@@ -7,7 +7,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
     background: #f7f7f5;
     color: #2c2c2a;
     line-height: 1.75;
@@ -15,119 +15,265 @@
   header {
     background: #fff;
     border-bottom: 1px solid #e8e8e4;
-    padding: 1.2rem 1.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
   header a { font-size: 0.85rem; color: #888; text-decoration: none; }
   header a:hover { color: #534ab7; }
-  header .sep { color: #ccc; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
   header .current { font-size: 0.85rem; color: #444; }
   .hero {
     background: #fff;
     border-bottom: 1px solid #e8e8e4;
-    padding: 2rem 0;
+    padding: 2.2rem 1.25rem 1.8rem;
     text-align: center;
   }
-  .hero .date-label { font-size: 0.78rem; color: #aaa; letter-spacing: 0.06em; text-transform: uppercase; }
-  .hero h1 { font-size: 1.5rem; font-weight: 500; margin: 0.5rem auto; max-width: 680px; padding: 0 1.25rem; line-height: 1.4; }
-  .hero .en-title { font-size: 0.9rem; color: #888; margin-top: 0.25rem; }
+  .hero .date-label {
+    font-size: 0.73rem;
+    color: #aaa;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .hero h1 {
+    font-size: 1.45rem;
+    font-weight: 500;
+    margin: 0 auto 0.4rem;
+    max-width: 700px;
+    line-height: 1.4;
+  }
+  .hero .en-title {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 1.1rem;
+    font-style: italic;
+  }
   .score-bar {
     display: flex;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
-    margin-top: 1rem;
-    padding: 0 1.25rem;
   }
   .score-chip {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     padding: 3px 12px;
     border-radius: 20px;
     font-weight: 500;
+    white-space: nowrap;
   }
-  .chip-total { background: #eaf3de; color: #3b6d11; }
-  .chip-rel   { background: #eeedfe; color: #534ab7; }
-  .chip-venue { background: #e6f1fb; color: #185fa5; }
-  .chip-cite  { background: #faeeda; color: #854f0b; }
-  .chip-novel { background: #fcebeb; color: #a32d2d; }
-  .chip-open  { background: #e1f5ee; color: #0f6e56; }
-  main { max-width: 760px; margin: 2rem auto; padding: 0 1.25rem; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main {
+    max-width: 780px;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
+  }
   .card {
     background: #fff;
     border: 1px solid #e8e8e4;
     border-radius: 12px;
     padding: 1.5rem 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.2rem;
   }
   .card-title {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #aaa;
+    letter-spacing: 0.09em;
+    color: #bbb;
     margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
+    padding-bottom: 0.55rem;
     border-bottom: 1px solid #f0efe9;
   }
   .meta-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.6rem 1.5rem;
+    gap: 0.75rem 2rem;
   }
-  .meta-item label { display: block; font-size: 0.75rem; color: #aaa; margin-bottom: 0.15rem; }
-  .meta-item span  { font-size: 0.9rem; }
+  .meta-item label {
+    display: block;
+    font-size: 0.72rem;
+    color: #bbb;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .meta-item span, .meta-item a {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+  .meta-item a {
+    color: #534ab7;
+    text-decoration: none;
+  }
+  .meta-item a:hover { text-decoration: underline; }
   .highlight-box {
-    background: #f7f5ff;
+    background: #f5f3ff;
     border-left: 3px solid #534ab7;
     border-radius: 0 8px 8px 0;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1.1rem;
     font-size: 1rem;
     font-weight: 500;
     color: #3c3489;
-    margin-bottom: 0;
+    line-height: 1.6;
   }
-  p { font-size: 0.95rem; margin-bottom: 0.8rem; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
   p:last-child { margin-bottom: 0; }
-  ul.result-list { padding-left: 1.2rem; }
-  ul.result-list li { font-size: 0.95rem; margin-bottom: 0.4rem; }
-  ul.result-list li strong { color: #534ab7; }
-  .link-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 0.5rem 0;
+  }
+  .progression-table th {
+    background: #f7f7f5;
+    font-weight: 500;
+    padding: 0.55rem 0.85rem;
+    text-align: left;
+    border: 1px solid #e8e8e4;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  .progression-table td {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid #e8e8e4;
+    vertical-align: top;
+    color: #3a3a38;
+  }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list {
+    padding-left: 1.2rem;
+    list-style: none;
+  }
+  ul.point-list li {
+    font-size: 0.93rem;
+    margin-bottom: 0.55rem;
+    color: #3a3a38;
+    position: relative;
+    padding-left: 0.4rem;
+  }
+  ul.point-list li::before {
+    content: "·";
+    position: absolute;
+    left: -0.8rem;
+    color: #534ab7;
+    font-weight: 700;
+  }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item {
+    font-size: 0.86rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f3f0;
+    color: #555;
+  }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .inspiration-item {
+    border-left: 3px solid #e0dfd8;
+    padding: 0.7rem 1rem;
+    border-radius: 0 8px 8px 0;
+    background: #fafaf8;
+  }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.3rem;
+  }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
   .link-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     background: #f1efe8;
     color: #2c2c2a;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     padding: 6px 14px;
     border-radius: 8px;
     text-decoration: none;
     border: 1px solid #e0dfd8;
+    transition: background 0.1s;
   }
-  .link-btn:hover { background: #e8e8e4; }
-  .inspiration {
-    background: #fff8e6;
-    border: 1px solid #fac775;
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary {
+    background: #eeedfe;
+    border-color: #c8c4f4;
+    color: #3c3489;
+  }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .candidate-table th {
+    background: #f7f7f5;
+    font-weight: 500;
+    padding: 0.45rem 0.7rem;
+    text-align: left;
+    border: 1px solid #e8e8e4;
+    color: #666;
+    white-space: nowrap;
+  }
+  .candidate-table td {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid #e8e8e4;
+    vertical-align: top;
+    color: #444;
+  }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge {
+    display: inline-block;
+    background: #3b6d11;
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 1px 7px;
     border-radius: 10px;
-    padding: 1.1rem 1.25rem;
-    font-size: 0.93rem;
-    color: #633806;
+    margin-left: 5px;
+    vertical-align: middle;
+    font-weight: 500;
   }
   footer {
     text-align: center;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: #bbb;
-    padding: 2rem;
+    padding: 2.5rem 1rem;
+    margin-top: 0.5rem;
   }
-  @media (max-width: 540px) {
+  footer a { color: #bbb; }
+  @media (max-width: 580px) {
     .meta-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.2rem; }
+    .hero h1 { font-size: 1.15rem; }
+    .card { padding: 1.1rem 1rem; }
   }
 </style>
 </head>
 <body>
+
 <header>
   <a href="../index.html">← 返回归档</a>
   <span class="sep">/</span>
@@ -135,40 +281,121 @@
 </header>
 
 <div class="hero">
-  <div class="date-label">2026 年 4 月 28 日 · 示例报告</div>
-  <h1>去噪扩散概率模型：一种高质量图像生成的新范式</h1>
-  <div class="en-title">Denoising Diffusion Probabilistic Models</div>
+  <div class="date-label">2026 年 4 月 28 日 · Harness Engineering · Agent Skills · 综述</div>
+  <h1>LLM Agent 外部化：记忆、技能、协议与 Harness Engineering 统一综述</h1>
+  <div class="en-title">Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering</div>
   <div class="score-bar">
-    <span class="score-chip chip-total">综合 92 分</span>
-    <span class="score-chip chip-rel">相关度 9.5</span>
-    <span class="score-chip chip-venue">期刊质量 9.0</span>
-    <span class="score-chip chip-cite">引用趋势 9.5</span>
-    <span class="score-chip chip-novel">新颖性 8.5</span>
-    <span class="score-chip chip-open">开源复现 10</span>
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
   </div>
 </div>
 
 <main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日候选论文评分对比（共 8 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr>
+          <th>标题（简）</th>
+          <th>方向</th>
+          <th>来源</th>
+          <th>综合分</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">Externalization in LLM Agents…</a><span class="winner-badge">今日选定</span></td>
+          <td>Harness Engineering</td>
+          <td>arXiv 2026-04-09</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">SemaClaw: Harness Engineering…</a></td>
+          <td>Harness Engineering</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24026" target="_blank" rel="noopener">From Skill Text to Skill Structure…</a></td>
+          <td>Agent Skills</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.20441" target="_blank" rel="noopener">MedSkillAudit…</a></td>
+          <td>Agent Skills Safety</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">82</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">How Sensitive Are Safety Benchmarks…</a></td>
+          <td>Safety Benchmark</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">Cross-Session Threats in AI Agents…</a></td>
+          <td>Agent Safety Benchmark</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">79</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">AISafetyBenchExplorer…</a></td>
+          <td>Safety Benchmark</td>
+          <td>arXiv 2026-04-14</td>
+          <td class="score-num">75</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.20087" target="_blank" rel="noopener">SkillLearnBench…</a></td>
+          <td>Agent Skills Benchmark</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">74</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- 基本信息 -->
   <div class="card">
     <div class="card-title">论文基本信息</div>
     <div class="meta-grid">
       <div class="meta-item">
-        <label>作者</label>
-        <span>Jonathan Ho, Ajay Jain, Pieter Abbeel</span>
+        <label>作者（共 21 位）</label>
+        <span>Chenyu Zhou, Huacan Chai, Wenteng Chen, Zeyu Zheng, Weinan Zhang 等</span>
       </div>
       <div class="meta-item">
         <label>机构</label>
-        <span>UC Berkeley</span>
+        <span>上海交通大学 / 中山大学 / 上海创新研究院 / CMU / OPPO</span>
       </div>
       <div class="meta-item">
-        <label>发表</label>
-        <span>NeurIPS 2020</span>
+        <label>发表状态</label>
+        <span>arXiv 预印本，cs.SE / cs.MA，54 页</span>
       </div>
       <div class="meta-item">
-        <label>引用数</label>
-        <span>18,000+（近期仍在高速增长）</span>
+        <label>提交日期</label>
+        <span>2026 年 4 月 9 日</span>
+      </div>
+      <div class="meta-item">
+        <label>原文链接</label>
+        <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2604.08224" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.08224</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2604.08224" target="_blank" rel="noopener">10.48550/arXiv.2604.08224</a>
+      </div>
+      <div class="meta-item">
+        <label>许可证</label>
+        <span>CC BY 4.0</span>
       </div>
     </div>
   </div>
@@ -177,57 +404,157 @@
   <div class="card">
     <div class="card-title">一句话核心贡献</div>
     <div class="highlight-box">
-      通过参数化马尔可夫链的逆扩散过程，实现了超越 GAN 的高保真图像生成质量。
+      提出"外部化"统一视角：LLM Agent 的进步本质是将认知负担从模型权重转移到记忆、技能、协议和 Harness 四层外部基础设施中。
     </div>
   </div>
 
   <!-- 摘要翻译 -->
   <div class="card">
     <div class="card-title">摘要（中文翻译）</div>
-    <p>我们提出了一种基于扩散概率模型的高质量图像合成方法。该模型是一类参数化马尔可夫链，通过变分推断进行训练，以在有限时间内生成与目标数据分布相匹配的样本。</p>
-    <p>学习过程通过训练去噪分数匹配目标来实现，而采样过程则对应一个 Langevin 动力学的离散版本。在无条件 CIFAR-10 上，我们的模型获得了 3.17 的 Inception Score 和 3.17 的 FID 分数，优于当时所有已知的 GAN 模型。在 256×256 LSUN 数据集上，生成效果达到了与 ProgressiveGAN 相当的视觉质量。</p>
+    <p>
+      大型语言模型（LLM）Agent 的构建方式正在发生根本性转变——越来越少依赖改变模型权重，而是越来越多地依赖重新组织运行时环境。过去需要模型在内部完成的能力，现在被"外部化"到记忆存储、可复用技能、交互协议以及让这些模块在实践中可靠运行的"Harness（工程框架）"中。
+    </p>
+    <p>
+      本文通过"外部化"视角对这一转变进行综述。借鉴认知工件（cognitive artifacts）的理念，论文指出 Agent 基础设施的重要性不仅在于添加辅助组件，更在于它将困难的认知负担转化为模型能更可靠地处理的形式：记忆将"回忆"转化为"识别"，技能将"生成"转化为"组合"，协议将"临时协调"转化为"结构化契约"，而 Harness Engineering 则作为统一层，协调这三者在治理约束下可靠执行。
+    </p>
+    <p>
+      论文追踪了从"权重时代" → "上下文时代" → "Harness 时代"的历史演进，并深入分析了参数化能力与外部化能力之间的核心权衡。
+    </p>
   </div>
 
-  <!-- 方法解读 -->
+  <!-- 核心方法解读 -->
   <div class="card">
-    <div class="card-title">方法解读</div>
-    <p><strong>解决了什么问题：</strong>GAN 在训练时存在模式崩塌（mode collapse）和训练不稳定的问题，而之前的概率生成模型（如 VAE、Flow）在生成质量上又不及 GAN。DDPM 试图在保持训练稳定性的同时达到更高的生成质量。</p>
-    <p><strong>核心方法：</strong>DDPM 定义了两个马尔可夫链过程——前向扩散过程（逐步向图像加入高斯噪声，直至完全变为噪声）和反向去噪过程（从纯噪声出发，由神经网络逐步预测并去除噪声，还原真实图像）。训练目标等价于一系列加权去噪分数匹配目标的变体。</p>
-    <p><strong>与以往方法的主要区别：</strong>关键创新在于将反向过程的参数化从预测 <em>x₀</em>（原始图像）改为预测每一步添加的噪声 <em>ε</em>，这一改动使得训练目标更接近 NCSN（Noise Conditional Score Networks），大幅提升了生成质量。</p>
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>当前 LLM Agent 领域缺乏一个统一的理论框架来理解为何"做更大的模型"以外的工程努力同样（甚至更）重要。大量系统（MemGPT、ReAct、LangGraph、AutoGen 等）各自提出自己的方案，但缺少贯穿全局的第一性原理。</p>
+    <p><strong>核心框架——四层外部化体系：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>层级</th><th>外部化内容</th><th>认知转化</th><th>代表系统</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>记忆（Memory）</strong></td>
+          <td>跨时间的状态</td>
+          <td>回忆 → 识别</td>
+          <td>MemGPT, GraphRAG, Mem0</td>
+        </tr>
+        <tr>
+          <td><strong>技能（Skills）</strong></td>
+          <td>程序性专业知识</td>
+          <td>生成 → 组合</td>
+          <td>OpenAI 函数调用, Anthropic Tools</td>
+        </tr>
+        <tr>
+          <td><strong>协议（Protocols）</strong></td>
+          <td>交互结构</td>
+          <td>临时协调 → 结构化契约</td>
+          <td>MCP, A2A, Agent 协议</td>
+        </tr>
+        <tr>
+          <td><strong>Harness</strong></td>
+          <td>统一执行治理</td>
+          <td>混乱集成 → 可审计系统</td>
+          <td>LangGraph, CrewAI, SemaClaw</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>三个时代的演进：</strong>论文明确划分了 LLM Agent 发展的三个阶段——2022~2023 年的"权重时代"（靠大模型本身）、2023~2024 年的"上下文时代"（靠 Prompt Engineering 和 RAG）、2024~2026 年的"Harness 时代"（靠系统工程基础设施）。</p>
+    <p><strong>与现有综述的关键区别：</strong>不是简单罗列技术，而是用 Norman 的"认知工件理论"作为第一性原理，统一解释了为什么这四种外部化都能降低模型认知负担。六类模块间交互（记忆→技能的经验蒸馏、技能→协议的能力调用等）形成了一个完整的交互地图，这是之前综述所没有的。</p>
   </div>
 
-  <!-- 实验亮点 -->
+  <!-- 关键引用与出处 -->
   <div class="card">
-    <div class="card-title">实验结果亮点</div>
-    <ul class="result-list">
-      <li>在 CIFAR-10 无条件生成上取得 <strong>FID = 3.17</strong>，超过当时所有 GAN 模型</li>
-      <li>在 CelebA-HQ 256×256 上取得 <strong>FID = 5.11</strong>，显著优于 PGGAN</li>
-      <li>对数似然估计（bits/dim）在 CIFAR-10 上达到 <strong>3.75</strong>，接近当时 flow-based 模型的最优水平</li>
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Norman (1991, 1993) — <em>Cognitive artifacts / Things that make us smart</em> — 认知工件理论基础<br>
+    <a href="https://www.cambridge.org/core/books/things-that-make-us-smart/3A6B1CC0B78BF2E86E6BA3CE27F17AC0" target="_blank" rel="noopener">cambridge.org — Things That Make Us Smart</a></div>
+    <div class="ref-item">Lewis et al. (2020) — <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em><br>
+    <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">https://arxiv.org/abs/2005.11401</a></div>
+    <div class="ref-item">Packer et al. (2023) — <em>MemGPT: Towards LLMs as Operating Systems</em><br>
+    <a href="https://arxiv.org/abs/2310.08560" target="_blank" rel="noopener">https://arxiv.org/abs/2310.08560</a></div>
+    <div class="ref-item">Wei et al. (2022) — <em>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</em><br>
+    <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">https://arxiv.org/abs/2201.11903</a></div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em><br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">https://arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Wu et al. (2023) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em><br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">https://arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">Edge et al. (2024) — <em>From Local to Global: A Graph RAG Approach to Query-Focused Summarization</em><br>
+    <a href="https://arxiv.org/abs/2404.16130" target="_blank" rel="noopener">https://arxiv.org/abs/2404.16130</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Model Context Protocol (MCP) 规范文档</em><br>
+    <a href="https://docs.anthropic.com/en/docs/build-with-claude/mcp" target="_blank" rel="noopener">docs.anthropic.com — MCP Documentation</a></div>
+    <div class="ref-item">Sumers et al. (2024) — <em>Cognitive Architectures for Language Agents (CoALA)</em><br>
+    <a href="https://arxiv.org/abs/2309.02427" target="_blank" rel="noopener">https://arxiv.org/abs/2309.02427</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em><br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">https://arxiv.org/abs/2302.04761</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心论点亮点</div>
+    <ul class="point-list">
+      <li><strong>54 页系统性综述</strong>，覆盖 Agent 外部化领域的全部主流技术路线，是目前最完整的 Harness Engineering 理论框架文章，涉及现有系统超过 40 个。</li>
+      <li><strong>六类模块交互</strong>：记忆⇌技能⇌协议之间形成 6 种双向交互（如"经验蒸馏"将记忆中的轨迹转化为可复用技能，"结果同化"将协议执行结果写回记忆），这是此前综述缺失的系统性描述。</li>
+      <li><strong>参数化 vs 外部化的权衡分析</strong>：明确给出了何时应将能力"烧入"模型权重、何时应外部化为基础设施的判断标准（更新频率、可审计性、多 Agent 复用需求），对实际系统设计有直接指导意义。</li>
+      <li><strong>预测未来方向</strong>：提出编排逻辑本身将成为下一个被外部化的层次（"self-evolving harness"），以及多模态外部化和体现式外部化（类比大脑-小脑分工）是下一阶段核心课题。</li>
     </ul>
   </div>
 
-  <!-- 启发 -->
+  <!-- 对研究方向的启发 -->
   <div class="card">
-    <div class="card-title">对你研究的启发</div>
-    <div class="inspiration">
-      DDPM 的噪声预测参数化策略（预测 ε 而非 x₀）是扩散模型后续一切改进的基础。如果你的方向涉及条件生成或引导采样，理解这一参数化是入门的关键第一步，建议与 DDIM 和 Classifier-Free Guidance 论文一起阅读。
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>本文提供了 Harness Engineering 最系统的理论定义：不是"工具调用的封装"，而是"在记忆、技能、协议三层之上提供治理、可审计性和可靠执行的统一基础设施"。你做 Harness Engineering 研究时，这套词汇体系（Agent Loop、沙箱隔离、人工监督门、可观测性、权限策略）是必须掌握的基础语言。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>论文提出技能外部化带来三个安全维度：规格安全（skill spec 是否被篡改）、发现安全（技能注册表是否可信）和执行绑定安全（skill 调用时的权限边界）。这直接为"Agent Skills Safety"研究提供了攻击面分类框架，可作为你构建安全评估方法的切入点。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">相关 Benchmark</div>
+        <p>论文明确指出当前缺乏对"外部化质量"本身的评估基准——现有 benchmark 评估的是 Agent 的任务完成率，而非其 Harness 的可审计性、记忆的一致性、技能的安全边界等基础设施属性。这是一个空白的 benchmark 设计方向，值得开坑。</p>
+      </div>
     </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li>
+        <strong>SemaClaw</strong> — Zhu et al. (2026) — <em>A Step Towards General-Purpose Personal AI Agents through Harness Engineering</em>（本文的工程实现对应物，提出了 PermissionBridge 行为安全系统）<br>
+        <a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">https://arxiv.org/abs/2604.11548</a>
+      </li>
+      <li>
+        <strong>MedSkillAudit</strong> — Hou et al. (2026) — <em>A Domain-Specific Audit Framework for Medical Research Agent Skills</em>（Agent Skills Safety 的领域落地案例）<br>
+        <a href="https://arxiv.org/abs/2604.20441" target="_blank" rel="noopener">https://arxiv.org/abs/2604.20441</a>
+      </li>
+      <li>
+        <strong>How Sensitive Are Safety Benchmarks to Judge Configuration</strong> — Zhang (2026) — 对 HarmBench 评测配置敏感性的系统分析，直接警示 Benchmark 设计中的评判者偏差问题<br>
+        <a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a>
+      </li>
+    </ul>
   </div>
 
   <!-- 开源资源 -->
   <div class="card">
-    <div class="card-title">开源资源</div>
+    <div class="card-title">资源链接</div>
     <div class="link-row">
-      <a class="link-btn" href="https://arxiv.org/abs/2006.11239" target="_blank">arXiv 论文</a>
-      <a class="link-btn" href="https://github.com/hojonathanho/diffusion" target="_blank">官方代码 (GitHub)</a>
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.08224" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2604.08224v1" target="_blank" rel="noopener">在线 HTML 版</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.08224" target="_blank" rel="noopener">DOI 链接</a>
     </div>
   </div>
 
 </main>
 
 <footer>
-  由 CodeBuddy Agent 自动生成 · 2026-04-28 · 
-  <a href="../index.html" style="color:#bbb">返回归档首页</a>
+  由 CodeBuddy Agent 自动生成 · 2026-04-28 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">arxiv.org/abs/2604.08224</a> ·
+  <a href="../index.html">← 返回归档首页</a>
 </footer>
+
 </body>
 </html>
