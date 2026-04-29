@@ -5,121 +5,116 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Paper Tracker — Anqi</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f7f7f5;
-    color: #2c2c2a;
-    line-height: 1.7;
-  }
-  header {
-    background: #fff;
-    border-bottom: 1px solid #e8e8e4;
-    padding: 2rem 0;
-    text-align: center;
-  }
-  header h1 { font-size: 1.6rem; font-weight: 500; letter-spacing: -0.3px; }
-  header p { color: #888; font-size: 0.9rem; margin-top: 0.3rem; }
-  .badge {
-    display: inline-block;
-    background: #eeedfe;
-    color: #534ab7;
-    font-size: 0.75rem;
-    padding: 2px 10px;
-    border-radius: 20px;
-    margin-top: 0.5rem;
-  }
-  main { max-width: 760px; margin: 2.5rem auto; padding: 0 1.25rem; }
-  .section-title {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #aaa;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e8e8e4;
-  }
-  .paper-list { list-style: none; }
-  .paper-item {
-    background: #fff;
-    border: 1px solid #e8e8e4;
-    border-radius: 10px;
-    padding: 1.1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    transition: border-color 0.15s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .paper-item:hover { border-color: #bbb; }
-  .date-badge {
-    flex-shrink: 0;
-    background: #f1efe8;
-    border-radius: 8px;
-    padding: 0.4rem 0.7rem;
-    text-align: center;
-    min-width: 64px;
-  }
-  .date-badge .month { font-size: 0.7rem; color: #888; text-transform: uppercase; }
-  .date-badge .day { font-size: 1.4rem; font-weight: 500; line-height: 1.2; }
-  .paper-meta { flex: 1; }
-  .paper-title { font-size: 0.95rem; font-weight: 500; line-height: 1.45; margin-bottom: 0.25rem; }
-  .paper-sub { font-size: 0.82rem; color: #888; }
-  .score-pill {
-    flex-shrink: 0;
-    align-self: center;
-    background: #eaf3de;
-    color: #3b6d11;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-  .empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #aaa;
-    font-size: 0.9rem;
-  }
-  footer {
-    text-align: center;
-    font-size: 0.78rem;
-    color: #bbb;
-    padding: 2rem;
-    margin-top: 1rem;
-  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7}
+  header{background:#fff;border-bottom:1px solid #e8e8e4;padding:2rem 1.25rem;text-align:center}
+  header h1{font-size:1.6rem;font-weight:500;letter-spacing:-.3px}
+  header p{color:#888;font-size:.9rem;margin-top:.3rem}
+  .badge{display:inline-block;background:#eeedfe;color:#534ab7;font-size:.74rem;padding:2px 10px;border-radius:20px;margin-top:.5rem}
+  main{max-width:860px;margin:2.5rem auto;padding:0 1.25rem}
+  .section-title{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:#aaa;margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:1px solid #e8e8e4}
+  .direction-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:2.5rem}
+  .dir-card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:1.5rem 1.5rem 1.25rem;text-decoration:none;color:inherit;transition:border-color .15s;display:block}
+  .dir-card:hover{border-color:#bbb}
+  .dir-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.1rem}
+  .dir-card.harness .dir-icon{background:#e6f1fb}
+  .dir-card.safety  .dir-icon{background:#e1f5ee}
+  .dir-card.bench   .dir-icon{background:#faeeda}
+  .dir-card h2{font-size:1rem;font-weight:500;margin-bottom:.3rem}
+  .dir-card.harness h2{color:#0c447c}
+  .dir-card.safety  h2{color:#085041}
+  .dir-card.bench   h2{color:#633806}
+  .dir-card p{font-size:.82rem;color:#888;line-height:1.55;margin-bottom:.9rem}
+  .dir-meta{display:flex;align-items:center;justify-content:space-between}
+  .count-badge{font-size:.75rem;color:#aaa}
+  .arrow{font-size:.8rem;color:#ccc}
+  .dir-card:hover .arrow{color:#888}
+  .recent-section{margin-bottom:2rem}
+  .paper-list{list-style:none}
+  .paper-item{background:#fff;border:1px solid #e8e8e4;border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.65rem;display:flex;align-items:flex-start;gap:.9rem;text-decoration:none;color:inherit;transition:border-color .15s}
+  .paper-item:hover{border-color:#bbb}
+  .date-badge{flex-shrink:0;background:#f1efe8;border-radius:8px;padding:.35rem .65rem;text-align:center;min-width:60px}
+  .date-badge .month{font-size:.67rem;color:#888;text-transform:uppercase}
+  .date-badge .day{font-size:1.3rem;font-weight:500;line-height:1.2}
+  .dir-tag{flex-shrink:0;align-self:center;font-size:.72rem;font-weight:500;padding:2px 9px;border-radius:10px}
+  .tag-harness{background:#e6f1fb;color:#185fa5}
+  .tag-safety {background:#e1f5ee;color:#0f6e56}
+  .tag-bench  {background:#faeeda;color:#854f0b}
+  .paper-meta{flex:1}
+  .paper-title{font-size:.92rem;font-weight:500;line-height:1.43;margin-bottom:.2rem}
+  .paper-sub{font-size:.79rem;color:#888}
+  .score-pill{flex-shrink:0;align-self:center;background:#eaf3de;color:#3b6d11;font-size:.77rem;font-weight:500;padding:3px 10px;border-radius:20px}
+  footer{text-align:center;font-size:.76rem;color:#bbb;padding:2rem;margin-top:.5rem}
+  footer a{color:#bbb}
 </style>
 </head>
 <body>
 <header>
   <h1>Daily Paper Tracker</h1>
   <p>AI 每日精选 · 中文解读 · 自动更新</p>
-  <span class="badge">由 CodeBuddy Agent 驱动</span>
+  <span class="badge">由 CodeBuddy Agent 驱动 · 每天中午 12:00</span>
 </header>
 <main>
-  <p class="section-title">历史报告归档</p>
-  <ul class="paper-list" id="paper-list">
+
+  <p class="section-title">研究方向</p>
+  <div class="direction-grid">
+    <a class="dir-card harness" href="harness/index.html">
+      <div class="dir-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="2.5" rx="1.25" fill="#185fa5"/><rect x="2" y="7.75" width="10" height="2.5" rx="1.25" fill="#378add"/><rect x="2" y="11.5" width="12" height="2.5" rx="1.25" fill="#b5d4f4"/></svg>
+      </div>
+      <h2>Harness Engineering</h2>
+      <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
+      <div class="dir-meta">
+        <span class="count-badge">1 篇报告</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+    <a class="dir-card safety" href="agent-safety/index.html">
+      <div class="dir-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L3 5v4c0 3.5 2.5 6.5 6 7.5 3.5-1 6-4 6-7.5V5L9 2z" fill="#1d9e75" opacity=".3"/><path d="M9 2L3 5v4c0 3.5 2.5 6.5 6 7.5 3.5-1 6-4 6-7.5V5L9 2z" stroke="#0f6e56" stroke-width="1.2" fill="none"/></svg>
+      </div>
+      <h2>Agent Skills Safety</h2>
+      <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
+      <div class="dir-meta">
+        <span class="count-badge">0 篇报告</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+    <a class="dir-card bench" href="benchmark/index.html">
+      <div class="dir-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="11" width="3" height="5" rx="1" fill="#ba7517"/><rect x="7" y="7" width="3" height="9" rx="1" fill="#ef9f27"/><rect x="12" y="4" width="3" height="12" rx="1" fill="#fac775"/></svg>
+      </div>
+      <h2>Safety Benchmark</h2>
+      <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
+      <div class="dir-meta">
+        <span class="count-badge">0 篇报告</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+  </div>
+
+  <p class="section-title">最近报告（全方向）</p>
+  <ul class="paper-list">
     <li>
-      <a class="paper-item" href="papers/2026-04-28.html">
+      <a class="paper-item" href="harness/2026-04-28-1.html">
         <div class="date-badge">
           <div class="month">Apr</div>
           <div class="day">28</div>
         </div>
+        <span class="dir-tag tag-harness">Harness</span>
         <div class="paper-meta">
           <div class="paper-title">LLM Agent 外部化：记忆、技能、协议与 Harness Engineering 统一综述</div>
-          <div class="paper-sub">Zhou, Chai et al. · 上海交通大学/CMU · arXiv 2026 · Harness Engineering · Agent Skills · Benchmark</div>
+          <div class="paper-sub">Zhou, Chai et al. · 上海交通大学/CMU · arXiv 2026-04-09 · #1</div>
         </div>
         <div class="score-pill">94 分</div>
       </a>
     </li>
   </ul>
+
 </main>
 <footer>
   本站内容由 AI Agent 自动生成 · 每天中午 12:00 更新 ·
-  <a href="https://github.com/HuYangjia/Daily-Paper-Anqi-Test" style="color:#aaa">GitHub 仓库</a>
+  <a href="https://github.com/HuYangjia/Daily-Paper-Anqi-Test">GitHub 仓库</a>
 </footer>
 </body>
 </html>
