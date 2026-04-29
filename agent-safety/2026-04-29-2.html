@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 #2 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0b5c47; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e1f5ee; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #c8ecdd; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-29 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 29 日 · Agent Skills Safety · Filesystem · Coding Agent</div>
+  <h1>不要让 AI Agent "YOLO"你的文件：把信息与控制权转移到文件系统</h1>
+  <div class="en-title">Don't Let AI Agents YOLO Your Files: Shifting Information and Control to Filesystems for Agent Safety and Autonomy</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 91 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.3</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 6 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.13536" target="_blank" rel="noopener">Don't Let AI Agents YOLO Your Files…</a><span class="winner-badge">今日选定</span></td>
+          <td>Filesystem-level Agent Safety</td>
+          <td>arXiv 2026-04-15 / v2 2026-04-16</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.18658" target="_blank" rel="noopener">Owner-Harm: Missing Threat Model for AI Agent Safety</a></td>
+          <td>Threat Modeling</td>
+          <td>arXiv 2026-04-20</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.10577" target="_blank" rel="noopener">Blind Spot of Agent Safety (OS-BLIND)</a></td>
+          <td>Computer-Use Agent Safety</td>
+          <td>arXiv 2026-04-12 / v2 2026-04-17</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">Discovering Agentic Safety Specifications from 1-Bit Signals</a></td>
+          <td>Safe Spec Discovery</td>
+          <td>arXiv 2026-04-25</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2602.11749" target="_blank" rel="noopener">AIR: Improving Agent Safety through Incident Response</a></td>
+          <td>Incident Response</td>
+          <td>arXiv 2026-02-12</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2601.18491" target="_blank" rel="noopener">AgentDoG: Diagnostic Guardrail Framework</a></td>
+          <td>Guardrail</td>
+          <td>arXiv 2026-01-26</td>
+          <td class="score-num">76</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者（共 6 位）</label><span>Shawn Wanxiang Zhong, Junxuan Liao, Jing Liu, Mai Zheng, Andrea C. Arpaci-Dusseau, Remzi H. Arpaci-Dusseau</span></div>
+      <div class="meta-item"><label>机构</label><span>University of Wisconsin–Madison / HKUST(GZ) / Iowa State University</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本，cs.OS，v2 修订版</span></div>
+      <div class="meta-item"><label>首次提交</label><span>2026 年 4 月 15 日（v2：2026 年 4 月 16 日）</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.13536" target="_blank" rel="noopener">https://arxiv.org/abs/2604.13536</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.13536v2" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.13536v2</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.13536" target="_blank" rel="noopener">10.48550/arXiv.2604.13536</a></div>
+      <div class="meta-item"><label>主分类</label><span>cs.OS（Operating Systems）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次系统调研 290 起真实 Agent 文件误操作事故，并提出 YoloFS——把"信息"和"控制权"下沉到文件系统层，用 Staging/Snapshots/渐进式权限解决"自由 vs 安全"的长期 tradeoff。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>AI 编码 Agent 直接在用户文件系统上工作，它们<strong>经常损坏数据、删除文件、甚至泄露密钥</strong>。当前各种防御方案都被困在一个 tradeoff 里：不限制访问则风险高，频繁弹出权限提示则阻碍使用。</p>
+    <p>为理解该问题，本文进行了<strong>首个对 Agent 文件系统滥用的系统性研究</strong>——分析了 13 个主流 Agent 框架下公开报告的 290 起事故。分析表明：今天的 Agent 对"自己的文件影响"只有很有限的信息，对这些影响的控制也不足。因此作者主张把信息与控制权下沉到文件系统自身。</p>
+    <p>基于这一原则，作者设计了 <strong>YoloFS</strong>——一个 Agent 原生的文件系统，包含三项技术：（1）<strong>Staging</strong>：所有写入在提交前被隔离，给用户一种"事后可纠正"的控制；（2）<strong>Snapshots</strong>：将这种控制力也给 Agent 自己，让它能检测并纠正自己的错误；（3）<strong>Progressive Permission</strong>：以最小的交互门控访问权限，为用户提供"事前预防"的控制。在 11 项带有隐藏副作用的任务上，YoloFS 在 8 项里让 Agent 成功自我纠错，并保持所有副作用处于可审查的暂存状态；在 112 项常规任务上，YoloFS 让用户所需的交互次数更少，且成功率与基线持平。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>coding agent 的一个根本 tension——<strong>"让 Agent 自由操作 = 能力"，"限制 Agent 操作 = 安全"</strong>。前者导致真实事故（13 框架 290 案例），后者变成频繁权限弹窗，让 Agent 失去自治能力。作者的洞察来自 OS 社区的长期经验：<strong>这类问题的正确抽象层不是应用，而是文件系统本身</strong>。</p>
+    <p><strong>核心设计——YoloFS 三件套：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>机制</th><th>服务对象</th><th>类比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Staging</strong>（暂存提交）</td><td>用户（事后纠正）</td><td>Git 的 staging area 式事务隔离</td></tr>
+        <tr><td><strong>Snapshots</strong>（快照回滚）</td><td>Agent（自我纠错）</td><td>ZFS/Btrfs 快照，Agent 可感知并回滚自身错误</td></tr>
+        <tr><td><strong>Progressive Permission</strong>（渐进式权限）</td><td>用户（事前预防）</td><td>Android 运行时权限 + 最小交互门控</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>为什么是"文件系统"这一层：</strong>之前的防御分为两类——（a）在 Agent 侧加 prompt 约束或 policy，（b）用 sandbox 完全隔离。两者都有硬伤：前者不可靠（LLM 被 jailbreak 或自己产生混乱），后者不可用（完全隔离的 Agent 不能访问真实文件）。YoloFS 选择"和文件系统一起设计"：Agent 的每一次文件写入都先落到 staging layer，commit 阶段可被人工或 Agent 自己审查后再生效——从而在不牺牲能力的情况下消除"不可逆破坏"。</p>
+    <p><strong>与现有工作的关键区别：</strong>同期相关工作 Owner-Harm（arXiv 2604.18658）提出威胁模型，OS-BLIND（arXiv 2604.10577）提出评测基准，但它们都停留在"发现问题"层面；YoloFS 给出的是"OS 原生的结构性缓解方案"——这类跨层 co-design 是 Agent Safety 研究里仍然稀缺的范式。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em><br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">https://arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Claude Code</em> / Computer Use 技术文档（coding agent 文件操作范式的代表）<br>
+    <a href="https://docs.anthropic.com/en/docs/agents-and-tools/computer-use" target="_blank" rel="noopener">docs.anthropic.com — Computer Use</a></div>
+    <div class="ref-item">Wang et al. (2024) — <em>OpenHands (OpenDevin): An Open Platform for AI Software Developers as Generalist Agents</em><br>
+    <a href="https://arxiv.org/abs/2407.16741" target="_blank" rel="noopener">https://arxiv.org/abs/2407.16741</a></div>
+    <div class="ref-item">Bonwick et al. (2003) — <em>The Zettabyte File System (ZFS)</em> — 写时复制 / Snapshot 的起源（OS 社区经典）<br>
+    <a href="https://www.usenix.org/legacy/event/lisa03/tech/bonwick.html" target="_blank" rel="noopener">usenix.org — ZFS</a></div>
+    <div class="ref-item">Chacon &amp; Straub (2014) — <em>Pro Git</em> — Staging area 事务抽象的用户可见实现<br>
+    <a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">git-scm.com — Pro Git</a></div>
+    <div class="ref-item">Wu et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em><br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">https://arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Perez &amp; Ribeiro (2022) — <em>Ignore Previous Prompt: Attack Techniques for Language Models</em>（prompt-level 防御失效的根因之一）<br>
+    <a href="https://arxiv.org/abs/2211.09527" target="_blank" rel="noopener">https://arxiv.org/abs/2211.09527</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据与论点亮点</div>
+    <ul class="point-list">
+      <li><strong>事故量化：</strong>13 个主流 Agent 框架下 <strong>290 起公开的文件系统误操作事故</strong>——这是当前 Agent Skills Safety 方向最大规模的真实事故语料。</li>
+      <li><strong>自我纠错能力：</strong>在 11 项带隐藏副作用的任务上，<strong>YoloFS 使 Agent 在 8 项里实现自我检测并回滚</strong>，所有副作用均保持在可审查的 staging 状态。</li>
+      <li><strong>用户体验不降反升：</strong>在 112 项常规任务上，YoloFS 需要的用户交互次数比基线 permission prompt 方案<strong>更少</strong>，且任务成功率保持一致。</li>
+      <li><strong>"OS 抽象层即安全边界"：</strong>论文提出一个值得 agent-safety 社区认真对待的结构论点——<strong>Agent 的安全 tradeoff 应该在系统调用这层解决，而不是在提示词层面解决</strong>。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（本方向）</div>
+        <p>这是 2026 年少数真正把 Agent 文件安全问题"沉到 OS 层"的工作。对你研究技能安全的意义：<strong>skill 的权限边界不必由 skill 自己承诺，可以由底层 runtime 强制</strong>。把 YoloFS 的 staging/snapshot/progressive permission 三件套抽象成 skill-level 概念——每个技能调用都在 staging 层执行、可回滚、权限最小化——就是可落地的研究方向。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>论文强调 harness 需要把"动作效果"暴露给 Agent 自己——这正是 harness 中"可观测性"的核心。YoloFS 为 harness 提供了一种独特的可观测手段：通过文件系统层的事务记录，Agent 能看到自己的副作用、并能以"撤销 + 重做"为语义在 harness 中循环——这是传统 "edit-execute-evaluate" 循环的强化版。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>作者用"带隐藏副作用的任务集"定义了一种评估方法：衡量 Agent 能否检测并纠正自己的错误，而非仅看终态是否正确。这是一种<strong>"过程安全"维度</strong>，可以直接被吸收到 agent safety benchmark 中，补齐现在 HarmBench / AgentHarm 只看 refusal/attack success 的结果导向评估。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Owner-Harm</strong> — Zhang &amp; Jiang (2026) — 提出"Agent 伤害其 deployer"这一被主流 benchmark 遗漏的威胁模型，8 大类别、3 种实验体系<br>
+      <a href="https://arxiv.org/abs/2604.18658" target="_blank" rel="noopener">https://arxiv.org/abs/2604.18658</a></li>
+      <li><strong>OS-BLIND</strong> — Ding et al. (2026) — Computer-Use Agent 在"良性指令 + 恶意环境"下的安全盲点，Claude 4.5 Sonnet 多代理场景 ASR 从 73% 升到 92.7%<br>
+      <a href="https://arxiv.org/abs/2604.10577" target="_blank" rel="noopener">https://arxiv.org/abs/2604.10577</a></li>
+      <li><strong>EPO-Safe</strong> — Gallego (2026, AAMAS ALA Workshop) — Agent 从 1-bit 危险信号中自发学习安全 spec<br>
+      <a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">https://arxiv.org/abs/2604.23210</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.13536" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.13536v2" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.13536" target="_blank" rel="noopener">DOI 链接</a>
+    </div>
+    <p style="font-size:.82rem;color:#888;margin-top:.6rem">注：YoloFS 的开源代码仓库在 arXiv v2 版本中未给出直接 URL，如需试用建议通过作者主页联系；截至本报告日期暂无公开 GitHub 地址。</p>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-29 #2 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.13536" target="_blank" rel="noopener">arxiv.org/abs/2604.13536</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

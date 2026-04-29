@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 #2 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e1f5ee; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f6e1bf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-29 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 29 日 · Safety Benchmark · Judge Robustness · Measurement Science</div>
+  <h1>安全 Benchmark 有多依赖"评判者配置"？——Judge Prompt 一词之差就能让分数差 24.2 个百分点</h1>
+  <div class="en-title">How Sensitive Are Safety Benchmarks to Judge Configuration Choices?</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 6 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">How Sensitive Are Safety Benchmarks to Judge Configuration…</a><span class="winner-badge">今日选定</span></td>
+          <td>Benchmark Measurement Science</td>
+          <td>arXiv 2026-04-27 · 将收录于 ICIC 2026 / Springer CCIS</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">GAIA-v2-LILT: Multilingual Adaptation of Agent Benchmark</a></td>
+          <td>Multilingual Benchmark</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">Cross-Session Threats in AI Agents</a></td>
+          <td>Agent Safety Benchmark</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">82</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">AISafetyBenchExplorer</a></td>
+          <td>Meta-Benchmark</td>
+          <td>arXiv 2026-04-14</td>
+          <td class="score-num">81</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.00547" target="_blank" rel="noopener">Uni-SafeBench for Unified Multimodal Large Models</a></td>
+          <td>Multimodal Safety Benchmark</td>
+          <td>arXiv 2026-04-01</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.10988" target="_blank" rel="noopener">WebForge: Browser Agent Benchmark</a></td>
+          <td>Browser Agent Benchmark</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">78</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Xinran Zhang</span></div>
+      <div class="meta-item"><label>机构</label><span>（按论文提交信息为独立作者提交，单位未在 arXiv 元数据中披露；将收录于 Springer CCIS 会议正式版本）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 / ICIC 2026 接收（Springer CCIS）</span></div>
+      <div class="meta-item"><label>首次提交</label><span>2026 年 4 月 27 日</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.24074v1" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.24074v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.24074" target="_blank" rel="noopener">10.48550/arXiv.2604.24074</a></div>
+      <div class="meta-item"><label>主分类</label><span>cs.CL（Computation and Language）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用 2×2×3 因子实验证明：仅仅改动 Judge Prompt 的措辞（Judge 模型不变）就能让 HarmBench 上的"有害响应率"偏移最多 24.2 个百分点——主流安全 Benchmark 的分数远不如我们以为的稳定。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>HarmBench 等安全 benchmark 依赖 LLM 作为"judge"来判断某条模型响应是否有害，但"judge 配置"——即 judge 模型和 judge prompt 的组合——通常被当作一个固定的实现细节。本文证明这个假设是成问题的。</p>
+    <p>作者使用 <strong>2×2×3 的因子设计</strong>，沿"评估结构"和"指令框架"两个轴构造 <strong>12 种 judge prompt 变体</strong>，固定使用同一个 judge 模型（Claude Sonnet 4-6）。在 6 个目标模型、400 个 HarmBench 行为上累计生成 <strong>28 812 次判定</strong>。结果：仅仅 prompt 措辞（holding judge 模型不变）就能让测得的"有害响应率"偏移 <strong>最多 24.2 个百分点</strong>；即使在同一条件内做语义相近的表面改写，摆动也可达 <strong>20.1 个百分点</strong>。模型安全排名的稳定性中等偏低（<strong>Kendall τ = 0.89</strong>），其中 copyright 类别的敏感性高达 39.6 pp，而 harassment 类别几乎不受影响。额外的多 judge 模型实验（3 个 judge 模型）显示 judge 模型本身也会引入更多方差。整体结论：<strong>judge prompt 措辞是此前被严重低估的、对安全测量结果有实质性影响的方差来源</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>几乎所有安全 benchmark 最终都依赖一个 "LLM-as-judge"——但各篇论文使用的 judge 模型、prompt 格式、打分 rubric 各不相同，且通常不被当作可变量。这就产生了"同一行为，一个 judge 判为 harmful，另一个判为 safe"的系统性偏差。本文把问题摆上台面：<strong>你所测到的"安全分数"，到底有多少是模型的属性、多少是 judge 配置的属性？</strong></p>
+    <p><strong>核心方法——2×2×3 因子实验：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>变量</th><th>取值</th><th>变量类型</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>评估结构</strong></td><td>binary（有害/安全） vs rubric（多等级）</td><td>2 水平</td></tr>
+        <tr><td><strong>指令框架</strong></td><td>"帮助 user 识别 harmful"型 vs "审阅法律风险"型</td><td>2 水平</td></tr>
+        <tr><td><strong>表面改写</strong></td><td>同一 prompt 的三种等义改写</td><td>3 水平</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p>共 2×2×3 = 12 个 prompt 变体 × 6 个目标模型 × 400 个 HarmBench 行为 = <strong>28 812 次判定</strong>。并且控制组：judge 模型固定为 Claude Sonnet 4-6（避免 judge 模型自身的方差干扰）。</p>
+    <p><strong>关键发现：</strong></p>
+    <ul class="point-list">
+      <li>跨 12 个 prompt 变体，<strong>有害响应率（ASR）波动最大 24.2 pp</strong>。</li>
+      <li>即使只做"同条件的语义等价改写"，波动仍可达 20.1 pp——说明这不是"不同意图"造成的，而是"表面 wording"造成的。</li>
+      <li><strong>模型排名不全稳定</strong>（Kendall τ = 0.89），对"谁更安全"这一实务问题直接有影响。</li>
+      <li>不同 harm 类别敏感度差异巨大：copyright 39.6 pp，harassment 接近 0 pp——说明 judge 在某些"社会共识明确"的类别上稳定，在"法律/边界判断"类别上极不稳定。</li>
+    </ul>
+    <br>
+    <p><strong>与现有工作的关键区别：</strong>此前的 benchmark 稳定性研究主要关注"数据污染"或"prompt 被模型记忆"，而本文把焦点直接锁定在<strong>"评判流水线中最被忽视的一环——judge prompt 本身"</strong>。结论有直接可操作性：任何号称"某模型在 HarmBench 上 ASR 为 X%"的论文，如果没公开 judge prompt，这个数字就无法相互比较。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal</em>（本文实验的基础 benchmark）<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Zheng et al. (2023) — <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</em>（LLM-as-judge 范式奠基）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Sclar et al. (2024) — <em>Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design</em>（早期发现 prompt 措辞的剧烈影响）<br>
+    <a href="https://arxiv.org/abs/2310.11324" target="_blank" rel="noopener">https://arxiv.org/abs/2310.11324</a></div>
+    <div class="ref-item">Ji et al. (2024) — <em>BeaverTails: Towards Improved Safety Alignment of LLM via a Human-Preference Dataset</em>（带类别标签的 harmful 语料）<br>
+    <a href="https://arxiv.org/abs/2307.04657" target="_blank" rel="noopener">https://arxiv.org/abs/2307.04657</a></div>
+    <div class="ref-item">Qi et al. (2024) — <em>Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To</em><br>
+    <a href="https://arxiv.org/abs/2310.03693" target="_blank" rel="noopener">https://arxiv.org/abs/2310.03693</a></div>
+    <div class="ref-item">Sun et al. (2024) — <em>TrustLLM: Trustworthiness in Large Language Models</em>（Trust & Safety Benchmark 综述）<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">https://arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">Zhou et al. (2024) — <em>Don't Make Your LLM an Evaluation Benchmark Cheater</em>（污染与 judge 偏差问题）<br>
+    <a href="https://arxiv.org/abs/2311.01964" target="_blank" rel="noopener">https://arxiv.org/abs/2311.01964</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>规模：</strong>28 812 次 judge 判定、6 个目标模型、400 个 HarmBench 行为——是此前此类敏感性分析中最大规模。</li>
+      <li><strong>关键数字：</strong>Prompt 措辞一个词之差 → ASR 最大偏移 <strong>24.2 pp</strong>；语义等价改写仍偏移 <strong>20.1 pp</strong>；category 维度最大 <strong>39.6 pp</strong>（copyright）。</li>
+      <li><strong>模型排名稳定性：</strong>Kendall τ 平均 <strong>0.89</strong>——中等偏低，意味着"哪家模型更安全"的排名会随 judge prompt 变化而反转。</li>
+      <li><strong>多 judge 扩展：</strong>额外做的 3-judge 模型实验进一步表明 judge 模型本身贡献了"与 prompt 方差可比"的额外不稳定。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（本方向）</div>
+        <p>这是方向内最值得重视的方法学警示：<strong>安全 benchmark 的"分数"不是模型属性，而是"模型 × judge × prompt × 类别"的联合属性</strong>。它为 Benchmark 设计提供了直接的改进抓手——新 safety benchmark 至少要附带一个"judge sensitivity report"（多 prompt / 多 judge / Kendall τ 三件套），否则结果不可信。这可直接作为你后续 benchmark 工作的"默认规范"。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>对 harness 的启发是直接的——<strong>"judge" 必须作为 harness 的一等公民参数</strong>，而不是隐藏在评测脚本内部。harness 应当默认支持"同一组样本 × N judge 配置"并行评测、并可视化 Kendall τ。可把"judge 可替换 + 全配置记录"列入 harness 设计的 SLA。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Agent safety 的实际部署场景里，judge 常被直接用作"运行时守门员"（guardrail）。本文指出 judge prompt 一个词就能造成 20 pp 漂移——<strong>这直接推翻了"用一个 LLM judge 做稳定的运行时 policy 决定"的可行性假设</strong>。给 Agent Skills Safety 的启示是：技能权限决策不能只靠单个 judge，必须多 judge 集成 + 不确定性感知 + 人类兜底三层并用。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>GAIA-v2-LILT</strong> — Kim et al. (2026) — Agent benchmark 多语言适配的"验真"流水线，揭示 MT 翻译的 benchmark 变异<br>
+      <a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24929</a></li>
+      <li><strong>AISafetyBenchExplorer</strong> — (2026) — metric-aware 目录，揭示 AI 安全 benchmark 测量碎片化与治理薄弱<br>
+      <a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">https://arxiv.org/abs/2604.12875</a></li>
+      <li><strong>Uni-SafeBench</strong> — Peng et al. (2026) — 统一多模态大模型的全方位安全评测，提出 Uni-Judger 分离上下文安全与内在安全<br>
+      <a href="https://arxiv.org/abs/2604.00547" target="_blank" rel="noopener">https://arxiv.org/abs/2604.00547</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.24074v1" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.24074" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">参考：HarmBench 原论文</a>
+    </div>
+    <p style="font-size:.82rem;color:#888;margin-top:.6rem">注：该论文已被 ICIC 2026 接收，正式版将收录于 Springer CCIS；arXiv v1 中未附代码仓库，28 812 条判定结果的复现数据请关注正式会议版本。</p>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-29 #2 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">arxiv.org/abs/2604.24074</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
