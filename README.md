@@ -4,7 +4,7 @@
 
 ## 网站地址
 
-**[https://huyanjia.github.io/Daily-Paper-Anqi-Test/](https://huyanjia.github.io/Daily-Paper-Anqi-Test/)**
+**[https://huyangjia.github.io/Daily-Paper-Anqi-Test/](https://huyangjia.github.io/Daily-Paper-Anqi-Test/)**
 
 ## 这个仓库是干什么的
 
