@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    background: #f7f7f5;
+    color: #2c2c2a;
+    line-height: 1.75;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e8e8e4;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #185fa5; background: #e6f1fb; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e1f5ee; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #185fa5; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfb8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.15rem; }
+    .card { padding: 1.1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-29 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 29 日 · Safety Benchmark · 元评估 · Benchmark of Benchmarks</div>
+  <h1>BenchGuard：谁来守护 Benchmark 本身？Agent Benchmark 的自动审计</h1>
+  <div class="en-title">BenchGuard: Who Guards the Benchmarks? Automated Auditing of LLM Agent Benchmarks</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 91 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日候选论文评分对比（arXiv 近 4 周，共 8 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>子方向</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">BenchGuard: Automated Auditing of Agent Benchmarks…</a><span class="winner-badge">今日选定</span></td>
+          <td>Benchmark 审计</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">How Sensitive Are Safety Benchmarks to Judge Config</a></td>
+          <td>Benchmark 方法论</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">GAIA-v2-LILT: 多语言 Agent Benchmark</a></td>
+          <td>多语言 Agent</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">83</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">Cross-Session Threats in AI Agents</a></td>
+          <td>跨会话安全</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">82</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">AISafetyBenchExplorer: 195 个安全 Benchmark 目录</a></td>
+          <td>Benchmark 治理</td>
+          <td>arXiv 2026-04-14</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.10988" target="_blank" rel="noopener">WebForge: 浏览器 Agent Benchmark</a></td>
+          <td>Web Agent</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">78</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.00547" target="_blank" rel="noopener">Uni-SafeBench: Unified 多模态安全评测</a></td>
+          <td>多模态安全</td>
+          <td>arXiv 2026-04-01</td>
+          <td class="score-num">76</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.01532" target="_blank" rel="noopener">PHMForge: 工业资产维护 Agent Benchmark</a></td>
+          <td>领域 Benchmark</td>
+          <td>arXiv 2026-04-02</td>
+          <td class="score-num">72</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>作者（共 6 位）</label>
+        <span>Xinming Tu, Tianze Wang, Yingzhou (Minta) Lu, Kexin Huang, Yuanhao Qu, Sara Mostafavi</span>
+      </div>
+      <div class="meta-item">
+        <label>机构</label>
+        <span>华盛顿大学 / 斯坦福大学（Kexin Huang）/ Minta Labs 等（基于作者历史归属推断）</span>
+      </div>
+      <div class="meta-item">
+        <label>发表状态</label>
+        <span>arXiv 预印本 v1，cs.CL / cs.AI / cs.SE</span>
+      </div>
+      <div class="meta-item">
+        <label>提交日期</label>
+        <span>2026 年 4 月 27 日</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24955</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2604.24955" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.24955</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2604.24955" target="_blank" rel="noopener">10.48550/arXiv.2604.24955</a>
+      </div>
+      <div class="meta-item">
+        <label>在线 HTML 版</label>
+        <a href="https://arxiv.org/html/2604.24955v1" target="_blank" rel="noopener">arxiv.org/html/2604.24955v1</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个用前沿 LLM 自动审计 Agent Benchmark 自身质量的框架，以 &lt;15 美元成本命中 83.3% 专家标注缺陷，揭示"失败是 Benchmark 的，不是 Agent 的"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>
+      随着 Benchmark 越来越复杂，许多看似"Agent 失败"的案例其实根本不是 Agent 的失败——而是 <strong>Benchmark 自身的失败</strong>：规范写错、隐性假设、评测脚本过于僵化以至于惩罚掉一切合理的替代解法。我们提出用前沿 LLM 作为评估基础设施本身的系统性审计员，并通过 <strong>BenchGuard</strong> 将这一愿景落地。
+    </p>
+    <p>
+      BenchGuard 是<strong>首个面向任务型、执行式 Agent Benchmark 的自动审计框架</strong>。它通过结构化的 LLM 协议对 Benchmark 的所有工件进行交叉验证，可选地结合 Agent 的解答或执行轨迹作为额外诊断证据。
+    </p>
+    <p>
+      在两个顶级科学 Benchmark 上部署：对 ScienceAgentBench，BenchGuard 识别出 <strong>12 个被作者确认的问题</strong>，其中包含<strong>让任务本身无法完成</strong>的致命错误；对 BIXBench Verified-50 子集，与人类专家的结果重合率为 <strong>83.3%</strong>，并发现了人类 review 完全遗漏的缺陷。<strong>完整审计 50 个复杂生信任务总成本不到 15 美元</strong>。结论：AI 不仅可以作为评估对象，更可以成为评估基础设施的主动审计员。
+    </p>
+  </div>
+
+  <!-- 核心方法解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>AI Safety Benchmark 数量在过去两年爆炸式增长（AISafetyBenchExplorer 统计 2018–2026 共 195 个），但这些 Benchmark 本身的质量几乎从未被系统审计。破损的 ground truth、过严格的字符串匹配脚本、含糊的 rubric、隐式环境假设……这些"Benchmark bug"会让排行榜变得毫无意义。本文问：<em>谁来给 Benchmark 打分？</em></p>
+
+    <p><strong>方法架构：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>审计步骤</th><th>LLM 扮演角色</th><th>产出</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>工件解析</strong></td>
+          <td>结构化阅读：任务规范、Groundtruth、评分脚本</td>
+          <td>结构化 JSON 表示 + 一致性卡片</td>
+        </tr>
+        <tr>
+          <td><strong>交叉验证</strong></td>
+          <td>规范 ↔ GT ↔ 脚本 两两互检</td>
+          <td>标注矛盾点（如"规范要 CSV、GT 为 TSV、脚本 strict match"）</td>
+        </tr>
+        <tr>
+          <td><strong>证据增强</strong></td>
+          <td>可选：读入 Agent 解答 / 执行轨迹</td>
+          <td>识别"脚本错杀"而非"Agent 错答"</td>
+        </tr>
+        <tr>
+          <td><strong>报告生成</strong></td>
+          <td>按严重程度分级</td>
+          <td>Fatal / Major / Minor 三档问题清单</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <p><strong>与现有工作的关键区别：</strong>（1）AISafetyBenchExplorer 只做静态目录化；（2）"How Sensitive Are Safety Benchmarks" 一文仅分析 HarmBench 中 Judge Prompt 敏感度（同日期 arXiv）；（3）传统人工 Benchmark review 不可扩展。BenchGuard 是首个把"LLM 作 Auditor"工程化为可批处理、可量化、可报告的闭环系统，真正解决了"Benchmark 也需要自己的 Benchmark"这一 meta 问题。</p>
+
+    <p><strong>方法论创新点：</strong>（1）"可选加入 Agent 轨迹"让审计能区分"Agent 真的错了"vs."Benchmark 错杀 Agent"，这是以往所有 Benchmark review 不具备的能力；（2）经济学意义的突破——<strong>人类专家 review 一个复杂任务成本约 100–200 美元</strong>，本文以 0.3 美元/任务达到 83.3% 等效检出率，让"每次 Benchmark 发布前强制 LLM 审计"成为现实可行的工程流程。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Chen et al. (2024) — <em>ScienceAgentBench: Benchmarking Language Agents for Data-Driven Scientific Discovery</em>（审计对象 1）<br>
+    <a href="https://arxiv.org/abs/2410.05080" target="_blank" rel="noopener">https://arxiv.org/abs/2410.05080</a></div>
+    <div class="ref-item">Huang et al. (2024) — <em>BIXBench: Evaluating LLMs on Real-World Bioinformatics Tasks</em>（审计对象 2）<br>
+    <a href="https://arxiv.org/abs/2408.14034" target="_blank" rel="noopener">https://arxiv.org/abs/2408.14034</a></div>
+    <div class="ref-item">Solanke (2026) — <em>AISafetyBenchExplorer</em>（AI 安全 Benchmark 目录化研究）<br>
+    <a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">https://arxiv.org/abs/2604.12875</a></div>
+    <div class="ref-item">Zhang (2026) — <em>How Sensitive Are Safety Benchmarks to Judge Configuration Choices?</em>（同期 Judge 敏感度研究）<br>
+    <a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a></div>
+    <div class="ref-item">Zheng et al. (2023) — <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</em>（LLM-as-judge 基础工作）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>AgentBench: Evaluating LLMs as Agents</em>（Agent Benchmark 代表作）<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">https://arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Jimenez et al. (2023) — <em>SWE-bench</em>（执行式 Benchmark 的里程碑）<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">https://arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Mazumder et al. (2022) — <em>DataPerf: Benchmarks for Data-Centric AI Development</em>（"Benchmark 数据质量"的早期呼吁）<br>
+    <a href="https://arxiv.org/abs/2207.10062" target="_blank" rel="noopener">https://arxiv.org/abs/2207.10062</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">实验结果 / 核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>ScienceAgentBench：</strong>识别出 <strong>12 个作者确认</strong>的缺陷，其中包含 fatal error——"题目根本无解"。这直接影响任何在该 Benchmark 上发布的模型排行榜。</li>
+      <li><strong>BIXBench Verified-50 对比专家：</strong>重合率 <strong>83.3%</strong>；更重要的是，BenchGuard 还抓到了人类 review 彻底遗漏的缺陷，说明它对人类 review 具有互补而非简单替代关系。</li>
+      <li><strong>成本：</strong><strong>50 个复杂生信任务 &lt; 15 美元</strong>（约合每任务 0.3 美元），是人工专家审查的 300–600 倍性价比，使"Benchmark 发布前强制自动审计"在经济上完全可行。</li>
+      <li><strong>方法学意义：</strong>引入"AI 参与评估基础设施治理"的新定位——前沿 LLM 不再只是被评对象，也是 Benchmark 的共建与审计参与者。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>BenchGuard 可直接集成进评估 Harness，作为一个"审计层"——每次 Harness 要对 Agent 打分前，先审计当前任务规范/GT/脚本是否自洽。结合 AHE（本仓库今日 Harness 方向论文），BenchGuard 可与 AHE 的"决策可观测性"融合：不仅要审计 Benchmark 是否靠谱，还能同时审计 Harness 的评估脚本是否与 Benchmark 一致。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 Agent Skills Safety 而言，本文揭示了重要的二阶风险：如果 Safety Benchmark 本身有 bug（比如对"拒绝"一词的关键字匹配过于粗糙），你得到的"安全率 90%"可能完全是幻觉。未来在发布 Skills Safety 相关 benchmark 时，可把 BenchGuard 作为必经的审计门槛，避免误把"Benchmark 脚本 bug"当作"模型安全突破"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这篇是方向三里最具启发的元研究：它为你指明了一条完整的研究路径——（1）把 BenchGuard 的思想迁移到 Safety Benchmark（安全场景里 Judge Prompt 和 refusal 判断更主观，自动审计更有价值）；（2）与"How Sensitive Are Safety Benchmarks"联合，形成"审计 + 敏感度分析"双模块；（3）构建 <strong>SafetyBenchGuard</strong>——一个专门审计 HarmBench/TrustLLM/AgentHarm 等 Safety Benchmark 自身质量的工具链，这极可能成为一个高引用、强社区价值的工作。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li>
+        <strong>How Sensitive Are Safety Benchmarks to Judge Configuration Choices?</strong> — Zhang (2026) — HarmBench 中 Judge Prompt 措辞单独就能造成高达 24.2pp 的安全率波动<br>
+        <a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a>
+      </li>
+      <li>
+        <strong>AISafetyBenchExplorer</strong> — Solanke (2026) — 195 个 AI Safety Benchmark 的结构化目录，揭示 Benchmark 治理的分散与碎片化（注：已由作者因合规审查撤回，仅作参考）<br>
+        <a href="https://arxiv.org/abs/2604.12875" target="_blank" rel="noopener">https://arxiv.org/abs/2604.12875</a>
+      </li>
+      <li>
+        <strong>Terminal Wrench</strong> — Bercovich et al. (2026) — 331 个被 reward-hacked 的 benchmark 环境，说明 benchmark 设计缺陷在执行式场景下直接被模型利用<br>
+        <a href="https://arxiv.org/abs/2604.17596" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17596</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.24955" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2604.24955v1" target="_blank" rel="noopener">在线 HTML 版</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.24955" target="_blank" rel="noopener">DOI 链接</a>
+    </div>
+    <p style="margin-top:0.7rem;color:#888;font-size:0.82rem">注：v1 版 arXiv 页面暂未提供 GitHub 链接。可通过邮件联系作者 Xinming Tu 获取后续开源代码。</p>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-29 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">arxiv.org/abs/2604.24955</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

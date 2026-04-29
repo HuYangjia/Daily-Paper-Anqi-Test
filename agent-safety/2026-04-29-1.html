@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    background: #f7f7f5;
+    color: #2c2c2a;
+    line-height: 1.75;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e8e8e4;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0b5c47; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #185fa5; background: #e6f1fb; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e1f5ee; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #185fa5; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #0b5c47; }
+  .link-btn.primary:hover { background: #cdefdf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.15rem; }
+    .card { padding: 1.1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-29 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 29 日 · Agent Skills Safety · 技能生态 · 实证研究</div>
+  <h1>HarmfulSkillBench：公开技能生态如何把 Agent "武器化"？</h1>
+  <div class="en-title">HarmfulSkillBench: How Do Harmful Skills Weaponize Your Agents?</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 8.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.3</span>
+    <span class="score-chip chip-open">开源复现 9.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日候选论文评分对比（arXiv 近 2 周，共 8 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>子方向</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.15415" target="_blank" rel="noopener">HarmfulSkillBench: Harmful Skills…</a><span class="winner-badge">今日选定</span></td>
+          <td>技能生态安全</td>
+          <td>arXiv 2026-04-16</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.18658" target="_blank" rel="noopener">Owner-Harm: Missing Threat Model…</a></td>
+          <td>威胁模型</td>
+          <td>arXiv 2026-04-20</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">SafeAgent: Runtime Protection Architecture…</a></td>
+          <td>运行时防护</td>
+          <td>arXiv 2026-04-19</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">Symbolic Guardrails for Domain-Specific Agents</a></td>
+          <td>符号化护栏</td>
+          <td>arXiv 2026-04-16</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.13954" target="_blank" rel="noopener">HINTBench: Intrinsic Non-attack Risk Audit</a></td>
+          <td>非攻击内生风险</td>
+          <td>arXiv 2026-04-15</td>
+          <td class="score-num">83</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.18847" target="_blank" rel="noopener">Human-Guided Harm Recovery for CUA</a></td>
+          <td>危害恢复</td>
+          <td>arXiv 2026-04-20</td>
+          <td class="score-num">81</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.13536" target="_blank" rel="noopener">YoloFS: Agent-Native Filesystem</a></td>
+          <td>系统级防护</td>
+          <td>arXiv 2026-04-15</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.10577" target="_blank" rel="noopener">OS-BLIND: Benign Instruction Harms</a></td>
+          <td>CUA 盲区</td>
+          <td>arXiv 2026-04-12</td>
+          <td class="score-num">80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>作者（共 5 位）</label>
+        <span>Yukun Jiang, Yage Zhang, Michael Backes, Xinyue Shen, Yang Zhang</span>
+      </div>
+      <div class="meta-item">
+        <label>机构</label>
+        <span>CISPA Helmholtz 信息安全中心（Yang Zhang / Michael Backes 组，TrustAIRLab）</span>
+      </div>
+      <div class="meta-item">
+        <label>发表状态</label>
+        <span>arXiv 预印本 v1，cs.CR / cs.AI</span>
+      </div>
+      <div class="meta-item">
+        <label>提交日期</label>
+        <span>2026 年 4 月 16 日</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2604.15415" target="_blank" rel="noopener">https://arxiv.org/abs/2604.15415</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2604.15415" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.15415</a>
+      </div>
+      <div class="meta-item">
+        <label>代码仓库</label>
+        <a href="https://github.com/TrustAIRLab/HarmfulSkillBench" target="_blank" rel="noopener">github.com/TrustAIRLab/HarmfulSkillBench</a>
+      </div>
+      <div class="meta-item">
+        <label>许可证</label>
+        <span>CC BY-NC-ND 4.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次大规模实测：开放技能生态中 4.93% 的技能具有危害性，且通过"预装技能"触发可使模型拒绝率暴跌、危害得分由 0.27 升至 0.76。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>
+      大型语言模型已经演化为依赖公开"技能生态"（skill ecosystems）的自主 Agent，ClawHub、Skills.Rest 等平台上有大量可重用的公开技能。现有安全研究主要关注<strong>技能自身的漏洞</strong>（如 Prompt Injection），但一个关键盲区尚未被讨论：<strong>技能本身可能就是用于危害性行为的</strong>——网络攻击、诈骗、隐私侵犯、色情内容生成等，我们称之为"有害技能（harmful skills）"。
+    </p>
+    <p>
+      本文首次对 Agent 技能生态进行大规模测量研究，覆盖两大主流注册表共 <strong>98,440 个技能</strong>。借助基于有害技能分类体系的 LLM 评分系统，我们发现：<strong>4.93%（4,858 个）</strong>技能属于有害技能；其中 ClawHub 的有害率为 8.84%，Skills.Rest 为 3.49%。
+    </p>
+    <p>
+      进一步，我们构建了 <strong>HarmfulSkillBench</strong>——首个在真实 Agent 上下文中评估"有害技能武器化风险"的 Benchmark，包含 20 个类别下的 200 个有害技能和 4 种评估条件。对 6 个主流 LLM 的测试表明：当有害任务以"预装技能"形式出现时，模型拒绝率显著下降——平均危害分数从无技能时的 <strong>0.27</strong>，上升到有技能时的 <strong>0.47</strong>，当有害意图以"隐式"形式表达时再进一步升至 <strong>0.76</strong>。我们已负责任地向相关注册表披露发现，并开源 Benchmark 以促进后续研究。
+    </p>
+  </div>
+
+  <!-- 核心方法解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>2026 年前后，ClawHub / Skills.Rest 等"技能市场"爆发式增长，用户可以像下载 VS Code 插件一样给自己的 Agent "装技能"。此前的 Agent Safety 研究几乎全部假定"技能本身是善意的，只有被 Prompt Injection 劫持时才危险"。本文直接问：<em>如果技能本身就是坏的呢？</em>并指出这是一个尚未被主流安全研究覆盖的系统性盲区。</p>
+
+    <p><strong>方法与关键设计：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>阶段</th><th>方法</th><th>规模 / 产物</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>生态测量</strong></td>
+          <td>爬取 ClawHub 与 Skills.Rest 全量技能清单</td>
+          <td>98,440 技能 → 4,858 有害（4.93%）</td>
+        </tr>
+        <tr>
+          <td><strong>有害技能分类体系</strong></td>
+          <td>人工与 LLM 协同标注，构建 20 类有害技能 taxonomy</td>
+          <td>含网络攻击、诈骗、隐私、色情、生物化学等</td>
+        </tr>
+        <tr>
+          <td><strong>Benchmark 构造</strong></td>
+          <td>从检测出的有害技能中采样 200 个，组成 HarmfulSkillBench</td>
+          <td>20 类 × 4 评估条件（有/无技能 × 显式/隐式意图）</td>
+        </tr>
+        <tr>
+          <td><strong>模型评测</strong></td>
+          <td>对 6 个主流 LLM 在 HarmfulSkillBench 上跑完整 Agent 工作流，LLM-as-judge 打分</td>
+          <td>最强模型隐式条件下仍达 0.76 危害分</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <p><strong>与现有工作的关键区别：</strong>MedSkillAudit（2026-04）、AgentHarm、AgentBench 等关注的是"Agent 被外部攻击"或"特定领域内技能合规"，都假设技能来源可信。本文是<strong>第一篇</strong>系统研究"生态层面技能本身的恶意性"的工作——这与软件供应链安全（SolarWinds、npm typosquatting 事件）的框架非常相似，是把"供应链攻击"的视角首次引入 Agent 技能生态。</p>
+
+    <p><strong>最让人震惊的发现：</strong>"显式请求有害行为"的模型平均危害分 0.27（大部分模型会拒绝），但一旦把同样的意图封装成一个"预装技能"并以隐式方式调用，危害分飙升到 0.76——<strong>将近 3 倍</strong>。这说明当前所有对齐训练严重依赖"用户显式请求"这一表层信号，而模型对"自己拥有什么工具/技能"的安全审视能力极弱。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Andriushchenko et al. (2024) — <em>AgentHarm: A Benchmark for Measuring Harmfulness of LLM Agents</em>（与本文同类对比基线）<br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">https://arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>Prompt Injection Attack against LLM-Integrated Applications</em>（既有技能生态安全研究的代表）<br>
+    <a href="https://arxiv.org/abs/2306.05499" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05499</a></div>
+    <div class="ref-item">Debenedetti et al. (2024) — <em>AgentDojo: A Dynamic Environment to Evaluate Attacks and Defenses for LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">https://arxiv.org/abs/2406.13352</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Model Context Protocol (MCP) 规范</em>（技能生态的核心传输协议）<br>
+    <a href="https://docs.anthropic.com/en/docs/build-with-claude/mcp" target="_blank" rel="noopener">docs.anthropic.com — MCP</a></div>
+    <div class="ref-item">Ohm et al. (2020) — <em>Backstabber's Knife Collection: A Review of Open Source Software Supply Chain Attacks</em>（软件供应链攻击研究基础）<br>
+    <a href="https://arxiv.org/abs/2005.09535" target="_blank" rel="noopener">https://arxiv.org/abs/2005.09535</a></div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations</em>（典型防护模型基线）<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">https://arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em><br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">https://arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Jiang et al. (TrustAIRLab, 2024) — <em>Do Anything Now: LLM Jailbreak Prompt Measurement Study</em>（同实验室前作，方法学一脉相承）<br>
+    <a href="https://arxiv.org/abs/2308.03825" target="_blank" rel="noopener">https://arxiv.org/abs/2308.03825</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">实验结果 / 核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>生态有害率：</strong>98,440 个真实技能中检出 4,858 有害（4.93%）；ClawHub 有害率 <strong>8.84%</strong>，是 Skills.Rest（3.49%）的 2.5 倍——说明审核门槛差异直接决定生态安全性。</li>
+      <li><strong>武器化放大效应：</strong>同一个有害意图，无技能 → 有技能 → 隐式技能的危害分数为 <strong>0.27 → 0.47 → 0.76</strong>，近 3 倍放大。这是技能生态带来的全新攻击面。</li>
+      <li><strong>跨模型普适：</strong>包括 6 个主流 LLM（具体型号见论文表 3），拒绝率随技能装载一致性下降；现有对齐训练无法消除"技能诱导效应"。</li>
+      <li><strong>分类体系覆盖 20 类：</strong>涵盖网络入侵、社工钓鱼、金融诈骗、隐私盗窃、色情生成、仇恨言论、生化危害等，近似覆盖 OWASP Top 10 for LLM Agents 的高危子集。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Harness 应把"技能注册表审计"作为原生能力而非事后补丁。具体建议：在 Agent Loop 的"技能加载阶段"插入强制签名校验 + 沙箱执行策略，每次加载新技能都产生可审计事件流。结合 AHE（本仓库今日 Harness 方向报告），"技能可观测性"应成为"组件可观测性"的第四级扩展。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>本文是你方向最直接的基石：它把"Agent Skills Safety"从"调用时漏洞防御"扩展为"供应链安全"。你未来研究的自然延伸有三条——（1）自动检测恶意技能（比 LLM-as-judge 更 scalable 的静态分析）；（2）"组合攻击"：单技能无害但多技能组合后形成攻击链（本文未系统研究）；（3）技能签名与可信注册表协议设计，类似 Sigstore 之于软件供应链。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>HarmfulSkillBench 本身就是方向三的直接范本，但它只覆盖"有害技能武器化"这一攻击面。可以进一步扩展成包含"良性意图 + 良性技能但组合成有害"、"多技能链式执行"、"技能更新后植入后门"三类新 benchmark 轴，形成覆盖生态全生命周期的 Safety Benchmark 套件。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li>
+        <strong>Owner-Harm</strong> — Zhang &amp; Jiang (2026) — Agent 伤害部署者（Owner）的威胁模型，与 HarmfulSkillBench 构成"外部有害技能 × 内部 Owner 伤害"二维<br>
+        <a href="https://arxiv.org/abs/2604.18658" target="_blank" rel="noopener">https://arxiv.org/abs/2604.18658</a>
+      </li>
+      <li>
+        <strong>Symbolic Guardrails for Domain-Specific Agents</strong> — Hong et al. (2026) — 对 80 个 Agent Safety benchmark 做 meta-review，发现 74% 的安全策略可由符号化护栏保证<br>
+        <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">https://arxiv.org/abs/2604.15579</a>
+      </li>
+      <li>
+        <strong>SafeAgent</strong> — Liu et al. (2026) — 运行时 Agent 防护架构，可作为 HarmfulSkillBench 的 Defense 基线<br>
+        <a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17562</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.15415" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.15415" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/TrustAIRLab/HarmfulSkillBench" target="_blank" rel="noopener">GitHub 代码仓库</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.15415" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://arxiv.org/html/2604.15415v1" target="_blank" rel="noopener">在线 HTML 版</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-29 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.15415" target="_blank" rel="noopener">arxiv.org/abs/2604.15415</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

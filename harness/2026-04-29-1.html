@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-29 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    background: #f7f7f5;
+    color: #2c2c2a;
+    line-height: 1.75;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e8e8e4;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #185fa5; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero {
+    background: #fff;
+    border-bottom: 1px solid #e8e8e4;
+    padding: 2.2rem 1.25rem 1.8rem;
+    text-align: center;
+  }
+  .hero .date-label {
+    font-size: 0.73rem;
+    color: #aaa;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .hero h1 {
+    font-size: 1.45rem;
+    font-weight: 500;
+    margin: 0 auto 0.4rem;
+    max-width: 720px;
+    line-height: 1.4;
+  }
+  .hero .en-title {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 1.1rem;
+    font-style: italic;
+  }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #185fa5; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e6f1fb; border-left: 3px solid #185fa5; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0c447c; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #185fa5; font-weight: 700; }
+  ul.point-list li a { color: #185fa5; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #185fa5; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #185fa5; background: #e6f1fb; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #185fa5; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e6f1fb; border-color: #b5d4f4; color: #0c447c; }
+  .link-btn.primary:hover { background: #cfe3f7; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e6f1fb; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.15rem; }
+    .card { padding: 1.1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-29 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 29 日 · Harness Engineering · Coding Agent · 自演化</div>
+  <h1>Agentic Harness Engineering：由可观测性驱动的 Coding Agent Harness 自动演化</h1>
+  <div class="en-title">Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.3</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日候选论文评分对比（arXiv 近 2 周，共 8 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">Agentic Harness Engineering (AHE)…</a><span class="winner-badge">今日选定</span></td>
+          <td>Harness Engineering</td>
+          <td>arXiv 2026-04-28</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">AgentPulse: 部署后连续多信号评估…</a></td>
+          <td>Harness / 评估</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">84</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23781" target="_blank" rel="noopener">ClawMark: 多日多模态 Coworker Agent Benchmark…</a></td>
+          <td>Harness / Benchmark</td>
+          <td>arXiv 2026-04-26</td>
+          <td class="score-num">83</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.22871" target="_blank" rel="noopener">AutoRISE: Red-Teaming 策略演化 Harness…</a></td>
+          <td>Harness / Safety</td>
+          <td>arXiv 2026-04-23</td>
+          <td class="score-num">81</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.17596" target="_blank" rel="noopener">Terminal Wrench: Reward-Hackable Harness 环境…</a></td>
+          <td>Harness / Safety</td>
+          <td>arXiv 2026-04-19</td>
+          <td class="score-num">80</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">SemaClaw: Personal AI Agents & Harness Engineering</a></td>
+          <td>Harness Engineering</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">79</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24283" target="_blank" rel="noopener">AutoQResearch: 量子优化的 Evaluation Harness</a></td>
+          <td>Harness / 量子</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">70</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.16593" target="_blank" rel="noopener">SemanticQA: 语义推理评测 Harness</a></td>
+          <td>Harness / 评估</td>
+          <td>arXiv 2026-04-17</td>
+          <td class="score-num">68</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>作者（共 9 位）</label>
+        <span>Jiahang Lin, Shichun Liu, Chengjun Pan, Lizhi Lin, Shihan Dou, Xuanjing Huang, Hang Yan, Zhenhua Han, Tao Gui</span>
+      </div>
+      <div class="meta-item">
+        <label>主要作者背景</label>
+        <span>复旦大学 NLP 实验室（Xuanjing Huang, Tao Gui）/ 上海 AI Lab（Hang Yan）/ 微软研究院（Zhenhua Han）</span>
+      </div>
+      <div class="meta-item">
+        <label>发表状态</label>
+        <span>arXiv 预印本 v1，cs.CL / cs.SE</span>
+      </div>
+      <div class="meta-item">
+        <label>提交日期</label>
+        <span>2026 年 4 月 28 日</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2604.25850" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.25850</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2604.25850" target="_blank" rel="noopener">10.48550/arXiv.2604.25850</a>
+      </div>
+      <div class="meta-item">
+        <label>在线 HTML 版</label>
+        <a href="https://arxiv.org/html/2604.25850v1" target="_blank" rel="noopener">arxiv.org/html/2604.25850v1</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用"三层可观测性"把 Harness 本身变成可被 Agent 自我编辑、自我验证、自我演化的一等对象，首次实现 Harness 的全自动进化。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>
+      Harness（承载 Agent 与代码仓库、工具、执行环境交互的工程框架）已经成为决定 Coding Agent 表现的核心因素。然而自动化 Harness Engineering 本身极其困难：动作空间异构、评估信号稀疏且嘈杂、单次运行的轨迹动辄数百万 Token、而且某次编辑到底如何影响下一轮结果几乎无法直接归因。
+    </p>
+    <p>
+      本文提出 <strong>Agentic Harness Engineering (AHE)</strong>：一个通过在工程闭环的三个阶段（组件编辑、轨迹检查、决策）配套部署"匹配的可观测性支柱"，来自动演化 Harness 本身的框架。（1）<strong>组件可观测性</strong>为每一个可编辑的 Harness 组件提供文件级表示，让动作空间显式且可回滚；（2）<strong>经验可观测性</strong>将数百万 Token 的原始轨迹蒸馏为分层的、可下钻的证据语料，让正在演化的 Agent 真正消化得下；（3）<strong>决策可观测性</strong>要求每一次编辑附带一个自我声明的预期，后续再对照下一轮任务级结果进行验证。
+    </p>
+    <p>
+      在 Terminal-Bench 2 上，AHE 以 10 次迭代将 Pass@1 从 69.7% 提升到 77.0%，超过了 Codex-CLI 的 71.9%，也强于 ACE 和 TF-GRPO 等同期基线；在 SWE-bench-verified 上，AHE 以比初始 seed 少 12% 的 Token 达到更高的综合成功率；在三个不同模型家族上，AHE 的跨家族增益稳定在 +5.1 ~ +10.1 个百分点。
+    </p>
+  </div>
+
+  <!-- 核心方法解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>当前所有 Coding Agent（Claude Code、Codex CLI、OpenDevin、SWE-agent 等）都严重依赖人工调试的 Harness——Prompt 模板、工具集、沙箱策略、检索规则、失败恢复路径等。这些 Harness 随任务、模型、代码库变化而需要持续迭代，但因为动作空间太大、反馈太嘈杂，目前几乎全部依赖专家手工调参。论文问的核心问题是：<em>能不能让 Agent 自己改 Agent 的 Harness</em>？</p>
+
+    <p><strong>核心框架——三层可观测性：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>可观测性层</th><th>解决的具体痛点</th><th>实现方式</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>组件可观测性</strong></td>
+          <td>Harness 是一坨胶水代码，改哪都怕误伤</td>
+          <td>将 Harness 拆为文件级组件（Prompt、Tool Schema、策略文件等），每次编辑落到单个文件；保留版本快照，任何修改可原子回滚</td>
+        </tr>
+        <tr>
+          <td><strong>经验可观测性</strong></td>
+          <td>百万 Token 的轨迹，LLM 读不完也看不清</td>
+          <td>把原始轨迹蒸馏成分层证据语料：任务级 summary → 步骤级 anomaly → Token 级 evidence snippet，Agent 可按需下钻</td>
+        </tr>
+        <tr>
+          <td><strong>决策可观测性</strong></td>
+          <td>改完不知道是变好还是变坏</td>
+          <td>每次编辑必须附带"我预计这会改善 X 类任务的 Y 指标"；下一轮实际结果与预期对齐的编辑被保留，反之回滚</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <p><strong>与现有工作的关键差异：</strong>ACE（Self-Evolving Agent Capability）和 TF-GRPO 等方法聚焦于优化 Prompt 或动作策略，属于"参数级"演化；AHE 将 Harness 本身作为一等演化对象——它编辑的是整个评估与执行基础设施，而不是单条 Prompt 或 RL 权重。这种抽象层级的提升直接带来了跨模型家族（不同 LLM 替换）的稳定增益。</p>
+
+    <p><strong>方法论上的新意：</strong>论文将"预测-验证"机制注入到自动演化循环——这非常类似科学研究中的假设驱动实验，把强化学习中"只看 reward"的盲目搜索，升级为"声明预期→验证预期"的可审计演化，显著降低了稀疏反馈带来的方差。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Yang et al. (2024) — <em>SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>（Coding Agent 的代表性基础工作）<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">https://arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">OpenAI (2025) — <em>Codex CLI 技术报告</em>（论文对比的重要 Harness 基线）<br>
+    <a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">openai.com — Introducing Codex</a></div>
+    <div class="ref-item">Jimenez et al. (2023) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>（核心评测基准）<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">https://arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Terminal-Bench Team (2025) — <em>Terminal-Bench 2: A Benchmark for Terminal-Based AI Agents</em><br>
+    <a href="https://www.tbench.ai/" target="_blank" rel="noopener">https://www.tbench.ai/</a></div>
+    <div class="ref-item">Shao et al. (2024) — <em>DeepSeek-Math: GRPO and Related Optimization</em>（TF-GRPO 基线方法来源）<br>
+    <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">https://arxiv.org/abs/2402.03300</a></div>
+    <div class="ref-item">Zhou et al. (2026) — <em>Externalization in LLM Agents</em>（Harness Engineering 的理论综述，本仓库 2026-04-28 #1 已读）<br>
+    <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Model Context Protocol (MCP) 规范</em>（Harness 与工具调用的标准协议）<br>
+    <a href="https://docs.anthropic.com/en/docs/build-with-claude/mcp" target="_blank" rel="noopener">docs.anthropic.com — MCP</a></div>
+    <div class="ref-item">Silver et al. (2018) — <em>AlphaGo Zero: Mastering the Game of Go without Human Knowledge</em>（"自博弈自演化"的理论先声）<br>
+    <a href="https://www.nature.com/articles/nature24270" target="_blank" rel="noopener">nature.com — Mastering the game of Go</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">实验结果 / 核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>Terminal-Bench 2：</strong>10 次 AHE 迭代后 Pass@1 <strong>69.7% → 77.0%</strong>（+7.3pp），超过 Codex-CLI 的 71.9%。这是在同一基模型下，仅靠 Harness 自演化带来的纯工程红利。</li>
+      <li><strong>SWE-bench-verified：</strong>综合成功率高于初始 seed Harness，同时 <strong>Token 消耗减少 12%</strong>。说明演化不是"加料堆量"，而是真正削减了冗余组件。</li>
+      <li><strong>跨模型家族稳定性：</strong>在三个其它模型家族上增益 <strong>+5.1 ~ +10.1 pp</strong>，证明 AHE 演化出的 Harness 不是只对一个模型过拟合，而是捕捉到了跨模型的结构性优化。</li>
+      <li><strong>工程成本：</strong>百万 Token 轨迹 → 分层证据语料的蒸馏成本可忽略，使得整个自演化闭环在商用云上可支撑日更式迭代，这是之前 RL 式方法无法达到的性价比。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>本文是迄今为止"Harness 本身如何被自动优化"最扎实的工作，直接给出了一个可落地的工程模板。对你而言，最值得借鉴的是"三层可观测性"框架——未来搭建任何评估 Harness 都可以套用这三个支柱作为设计原则，而不是只做"工具 + 环境 + Prompt"的朴素组合。特别是"决策可观测性（每次编辑附带预期并验证）"值得推广到所有评估系统设计中。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AHE 的"自动演化 Harness"是一把双刃剑——若被恶意利用，Agent 可能自动"演化"出绕过安全边界的 Harness（例如通过修改工具 Schema 偷偷扩大权限）。这提示我们：Agent Skills Safety 的未来攻击面将包含"对 Harness 自身的投毒"，需要在"组件可观测性"层面加入不可变策略（immutable policy）和数字签名，防止演化越过预设安全红线。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>现有 Safety Benchmark（如 AgentHarm、HarmBench）假设 Harness 固定，只评估模型的"本质安全"。但 AHE 表明 Harness 可以被主动"微调"，因此 Benchmark 必须把"Harness 可配置空间"也纳入评估维度——同一个模型在不同 Harness 下的安全性可能差距 20pp 以上。下一代 Safety Benchmark 应测量"Harness 演化的安全不变性"（Safety-under-Harness-Evolution）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li>
+        <strong>SemaClaw</strong> — Zhu et al. (2026) — <em>A Step Towards General-Purpose Personal AI Agents through Harness Engineering</em>（Harness Engineering 工程落地参考）<br>
+        <a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">https://arxiv.org/abs/2604.11548</a>
+      </li>
+      <li>
+        <strong>Externalization in LLM Agents</strong> — Zhou et al. (2026) — Harness Engineering 理论综述<br>
+        <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a>
+      </li>
+      <li>
+        <strong>AgentPulse</strong> — Gao et al. (2026) — 部署后连续多信号评估框架，与 AHE 的"演化期评估"形成互补<br>
+        <a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24038</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.25850" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2604.25850v1" target="_blank" rel="noopener">在线 HTML 版</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.25850" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://www.tbench.ai/" target="_blank" rel="noopener">Terminal-Bench 2 官网</a>
+    </div>
+    <p style="margin-top:0.7rem;color:#888;font-size:0.82rem">注：论文本身未在公开页面提供 GitHub 代码仓库，评估所用的 SWE-bench-verified 与 Terminal-Bench 2 均为开源基准。</p>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-29 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">arxiv.org/abs/2604.25850</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
