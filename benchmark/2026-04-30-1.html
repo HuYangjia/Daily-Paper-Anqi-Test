@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-30 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff7e6; border-left: 3px solid #ba7517; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #ba7517; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #ba7517; background: #fff7e8; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #ba7517; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5e0bf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff7e6; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #ba7517; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-04-30 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 4 月 30 日 · Safety Benchmark · Cross-Session Threat · Memory-Aware Evaluation</div>
+  <h1>CSTM-Bench：把攻击拆进多次对话，现有 Guardrail 直接腰斩——跨会话威胁首个系统 benchmark</h1>
+  <div class="en-title">Cross-Session Threats in AI Agents: Benchmark, Evaluation, and Algorithms</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety Benchmark 方向候选评分对比（共 5 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">CSTM-Bench: Cross-Session Threats in AI Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>Cross-Session Evaluation</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">GAIA-v2-LILT: Multilingual Agent Benchmark</a></td>
+          <td>Multilingual Adaptation</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.01532" target="_blank" rel="noopener">PHMForge: Industrial Agent Benchmark</a></td>
+          <td>Domain-Specific Benchmark</td>
+          <td>arXiv 2026-04-02</td>
+          <td class="score-num">82</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.10988" target="_blank" rel="noopener">WebForge: Browser Agent Benchmark</a></td>
+          <td>Browser Agent Eval</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.00547" target="_blank" rel="noopener">Uni-SafeBench: Unified Multimodal Safety</a></td>
+          <td>UMLM Safety</td>
+          <td>arXiv 2026-04-01</td>
+          <td class="score-num">84</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Ari Azarafrooz</span></div>
+      <div class="meta-item"><label>方向</label><span>cs.CR / cs.AI / cs.CL / cs.LG — Agent Safety Benchmark</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本，v1，46 页，8 张图</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026 年 4 月 22 日</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">https://arxiv.org/abs/2604.21131</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.21131" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.21131</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.21131" target="_blank" rel="noopener">10.48550/arXiv.2604.21131</a></div>
+      <div class="meta-item"><label>数据集</label><a href="https://huggingface.co/datasets/intrinsec-ai/cstm-bench" target="_blank" rel="noopener">huggingface.co/intrinsec-ai/cstm-bench</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次系统化"跨会话攻击"：把攻击拆到多个对话里，session-bound guardrail 和 Full-Log Correlator 召回都掉 ~50%，唯独 Coreset Memory Reader 存活。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>今天的 AI Agent guardrail 几乎都是 <strong>memoryless</strong> 的——每条消息被独立判定。这让攻击者能把攻击"稀释"到多个会话里：<strong>每一次单独看都无害，只有把所有会话聚合起来才能看出威胁信号</strong>。</p>
+    <p>本文做了三件事：</p>
+    <p>（1）构造 <strong>CSTM-Bench</strong> 数据集——26 种可执行攻击 taxonomy，按 kill-chain 阶段与跨会话动作（accumulate / compose / launder / inject_on_reader）分类，含 7 类身份锚（identity anchor）将"违规"定义为可被审计的 policy predicate。配有两个对照集（Benign-pristine, Benign-hard）和两个评估 split：<strong>Dilution 分片（54 个组合场景）</strong> 与 <strong>Cross-session 分片（12 个 isolation-invisible 场景）</strong>，后者由闭环改写器生成——保持跨会话制品不变，仅软化表层措辞。</p>
+    <p>（2）把"跨会话检测"形式化为对下游 correlator LLM 的 <strong>信息瓶颈问题</strong>，实证发现：session-bound judge 从 dilution → cross-session 召回掉 ~50%；把所有 prompt 拼成一次长上下文的 Full-Log Correlator 同样掉 ~50%——这一切都发生在前沿模型的上下文窗口内，说明"长上下文不是解药"。</p>
+    <p>（3）提出 <strong>Bounded-Memory Coreset Memory Reader</strong>：K=50 时保留最高信号片段，是唯一在两个分片上都保持召回的方法。并把 <strong>CSR_prefix（ordered prefix stability，无 LLM 度量）</strong> 升为一等公民，与 F1 组合成复合指标 <strong>CSTM = 0.7·F1 + 0.3·CSR_prefix</strong>，在召回与服务稳定性之间形成 Pareto 前沿。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>问题动机：</strong>现有 agent safety benchmark 默认"攻击发生在单次对话中"。但真实场景里，攻击者完全可以把漏洞利用分 5 次会话慢慢诱导——每次看都合法。这种"跨会话威胁"在工业界时有出现（如"通过多次客服对话累积账户信息"），但学术界几乎没有对应 benchmark。作者首次把这件事做成一个可复现、可审计的评测集。</p>
+    <p><strong>方法关键：三件事从 benchmark 抬升到可测度量学：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>组件</th><th>解决的问题</th><th>关键创新</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>CSTM-Bench 数据结构</strong></td><td>攻击如何跨会话"隐形"</td><td>26 种 taxonomy + 7 类身份锚 + 闭环改写器生成 cross-session 分片</td></tr>
+        <tr><td><strong>信息瓶颈视角</strong></td><td>guardrail 召回为何掉 50%</td><td>把"跨会话检测"抽象为：下游 LLM 能否从有限 token 预算里重建威胁特征</td></tr>
+        <tr><td><strong>CSR_prefix 指标</strong></td><td>ranker reshuffle 破坏 KV-cache 复用</td><td>LLM-free 的 ordered prefix stability，直接服务于生产部署</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>最反直觉的发现：</strong>把所有会话 prompt 拼成一次长上下文喂给 correlator（即 Full-Log Correlator）<strong>并不能恢复召回——它仍然掉 50%</strong>。这说明瓶颈不是 context window，而是<strong>长上下文本身没有"对齐到威胁信号"的 inductive bias</strong>。这对整个 memory-based safety 系统是一个基础性的警告。</p>
+    <p><strong>工程可用性：</strong>CSR_prefix 被专门设计为 LLM-free——它只检查排序前缀的稳定性，因此可以零成本接入生产 guardrail 管线，不增加推理费用。CSTM 复合指标则把"召回 vs. 服务稳定性"做成 Pareto 前沿，让 benchmark 结果直接映射到 ops 决策。</p>
+    <p><strong>与 BenchGuard / Judge Sensitivity 的对照：</strong>昨天已读的 BenchGuard（2604.24955）和 Judge Sensitivity（2604.24074）都是"审计 benchmark 本身"；CSTM-Bench 则是<strong>把 benchmark 扩展到一个此前根本没被度量过的威胁维度</strong>。三者组合起来才是 safety benchmark 研究的完整图景——既要审计现存 benchmark，又要补齐 missing 维度。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Debenedetti et al. (2024) — <em>AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses</em><br>
+    <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">https://arxiv.org/abs/2406.13352</a></div>
+    <div class="ref-item">Andriushchenko et al. (2024) — <em>AgentHarm: A Benchmark for Measuring Harmfulness of LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">https://arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em><br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">MITRE (2024) — <em>ATLAS: Adversarial Threat Landscape for AI Systems</em>（kill-chain 背景）<br>
+    <a href="https://atlas.mitre.org/" target="_blank" rel="noopener">https://atlas.mitre.org/</a></div>
+    <div class="ref-item">Tishby & Zaslavsky (2015) — <em>Deep Learning and the Information Bottleneck Principle</em><br>
+    <a href="https://arxiv.org/abs/1503.02406" target="_blank" rel="noopener">https://arxiv.org/abs/1503.02406</a></div>
+    <div class="ref-item">Clavié & Chaffin (2024) — <em>ColBERT v2 and Coreset-based Retrieval for Guardrails</em><br>
+    <a href="https://github.com/bclavie/RAGatouille" target="_blank" rel="noopener">github.com/bclavie/RAGatouille</a></div>
+    <div class="ref-item">Zhang (2026) — <em>How Sensitive Are Safety Benchmarks to Judge Configuration Choices?</em>（同日 judge 敏感度研究，同系列问题域）<br>
+    <a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>召回塌陷：</strong>session-bound judge 从 dilution → cross-session 分片，attack recall 掉 <strong>~50%</strong>；Full-Log Correlator 同样掉 ~50%——说明"把长上下文塞进去"不能拯救。</li>
+      <li><strong>Coreset Memory Reader (K=50)：</strong>是唯一在两个分片上都保持召回的方法，证明<strong>稀疏高信号片段保留 > 全量拼接</strong>。</li>
+      <li><strong>CSTM 复合指标：</strong>0.7·F1(CSDA@action, precision) + 0.3·CSR_prefix，首次把"服务稳定性（KV-cache prefix 复用）"提升为 first-class metric。</li>
+      <li><strong>数据集规模：</strong>Dilution split 54 场景 / Cross-session split 12 场景 / 26 种 taxonomy / 7 类 identity anchor；已在 Hugging Face 开源（intrinsec-ai/cstm-bench）。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这是今年 safety benchmark 方向最有方法论价值的一篇：它把"benchmark 设计"本身做成了一套可传染的 pattern——<strong>单会话 → 多会话，prompt-level → memory-level，模型能力度量 → 服务稳定性度量</strong>。你做 Safety Benchmark 研究时，可以直接继承 CSTM 的方法论：每一个现有单 session benchmark 都可以被扩展出一个 cross-session 版本（CSTM-AgentHarm、CSTM-HarmBench……）。另一个值得抄的是 CSR_prefix——LLM-free 度量对生产部署极有价值。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Cross-session threat 是"agent skill memory"的对偶风险：<strong>如果 skill 有长期记忆，那么攻击也可以长期潜伏</strong>。你研究 Agent Skills Safety 时，应把"skill 是否会被多次无害调用累积出恶意后果"作为一个审查维度——这对带记忆的 skill（memory tool、persistent storage）尤其关键。Owner-Harm（今天同时已读）说的是单会话 + 结构错位；CSTM-Bench 说的是跨会话 + 聚合信号——两者合起来是 Agent Skills Safety 的完整攻击面。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Harness 设计者应该把 <strong>"跨会话记忆审计"</strong> 纳入第一等设计维度：每个 session 结束时，harness 必须产生一个可被 downstream correlator 消费的"session trace"，而不是把 session 丢弃。Coreset Memory Reader 的"K=50 高信号片段保留"非常适合作为 harness 的标准组件。此外，CSR_prefix 作为一个 harness-level 的 serving metric，比许多 Prompt-level 指标都更接近生产 ops 关心的东西。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>BenchGuard</strong> — Tu, Wang et al. (2026) — 自动审计已有 benchmark 是否有错（昨日已读）<br>
+      <a href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24955</a></li>
+      <li><strong>Judge Sensitivity</strong> — Zhang (2026) — judge prompt 一词之差让 ASR 偏移 24.2 pp（昨日已读）<br>
+      <a href="https://arxiv.org/abs/2604.24074" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24074</a></li>
+      <li><strong>GAIA-v2-LILT</strong> — Kim, Uhlig, Wuebker (2026) — 多语言场景下 agent benchmark 如何保持语义/文化对齐<br>
+      <a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24929</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源链接 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.21131" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://huggingface.co/datasets/intrinsec-ai/cstm-bench" target="_blank" rel="noopener">Hugging Face 数据集</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.21131" target="_blank" rel="noopener">DOI 链接</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-04-30 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener">arxiv.org/abs/2604.21131</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
