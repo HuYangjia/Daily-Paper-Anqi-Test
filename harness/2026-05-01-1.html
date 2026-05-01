@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-01 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-01 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 1 日 · Harness Engineering · 个人 AI Agent · 开源框架</div>
+  <h1>SemaClaw：用 Harness Engineering 迈向通用个人 AI Agent 的开源实现</h1>
+  <div class="en-title">SemaClaw: A Step Towards General-Purpose Personal AI Agents through Harness Engineering</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">SemaClaw: General-Purpose Personal AI Agents through Harness Engineering</a><span class="winner-badge">今日选定</span></td>
+          <td>Personal Agent Harness</td>
+          <td>arXiv 2026-04-13</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">Externalization in LLM Agents: Unified Review of Memory/Skills/Protocols/Harness</a></td>
+          <td>Harness 综述</td>
+          <td>arXiv 2026-04-09</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">VeRO: Evaluation Harness for Agents to Optimize Agents</a></td>
+          <td>Meta-Optimization Harness</td>
+          <td>arXiv 2026-02-25</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2508.20810" target="_blank" rel="noopener">Graph-Based Evaluation Harness for Domain-Specific LLM Evaluation</a></td>
+          <td>Graph Harness</td>
+          <td>arXiv 2025-08-28 (v2)</td>
+          <td class="score-num">82</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2603.13966" target="_blank" rel="noopener">vla-eval: Unified Harness for VLA Models</a></td>
+          <td>VLA Harness（已覆盖）</td>
+          <td>arXiv 2026-03-14</td>
+          <td class="score-num">80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者（共 11 位）</label><span>Ningyan Zhu, Huacan Wang, Jie Zhou, Feiyu Chen, Shuo Zhang, Ge Chen, Chen Liu, Jiarou Wu, Wangyi Chen, Xiaofeng Mou, Yi Xu</span></div>
+      <div class="meta-item"><label>方向</label><span>cs.AI — Personal AI Agent × Harness Engineering</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本，v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026 年 4 月 13 日</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">https://arxiv.org/abs/2604.11548</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.11548" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.11548</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.11548" target="_blank" rel="noopener">10.48550/arXiv.2604.11548</a></div>
+      <div class="meta-item"><label>代码仓库</label><a href="https://github.com/sema-claw/semaclaw" target="_blank" rel="noopener">github.com/sema-claw/semaclaw（论文标注已开源）</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"个人 AI Agent"拆成 DAG 两阶段编排 + PermissionBridge 行为安全 + 三层上下文管理 + 自建 Wiki 技能四件套，交出 Harness Engineering 第一个完整开源参考实现。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>2026 年初 OpenClaw 的兴起标志着一个关键时刻：数百万用户开始把个人 AI Agent 部署到日常生活中，将"安排旅行"到"多步研究"等任务都交给它完成。这种规模化采用说明两条平行的发展曲线已经到达拐点。</p>
+    <p><strong>第一条曲线是 AI 工程范式的迁移</strong>：从 Prompt Engineering 和 Context Engineering，演进到 <strong>Harness Engineering</strong>——设计完整的基础设施，把"不受约束的 Agent"转化为"可控、可审计、生产级可靠"的系统。当模型能力趋于收敛，<strong>Harness 层正在成为架构差异化的主战场</strong>。</p>
+    <p><strong>第二条曲线是人-Agent 交互的演进</strong>：从一次性离散任务迁移到持续的、具备上下文感知的协作关系，这要求 harness 基础设施必须开放、可信、可扩展。</p>
+    <p>我们提出 <strong>SemaClaw</strong>，一个面向这两条曲线的开源多 Agent 应用框架，通过 Harness Engineering 迈向通用个人 AI Agent。主要贡献包括：（1）<strong>基于 DAG 的两阶段混合 Agent 团队编排方法</strong>；（2）<strong>PermissionBridge 行为安全系统</strong>；（3）<strong>三层上下文管理架构</strong>；（4）用于自动构建个人知识库的 <strong>Agentic Wiki 技能</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>2026 年个人 AI Agent 进入规模化部署，但真正卡住工程落地的不是模型推理能力，而是"如何把一个不受约束的模型，包装成一个可以每天用、不翻车、能审计、能延展"的运行时。以往做法（Auto-GPT 式单 Agent、Prompt 链、人工 while-loop）都有明显断裂：没有持久上下文、安全靠硬编码黑白名单、技能无法跨会话复用。SemaClaw 把这一层工程实践系统化，明确提出"Harness Engineering 就是把 agent 变产品的主场"。</p>
+    <p><strong>核心方法——四件套共同构成一个 harness 参考实现：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>组件</th><th>做法</th><th>相对前人的关键区别</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>DAG 两阶段 Agent 编排</strong></td><td>先做"规划 DAG"（Planning Phase）产出可检查的任务图；再做"执行 DAG"（Execution Phase）由多 Agent 协作，期间可回到规划阶段</td><td>比 CrewAI/AutoGen 的"顺序或全连通图"更显式：计划与执行解耦，允许计划被用户修订再执行</td></tr>
+        <tr><td><strong>PermissionBridge 行为安全</strong></td><td>所有外部副作用（文件、网络、消息）都经 Permission Bridge：先声明 intent、再按用户策略授权、最后记录审计日志</td><td>把"工具调用安全"从模型自省升级为运行时强约束，Agent 想用什么工具必须先开票</td></tr>
+        <tr><td><strong>三层上下文管理</strong></td><td>Session / Project / Personal 三层上下文分别落库；查询时自上而下合并，注入前过滤</td><td>解决了"同一 agent 跨项目记忆串扰 / 跨会话失忆"两个对立的老问题</td></tr>
+        <tr><td><strong>Agentic Wiki 技能</strong></td><td>内置可自演化的知识库构建技能：agent 自己从对话 / 文件产出 wiki，回写到 Personal 层上下文</td><td>把"个人知识库"从被动存储升级为 agent 主动治理的资产</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>与现有工作的关键区别：</strong>同期综述 Externalization in LLM Agents（2604.08224）把 memory / skills / protocols / harness 作为四种外部化形式做了学术综述；SemaClaw 则是它的工程对照版——给出一个<strong>已落地、已开源、且面向终端用户</strong>的 harness 参考实现。这让它在"学术概念 → 产品栈"之间架起了非常难得的一座桥。</p>
+    <p><strong>为什么这篇值得读：</strong>如果 AgentFlow（2604.20801）教会我们"harness 可以被自动合成"、Agentic Harness Engineering（2604.25850）教会我们"harness 可以被自动演化"，那么 SemaClaw 教会我们"harness 应该长什么样，才能真的跑在一个普通用户的电脑上"。三者合起来，2026-04 月 Harness Engineering 方向已经有了完整的合成—演化—产品化三段式地图。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Zhou et al. (2026) — <em>Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering</em>（SemaClaw 的学术对照面）<br>
+    <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a></div>
+    <div class="ref-item">Wu et al. (2023) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em>（多 Agent 编排对照）<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">https://arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">Xi et al. (2023) — <em>The Rise and Potential of Large Language Model Based Agents: A Survey</em>（Agent 基础综述）<br>
+    <a href="https://arxiv.org/abs/2309.07864" target="_blank" rel="noopener">https://arxiv.org/abs/2309.07864</a></div>
+    <div class="ref-item">Richards (2023) — <em>Auto-GPT: An Autonomous GPT-4 Experiment</em>（历史参照，单 Agent 时代）<br>
+    <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">https://github.com/Significant-Gravitas/AutoGPT</a></div>
+    <div class="ref-item">Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>（规划阶段反思机制源头）<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">https://arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>（工具调用范式）<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">https://arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Lin et al. (2026) — <em>Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses</em>（演化式 harness 对照）<br>
+    <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>四件套合一：</strong>DAG 编排 + PermissionBridge + 三层上下文 + Agentic Wiki，首次把 Harness Engineering 的四项关键工程抽象合并为一个可下载、可自部署的参考实现。</li>
+      <li><strong>规划-执行解耦：</strong>两阶段 DAG 使得 Agent 的"计划"变成可检视、可修订的图结构，而不再是模型内部不可见的 chain-of-thought——这是 harness 层取代 Prompt 层的直接证据。</li>
+      <li><strong>从"能力黑箱"到"权限白盒"：</strong>所有 Agent 的外部副作用统一走 PermissionBridge，使得"Agent 要干坏事"必须先暴露在可审计的决策点，比任何 Prompt-level safety 提示都更硬。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SemaClaw 正面给出了 Harness Engineering 的<strong>产品化模板</strong>：规划-执行两段 DAG、权限桥、三层上下文、可自演化 Wiki。后续 Harness 研究不必再从零起步，可以直接把它当"reference harness"做 ablation：拆掉 PermissionBridge 看安全代价、拆掉三层上下文看长期记忆代价、拆掉 Wiki 技能看知识复用代价。这让 Harness 研究第一次有了可以被实证比较的基线。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>PermissionBridge 是一个值得被 Agent Safety 社区借鉴的<strong>运行时安全层设计</strong>：Agent 想调用任何外部工具，都必须先声明 intent 并等待授权。这比"让对齐过的模型自己判断"鲁棒得多——尤其是在今天的 OS-BLIND（2604.10577）场景中，即便用户指令良性，agent 在执行期也会绕过 safety alignment；PermissionBridge 正是针对这种"执行期逃逸"的对策。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>一个完整的 harness（SemaClaw 这样的）意味着<strong>benchmark 的测量对象必须从"模型"下沉到"模型 × harness"组合</strong>。如果一个 safety benchmark 不指定 harness 层（比如是否启用 PermissionBridge、三层上下文裁剪策略如何），其分数就无法在不同 agent 产品之间比较。这和之前读过的 Judge Sensitivity（2604.24074）是同一件事：benchmark 必须公开其 harness 端的"暗参数"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Externalization in LLM Agents</strong> — Zhou et al. (2026) — Memory/Skills/Protocols/Harness 的统一学术综述，SemaClaw 的理论对照<br>
+      <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a></li>
+      <li><strong>Agentic Harness Engineering (AHE)</strong> — Lin, Liu et al. (2026) — 可观测性驱动的 coding-agent harness 自动演化（归档 #1 已读）<br>
+      <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a></li>
+      <li><strong>AgentFlow</strong> — Liu, Shou et al. (2026) — 类型化图 DSL + 反馈驱动外循环合成多 Agent Harness（归档 2026-04-30 #1）<br>
+      <a href="https://arxiv.org/abs/2604.20801" target="_blank" rel="noopener">https://arxiv.org/abs/2604.20801</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.11548" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.11548" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://github.com/sema-claw/semaclaw" target="_blank" rel="noopener">GitHub（论文标注）</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-01 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">arxiv.org/abs/2604.11548</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
