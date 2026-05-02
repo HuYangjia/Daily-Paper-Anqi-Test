@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-02 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-02 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 2 日 · Harness Engineering · 两层元进化 · 跨任务自动化</div>
+  <h1>《最后一次你需要亲手搭 Harness》：从"自动化 Harness"到"自动化设计自动化"的两层元学习框架</h1>
+  <div class="en-title">The Last Harness You'll Ever Build</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇，均 2026-04 新增）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">The Last Harness You'll Ever Build</a><span class="winner-badge">今日选定</span></td>
+          <td>元进化 Harness</td>
+          <td>arXiv 2026-04-22 (v2 04-28)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.20938" target="_blank" rel="noopener">HARBOR: Automated Harness Optimization（贝叶斯优化 Harness）</a></td>
+          <td>贝叶斯 Harness 搜索</td>
+          <td>arXiv 2026-04-22</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.07236" target="_blank" rel="noopener">How Much Heavy Lifting Can an Agent Harness Do?</a></td>
+          <td>Harness 贡献量化</td>
+          <td>arXiv 2026-04-08 (v4 04-28)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.18071" target="_blank" rel="noopener">Architectural Design Decisions in AI Agent Harnesses</a></td>
+          <td>Harness 架构学</td>
+          <td>arXiv 2026-04-20</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.17450" target="_blank" rel="noopener">Compiling Deterministic Structure into SLM Harnesses</a></td>
+          <td>SLM 确定性 Harness</td>
+          <td>arXiv 2026-04-19</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Haebin Seong, Li Yin, Haoran Zhang</span></div>
+      <div class="meta-item"><label>方向</label><span>cs.AI — Harness Engineering × Meta-Learning</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v2</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-22（v2 2026-04-28）</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">https://arxiv.org/abs/2604.21003</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.21003" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.21003</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.21003" target="_blank" rel="noopener">10.48550/arXiv.2604.21003</a></div>
+      <div class="meta-item"><label>方法定位</label><span>Harness Evolution + Meta-Evolution 双层循环</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 Harness Engineering 抬到 meta-learning 层：外层循环学习"如何演化 Harness 的蓝图"，让适配任何新任务都不再需要人肉搭 Harness。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>AI Agent 正在被部署到越来越复杂的领域特化工作流——在企业 Web 应用上点数十次才能完成一个表单，编排跨越搜索、抽取与综合的多步研究流水线，跨越陌生仓库做代码评审，处理需要精细领域知识的客户升级事件。<strong>每进入一个新任务领域，都需要专家亲手搭一套 Harness</strong>：设计 prompt、工具、编排逻辑和评估准则，才能把基础模型变得真正可用。</p>
+    <p>我们提出一个<strong>两层框架</strong>自动化这一过程。<strong>第一层，Harness 进化循环（Harness Evolution Loop）</strong>针对单一任务自动优化 Worker Agent 的 Harness H：Worker Agent W<sub>H</sub> 执行任务，Evaluator Agent V 对抗性地诊断失败并打分，Evolution Agent E 基于历史修改 Harness。<strong>第二层，元进化循环（Meta-Evolution Loop）</strong>跨任务优化整张进化蓝图 Γ = (W<sub>H</sub>, H<sup>(0)</sup>, V, E) 自身，学出一张"最佳蓝图 Γ<sup>(best)</sup>"，使得适配到任意新任务时 Harness 能快速收敛、<strong>完全不再需要人工 Harness 工程</strong>。我们形式化了它与 meta-learning 的对应关系并给出两个算法，将<strong>手动 Harness 工程转变为自动化 Harness 工程，再更进一步——自动化"自动化本身的设计"</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>Harness Engineering 已经成了真正决定 Agent 产品性能的主战场（参见 <a href="https://arxiv.org/abs/2604.07236" target="_blank" rel="noopener">Jung & Son, 2604.07236</a> 证明 Harness 可改变端到端指标 6 倍之多），但代价是"每个新领域都要专家亲手搭一套"。HARBOR（<a href="https://arxiv.org/abs/2604.20938" target="_blank" rel="noopener">2604.20938</a>）前进了一步，把单一 Harness 变成可贝叶斯优化的搜索问题；AgentFlow（<a href="https://arxiv.org/abs/2604.20801" target="_blank" rel="noopener">2604.20801</a>，归档 2026-04-30 #1）则把 Harness 的<em>合成</em>做到了自动化。但它们都绑定在具体任务上——任务一换，优化流程本身还得重调。本文把这一层也端掉。</p>
+    <p><strong>核心方法——两层循环：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>层级</th><th>组成</th><th>优化对象</th><th>对 Harness Engineering 的意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>第一层：Harness Evolution Loop</strong></td><td>Worker W<sub>H</sub> 执行 → Evaluator V 对抗打分 → Evolution Agent E 基于完整历史修改 H</td><td>单任务内的 Harness H</td><td>把"Harness 怎么改"变成可自动迭代的闭环</td></tr>
+        <tr><td><strong>第二层：Meta-Evolution Loop</strong></td><td>跨任务优化整张蓝图 Γ = (W<sub>H</sub>, H<sup>(0)</sup>, V, E) 本身，包括<em>初始 Harness H<sup>(0)</sup>、Evaluator 与 Evolution Agent 的设计</em></td><td>进化蓝图 Γ</td><td>学出一个"能快速适配任意新任务"的 blueprint，彻底摆脱人工</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>方法论层面的根本转换：</strong>此前的 Harness 研究大多停留在"拟合一个任务"（ablation + 手调），AgentFlow / AHE 将其推进到"合成+演化一个任务的 Harness"。本文的 Meta-Evolution Loop 把它推到 <em>meta-learning</em>：模型不再学任务，而是学"如何学任务的 Harness 工程流程"。这和过去 MAML、Reptile 在 few-shot 学习里做的事几乎是同构的——只不过对象从"参数"换成了"Harness 配置 + 评估/演化策略"。</p>
+    <p><strong>与 SemaClaw / AHE / HARBOR 的互补关系：</strong>SemaClaw（<a href="https://arxiv.org/abs/2604.11548" target="_blank" rel="noopener">2604.11548</a>，归档 #1 昨日）提供"最终 Harness 应长什么样"的产品化蓝本，AHE 提供"可观测性驱动的自动演化"的方法路径，HARBOR 给出"混合变量贝叶斯搜索"的解法框架。本文和它们是<strong>垂直关系而非竞争关系</strong>：当 meta-evolution 学到一个好的 Γ<sup>(best)</sup>，可以被落到任意下层 Harness 架构中——SemaClaw 或 AHE 的具体实现，都能被它喂入。</p>
+    <p><strong>工程意义：</strong>如果这一做法规模化成立，Harness Engineering 就从"每公司每场景都要养一个工程师"退化为"领域工程师仅仅定义任务和评估准则，Harness 自己长出来"——这对企业化落地是量级的成本节省。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Finn, Abbeel, Levine (2017) — <em>Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (MAML)</em>（Meta-Learning 基石）<br>
+    <a href="https://arxiv.org/abs/1703.03400" target="_blank" rel="noopener">https://arxiv.org/abs/1703.03400</a></div>
+    <div class="ref-item">Jung, Son (2026) — <em>How Much Heavy Lifting Can an Agent Harness Do?</em>（证明 Harness 对端到端性能可带来 6× 差异）<br>
+    <a href="https://arxiv.org/abs/2604.07236" target="_blank" rel="noopener">https://arxiv.org/abs/2604.07236</a></div>
+    <div class="ref-item">Sengupta, Wang (2026) — <em>HARBOR: Automated Harness Optimization</em>（单任务 Harness 贝叶斯优化）<br>
+    <a href="https://arxiv.org/abs/2604.20938" target="_blank" rel="noopener">https://arxiv.org/abs/2604.20938</a></div>
+    <div class="ref-item">Lin et al. (2026) — <em>Agentic Harness Engineering (AHE)</em>（可观测性驱动的 coding-agent harness 自动演化）<br>
+    <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a></div>
+    <div class="ref-item">Liu et al. (2026) — <em>AgentFlow: Synthesizing Multi-Agent Harnesses for Vulnerability Discovery</em>（多 Agent Harness 合成对照）<br>
+    <a href="https://arxiv.org/abs/2604.20801" target="_blank" rel="noopener">https://arxiv.org/abs/2604.20801</a></div>
+    <div class="ref-item">Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>（Evaluator/Evolution Agent 反思机制渊源）<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">https://arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">Zhou et al. (2026) — <em>Externalization in LLM Agents: A Unified Review</em>（Harness Engineering 学术综述）<br>
+    <a href="https://arxiv.org/abs/2604.08224" target="_blank" rel="noopener">https://arxiv.org/abs/2604.08224</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>两层正式化：</strong>文中首次把"Harness 的演化"和"演化蓝图本身的优化"分别作为两个可参数化、可被证明收敛的优化问题写下来，和 meta-learning 的对应关系被显式写成定理—算法对。</li>
+      <li><strong>Evaluator 作为对抗者：</strong>第一层循环里 Evaluator Agent 不是被动打分，而是"对抗性诊断失败"——这把评估从"pass/fail 信号"升级到"结构化失败解释"，供 Evolution Agent 精修。</li>
+      <li><strong>蓝图 Γ 的可迁移性：</strong>第二层训练出的 Γ<sup>(best)</sup> 是一张面向"怎么搭 Harness"的通用 prior——对新任务只需要一两次外循环就能快速收敛到可用 Harness，相比从零优化是数量级的效率提升。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>这篇把 Harness Engineering 真正推进到 meta-learning 层：不再问"这个任务的 Harness 怎么搭"，而是问"搭 Harness 这件事本身怎么学"。它和 SemaClaw（产品化模板）、AHE（演化式 Harness）、HARBOR（搜索式 Harness）是<strong>分层互补</strong>的——把 AHE / HARBOR 当作第一层的具体实例放进去，Γ<sup>(best)</sup> 就会学出"在什么场景下用 AHE、什么场景下用贝叶斯搜索"的 meta-policy。这是 Harness 研究的下一个值得攻的点。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>这个 Meta-Evolution 框架一旦放出来，<strong>"Harness 安全"就必须作为元目标之一被显式加入</strong>：否则 Evolution Agent 会把 PermissionBridge 一类的 guard 当作性能成本优化掉。可以预见下一篇 safety 工作就会研究"safety-aware Meta-Evolution"——把 Evaluator V 从"task metric"扩展成"task × risk dual-head"。今天的 EPO-Safe（<a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">2604.23210</a>，归档 agent-safety 2026-05-02 #1）提供的"1-bit 危险信号"正好是现成的 safety 反馈通道。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Meta-Evolution 给 benchmark 社区抛了一个硬问题：如果 Γ<sup>(best)</sup> 能让 Harness 迅速"进化到通过任何已知 benchmark"，那传统 benchmark 就更像 train set 而不是 test set 了。评估必须转向<strong>"未见蓝图下的零样本 Harness 构建"</strong>这种元级测试——和今天的 CarryOnBench（<a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">2604.27093</a>，归档 benchmark 2026-05-02 #1）把评估从"单轮 pass"升级到"多轮 recovery"是同构的思路演化。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HARBOR: Automated Harness Optimization</strong> — Sengupta & Wang (2026) — 把单 Harness 优化形式化为贝叶斯优化，本文方法的第一层具体实例<br>
+      <a href="https://arxiv.org/abs/2604.20938" target="_blank" rel="noopener">https://arxiv.org/abs/2604.20938</a></li>
+      <li><strong>How Much Heavy Lifting Can an Agent Harness Do?</strong> — Jung & Son (2026) — 测量 Harness 相对 LLM 的性能占比，说明优化 Harness 本身值得<br>
+      <a href="https://arxiv.org/abs/2604.07236" target="_blank" rel="noopener">https://arxiv.org/abs/2604.07236</a></li>
+      <li><strong>MAML</strong> — Finn, Abbeel & Levine (2017) — 本文 meta-learning 对应关系的理论基石<br>
+      <a href="https://arxiv.org/abs/1703.03400" target="_blank" rel="noopener">https://arxiv.org/abs/1703.03400</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.21003" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.21003" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2604.21003v2" target="_blank" rel="noopener">v2 版本页</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-02 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">arxiv.org/abs/2604.21003</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

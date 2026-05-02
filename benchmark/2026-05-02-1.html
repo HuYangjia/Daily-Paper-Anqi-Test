@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-02 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf6eb; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #eff9f5; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf6eb; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f7e0bb; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf6eb; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-02 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 2 日 · Safety Benchmark · 多轮效用恢复 · CMU × U.Washington</div>
+  <h1>CarryOnBench：Benchmark 第一次同时测"多轮安全"与"效用恢复"——发现三类单轮评估看不见的失败模式</h1>
+  <div class="en-title">Useless but Safe? Benchmarking Utility Recovery with User Intent Clarification in Multi-Turn Conversations</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety Benchmark 方向候选评分对比（共 5 篇）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">CarryOnBench: Utility Recovery with Intent Clarification</a><span class="winner-badge">今日选定</span></td>
+          <td>多轮 safety × utility</td>
+          <td>arXiv 2026-04-29</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener">GAIA-v2-LILT: 多语言 Agent Benchmark</a></td>
+          <td>多语 Agent 评估</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23341" target="_blank" rel="noopener">Jailbreak in Smart Grid: NERC Benchmark</a></td>
+          <td>垂直行业 red team</td>
+          <td>arXiv 2026-04-25 (v2)</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2602.03100" target="_blank" rel="noopener">Risky-Bench: Deployment Risk Probing</a></td>
+          <td>部署风险评估</td>
+          <td>arXiv 2026-02-03</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2601.07853" target="_blank" rel="noopener">FinVault: Financial Agent Safety Bench</a></td>
+          <td>金融 Agent 安全</td>
+          <td>arXiv 2026-01-09</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Mingqian Zheng, Malia Morgan, Liwei Jiang, Carolyn Rose, Maarten Sap</span></div>
+      <div class="meta-item"><label>机构</label><span>CMU LTI, University of Washington, AI2</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-29</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">https://arxiv.org/abs/2604.27093</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.27093" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.27093</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.27093" target="_blank" rel="noopener">10.48550/arXiv.2604.27093</a></div>
+      <div class="meta-item"><label>数据规模</label><span>398 初始 query → 5,970 对话 → 23,880 response</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      Benchmark 第一次把"safety × utility"从单轮指标升级成多轮动态指标，暴露 14 个前沿模型第一轮只能满足 10.5-37.6% 良性信息需求的"伪安全"症状。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>当前的 LLM 安全对齐技术在对抗攻击下提升了模型鲁棒性，但<strong>忽视了良性用户澄清意图后 LLM 能否、以及如何恢复有用性</strong>。我们提出 <strong>CarryOnBench</strong>——首个交互式 benchmark，衡量 LLM 在多轮对话中修订对用户意图的解读并恢复效用、同时保持安全的能力。</p>
+    <p>从 <strong>398 个看似有害但底层意图良性的 query</strong> 出发，通过变化用户的后续 follow-up 序列模拟 <strong>5,970 段对话</strong>，在 14 个模型上分别评估"对齐意图后的效用"与"安全"。CarryOnBench 产出 <strong>1,866 种不同对话流、4-12 轮、共 23,880 个 response</strong>。我们设计 <strong>Ben-Util</strong>——一个基于原子核对清单的指标，衡量每个响应对良性信息需求的满足度。</p>
+    <p><strong>核心发现：</strong>第一轮模型只满足 <strong>10.5-37.6%</strong> 的良性信息需求；当 query 把良性意图前置时，满足度升至 <strong>25.1-72.1%</strong>，证明模型并非知识不足，而是<strong>对意图的误读导致主动扣留信息</strong>。多轮良性澄清下，14 个模型中有 13 个可以追平或超越前置 baseline，但恢复成本差异巨大。本文识别三类单轮评估看不见的失败模式：<strong>(1) Utility lock-in：模型几乎不为澄清更新；(2) Unsafe recovery：模型以不成比例的安全代价恢复效用；(3) Repetitive recovery：模型循环旧响应而非提供新信息</strong>。此外，不管模型起点多保守，多轮对话最终都收敛到相近的 harmfulness 水平。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>过去 Safety Benchmark（HarmBench / AIR-Bench / SafetyBench）几乎全部是<strong>单轮评估</strong>：一个 prompt 进，一个 response 出，拒绝得越好分越高。这让工业界训出来的模型普遍患上"过度保守病"——在 <em>seemingly harmful but benignly intended</em> 的请求上（比如"我该怎么清洗这把猎刀"）直接拒绝。CarryOnBench 第一次把 safety 评估放到<strong>多轮动态场景</strong>里，追问一个核心问题：<em>当用户澄清意图是良性的，模型能不能恢复有用？</em></p>
+    <p><strong>方法论三件事：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>要素</th><th>做法</th><th>对 safety-utility 评估的推进</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>399 → 5970 对话扩展</strong></td><td>398 个"看似有害、实为良性"的 seed query，每个通过多种 follow-up 序列展开成不同对话流</td><td>把 benchmark 从"静态 prompt 集合"扩到"可遍历的对话状态空间"</td></tr>
+        <tr><td><strong>Ben-Util 指标</strong></td><td>按 checklist 把每个良性信息需求拆成原子项，per-response 计算满足率</td><td>让"是否有用"从 judge 主观打分变成可复现、可审计的原子项覆盖率</td></tr>
+        <tr><td><strong>双目标评估</strong></td><td>每一轮同时记录 Ben-Util（效用）与 harmfulness（安全），做 trade-off 曲线</td><td>直接暴露"假安全"——即高安全但低效用的模型是有问题的</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>最扎心的发现——"收敛到相近 harmfulness"：</strong>作者发现无论模型初始多保守，只要对话走够长（4-12 轮），最终的 harmfulness 水平都会收敛到相近值。这意味着<strong>"保守初值"并不提供长期安全收益</strong>——它只是把风险推后。对很多以 "refusal rate 高 = 安全好" 来调模型的团队来说，这是一记重拳。</p>
+    <p><strong>三个失败模式都是 single-turn 看不到的：</strong></p>
+    <ul class="point-list">
+      <li><strong>Utility lock-in：</strong>模型第一次拒绝后即便用户澄清，依然保持拒绝姿态——benchmark 里测不出的"死板性"。</li>
+      <li><strong>Unsafe recovery：</strong>模型为了恢复效用把安全让步太多——比如从"拒绝"直接跳到"连枪支改装也讲"。</li>
+      <li><strong>Repetitive recovery：</strong>模型用套话回复来凑回合数，看似"友好"但毫无信息增量。</li>
+    </ul>
+    <p><strong>与现有工作的关键区别：</strong>HarmBench 关注对抗 prompt 下的拒绝率，不测效用；MT-Bench 关注多轮但不测 safety；AIR-Bench 关注单轮风险分类。CarryOnBench 是第一个<strong>multi-turn × safety × utility 三轴齐备的 benchmark</strong>。和今天同组的 EPO-Safe（<a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">2604.23210</a>，agent-safety 2026-05-02 #1）也相互印证：EPO-Safe 指出"reward-only 反思加速反齐"，CarryOnBench 正好用对话流量化了这种"看起来越改越好、实际安全越差"的动态。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em>（单轮 safety benchmark 代表作，本文参照对比）<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Zheng et al. (2023) — <em>MT-Bench: Judging LLM-as-a-Judge with Multi-Turn Dialogs</em>（多轮评估但不测 safety）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Zeng et al. (2024) — <em>AIR-Bench: Risk Classification for LLM Safety</em>（单轮风险分类 benchmark）<br>
+    <a href="https://arxiv.org/abs/2407.17436" target="_blank" rel="noopener">https://arxiv.org/abs/2407.17436</a></div>
+    <div class="ref-item">Röttger et al. (2023) — <em>XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in LLMs</em>（"伪安全 / 过度拒绝"问题最早系统化）<br>
+    <a href="https://arxiv.org/abs/2308.01263" target="_blank" rel="noopener">https://arxiv.org/abs/2308.01263</a></div>
+    <div class="ref-item">Bai et al. (Anthropic, 2022) — <em>Constitutional AI: Harmlessness from AI Feedback</em>（RLHF-alignment 路线源头）<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">https://arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">Sap et al. (2019) — <em>Social Bias Frames</em>（作者 Maarten Sap 的既往工作，同脉络）<br>
+    <a href="https://arxiv.org/abs/1911.03891" target="_blank" rel="noopener">https://arxiv.org/abs/1911.03891</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>第一轮良性效用仅 10.5-37.6%：</strong>14 个前沿模型在"看似有害、实为良性"query 上的第一轮仅满足 10.5-37.6% 的用户良性信息需求，几乎全体患有"过度保守病"。</li>
+      <li><strong>澄清后最多能恢复到 72.1%：</strong>当意图前置写清，满足率升至 25.1-72.1%，证明<strong>瓶颈不是知识而是意图解读</strong>——"伪安全"由训练策略造成。</li>
+      <li><strong>Harmfulness 长期收敛：</strong>不管起点多保守，4-12 轮对话后 harmfulness 收敛到相近水平，说明"保守初值"并不提供持久安全收益——这让"拒绝率越高越安全"的常识被实证证伪。</li>
+    </ul>
+  </div>
+
+  <!-- 对三方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Harness 设计必须重新定义 "utility × safety 双目标"：以往 harness 层偏好"宁可拒绝也不要危险"，CarryOnBench 证明这种策略在多轮下<strong>既扣效用也并不带来长期安全</strong>。这意味着 Harness（如 SemaClaw / AHE / HARBOR）在 Evaluator 层必须加一个"intent-clarification aware" 的轴：把"用户是否是良性需求 + 是否被澄清过"作为一等公民的上下文信号。对于今天同组的 Meta-Evolution（<a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">2604.21003</a>）——Evaluator V 的设计空间里必须有 "multi-turn Ben-Util" 这一项。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>CarryOnBench 的三个失败模式（utility lock-in / unsafe recovery / repetitive recovery）都会在 Agent Skill 调用里被放大：skill 一旦被 lock-in 在"拒绝"，agent 就完全无法工作；一旦 unsafe recovery，agent 会调用危险工具；repetitive recovery 则让 agent 消耗 token 却不解决问题。Skill 安全框架必须显式设计"经过良性澄清后的技能再授权路径"——这恰好和 EPO-Safe（<a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">2604.23210</a>）的"自主规约 + 1-bit 安全通道"互补：澄清通道 + 1-bit 危险通道，一个刷新效用，一个守住底线。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这是 Safety Benchmark 的范式切换：<strong>从"单轮 pass/fail"到"多轮动态轨迹"，从"安全分数"到"safety-utility 前沿曲线"</strong>。未来新的 safety benchmark 应默认公开：(1) 每个 query 的良性底层意图；(2) 用户后续澄清的 follow-up 模板；(3) 原子化的 checklist 指标——这样别人跑出来的分数才能公平比较。CarryOnBench 对社区的最重要贡献可能不是模型排名，而是<strong>"Ben-Util"这种 checklist 原子指标的范式推广</strong>——可以直接移植到 SafeAgentBench、HarmBench-v2 等所有后续工作。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarmBench</strong> — Mazeika et al. (2024) — 单轮 safety 红队评估标准化代表作，CarryOnBench 的对照基线<br>
+      <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></li>
+      <li><strong>XSTest</strong> — Röttger et al. (2023) — 最早系统研究"LLM 过度拒绝"的 benchmark，与 Ben-Util 同脉<br>
+      <a href="https://arxiv.org/abs/2308.01263" target="_blank" rel="noopener">https://arxiv.org/abs/2308.01263</a></li>
+      <li><strong>MT-Bench</strong> — Zheng et al. (2023) — 多轮评估范式源头；CarryOnBench 把它的多轮思路搬到 safety 领域<br>
+      <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.27093" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.27093" target="_blank" rel="noopener">DOI 链接</a>
+      <a class="link-btn" href="https://maartensap.com/" target="_blank" rel="noopener">通讯作者主页 (Maarten Sap · CMU)</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-02 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">arxiv.org/abs/2604.27093</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
