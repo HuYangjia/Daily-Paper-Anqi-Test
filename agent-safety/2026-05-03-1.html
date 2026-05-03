@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-03 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e9f7f1; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faf2e2; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #cdefe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e9f7f1; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 3 日 · Agent Skills Safety · 危害恢复 · 对齐性偏好学习</div>
+  <h1>Human-Guided Harm Recovery：从"防止伤害"到"出错后怎么救"——为 Computer-Use Agent 补上 Post-Execution Safety 最后一环</h1>
+  <div class="en-title">Human-Guided Harm Recovery for Computer Use Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇，均 2026-04 新增）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.18847" target="_blank" rel="noopener">Human-Guided Harm Recovery for Computer Use Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>出错后恢复 / Post-execution safety</td>
+          <td>arXiv 2026-04-20 (MIT / Columbia)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">SafeAgent: Runtime Protection Architecture</a></td>
+          <td>运行时保护 / 状态化决策</td>
+          <td>arXiv 2026-04-19</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">Symbolic Guardrails for Domain-Specific Agents</a></td>
+          <td>符号化守门 / 强保证</td>
+          <td>arXiv 2026-04-16 (CMU)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.13954" target="_blank" rel="noopener">HINTBench: Horizon-agent Intrinsic Non-attack Benchmark</a></td>
+          <td>非攻击场景内生风险</td>
+          <td>arXiv 2026-04-15</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.12986" target="_blank" rel="noopener">Parallax: AI Agents That Think Must Never Act</a></td>
+          <td>架构级分离立场</td>
+          <td>arXiv 2026-04-14</td>
+          <td class="score-num">83</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Christy Li, Sky CH-Wang, Andi Peng, Andreea Bobu</span></div>
+      <div class="meta-item"><label>机构</label><span>MIT CSAIL · Columbia NLP</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-20</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.18847" target="_blank" rel="noopener">https://arxiv.org/abs/2604.18847</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.18847" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.18847</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI / cs.CL</span></div>
+      <div class="meta-item"><label>关键产物</label><span>BackBench（50 个 computer-use harm-recovery 任务）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 Agent Safety 从 "防止伤害" 一条线扩成 "预防 + 恢复" 两条线，并给出首个计算机使用 Agent 的 harm-recovery benchmark。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>当 LM Agent 能够在真实计算机系统上执行动作时，我们需要的不仅是"阻止伤害"，还必须在阻止失败后能"有效修复"。我们把这一被忽视的后执行安全（post-execution safeguards）问题形式化为 <strong>harm recovery</strong>：<em>给定一个已处于有害状态的 Agent，如何按照人类偏好将它最优地导回安全状态</em>。</p>
+    <p>我们通过一个形成性用户研究（formative user study），挖掘出人们真正关心的 recovery 维度并得到一份自然语言 rubric。我们收集了 <strong>1,150 条成对偏好判断</strong>，结果显示：属性的重要性在不同上下文中会发生系统性偏移——例如人们更偏好务实、针对性的短期策略，而不是全面的长期方案。我们把这些学到的洞察落成一个 <strong>reward model</strong>，在测试时对 agent scaffold 生成的多个 recovery 方案进行 re-rank。为了系统评估恢复能力，我们进一步构建 <strong>BackBench</strong>：50 个 computer-use 任务，专门测试 agent 从有害状态恢复的能力。人类评估显示我们的 reward-model scaffold 产出的 recovery 轨迹质量显著优于 base agent 与基于 rubric 的 scaffold。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>过去两年 Agent Safety 几乎都聚焦在"事前拦截"：prompt injection 防御、guardrail、symbolic policy、<a href="../../agent-safety/2026-05-02-1.html">EPO-Safe 的 1-bit 危险信号</a>、<a href="../../agent-safety/2026-05-01-1.html">OS-BLIND</a> 等。但只要 Agent 真去执行现实动作，<strong>"预防永远不是 100%"</strong>——被 prompt injection 吃下、被用户误发指令、模型幻觉，都可能产出已然发生的危害（已发出的邮件、已修改的文件、已扣的款）。此前 Safety 方法学里这一环几乎是空白，大家默认"一旦失手就找人来"。本文第一次把它正式化为一个研究对象。</p>
+    <p><strong>为什么"按偏好恢复"是新问题：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>环节</th><th>核心困难</th><th>本文方案</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Recovery 目标定义</td><td>同一个害状态往往有多条 "回到 safe" 的路径，人类偏好并非总是"最快最全"</td><td>形成性用户研究 → 自然语言 rubric</td></tr>
+        <tr><td>偏好多维度权衡</td><td>保留数据 vs 撤销动作、短期止血 vs 长期一致、通知用户 vs 静默修复</td><td>1,150 条 pairwise judgment，学出上下文相关权重</td></tr>
+        <tr><td>Recovery 计划选择</td><td>base agent 给出的 recovery 方案往往"全都包"或"全都撤"，偏极端</td><td>scaffold 并行生成多个候选方案 → reward model re-rank</td></tr>
+        <tr><td>系统性评估</td><td>没有"害状态 → 期望恢复"的标注集</td><td><strong>BackBench</strong>：50 个 computer-use harm recovery 任务</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>关键发现——偏好是"情境化的"：</strong>用户并不总是想让 Agent"把错误全部抹平"。很多情形下他们更偏好<em>务实地修到够用</em>，比如只撤回最敏感的一条邮件而不强制回滚整个邮箱。这和过去 Safety 研究里"最小化 harm 分数"的简化目标很不同——recovery 的最优解是一个与用户、任务、时间都相关的高维动态偏好。</p>
+    <p><strong>和今天 Harness 方向 <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a> 的对照：</strong>Terminal Wrench 展示"reward hack 是在 task 里长出来的"，本文则展示"harm 同样是在 task 里长出来的，而且不得不按 task-level 去恢复"——两篇文章合起来在说：Agent safety 和 harness 设计都已经走到了<strong>"task-first, scaffold-second"</strong>的阶段。那种"加一层通用 guardrail 就万事大吉"的思维是过时的。</p>
+    <p><strong>和 <a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">SafeAgent (2604.17562)</a> / <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">Symbolic Guardrails (2604.15579)</a> 的关系：</strong>SafeAgent 用"runtime controller + context-aware decision core"做事中拦截；Symbolic Guardrails 用符号策略给出"可被证明的安全保证"。两者都是 <em>pre-harm</em>。本文把 pipeline 的<strong>最后一公里</strong>补上了：当它们失手时，有一个带偏好学习的 reward model scaffold 接管。这是一个清晰的"上层/下层"分工，而不是彼此替代。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">Christiano et al. (2017) — <em>Deep Reinforcement Learning from Human Preferences</em>（偏好学习原典）<br>
+    <a href="https://arxiv.org/abs/1706.03741" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03741</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Computer Use: Claude 3.5 Sonnet Model Card Addendum</em>（computer-use agent 代表产品）<br>
+    <a href="https://www.anthropic.com/news/3-5-models-and-computer-use" target="_blank" rel="noopener">https://www.anthropic.com/news/3-5-models-and-computer-use</a></div>
+    <div class="ref-item">OpenAI (2025) — <em>Operator System Card</em>（CUA 代表）<br>
+    <a href="https://openai.com/index/introducing-operator/" target="_blank" rel="noopener">https://openai.com/index/introducing-operator/</a></div>
+    <div class="ref-item">Hendrycks, Mazeika & Woodside (2023) — <em>An Overview of Catastrophic AI Risks</em>（Agent harm 类型学）<br>
+    <a href="https://arxiv.org/abs/2306.12001" target="_blank" rel="noopener">https://arxiv.org/abs/2306.12001</a></div>
+    <div class="ref-item">Ding et al. (2026) — <em>OS-BLIND</em>（benign-instruction 下的 computer-use 安全漏洞）<br>
+    <a href="https://arxiv.org/abs/2604.10577" target="_blank" rel="noopener">https://arxiv.org/abs/2604.10577</a></div>
+    <div class="ref-item">Liu et al. (2026) — <em>SafeAgent: Runtime Protection Architecture</em>（预防侧对照）<br>
+    <a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17562</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>1,150 条成对偏好：</strong>这是 agent safety 领域第一份系统化的"恢复策略偏好"数据——覆盖常见 computer-use 场景如误发邮件、错改文件、误下单等。</li>
+      <li><strong>BackBench 50 任务：</strong>首个 computer-use harm-recovery benchmark，为后续方法提供"从有害态恢复"这一维度的可比较测评平台。</li>
+      <li><strong>上下文依赖的属性权重：</strong>同一属性（如"彻底性 vs 针对性"）在不同场景下重要度显著变化，证明 recovery 不能用单一 reward 模型拟合。</li>
+      <li><strong>Reward-model 显著优于 base agent 与 rubric scaffold：</strong>人类评估显示 re-rank scaffold 产出的 recovery 轨迹质量明显更高。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Harness 设计需要把"recovery phase"做成 first-class 子图而不是简单的 exception handler。<strong>BackBench 这样的数据集应当直接集成进任何 computer-use harness 的 CI</strong>——和今日 Harness 方向 <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a>（reward-hack 回归测试）组成"harness 两件套"：一个查能力偏航、一个查恢复能力。SemaClaw / AgentFlow 也应当引入 "recovery loop" 模块，作为 DAG 上一条独立线路。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>这是 agent safety 里最早一批把 <strong>"偏好学习 × post-execution"</strong> 结合起来的工作之一。它指出：单一"最小化 harm 分数"的训练目标是错的——不同用户、不同任务有不同的恢复偏好，必须用 preference RM 拟合。结合今日 Benchmark 方向的 <a href="../../benchmark/2026-05-03-1.html">RedVLA (2604.22591)</a>（物理红队）启发：未来 safety pipeline 应该是 <em>红队 → 拦截 → 恢复</em> 三段式，而不是现在普遍的"单点加 guardrail"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>BackBench 示范了一种新形态 benchmark：<strong>不以 attack success rate 为指标，而以 "recovery quality" 的偏好打分为指标</strong>。这跟 <a href="../../benchmark/2026-05-02-1.html">CarryOnBench</a>（多轮 safety × utility）一脉相承，都属于"benchmark 的第二阶段评估"——不止要衡量 Agent 会不会犯错，还要衡量它犯错之后能否被救回来。推荐未来 safety benchmark 都配一条 "recovery subset"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SafeAgent: Runtime Protection Architecture</strong> — Liu et al. (2026) — 运行时 safety 预防侧代表作<br>
+      <a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17562</a></li>
+      <li><strong>Symbolic Guardrails for Domain-Specific Agents</strong> — Hong et al. (2026) — 符号化守门 + 可证明安全保证<br>
+      <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">https://arxiv.org/abs/2604.15579</a></li>
+      <li><strong>Deep RL from Human Preferences</strong> — Christiano et al. (2017) — 本文偏好学习技术根基<br>
+      <a href="https://arxiv.org/abs/1706.03741" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03741</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.18847" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.18847" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.18847" target="_blank" rel="noopener">DOI</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-03 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.18847" target="_blank" rel="noopener">arxiv.org/abs/2604.18847</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

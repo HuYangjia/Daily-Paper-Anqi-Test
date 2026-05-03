@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-03 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #e9f7f1; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faf2e2; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5e1bf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faf2e2; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 3 日 · Safety Benchmark · 物理红队 · VLA 模型</div>
+  <h1>RedVLA：首个 Vision-Language-Action 模型的物理红队框架——ASR 高达 95.5%，并附轻量级 SimpleVLA-Guard 守门</h1>
+  <div class="en-title">RedVLA: Physical Red Teaming for Vision-Language-Action Models</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇，均 2026-04 新增）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.22591" target="_blank" rel="noopener">RedVLA: Physical Red Teaming for Vision-Language-Action Models</a><span class="winner-badge">今日选定</span></td>
+          <td>VLA 物理红队 + Guard 数据</td>
+          <td>arXiv 2026-04-24 (Peking Univ. Yang 组)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.28157" target="_blank" rel="noopener">FlashRT: Efficient Red-Teaming for Long-Context LLMs</a></td>
+          <td>效率化红队算法</td>
+          <td>arXiv 2026-04-30</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23067" target="_blank" rel="noopener">Training a General Purpose Automated Red Teaming Model</a></td>
+          <td>通用红队模型训练管线</td>
+          <td>arXiv 2026-04-24 (NVIDIA)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.22871" target="_blank" rel="noopener">AutoRISE: Agent-Driven Strategy Evolution for Red-Teaming</a></td>
+          <td>演化式红队 Agent</td>
+          <td>arXiv 2026-04-23</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.28093" target="_blank" rel="noopener">What Makes a Good Terminal-Agent Benchmark Task</a></td>
+          <td>Benchmark 任务设计指南</td>
+          <td>arXiv 2026-04-30</td>
+          <td class="score-num">89</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>作者</label><span>Yuhao Zhang, Borong Zhang, Jiaming Fan, Jiachen Shen, Yishuai Cai, Yaodong Yang, Jiaming Ji</span></div>
+      <div class="meta-item"><label>机构</label><span>Peking University (Yang Yaodong 组) · 中关村学院</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-24</span></div>
+      <div class="meta-item"><label>原文链接</label><a href="https://arxiv.org/abs/2604.22591" target="_blank" rel="noopener">https://arxiv.org/abs/2604.22591</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.22591" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.22591</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.RO / cs.AI</span></div>
+      <div class="meta-item"><label>项目主页</label><a href="https://redvla.github.io" target="_blank" rel="noopener">redvla.github.io</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个面向 VLA（视觉-语言-动作）模型的物理红队框架：10 次迭代内 ASR 达 95.5%，附带基于红队数据训练的 SimpleVLA-Guard 防线。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译）</div>
+    <p>Vision-Language-Action（VLA）模型走向真实部署，一直受制于"<strong>不可预测且不可逆的物理伤害</strong>"风险。然而，我们当前<strong>缺乏一种在部署前主动检测物理安全风险的有效机制</strong>。为了补上这一空缺，我们提出 <strong>RedVLA</strong>：首个面向 VLA 模型物理安全的红队框架。</p>
+    <p>我们用两阶段流程系统性地暴露不安全行为：<br>
+    <strong>(I) Risk Scenario Synthesis（风险场景合成）</strong>——构造一个有效、任务可行的初始风险场景。具体做法：从正常轨迹中识别"关键交互区域"，把风险因素（risk factor）布置到这些区域内，让它与 VLA 的执行流纠缠并触发目标不安全行为。<br>
+    <strong>(II) Risk Amplification（风险放大）</strong>——保证在异构模型间稳定触发。它以轨迹特征为引导，通过无梯度优化反复细化风险因素的状态，直到目标不安全行为被稳定激发。</p>
+    <p>在 6 个代表性 VLA 模型上的实验表明，RedVLA 能够挖掘出多样化的不安全行为，<strong>10 次优化迭代内 Attack Success Rate (ASR) 最高达到 95.5%</strong>。我们进一步基于 RedVLA 合成数据训练了轻量级 <strong>SimpleVLA-Guard</strong> 作为部署侧 safety guard。数据、资产与代码在 <a href="https://redvla.github.io" target="_blank" rel="noopener">redvla.github.io</a> 公开。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读</div>
+    <p><strong>解决了什么问题：</strong>VLA 模型（代表作：RT-2、OpenVLA、π0、GR00T）已经在仿真到真机之间的界限越来越模糊，越来越多机构在实机部署——但物理世界的 safety 有一个数字世界没有的特性：<strong>不可回滚</strong>。数字 agent 把文件删了还能从备份恢复，机器人把架子撞倒砸到人就真的砸到了。过去一年的 safety 工作绝大部分在 text-only / computer-use 层面，物理层面的红队研究几乎一片空白。本文是第一篇正儿八经把"物理红队"作为独立 benchmark 范畴拿出来做的工作。</p>
+    <p><strong>核心方法——两阶段红队 pipeline：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>阶段</th><th>技术手法</th><th>在 VLA 语境中的意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Stage I: Risk Scenario Synthesis</strong></td><td>从 benign 轨迹抓取"关键交互区域"（夹爪路径 / 接触点 / 工件交接点），把 risk factor 精确放置在这些区域</td><td>保证生成的风险场景<em>对原任务依然可行</em>，避免"红队场景根本不会出现"这一常见诟病</td></tr>
+        <tr><td><strong>Stage II: Risk Amplification</strong></td><td>无梯度优化：用 trajectory features 作评分函数，迭代微调 risk factor 状态（位置 / 角度 / 质量 / 摩擦）直到目标不安全行为稳定触发</td><td>把"偶发失败"变成"可复现攻击"，为后续评估/防御训练提供稳定信号</td></tr>
+        <tr><td><strong>Output: SimpleVLA-Guard</strong></td><td>用 RedVLA 合成数据训练一个轻量守门模型</td><td>形成"攻击 ↔ 防御"闭环，红队不只为报警</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>在 benchmark 视角的新贡献：</strong>
+    1. 第一次把<strong>物理 ASR</strong> 作为 VLA safety 的核心指标引入——95.5% 的数字说明当前前沿 VLA 模型在物理层面几乎毫无 safety margin。
+    2. 提出"<strong>关键交互区域</strong>"这个概念，为物理红队提供了可扩展的参数化框架，下游任何 VLA benchmark 都可以借用这一范式。
+    3. 从"只测不治"走到"红队即训练数据"——SimpleVLA-Guard 展示了红队数据反哺 safety 模型的完整循环。</p>
+    <p><strong>与今日 Harness 方向 <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a> 的对照：</strong>Terminal Wrench 做的是"文本 agent 的 reward hack 数据集"，RedVLA 做的是"物理 agent 的 risk scenario 数据集"——两者形成一个完整对比：<em>数字世界漏洞 vs 物理世界漏洞</em>。二者共同指出：<strong>真正的 safety 评估必须是 task-specific 的轨迹数据集，而不是静态问答题</strong>。</p>
+    <p><strong>与 <a href="https://arxiv.org/abs/2604.23067" target="_blank" rel="noopener">General Red Teaming Model (2604.23067)</a> / <a href="https://arxiv.org/abs/2604.28157" target="_blank" rel="noopener">FlashRT (2604.28157)</a> 的关系：</strong>后两者沿"文本红队 / LLM 红队"主线做效率和泛化；RedVLA 是把红队范式成功"跨模态迁移"到物理域的第一个样本。这提示社区：未来 benchmark 不应只有文字攻击题，而需要覆盖 <em>text / code / multimodal / physical</em> 全谱的红队语料。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用的关键文献（附链接）</div>
+    <div class="ref-item">OpenVLA (2024) — <em>An Open-Source Vision-Language-Action Model</em>（被测代表模型）<br>
+    <a href="https://arxiv.org/abs/2406.09246" target="_blank" rel="noopener">https://arxiv.org/abs/2406.09246</a></div>
+    <div class="ref-item">Brohan et al. (2023) — <em>RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control</em>（VLA 范式奠基）<br>
+    <a href="https://arxiv.org/abs/2307.15818" target="_blank" rel="noopener">https://arxiv.org/abs/2307.15818</a></div>
+    <div class="ref-item">Ji, Yang et al. (2023) — <em>Safe RLHF: Safe Reinforcement Learning from Human Feedback</em>（同组 safety alignment 基础）<br>
+    <a href="https://arxiv.org/abs/2310.12773" target="_blank" rel="noopener">https://arxiv.org/abs/2310.12773</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em>（文本红队对照）<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Figure AI / Physical Intelligence (2024) — <em>π0: A Vision-Language-Action Flow Model</em>（代表 VLA）<br>
+    <a href="https://arxiv.org/abs/2410.24164" target="_blank" rel="noopener">https://arxiv.org/abs/2410.24164</a></div>
+    <div class="ref-item">Padmakumar et al. (2026) — <em>Training a General Purpose Automated Red Teaming Model</em>（今日对照候选）<br>
+    <a href="https://arxiv.org/abs/2604.23067" target="_blank" rel="noopener">https://arxiv.org/abs/2604.23067</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>6 个前沿 VLA 模型 × 10 次迭代：</strong>RedVLA 在多个主流 VLA 模型上稳定把 ASR 推到 95.5%，证明物理 safety 漏洞不是某模型特例。</li>
+      <li><strong>"关键交互区域"作为参数化风险空间：</strong>第一个把物理红队规约为一个"从 benign 轨迹反推关键区 → 植入风险因素"的自动化流程，使攻击可量化、可比较。</li>
+      <li><strong>无梯度优化：</strong>放弃对 VLA 模型参数的访问假设，以轨迹特征为反馈信号做黑盒扰动——对闭源商用 VLA 同样适用。</li>
+      <li><strong>SimpleVLA-Guard：</strong>用红队数据回训的轻量 guard，证明红队不是只产出 benchmark 分数，更是 safety 训练的第一手监督数据来源。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>物理 agent 的 harness 必须和数字 agent 分家。RedVLA 指出：<strong>物理 harness 的评估单元不能是 prompt 对，而必须是 (初始场景, 风险因素, 目标轨迹)</strong>。这会对未来 Harness 工具链（SemaClaw / AHE / AgentFlow）提出一种新诉求：harness 要能描述"物理初始状态"这一类 task context。跟今日 Harness <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a>（文本 reward hack 数据集）合起来，形成"<em>harness 可信度评估在数字与物理两个层面的 co-benchmark</em>"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>把"技能 safety"的视野从软件扩展到机器人——而且不是象征意义的扩展，而是完整的红队 → guard 闭环。和今日 <a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a>（post-execution 偏好恢复）联读：数字侧讲"出错了如何优雅恢复"，物理侧讲"出错不可恢复所以得先把错压下去"——两者共同描绘了一张<strong>按可逆性分级的 safety 框架</strong>。未来 Agent Skills Safety 应按 reversibility 把任务分层，高不可逆性场景（物理 / 金融 / 生医）采用 RedVLA 路线，高可逆性场景采用 Harm Recovery 路线。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这是 benchmark 社区真正需要的一次"跨模态补票"。过去 HarmBench / SafetyBench / TrustLLM 清一色文本；RedVLA 补上了物理这块版图。推荐整合思路：<strong>把 RedVLA 的 risk scenario + ASR 作为"benchmark 的 Physical Track"加入现有统一 safety 评估套件（如 AIR-Bench 或 <a href="../../benchmark/2026-05-02-1.html">CarryOnBench</a> 的扩展）</strong>。此外 RedVLA 开放数据 + SimpleVLA-Guard 的做法值得所有 red-team benchmark 借鉴——红队产物必须具备"反哺防御模型"的可用性，否则就是一次性评估。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarmBench</strong> — Mazeika et al. (2024) — 文本红队标准评测框架，RedVLA 在物理层面对应物<br>
+      <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">https://arxiv.org/abs/2402.04249</a></li>
+      <li><strong>Safe RLHF</strong> — Ji, Yang et al. (2023) — 同组 safety alignment 基础工作<br>
+      <a href="https://arxiv.org/abs/2310.12773" target="_blank" rel="noopener">https://arxiv.org/abs/2310.12773</a></li>
+      <li><strong>RT-2</strong> — Brohan et al. (2023) — VLA 范式奠基，被测模型同谱系<br>
+      <a href="https://arxiv.org/abs/2307.15818" target="_blank" rel="noopener">https://arxiv.org/abs/2307.15818</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.22591" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.22591" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://redvla.github.io" target="_blank" rel="noopener">项目主页 / 数据</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2604.22591" target="_blank" rel="noopener">DOI</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-03 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.22591" target="_blank" rel="noopener">arxiv.org/abs/2604.22591</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
