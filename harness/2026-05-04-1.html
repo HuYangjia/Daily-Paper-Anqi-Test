@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-04 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-04 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 4 日 · Harness Engineering · Agent Optimization Harness · 为"自动改 Agent"造尺子</div>
+  <h1>VeRO：第一个面向"Agent 优化 Agent"任务的可复现评测 Harness——给 Meta-Evolution 补上量尺</h1>
+  <div class="en-title">VeRO: An Evaluation Harness for Agents to Optimize Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">VeRO: An Evaluation Harness for Agents to Optimize Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>Agent 优化 Agent 的评测 Harness</td>
+          <td>arXiv 2026-02-25 (Ursekar et al., ServiceNow Research)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2508.20810" target="_blank" rel="noopener">From Guidelines to Guarantees: A Graph-Based Evaluation Harness for Domain-Specific LLMs</a></td>
+          <td>领域特定 harness（临床指南）</td>
+          <td>arXiv 2025-08-28</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2603.13966" target="_blank" rel="noopener">vla-eval: 统一 VLA 评估 Harness（已归档 04-29 #2）</a></td>
+          <td>VLA 评估 harness</td>
+          <td>arXiv 2026-03-14 v2</td>
+          <td class="score-num">—</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2402.14261" target="_blank" rel="noopener">Copilot Evaluation Harness</a></td>
+          <td>IDE Copilot 评估（旧文）</td>
+          <td>arXiv 2024-02-22</td>
+          <td class="score-num">76</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>VeRO: An Evaluation Harness for Agents to Optimize Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>VeRO：一种用于"让 Agent 去优化 Agent"的评测 Harness</span></div>
+      <div class="meta-item"><label>作者</label><span>Varun Ursekar, Apaar Shanker, Veronica Chatrath, Yuan Xue, Sam Denton</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-02-25</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">https://arxiv.org/abs/2602.22480</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2602.22480" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.22480</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.SE / cs.AI / cs.LG</span></div>
+      <div class="meta-item"><label>机构</label><span>ServiceNow Research（VERO 于论文中声明开源）</span></div>
+      <div class="meta-item"><label>项目资源</label><a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">arXiv 2602.22480（论文中指明 release VERO）</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个把"Agent 去改 Agent"做成可复现 benchmark：版本化快照 + 预算受控评估 + 结构化轨迹，为 Meta-Evolution 研究补上客观量尺。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>编码 Agent 一个重要的新兴应用是 <strong>"Agent 优化"</strong>——通过"改代码—运行—评估"的循环，逐步改进目标 Agent。尽管该任务越来越重要，社区对"编码 Agent 在这类任务上到底表现如何"缺乏系统性理解。Agent 优化与传统软件工程有根本区别：目标 Agent 把<strong>确定性代码</strong>与<strong>随机 LLM 补全</strong>交错，既需要结构化地捕获中间推理，又要关联下游执行结果。</p>
+    <p>为此，作者提出 <strong>VERO（Versioning, Rewards, and Observations）</strong>，它提供：(1) 一个可复现的评测 harness，包含<strong>版本化 Agent 快照</strong>、<strong>预算受控的评估</strong>、以及<strong>结构化执行轨迹</strong>；(2) 一套 benchmark 套件，提供若干目标 Agent、任务，以及参考评估流程。借助 VERO，他们做了一项实证研究——比较了多种优化器配置在不同任务上的表现，分析了"哪些修改可以稳定提升目标 Agent 性能"。作者<strong>公开 VERO</strong>，期望把"Agent 优化"变成编码 Agent 的核心能力进行研究。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong> 最近两个月 Harness 方向的关键议题不断推进——从 <a href="../../harness/2026-04-29-1.html">AHE (2604.25850)</a>"观测驱动的 Harness 自动演化"，到 <a href="../../harness/2026-05-02-1.html">Last Harness (2604.21003)</a>"Meta-Evolution"两层循环，再到 <a href="../../harness/2026-05-03-1.html">Terminal Wrench (2604.17596)</a>"评测 harness 本身的可信度"。但它们都缺一张公开 benchmark 来回答："<strong>优化器改了 Agent 之后，到底有没有变好？变好了多少？哪个改动起了作用？</strong>" VERO 正是把这个问题做成了<strong>可复现、可比较、可溯源</strong>的评测基础设施。</p>
+    <p><strong>三件关键部件（也是论文名 VERO 的由来）：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>部件</th><th>具体做法</th><th>为什么重要</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>V —— Versioning（版本化）</strong></td><td>把"目标 Agent"存成带版本快照；每轮优化都可回溯到精确前驱</td><td>解决"评估时改动不再是改动本身"的飘移；让 A/B 比较可靠</td></tr>
+        <tr><td><strong>R —— Rewards（奖励/预算）</strong></td><td>预算受控评估：限制调用次数、token、wall-clock；控制噪声带来的假阳性</td><td>保证优化实验在可重复成本下对比，防止"多跑几次就赢"</td></tr>
+        <tr><td><strong>O —— Observations（观测）</strong></td><td>结构化执行轨迹：同时保留推理链（stochastic LLM）和执行痕迹（deterministic code）</td><td>区分"是 Agent 思考变好"还是"是工具调用变好"，便于 credit assignment</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>Benchmark 套件：</strong> VERO 附带一组<strong>目标 Agent × 任务</strong>的参考对，以及每个任务的"参考评估流程"。目标 Agent 并非单一 fixed agent，而是覆盖不同 baseline——这使得"同一个优化器在不同 seed agent 上是否有可迁移的改进"成了一个可直接度量的问题。</p>
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比 lm-evaluation-harness / OpenAI evals：</strong>后者都是"给模型打分"。VERO 评的是"<em>优化器改完 Agent 以后的 Agent</em>"——多了一层动作对象的递归，也因此需要完全不同的 harness 原语。</li>
+      <li><strong>对比 AHE / Last Harness：</strong>AHE 和 Last Harness 给出了"演化循环"本身的设计（如何自动改 harness / 如何 meta-evolve）。VERO 则在<em>循环外</em>提供了"评判这些演化算法的裁判"。少了 VERO，Meta-Evolution 的比较只能靠各家自报 pass@1。</li>
+      <li><strong>对比 Terminal Wrench：</strong>Terminal Wrench 回答"harness 能不能被骗"；VERO 回答"把 harness 改一下，它变好了没有"。两者是 harness-信度工具链的两块拼图。</li>
+    </ul>
+    <p><strong>实证研究——哪类修改稳定有用：</strong> 文中用 VERO 系统性比较优化器配置，分析哪些编辑类型（prompt 重写、工具封装、错误恢复分支增加等）在多个任务上<strong>可复现地带来</strong>性能提升。这为"有原则地构造 Meta-Evolution 的搜索空间"提供了第一份实证参考。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用 / 对齐的关键文献（附链接）</div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>（静态模型评估 harness 事实标准）<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+    <div class="ref-item">OpenAI — <em>Evals</em>（另一类广泛使用的评测库）<br>
+    <a href="https://github.com/openai/evals" target="_blank" rel="noopener">github.com/openai/evals</a></div>
+    <div class="ref-item">Jimenez et al. (2023) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em><br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">https://arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Terminal-Bench Community — <em>Terminal-Bench</em>（编码 Agent 的复杂环境评估）<br>
+    <a href="https://github.com/laude-institute/terminal-bench" target="_blank" rel="noopener">github.com/laude-institute/terminal-bench</a></div>
+    <div class="ref-item">Lin, Liu et al. (2026) — <em>AHE: Agentic Harness Engineering</em>（harness 自动演化）<br>
+    <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a></div>
+    <div class="ref-item">Seong, Yin, Zhang (2026) — <em>The Last Harness You'll Ever Build</em>（Meta-Evolution Loop）<br>
+    <a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">https://arxiv.org/abs/2604.21003</a></div>
+    <div class="ref-item">Bercovich et al. (2026) — <em>Terminal Wrench: Reward-Hackable Environments</em><br>
+    <a href="https://arxiv.org/abs/2604.17596" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17596</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Versioned 快照 × 预算 × 结构化轨迹——三项原语全到位。</strong>这是第一次把"优化 Agent 的 Agent"所需的 harness 原语抽象清楚——版本化解决"改动可溯源"、预算控制解决"噪声假阳"、结构化观测解决"credit assignment"。</li>
+      <li><strong>"Agent 优化"与"软件工程"本质不同：</strong>VERO 明确指出目标 Agent 的行为是 <em>deterministic code + stochastic LLM completion 的交错</em>，因此评估需要<strong>同时捕获推理链与执行痕迹</strong>，而不是像 SWE-bench 那样只看最终 patch。</li>
+      <li><strong>多 baseline 目标 Agent × 多任务：</strong>让"优化器是否可迁移"第一次成为可测量问题——避免"某优化器只在某一个 agent 上好看"的樱桃采摘。</li>
+      <li><strong>公开 VERO：</strong>作者明确声明发布 VERO，把"Agent 优化"当作编码 Agent 的一类核心能力推进为开放研究问题。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>VERO 把 Harness 研究从"我如何搭一个更好的 harness"升级到"<strong>我如何评价一个 harness 优化算法</strong>"。这正是 AHE / Last Harness 这条 Meta-Evolution 主线缺的"回归测试平台"。建议：后续 Harness 论文若要声称"自动演化提升了 X%"，应该在 VERO 上跑一遍作为 anchor；否则 X% 只是自报数。把 VERO 和 <a href="../../harness/2026-05-03-1.html">Terminal Wrench (2604.17596)</a> 绑定做成"双指标"——前者考核"变好了没"，后者考核"是否引入新 reward-hack"——harness 社区才算有了工业级评审体系。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Agent 优化场景是 Agent Skills Safety 的放大器：当一个 Agent 被允许"修改另一个 Agent"，它就等于在写 <em>新的技能</em>。VERO 的版本化 + 结构化轨迹恰好给安全侧留了"可审计"的接口——对齐研究可以把 "post-edit Agent 是否保留原安全边界"当作新的 evaluation axis 插入 VERO，构建"Optimization-Preserves-Safety"基线。这和今天 agent-safety 方向的 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails (2604.15579)</a>"policy-level 可保证安全"天然互补：VERO 管"功能变化的可测量"，Symbolic Guardrails 管"安全约束的可保持"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Benchmark 社区长期忽视了一个维度："<strong>Benchmark 是否足以评估优化算法</strong>"。VERO 的出现提示我们：未来 Safety Benchmark 可能需要两种形态——一种评"模型/Agent"，一种评"Agent-编辑器"。今天的 <a href="../../benchmark/2026-05-04-1.html">SafetyALFRED (2604.19638)</a> 做了前者（embodied 安全），如果要做后者，就要求"评估工具本身能跟上优化循环的速度"——这和 VERO 的预算控制、版本化思想是同构命题。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AHE: Agentic Harness Engineering</strong> — Lin, Liu et al. (2026) — 可观测性驱动的 coding agent harness 自动演化<br>
+      <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">https://arxiv.org/abs/2604.25850</a></li>
+      <li><strong>The Last Harness You'll Ever Build</strong> — Seong, Yin, Zhang (2026) — 两层 Meta-Evolution 循环<br>
+      <a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">https://arxiv.org/abs/2604.21003</a></li>
+      <li><strong>Terminal Wrench</strong> — Bercovich et al. (2026) — Harness 可信度诊断数据集<br>
+      <a href="https://arxiv.org/abs/2604.17596" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17596</a></li>
+      <li><strong>SWE-bench</strong> — Jimenez et al. (2023) — 真实 GitHub issue 评估基准<br>
+      <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">https://arxiv.org/abs/2310.06770</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2602.22480" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">对照：lm-eval-harness</a>
+      <a class="link-btn" href="https://github.com/openai/evals" target="_blank" rel="noopener">对照：OpenAI evals</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-04 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">arxiv.org/abs/2602.22480</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

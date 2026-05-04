@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-04 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f5c98a; color: #633806; }
+  .link-btn.primary:hover { background: #f5dcb4; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-04 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 4 日 · Safety Benchmark · Embodied Agent Safety · 从 QA 到"物理行动"</div>
+  <h1>SafetyALFRED：把 ALFRED 扩成"厨房物理安全"——揭开 QA 合格但行动不合格的"对齐鸿沟"</h1>
+  <div class="en-title">SafetyALFRED: Evaluating Safety-Conscious Planning of Multimodal Large Language Models</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.19638" target="_blank" rel="noopener">SafetyALFRED: Evaluating Safety-Conscious Planning of MLLMs</a><span class="winner-badge">今日选定</span></td>
+          <td>具身 Agent 安全 benchmark</td>
+          <td>arXiv 2026-04-21 (Torres-Fonseca/Deng/Dai/Chai et al., U-Michigan SLED + Boise State)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.11806" target="_blank" rel="noopener">Detecting Safety Violations Across Many Agent Traces</a></td>
+          <td>大规模轨迹安全审计</td>
+          <td>arXiv 2026-04-13 (UPenn, Stein/Brown/Hassani/Naik/Wong)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.02022" target="_blank" rel="noopener">ATBench: Diverse and Realistic Agent Trajectory Benchmark</a></td>
+          <td>轨迹级安全评估</td>
+          <td>arXiv 2026-04-02 v2</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.06132" target="_blank" rel="noopener">Claw-Eval: Trustworthy Evaluation of Autonomous Agents</a></td>
+          <td>全链路安全基准</td>
+          <td>arXiv 2026-04-07</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2602.16756" target="_blank" rel="noopener">NESSiE: The Necessary Safety Benchmark</a></td>
+          <td>安全"必要不充分"条件</td>
+          <td>arXiv 2026-02-18 (Bertram/Geiping)</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SafetyALFRED: Evaluating Safety-Conscious Planning of Multimodal Large Language Models</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SafetyALFRED：评估多模态大模型在具身情境中的"安全意识规划"</span></div>
+      <div class="meta-item"><label>作者</label><span>Josue Torres-Fonseca, Naihao Deng, Yinpei Dai, Shane Storks, Yichi Zhang, Rada Mihalcea, Casey Kennington, Joyce Chai</span></div>
+      <div class="meta-item"><label>机构</label><span>University of Michigan（SLED Lab），Boise State University</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-21</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2604.19638" target="_blank" rel="noopener">https://arxiv.org/abs/2604.19638</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.19638" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.19638</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI / cs.CL / cs.RO</span></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/sled-group/SafetyALFRED" target="_blank" rel="noopener">github.com/sled-group/SafetyALFRED</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把经典 ALFRED 环境扩成 6 大类厨房物理安全场景，揭示：MLLM 能认出危险（QA 高分），但行动上救不了场。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多模态大语言模型（MLLM）越来越多地被部署为<strong>交互式环境中的自主 Agent</strong>，但它们主动处理安全隐患的能力仍然不足。我们提出 <strong>SafetyALFRED</strong>，基于具身 Agent 基准 <strong>ALFRED</strong>，扩充了 <strong>6 类真实世界厨房隐患</strong>。</p>
+    <p>现有的安全评估多局限在<strong>非具身的问答（QA）</strong>设置下，只检验模型能否识别危险。本文则同时评估来自 <strong>Qwen、Gemma、Gemini</strong> 三家系列的 <strong>11 个 SOTA 模型</strong>——不仅考察 <em>hazard recognition</em>（危险识别），还考察<strong>通过具身规划进行的主动风险缓解</strong>（risk mitigation via embodied planning）。实验结果揭示出显著的<strong>对齐鸿沟（alignment gap）</strong>：模型在 QA 设置下可以准确识别隐患，但相应的具身缓解成功率却远低于识别率。</p>
+    <p>结论：<em>静态 QA 评估不足以衡量物理安全</em>，作者呼吁范式转向"将纠正性行动置于具身情境"的 benchmark。代码与数据集在 <a href="https://github.com/sled-group/SafetyALFRED" target="_blank" rel="noopener">github.com/sled-group/SafetyALFRED</a> 开源。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去两年，"安全评估"在多模态社区几乎等同于"给模型出危险图片看它会不会识别"。这种 QA 形式虽然统计上好看，但完全跳过了真正决定后果的那一步：<strong>模型采取了什么物理行动</strong>。正如一个人"知道煤气味道危险"和"闻到后会关闭阀门开窗"是两件事——前者是认知测试，后者才是安全测试。SafetyALFRED 把安全评估从认知层推到<strong>embodied planning 层</strong>。</p>
+    <p><strong>基准构造：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>SafetyALFRED 的做法</th><th>意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>环境基底</strong></td><td>复用 ALFRED（AI2-THOR 家用环境） + 扩充 <strong>6 类厨房隐患</strong>（高温器皿、尖锐物、湿滑、燃气、刀具开放、毒性清洁剂等）</td><td>避免重新造具身仿真器的成本，直接继承 ALFRED 的 oracle planner 可判定性</td></tr>
+        <tr><td><strong>双任务设计</strong></td><td>Task A: 隐患识别（QA 形式）；Task B: 具身风险缓解（规划+执行）</td><td>定量地"分开测认知 vs. 行动"——才能观测 alignment gap</td></tr>
+        <tr><td><strong>受测模型</strong></td><td>11 个 SOTA MLLM：Qwen、Gemma、Gemini 系列</td><td>跨家族覆盖，既含开源也含闭源前沿模型</td></tr>
+        <tr><td><strong>关键指标</strong></td><td>Recognition Accuracy（QA） vs. Mitigation Success Rate（具身）</td><td>直接可视化 alignment gap：前者高、后者低 = 认知行动脱节</td></tr>
+        <tr><td><strong>呼吁</strong></td><td>范式转变：从"disembodied QA" → "corrective actions in embodied contexts"</td><td>为整个 AI-safety benchmark 社区提出"第二波 embodied shift"的议程</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>核心发现——"识得出但救不了"的对齐鸿沟：</strong>SafetyALFRED 定量地展示：就算模型可以用 QA 答对"这把刀这么放有什么风险"，一旦被要求真正采取行动（移动刀、关掉明火、把洗洁精放回柜子），<strong>mitigation 成功率平均远低于 recognition</strong>。这是对当下"安全对齐"工作流最直接的拷问：<em>我们的 alignment 到底是在训模型"能说会说"，还是在训它"能救能救"？</em></p>
+    <p><strong>与已归档相关工作的对比：</strong></p>
+    <ul class="point-list">
+      <li>与 <a href="../../benchmark/2026-05-03-1.html">RedVLA (2604.22591)</a>：RedVLA 是"攻"——对 VLA 做物理红队，证明它易被打穿；SafetyALFRED 是"防"——问 MLLM 在厨房里会不会做出"防危险的动作"。两者合在一起构成"物理安全 benchmark 的攻防双面"。</li>
+      <li>与 <a href="../../benchmark/2026-04-30-1.html">CSTM-Bench</a>：CSTM-Bench 看的是跨会话记忆带来的<em>信息层</em>威胁；SafetyALFRED 看的是<em>物理层</em>威胁。它们扩大了"safety benchmark 该评估什么"的坐标系。</li>
+      <li>与 <a href="../../benchmark/2026-04-29-2.html">Judge Sensitivity</a>：Judge Prompt 的偏差可让 ASR 偏 24.2pp。SafetyALFRED 把"判定"从 LLM judge 下放到 <strong>AI2-THOR oracle</strong>——这是对"LLM judge 飘移"最直接的工程性回避。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用 / 对比的关键文献（附链接）</div>
+    <div class="ref-item">Shridhar et al. (2020) — <em>ALFRED: A Benchmark for Interpreting Grounded Instructions for Everyday Tasks</em>（环境基底）<br>
+    <a href="https://arxiv.org/abs/1912.01734" target="_blank" rel="noopener">https://arxiv.org/abs/1912.01734</a></div>
+    <div class="ref-item">Kolve et al. — <em>AI2-THOR: Interactive 3D Environment for Visual AI</em><br>
+    <a href="https://arxiv.org/abs/1712.05474" target="_blank" rel="noopener">https://arxiv.org/abs/1712.05474</a></div>
+    <div class="ref-item">Qwen Team — <em>Qwen-VL / Qwen2.5-VL Series</em><br>
+    <a href="https://arxiv.org/abs/2409.12191" target="_blank" rel="noopener">https://arxiv.org/abs/2409.12191</a></div>
+    <div class="ref-item">Google DeepMind — <em>Gemini Technical Reports</em><br>
+    <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener">deepmind.google/technologies/gemini</a></div>
+    <div class="ref-item">Zhang et al. (2024) — <em>Robot-Safe-Bench: Towards Safe Embodied Agents</em>（相近 embodied safety 研究）<br>
+    <a href="https://arxiv.org/abs/2405.17140" target="_blank" rel="noopener">https://arxiv.org/abs/2405.17140</a></div>
+    <div class="ref-item">SLED Group — <em>SLED Lab, University of Michigan</em>（作者团队）<br>
+    <a href="https://sled.eecs.umich.edu/" target="_blank" rel="noopener">sled.eecs.umich.edu</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>6 类真实世界厨房隐患 × ALFRED：</strong>第一次把日常家庭"物理安全风险"以 oracle 可判定的形式引入 LLM Agent benchmark，对标 RedVLA 对工业 VLA 的物理红队做法。</li>
+      <li><strong>11 个 SOTA MLLM 全家福：</strong>Qwen / Gemma / Gemini 系列——跨开源与闭源，结果具统计说服力。</li>
+      <li><strong>"识得出 vs. 救不了"显著差距：</strong>平均 mitigation success 远低于 recognition accuracy，揭示的对齐鸿沟是可复现的，不只个案。</li>
+      <li><strong>Paradigm shift 呼吁：</strong>论文直接定义了社区的下一步方向——"corrective actions in embodied contexts"，为接下来一年 safety benchmark 设定 agenda。</li>
+      <li><strong>可复现基础设施：</strong>ALFRED oracle 判定 + 代码&数据完整开源（<a href="https://github.com/sled-group/SafetyALFRED" target="_blank" rel="noopener">sled-group/SafetyALFRED</a>），为后续工作直接提供可扩展平台。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SafetyALFRED 给 Harness 设计者一条新常识：<strong>"认知指标"和"行动指标"不能混</strong>。下一代 Agent Harness 应该天然支持<em>(recognition, mitigation)</em> 二维度评估——例如今天的 <a href="../../harness/2026-05-04-1.html">VeRO</a> 只要在其 Observations 中多记一层"是否采取了缓解动作以及结果"，就能一站式把 alignment gap 问题纳入 harness 级基础指标。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"QA 合格 &amp; 行动不合格"这条差距给 Safety 研究提供了具体的干预靶点：<strong>训练应包括"纠正性技能"（corrective skill），而不只是"识别回避"（detect-refuse）</strong>。这与今天 agent-safety 方向的 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 形成互补——前者从"训练信号"端补行动，后者从"部署守卫"端保证动作不越线。两条路拢起来，"能认危险且能救险"才成为可验证标准。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>SafetyALFRED 是整个 Safety Benchmark 方向"第二波具身化"的典型代表——与 <a href="../../benchmark/2026-05-03-1.html">RedVLA</a> 一起，将 safety benchmark 的试验场从"对话"推到"物理世界"。建议社区把该范式推广到其他具身基底（Habitat, iGibson, RoboCasa），把"disembodied-QA"彻底变成一类被废弃的 safety 评估套路。再叠加 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 的"85% benchmark 无明确 policy"发现：新一波 benchmark 应当同时满足"物理可验证"和"policy 可机器验收"两项底线。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>RedVLA</strong> — Zhang et al. (2026) — 首个 VLA 物理红队框架，ASR 95.5%<br>
+      <a href="https://arxiv.org/abs/2604.22591" target="_blank" rel="noopener">https://arxiv.org/abs/2604.22591</a></li>
+      <li><strong>Detecting Safety Violations Across Many Agent Traces</strong> — Stein et al. (2026)<br>
+      <a href="https://arxiv.org/abs/2604.11806" target="_blank" rel="noopener">https://arxiv.org/abs/2604.11806</a></li>
+      <li><strong>ATBench: Agent Trajectory Benchmark for Safety</strong> — Li et al. (2026)<br>
+      <a href="https://arxiv.org/abs/2604.02022" target="_blank" rel="noopener">https://arxiv.org/abs/2604.02022</a></li>
+      <li><strong>ALFRED</strong> — Shridhar et al. (2020) — 基座 embodied benchmark<br>
+      <a href="https://arxiv.org/abs/1912.01734" target="_blank" rel="noopener">https://arxiv.org/abs/1912.01734</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.19638" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.19638" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://github.com/sled-group/SafetyALFRED" target="_blank" rel="noopener">GitHub 代码与数据集</a>
+      <a class="link-btn" href="https://github.com/askforalfred/alfred" target="_blank" rel="noopener">ALFRED 原项目</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-04 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.19638" target="_blank" rel="noopener">arxiv.org/abs/2604.19638</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-04 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #ccebe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-04 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 4 日 · Agent Skills Safety · Symbolic Guardrails · 可证明的安全约束执行</div>
+  <h1>Symbolic Guardrails：审阅 80 个 Agent Safety Benchmark 后给出的"可保证"答案</h1>
+  <div class="en-title">Symbolic Guardrails for Domain-Specific Agents: Stronger Safety and Security Guarantees Without Sacrificing Utility</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.7</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">Symbolic Guardrails for Domain-Specific Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>可证明安全 / 策略级守卫</td>
+          <td>arXiv 2026-04-16 (Hong/She/Kang/Timperley/Kästner, CMU)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">SafeAgent: A Runtime Protection Architecture for Agentic Systems</a></td>
+          <td>运行时 prompt-injection 防护</td>
+          <td>arXiv 2026-04-19</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.12986" target="_blank" rel="noopener">Parallax: Why AI Agents That Think Must Never Act</a></td>
+          <td>思考-行动分离的立场论文</td>
+          <td>arXiv 2026-04-14</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2602.11749" target="_blank" rel="noopener">AIR: Agent Safety through Incident Response</a></td>
+          <td>事件响应型安全</td>
+          <td>arXiv 2026-02-12</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.03242" target="_blank" rel="noopener">DRAFT: Task Decoupled Latent Reasoning for Agent Safety</a></td>
+          <td>潜在推理的安全信用分配</td>
+          <td>arXiv 2026-02-11</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Symbolic Guardrails for Domain-Specific Agents: Stronger Safety and Security Guarantees Without Sacrificing Utility</span></div>
+      <div class="meta-item"><label>中文标题</label><span>面向领域特定 Agent 的符号守卫：既要更强的安全/安全保证，又不牺牲 Agent 效用</span></div>
+      <div class="meta-item"><label>作者</label><span>Yining Hong, Yining She, Eunsuk Kang, Christopher S. Timperley, Christian Kästner</span></div>
+      <div class="meta-item"><label>机构</label><span>Carnegie Mellon University (CMU) Software Engineering &amp; Formal Methods 组</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-16（arXiv v1）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">https://arxiv.org/abs/2604.15579</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.15579" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.15579</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.SE / cs.AI / cs.CR</span></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/hyn0027/agent-symbolic-guardrails" target="_blank" rel="noopener">github.com/hyn0027/agent-symbolic-guardrails</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 80 个 agent safety benchmark 的策略需求系统化：74% 可被符号守卫以低成本保证，且不牺牲 Agent 效用。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>通过工具与环境交互的 AI Agent 能够支持强大的应用，但在高风险的商业场景中，<strong>不期望的行为</strong>会带来不可接受的伤害——例如隐私泄漏和财务损失。现有的缓解手段，如基于训练的方法和神经网络守卫（neural guardrails），能提升 Agent 的可靠性，但<strong>无法提供保证</strong>。</p>
+    <p>我们研究<strong>符号守卫（symbolic guardrails）</strong>作为一条切实可行的路径，以获得 AI Agent 的<em>强安全/强安全保障</em>。整项研究分三部分：(1) 对 <strong>80 个 SOTA Agent 安全/安全基准</strong>做系统性审查，识别它们真正评估的"策略（policy）"； (2) 分析其中哪些策略需求可以由符号守卫提供保证； (3) 在 τ²-Bench、CAR-bench、MedAgentBench 上评估符号守卫对 Agent 安全、安全与成功率的影响。</p>
+    <p>核心发现：<strong>85% 的 benchmark 缺少明确定义的策略</strong>，只依赖抽象高层目标或常识；在被明确写出的策略里，<strong>74% 可以由符号守卫强制执行</strong>——往往只需要简单、低成本的机制。这些守卫在<em>不牺牲 Agent 效用</em>的前提下改善了安全与安全。总体结论：符号守卫是一条务实、有效的路径，可以为至少一部分安全/安全需求提供保证，尤其适合领域特定 Agent。代码与 artifacts 发布于 <a href="https://github.com/hyn0027/agent-symbolic-guardrails" target="_blank" rel="noopener">github.com/hyn0027/agent-symbolic-guardrails</a>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一年里，Agent 安全领域的主流方案分两支——训练对齐（RLHF/DPO 派）和神经守卫（classifier / LLM-as-judge 派）。它们都是<strong>经验性缓解</strong>：可以降低失败率，但无法为任何一条策略给出"绝对不会被违反"的承诺。在高风险商业部署（医疗、金融、合规）里，这种"几率性安全"是不够的。Symbolic Guardrails 给出的是<strong>可形式化保证的子集</strong>：哪些安全约束可以被符号系统（比如类型系统、访问控制矩阵、正则/时序逻辑）以 100% 精度强制执行。</p>
+    <p><strong>方法三步走：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>步骤</th><th>做法</th><th>关键结论</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>(1) 系统综述</strong></td><td>审查 <strong>80 个 SOTA Agent 安全 benchmark</strong>，抽取其所声称评估的 policy</td><td><strong>85% 缺乏明确 policy</strong>：只写"不要做违法的事"级别的空话，根本无法验收</td></tr>
+        <tr><td><strong>(2) 可验证性分析</strong></td><td>对那些明确写出的 policy，判断是否可由符号守卫（类型/约束/规则）执行</td><td><strong>74% 可被执行</strong>，且常常是低成本机制：正则匹配、白名单、状态机</td></tr>
+        <tr><td><strong>(3) 实证评估</strong></td><td>在 <strong>τ²-Bench / CAR-bench / MedAgentBench</strong> 三个 domain-specific benchmark 上加装符号守卫</td><td>安全/安全上升，<em>任务成功率不下降</em>——推翻"守卫必然降效用"的常见偏见</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>核心洞察——"policy 缺失"是系统性问题，不是个别 benchmark 的毛病：</strong>85% 这个数字刺眼。它意味着<em>绝大多数 agent safety benchmark 在用"常识"而不是"契约"来评价 Agent</em>。这对整个 agent-safety 社区是个硬警告：当你宣称"某 Agent 在 benchmark X 上安全率 95%"，其实你报的很可能是"Agent 在某几个未显式写出的共识规则下看上去没出事"。Symbolic Guardrails 给出的下一步是<strong>先把 policy 写清楚，再谈安全率</strong>。</p>
+    <p><strong>与神经守卫路线的根本区别：</strong></p>
+    <ul class="point-list">
+      <li><strong>神经守卫（如 Llama Guard、ShieldGemma、<a href="https://arxiv.org/abs/2601.18491" target="_blank" rel="noopener">AgentDoG (2601.18491)</a>）：</strong>统计学上减少风险，但永远存在"本次绕过成功"的概率。</li>
+      <li><strong>符号守卫：</strong>对一类可形式化的约束（数据越权、动作越权、消息流、时序先后）<em>强制拦截，概率 = 0</em>。代价：只能保证"可写出规则"的那一部分。</li>
+      <li><strong>两者互补关系：</strong>符号守卫处理 74% 的可形式化策略，剩下 26% 交给神经守卫做补漏——这比任何一派单打独斗都更现实。</li>
+    </ul>
+    <p><strong>对比已归档的相关工作：</strong></p>
+    <ul class="point-list">
+      <li>与 <a href="../../agent-safety/2026-05-02-1.html">EPO-Safe (2604.23210)</a>：EPO 让 Agent <em>自主发现</em>安全规约；Symbolic Guardrails 处理"人类已写好的规约如何被保证"。两者正好首尾互补。</li>
+      <li>与 <a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a>：后者解决"出错后怎么救"（post-execution）；Symbolic Guardrails 解决"某些错根本不该发生"（pre-execution 阻断）。</li>
+      <li>与 <a href="../../agent-safety/2026-04-29-1.html">HarmfulSkillBench (2604.15415)</a>：HarmfulSkillBench 揭示"技能生态如何被武器化"——Symbolic Guardrails 给出一条"按技能注册符号约束"的直接防御。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文引用 / 对比的关键文献（附链接）</div>
+    <div class="ref-item">τ²-Bench（Tau-2 Bench，domain-specific agent benchmark）<br>
+    <a href="https://github.com/sierra-research/tau2-bench" target="_blank" rel="noopener">github.com/sierra-research/tau2-bench</a></div>
+    <div class="ref-item">CAR-bench（Customer Agent Risk benchmark）<br>
+    <a href="https://github.com/hyn0027/agent-symbolic-guardrails" target="_blank" rel="noopener">project 仓库中可查</a></div>
+    <div class="ref-item">Chen et al. — <em>MedAgentBench: A Realistic Benchmark for Medical LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2501.14654" target="_blank" rel="noopener">https://arxiv.org/abs/2501.14654</a></div>
+    <div class="ref-item">Meta — <em>Llama Guard 3</em>（典型神经守卫）<br>
+    <a href="https://ai.meta.com/research/publications/llama-guard/" target="_blank" rel="noopener">ai.meta.com/research/publications/llama-guard</a></div>
+    <div class="ref-item">Google — <em>ShieldGemma</em><br>
+    <a href="https://arxiv.org/abs/2407.21772" target="_blank" rel="noopener">https://arxiv.org/abs/2407.21772</a></div>
+    <div class="ref-item">Liu et al. (2026) — <em>AgentDoG: Diagnostic Guardrail Framework for AI Agent Safety and Security</em><br>
+    <a href="https://arxiv.org/abs/2601.18491" target="_blank" rel="noopener">https://arxiv.org/abs/2601.18491</a></div>
+    <div class="ref-item">Gallego (2026) — <em>Discovering Agentic Safety Specifications from 1-Bit Danger Signals (EPO-Safe)</em><br>
+    <a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">https://arxiv.org/abs/2604.23210</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点</div>
+    <ul class="point-list">
+      <li><strong>85% / 74%：</strong>作者对 <strong>80 个 SOTA Agent safety/security benchmark</strong> 做系统性审查——85% 的 benchmark 缺乏明确可验收的 policy；已写出 policy 中的 74% 可被符号守卫低成本强制执行。</li>
+      <li><strong>τ²-Bench / CAR-bench / MedAgentBench 三战：</strong>加装符号守卫后，三个 domain-specific 基准上<em>安全与安全指标全部提升，任务成功率不下降</em>。推翻了"守卫必然降效用"这个流行 intuition。</li>
+      <li><strong>符号机制其实很"便宜"：</strong>文中反复强调很多策略只需要"简单的、低成本的机制"（例如数据访问白名单、动作序列状态机、一次性令牌）。这对工业界是一条可立即落地的工程路径。</li>
+      <li><strong>开源 &amp; 可复现：</strong>80 benchmark 清单、策略提取、三基准守卫实现全在 <a href="https://github.com/hyn0027/agent-symbolic-guardrails" target="_blank" rel="noopener">github.com/hyn0027/agent-symbolic-guardrails</a>。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Harness 设计者应该学的第一课：<strong>"80% 的 Agent benchmark 没有可验收的 policy"</strong>——这是 harness 质量的根本问题。结合今天 Harness 方向的 <a href="../../harness/2026-05-04-1.html">VeRO</a>，建议下一代 harness 在每个 task 旁附带一份"policy 规约 + 守卫实现"的 JSON schema，使得 harness 既能评"对不对"（task reward），也能评"守不守"（policy compliance）。这会把"agent 性能"升级为<em>(capability, policy-compliance)</em>二维指标。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>把 Agent Skills Safety 的思路换一换：以前我们总在训练阶段"教 Agent 不要做坏事"，Symbolic Guardrails 给出了第二条路——<strong>在 skill 注册时就钉死约束</strong>。这对 Agent Skills 生态（如我们在 <a href="../../agent-safety/2026-04-29-1.html">HarmfulSkillBench</a> 中看到的"公开技能武器化"）是直接解药：每一个技能 manifest 就应带 symbolic policy 片段（I/O 类型、动作白名单、时序约束），由 harness 在加载技能时编译为守卫。这样，"技能泛化风险"就从"统计问题"变成"类型问题"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 Benchmark 圈子的直接警告：<strong>85% 无明确 policy</strong> = 85% 的 "safety 分数" 其实是"常识合规分"。未来 Safety Benchmark 应该<em>强制要求作者提交可机器验收的 policy DSL</em>，让 "benchmark 能被符号守卫覆盖多少百分比"作为 benchmark 的元指标。这与今天 Benchmark 方向的 <a href="../../benchmark/2026-05-04-1.html">SafetyALFRED</a>"从 QA 到 embodied-planning"倡导一致——都是在推动评测从"看起来像安全"升级到"可证明地合规"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AgentDoG: Diagnostic Guardrail Framework</strong> — Liu et al. (2026) — 神经守卫路线的代表<br>
+      <a href="https://arxiv.org/abs/2601.18491" target="_blank" rel="noopener">https://arxiv.org/abs/2601.18491</a></li>
+      <li><strong>EPO-Safe</strong> — Gallego (2026) — 从 1-bit 危险信号自主发现安全规约<br>
+      <a href="https://arxiv.org/abs/2604.23210" target="_blank" rel="noopener">https://arxiv.org/abs/2604.23210</a></li>
+      <li><strong>Llama Guard</strong> — Inan et al. (2023) — 典型开源神经守卫<br>
+      <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">https://arxiv.org/abs/2312.06674</a></li>
+      <li><strong>SafeAgent: Runtime Protection Architecture</strong> — Liu et al. (2026)<br>
+      <a href="https://arxiv.org/abs/2604.17562" target="_blank" rel="noopener">https://arxiv.org/abs/2604.17562</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.15579" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://github.com/hyn0027/agent-symbolic-guardrails" target="_blank" rel="noopener">GitHub 代码仓库</a>
+      <a class="link-btn" href="https://github.com/sierra-research/tau2-bench" target="_blank" rel="noopener">τ²-Bench</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-04 #1 · 搜索来源：arXiv API<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arxiv.org/abs/2604.15579</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
