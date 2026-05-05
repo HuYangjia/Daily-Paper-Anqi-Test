@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-05 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #ccebe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-05 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 5 日 · Agent Skills Safety · BOA Framework · 长尾不安全轨迹的搜索式度量</div>
+  <h1>BOA：把"Agent 安全度"从采样翻成搜索——第一次能在固定 GPU 预算下穷尽长尾不安全轨迹</h1>
+  <div class="en-title">Toward a Principled Framework for Agent Safety Measurement</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">Toward a Principled Framework for Agent Safety Measurement (BOA)</a><span class="winner-badge">今日选定</span></td>
+          <td>搜索式安全度量（不再靠采样）</td>
+          <td>arXiv 2026-05-02 (Lin/Suri/Oprea/Tan)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">Architectural Obsolescence of Unhardened Agentic-AI Runtimes</a></td>
+          <td>Agent 网关运行时硬化</td>
+          <td>arXiv 2026-05-03 (Metere)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00081" target="_blank" rel="noopener">Alignment Contracts for Agentic Security Systems</a></td>
+          <td>形式化"对齐合同"</td>
+          <td>arXiv 2026-04-30 (David/Guarnieri/Gervais)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01133" target="_blank" rel="noopener">When Embedding-Based Defenses Fail: Multi-Agent Systems</a></td>
+          <td>多 Agent 嵌入防御失败案例</td>
+          <td>arXiv 2026-05-01 (Zhang/Zheng/Chen)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.02087" target="_blank" rel="noopener">Model Spec Midtraining: Improving Alignment Generalization</a></td>
+          <td>对齐训练泛化（54%→7% 误对齐）</td>
+          <td>arXiv 2026-05-03 (Li/Price/Marks/Kutasov)</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Toward a Principled Framework for Agent Safety Measurement</span></div>
+      <div class="meta-item"><label>中文标题</label><span>面向 Agent 安全度量的原则性框架（BOA）</span></div>
+      <div class="meta-item"><label>作者</label><span>Shuyi Lin, Anshuman Suri, Alina Oprea, Cheng Tan</span></div>
+      <div class="meta-item"><label>机构</label><span>Northeastern University 安全与系统组（Oprea 长期方向）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-02</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">https://arxiv.org/abs/2605.01644</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.01644" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.01644</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.01644" target="_blank" rel="noopener">10.48550/arXiv.2605.01644</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.CR / cs.AI</span></div>
+      <div class="meta-item"><label>核心方法</label><span>BOA：likelihood-budget 受限轨迹搜索（in-round + cross-tree）</span></div>
+      <div class="meta-item"><label>工程优化</label><span>Batched decoding/judging · prefix caching · chunked tree expansion</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 Agent Safety 度量从"几次采样均值"改成"likelihood 预算受限的搜索"，可在同一刻度上对比模型 / 防御 / 攻击。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM Agent 输出的<strong>是动作而不仅是文本</strong>，而动作一旦做出往往无法撤销。然而当下的 Agent 安全评估多用<em>贪心或寥寥几次采样</em>，给出一个"安全/不安全"二值率——这对"低概率却非可忽略"的长尾轨迹完全失明。</p>
+    <p>作者主张：<strong>Agent 安全应当用搜索来度量，而非采样</strong>。论文给出 <strong>BOA</strong> 框架——给定一份部署配置（模型、解码器、prompt、环境、判官、likelihood 预算），BOA 在<em>预算内</em>的轨迹空间里搜索，并报告"在该配置下 Agent 保持安全的概率"作为安全分数。BOA 既在<strong>单轮 LLM 解码内部</strong>搜，也跨越<strong>Agent–环境交互树</strong>搜；并通过批处理解码/判官、prefix caching、分块树展开等工程手段把搜索做得切实可行。在主流 Agent-safety workload 上，BOA 能发现贪心和采样都漏掉的不安全轨迹；同时还可在<strong>同一刻度</strong>上为模型、防御、攻击三方排序，GPU 成本可控。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一周 Agent Safety 主线集中处理"<em>真实部署里的安全</em>"——<a href="../../agent-safety/2026-04-30-1.html">Owner-Harm</a> 关注 Agent 伤害部署者本人，<a href="../../agent-safety/2026-05-01-1.html">OS-BLIND</a> 揭示 CUA 在良性指令下的盲区，<a href="../../agent-safety/2026-05-02-1.html">EPO-Safe</a> 用 1-bit 危险信号让 Agent 自定规约，<a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a> 把"出错后怎么救"补上，<a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 在 80 个 benchmark 上证明符号守卫足以保住 74% 安全策略。但这些工作都把"安全分"当作一个<strong>可信的标量来用</strong>——而 BOA 这篇文章直接质疑了这一前提：今天大家口中的"安全率"到底测得准不准？</p>
+    <p><strong>核心洞察：</strong>采样式评测只能看到分布的中间地带；但 <strong>Agent 出问题往往出在长尾</strong>——一个 0.5% 概率的危险动作，在百万次部署中就是 5,000 次。把这种长尾用 4 次采样去估，平均会得到 0% 不安全率，但实际损失巨大。</p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>BOA 关键概念</th><th>具体做法</th><th>解决了什么</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Likelihood Budget（似然预算）</strong></td><td>把搜索空间限制在"配置下出现概率 ≥ ε"的轨迹</td><td>避开"理论上存在但极不可能"的鬼故事；让度量可控</td></tr>
+        <tr><td><strong>双层搜索</strong></td><td>(a) 单轮 LLM 解码内的 token 搜索；(b) Agent–环境交互树的多轮搜索</td><td>同时覆盖"模型一次输出选错"和"多步累积走偏"</td></tr>
+        <tr><td><strong>Safety Score = P(safe)</strong></td><td>枚举到的不安全轨迹按 likelihood 加权求和</td><td>把"是否安全"换成"安全的概率"——可比、可加、可拆</td></tr>
+        <tr><td><strong>批处理 + prefix caching + 分块展开</strong></td><td>典型工程优化让"看起来不可承受"的搜索变得可承受</td><td>使 BOA 在常规 GPU 集群上可跑——这是它能成为标准的关键</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比 sampling-based agent benchmark：</strong>HarmBench / AgentDojo / <a href="../../benchmark/2026-05-02-1.html">CarryOnBench</a> 等都报告"k 次采样里的不安全率"。BOA 不是再加几个采样，而是<strong>把"率"重新定义为"在 likelihood 预算内的安全概率"</strong>，避开"采样越多越像在 cherry-picking"的方法论批评。</li>
+      <li><strong>对比 Symbolic Guardrails / EPO-Safe：</strong>那两篇是<em>给 Agent 加约束</em>。BOA 是<em>给 Agent 测温度计</em>——它和守卫机制天然互补，可以衡量"加了 Symbolic Guardrails 之后的安全分究竟提了多少"。</li>
+      <li><strong>对比 model-only safety eval：</strong>BOA 不只评模型，把模型 / 解码器 / 防御层 / 攻击者放在<strong>同一刻度</strong>上排序——这是过去 LLM safety 评测里几乎没人做到的。</li>
+    </ul>
+    <p><strong>实证发现的重要性：</strong>BOA 在 agent-safety workloads 上"发现了贪心和采样都漏掉的不安全轨迹"——也就是说，今天市面上一些被报告为"99% 安全"的 Agent，BOA 仍能找到 likelihood 不可忽略的危险路径。这对监管、合规、保险定价的影响显而易见。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Andriushchenko et al. (2024) — <em>AgentDojo</em>（动态 prompt-injection benchmark）<br>
+    <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">arxiv.org/abs/2406.13352</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework</em><br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em><br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Chao et al. (2023) — <em>PAIR: Jailbreaking Black Box LLMs in 20 Queries</em>（搜索式攻击思想前身）<br>
+    <a href="https://arxiv.org/abs/2310.08419" target="_blank" rel="noopener">arxiv.org/abs/2310.08419</a></div>
+    <div class="ref-item">Hong et al. (2026) — <em>Symbolic Guardrails for Domain-Specific Agents</em>（与 BOA 互补）<br>
+    <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arxiv.org/abs/2604.15579</a></div>
+    <div class="ref-item">Zheng, Morgan et al. (2026) — <em>CarryOnBench</em>（多轮 Safety×Utility benchmark）<br>
+    <a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">arxiv.org/abs/2604.27093</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>"采样式安全分对长尾失明"被首次形式化：</strong>论文明确论证：贪心或 4 次采样的安全率本质是"分布峰值的样本估计"，对低概率高危轨迹的覆盖几乎为 0；BOA 用 likelihood-budget 替换"采样次数"，让长尾覆盖成为可调旋钮。</li>
+      <li><strong>双层搜索 = 单轮 + 交互树：</strong>过往工作要么只看模型一次输出（红队 prompt），要么只看多轮 trace（agent-bench），BOA 把两者统一成一个搜索目标 P(safe)。</li>
+      <li><strong>同一刻度评比模型 / 防御 / 攻击：</strong>这是 BOA 最具工程意义的贡献——目前业界争论"加了某 guardrail 安全度上升多少"几乎是无标准对话，BOA 给出可比的数字。</li>
+      <li><strong>GPU 成本可承受：</strong>论文强调"manageable GPU costs"——通过 prefix caching、批量判官，避免了搜索式评测之前"理论上对、工程上跑不动"的失败模式。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>BOA 给 harness 增加了一个迄今被忽视的维度：<strong>"评测函数本身的统计完备性"</strong>。今天 harness 工程的成熟度大多停留在"能跑起来 + 能复现"，但 BOA 提示我们：<em>采样式评测函数从一开始就是 biased estimator</em>。建议把 BOA 的 likelihood-budget 思想引入 <a href="../../harness/2026-05-04-1.html">VeRO</a> / <a href="../../harness/2026-05-05-1.html">AgentPulse</a>——把每个被监测的 Agent 的安全分从"评分"升级为"P(safe) 区间"，让 harness 输出从点估计变成置信区间，工程价值极大。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对正在做 Agent Safety 研究的人，BOA 是一个迟早要采用的工具：(a) 评估自家防御方案 (Symbolic Guardrails / EPO-Safe / Owner-Harm SSDG) 时，请<strong>同时报告 BOA 给出的 P(safe) 提升量</strong>，避免被"采样巧合"误导；(b) 设计技能时如果某项技能的 likelihood-budget 内 P(unsafe) ≥ 5%，就必须提前在 manifest 里声明高风险并接入运行时守卫；(c) BOA 把"安全"做成可审计的概率，对监管报告和保险评估极有用——这本身就是一条产品化路径。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>BOA 实质是给 Safety Benchmark 提供了"<strong>正确的统计基底</strong>"。后续 benchmark 工作（如下日 Benchmark 报告里我们要选的 AcademiClaw 等）若要保留权威性，应在评分体系中至少给出"采样估计"和"BOA 估计"的双数字；当二者偏离>5pp 时，应触发重审。这能直接降低 <a href="../../benchmark/2026-04-29-2.html">Judge Sensitivity</a> 揭示的"评判口径偏移"对结果的破坏。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Architectural Obsolescence of Unhardened Agentic-AI Runtimes</strong> — Metere (2026) · 给"网关层"硬化的具体方案<br>
+      <a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">arxiv.org/abs/2605.01740</a></li>
+      <li><strong>Alignment Contracts for Agentic Security Systems</strong> — David, Guarnieri, Gervais (2026) · 形式化对齐合同<br>
+      <a href="https://arxiv.org/abs/2605.00081" target="_blank" rel="noopener">arxiv.org/abs/2605.00081</a></li>
+      <li><strong>Model Spec Midtraining</strong> — Li, Price, Marks, Kutasov (2026) · 把对齐文档塞进 midtraining，agentic 误对齐 54%→7%<br>
+      <a href="https://arxiv.org/abs/2605.02087" target="_blank" rel="noopener">arxiv.org/abs/2605.02087</a></li>
+      <li><strong>Symbolic Guardrails</strong> — Hong et al. (2026) · 与 BOA 互补<br>
+      <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arxiv.org/abs/2604.15579</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.01644" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.01644v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/ethz-spylab/agentdojo" target="_blank" rel="noopener">对比：AgentDojo</a>
+      <a class="link-btn" href="https://github.com/centerforaisafety/HarmBench" target="_blank" rel="noopener">对比：HarmBench</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-05 #1 · 搜索来源：arXiv API + arxiv.org/search<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

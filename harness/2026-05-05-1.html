@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-05 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-05 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 5 日 · Harness Engineering · Continuous Evaluation · 把"部署后真实信号"接入 Harness</div>
+  <h1>AgentPulse：让 Harness 走出"静态跑分"——18 个真实部署信号 × 50 个 Agent × 4 维度的连续评估框架</h1>
+  <div class="en-title">AgentPulse: A Continuous Multi-Signal Framework for Evaluating AI Agents in Deployment</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">AgentPulse: Continuous Multi-Signal Framework for Evaluating AI Agents in Deployment</a><span class="winner-badge">今日选定</span></td>
+          <td>Deployment-aware harness（连续评估）</td>
+          <td>arXiv 2026-04-27 (Gao, Wang, Yu)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23781" target="_blank" rel="noopener">ClawMark: Living-World Benchmark for Multi-Turn Multi-Day Coworker Agents</a></td>
+          <td>多日多模态 coworker 评测 harness</td>
+          <td>arXiv 2026-04-26（25+ 作者）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.22871" target="_blank" rel="noopener">AutoRISE: Agent-Driven Strategy Evolution for Red-Teaming LLMs</a></td>
+          <td>Red-team harness（策略演化）</td>
+          <td>arXiv 2026-04-23 (Gautam et al.)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24283" target="_blank" rel="noopener">AutoQResearch: LLM-Guided Closed-Loop Policy Search (固定 harness 版本)</a></td>
+          <td>把 harness 当筛选器使用</td>
+          <td>arXiv 2026-04-27 (Sharma, Lau)</td>
+          <td class="score-num">82</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentPulse: A Continuous Multi-Signal Framework for Evaluating AI Agents in Deployment</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentPulse：面向部署后真实使用的多信号连续评估框架</span></div>
+      <div class="meta-item"><label>作者</label><span>Yuxuan Gao, Megan Wang, Yi Ling Yu</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（在审）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-04-27</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">https://arxiv.org/abs/2604.24038</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2604.24038" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.24038</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2604.24038" target="_blank" rel="noopener">10.48550/arXiv.2604.24038</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI / cs.CL / cs.SE</span></div>
+      <div class="meta-item"><label>篇幅 / 许可</label><span>19 页 · 5 图 · 9 表 · CC BY 4.0</span></div>
+      <div class="meta-item"><label>规模</label><span>50 个 Agent × 10 个工作类目 × 18 个实时信号</span></div>
+      <div class="meta-item"><label>开源</label><span>评分输出、信号、评测 harness 全部开源（CC BY 4.0）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个把"GitHub / 包管理 / IDE 市场 / 社交平台 / 榜单"五类真实信号汇成连续四维度评分的 Agent harness——把"跑分"换成"部署生命体征"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>静态 benchmark 衡量的是 AI Agent 在某一时刻"能做什么"，但回答不了它<strong>是否被采用、是否被维护、用户体验如何</strong>。我们提出 <strong>AgentPulse</strong>——一个连续评估框架，针对 50 个 Agent、10 个工作类目、4 个维度（Benchmark Performance / Adoption Signals / Community Sentiment / Ecosystem Health）打分；这 4 个维度由 18 个跨平台实时信号（GitHub、包管理、IDE Marketplace、社交媒体、榜单）聚合而成。</p>
+    <p>三项分析支撑该框架：(1) 4 个维度信息基本互补（n=50；最高相关 ρ=0.61，其余 |ρ|≤0.37）；(2) 控制了循环依赖的子组合（"Benchmark+Sentiment"，不含任何 GitHub 派生信号）能预测它<em>未直接聚合</em>的外部采用代理：GitHub stars (ρ_s=0.52)、Stack Overflow 提问量 (ρ_s=0.49)，以及 VS Code 安装数 (ρ_s=0.44)；(3) 在 11 个有 SWE-bench 公开成绩的子集中，AgentPulse 综合排名与 benchmark-only 排名几乎不相关（ρ_s=0.25；11 个里有 9 个排名变化≥2 名）——这正是"高能力 Agent 不一定被采用"的量化证据。<strong>AgentPulse 是一种方法论而非 ground-truth 排名</strong>。框架本身、原始信号、打分输出与评测 harness 全部以 CC BY 4.0 公开。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一周 Harness 主线持续把"自动化"做深——从 <a href="../../harness/2026-04-29-1.html">AHE</a> 的"观测驱动 harness 自演化"，到 <a href="../../harness/2026-05-02-1.html">Last Harness</a> 的两层 Meta-Evolution，到 <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a> 的"harness 自身可被骗吗"，再到 <a href="../../harness/2026-05-04-1.html">VeRO</a> 的"评测优化器本身"。这条主线全部围绕"<strong>跑分阶段</strong>"做精；但 Agent 一旦真的进入生产，<em>跑分</em>就再也无法回答管理者关心的问题：用户真在用吗？还在维护吗？社区怎么评？AgentPulse 第一次把"<strong>部署后</strong>"作为 harness 的评估对象正式提上议程。</p>
+    <p><strong>四个维度（每个由若干实时信号组成）：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>构成信号</th><th>这维度回答什么</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Benchmark Performance</strong></td><td>SWE-bench / Terminal-Bench / 各家 leaderboard 公布分</td><td>"能力上限"——传统 harness 已经做得最好的部分</td></tr>
+        <tr><td><strong>Adoption Signals</strong></td><td>GitHub stars / fork / npm-pypi 下载 / VS Code 安装数</td><td>"有人在用吗"——揭示真实分发量级</td></tr>
+        <tr><td><strong>Community Sentiment</strong></td><td>X/Twitter、Reddit、HN 提及与情绪 / Stack Overflow 提问量</td><td>"社区怎么评 / 在解决什么坑"——半结构化用户反馈</td></tr>
+        <tr><td><strong>Ecosystem Health</strong></td><td>commit 频率 / issue 关闭速度 / 插件生态 / 文档刷新</td><td>"还在被维护吗"——长期生命力指标</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>三项实证回应"这套维度凭什么有效"：</strong></p>
+    <ul class="point-list">
+      <li><strong>互补性测试（n=50）：</strong>除"Adoption × Ecosystem"高相关 (ρ=0.61) 之外，其余两两 |ρ|≤0.37——说明 4 维度并非冗余，而是各自捕获独立信息。</li>
+      <li><strong>非循环预测（n=35）：</strong>用"Benchmark+Sentiment"（去掉了 GitHub 派生信号）这个子组合，能反向预测未参与计算的 GitHub Stars / SO 提问量——证明这套打分确实跟踪到了"真实采用"。</li>
+      <li><strong>SWE-bench 子集对照（n=11）：</strong>AgentPulse 综合分 vs 仅 SWE-bench 分排名几乎无关 (ρ_s=0.25)；论文坦承在这个小样本里"高能力闭源 Agent"反倒采用度低——这恰恰是为什么不该只用 SWE-bench 来比 Agent 的有力佐证。</li>
+    </ul>
+    <p><strong>与现有 harness 的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比 lm-eval-harness / OpenAI evals / SWE-bench：</strong>它们是"同一时刻、同一题面、同一打分函数"。AgentPulse 是"<em>持续时间窗 × 多源信号 × 跨平台</em>"，更像是给 Agent 装了一组生命体征监护仪。</li>
+      <li><strong>对比 <a href="../../harness/2026-05-04-1.html">VeRO</a>（昨日 Harness 报告）：</strong>VeRO 评的是"优化器把 Agent 改好了没"，AgentPulse 评的是"Agent 部署到真实世界以后变成了什么样"。两者构成"Edit-time × Run-time"的双视角 harness。</li>
+      <li><strong>对比 ClawMark（候选 #2）：</strong>ClawMark 仍是 sandboxed sandbox 任务（13 个职业场景里的 100 个任务），离线评估为主；AgentPulse 把"线上信号"也合法化为评估对象。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>（静态评估事实标准）<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+    <div class="ref-item">Jimenez et al. (2023) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em><br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>（首个跨域 Agent benchmark）<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Lin, Liu et al. (2026) — <em>Agentic Harness Engineering (AHE)</em>（观测驱动 harness 自演化）<br>
+    <a href="https://arxiv.org/abs/2604.25850" target="_blank" rel="noopener">arxiv.org/abs/2604.25850</a></div>
+    <div class="ref-item">Ursekar, Shanker, Chatrath et al. (2026) — <em>VeRO</em>（评测优化器的 harness）<br>
+    <a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">arxiv.org/abs/2602.22480</a></div>
+    <div class="ref-item">CHAOSS / GitHub Octoverse — 开源生态健康度指标体系（参考其 issue/commit 节奏度量）<br>
+    <a href="https://chaoss.community/metrics/" target="_blank" rel="noopener">chaoss.community/metrics/</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>四维度互补：</strong>n=50，最高相关 ρ=0.61（Adoption-Ecosystem），其余两两相关 |ρ|≤0.37。"4 个维度"不是任意拍的，是经统计验证后留下来的。</li>
+      <li><strong>"无 GitHub 信号也能预测 GitHub stars" (n=35)：</strong>Benchmark+Sentiment 子组合预测 GitHub stars (ρ_s=0.52, p&lt;0.01)、Stack Overflow 提问量 (ρ_s=0.49, p&lt;0.01)、VS Code 安装数 (ρ_s=0.44, p&lt;0.05)——说明跑分+情绪足够前瞻"采用度"。</li>
+      <li><strong>SWE-bench 排名 vs AgentPulse 综合排名 ρ_s 仅 0.25 (n=11)：</strong>11 个里有 9 个排名变化≥2；高能力闭源 Agent 与高采用度负相关。这是迄今为止"benchmark ≠ 用户选择"最直接的实证。</li>
+      <li><strong>AgentPulse 把"评测"做成 SaaS 思路：</strong>所有信号、打分、harness 全部 CC BY 4.0 开源，便于第三方做 fork、做行业子榜。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AgentPulse 把 Harness 研究从"试验场内的微观闭环"扩展到"<strong>部署后宏观信号闭环</strong>"。建议把它和昨日 <a href="../../harness/2026-05-04-1.html">VeRO</a>（Edit-time）+ <a href="../../harness/2026-05-03-1.html">Terminal Wrench</a>（信度）+ <a href="../../harness/2026-05-02-1.html">Last Harness</a>（Meta-Evolution）合成"Harness 工程四象限"：(a) 编辑期能力评测（VeRO）、(b) 信度可被骗诊断（Terminal Wrench）、(c) 自动化优化（Last Harness）、(d) 部署期持续监测（AgentPulse）——这四类共同构成下一代 harness 的最小完备套件。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AgentPulse 间接给 Agent Safety 提供了"<strong>事后召回</strong>"的可能：当某个 Agent 的 Sentiment 维度突然下跌（用户大量发帖抱怨"Agent 删了我的文件"等 Owner-Harm 案例），可以触发 <a href="../../agent-safety/2026-04-30-1.html">Owner-Harm 框架</a>的事后审计或 <a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a> 的回滚。换句话说，AgentPulse 自带"<em>community-level 安全告警</em>"——这是 sandboxed safety bench 永远抓不到的。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>"Benchmark+Sentiment 能预测 GitHub stars"这个事实揭示：<strong>Sentiment 维度本身就是一个可量化、低成本、近实时的 benchmark 信号源</strong>。Safety Benchmark 设计者可以把"Sentiment-derived safety incident rate"做成 secondary metric——例如统计 Agent 相关推文里"data-loss / privacy-leak / unauthorized-action"事件密度，弥补 <a href="../../benchmark/2026-04-29-2.html">Judge Sensitivity</a> 关心的"评判者口径"对真实危害的覆盖盲区。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>VeRO: Evaluation Harness for Agents to Optimize Agents</strong> — Ursekar et al. (2026) · 编辑期 harness<br>
+      <a href="https://arxiv.org/abs/2602.22480" target="_blank" rel="noopener">arxiv.org/abs/2602.22480</a></li>
+      <li><strong>ClawMark: Living-World Benchmark for Multi-Day Coworker Agents</strong> — Meng, Du et al. (2026) · 多日多模态长任务<br>
+      <a href="https://arxiv.org/abs/2604.23781" target="_blank" rel="noopener">arxiv.org/abs/2604.23781</a></li>
+      <li><strong>AutoRISE: Strategy Evolution for Red-Teaming LLMs</strong> — Gautam et al. (2026) · Red-team harness<br>
+      <a href="https://arxiv.org/abs/2604.22871" target="_blank" rel="noopener">arxiv.org/abs/2604.22871</a></li>
+      <li><strong>SWE-bench</strong> — Jimenez et al. (2023) · 真实 GitHub issue 评估<br>
+      <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2604.24038" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2604.24038v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">对照：lm-eval-harness</a>
+      <a class="link-btn" href="https://chaoss.community/metrics/" target="_blank" rel="noopener">参考：CHAOSS 生态指标</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-05 #1 · 搜索来源：arXiv API + arxiv.org/search<br>
+  论文出处：<a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">arxiv.org/abs/2604.24038</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

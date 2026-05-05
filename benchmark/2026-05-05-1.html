@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-05 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f5c98a; color: #633806; }
+  .link-btn.primary:hover { background: #f5dcb4; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-05 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 5 日 · Safety Benchmark · Student-Authored Long-Horizon Tasks · 真实学术工作流</div>
+  <h1>AcademiClaw：当大学生给 AI Agent 出题——80 道学生提交的真实学术任务，最强模型只过 55%</h1>
+  <div class="en-title">AcademiClaw: When Students Set Challenges for AI Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.7</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.02661" target="_blank" rel="noopener">AcademiClaw: When Students Set Challenges for AI Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>真实学术长任务 + 五类安全审计</td>
+          <td>arXiv 2026-05-04 (Yu, Liu et al., 77 作者)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.02709" target="_blank" rel="noopener">An Empirical Study of Agent Skills for Healthcare</a></td>
+          <td>557 个医疗 skills 跨 10 维度审计</td>
+          <td>arXiv 2026-05-04 (Xu, Tang et al.)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01371" target="_blank" rel="noopener">ESARBench: Agentic UAV Embodied Search and Rescue</a></td>
+          <td>UE5+AirSim 600 任务 SAR benchmark</td>
+          <td>arXiv 2026-05-02 (Zhang, Chen et al.)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24668" target="_blank" rel="noopener">The Price of Agreement: LLM Sycophancy in Financial Apps</a></td>
+          <td>金融 Agent 谄媚行为基准</td>
+          <td>arXiv 2026-04-28 (Zhao, Balagopalan et al.)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.24348" target="_blank" rel="noopener">OS-SPEAR: Toolkit for OS Agents (S/P/E/R)</a></td>
+          <td>22 个 OS Agent 跨 4 维评测工具</td>
+          <td>arXiv 2026-04-28 (Wu, Hua et al.)</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AcademiClaw: When Students Set Challenges for AI Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AcademiClaw：当大学生给 AI Agent 出题</span></div>
+      <div class="meta-item"><label>作者</label><span>Junjie Yu et al.（77 位作者，末作者 Pengfei Liu）</span></div>
+      <div class="meta-item"><label>机构</label><span>GAIR-NLP（GAIR Lab） — 上海交通大学等多机构联合</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-04</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.02661" target="_blank" rel="noopener">https://arxiv.org/abs/2605.02661</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.02661" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.02661</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.02661" target="_blank" rel="noopener">10.48550/arXiv.2605.02661</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI / cs.CY</span></div>
+      <div class="meta-item"><label>规模</label><span>80 任务（230 学生提交筛出）· 25+ 专业领域 · 16 个 CUDA 任务</span></div>
+      <div class="meta-item"><label>开源</label><span>GitHub: <a href="https://github.com/GAIR-NLP/AcademiClaw" target="_blank" rel="noopener">GAIR-NLP/AcademiClaw</a> · CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      第一份"由学生出题"的双语 Agent benchmark：80 道真实长任务 + 六技术多维评分 + 五类安全审计，6 个前沿模型最高仅 55%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>OpenClaw 生态目前的 benchmark 几乎只评估"<em>助理级</em>"任务，<strong>"学术级"能力</strong>仍未被系统衡量。我们提出 <strong>AcademiClaw</strong>——一份双语 benchmark，包含 80 道复杂、长时程任务，全部来自大学生真实学术工作流（作业、研究项目、竞赛、个人项目），且都是他们认为"现有 AI Agent 解决得不够好"的题目。从 230 份学生提交、经专家严审后留下 80 道；覆盖 25+ 专业领域，从奥赛级数学/语言学问题到 GPU 级强化学习与全栈系统调试；其中 16 道需要 CUDA GPU 执行。</p>
+    <p>每道题在<strong>独立 Docker 沙箱</strong>中执行，按多维 rubric 计分（六类互补技术），并附独立的<strong>五类安全审计</strong>给出行为分析。在 6 个前沿模型上的实验显示，<strong>最强者仅 55% 通过率</strong>。进一步分析揭示：跨任务领域有明显<strong>能力边界</strong>、模型行为策略<strong>分化显著</strong>、token 消耗和输出质量之间<strong>关系松散</strong>——这些细粒度诊断信号是聚合指标无法呈现的。我们希望 AcademiClaw 与其开源数据/代码能成为社区资源，推动 Agent 在真实学术需求上变得更可靠、通用。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一周 Benchmark 主线密集发布——<a href="../../benchmark/2026-04-29-1.html">BenchGuard</a> 审 benchmark 本身、<a href="../../benchmark/2026-04-29-2.html">Judge Sensitivity</a> 揭 judge 偏移、<a href="../../benchmark/2026-04-30-1.html">CSTM-Bench</a> 看跨会话威胁、<a href="../../benchmark/2026-05-01-1.html">Claw-Eval-Live</a> 实时刷新、<a href="../../benchmark/2026-05-02-1.html">CarryOnBench</a> 双目标 safety×utility、<a href="../../benchmark/2026-05-03-1.html">RedVLA</a> 物理红队、<a href="../../benchmark/2026-05-04-1.html">SafetyALFRED</a> 厨房安全。这些工作各自补全了某个角度，但题目都是<strong>研究者出</strong>。AcademiClaw 第一次把"<strong>谁来出题</strong>"作为研究对象——让真实的<strong>学生</strong>，把"AI 没能帮我做完的真任务"作为 benchmark item。</p>
+    <p><strong>四个关键设计选择：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>关键选择</th><th>具体做法</th><th>解决了什么</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>题源 = 学生提交</strong></td><td>从 230 份学生提交里筛出 80 道，研究者只做"专家审"过滤</td><td>避免研究者出题的 publication-bias，让分布贴近"真用户实际遇到的难题"</td></tr>
+        <tr><td><strong>双语 + 25+ 领域</strong></td><td>覆盖中英文，从奥数到 GPU 级 RL 到全栈调试</td><td>让 benchmark 不被任何单一文化或单一学科绑死</td></tr>
+        <tr><td><strong>16 个 CUDA 任务</strong></td><td>必须真的跑起来 GPU 训练 / 推理</td><td>把"能写 CUDA 代码"和"能跑通 CUDA 系统"区分开</td></tr>
+        <tr><td><strong>多维 rubric + 五类安全审计</strong></td><td>六类技术互补打分；安全审计独立做行为分析</td><td>避免"通过率 = 任务质量"单点失效；保留可解释诊断信号</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>实验关键发现：</strong></p>
+    <ul class="point-list">
+      <li><strong>最强前沿模型仅 55% 通过率：</strong>这是"<em>研究者出题已饱和的 SWE-bench / GAIA</em>"和"<em>真实学生题</em>"之间的差距——80 道题里，有 45% 落在最强 Agent 也搞不定的区域。</li>
+      <li><strong>能力边界突变：</strong>同一模型在某领域 80%、邻近领域跌到 20%，<em>能力曲线极不平滑</em>。这意味着平均通过率会严重高估单领域可靠性。</li>
+      <li><strong>token 与质量解耦：</strong>多花 token 不等于更好答案——这与 inference-time scaling 的乐观叙事矛盾，提示需要单独衡量"花 token 的边际价值"。</li>
+    </ul>
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比 GAIA / AgentBench / Claw-Eval-Live：</strong>它们的题目都由研究者撰写或半自动构造；AcademiClaw 把"<em>题目分布</em>"本身从"benchmark 设计选择"还原成"<em>真实需求样本</em>"。</li>
+      <li><strong>对比 SWE-bench Verified：</strong>SWE-bench 的题源是 GitHub issues（产业语料）；AcademiClaw 是<em>学习者语料</em>——这两类数据揭示的能力边界差异巨大。</li>
+      <li><strong>独立安全审计：</strong>五类安全审计与任务通过率独立报告——这与今天 Agent Safety 的 <a href="../../agent-safety/2026-05-05-1.html">BOA 框架</a>"安全应当被独立度量"思想完全一致。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em><br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em><br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Jimenez et al. (2023) — <em>SWE-bench</em>（产业级 issue 题源对照）<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">OpenClaw — <em>OpenClaw 生态：助理级任务为主</em>（动机引文）<br>
+    <a href="https://www.openclaw.ai" target="_blank" rel="noopener">openclaw.ai</a></div>
+    <div class="ref-item">Zheng, Morgan et al. (2026) — <em>CarryOnBench</em>（safety×utility 双目标 benchmark 借鉴）<br>
+    <a href="https://arxiv.org/abs/2604.27093" target="_blank" rel="noopener">arxiv.org/abs/2604.27093</a></div>
+    <div class="ref-item">Lin, Suri, Oprea, Tan (2026) — <em>BOA</em>（独立安全度量思想呼应）<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>"学生出题" vs "研究者出题"差距巨大：</strong>SWE-bench / GAIA 的 SOTA 通过率已超 70-80%；AcademiClaw 上 SOTA 仅 55%——同一批前沿模型，更换题源后掉了 15-25 个百分点。</li>
+      <li><strong>跨域能力锯齿：</strong>论文揭示"sharp capability boundaries across task domains"——平均分掩盖了模型在某些领域不具备最低工作可靠性。</li>
+      <li><strong>token 与质量解耦：</strong>论文明确指出"token 消耗与输出质量脱节"——这是首次有 benchmark 把 cost-quality decoupling 当一等公民报告。</li>
+      <li><strong>独立的五类安全审计：</strong>与任务通过率正交报告，避免"安全分被任务通过率稀释"——和 <a href="../../agent-safety/2026-05-05-1.html">BOA</a> 的"安全应被独立度量"原则呼应。</li>
+      <li><strong>16 个 CUDA 任务：</strong>把"能写代码"与"能让 GPU 真正跑通"分开评估，迄今最严苛的可执行环境之一。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AcademiClaw 把"<strong>题源采集</strong>"本身做成 harness 的一部分——这是 <a href="../../harness/2026-05-04-1.html">VeRO</a> / <a href="../../harness/2026-05-05-1.html">AgentPulse</a> 这条主线还没充分覆盖的环节。建议把"题源采集 pipeline"（学生提交 + 专家审）写成 harness 模块——它是 benchmark 健康度的根，比"打分函数"更早决定结论的可信度。配合 16 个 CUDA 任务的 Docker 沙箱设计，AcademiClaw 实际上提供了"<em>带 GPU 的可复现 harness</em>"的最小可行实现。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"五类安全审计 × 任务通过率"<strong>正交报告</strong>这一格式应成为业内标准——这与今天 Agent Safety 主线（<a href="../../agent-safety/2026-05-05-1.html">BOA</a> 把安全做成独立的 P(safe) 标量）完全一致。如果你正在写 Agent Safety paper，建议直接把 AcademiClaw 的安全审计接入做对照——它可以成为"<em>真实长任务下的安全 + 能力联合数据点</em>"的 baseline。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这一篇论文为"<em>Safety Benchmark v2 时代</em>"指明了三个方向：(a) <strong>题源去研究者化</strong>——让用户/学生提交，研究者只做审核；(b) <strong>独立安全审计</strong>——和能力分正交报告，避免"高分掩盖高危"；(c) <strong>cost-quality 解耦诊断</strong>——把 inference-time scaling 的边际效用单独汇报。后续 Safety Benchmark 工作如果忽略这三点，很可能会被认为已经过时。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>An Empirical Study of Agent Skills for Healthcare</strong> — Xu, Tang et al. (2026) · 557 个医疗 skills 跨 10 维度审计<br>
+      <a href="https://arxiv.org/abs/2605.02709" target="_blank" rel="noopener">arxiv.org/abs/2605.02709</a></li>
+      <li><strong>ESARBench</strong> — Zhang, Chen et al. (2026) · UE5+AirSim 搜救 Agent benchmark<br>
+      <a href="https://arxiv.org/abs/2605.01371" target="_blank" rel="noopener">arxiv.org/abs/2605.01371</a></li>
+      <li><strong>OS-SPEAR</strong> — Wu, Hua et al. (2026) · OS Agent 四维评测工具<br>
+      <a href="https://arxiv.org/abs/2604.24348" target="_blank" rel="noopener">arxiv.org/abs/2604.24348</a></li>
+      <li><strong>BOA: Principled Framework for Agent Safety Measurement</strong> — Lin, Suri, Oprea, Tan (2026)<br>
+      <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.02661" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.02661" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/GAIR-NLP/AcademiClaw" target="_blank" rel="noopener">GitHub: GAIR-NLP/AcademiClaw</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.02661v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">对照：GAIA</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-05 #1 · 搜索来源：arXiv API + arxiv.org/search<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.02661" target="_blank" rel="noopener">arxiv.org/abs/2605.02661</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
