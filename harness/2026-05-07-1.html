@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-07 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-07 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 7 日 · Harness Engineering · Selective Delegation · 让"路由"成为 harness 的优化对象</div>
+  <h1>Uno-Orchestra：把"路由+分解+预算"放进同一目标——RL 端到端学一个多 Agent 编排策略</h1>
+  <div class="en-title">Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation</a><span class="winner-badge">今日选定</span></td>
+          <td>多 Agent 编排 harness（路由+分解联合学习）</td>
+          <td>arXiv 2026-05-06 (Cui/Xie/Yuan/Yang/Wang/Wu et al., 14 作者)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05191" target="_blank" rel="noopener">LongSeeker: Elastic Context Orchestration for Long-Horizon Search Agents</a></td>
+          <td>长时序上下文编排（Skip/Compress/Rollback 五原语）</td>
+          <td>arXiv 2026-05-06 (Lu/Ye/Du/Wang/Liu/Chen)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.04050" target="_blank" rel="noopener">LCM: Lossless Context Management</a></td>
+          <td>上下文管理基础设施</td>
+          <td>arXiv 2026-05-07 (Ehrlich/Blackman)</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.04711" target="_blank" rel="noopener">Budget-aware Auto Optimizer Configurator</a></td>
+          <td>预算感知评估配置器</td>
+          <td>arXiv 2026-05-07 (Liu/Peng/Hu)</td>
+          <td class="score-num">82</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Uno-Orchestra：通过选择性委派实现节俭的多 Agent 路由</span></div>
+      <div class="meta-item"><label>作者</label><span>Zhiqing Cui, Haotong Xie, Jiahao Yuan, Cheng Yang, Hanqing Wang, Yuxin Wu, Yifan Wu, Siru Zhong, Tao Yu, Yifu Guo, Siyu Zhang, Xinlei Yu, Qibing Ren, Usman Naseem（共 14 作者）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-06，cs.AI）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-06 15:07 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">https://arxiv.org/abs/2605.05007</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.05007" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.05007</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.05007" target="_blank" rel="noopener">10.48550/arXiv.2605.05007</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · 多 Agent 系统 · RL</span></div>
+      <div class="meta-item"><label>评测规模</label><span>13 个 benchmark 套 · 22 个基线 · 涵盖数学/代码/知识/长上下文/工具调用</span></div>
+      <div class="meta-item"><label>关键数字</label><span>macro pass@1 77.0% · 较最强工作流基线高 ~16 pp · 单查询成本约低 1 个数量级</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把多 Agent harness 里"分解多深、派给谁、花多少 token"三件事，第一次放进同一个 RL 目标里联合优化。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当前的 LLM 多 Agent 系统通常依赖<strong>刚性编排</strong>——要么把每个查询直接<em>扁平地</em>路由到一个 worker，要么按人工设计的工作流逐层分解任务。这两种做法的共同问题是：<strong>分解深度、worker 选择、推理预算并未在同一目标下被联合优化</strong>。</p>
+    <p>本文提出 <strong>Uno-Orchestra</strong>，一个统一的编排策略，能够<em>选择性地分解任务</em>，并把每个子任务派发给一个可行的 (model, primitive) 对；这两类决策都由 RL 联合学习，训练数据来自与真实 worker 交互记录的精选轨迹。</p>
+    <p>在覆盖<strong>数学、代码、知识、长上下文、工具调用</strong>共 13 个 benchmark 的评测中，Uno-Orchestra 相对 22 个基线达到 <strong>77.0% 的 macro pass@1</strong>，比最强工作流基线高约 <strong>16 个百分点</strong>，且<strong>单次查询成本约低一个数量级</strong>，把"选择性委派"在准确度-效率前沿上推得更远。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>这条 Harness 主线最近一年的演进，明显是从"被测对象在外"逐步往"harness 把 Agent 设计本身吃进来"推进——从 <a href="../../harness/2026-04-29-1.html">AHE</a> 的可观测性自演化、<a href="../../harness/2026-05-02-1.html">Last Harness</a> 的 Meta-Evolution、<a href="../../harness/2026-05-04-1.html">VeRO</a> 的 Edit-time 评测，到 <a href="../../harness/2026-05-05-1.html">AgentPulse</a> 引入部署期外部信号、<a href="../../harness/2026-05-06-1.html">PAEF</a> 把生产事故纳入连续评估，每一步都在"扩外延"。<strong>Uno-Orchestra 正好把扩张方向反转回来——往内核走，把 harness 内部最关键的三个旋钮（分解、路由、预算）合并成一个被学习的策略</strong>。</p>
+
+    <p><strong>核心方法：</strong>Uno-Orchestra 把多 Agent 编排建模成一个<em>选择性委派</em>过程：</p>
+    <ul class="point-list">
+      <li><strong>状态：</strong>当前未完成子任务集合 + 已观察到的中间结果。</li>
+      <li><strong>动作：</strong>对当前任务做"是否分解"的二值决策，若分解则同时输出子任务列表；若不分解则输出一个 (model, primitive) 对——指明<em>哪个模型</em>用<em>哪种工具/能力</em>去处理。</li>
+      <li><strong>奖励：</strong>解题正确性 - 累计推理成本（用于压制冗余分解和昂贵 worker 调用）。</li>
+      <li><strong>训练数据：</strong>从真实 worker 交互轨迹中精选 RL 轨迹（保留分解深度多样性、worker 选择多样性），作者称之为 "curated RL trajectories grounded in real worker interactions"。</li>
+    </ul>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>扁平路由（per-query routing）</th><th>固定工作流（hand-engineered）</th><th>Uno-Orchestra</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>分解深度</td><td>=1</td><td>固定模板</td><td>由策略学出，按需展开</td></tr>
+        <tr><td>worker 选择</td><td>从单层池里挑</td><td>每节点固定模型</td><td>(model, primitive) 联合搜索</td></tr>
+        <tr><td>预算控制</td><td>无显式预算项</td><td>无显式预算项</td><td>奖励里直接惩罚 token 成本</td></tr>
+        <tr><td>训练信号</td><td>SFT / 单任务</td><td>无（人工写）</td><td>RL 端到端，多任务统一目标</td></tr>
+      </tbody>
+    </table>
+
+    <p>站在 harness 视角看，<strong>Uno-Orchestra 把"调度器"变成 harness 评测的<em>对象</em>本身</strong>——以前 evaluation harness 默认调度策略给定，只评估底层模型/工具；现在调度策略也成了被对比的 system-under-test，且自带成本约束维度。这与昨日 <a href="../../harness/2026-05-06-1.html">PAEF</a> 的"trajectory-level"五维度评估在同一条因果链上：先把 trajectory 显式建模，再让 trajectory 上的<em>选择行为</em>被学习。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·跨域多 Agent benchmark<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Chen et al. (2024) — <em>AgentVerse: Facilitating Multi-Agent Collaboration</em>·多 Agent 协作 harness<br>
+    <a href="https://arxiv.org/abs/2308.10848" target="_blank" rel="noopener">arxiv.org/abs/2308.10848</a></div>
+    <div class="ref-item">Khattab et al. (2023) — <em>DSPy: Compiling Declarative Prompts</em>·声明式编排<br>
+    <a href="https://arxiv.org/abs/2310.03714" target="_blank" rel="noopener">arxiv.org/abs/2310.03714</a></div>
+    <div class="ref-item">Wang et al. (2023) — <em>Voyager: An Open-Ended Embodied Agent with LLMs</em>·技能选择<br>
+    <a href="https://arxiv.org/abs/2305.16291" target="_blank" rel="noopener">arxiv.org/abs/2305.16291</a></div>
+    <div class="ref-item">OpenAI (2024) — <em>Routing in Mixture-of-Experts and Tool-Use</em>·MoE 路由先验<br>
+    <a href="https://openai.com/research" target="_blank" rel="noopener">openai.com/research</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: LLMs Can Teach Themselves to Use Tools</em>·primitive 概念雏形<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>13 benchmark × 22 基线：</strong>覆盖数学（GSM8K/MATH 系）、代码（HumanEval/MBPP/SWE-bench）、知识（MMLU/MMLU-Pro）、长上下文（LongBench 类）、工具调用（API-Bank/T-Eval 类）共五大类，使评测不被某一类型支配。</li>
+      <li><strong>macro pass@1 = 77.0%：</strong>较最强工作流基线领先约 16 pp——这相当于在一年的 harness 演化曲线上一次性吃掉两个季度的提升。</li>
+      <li><strong>~10× 成本下降：</strong>不靠堆 token、不靠加深递归——而是把"该不该再分一层""该不该派给昂贵 worker"作为<em>可学习</em>动作。</li>
+      <li><strong>(model, primitive) 二元组：</strong>把"模型选择"与"工具/能力选择"打包，避免 routing 与 tool-use 训练目标互相冲突。</li>
+      <li><strong>RL 数据来自真实 worker 交互：</strong>不是合成 trajectory，而是 "grounded in real worker interactions"——这一点对 harness 的可移植性非常关键。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Uno-Orchestra 给"<strong>编排作为可学习对象</strong>"提供了第一份可对比基线。建议下一步把昨日 <a href="../../harness/2026-05-06-1.html">PAEF</a> 的五维度评估接到 Uno-Orchestra 的奖励函数上——把 Outcome Quality、Trajectory Coherence、Tool Reliability 直接当作奖励 head——这样就能形成"<em>评估即奖励、奖励即评估</em>"的统一闭环。Harness 工程下一阶段应在<strong>路由策略 + 评估指标</strong>这两个旋钮之间交替优化，而不再把它们当成两件事。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"(model, primitive) 联合搜索"为<strong>能力安全</strong>提供了精细约束面：可以把不安全 primitive（如未沙箱化 shell、未授权 HTTP）从动作空间剔除，让安全策略变成"约束化 RL"——直接接驳今日 Agent Safety 报告 <a href="../../agent-safety/2026-05-07-1.html">AgentTrust</a> 的 verdict 输出（allow/warn/block/review）作为可学习的硬约束信号；与 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 的"可证明守卫"则可作为动作约束的形式化层。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>当 harness 里的<strong>调度策略</strong>本身成为被测对象，Safety Benchmark 也必须从"测模型"扩展到"测编排策略"。今日 Benchmark 报告 <a href="../../benchmark/2026-05-07-1.html">DTap</a> 的"prompt × tool × skill × environment × combinations"五维注入正好可以与 Uno-Orchestra 的 (model, primitive) 决策面正交——形成"<em>编排策略 × 注入向量</em>"的双轴 benchmark；这能直接量化编排策略本身被攻击诱导分解的脆弱性。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>LongSeeker — Elastic Context Orchestration for Long-Horizon Search Agents</strong> · 同日提交的另一种"编排即 harness"工作<br>
+      <a href="https://arxiv.org/abs/2605.05191" target="_blank" rel="noopener">arxiv.org/abs/2605.05191</a></li>
+      <li><strong>AgentPulse — Continuous Multi-Signal Framework for Evaluating AI Agents in Deployment</strong> · 部署期信号 → 本文奖励信号候选<br>
+      <a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">arxiv.org/abs/2604.24038</a></li>
+      <li><strong>PAEF — Production Agentic Evaluation Framework</strong> · 五维度 trajectory 评估<br>
+      <a href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">arxiv.org/abs/2605.01604</a></li>
+      <li><strong>The Last Harness You'll Ever Build</strong> · Meta-Evolution Loop<br>
+      <a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">arxiv.org/abs/2604.21003</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.05007" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.05007v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.05007" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">参考工具：lm-evaluation-harness</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-07 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/recent<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">arxiv.org/abs/2605.05007</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

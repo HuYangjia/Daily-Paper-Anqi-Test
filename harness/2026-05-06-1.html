@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-06 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-06 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 6 日 · Harness Engineering · Production-aware · 把"事故现场"变成 Harness 的一等公民</div>
+  <h1>PAEF：在生产环境直接评估 Agent——7 类只有上线后才会暴露的失败模式 + 五维持续评估框架</h1>
+  <div class="en-title">Evaluating Agentic AI in the Wild: Failure Modes, Drift Patterns, and a Production Evaluation Framework</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">Evaluating Agentic AI in the Wild: Production Evaluation Framework (PAEF)</a><span class="winner-badge">今日选定</span></td>
+          <td>Production harness（5 维度连续评估）</td>
+          <td>arXiv 2026-05-02 (Mukund Pandey)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.23990" target="_blank" rel="noopener">PSA-Eval: Failure-Centered Runtime Evaluation for Trilingual Public-Space Agents</a></td>
+          <td>Runtime failure-centered harness</td>
+          <td>arXiv 2026-04-27</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.02122" target="_blank" rel="noopener">STABLEVAL: Disagreement-Aware and Stable Evaluation of AI Systems</a></td>
+          <td>评估稳定性（标注分歧建模）</td>
+          <td>arXiv 2026-05-04</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2604.28049" target="_blank" rel="noopener">Agent-Agnostic Evaluation of SQL Accuracy in Production T2SQL</a></td>
+          <td>领域专项 production harness</td>
+          <td>arXiv 2026-04-30</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Evaluating Agentic AI in the Wild: Failure Modes, Drift Patterns, and a Production Evaluation Framework</span></div>
+      <div class="meta-item"><label>中文标题</label><span>"野外"评估 Agent：失败模式、漂移图谱与一个生产环境评估框架</span></div>
+      <div class="meta-item"><label>作者</label><span>Mukund Pandey</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（在审）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-02</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">https://arxiv.org/abs/2605.01604</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.01604" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.01604</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.01604" target="_blank" rel="noopener">10.48550/arXiv.2605.01604</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · 11 页 · 6 表 · 1 图</span></div>
+      <div class="meta-item"><label>规模</label><span>"billion-event scale" 生产观察 · 7 类失败模式 · 5 维度</span></div>
+      <div class="meta-item"><label>开源</label><span>参考实现：<a href="https://github.com/mukund1985/llm-eval-toolkit" target="_blank" rel="noopener">github.com/mukund1985/llm-eval-toolkit</a></span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"实验室单次跑分"换成"亿级事件流连续监测"——首次系统性证明 ROUGE/BERTScore/AgentBench 完全测不到 7 大生产失败模式中的 4 个。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>现有 LLM 评估框架——包括 <strong>HELM、MT-Bench、AgentBench、BIG-bench</strong>——都是面向<strong>受控、单会话、实验室规模</strong>的设定设计的。它们无法应对 Agentic AI 系统在生产环境<em>持续</em>运行时所暴露出的评估挑战：决策错误的复合、工具失效的级联、非确定性输出漂移，以及长时间跨度任务下"无 ground truth"的窘境。本文给出三项贡献：</p>
+    <p>(1) 提出一个由生产观察归纳而成的 <strong>7 类 Agentic 失败模式分类法</strong>，每一类都有亿级事件量的真实样本支撑；<br>
+    (2) 实证表明 ROUGE / BERTScore / accuracy / AUC 以及上述 Agent benchmark <strong>无法识别其中 4 类失败模式</strong>，对另外 3 类则要延迟若干评估周期才能察觉；<br>
+    (3) 提出 <strong>PAEF（Production Agentic Evaluation Framework）</strong>——一个面向生产流量、五维度、可持续运行的评估框架，并提供开源参考实现，专为<em>取代而非补充</em>过去那种"季度性 benchmark 跑一次"的工作流。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>Harness 主线最近一年逐步把"自动化"做深——从 <a href="../../harness/2026-04-29-1.html">AHE</a> 的观测驱动自演化、<a href="../../harness/2026-05-02-1.html">Last Harness</a> 的 Meta-Evolution、<a href="../../harness/2026-05-04-1.html">VeRO</a> 的 Edit-time 评测，到昨日 <a href="../../harness/2026-05-05-1.html">AgentPulse</a> 把外部社区信号纳入连续评估——大家都在<em>把 harness 范围向外推</em>。但所有这些工作仍然把 Agent 当作"系统外的被测对象"，它们要么使用人造工作负载，要么使用社区的二级信号。<strong>PAEF 第一次直接走进了正在跑生产流量的 Agent 内部，把"线上事故"作为评估的一等公民。</strong></p>
+
+    <p><strong>核心论点：实验室 metric 测不到 4 类失败模式</strong>。下表是论文给出的失败模式清单与传统指标的覆盖情况：</p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>失败模式（论文归纳）</th><th>典型表现</th><th>传统 metric 是否能识别？</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Compounding decision errors</strong></td><td>每步小偏差，几十步后跑偏到完全错误目标</td><td>❌ 单步打分被平均掉</td></tr>
+        <tr><td><strong>Tool failure cascades</strong></td><td>工具 A 给了脏数据，B 拿来生成了"自信但错"的结论</td><td>❌ 工具出错本身被遮蔽</td></tr>
+        <tr><td><strong>Non-deterministic output drift</strong></td><td>同一输入，今天明天答案不同；trajectory 分布漂移</td><td>⚠️ 多周期延迟才能看出</td></tr>
+        <tr><td><strong>Missing ground-truth long-horizon</strong></td><td>"写一份季度市场报告"没有标准答案</td><td>❌ ROUGE/BERTScore 失效</td></tr>
+        <tr><td><strong>Unsafe action emergence</strong></td><td>合规步骤 ×N → 复合违规</td><td>⚠️ 单步合规率掩盖整体风险</td></tr>
+        <tr><td><strong>Context-window erosion</strong></td><td>长会话后忘了用户初始约束</td><td>❌ Benchmark 默认短任务</td></tr>
+        <tr><td><strong>Adoption-quality decoupling</strong></td><td>能力提升但用户流失（或反之）</td><td>❌ Benchmark 不感知采用</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <p><strong>PAEF 的五维度（论文表 3）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Outcome Quality</strong>——含 LLM-as-judge、用户反馈、规则校验，用以替代单一 ROUGE 类指标。</li>
+      <li><strong>Trajectory Coherence</strong>——衡量 Agent 多步决策路径是否前后逻辑自洽（覆盖"compounding errors"和"context erosion"）。</li>
+      <li><strong>Tool Reliability</strong>——单独把工具调用错误与上游脏数据建模成可观测信号（覆盖"tool cascades"）。</li>
+      <li><strong>Drift & Variance</strong>——对相同输入的输出分布做时间序列监控（覆盖"output drift"）。</li>
+      <li><strong>Operational Safety</strong>——以"trajectory-level"违规率代替"step-level"违规率，补齐 <a href="../../agent-safety/2026-04-30-1.html">Owner-Harm</a>、<a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 在线上的盲区。</li>
+    </ul>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比 HELM / MT-Bench / BIG-bench：</strong>它们仍是"prompt → response"的单回合静态打分；PAEF 接的是"trajectory"，每条都包含工具调用、状态变化与时间戳。</li>
+      <li><strong>对比 AgentBench：</strong>AgentBench 把任务搬到沙盒，PAEF 直接挂在已有线上系统的可观测面（OpenTelemetry trace + LLM judge），无需把 Agent 重新塞进 sandbox。</li>
+      <li><strong>对比 <a href="../../harness/2026-05-05-1.html">AgentPulse</a>（昨日 Harness 报告）：</strong>AgentPulse 用 GitHub/社区/榜单等"外部生命体征"评估 Agent；PAEF 用"内部失败模式"评估 Agent。两者构成互补：<em>外部生命体征 + 内部失败诊断</em> = 完整的 production harness。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Liang et al. (2023) — <em>Holistic Evaluation of Language Models (HELM)</em>·静态多任务评估的标准<br>
+    <a href="https://arxiv.org/abs/2211.09110" target="_blank" rel="noopener">arxiv.org/abs/2211.09110</a></div>
+    <div class="ref-item">Zheng et al. (2023) — <em>MT-Bench / Chatbot Arena: LLM-as-Judge with MT-Bench</em>·LLM 评判范式<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·首个跨域 Agent benchmark<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Srivastava et al. (2023) — <em>Beyond the Imitation Game (BIG-Bench)</em>·任务广度基准<br>
+    <a href="https://arxiv.org/abs/2206.04615" target="_blank" rel="noopener">arxiv.org/abs/2206.04615</a></div>
+    <div class="ref-item">Lin, Zhang et al. (2024) — <em>ROUGE 与 BERTScore 在自由生成评估中的局限</em><br>
+    <a href="https://arxiv.org/abs/1904.09675" target="_blank" rel="noopener">arxiv.org/abs/1904.09675</a> (BERTScore 原文)</div>
+    <div class="ref-item">OpenTelemetry (CNCF) — Agent 可观测性事实标准<br>
+    <a href="https://opentelemetry.io/" target="_blank" rel="noopener">opentelemetry.io</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>4/7 完全测不到：</strong>论文核心实证——ROUGE / BERTScore / accuracy / AUC + AgentBench 这一套主流组合，对 7 类生产失败模式里的 4 类<em>识别率为 0</em>。</li>
+      <li><strong>3/7 严重滞后：</strong>对剩余 3 类，传统 metric 也只能在多个评估周期之后被动察觉，错过实时干预窗口。</li>
+      <li><strong>"亿级事件"规模：</strong>论文使用 billion-event scale 生产数据归纳失败模式，是当前 Agent 评估文献中规模最大的实证之一。</li>
+      <li><strong>开源参考实现：</strong>llm-eval-toolkit（GitHub）已发布五维度的初版打分器，可直接挂到现有 Agent 服务上做 trace-level 持续评估。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>PAEF 把 Harness 研究从"实验台"正式扩展到"生产监控管"。结合昨日 <a href="../../harness/2026-05-05-1.html">AgentPulse</a> 的"宏观社区信号"，可形成<strong>"内观 PAEF + 外观 AgentPulse"</strong> 的双层 production harness。建议下一步 Harness 工程把"trajectory schema"标准化（OpenTelemetry-Agent 提案值得跟进），让不同 Agent 框架都能直接接入同一套五维度评分器。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>论文把 Operational Safety 从"step-level"升到"trajectory-level"，与 <a href="../../agent-safety/2026-03-28-1.html">SafetyDrift</a>（"几个安全步骤复合成数据外泄"）和 <a href="../../agent-safety/2026-04-30-1.html">Owner-Harm</a> 形成自然对接。建议把 Symbolic Guardrails 等运行时防护策略的评估指标，从"被拦截率"改为"trajectory-level 违规漂移率"——这正是 PAEF Drift & Variance 维度提供的新接口。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>"4/7 失败模式 benchmark 完全测不到"是对当下 Safety Benchmark 设计哲学的有力警示——纯静态题面只能覆盖<em>显性风险</em>。Safety Benchmark 设计者应该把生产侧的失败模式（compounding error、tool cascades、context erosion）作为新的题型注入，使其与今日 Benchmark 报告 <a href="../../benchmark/2026-05-06-1.html">Dreadnode 红队 Agent</a> 的"自动化高吞吐红队"结果形成内外闭环。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AgentPulse — Continuous Multi-Signal Framework for Evaluating AI Agents in Deployment</strong> · 部署期外部信号<br>
+      <a href="https://arxiv.org/abs/2604.24038" target="_blank" rel="noopener">arxiv.org/abs/2604.24038</a></li>
+      <li><strong>PSA-Eval — Failure-Centered Runtime Evaluation for Trilingual Public-Space Agents</strong> · 部署期失败诊断<br>
+      <a href="https://arxiv.org/abs/2604.23990" target="_blank" rel="noopener">arxiv.org/abs/2604.23990</a></li>
+      <li><strong>Holistic Agent Leaderboard (HAL) — The Missing Infrastructure for AI Agent Evaluation</strong> · 评估基础设施<br>
+      <a href="https://arxiv.org/abs/2510.11977" target="_blank" rel="noopener">arxiv.org/abs/2510.11977</a></li>
+      <li><strong>STABLEVAL — Disagreement-Aware and Stable Evaluation of AI Systems</strong> · 评估稳定性<br>
+      <a href="https://arxiv.org/abs/2605.02122" target="_blank" rel="noopener">arxiv.org/abs/2605.02122</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.01604" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.01604v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/mukund1985/llm-eval-toolkit" target="_blank" rel="noopener">参考实现：llm-eval-toolkit</a>
+      <a class="link-btn" href="https://opentelemetry.io/" target="_blank" rel="noopener">参考：OpenTelemetry</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-06 #1 · 搜索来源：arXiv API + arxiv.org/search<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">arxiv.org/abs/2605.01604</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

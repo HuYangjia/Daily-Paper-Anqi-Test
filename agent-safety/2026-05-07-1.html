@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-07 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #ecfaf3; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #c8ecde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #ecfaf3; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-07 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 7 日 · Agent Skills Safety · Runtime Interception · 把工具调用变成可裁决的语义事件</div>
+  <h1>AgentTrust：在工具调用执行前给出 allow/warn/block/review——300+630 场景下 95–96.7% 裁决准确率，毫秒级延迟</h1>
+  <div class="en-title">AgentTrust: Runtime Safety Evaluation and Interception for AI Agent Tool Use</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.04785" target="_blank" rel="noopener">AgentTrust: Runtime Safety Evaluation and Interception for AI Agent Tool Use</a><span class="winner-badge">今日选定</span></td>
+          <td>运行时工具调用拦截 + verdict 系统</td>
+          <td>arXiv 2026-05-06 (Chenglin Yang)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.04572" target="_blank" rel="noopener">From Parameter Dynamics to Risk Scoring: Sample-Level Safety Degradation</a></td>
+          <td>fine-tuning 安全衰减量化（SQSD）</td>
+          <td>arXiv 2026-05-06 · ICML 2026 (Wang et al., Northeastern China)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05017" target="_blank" rel="noopener">Embodied AI Requires a Privacy-Utility Trade-off (Position)</a></td>
+          <td>具身 AI 隐私-效用权衡（立场论文）</td>
+          <td>arXiv 2026-05-06 · ICML 2026 (Fan et al.)</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.04313" target="_blank" rel="noopener">NoisyCausal: Benchmark for Causal Reasoning Under Structured Noise</a></td>
+          <td>因果推理鲁棒性（外延阅读）</td>
+          <td>arXiv 2026-05-07 (Xu, Fu)</td>
+          <td class="score-num">82</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentTrust: Runtime Safety Evaluation and Interception for AI Agent Tool Use</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentTrust：面向 AI Agent 工具调用的运行时安全评估与拦截</span></div>
+      <div class="meta-item"><label>作者</label><span>Chenglin Yang（独立作者；项目随论文同步开源）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-06）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-06 11:38 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.04785" target="_blank" rel="noopener">https://arxiv.org/abs/2605.04785</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.04785" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.04785</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.04785" target="_blank" rel="noopener">10.48550/arXiv.2605.04785</a></div>
+      <div class="meta-item"><label>数据规模</label><span>内部 benchmark 300 场景（6 类风险）+ 独立外部 630 真实对抗场景</span></div>
+      <div class="meta-item"><label>裁决准确率</label><span>内部：95.0% 总裁决 / 73.7% 风险等级；外部：96.7% 总裁决 · shell 混淆样本 ~93%</span></div>
+      <div class="meta-item"><label>许可</label><span>AGPL-3.0（含 MCP 服务器实现）</span></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · cs.CR · 运行时安全</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      Agent 安全的"沙盒/守卫/post-hoc"三类各管一段，AgentTrust 把它们合并到 Tool 调用前的<em>一个</em>裁决面上：allow / warn / block / review。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>现代 AI Agent 通过<strong>工具调用</strong>对世界产生真实副作用——文件操作、shell 命令、HTTP 请求、数据库查询。<em>一次</em>不安全的动作就足以造成不可逆伤害：误删、凭据泄露、数据外泄。现有防御不完整：</p>
+    <ul class="point-list">
+      <li><strong>Post-hoc benchmark</strong>——只在执行<em>之后</em>测量行为；</li>
+      <li><strong>静态守卫</strong>——遗漏混淆与多步上下文；</li>
+      <li><strong>沙盒</strong>——约束代码<em>在哪里跑</em>，但不理解动作<em>意味着什么</em>。</li>
+    </ul>
+    <p>本文提出 <strong>AgentTrust</strong>——一个运行时安全层，<em>在执行前</em>拦截 Agent 工具调用并返回结构化裁决：<strong>allow / warn / block / review</strong>。AgentTrust 由四个组件组成：<strong>shell 反混淆归一化器</strong>、<strong>SafeFix</strong>（更安全替代建议）、<strong>RiskChain</strong>（多步攻击链检测）、<strong>cache-aware LLM-as-Judge</strong>（处理歧义输入）。</p>
+    <p>作者发布两个 benchmark：<strong>300 场景 × 6 类风险</strong>的内部 benchmark 与独立构造的 <strong>630 场景</strong>真实对抗 benchmark。在内部 benchmark 上仅靠产线规则集即可达 <strong>95.0% 总裁决准确率 / 73.7% 风险等级准确率</strong>，端到端延迟为<strong>低毫秒级</strong>；在 630 场景外部 benchmark 上（评估时使用了打补丁的规则集，<em>不</em>主张零样本），AgentTrust 达 <strong>96.7% 总裁决准确率</strong>，其中对 shell 混淆攻击约 <strong>93%</strong>。AgentTrust 在 <strong>AGPL-3.0</strong> 下发布，并提供一个 <strong>Model Context Protocol (MCP) 服务器</strong>，可被任意 MCP 兼容 Agent 直接接入。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一年这条 Agent Safety 主线已经把"事故什么时候发生"切成了三段研究：执行前（<a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 在策略上"可证明"，但需要预先有 policy）、执行中（<a href="../../agent-safety/2026-04-30-1.html">Owner-Harm</a>、<a href="../../agent-safety/2026-05-01-1.html">OS-BLIND</a> 揭示运行时空白）、执行后（<a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a>）。<strong>AgentTrust 第一次给"执行前 N 毫秒"这个时间窗设计了一个完整、可部署、毫秒级延迟、覆盖混淆/多步/歧义的运行时安全层</strong>，并且不预设事先有 policy——它自己就承担"现场判断"的角色。</p>
+
+    <p><strong>四大组件如何协同：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>组件</th><th>功能</th><th>解决的现有空白</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Shell Deobfuscation Normalizer</strong></td><td>把混淆 shell 命令归一化（base64/eval/aliasing/quote-tricks）</td><td>静态规则误判混淆为良性</td></tr>
+        <tr><td><strong>SafeFix</strong></td><td>对潜在风险动作给出"更安全替代"（如 rm → trash, curl|sh → 可审计安装器）</td><td>沙盒/守卫只能 block，无法引导回正轨</td></tr>
+        <tr><td><strong>RiskChain</strong></td><td>检测跨步骤的攻击链（如读凭据 → 改 .ssh/config → 外发）</td><td>Symbolic Guardrails 假设 policy 已知</td></tr>
+        <tr><td><strong>Cache-aware LLM-as-Judge</strong></td><td>对仅靠规则无法判定的歧义动作做语义裁决，并复用判定缓存</td><td>朴素 LLM-judge 延迟过高、规则系统覆盖不足</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <ul class="point-list">
+      <li><strong>对比传统沙盒（Docker/seccomp/firejail）：</strong>沙盒约束<em>能力面</em>但不理解<em>语义</em>；AgentTrust 在调用层做语义级 verdict。</li>
+      <li><strong>对比 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a>：</strong>后者要求预先存在显式策略；AgentTrust 自带 LLM-judge 兜底，<strong>无 policy 也能上线</strong>，可与 Symbolic Guardrails 互为前后端（Symbolic 提供高保证主干，AgentTrust 处理 policy 真空）。</li>
+      <li><strong>对比 <a href="../../agent-safety/2026-05-05-1.html">BOA</a>：</strong>BOA 把"安全度量"改成搜索（评估侧），AgentTrust 把"安全干预"做成实时拦截（部署侧）——评估-部署两条腿同时落地。</li>
+      <li><strong>对比 post-hoc benchmark（HarmBench/AgentBench-Safety）：</strong>它们事后量化伤害；AgentTrust 让伤害根本不发生。</li>
+      <li><strong>开源策略：</strong>AGPL-3.0 + MCP server——任何 MCP 兼容 Agent（含 Claude Desktop/IDE/自研）都可零改动接入，这是迄今为止最低门槛的运行时安全层接入方式。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Hong, She, Kang, Timperley, Kästner — <em>Symbolic Guardrails for Agent Safety</em>·策略可证明守卫<br>
+    <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arxiv.org/abs/2604.15579</a></div>
+    <div class="ref-item">Lin, Suri, Oprea, Tan — <em>BOA: Search-not-Sample Safety Evaluation</em>·安全评估范式<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em><br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP) Specification</em>·标准化工具调用接口<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Indirect Prompt Injection in LLM-Integrated Applications</em>·工具污染源头<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>Tool-Use Safety Survey</em>·工具调用安全分类<br>
+    <a href="https://arxiv.org/abs/2402.10302" target="_blank" rel="noopener">arxiv.org/abs/2402.10302</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>内部 benchmark 95.0%：</strong>300 场景 × 6 类风险，仅靠产线规则集（无 LLM-judge 兜底）。</li>
+      <li><strong>外部 benchmark 96.7%：</strong>独立构造 630 场景对抗集；论文明确披露使用打补丁规则集，<em>不</em>主张零样本——这种诚信披露在该领域并不常见。</li>
+      <li><strong>shell 混淆攻击 ~93% 拦截：</strong>这是现有静态守卫最薄弱的一环；AgentTrust 的 Deobfuscation Normalizer 单点收益显著。</li>
+      <li><strong>低毫秒级 E2E 延迟：</strong>对线上 Agent 来说"零感知拦截"——cache-aware LLM-as-Judge 的关键工程贡献。</li>
+      <li><strong>AGPL-3.0 + MCP：</strong>第一份"开箱即用"的运行时 Agent 安全层；对 MCP 生态有可能形成事实标准位。</li>
+      <li><strong>结构化 verdict（4 类）：</strong>allow/warn/block/review 设计远比"true/false"灵活——为人类介入（review）和自动改写（SafeFix）留足空间。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AgentTrust 的 verdict 流可以直接接入今日 Harness 报告 <a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 的奖励函数：把"被 block / warn 次数"作为编排策略的硬约束/软约束信号——让"安全编排"的目标显式进入 RL 而不是事后修正。这种"runtime safety verdict ↔ RL 奖励"的耦合，会成为下一阶段 production harness 的标配。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AgentTrust 让 Agent Safety 真正进入"<strong>工程可消费</strong>"阶段——AGPL-3.0 + MCP server 意味着研究产出能立即变成生态共享件。下一步该做的是把 <a href="../../agent-safety/2026-05-04-1.html">Symbolic Guardrails</a> 的可证明策略与 AgentTrust 的 LLM-judge 兜底正交合层（symbolic 主干 + LLM 兜底 + 缓存）；同时把 <a href="../../agent-safety/2026-05-03-1.html">Human-Guided Harm Recovery</a> 的偏好学习反哺 SafeFix 的"安全替代生成"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>"内部 300 + 外部 630 + 不主张零样本"是一个值得普及的 benchmark 报告范式——明确区分 in-distribution 与 wild distribution、明确披露规则是否打过补丁。和今日 Benchmark 报告 <a href="../../benchmark/2026-05-07-1.html">DTap</a> 的 14 域 × 50 环境结合，可形成"DTap 出题 + AgentTrust 应试"的端到端 red-team 闭环：DTap 自动注入攻击向量，AgentTrust 给出 verdict，verdict 错误回流为新 benchmark 样本。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Symbolic Guardrails for Agent Safety</strong> · 策略可证明守卫，AgentTrust 的可形式化前端候选<br>
+      <a href="https://arxiv.org/abs/2604.15579" target="_blank" rel="noopener">arxiv.org/abs/2604.15579</a></li>
+      <li><strong>BOA — Best-of-All Search-Based Safety Evaluation</strong> · 评估侧"搜索而非采样"<br>
+      <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></li>
+      <li><strong>Owner-Harm — Threat Model of Agent Harming Its Deployer</strong> · AgentTrust 重点拦截类目<br>
+      <a href="https://arxiv.org/abs/2604.18658" target="_blank" rel="noopener">arxiv.org/abs/2604.18658</a></li>
+      <li><strong>Model Context Protocol Specification</strong> · 接入标准<br>
+      <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.04785" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.04785" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.04785v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.04785" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP 协议规范</a>
+      <a class="link-btn" href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 许可</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-07 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/recent<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.04785" target="_blank" rel="noopener">arxiv.org/abs/2605.04785</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
