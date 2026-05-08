@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-08 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 8 日 · Harness Engineering · Endpoint Granularity · 把"模型"换成"端点"作评测单元</div>
+  <h1>Token Arena：把推理 benchmark 颗粒度从 model 推到 (provider, model, SKU) endpoint，5 轴 + 3 复合 + 工作负载预设</h1>
+  <div class="en-title">Token Arena: A Continuous Benchmark Unifying Energy and Cognition in AI Inference</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.3</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 4 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">Token Arena: A Continuous Benchmark Unifying Energy and Cognition in AI Inference</a><span class="winner-badge">今日选定</span></td>
+          <td>endpoint 级连续评测 harness（5 轴 × 3 复合 × 工作负载预设）</td>
+          <td>arXiv 2026-05-01 (Gao, Wang, Yu)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00737" target="_blank" rel="noopener">To Call or Not to Call: A Framework to Assess and Optimize LLM Tool Calling</a></td>
+          <td>tool-use 决策评估框架（必要性/效用/可负担性三因子）</td>
+          <td>arXiv 2026-05-01 (Wu, Das, Amani et al., MPI-SWS)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00136" target="_blank" rel="noopener">Are Tools All We Need? Unveiling the Tool-Use Tax in LLM Agents</a></td>
+          <td>分解 tool-use 实际收益的因子干预框架</td>
+          <td>arXiv 2026-04-30 (Zhang, Xiong, Zhong et al.)</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">Skills as Verifiable Artifacts: A Trust Schema for HITL Agent Runtimes</a></td>
+          <td>skill 验证级与 HITL 运行时规范（harness-/model-agnostic）</td>
+          <td>arXiv 2026-05-01 (Alfredo Metere)</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Token Arena: A Continuous Benchmark Unifying Energy and Cognition in AI Inference</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Token Arena：一个统一能耗与认知质量的连续推理 Benchmark</span></div>
+      <div class="meta-item"><label>作者</label><span>Yuxuan Gao, Megan Wang, Yi Ling Yu</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-01，cs.AI；14 页 / 1 图 / 8 表）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-01 00:05:54 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">https://arxiv.org/abs/2605.00300</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.00300" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.00300</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.00300" target="_blank" rel="noopener">10.48550/arXiv.2605.00300</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · benchmark · serving systems</span></div>
+      <div class="meta-item"><label>评测规模</label><span>78 个 endpoint · 12 个模型家族 · 5 个核心轴 · 3 个复合指标</span></div>
+      <div class="meta-item"><label>关键数字</label><span>同模型不同 endpoint 数学/代码均值差距 ≤ 12.5 pp · 模型指纹相似度差 ≤ 12 pp · 尾延迟差 1 个数量级 · 焦耳/正确答案差 6.2×</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0（含 schema、probe、eval harness、leaderboard v1.0 全部释出）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把推理 benchmark 的评测单元从"模型"下沉到"endpoint=（provider, model, SKU）"，并连续测量"焦耳 / 正确答案"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>公开的推理 benchmark 大多在<strong>模型</strong>与<strong>提供商</strong>层面对 AI 系统作横向比较，但实际部署决策的最小单位是 <strong>endpoint</strong>——即（provider, model, SKU）三元组：暴露了某种特定的<em>量化方案、解码策略、区域、推理服务栈</em>的 SKU。</p>
+    <p>本文提出 <strong>Token Arena</strong>：以 endpoint 颗粒度连续评测推理，沿 <strong>5 个核心轴</strong>（输出速度、首 token 时间、工作负载混合价格、有效上下文、live endpoint 上的质量）测量，并联合一个建模能耗估计，合成出 <strong>3 个头条复合指标</strong>：每正确答案的焦耳数、每正确答案的美元数、endpoint 保真度（输出分布与第一方参考的相似度）。</p>
+    <p>该框架的新颖性既是经验也是方法论上的。在 <strong>78 个 endpoint × 12 个模型家族</strong>上：同一模型在不同 endpoint 上数学/代码任务的<strong>平均准确率最大差距 12.5 个百分点</strong>，与第一方的指纹相似度最大相差 12 个百分点，<strong>尾延迟相差 1 个数量级</strong>，建模焦耳/正确答案相差 <strong>6.2 倍</strong>。进一步表明<strong>工作负载感知的混合定价会显著重排榜单</strong>：在 chat 预设（输入:输出 = 3:1）下排名前 10 的 endpoint，有 7 个在检索增强预设（20:1）下跌出前 10；reasoning 预设（1:5）反过来抬高了那些被 chat 预设惩罚的前沿闭源模型。</p>
+    <p>作者以 CC BY 4.0 释出整套框架、schema、probe、eval harness 与 leaderboard v1.0 快照。Token Arena 不是单一榜单，而是<strong>一种方法论</strong>，作者公布完整溯源信息与限制条件，并欢迎外部复现。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一年的 evaluation harness 演化曲线主要在做"<em>外延扩张</em>"——从 <a href="../../harness/2026-05-04-1.html">VeRO</a> 把 Edit-time 接进来、<a href="../../harness/2026-05-05-1.html">AgentPulse</a> 把 deployment 信号接进来、<a href="../../harness/2026-05-06-1.html">PAEF</a> 把生产事故接进来，到昨日 <a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 把"调度策略"作为被测对象内化。<strong>Token Arena 是这条主线上的另一种"内化"——把 serving 栈本身（量化、解码、区域、服务实现）也当作评测变量</strong>。它指出：当前公开榜单的最大盲点是把（provider, model, SKU）扁平化看作"同一个模型"，因而忽略了同一模型在不同 endpoint 上 12.5 pp 的准确率漂移与一个数量级的尾延迟差异——这些差异恰好是真实部署 ROI 的支配项。</p>
+
+    <p><strong>核心方法（5 轴 → 3 复合）：</strong></p>
+    <ul class="point-list">
+      <li><strong>核心轴 1（速度）：</strong>output speed = tokens/s（持续区间）。</li>
+      <li><strong>核心轴 2（延迟）：</strong>time to first token（TTFT 与尾分位）。</li>
+      <li><strong>核心轴 3（价格）：</strong>workload-blended price（混合输入/输出比例计费，三种预设：chat 3:1、retrieval-aug 20:1、reasoning 1:5）。</li>
+      <li><strong>核心轴 4（容量）：</strong>effective context（实测有效长度，非 spec context）。</li>
+      <li><strong>核心轴 5（质量）：</strong>live endpoint quality（在线测试集分数 + 输出分布与 first-party reference 的指纹相似度）。</li>
+      <li><strong>建模能耗：</strong>从硬件 SKU、量化、并行度反推 J/token。</li>
+      <li><strong>3 个复合指标：</strong>① 焦耳/正确答案；② 美元/正确答案；③ endpoint fidelity（与 first-party reference 的输出分布相似度）。</li>
+    </ul>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>HELM / OpenLLM / Chatbot Arena 等模型级榜单</th><th>MLPerf / Inference Bench 等系统级 benchmark</th><th>Token Arena</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测单元</td><td>model</td><td>(model, hardware) 但定价不可比</td><td>(provider, model, SKU) endpoint</td></tr>
+        <tr><td>价格维度</td><td>无 / 单点报价</td><td>无</td><td>三种工作负载预设的 blended price</td></tr>
+        <tr><td>能耗维度</td><td>无</td><td>原始 J/token，未对齐到任务质量</td><td>焦耳/正确答案（与正确率耦合）</td></tr>
+        <tr><td>偏移度量</td><td>仅 accuracy</td><td>无</td><td>endpoint fidelity（与 first-party 的输出分布相似度）</td></tr>
+        <tr><td>更新方式</td><td>定期重跑</td><td>定期重跑</td><td>continuous（live endpoint）</td></tr>
+      </tbody>
+    </table>
+
+    <p>站在 harness 工程的视角，Token Arena 的最尖锐贡献是<strong>承认 SKU 漂移并把它量化</strong>：榜单上的"GPT-4o"或"Claude Sonnet"在不同区域、不同量化方案、不同 serving 栈下，输出分布会显著漂移，且漂移幅度足以吞掉"前 10/前 11"这种细粒度排名差异。这与昨日 <a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 的 (model, primitive) 决策面是<strong>正交互补</strong>的——前者把"用哪个 endpoint"作为 harness 测量目标，后者把"派给哪个 worker"作为 harness 学习目标，二者一起把 harness 的量纲推进到 deployment-fidelity 时代。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Liang et al. (2022) — <em>HELM: Holistic Evaluation of Language Models</em>·多维度模型级评测奠基<br>
+    <a href="https://arxiv.org/abs/2211.09110" target="_blank" rel="noopener">arxiv.org/abs/2211.09110</a></div>
+    <div class="ref-item">Chiang et al. (2024) — <em>Chatbot Arena: New Open Platform for LLM Evaluation by Human Preference</em>·Live evaluation 灵感<br>
+    <a href="https://arxiv.org/abs/2403.04132" target="_blank" rel="noopener">arxiv.org/abs/2403.04132</a></div>
+    <div class="ref-item">MLCommons — <em>MLPerf Inference Benchmark</em>·硬件级 throughput / latency 基准<br>
+    <a href="https://mlcommons.org/benchmarks/inference-datacenter/" target="_blank" rel="noopener">mlcommons.org/benchmarks/inference-datacenter</a></div>
+    <div class="ref-item">Sheng et al. (2023) — <em>FlexGen: High-throughput Generative Inference of LLMs</em>·serving 栈影响 throughput 实证<br>
+    <a href="https://arxiv.org/abs/2303.06865" target="_blank" rel="noopener">arxiv.org/abs/2303.06865</a></div>
+    <div class="ref-item">Frantar et al. (2023) — <em>GPTQ: Accurate Post-Training Quantization for Generative Pretrained Transformers</em>·量化造成的输出分布漂移<br>
+    <a href="https://arxiv.org/abs/2210.17323" target="_blank" rel="noopener">arxiv.org/abs/2210.17323</a></div>
+    <div class="ref-item">Patterson et al. (2021) — <em>Carbon Emissions and Large Neural Network Training</em>·能耗-任务质量耦合视角<br>
+    <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">arxiv.org/abs/2104.10350</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>78 endpoint × 12 模型家族：</strong>覆盖前沿闭源模型与多个开源家族，每个家族跨多 SKU（量化级、区域、serving 栈不同）。</li>
+      <li><strong>同模型 endpoint 漂移：</strong>数学/代码任务平均准确率差距最高 <strong>12.5 pp</strong>；与第一方参考的指纹相似度差距 12 pp；尾延迟差距 <strong>1 个数量级</strong>。</li>
+      <li><strong>能耗-质量耦合：</strong>"建模焦耳 / 正确答案"指标在 endpoint 间相差 <strong>6.2×</strong>——同样问题答对一次的能耗最坏比最好高 6 倍。</li>
+      <li><strong>预设重排榜单：</strong>chat 预设（3:1）的前 10 中 <strong>7 个</strong>在 retrieval-aug 预设（20:1）下跌出前 10；reasoning 预设（1:5）抬高了被 chat 预设惩罚的前沿闭源模型。</li>
+      <li><strong>方法论而非榜单：</strong>整套框架、schema、probe、eval harness 与 leaderboard v1.0 快照以 CC BY 4.0 全部释出，公布完整溯源与 limitations，明确鼓励外部复现。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Token Arena 给 harness 工程加了<strong>三件被长期忽略的东西</strong>：（1）把 SKU 当成评测变量，意味着今后任何 evaluation harness 都应该带 endpoint metadata；（2）"焦耳/正确答案"把能耗第一次和任务质量耦合，这正好是你做 W4A4 量化时端到端 benchmark 的一个理想 north-star——可以把 ZipperEngine 的 e2e 能耗除以正确率作为<em>真正的 ROI 指标</em>；（3）workload preset 把 "prefill : decode 比例" 显式化，这与你做 prefill_seq=2048 / decode_seq=1 的 BF16 benchmark 框架在<strong>同一条因果链</strong>上：harness 必须按 workload 预设报告，不要再给单一吞吐数字。建议把 endpoint fidelity 作为 ZipperQuant 论文 Section 4.2 实验报告的额外列。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"endpoint 指纹漂移高达 12 个百分点" 直接揭示了 agent safety 评测的一个隐患：用第一方 model 训练的 guardrail，在第三方 endpoint 上可能<strong>因为 SKU 漂移而失效</strong>。建议把今日 Agent Safety 报告 <a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a> 的 guardrail 评测扩展为 endpoint 矩阵——同一模型在不同 SKU 下的 refusal-rate 和 utility 差异，可能比模型间差异更大。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Token Arena 的方法论可直接迁移到 safety benchmark：safety 表现也应该按 endpoint 报告而不是按 model 报告。今日 Benchmark 报告 <a href="../../benchmark/2026-05-08-1.html">XL-SafetyBench</a> 已经把"语言/文化"作为评测正交轴，下一步自然就是叠加 "(provider, model, SKU)" 第三轴——这能区分"模型本身存在文化盲区"与"特定 endpoint 的安全栈过度过滤"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Uno-Orchestra — Parsimonious Agent Routing via Selective Delegation</strong> · 把 (model, primitive) 作为 harness 学习目标<br>
+      <a href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">arxiv.org/abs/2605.05007</a></li>
+      <li><strong>To Call or Not to Call: A Framework to Assess and Optimize LLM Tool Calling</strong> · tool-use 决策三因子框架<br>
+      <a href="https://arxiv.org/abs/2605.00737" target="_blank" rel="noopener">arxiv.org/abs/2605.00737</a></li>
+      <li><strong>PAEF — Production Agentic Evaluation Framework</strong> · 把生产 trajectory 作为评估对象<br>
+      <a href="https://arxiv.org/abs/2605.01604" target="_blank" rel="noopener">arxiv.org/abs/2605.01604</a></li>
+      <li><strong>HELM — Holistic Evaluation of Language Models</strong> · 模型级多维评测奠基<br>
+      <a href="https://arxiv.org/abs/2211.09110" target="_blank" rel="noopener">arxiv.org/abs/2211.09110</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.00300" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.00300v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.00300" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">参考工具：lm-evaluation-harness</a>
+      <a class="link-btn" href="https://mlcommons.org/benchmarks/inference-datacenter/" target="_blank" rel="noopener">参考：MLPerf Inference</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-08 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/2026-05<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">arxiv.org/abs/2605.00300</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
