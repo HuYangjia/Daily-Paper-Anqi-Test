@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-09 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff5f5; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #871c1c; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f3c9c9; color: #871c1c; }
+  .link-btn.primary:hover { background: #f9d8d8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff5f5; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #a32d2d; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 9 日 · Agent Skills Safety · LRM Reasoning-Trace Safety · 把"答案安全"扩到"思维链安全"</div>
+  <h1>Chain of Risk：大型推理模型答得安全 ≠ 想得安全——15 个 LRM × 41K prompt 揭示"reasoning leak / answer escape"，并以 1 方向/原则的 adaptive multi-principle steering 在 7B 上降险 40.8% 仅丢 2.3% 准确率</h1>
+  <div class="en-title">Chain of Risk: Safety Failures in Large Reasoning Models and Mitigation via Adaptive Multi-Principle Steering</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.1</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.05678" target="_blank" rel="noopener">Chain of Risk: Safety Failures in Large Reasoning Models and Mitigation via Adaptive Multi-Principle Steering</a><span class="winner-badge">今日选定</span></td>
+          <td>LRM reasoning-trace 安全评测 + adaptive multi-principle steering 缓解</td>
+          <td>arXiv 2026-05-07 (Li, Hou, Deng et al., 9 作者)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05709" target="_blank" rel="noopener">Conceal, Reconstruct, Jailbreak: Exploiting the Reconstruction-Concealment Tradeoff in MLLMs</a></td>
+          <td>MLLM 越狱新视角：揭示重建-隐瞒权衡 + character-removed 变体</td>
+          <td>arXiv 2026-05-07 (Reza, Jin, Wu, Dai)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05440" target="_blank" rel="noopener">Authorization Propagation in Multi-Agent AI Systems: Identity Governance as Infrastructure</a></td>
+          <td>多 Agent 系统授权传播形式化 + identity governance 基础设施视角</td>
+          <td>arXiv 2026-05-07 (Krti Tallam)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05415" target="_blank" rel="noopener">Information Theoretic Adversarial Training of Large Language Models (WARDEN)</a></td>
+          <td>f-divergence 模糊集驱动的分布鲁棒对抗训练</td>
+          <td>arXiv 2026-05-07 (Zhang, Birrell, Ebrahimi et al.)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05475" target="_blank" rel="noopener">Intentionality is a Design Decision: Functional Intentionality Test (FIT)</a></td>
+          <td>5 维度 FIT 框架量化 Agent 类意图行为</td>
+          <td>arXiv 2026-05-07 (Chiappetta, Mahari)</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Chain of Risk: Safety Failures in Large Reasoning Models and Mitigation via Adaptive Multi-Principle Steering</span></div>
+      <div class="meta-item"><label>中文标题</label><span>风险链：大型推理模型的安全失败与基于自适应多原则转向的缓解</span></div>
+      <div class="meta-item"><label>作者</label><span>Xiaomin Li, Jianheng Hou, Zheyuan Deng, Zhiwei Zhang, Taoran Li, Binghang Lu, Bing Hu, Yunhan Zhao, Yuexing Hao（共 9 人）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-07，cs.AI；3,510 KB 全文）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-07 05:12:56 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.05678" target="_blank" rel="noopener">https://arxiv.org/abs/2605.05678</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.05678" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.05678</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.05678" target="_blank" rel="noopener">10.48550/arXiv.2605.05678</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · 大型推理模型 LRM 安全 / steering / red-teaming</span></div>
+      <div class="meta-item"><label>评测规模</label><span>15 个开源/API LRM × 41K prompt/model · 7 公开 harmfulness/jailbreak 源 + 4 OOD 源 · 20 原则统一 rubric</span></div>
+      <div class="meta-item"><label>关键数字</label><span>DeepSeek-R1-Qwen-7B 自适应转向 unsafe count 平均下降 <strong>40.8%</strong>；BBH+GSM8K+MMLU 宏平均准确率保留 <strong>97.7%</strong></span></div>
+      <div class="meta-item"><label>许可</label><span>Nonexclusive-distrib/1.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LRM 安全评测从"答案对错"扩展到"reasoning + answer 全轨迹"，并以单方向激活转向修复 leak/escape 而几乎不损推理能力。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>大型推理模型（LRM）越来越多地<strong>把"思维链式推理"暴露</strong>给用户，以提升透明度、可验证性和审慎问题求解能力。这就产生了<em>一个安全盲区</em>：即使最终答案看起来安全，<strong>有害或违反策略的内容仍可能出现在推理痕迹中</strong>。</p>
+    <p>我们检验"最终答案的安全性"是否是"完整推理-答案轨迹"的充分代理：把这两个阶段放在<strong>统一的 20 原则安全 rubric</strong> 下打分。我们使用来自 7 个公开 harmfulness 与 jailbreak 源、再加 4 个 OOD（out-of-distribution）源的 prompt，对 <strong>15 个开源/API LRM</strong> 进行了评测，每个模型 41K prompt。<strong>推理痕迹一致地暴露出超出最终答案的额外安全风险</strong>，特别是在两类高严重度的阶段失败上：<em>leak case</em>（不安全的推理之后跟一个看似安全的答案）与 <em>escape case</em>（看似无害的推理之后冒出不安全的最终答案）。原则级分析显示风险集中在 misinformation、legal compliance、discrimination、physical harm 与 psychological harm 上。</p>
+    <p>我们进一步提出 <strong>adaptive multi-principle steering</strong>：一种白盒的<em>测试时缓解</em>，<strong>每个安全原则学一条 unsafe→safe 的激活方向</strong>，且<em>仅当</em>当前隐藏状态距 unsafe 质心比 safe 更近时才激活该方向。在 3 个可被转向的开源推理模型上，自适应转向都减少了 held-out 与 OOD benchmark 上推理痕迹与最终答案中的不安全计数；<strong>DeepSeek-R1-Qwen-7B 平均不安全计数下降 40.8%</strong>，<strong>同时在 BBH、GSM8K、MMLU 上宏平均准确率保留 97.7%</strong>。</p>
+    <p>这表明：<em>LRM 的安全应该在"完整暴露的推理-答案轨迹"上评估并缓解，而不是只盯最终答案阶段。</em></p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>这两年大家把"reasoning model"（LRM，o1/DeepSeek-R1/Qwen3-Thinking 等）作为新一代默认形态，模型对外完全暴露 CoT。HarmBench/SafetyBench 那一代评测仍只看最终回答的"是否拒绝/是否输出有害内容"，但 LRM 把生成结构变成"推理痕迹 + 最终答案"两段，<strong>safety 评测刻度因此漏掉了一整层</strong>。本文给出非常清晰的两类失败原型：①<em>leak</em>：unsafe reasoning + safe-looking answer——模型在 CoT 里把违法/歧视/物理伤害细节摆出来，但答案是个礼貌拒绝，这种轨迹仍然把 unsafe 内容泄漏给用户。②<em>escape</em>：benign-looking reasoning + unsafe answer——CoT 看上去无害，但最后跳到不安全输出，绕开了"看 CoT 的 monitor"。这是 LRM 时代独有的安全盲区。</p>
+
+    <p><strong>核心方法：</strong></p>
+    <ul class="point-list">
+      <li><strong>统一 20 原则 rubric：</strong>把 misinformation / legal compliance / discrimination / physical harm / psychological harm 等 20 个原则做成共享打分卡，<em>同一刻度同时给 reasoning trace 和 final answer 打分</em>。</li>
+      <li><strong>评测语料 11 源：</strong>7 个公开 harmfulness/jailbreak benchmark + 4 个 OOD benchmark，每模型 41K prompt——首次把 LRM 在 reasoning 阶段的不安全率"系统化压力测试"成一个量级。</li>
+      <li><strong>15 模型扫描：</strong>open-weight + API 各类 LRM，识别 leak / escape 在不同模型上的频率分布，给出原则级风险热图。</li>
+      <li><strong>Adaptive Multi-Principle Steering（核心防御）：</strong>① 对 20 个原则中每一个，<em>单独学一条"unsafe→safe"的激活转向方向</em>（每方向一组 sample，做差得 vector）；② 推理时计算 hidden state 与每个原则的 safe / unsafe 质心距离；③ <em>仅</em>对那些"当前更接近 unsafe 质心"的原则方向激活转向（adaptive gating）；④ 不动权重，纯 test-time 干预。</li>
+      <li><strong>评测目标：</strong>同时下降 reasoning trace + final answer 的 unsafe count，并在 BBH/GSM8K/MMLU 上保留宏平均准确率。</li>
+    </ul>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>主流 LLM 安全评测（HarmBench / SafetyBench）</th><th>近期 reasoning-aware 评测（如 SafeHarbor 走 input-side guardrail）</th><th>本工作（Chain of Risk）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测对象</td><td>final answer</td><td>input prompt + final answer</td><td><strong>reasoning trace + final answer 全轨迹</strong></td></tr>
+        <tr><td>失败原型</td><td>refusal vs harmful</td><td>jailbreak 成功率</td><td><strong>leak / escape 二分</strong></td></tr>
+        <tr><td>模型规模</td><td>普通 LLM</td><td>普通 LLM</td><td><strong>专门针对 LRM</strong></td></tr>
+        <tr><td>缓解机制</td><td>训练时 RLHF / DPO</td><td>guardrail / guard model</td><td>测试时白盒 steering，每原则一条方向，adaptive 激活</td></tr>
+        <tr><td>能力代价</td><td>显著影响 utility</td><td>未知</td><td><strong>BBH+GSM8K+MMLU 保留 97.7%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>这是<em>对齐研究方法论</em>层面的一次推进。它不是发明新的越狱攻击，也不是给 reasoning model 重做一遍 finetune；它把<strong>"在那么多 LRM 上 CoT 安全到底崩在哪里"</strong>这个事实摆清楚，并且给出一种几乎不损能力的白盒修复思路——这种"诊断 + 微观干预"的形式正是当前 alignment community 最稀缺的东西。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal</em>·prompt 源之一<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Wang et al. (2023) — <em>Do-Not-Answer: A Dataset for Evaluating Safeguards in LLMs</em>·jailbreak 源之一<br>
+    <a href="https://arxiv.org/abs/2308.13387" target="_blank" rel="noopener">arxiv.org/abs/2308.13387</a></div>
+    <div class="ref-item">DeepSeek-AI (2025) — <em>DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</em>·主要 LRM 之一，本工作 7B 蒸馏版作为可转向的 host<br>
+    <a href="https://arxiv.org/abs/2501.12948" target="_blank" rel="noopener">arxiv.org/abs/2501.12948</a></div>
+    <div class="ref-item">Turner et al. (2023) — <em>Activation Addition: Steering Language Models Without Optimization</em>·activation steering 方法论起点<br>
+    <a href="https://arxiv.org/abs/2308.10248" target="_blank" rel="noopener">arxiv.org/abs/2308.10248</a></div>
+    <div class="ref-item">Zou et al. (2023) — <em>Representation Engineering: A Top-Down Approach to AI Transparency</em>·representation engineering / direction extraction 方法学<br>
+    <a href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">arxiv.org/abs/2310.01405</a></div>
+    <div class="ref-item">Suzgun et al. (2023) — <em>Challenging BIG-Bench Tasks (BBH)</em>·能力评测主基准之一<br>
+    <a href="https://arxiv.org/abs/2210.09261" target="_blank" rel="noopener">arxiv.org/abs/2210.09261</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>15 个 LRM × 41K prompt = 615K 次评测</strong>——目前 LRM 安全评测中规模最大的 reasoning-trace 系统压测。</li>
+      <li><strong>11 源 prompt 集合</strong>：7 个公开 harmfulness/jailbreak + 4 个 OOD，避免单数据集 bias 误导。</li>
+      <li><strong>Leak / escape 双失败原型</strong>：reasoning trace 一致暴露超出 final answer 的额外风险，集中在 misinformation / legal compliance / discrimination / physical harm / psychological harm 五类。</li>
+      <li><strong>缓解：DeepSeek-R1-Qwen-7B 不安全计数 −40.8%</strong>——在 held-out 与 OOD benchmark 上 reasoning trace 与 final answer 的 unsafe count 同时下降。</li>
+      <li><strong>能力保留 97.7%</strong>：BBH + GSM8K + MMLU 宏平均，证明 adaptive gating 的"按需激活"避免了对推理 / 数学 / 知识能力的破坏。</li>
+      <li><strong>Per-principle direction</strong>：20 原则各学 1 条 vector，避免单一 "safe direction" 泛化的副作用，是这套方法跑通"低损伤"的关键。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>"reasoning trace + final answer 全轨迹"评测对 evaluation harness 是一个<strong>新的颗粒度要求</strong>——下一代 harness 必须能拆开 LRM 的 CoT 段并独立打分。结合今日 Harness 报告 <a href="../../harness/2026-05-09-1.html">CCI</a> 的 2⁵ 全因子，可以推一个有趣实验：当 self-reflection 组件打开时，CoT 长度暴增，是否同步推高 leak case 概率？这种"组件 × 安全失败原型"的二维 heatmap 正是 harness 应该自带的产物。对你 ZipperQuant 量化项目也有现实意义：W4A4 量化对 reasoning model 的 CoT 行为可能并不均匀降级——你应在 e2e benchmark 中加一行 reasoning-trace safety regression（哪怕用 Qwen3-Thinking-8B 跑一个 mini-safety harness），免得 reviewer 质问"你的量化是否破坏 alignment"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 Agent skills safety 而言，这篇是<strong>"内部行为 ≠ 外部行为"</strong>的最好案例：当 Agent 调用 reasoning + tool 时，<em>tool call 参数中可能也存在和 leak case 同构的失败</em>——比如 Agent 在 thinking 阶段写出搜索关键词包含被禁主题，最终把"我无法帮助"返回给用户，但搜索 API 已经记下了那个 query。把 Chain of Risk 的 20 原则 rubric 直接套到 Agent 的 (thinking, tool_call_args, tool_response, final_answer) 四元组评分，是对昨日 <a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a>、前日 <a href="../../agent-safety/2026-05-07-1.html">AgentTrust</a> 的天然延伸——把 guardrail 从"call site"扩到"reasoning site"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这是 safety benchmark 范式的一次升级——以后所有"X-SafetyBench"都应给出两个数字：reasoning trace ASR 与 answer ASR，并报告 leak / escape 比例。本工作的 11 源混合 + 20 原则 rubric 是一个可被复用的 evaluation harness 蓝图，结合今日 Benchmark 报告 <a href="../../benchmark/2026-05-09-1.html">Partial Evidence Bench</a> 的"答案完整性 × 授权"评测面，可以拼出"安全完整性 = 答案安全 ∧ 推理安全 ∧ 完整性认知 ∧ 授权一致"的四维评测——这是下一代 agent benchmark 的合理形态。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SafeHarbor: Hierarchical Memory-Augmented Guardrail (ICML 2026)</strong> · plug-and-play guardrail，与本工作互补<br>
+      <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></li>
+      <li><strong>AgentTrust: Runtime Tool-Call Adjudication for AI Agents</strong> · tool call 执行前 allow/warn/block/review 裁决<br>
+      <a href="https://arxiv.org/abs/2605.04785" target="_blank" rel="noopener">arxiv.org/abs/2605.04785</a></li>
+      <li><strong>Conceal, Reconstruct, Jailbreak: Reconstruction-Concealment Tradeoff in MLLMs</strong> · 同日相关 jailbreak 视角<br>
+      <a href="https://arxiv.org/abs/2605.05709" target="_blank" rel="noopener">arxiv.org/abs/2605.05709</a></li>
+      <li><strong>Representation Engineering: A Top-Down Approach to AI Transparency</strong> · activation steering 范式起点<br>
+      <a href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">arxiv.org/abs/2310.01405</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.05678" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.05678" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.05678v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.05678" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/centerforaisafety/HarmBench" target="_blank" rel="noopener">参考工具：HarmBench</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-09 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/new<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.05678" target="_blank" rel="noopener">arxiv.org/abs/2605.05678</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

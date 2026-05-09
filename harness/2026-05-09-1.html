@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-09 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 9 日 · Harness Engineering · Cross-Component Interference · 把"堆组件"换成"组件子集选择"</div>
+  <h1>More Is Not Always Better：把 Agent Scaffolding 当 2⁵ 全因子实验跑——All-In 在 56% 子集中是子模性反例，最优组件数随任务从 1 到 4 摆动</h1>
+  <div class="en-title">More Is Not Always Better: Cross-Component Interference in LLM Agent Scaffolding</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.05716" target="_blank" rel="noopener">More Is Not Always Better: Cross-Component Interference in LLM Agent Scaffolding</a><span class="winner-badge">今日选定</span></td>
+          <td>Agent harness 的 2⁵ 全因子实验 + Shapley 子模性分析</td>
+          <td>arXiv 2026-05-07 (Ming Liu, Princeton)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05726" target="_blank" rel="noopener">SkillRet: A Large-Scale Benchmark for Skill Retrieval in LLM Agents</a></td>
+          <td>大规模 skill retrieval benchmark（17,810 技能 / 6 大类 / 18 小类）</td>
+          <td>arXiv 2026-05-07 (Cho, Kang, Kim)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05538" target="_blank" rel="noopener">AgenticRAG: Agentic Retrieval for Enterprise Knowledge Bases</a></td>
+          <td>企业知识库 agentic retrieval harness（4 工具 + 轻量 wrapper）</td>
+          <td>arXiv 2026-05-07 (Suresh, Mak, Chou, Kroon)</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05701" target="_blank" rel="noopener">Inference-Time Budget Control for LLM Search Agents</a></td>
+          <td>VOI 分数引导的多跳 QA 推理预算控制</td>
+          <td>arXiv 2026-05-07 (Fang, Hu, Chang, Guo)</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05409" target="_blank" rel="noopener">FinAgent-RAG: Agentic RAG for Financial Document Question Answering</a></td>
+          <td>金融文档数值推理 agentic RAG harness</td>
+          <td>arXiv 2026-05-08 (Shu, Liu, Xie)</td>
+          <td class="score-num">82</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>More Is Not Always Better: Cross-Component Interference in LLM Agent Scaffolding</span></div>
+      <div class="meta-item"><label>中文标题</label><span>多即更好？——LLM Agent 脚手架中的跨组件干扰</span></div>
+      <div class="meta-item"><label>作者</label><span>Ming Liu（独作）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-07，cs.AI / cs.CL；10 页 / 5 表 / preprint, under review）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-07 06:01:43 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.05716" target="_blank" rel="noopener">https://arxiv.org/abs/2605.05716</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.05716" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.05716</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.05716" target="_blank" rel="noopener">10.48550/arXiv.2605.05716</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · cs.CL · ACM I.2.7（NLP）</span></div>
+      <div class="meta-item"><label>实验规模</label><span>2⁵ = 32 子集 × 2 任务 (HotpotQA / GSM8K) × 2 模型 (Llama-3.1-8B / 70B) × ≤10 seed = 96 条件</span></div>
+      <div class="meta-item"><label>关键数字</label><span>HotpotQA 单工具子集 +32% F1（0.233 vs 0.177，p=0.023）· GSM8K 3 组件子集 +79%（0.43 vs 0.24，p=0.010）· 子模性违例 183/325（56.3%）· 主效应回归 R² = 0.916（adj 0.899，LOOCV 0.872）</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用 2⁵ 全因子 + 主效应回归 + 精确 Shapley 把"Agent 多堆组件就更好"证伪——All-In 系统稳定次优。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM Agent 系统的搭建方式是<strong>叠加多种 scaffolding 组件</strong>（规划、工具、记忆、自反思、检索），背后假设是"<em>越多越好</em>"。本文研究<strong>跨组件干扰（Cross-Component Interference, CCI）</strong>：当组件之间相互作用具有破坏性时所导致的能力退化。</p>
+    <p>我们对 5 个组件的<strong>全部 2⁵ = 32 个子集</strong>，在 HotpotQA 和 GSM8K 上以 Llama-3.1-8B/70B 跑了一次<strong>全因子实验</strong>（96 个条件，每个最多 10 个 random seed）。<strong>"All-In"系统持续次优</strong>：在 HotpotQA 上单工具 Agent 比 All-In 高 32%（F1 0.233 vs 0.177，p = 0.023）；在 GSM8K 上一个 3 组件子集比 All-In 高 79%（0.43 vs 0.24，p = 0.010）。<strong>最优组件数随任务而变（k* = 1–4）且与规模相关</strong>：在 70B 上，那些在 8B 上有害的组合反而成为增益项；尽管如此，All-In 仍落后于最佳子集。</p>
+    <p>我们拟合了一个主效应回归（R² = 0.916，adj-R² = 0.899，LOOCV = 0.872），计算了精确的 Shapley 值，发现 <strong>183/325 个子模性违例（56.3%）</strong>，说明<em>贪心选择不可靠</em>。在工具使用、自反思与检索三者之间存在一个三体协同（INT₃ = +0.175，95% CI [+0.003, +0.351]），但被作为探索性结果报告。CCI 在跨模型家族（Qwen2.5）和提示改写下都能复现。我们的结论是：<strong>"最大装备"的 Agent 默认配置应当被基于交互感知分析的"任务特定子集选择"取代</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一年的 harness engineering 演化，在外延上一路扩张——从 <a href="../../harness/2026-05-08-1.html">Token Arena</a> 把 SKU/能耗内化、<a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 把 (model, primitive) 决策面内化、<a href="../../harness/2026-05-06-1.html">PAEF</a> 把生产 trajectory 接进来——所有这些工作都在加东西。Ming Liu 这篇是<strong>反方向打的一拳</strong>：它把 Agent 自身的 scaffolding 5 个组件（planning / tools / memory / self-reflection / retrieval）当作 5 个二值因子，做一次<strong>真正的 2⁵ 全因子实验</strong>，第一次给社区一个干净的负证据：<em>"加得越多越好"是一个被高度反复但从未被严谨证明的传言；当你真的跑全因子的时候，超过一半的子集对存在子模性违例</em>。这是 harness 工程从"经验主义堆栈"走向"实验设计学（DOE）"的一个关键节点。</p>
+
+    <p><strong>核心方法（DOE × Shapley）：</strong></p>
+    <ul class="point-list">
+      <li><strong>5 个组件全因子：</strong>planning / tool use / memory / self-reflection / retrieval，每个 binary on/off → 2⁵ = 32 子集。</li>
+      <li><strong>2 个任务 × 2 个模型 × 多 seed：</strong>HotpotQA（multi-hop QA） + GSM8K（推理），Llama-3.1-8B / 70B，每条件最多 10 seed → 96 条件。</li>
+      <li><strong>主效应回归：</strong>把每个组件当作 0/1 自变量预测最终分数，R² = 0.916（adj 0.899，LOOCV 0.872）说明<em>大部分方差能被一阶解释</em>——但仍剩下不可忽略的非加性。</li>
+      <li><strong>精确 Shapley 值：</strong>计算每个组件的 Shapley contribution，作为"在多大子集大小上贡献多少"的边际效用图。</li>
+      <li><strong>子模性违例统计：</strong>对所有 5×|S\{i}| 对 (S, i) 检查 v(S∪{i}) − v(S) ≤ v(T∪{i}) − v(T) for T⊆S，得 <strong>183/325 = 56.3% 违例</strong>——这是"贪心选组件"在数学上不可信任的证据。</li>
+      <li><strong>三体协同：</strong>tool use × self-reflection × retrieval 的 INT₃ = +0.175（95% CI 不跨 0），但作者克制地标为 exploratory（避免 multiple comparison 偏差）。</li>
+      <li><strong>跨模型家族复现：</strong>Qwen2.5 上重跑骨干结论一致；提示改写后稳定。</li>
+    </ul>
+
+    <p><strong>与现有 Harness 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>主流 agent harness（AutoGPT / LangChain 范式）</th><th>近期"自动化 harness"主线（AgentFlow / Last Harness / Uno-Orchestra）</th><th>本工作（CCI）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>组件选择策略</td><td>默认全开（All-In）</td><td>RL/进化搜索学一套 wiring</td><td>实验测量 + Shapley 验证可加性</td></tr>
+        <tr><td>子模性假设</td><td>隐含假设</td><td>未验证</td><td><strong>显式证伪：56.3% 违例</strong></td></tr>
+        <tr><td>因果归因</td><td>对照组少</td><td>聚焦最优解</td><td>主效应 + 高阶交互全展开</td></tr>
+        <tr><td>k* 任务依赖</td><td>未讨论</td><td>未讨论</td><td>HotpotQA k* = 1，GSM8K k* = 3 — 跟任务结构耦合</td></tr>
+        <tr><td>规模-组合耦合</td><td>未讨论</td><td>未讨论</td><td>8B 有害组合在 70B 上变增益项</td></tr>
+      </tbody>
+    </table>
+
+    <p>站在 harness engineering 的视角，这篇论文最尖锐的一句话是：<em>"主效应回归 R² = 0.916，但仍有 56% 的子集对存在子模性违例。"</em> 翻译过来就是：<strong>组件之间的"主效应"足以解释大部分性能差异，但谁要是想用贪心一个一个加组件、希望单调上升，会有一半的概率撞上违例</strong>。这一句话把 LangChain 时代"先把全套工具塞给 Agent，再调 prompt"的工程范式判了死刑。它和 <a href="../../harness/2026-05-02-1.html">"Last Harness You'll Ever Build"</a> 的 Meta-Evolution 是<strong>互补</strong>的——后者是"自动搜出 harness"的方法论，前者给"为什么必须自动搜（手动堆不行）"的硬证据。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·tool use + reasoning 的范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>·self-reflection 组件原型<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">Yang et al. (2018) — <em>HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering</em>·本工作 multi-hop 评测主战场<br>
+    <a href="https://arxiv.org/abs/1809.09600" target="_blank" rel="noopener">arxiv.org/abs/1809.09600</a></div>
+    <div class="ref-item">Cobbe et al. (2021) — <em>Training Verifiers to Solve Math Word Problems (GSM8K)</em>·本工作数学推理主战场<br>
+    <a href="https://arxiv.org/abs/2110.14168" target="_blank" rel="noopener">arxiv.org/abs/2110.14168</a></div>
+    <div class="ref-item">Lundberg & Lee (2017) — <em>A Unified Approach to Interpreting Model Predictions (SHAP)</em>·Shapley 在 ML 评测中的方法论模板<br>
+    <a href="https://arxiv.org/abs/1705.07874" target="_blank" rel="noopener">arxiv.org/abs/1705.07874</a></div>
+    <div class="ref-item">Wu et al. (2024) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em>·"All-In" 多组件 Agent 框架代表<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>HotpotQA：单工具完胜 All-In</strong>——单 tool 子集 F1 0.233 vs 全 5 件套 All-In F1 0.177，提升 <strong>+32%</strong>，p = 0.023。</li>
+      <li><strong>GSM8K：3 组件子集打趴 All-In</strong>——3-component subset 0.43 vs All-In 0.24，提升 <strong>+79%</strong>，p = 0.010。</li>
+      <li><strong>56% 子模性违例</strong>——183/325 对 (S, i) 违反 submodular，意味着<em>"再加一个组件，平均贡献会因子集变大而下降"</em>这一基本假设在过半场景下不成立。</li>
+      <li><strong>主效应回归 R² = 0.916（adj 0.899，LOOCV 0.872）</strong>——大部分方差由一阶可加项解释，但剩余非加性仍是本研究的"高阶交互信号"，不可忽略。</li>
+      <li><strong>规模导致组合相位翻转</strong>：在 Llama-3.1-8B 上有害的组合在 70B 上转为增益——揭示<em>scaffolding 选择必须随模型 scale 一起调</em>。</li>
+      <li><strong>三体协同信号</strong>：(Tool Use × Self-Reflection × Retrieval) 的 INT₃ = +0.175，95% CI [+0.003, +0.351]，作者克制地报告为 exploratory。</li>
+      <li><strong>跨家族复现</strong>：Qwen2.5 上重跑核心结论稳定，提示改写后仍稳定，CCI 不是 prompt 工程脆弱性。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>这篇文章给 harness 工程的<strong>方法论标尺</strong>添了一根硬骨头：<em>下一个 evaluation harness 必须自带"组件子集选择"这一维</em>，不要再以"all components on"作为默认报告点。可以直接借鉴到你正在做的 ZipperQuant W4A4 量化 e2e benchmark：把 prefill / decode / KV-cache 优化、QKV fusion、sparse 补偿分支等也当作 binary 组件做小规模因子实验，每个 (Qwen3-8B, prefill_len, decode_len) 配置点用 Shapley 给"哪些 kernel 优化才有收益"做归因——避免你把全套优化堆上去后误判 ZipperEngine 单独贡献。另一个外推：你写 NeurIPS submission 的 ablation table，可以参考它的"k* 随任务变化"图，把 ZipperQuant 不同子集（dense base only / dense + sparse / dense + sparse + fused）单独跑，这是更能说服审稿人的证据形式。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>CCI 对 agent safety 的直接含义是：<em>组件越多，安全表面越大，但安全能力却<strong>不</strong>单调上升</em>——你不能假设"加上 self-reflection 和 retrieval 就更安全"。结合今日 Agent Safety 报告 <a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a> 提到的"reasoning trace 中泄漏 / final answer 看起来安全"的 leak case，CCI 给出的解释是：<em>当 reasoning + retrieval + self-reflection 三件套同时打开时，三体协同的+0.175 也可能用于错的方向（生成看似自洽的错误推理）</em>。建议在做 agent safety 评测时报告 (component subset, ASR) 二维表，而不是单一数字。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>CCI 直接挑战了 agent benchmark 设计：<em>主流 agent benchmark（如 AgentBench、HarmBench）默认评测 All-In 配置，因此报告的 "Agent X 在 benchmark Y 上得分 Z" 是 All-In 子集的局部最优</em>，并不能反映该 Agent 在子集选择优化下的能力上限。今日 Benchmark 报告 <a href="../../benchmark/2026-05-09-1.html">Partial Evidence Bench</a> 已经在做 ACL-partitioned 评测——下一步自然是叠加 component subset 维度，做"权限 × scaffolding 子集"的二维报告，让评测真正变成 capability frontier 而不是单点。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Token Arena: A Continuous Benchmark Unifying Energy and Cognition in AI Inference</strong> · 把 endpoint 当评测单元（与 CCI 的"组件子集"互补）<br>
+      <a href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">arxiv.org/abs/2605.00300</a></li>
+      <li><strong>Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation</strong> · 用 RL 端到端学组件选择（CCI 是其负证据基础）<br>
+      <a href="https://arxiv.org/abs/2605.05007" target="_blank" rel="noopener">arxiv.org/abs/2605.05007</a></li>
+      <li><strong>The Last Harness You'll Ever Build</strong> · Meta-Evolution loop 自动搜 harness（CCI 提供 why automate 的证据）<br>
+      <a href="https://arxiv.org/abs/2604.21003" target="_blank" rel="noopener">arxiv.org/abs/2604.21003</a></li>
+      <li><strong>SkillRet: A Large-Scale Benchmark for Skill Retrieval in LLM Agents</strong> · 与组件子集互补的 skill 选择 benchmark<br>
+      <a href="https://arxiv.org/abs/2605.05726" target="_blank" rel="noopener">arxiv.org/abs/2605.05726</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.05716" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.05716" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.05716v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.05716" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">参考工具：lm-evaluation-harness</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-09 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/2026-05 + arxiv.org/list/cs.AI/new<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.05716" target="_blank" rel="noopener">arxiv.org/abs/2605.05716</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

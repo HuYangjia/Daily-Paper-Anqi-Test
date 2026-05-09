@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-09 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0a4a3a; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b8e6d6; color: #0a4a3a; }
+  .link-btn.primary:hover { background: #cdebde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 9 日 · Safety Benchmark · Authorization-Limited Evidence · 把"权限边界"作为新的安全失败维度</div>
+  <h1>Partial Evidence Bench：当 ACL 把证据切走，企业 Agent 仍输出"看似完整"的答案——3 场景族 / 72 任务 / 4 评测面，让"沉默过滤"这一治理级失败第一次可量化</h1>
+  <div class="en-title">Partial Evidence Bench: Benchmarking Authorization-Limited Evidence in Agentic Systems</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.05379" target="_blank" rel="noopener">Partial Evidence Bench: Benchmarking Authorization-Limited Evidence in Agentic Systems</a><span class="winner-badge">今日选定</span></td>
+          <td>企业 Agent 治理级"沉默过滤"失败 benchmark（72 任务 / 3 场景族 / 4 评测面）</td>
+          <td>arXiv 2026-05-06 (Krti Tallam)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05726" target="_blank" rel="noopener">SkillRet: A Large-Scale Benchmark for Skill Retrieval in LLM Agents</a></td>
+          <td>17,810 技能 + 6 大类/18 小类的 skill retrieval benchmark</td>
+          <td>arXiv 2026-05-07 (Cho, Kang, Kim)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05476" target="_blank" rel="noopener">A Unified Benchmark for Evaluating Knowledge Graph Construction Methods and Graph Neural Networks</a></td>
+          <td>知识图谱构建+GNN 联合 benchmark</td>
+          <td>arXiv 2026-05-07 (Kabal, Harzallah, Guillet et al.)</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05534" target="_blank" rel="noopener">Adversarial Graph Neural Network Benchmarks: Towards Practical and Fair Evaluation</a></td>
+          <td>7 攻击 × 8 防御重评估的 GNN 对抗 benchmark</td>
+          <td>arXiv 2026-05-07 (Ngo, Alom, Errica et al.)</td>
+          <td class="score-num">84</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00245" target="_blank" rel="noopener">ARMOR 2025: Military-Aligned Benchmark for LLM Safety Beyond Civilian Contexts</a></td>
+          <td>军事场景对齐安全 benchmark</td>
+          <td>arXiv 2026-04-30 (Johns, Jin, Zhang, Hou)</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Partial Evidence Bench: Benchmarking Authorization-Limited Evidence in Agentic Systems</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Partial Evidence Bench：在 Agent 系统中度量"授权-受限证据"的 Benchmark</span></div>
+      <div class="meta-item"><label>作者</label><span>Krti Tallam（独作）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-06，cs.AI / cs.CC / cs.ET；14 页 / 6 表 / Benchmark paper with deterministic synthetic corpora）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-06 19:01:29 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.05379" target="_blank" rel="noopener">https://arxiv.org/abs/2605.05379</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.05379" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.05379</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.05379" target="_blank" rel="noopener">10.48550/arXiv.2605.05379</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.AI · cs.CC · cs.ET</span></div>
+      <div class="meta-item"><label>评测规模</label><span>3 场景族（due diligence / compliance audit / security incident response） · 72 任务 · ACL-partitioned corpora · 4 评测面</span></div>
+      <div class="meta-item"><label>关键设计</label><span>每任务自带 4 套 oracle：完整答案 / 已授权-视角答案 / 完整性判定 / 结构化 gap-report；deterministic 评测，无需人工 judge / 不易污染</span></div>
+      <div class="meta-item"><label>许可</label><span>未注明（按 arXiv 默认）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 Agent 在权限边界上的"沉默过滤 → 看似完整答案"这一治理级失败做成 deterministic benchmark，不依赖人工评判。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>企业 Agent 越来越多地在<strong>受范围限制的检索系统、被委托的工作流、和受策略约束的证据环境</strong>中运行。在这些场景下，<em>访问控制（access control）可以被正确执行，但系统仍可能给出"看上去完整"的答案，尽管关键证据其实落在调用方授权边界之外</em>。本文提出 <strong>Partial Evidence Bench</strong>，一个用于测量这一失败模式的 deterministic benchmark。</p>
+    <p>该 benchmark 提供 <strong>3 个场景族——尽职调查（due diligence）、合规审计（compliance audit）、安全事件响应（security incident response）——共 72 个任务</strong>。每个任务自带：① ACL-分区的语料；② oracle <em>complete</em> answer；③ oracle <em>authorized-view</em> answer；④ oracle 完整性判定；⑤ 结构化 gap-report oracle。</p>
+    <p>评测沿 <strong>4 个评估面</strong>展开：①<em>答案正确性</em>；②<em>完整性意识</em>（系统是否承认证据缺失）；③<em>gap-report 质量</em>（缺口报告的结构化程度）；④<em>不安全的完整性行为</em>（是否在授权受限时仍宣称完整）。已签入仓库的 baseline 显示：<strong>沉默过滤（silent filtering）在所有场景族中都是灾难性不安全</strong>；而显式的 fail-and-report 行为可以消除"不安全完整性"，且不会让任务退化为"什么都拒答"。初步真模型试跑显示，不同模型在<em>过度声称完整</em>、<em>保守式低估</em>或<em>以企业可用形式报告不完整</em>之间存在模型相关、场景敏感的差异。</p>
+    <p>该 benchmark 更广义的贡献是：<strong>让一种治理关键的 Agent 失败模式变得可度量，而不需要人工 judge 或易污染的静态语料</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>当下 agent benchmark 普遍假设"所有证据都对 Agent 开放"，所以评测点是"答案是否正确"。但企业部署 Agent 的真实场景几乎都<em>带 ACL（Access Control List）</em>：一个 PM 角色看不到 HR 的薪酬表，一个外审会计看不到公司加密通讯，一个 SOC 分析师看不到 HR 调查档案。<strong>问题不在 ACL 错了，而在于 Agent 在 ACL 正常工作的前提下，仍然把"我能看到的那一半证据"包装成"完整答案"</strong>——这是一种被作者命名为"silent filtering"的治理级失败。它过去之所以没被严肃评测，是因为它需要：① 同一份语料的两套答案 oracle（complete vs authorized-view）；② 一种"完整性意识"的形式化定义；③ deterministic 评测，避免 LLM-as-judge 污染。Partial Evidence Bench 第一次把这三件事一起搞定。</p>
+
+    <p><strong>核心方法：</strong></p>
+    <ul class="point-list">
+      <li><strong>3 个场景族 = 现实最常见的 ACL-敏感工作流：</strong>① due diligence（投资尽调，部分文档非授权方不可见）；② compliance audit（合规审计，跨部门隔离）；③ security incident response（事件响应，HR/法务证据天然隔离）。</li>
+      <li><strong>72 个任务，ACL-partitioned 语料：</strong>每任务的语料 split 成 authorized 与 restricted 两份；question 一致；正确行为依赖 Agent 是否承认 restricted 部分存在。</li>
+      <li><strong>5 件套 oracle：</strong>① <em>complete answer</em>（基于全语料的真值）；② <em>authorized-view answer</em>（基于授权部分的真值）；③ <em>completeness judgment</em>（这两份答案是否一致——决定 ground-truth 的"是否需要承认证据缺失"）；④ <em>structured gap-report</em>（什么类目缺、缺多少）；⑤ ACL 划分本身。</li>
+      <li><strong>4 评测面：</strong>① answer correctness（答案正确性）；② <em>completeness awareness</em>（"我看到的够不够"的元认知正确性）；③ <em>gap-report quality</em>（缺口报告结构化程度）；④ <em>unsafe completeness behavior</em>（在缺证据时仍宣称完整的"治理级"严重错误）。</li>
+      <li><strong>Deterministic 评测：</strong>每条 oracle 都是结构化数据 + 程序化匹配，<em>不依赖 LLM-as-judge</em>——避开了今日 benchmark 之痛。</li>
+      <li><strong>Baseline 启示：</strong>silent-filter Agent 在所有场景族都<em>灾难级不安全</em>；fail-and-report Agent 能消除 unsafe completeness 而不会退化为"什么都拒答"。</li>
+    </ul>
+
+    <p><strong>与现有工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>主流 agent benchmark（AgentBench / WebArena / τ-Bench）</th><th>近期 multi-agent safety benchmark（DTap / CarryOnBench）</th><th>Partial Evidence Bench</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测维度</td><td>任务成功率</td><td>safety × utility</td><td><strong>授权-完整性 × 答案 × gap-report × 不安全完整性</strong></td></tr>
+        <tr><td>语料假设</td><td>全开放</td><td>有时分级</td><td><strong>ACL-partitioned</strong></td></tr>
+        <tr><td>评测形式</td><td>function call 检查</td><td>LLM judge</td><td><strong>deterministic oracle 匹配</strong></td></tr>
+        <tr><td>失败定义</td><td>任务失败</td><td>违反规则</td><td><strong>silent filtering / unsafe completeness</strong></td></tr>
+        <tr><td>污染抗性</td><td>低</td><td>中</td><td><strong>高（合成语料 + 结构化 oracle）</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>这篇是<em>典型的"小而尖"benchmark</em>。72 任务规模不大，但因为它把"授权 vs 完整"这一类企业语境下高频但被忽视的失败原型形式化、结构化、可程序判定，因此对企业 Agent 部署具有非常直接的工程价值。它和今日 Agent Safety 报告 <a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a> 是<strong>互补</strong>的——后者把 reasoning trace 和 final answer 作为评测两段，前者把"是否承认证据不全"作为答案正确性的<em>第三个维度</em>；二者一同把 agent 安全评测从"做对没做对"的二分推到"做对、知道做对了多少、报告做对到哪儿了"的三分。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·主流 Agent benchmark 起点<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Yao et al. (2024) — <em>τ-Bench: A Benchmark for Tool-Use Agents in Real-World Domains</em>·任务成功率评测范式<br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Tallam (2026) — <em>Authorization Propagation in Multi-Agent AI Systems: Identity Governance as Infrastructure</em>·同作者授权治理姊妹篇<br>
+    <a href="https://arxiv.org/abs/2605.05440" target="_blank" rel="noopener">arxiv.org/abs/2605.05440</a></div>
+    <div class="ref-item">NIST (2024) — <em>AI Risk Management Framework (AI RMF 1.0)</em>·治理级安全度量的方法论参考<br>
+    <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">nist.gov/itl/ai-risk-management-framework</a></div>
+    <div class="ref-item">Karpas et al. (2022) — <em>MRKL Systems / RAG 框架</em>·受限检索 Agent 的工程基础<br>
+    <a href="https://arxiv.org/abs/2205.00445" target="_blank" rel="noopener">arxiv.org/abs/2205.00445</a></div>
+    <div class="ref-item">DecodingTrust-Agent Platform (2026) — <em>DTap</em>·昨日同方向 benchmark 报告<br>
+    <a href="https://arxiv.org/abs/2605.04808" target="_blank" rel="noopener">arxiv.org/abs/2605.04808</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>3 场景族 × 72 任务</strong>：覆盖企业 Agent 最常见、最 ACL-敏感的三类工作流；规模虽小但每任务结构高度形式化。</li>
+      <li><strong>5 套 oracle：</strong>complete / authorized-view / completeness judgment / structured gap-report / ACL split——任意工程师都能 deterministic 地复现评分。</li>
+      <li><strong>4 评测面：</strong>answer correctness / completeness awareness / gap-report quality / unsafe completeness behavior，第一次把"完整性意识"从"答案对错"中切出来作为独立维度。</li>
+      <li><strong>Silent filtering 在所有 3 场景族都灾难级不安全</strong>——这是 benchmark 给业界的最直接结论。</li>
+      <li><strong>Fail-and-report</strong> 能消除 unsafe completeness 而不退化为 trivial abstention——给"安全 vs 实用"trade-off 提供了非平凡的中间解。</li>
+      <li><strong>Deterministic + 合成语料：</strong>抗污染（不会被新的 LLM 训练数据吞掉）、不依赖人工 judge——这两点恰好回应 <a href="../../benchmark/2026-04-29-2.html">Judge Sensitivity</a> 与 <a href="../../benchmark/2026-04-29-1.html">BenchGuard</a> 上周指出的两类 benchmark 失效来源。</li>
+      <li><strong>真模型初探显示模型相关分布差异</strong>：有的模型 over-claim，有的 under-claim，有的真的写出企业可用的 gap report——给"可信赖 Agent vs 自信幻觉"的工业选型提供量化依据。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>Partial Evidence Bench 给 evaluation harness 提供了一个很好的"<strong>oracle 多重视角</strong>"模板：每条任务带多套 ground-truth（complete / authorized-view / gap-report），评测器同时输出多面分数，而不是合成一个"总分"。这可以直接映射到你 ZipperQuant 的 e2e benchmark：除了"端到端正确率"以外，还应该附 "FP16 reference / W4A4 quantized / W4A4+sparse" 三套答案的差异 vector，把"量化是否破坏哪一类问题"做成 per-category gap-report——这样审稿人能一眼看出量化退化集中在哪一类 prompt 上。它也补上昨日 <a href="../../harness/2026-05-09-1.html">CCI</a> 的另一面：评测 harness 不仅要做"组件子集 × 性能"二维表，还应记录"每个子集的失败原型分布"，这就需要 Partial Evidence Bench 这种 multi-oracle 设计。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"<strong>silent filtering 在所有场景都灾难级不安全</strong>"是这篇给 agent safety 社区的一个核心观点。它直接对应今日 Agent Safety 报告 <a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a> 中的 "leak case"：当 reasoning trace 看到了不该看的、final answer 给出了"看似安全的拒答"，本质上就是一种 silent filtering。两篇拼起来等于：<em>不论是 ACL 切走的"我没权限看到的"还是 safety policy 切走的"我不该说的"，Agent 都倾向于"用看起来完整的答案掩盖证据残缺"</em>，这是 alignment 一直没被严肃评测的一类元认知失败。建议把 Partial Evidence Bench 的 4 评测面平移到 agent-safety guardrail 评测里。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Partial Evidence Bench 给下一代 safety benchmark 设计提供了 3 个可立即复用的设计原则：① <strong>多 oracle 同时评分</strong>（消除"单一总分"导致的维度坍缩）；② <strong>deterministic 评测</strong>（不被 judge LLM 漂移影响）；③ <strong>合成语料</strong>（抗训练污染）。这三件加起来正好是过去一年 benchmark 危机（<a href="../../benchmark/2026-04-29-2.html">judge 敏感性</a>、<a href="../../benchmark/2026-05-01-1.html">live snapshot</a>、<a href="../../benchmark/2026-04-29-1.html">benchguard</a>）的解药雏形。下一步自然是把 Partial Evidence Bench 和 <a href="../../benchmark/2026-05-08-1.html">XL-SafetyBench</a> 的语言/文化轴、<a href="../../benchmark/2026-05-07-1.html">DTap</a> 的 14 域 × 50 环境拼成"权限 × 域 × 文化 × 攻击面"的四维 agent safety benchmark。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Authorization Propagation in Multi-Agent AI Systems</strong> · 同作者授权治理姊妹篇<br>
+      <a href="https://arxiv.org/abs/2605.05440" target="_blank" rel="noopener">arxiv.org/abs/2605.05440</a></li>
+      <li><strong>DTap: DecodingTrust-Agent Platform</strong> · 14 域 × 50 环境的红队 agent benchmark<br>
+      <a href="https://arxiv.org/abs/2605.04808" target="_blank" rel="noopener">arxiv.org/abs/2605.04808</a></li>
+      <li><strong>XL-SafetyBench: 10 国-语言 × 5,500 测例</strong> · 多语言文化敏感的 safety 评测<br>
+      <a href="https://arxiv.org/abs/2605.05662" target="_blank" rel="noopener">arxiv.org/abs/2605.05662</a></li>
+      <li><strong>BenchGuard: Auditing Agent Benchmarks</strong> · benchmark 自身的污染审计<br>
+      <a href="https://arxiv.org/abs/2604.24955" target="_blank" rel="noopener">arxiv.org/abs/2604.24955</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.05379" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.05379" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.05379v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.05379" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">参考：NIST AI RMF</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-09 #1 · 搜索来源：arXiv API + arxiv.org/list/cs.AI/new<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.05379" target="_blank" rel="noopener">arxiv.org/abs/2605.05379</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
