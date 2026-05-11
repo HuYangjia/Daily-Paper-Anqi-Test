@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-11 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f0faf5; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #08503f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b8e0d2; color: #08503f; }
+  .link-btn.primary:hover { background: #cdebe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f0faf5; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #08503f; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-11 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 11 日 · Agent Skills Safety · Verifiable Artifacts · Skill 默认不可信</div>
+  <h1>Skills as Verifiable Artifacts：把 skill 当"包管理器里的不可信代码"——trust schema + capability gate + biconditional 正确性 + 10 条规范</h1>
+  <div class="en-title">Skills as Verifiable Artifacts: A Trust Schema and a Biconditional Correctness Criterion for Human-in-the-Loop Agent Runtimes</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">Skills as Verifiable Artifacts: A Trust Schema and a Biconditional Correctness Criterion for Human-in-the-Loop Agent Runtimes</a><span class="winner-badge">今日选定</span></td>
+          <td>skill manifest trust schema + capability gate + 双条件正确性 + 10 条 runtime profile</td>
+          <td>arXiv 2026-05-01 (Alfredo Metere)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00314" target="_blank" rel="noopener">Semia: Auditing Agent Skills via Constraint-Guided Representation Synthesis</a></td>
+          <td>约束引导的 agent skill 自动审计（UCSB Yu Feng 组）</td>
+          <td>arXiv 2026-05-01 (Wen, Li, Liu et al. 7 作者)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">Architectural Obsolescence of Unhardened Agentic-AI Runtimes</a></td>
+          <td>未硬化 agentic 运行时的架构性过时性论文（同作者姊妹篇）</td>
+          <td>arXiv 2026-05-02 (Alfredo Metere)</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">Position: Safety and Fairness in Agentic AI Depend on Interaction Topology, Not on Model Scale or Alignment</a></td>
+          <td>立场论文：安全性来自交互拓扑而非模型规模</td>
+          <td>arXiv 2026-05-02 (Bajaj, Singh, Anand, Singh)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01186" target="_blank" rel="noopener">Trace: Unmasking AI Attack Agents Through Terminal Behavior Fingerprinting</a></td>
+          <td>通过终端行为指纹识别恶意 AI 攻击 agent</td>
+          <td>arXiv 2026-05-02 (Ediga, Chattopadhyay)</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00081" target="_blank" rel="noopener">Alignment Contracts for Agentic Security Systems</a></td>
+          <td>把 agent 对齐变成可执行合约</td>
+          <td>arXiv 2026-05-01 (David, Guarnieri, Gervais)</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Skills as Verifiable Artifacts: A Trust Schema and a Biconditional Correctness Criterion for Human-in-the-Loop Agent Runtimes</span></div>
+      <div class="meta-item"><label>中文标题</label><span>把 Skill 当作可验证 artifact：HITL Agent 运行时的信任 schema 与双条件正确性标准</span></div>
+      <div class="meta-item"><label>作者</label><span>Alfredo Metere（独作）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-01；cs.CR 主分类 · cs.AI · cs.MA · cs.SE）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-01 05:53:05 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">https://arxiv.org/abs/2605.00424</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.00424" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.00424</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.00424" target="_blank" rel="noopener">10.48550/arXiv.2605.00424</a></div>
+      <div class="meta-item"><label>分类</label><span>cs.CR / cs.AI / cs.MA / cs.SE</span></div>
+      <div class="meta-item"><label>核心定位</label><span>把 agent skill 视为"包管理器里的不可信代码"，runtime 必须 enforce 默认不信任</span></div>
+      <div class="meta-item"><label>开源资源</label><span>arXiv HTML/TeX 源码；引用 metere2026enclawed 参考实现（同作者）</span></div>
+      <div class="meta-item"><label>关键交付</label><span>trust schema + capability gate + biconditional correctness + 10 条 portable runtime profile</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent skill 默认视为不可信代码：用 trust schema + capability gate 让 runtime 强制 verification，而非从签名/许可推断信任。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Agent skills——一种结构化的<strong>指令、脚本与参考资料的封装包</strong>，可以在不修改大语言模型本身的前提下增强其能力——已经从一种便利特性，<strong>升格为头等部署 artifact</strong>。承载它们的 runtime 因此继承了包管理器和操作系统长久以来的同一个问题：<em>一段内容声称自己具备某种行为；runtime 必须决定是否相信它</em>。</p>
+    <p>本文给出的核心论点是：<strong>一个 skill 在被验证之前是"不受信任的代码"；加载它的运行时必须强制执行这一默认设置</strong>，而不是从签名、许可或来源注册表推断信任。这种"默认不可信"的姿态，必须在每一层（manifest、capabilities、policy、runtime profile）都被结构性地强制执行。</p>
+    <p>论文围绕这一论点提出了四件互相支撑的工程产物：</p>
+    <ul class="point-list">
+      <li><strong>(1) Trust schema：</strong>在每一份 skill manifest 上挂一个显式的 verification level 字段；该字段不可被 skill 自身伪造。</li>
+      <li><strong>(2) Capability gate：</strong>HITL（human-in-the-loop）策略是 verification level 的函数；高敏感能力（文件写、网络出向、shell exec）只有达到对应级别的 skill 才能 unlock。</li>
+      <li><strong>(3) Biconditional correctness criterion：</strong>正确性是双条件的——即 "verification level 为 L ⇔ runtime 给出 capability set ≤ Cap(L)"；任一方向违反即为 runtime bug，可机械检查。</li>
+      <li><strong>(4) Portable runtime profile：</strong>包含 10 条规范性指南（normative guidelines），可被任意 agent harness/runtime 实现。</li>
+    </ul>
+    <p>该工作明确为 <strong>harness- and model-agnostic</strong>，无需重新训练或微调；目的是把"信任"从"假设它可信"翻成"在 runtime 上结构性地约束它"。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去半年 agent skill 生态的爆发——从 Anthropic 的 Skills、各大厂的 MCP server、社区维护的 skill 包仓库——把"<em>把第三方 skill 包加载进 agent runtime</em>"这一动作变成了部署默认行为。但这条路径在工程文献里没有被严格定义信任语义：大多数 runtime 默认信任 manifest 上的描述、信任来源域名、信任手工 review；这种"<em>看起来 OK 就放行</em>"的姿态，在 OS/包管理器的几十年血泪史里早就被证明会让攻击者反复打穿。本文把整个 agent skill 生态对齐到 OS/包管理的成熟视角——<strong>"未验证的代码 = 不可信"</strong>——并给出可在 runtime 上 mechanically check 的双条件标准。</p>
+
+    <p><strong>核心方法（4 件互锁的产物）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Trust schema：</strong>每个 skill manifest 必须声明 verification level（典型分级：unverified / community-vetted / org-signed / formally-verified），该字段由 runtime（而非 skill）写入，可由审计追溯。</li>
+      <li><strong>Capability gate：</strong>HITL policy 是 verification level → capability set 的映射函数。低验证级 skill 只能调用 read-only / pure 计算原语；高敏感能力（fs.write、net.connect、process.spawn）严格要求高 verification 级别。</li>
+      <li><strong>Biconditional correctness criterion：</strong>把 "正确性"定义为 <em>双条件</em>——"<strong>L ⇔ Cap ≤ Cap(L)</strong>"。这意味着：runtime 不仅不能给低级 skill 高权限（前向），也不能在 skill 已被验证时拒绝其应得的权限（反向）；两侧都可以被 fuzz 出违例。</li>
+      <li><strong>10 条 portable runtime profile：</strong>规范性的 runtime 实现指南，跨 harness 和 model 可移植；明确避免对模型权重做改动，因此既不需要重新训练，也不需要 PEFT 微调。</li>
+      <li><strong>"unverified ≡ untrusted code"</strong>这一类比贯穿全文——把 OS/包管理器、MCM 的成熟工程经验直接迁移过来，是本文的概念骨架。</li>
+      <li><strong>明确反对 "trust by inference"</strong>：作者反复强调，runtime 不应从签名、许可或注册表来源（domain 名、author 名）推断信任；信任只能来自显式 verification 级别。</li>
+    </ul>
+
+    <p><strong>与近期 Agent Safety 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>SafeHarbor (2026-05-08 #1)</th><th>AgentTrust (2026-05-07 #1)</th><th>BOA (2026-05-05 #1)</th><th>Skills as Verifiable Artifacts（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>层次</td><td>对话级 guardrail</td><td>tool-call 决策层</td><td>Agent 安全度量化</td><td><strong>artifact 加载层（更早）</strong></td></tr>
+        <tr><td>核心机制</td><td>分层记忆 + 自演化 rules</td><td>allow/warn/block/review 调度</td><td>likelihood-budget 搜索</td><td><strong>verification level + capability gate</strong></td></tr>
+        <tr><td>正确性形式化</td><td>验证集 utility/refusal</td><td>裁决准确率 + 延迟</td><td>P(safe) 边界</td><td><strong>双条件机械可检查</strong></td></tr>
+        <tr><td>是否需要训练</td><td>training-free（plug-and-play）</td><td>无（外挂调度）</td><td>无（搜索）</td><td><strong>无（runtime 配置层）</strong></td></tr>
+        <tr><td>处理对象</td><td>用户 prompt → response</td><td>tool 调用 invocation</td><td>整体 trajectory</td><td><strong>skill 包本身（部署 artifact）</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把这篇放进过去 10 天 Agent Safety 的演进谱系里，可以看到一个清晰的"<em>把防线前移到 runtime 加载层</em>"的趋势。<a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a> 是在<strong>推理</strong>阶段做防泄漏；<a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a> 在<strong>响应</strong>阶段做 guardrail；<a href="../../agent-safety/2026-05-07-1.html">AgentTrust</a> 在<strong>工具调用</strong>阶段做裁决；本文则把防线推到了<em>更早的 skill 加载阶段</em>——一个 skill 在还没被 invoke 之前，就要按 verification level 被卡住能力。这与 Metere 自己后续 paper <a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">Architectural Obsolescence of Unhardened Agentic-AI Runtimes</a> 形成姊妹论述：未硬化的 agent 运行时是架构性地过时的。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Metere (2026) — <em>Enclawed: A Reference Runtime for Verifiable Agent Skills</em>·同作者参考实现（被本文引用）<br>
+    <a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">arxiv.org/abs/2605.01740（姊妹篇）</a></div>
+    <div class="ref-item">Wen et al. (2026) — <em>Semia: Auditing Agent Skills via Constraint-Guided Representation Synthesis</em>·skill 自动审计的对照工作<br>
+    <a href="https://arxiv.org/abs/2605.00314" target="_blank" rel="noopener">arxiv.org/abs/2605.00314</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Model Context Protocol (MCP)</em>·skill / tool 包的事实标准协议<br>
+    <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">anthropic.com/news/model-context-protocol</a></div>
+    <div class="ref-item">Cox (2019) — <em>Surviving Software Dependencies</em>·包管理器信任语义经典综述（CACM）<br>
+    <a href="https://research.swtch.com/deps" target="_blank" rel="noopener">research.swtch.com/deps</a></div>
+    <div class="ref-item">Saltzer &amp; Schroeder (1975) — <em>The Protection of Information in Computer Systems</em>·"least privilege" 原则的源头<br>
+    <a href="https://www.cs.virginia.edu/~evans/cs551/saltzer/" target="_blank" rel="noopener">cs.virginia.edu/~evans/cs551/saltzer</a></div>
+    <div class="ref-item">Bajaj et al. (2026) — <em>Position: Safety and Fairness in Agentic AI Depend on Interaction Topology</em>·与本文姊妹的"安全来自结构而非模型"立场<br>
+    <a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">arxiv.org/abs/2605.01147</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>"Unverified ≡ untrusted"</strong>——本文最尖锐的一句话：在 verification level 显式提供之前，所有 skill 都应被视为<em>未受信任的代码</em>。这一类比把整个 agent skill 生态对齐到包管理器的成熟视角。</li>
+      <li><strong>Trust schema 字段不可被 skill 伪造</strong>：verification level 必须由 runtime / 第三方注册表写入，skill 自身的 manifest 不得自命验证级别——这是本文区别于"meta-data 即信任"路线的关键。</li>
+      <li><strong>Capability gate = HITL policy 函数</strong>：把"哪些能力需要人审"的决策建模成 verification level → capability set 映射，让 HITL 强度自动随信任级别 scale，而不是固定一刀切。</li>
+      <li><strong>Biconditional correctness</strong>："L ⇔ Cap ≤ Cap(L)"——双向都可机械 check，包括"已验证 skill 不应被错误降权"这种通常被忽视的反向 bug。</li>
+      <li><strong>10 条 portable runtime profile</strong>：跨 harness/model 可移植的规范性指南，意味着这个方案可直接附加到现有 LangChain / LangGraph / AutoGen / OpenAgents 之上，无需替换 runtime。</li>
+      <li><strong>明确 harness- and model-agnostic</strong>：不要求重新训练或微调，只在 runtime 配置层落地——这是本文工程上最有吸引力的一点。</li>
+      <li><strong>方法论站位</strong>：把 OS/包管理器的几十年安全工程经验完整迁移到 LLM agent 生态，理论与实践之间的桥比单纯的"加 guardrail"硬得多。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>把 trust schema + capability gate 视为<strong>新的 harness 维度</strong>：未来 evaluation harness 应在每个测试用例上同时报告"<em>该 skill 在多少 verification level 下还能完成任务</em>"——这给 <a href="../../harness/2026-05-11-1.html">AgentFloor</a> 那样的能力 ladder 加上"权限轴"，能力 vs 权限二维 frontier 比单一能力 frontier 信息密度高得多。对你 ZipperQuant 项目的 ablation 也有外推：把 W4A4 kernel 的"启用域"建成类似 verification level（如 "fp32 baseline / W4A4 dense / W4A4 + sparse residual / fused kernel"），让 ablation table 自然 capture 哪些下游任务允许激进量化、哪些必须保守。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>本文是当前 agent safety 文献里最干净的"<em>把工程经验迁移过来的</em>"贡献之一。它的双条件正确性可以直接和你的研究方向对接：把 agent runtime 想象成 LLM 推理 stack 的"加载器"，每个 skill 包就像一个动态库；biconditional 让"权限错误降级"也能被 catch，这一反向检查在 LangChain 类 runtime 里是缺失的。结合今日 Harness 报告 <a href="../../harness/2026-05-11-1.html">AgentFloor</a> 的 model-routing 视角，可以做一个"模型能力 × skill 信任级别"的二维 admission policy——只有 capability tier ≥ k 的模型，才能 invoke verification level ≥ L 的 skill，让 routing 同时是能力路由 + 安全准入。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>本文最直接的 benchmark 落地：构造一组<strong>"manifest 谎报 vs 真实能力不一致"</strong>的对抗 skill，用 biconditional 标准做评测。今日 Benchmark 报告 <a href="../../benchmark/2026-05-11-1.html">ML-Bench&amp;Guard</a> 已经在做政策对齐评测——下一步可以加一个"skill manifest 真实性"测试集：随机翻转 verification level 字段或描述字段，看 runtime 是否拒绝。这把 safety benchmark 从"模型是否拒绝有害请求"扩展到"runtime 是否拒绝错误声明的能力包"，对接的是更接近真实部署的攻击面。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Architectural Obsolescence of Unhardened Agentic-AI Runtimes</strong> · 同作者姊妹篇——未硬化的 agent runtime 是架构性地过时<br>
+      <a href="https://arxiv.org/abs/2605.01740" target="_blank" rel="noopener">arxiv.org/abs/2605.01740</a></li>
+      <li><strong>Semia: Auditing Agent Skills via Constraint-Guided Representation Synthesis</strong> · skill 审计的自动化路线（与本文 runtime 路线互补）<br>
+      <a href="https://arxiv.org/abs/2605.00314" target="_blank" rel="noopener">arxiv.org/abs/2605.00314</a></li>
+      <li><strong>Position: Safety and Fairness in Agentic AI Depend on Interaction Topology</strong> · "安全来自结构"立场论文<br>
+      <a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">arxiv.org/abs/2605.01147</a></li>
+      <li><strong>Trace: Unmasking AI Attack Agents Through Terminal Behavior Fingerprinting</strong> · 从 runtime 行为侧识别恶意 agent<br>
+      <a href="https://arxiv.org/abs/2605.01186" target="_blank" rel="noopener">arxiv.org/abs/2605.01186</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.00424" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.00424v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.00424" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">参考协议：MCP</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-11 #1 · 搜索来源：arXiv list/cs.CR/2026-05 + arxiv.org/abs/2605.xxxxx<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">arxiv.org/abs/2605.00424</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

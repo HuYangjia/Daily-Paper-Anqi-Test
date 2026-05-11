@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-11 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-11 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 11 日 · Harness Engineering · 6 阶能力梯子 · 把"该用哪个模型"变成可路由问题</div>
+  <h1>AgentFloor：30 任务 × 6 阶能力梯子 × 16 开源模型 + GPT-5——16,542 次评分跑出"开源已足够"的 routing 边界</h1>
+  <div class="en-title">AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 7.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.00334" target="_blank" rel="noopener">AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?</a><span class="winner-badge">今日选定</span></td>
+          <td>6 阶能力 ladder × 30 任务 × 16 模型 + GPT-5 的 deterministic harness</td>
+          <td>arXiv 2026-05-01 (Karmakar &amp; Chatterjee)</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00737" target="_blank" rel="noopener">To Call or Not to Call: A Framework to Assess and Optimize LLM Tool Calling</a></td>
+          <td>"是否调用工具"的可学习决策评估框架（MPI-SWS / Bilkent / U Bonn）</td>
+          <td>arXiv 2026-05-01 (Wu, Das, Amani et al.)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00136" target="_blank" rel="noopener">Are Tools All We Need? Unveiling the Tool-Use Tax in LLM Agents</a></td>
+          <td>"加工具反而变笨"的 Tool-Use Tax 现象量化</td>
+          <td>arXiv 2026-05-01 (K. Zhang, Z. Xiong et al.)</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01203" target="_blank" rel="noopener">GR-Ben: A General Reasoning Benchmark for Evaluating Process Reward Models</a></td>
+          <td>过程奖励模型评测 benchmark（13 作者，HIT-SCIR）</td>
+          <td>arXiv 2026-05-02 (Sun, Zhang, Ding et al.)</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00425" target="_blank" rel="noopener">AEM: Adaptive Entropy Modulation for Multi-Turn Agentic RL</a></td>
+          <td>多轮 Agent RL 训练的自适应熵调控</td>
+          <td>arXiv 2026-05-01 (H. Zhao, S. Zhou et al.)</td>
+          <td class="score-num">84</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentFloor：小开源模型在工具使用阶梯上能爬多高？</span></div>
+      <div class="meta-item"><label>作者</label><span>Ranit Karmakar; Jayita Chatterjee</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-01；cs.AI · cs.CL）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-01 01:25:56 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.00334" target="_blank" rel="noopener">https://arxiv.org/abs/2605.00334</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.00334" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.00334</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.00334" target="_blank" rel="noopener">10.48550/arXiv.2605.00334</a></div>
+      <div class="meta-item"><label>实验规模</label><span>30 deterministic 任务 × 6 tier × 16 开源模型 (0.27B – 32B) + GPT-5 = 16,542 条 scored run</span></div>
+      <div class="meta-item"><label>开源资源</label><span>benchmark + harness + sweep configurations + full run corpus（CC BY 4.0）</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把"agent routing"建成 deterministic capability frontier 评测，为 small-vs-frontier 决策提供量化依据</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      30 deterministic 任务 + 6 阶能力 ladder + 16,542 跑次：开源模型已能在 agent pipeline 大半结构化短任务上替代前沿模型。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>生产环境的 agentic 系统对每个用户请求都要做<strong>多次模型调用</strong>，其中绝大多数都是<strong>短的、结构化的、例行的</strong>。这带来一个现有 evaluation 没有直接回答的实际 routing 问题：<em>在 agent 工作流中，到底哪些环节真的需要前沿大模型，哪些可以由小模型胜任？</em></p>
+    <p>我们提出 <strong>AgentFloor</strong>——一个 deterministic 的 30 任务 benchmark，按 <strong>6 阶能力 ladder</strong>（capability tier）组织，覆盖 instruction following、tool use、multi-step coordination、long-horizon planning under persistent constraints。我们评测了 <strong>16 个开源模型（0.27B 到 32B 参数）</strong>加上 <strong>GPT-5</strong>，总计 <strong>16,542 条 scored run</strong>。</p>
+    <p>结果揭示了一条清晰的"<strong>必要性边界（boundary of model necessity）</strong>"：<em>小型与中型开源模型已足以胜任真实 agent pipeline 的大部分短时长、结构化工具使用任务</em>；汇总来看，最强开源模型在 AgentFloor 上的得分与 GPT-5 持平，运行成本和延迟显著更低。<strong>差距最明显的是长时计划任务</strong>——需要在多步骤上保持持续协调和可靠的约束追踪——这里前沿模型仍然占优，但双方都没达到强可靠性。</p>
+    <p>我们还发现这条边界<strong>不能仅由参数规模解释</strong>：部分失败可以通过定向干预改善，但效果是 model-specific 而非普适。这些发现给 agentic 系统提示了一条务实的设计原则：<em>把广泛的 routine 操作交给小型开源模型，把真正需要更深规划与控制的窄类任务保留给大型前沿模型</em>。我们公开了 benchmark、harness、sweep configurations 和完整 run corpus。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去一年的 agent harness 研究主要是"把外延做大"——<a href="../../harness/2026-05-08-1.html">Token Arena</a> 把 (provider, model, SKU) endpoint 当评测单元，<a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 用 RL 端到端学 (model, primitive) 决策面，<a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a> 把组件子集做成 2⁵ 全因子。AgentFloor 攻的是另一条线：<em>把"该用哪个模型"这件事建成可路由的 deterministic 评测</em>。它把"小模型够不够用"这一个工业界天天在问、却没有 benchmark 直接回答的问题，落到 30 任务 × 6 tier 的固定坐标系上，跑出 16,542 条评分；从而让 router 设计从"猜"变成"读图"。</p>
+
+    <p><strong>核心方法（6 阶 ladder × deterministic harness）：</strong></p>
+    <ul class="point-list">
+      <li><strong>能力 ladder 6 阶：</strong>从最低阶 instruction following，到 tool use（结构化调用）、multi-step coordination、long-horizon planning under persistent constraints。每阶对应一组任务的难度面，可拼成完整能力曲线。</li>
+      <li><strong>30 个 deterministic 任务：</strong>关键修饰词是 deterministic——任务结果可由确定性 verifier 判定，避开了 LLM-judge 的随机性偏差，也保证了 16,542 条 run 之间可比。</li>
+      <li><strong>17 个模型横切：</strong>16 开源模型从 0.27B 到 32B（覆盖了 SLM/MLM/LLM 三个量级）+ GPT-5；同步 sweep 多种 sweep configurations（temperature/top-p/system prompt 模板）。</li>
+      <li><strong>报告"边界"而非"排名"：</strong>核心交付不是"模型 leaderboard"，而是 <em>capability frontier</em>——每阶 tier 上"何处开源已够、何处必须 frontier"的边界图。</li>
+      <li><strong>negative result 与 model-specific 干预：</strong>作者明确报告"边界不由 scale 单独解释"——某些失败响应定向 prompt 干预，效果却是 model-specific，不可普适，这是工程上比一句"scale up"更实用的指南。</li>
+      <li><strong>完整发布：</strong>benchmark + harness + sweep configs + full run corpus，所有 16,542 条 trajectory 都可复跑——这是真正"can you reproduce my router?"级别的开源。</li>
+    </ul>
+
+    <p><strong>与现有 Harness 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>Token Arena (2026-05-08 #1)</th><th>Uno-Orchestra (2026-05-07 #1)</th><th>More Is Not Always Better (2026-05-09 #1)</th><th>AgentFloor（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测单元</td><td>(provider, model, SKU) endpoint</td><td>(model, primitive) 决策对</td><td>(scaffolding 5 组件子集)</td><td><strong>(任务 tier, 模型) 必要性矩阵</strong></td></tr>
+        <tr><td>典型问题</td><td>"哪个 endpoint 跑这条 workload 最划算"</td><td>"调度策略能否跨任务通用"</td><td>"组件越多越好吗"</td><td><strong>"该用小模型还是大模型"</strong></td></tr>
+        <tr><td>规模</td><td>78 endpoint × 12 工作负载</td><td>13 benchmark / 22 baseline</td><td>96 条件 × ≤10 seed</td><td>30 任务 × 17 模型 × sweep = 16,542 run</td></tr>
+        <tr><td>判定方式</td><td>价 + 速度 + 质量加权</td><td>RL macro pass@1</td><td>主效应回归 + Shapley</td><td><strong>deterministic verifier</strong></td></tr>
+        <tr><td>对工业落地的指引</td><td>endpoint 比价</td><td>调度策略迁移</td><td>组件子集选择</td><td><strong>routing 边界（小→大切换）</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 AgentFloor 嵌进过去 10 天的 harness 时间线，可以画出一条非常清晰的"<em>把 agent 系统的每一个隐含决策内化为评测变量</em>"的演化：先是 endpoint（Token Arena），再是 routing/分解（Uno-Orchestra），再是组件子集（More Is Not Always Better），现在是 model size routing（AgentFloor）。它们共同构成一个由"经验主义堆栈"走向"明示决策面"的 harness engineering 升级路径——AgentFloor 是其中最贴近真实 production routing 决策的一篇。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>·deterministic harness 范式起点<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·agent benchmark 经典 baseline<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·tool use + reasoning 范式<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·tool use 自学习起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em>·long-horizon planning benchmark 参照<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>MetaGPT: Meta Programming for A Multi-Agent Framework</em>·agent pipeline 工程化代表<br>
+    <a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">arxiv.org/abs/2308.00352</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>16,542 条 scored run</strong>（30 任务 × 17 模型 × sweep）——deterministic verifier 全部可复跑，是当前规模最大的 small-vs-frontier 直接对比之一。</li>
+      <li><strong>开源 ≈ 前沿（短时结构化任务）</strong>：在低-中阶 tier（instruction following、tool use、短-multi-step）上，最强开源模型在 AgentFloor 上的得分与 GPT-5 持平，且更便宜更快。</li>
+      <li><strong>差距集中于长时规划</strong>：在 long-horizon planning under persistent constraints 上，前沿模型仍占优，但双方都未到达强可靠性——这是 agent harness 研究的下一个明确战场。</li>
+      <li><strong>边界不是 scale-only</strong>：作者明确指出"<em>this boundary is not explained by scale alone</em>"——某些失败响应定向干预（prompt/scaffolding 调整），但效果 model-specific，非普适。</li>
+      <li><strong>16 模型 × 0.27B – 32B</strong>：跨越 SLM 到中型 OSS 的完整覆盖（包括 Qwen / Llama / Phi / Gemma 系列），确保 ladder 上每一阶都有候选可比较。</li>
+      <li><strong>设计原则</strong>："<em>broad base of routine actions → small open-weight；narrower class of tasks demanding deeper planning → frontier</em>"——这是工业界 router 设计可以直接落地的工程结论。</li>
+      <li><strong>开源完整度高</strong>：benchmark + harness + sweep configurations + full run corpus，即"可以基于它直接复跑路由器"。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AgentFloor 给 harness 工程添了一个<strong>新的"决策面变量"</strong>：model size routing。它和 <a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a> 的"组件子集"+ <a href="../../harness/2026-05-08-1.html">Token Arena</a> 的"endpoint SKU"组合起来，可以构成一个三轴坐标系 (model size, scaffolding subset, endpoint)。对你正在写的 ZipperQuant W4A4 e2e benchmark：可以直接借鉴 AgentFloor 的"capability tier × deterministic verifier"思路——把 (Qwen3-8B, prefill_len, decode_len) 测试点按"短上下文/长上下文/超长上下文"分 tier，用 BF16 baseline 做 verifier reference，让你的 ZipperEngine 跑分以"在哪个 tier 上 W4A4 还能匹配 BF16"的形式呈现，比单纯报 throughput 更有说服力。NeurIPS 投稿 ablation 也可以参考它的 sweep config 公开方式。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AgentFloor 的 "boundary not explained by scale alone" 对 agent safety 是关键提示：<em>routing 决策本身就是一个安全 surface</em>——把高敏感任务（如代码执行、文件操作）误路由到能力不足的小模型上，会直接放大 hallucination/误用工具的安全风险。今日 Agent Safety 报告中的 <a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a> 提出"skill 必须按验证级别加 capability gate"——把 capability gate 和 AgentFloor 的 capability ladder 直接对接，可以得到"模型能力 × skill 信任级别"的二维 admission policy，比单维 skill 信任更稳健。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>30 deterministic tasks + 6 tier 给 safety benchmark 一个直接可学的形态：把 ASR / NSR / refusal-correctness 也做成 deterministic scoring（不依赖 LLM-judge 的 ASR 偏移），并按 capability tier 切片。今日 Benchmark 方向 <a href="../../benchmark/2026-05-11-1.html">ML-Bench&amp;Guard</a> 已经在做"政策对齐的多语种 safety benchmark"——下一步自然是把"能力 tier × 政策合规"两维交叉，让评测显示"小模型在低 tier 上能不能也合规拒绝"。这是更接近真实 agent 部署的评估形态。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>To Call or Not to Call: A Framework to Assess and Optimize LLM Tool Calling</strong> · 工具是否调用的可学决策评估框架（与 AgentFloor 的 tool-use tier 互补）<br>
+      <a href="https://arxiv.org/abs/2605.00737" target="_blank" rel="noopener">arxiv.org/abs/2605.00737</a></li>
+      <li><strong>Are Tools All We Need? Unveiling the Tool-Use Tax in LLM Agents</strong> · 加工具反而让小模型变笨的现象量化<br>
+      <a href="https://arxiv.org/abs/2605.00136" target="_blank" rel="noopener">arxiv.org/abs/2605.00136</a></li>
+      <li><strong>Token Arena: A Continuous Benchmark Unifying Energy and Cognition in AI Inference</strong> · endpoint SKU 维度上的姊妹工作<br>
+      <a href="https://arxiv.org/abs/2605.00300" target="_blank" rel="noopener">arxiv.org/abs/2605.00300</a></li>
+      <li><strong>More Is Not Always Better: Cross-Component Interference in LLM Agent Scaffolding</strong> · 与 AgentFloor 互补的 scaffolding 子集维度<br>
+      <a href="https://arxiv.org/abs/2605.05716" target="_blank" rel="noopener">arxiv.org/abs/2605.05716</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.00334" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.00334" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.00334v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.00334" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">参考工具：lm-evaluation-harness</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-11 #1 · 搜索来源：arXiv list/cs.AI/2026-05 + arxiv.org/abs/2605.xxxxx<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.00334" target="_blank" rel="noopener">arxiv.org/abs/2605.00334</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
