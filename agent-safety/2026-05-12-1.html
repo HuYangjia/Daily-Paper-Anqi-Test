@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-12 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #fcebeb; color: #a32d2d; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7a1f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c4c4; color: #7a1f1f; }
+  .link-btn.primary:hover { background: #fadcdc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 12 日 · Agent Skills Safety · 多 Agent 凭证泄漏 · 在 decoding 阶段拦截</div>
+  <h1>PRISM：把 multi-agent 凭证泄漏定义为"传播放大"——16 维生成期信号 + 红黄绿三档逐 token 干预，泄漏率 0.0%</h1>
+  <div class="en-title">PRISM: Generation-Time Detection and Mitigation of Secret Leakage in Multi-Agent LLM Pipelines</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.4</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.10614" target="_blank" rel="noopener">PRISM: Generation-Time Detection and Mitigation of Secret Leakage in Multi-Agent LLM Pipelines</a><span class="winner-badge">今日选定</span></td>
+          <td>多 Agent 凭证泄漏 · decoding 阶段干预 · F1 0.832 / 泄漏率 0%</td>
+          <td>arXiv 2026-05-11 (Tapwal, Kumar, Maple)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10763" target="_blank" rel="noopener">MATRA: Modeling the Attack Surface of Agentic AI Systems — OpenClaw Case Study</a></td>
+          <td>资产-攻击树驱动的 agentic 风险建模框架（DeMeSSAI'26 / EuroS&amp;P 2026）</td>
+          <td>arXiv 2026-05-11 (Van hamme, Vissers, Carnerero-Cano et al. 7 作者)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10386" target="_blank" rel="noopener">GuardAD: Safeguarding Autonomous Driving MLLMs via Markovian Safety Logic</a></td>
+          <td>把自动驾驶 MLLM 安全性形式化为 Markov 安全逻辑</td>
+          <td>arXiv 2026-05-11</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.06490" target="_blank" rel="noopener">Instrumental Choices: Measuring the Propensity of LLM Agents to Pursue Instrumental Behaviors</a></td>
+          <td>terminal-based agent 工具性收敛 (IC) 倾向 benchmark · IC 5.1%</td>
+          <td>arXiv 2026-05-07 (Wiedermann-Möller, Dung, Andriushchenko)</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.06455" target="_blank" rel="noopener">PrefixGuard: From LLM-Agent Traces to Online Failure-Warning Monitors</a></td>
+          <td>从 trace 自动学在线失败预警监控器</td>
+          <td>arXiv 2026-05-07</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>PRISM: Generation-Time Detection and Mitigation of Secret Leakage in Multi-Agent LLM Pipelines</span></div>
+      <div class="meta-item"><label>中文标题</label><span>PRISM：多 Agent LLM 流水线中"凭证泄漏"的生成期检测与缓解</span></div>
+      <div class="meta-item"><label>作者</label><span>Riya Tapwal; Abhishek Kumar; Carsten Maple</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-11；cs.AI）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-11 14:11:41 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.10614" target="_blank" rel="noopener">https://arxiv.org/abs/2605.10614</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.10614" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.10614</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.10614" target="_blank" rel="noopener">10.48550/arXiv.2605.10614</a></div>
+      <div class="meta-item"><label>评测规模</label><span>2,000 任务对抗 benchmark × 13 攻击类别 × 3 压力级别 × 4-agent 异构流水线</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把"凭证泄漏"建模为生成期顺序风险累积（含熵塌缩 + logit 集中早期信号）</span></div>
+      <div class="meta-item"><label>主结果</label><span>F1 = 0.832（precision 1.000 / recall 0.712）· 任务级泄漏率 0.0% · utility 0.893（vs Span Tagger F1 0.719 / 泄漏 15.0%）</span></div>
+      <div class="meta-item"><label>许可</label><span>arXiv default · 暂未公开 GitHub</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把多 Agent 凭证泄漏定义为生成期顺序风险累积，16 维信号 + 红黄绿三档逐 token 干预，benchmark 上零泄漏。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多 Agent LLM 系统引入了一个新的<strong>安全风险</strong>：被某个 agent 访问到的敏感信息，会通过<strong>共享上下文</strong>传播，并在下游输出中重新出现——<em>即使没有显式的对抗意图</em>。我们把这一现象形式化为<strong>"传播放大（propagation amplification）"</strong>：每跨越一次 agent 边界，敏感内容被反复曝露给下游生成器，泄漏风险随之累积。</p>
+    <p>已有防御——<em>基于 prompt 的护栏、静态模式匹配、LLM-as-judge 过滤</em>——并不为此场景设计：它们要么在生成<em>之后</em>才介入，要么主要依赖表面字符串模式，要么以巨大延迟为代价、且不对生成过程本身建模。</p>
+    <p>为此，我们提出 <strong>PRISM</strong>，一种把"凭证泄漏"视为<strong>生成期顺序风险累积</strong>的实时防御。在每个 decoding step，PRISM 融合 <strong>16 个信号</strong>——覆盖词法、结构、信息论、行为与上下文五个维度——计算<em>校准后的风险分</em>，并通过<strong>绿/黄/红三档风险区间</strong>实施<em>逐 token 干预</em>。</p>
+    <p>核心观察是：<strong>凭证再现往往在生成动力学层面有可测量的前兆</strong>——表现为<em>熵塌缩（entropy collapse）</em>与<em>logit 浓度上升</em>。结合 identifier-pattern 等文本结构线索，这些时间序列信号能在 secret 完全重构<em>之前</em>就给出预警。</p>
+    <p>在覆盖 13 个攻击类别、3 个压力级别、4-agent 异构流水线的 <strong>2,000 任务对抗 benchmark</strong> 上，PRISM 取得 <strong>F1 = 0.832</strong>（precision = 1.000，recall = 0.712），任务级泄漏率 <strong>0.0%</strong>，输出 utility 保持 <strong>0.893</strong>。相较最强 baseline <em>Span Tagger</em>（F1 = 0.719，泄漏率 15.0%），PRISM 展现实质性提升。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去两周的 agent safety 工作主要在两条线推进——<a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a> 用分层记忆 guardrail、<a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a> 在 LRM 思维链层面控风险、<a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a> 把 skill 当不可信代码做 capability gate。这些都聚焦"<em>单 agent / 单 skill</em>"层面的 safety。PRISM 攻的是另一条线：<strong>multi-agent pipeline 中"信息流"的安全</strong>——当一个 agent 看到 secret，它会被反复传给下游生成器，<em>即使每个 agent 都没有恶意</em>。这是把 agent safety 从"单调用 guardrail"推进到"信息流（information-flow）safety"的关键一步，对应了 OS 级 capability/IFC 的经典概念在 agent 系统的 LLM-native 实现。</p>
+
+    <p><strong>核心方法（生成期信号 + 三档干预）：</strong></p>
+    <ul class="point-list">
+      <li><strong>"传播放大"形式化：</strong>把"经过 N 个 agent 后的泄漏概率"建成一条递增的累积曲线，每个 agent 边界都是一个累积点。这是一个非常简洁却新颖的现象命名——它使得"凭证泄漏 ≠ 一次性事件"变成可量化的风险累积过程。</li>
+      <li><strong>16 维信号融合：</strong>覆盖五大类——(1) 词法（identifier 模式、长度异常）、(2) 结构（key-value 排版、URL 嵌入）、(3) 信息论（熵、logit 浓度）、(4) 行为（生成节奏变化）、(5) 上下文（前文出现 secret 命名空间）。每步 decoding 给出一个<em>校准</em>的风险分。</li>
+      <li><strong>关键时间序列洞察：</strong>论文指出 LLM 在<em>即将复现 secret</em> 时会出现可测量的<strong>熵塌缩 + logit 集中</strong>——这是模型"高置信回忆某段固定内容"的指纹。把它和 identifier 模式拼起来，就能在 secret 完全重构<em>之前</em>预警。</li>
+      <li><strong>红黄绿三档干预：</strong>绿区放行；黄区软干预（重写、占位符）；红区硬阻断（抑制 token / 回退）。这是一种<em>逐 token 的、以风险分驱动的</em>动态约束解码——不是 post-generation 的 filter，而是 in-the-loop 的 controller。</li>
+      <li><strong>4-agent 异构流水线 benchmark：</strong>2,000 任务 × 13 攻击类别 × 3 压力级别。这个规模足以做出 F1 / 泄漏率 / utility 三轴 trade-off 的 ROC，<em>是当前 multi-agent 安全 benchmark 中最系统化的一个</em>。</li>
+    </ul>
+
+    <p><strong>与现有 Agent Safety 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>SafeHarbor (2026-05-08 #1)</th><th>Skills as Verifiable Artifacts (2026-05-11 #1)</th><th>Chain of Risk (2026-05-09 #1)</th><th>PRISM（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>防护对象</td><td>对话 guardrail</td><td>skill 加载/调用</td><td>LRM 思维链泄漏</td><td><strong>multi-agent pipeline 信息流</strong></td></tr>
+        <tr><td>风险模型</td><td>语义违规</td><td>不可信 skill</td><td>泄漏-逃逸耦合</td><td><strong>传播放大（跨 agent 边界累积）</strong></td></tr>
+        <tr><td>干预时点</td><td>分层记忆 / 输入</td><td>加载前的 trust schema</td><td>多原则转向（mid-生成）</td><td><strong>每 token decoding step</strong></td></tr>
+        <tr><td>关键信号</td><td>规则匹配</td><td>capability gate</td><td>原则评分</td><td><strong>熵塌缩 + logit 集中 + 16 维特征</strong></td></tr>
+        <tr><td>主结果</td><td>benign 保留 + jailbreak 防御</td><td>双条件正确性</td><td>风险 -40.8% acc -2.3%</td><td><strong>泄漏 0.0% / utility 0.893</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 PRISM 嵌进过去两周的 agent safety 时间线，可以画出一条非常清晰的"<em>safety 单元从粗到细</em>"演化：会话 → skill → 思维链 → <strong>token</strong>。PRISM 第一次把 safety enforcement 推到 <em>per-token decoding step</em> 这个最小颗粒度，并且利用模型生成动力学本身（entropy collapse / logit concentration）做<em>预测性</em>而非<em>反应性</em>的拦截。这一思路有强烈的 systems & information-flow 风味，未来很可能成为 production multi-agent system 的标准 layer。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·间接 prompt 注入与跨边界信息流泄漏奠基<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Carlini et al. (2021) — <em>Extracting Training Data from Large Language Models</em>·"凭证再现"现象的早期量化<br>
+    <a href="https://arxiv.org/abs/2012.07805" target="_blank" rel="noopener">arxiv.org/abs/2012.07805</a></div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard</em>·LLM-as-judge guardrail baseline<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Pillutla et al. (2023) — <em>Span Tagger / privacy span detection</em>·静态 span 标注作为 PRISM 主 baseline<br>
+    <a href="https://aclanthology.org/2023.acl-long.252/" target="_blank" rel="noopener">aclanthology.org/2023.acl-long.252</a></div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·multi-agent / 工具调用范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Myers &amp; Liskov (1997) — <em>Decentralized Information Flow Control (DIFC)</em>·信息流 / capability 经典理论框架<br>
+    <a href="https://www.cs.cornell.edu/andru/papers/iflow-tosem.pdf" target="_blank" rel="noopener">cornell DIFC PDF</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>F1 = 0.832, precision = 1.000, recall = 0.712</strong>——precision 1.0 在生产级 secret 防泄漏里是关键指标（误杀 0），与 utility 0.893 的高保留率形成强 trade-off。</li>
+      <li><strong>任务级泄漏率 0.0%</strong>（vs Span Tagger 15.0%）——在 2,000 任务对抗 benchmark 上零泄漏，意味着 PRISM 的"预测性"信号至少在 benchmark 范围内做到了完整 coverage。</li>
+      <li><strong>16 维信号、5 大类</strong>：lexical / structural / information-theoretic / behavioral / contextual——是当前在 in-loop secret detection 中维度最齐全的特征工程。</li>
+      <li><strong>关键洞察：熵塌缩 + logit 集中</strong>——LLM 在"高置信回忆 secret"时生成动力学有可测量前兆，这是信息论 + 行为学的桥接观察，未来可推广到其他 high-confidence "记忆复现" 风险（PII / 训练数据复现）。</li>
+      <li><strong>13 攻击类别 × 3 压力级别 × 4 agent 异构流水线</strong>——把"传播放大"做成可重放压力实验，是一份高质量的多 agent 信息流 safety benchmark。</li>
+      <li><strong>方法学意义</strong>：把 information-flow control（IFC）经典思想以 LLM-native 方式落地到 decoding 阶段，相比 prompt-level / post-hoc filter 第一次把"safety-by-design"做到 token 颗粒度。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>PRISM 的 16 维生成期信号给 harness 引入一个"<strong>per-token diagnostic surface</strong>"：你正在做的 ZipperQuant W4A4 e2e benchmark 完全可以借鉴它的<em>熵塌缩 + logit 浓度</em>作为<strong>quantization regression detector</strong>——当 W4A4 模型在某个 token 上熵分布与 BF16 显著偏离（比如塌缩到错误 token），可以即时报警，比单纯比 perplexity 颗粒度细很多。这给 ZipperEngine 提供了一个"online quality monitor"的设计模板：在 decode 阶段以极低开销做 logit 分布对比，比 offline benchmark 更接近 production 信号。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>PRISM 把 safety unit 推进到 per-token，是和今日 Harness 方向 <a href="../../harness/2026-05-12-1.html">ComplexMCP</a> 形成天然组合的关键拼图：<em>ComplexMCP 揭示 over-confidence 是失败 root cause，PRISM 给 over-confidence 提供了 generation-time 的可观测信号（entropy collapse）</em>。把两者拼起来，可以构建一个完整的 "stress harness + per-token guardrail" pipeline——在 ComplexMCP 的 seed-driven 故障注入下，让 PRISM 风险分作为 capability gate 触发器，自动在 over-confidence 高发段切换到"verify-then-act"模式。这是把 information-flow safety 从凭证泄漏延伸到 agent 行为泄漏的自然路径。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>2,000 任务 × 13 攻击 × 3 压力 × 4 agent 流水线给 multi-agent safety benchmark 提供了一个直接可学的形态：<strong>"agent 拓扑 × 攻击类型 × 压力级别"三维 grid</strong>。今日 Benchmark 方向 <a href="../../benchmark/2026-05-12-1.html">Agent-ValueBench</a> 已经在做"价值在 4 主流 harness 中的潮汐"——把 PRISM 的 4-agent pipeline 作为额外 harness 配置嵌入，可以测出"价值一致性 vs 信息流泄漏"两条 safety 维度是否独立，这是更接近真实 production 部署的 multi-dimension safety 评估。Precision = 1.0 同时 recall &lt; 1.0 的 trade-off 也提示一个 benchmark 报告原则：<em>把 false positive 与 false negative 分开报，而不是混在一个 F1 数</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>MATRA: Modeling the Attack Surface of Agentic AI Systems — OpenClaw Case Study</strong> · 资产-攻击树驱动的 agentic 风险建模框架（DeMeSSAI'26 / EuroS&amp;P 2026）<br>
+      <a href="https://arxiv.org/abs/2605.10763" target="_blank" rel="noopener">arxiv.org/abs/2605.10763</a></li>
+      <li><strong>Instrumental Choices: Measuring the Propensity of LLM Agents to Pursue Instrumental Behaviors</strong> · 测量 LLM agent 工具性收敛倾向，IC 5.1%<br>
+      <a href="https://arxiv.org/abs/2605.06490" target="_blank" rel="noopener">arxiv.org/abs/2605.06490</a></li>
+      <li><strong>GuardAD: Safeguarding Autonomous Driving MLLMs via Markovian Safety Logic</strong> · 把自动驾驶 MLLM 安全形式化为 Markov 安全逻辑<br>
+      <a href="https://arxiv.org/abs/2605.10386" target="_blank" rel="noopener">arxiv.org/abs/2605.10386</a></li>
+      <li><strong>PrefixGuard: From LLM-Agent Traces to Online Failure-Warning Monitors</strong> · 从轨迹自动学在线失败预警监控<br>
+      <a href="https://arxiv.org/abs/2605.06455" target="_blank" rel="noopener">arxiv.org/abs/2605.06455</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.10614" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.10614" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.10614v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.10614" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.cs.cornell.edu/andru/papers/iflow-tosem.pdf" target="_blank" rel="noopener">参考理论：DIFC</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-12 #1 · 搜索来源：arXiv list/cs.AI/2026-05 + arxiv.org/abs/2605.xxxxx<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.10614" target="_blank" rel="noopener">arxiv.org/abs/2605.10614</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

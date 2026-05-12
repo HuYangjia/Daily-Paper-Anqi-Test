@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-12 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 12 日 · Harness Engineering · MCP 真实工具沙箱 · 把"工具调用"做成可重放压力测试</div>
+  <h1>ComplexMCP：300+ 工具 × 7 有状态沙箱 × seed-driven 失败注入——把"工具相互依赖"做成 deterministic agent harness</h1>
+  <div class="en-title">ComplexMCP: Evaluation of LLM Agents in Dynamic, Interdependent, and Large-Scale Tool Sandbox</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.10787" target="_blank" rel="noopener">ComplexMCP: Evaluation of LLM Agents in Dynamic, Interdependent, and Large-Scale Tool Sandbox</a><span class="winner-badge">今日选定</span></td>
+          <td>MCP 沙箱 + seed-driven 故障注入 + 工具相互依赖压力测试</td>
+          <td>arXiv 2026-05-11 (Li, Yang, Wang, Luo, Chen)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10448" target="_blank" rel="noopener">Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation</a></td>
+          <td>给 5 个 agent benchmark 加 evidence layer，量化"看起来成功"的可疑率</td>
+          <td>arXiv 2026-05-11 (Gao &amp; Zhou)</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10516" target="_blank" rel="noopener">Consistency as a Testable Property: Statistical Methods to Evaluate AI Agent Reliability</a></td>
+          <td>U-statistics + 核度量做"轨迹级一致性"，超越 pass@1</td>
+          <td>arXiv 2026-05-11 (Raj, Orkat, Mukherjee et al. 6 作者)</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10384" target="_blank" rel="noopener">Agentic Performance at the Edge: Insights from Benchmarking</a></td>
+          <td>≤8B 边缘 agent 的能力-延迟 Pareto 前沿（AutoEdge / MobiSys'26）</td>
+          <td>arXiv 2026-05-11 (Wang &amp; Woisetschläger)</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.06365" target="_blank" rel="noopener">From Agent Loops to Deterministic Graphs: Execution Lineage for Reproducible AI-Native Work</a></td>
+          <td>把 agent loop 编译为可重放的确定性 DAG，做 lineage 追踪</td>
+          <td>arXiv 2026-05-07</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>ComplexMCP: Evaluation of LLM Agents in Dynamic, Interdependent, and Large-Scale Tool Sandbox</span></div>
+      <div class="meta-item"><label>中文标题</label><span>ComplexMCP：在动态、相互依赖、大规模工具沙箱中评测 LLM Agent</span></div>
+      <div class="meta-item"><label>作者</label><span>Yuanyang Li; Xue Yang; Longyue Wang; Weihua Luo; Hongyang Chen</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-11；cs.AI · cs.SE）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-11 16:20:51 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.10787" target="_blank" rel="noopener">https://arxiv.org/abs/2605.10787</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.10787" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.10787</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.10787" target="_blank" rel="noopener">10.48550/arXiv.2605.10787</a></div>
+      <div class="meta-item"><label>评测规模</label><span>300+ 真实工具 × 7 个有状态沙箱（office / 财务 / 多套 SaaS）× seed-driven 故障注入</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把"工具相互依赖 + 环境噪声"作为 harness 第一原则的 MCP-native 评测</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>论文页数</label><span>约 5 MB PDF（含全部沙箱与失败案例）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"工具不是孤岛"建成 harness 第一原则：300+ MCP 工具 × 7 有状态沙箱 × 可重放故障注入，揭示顶级模型成功率 < 60%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当前 LLM agent 在调用<strong>孤立的 API</strong> 上已经熟练，但在商业软件自动化的"<strong>最后一公里</strong>"上仍然挣扎。真实场景里的工具<em>不是相互独立的</em>——它们是<strong>原子的、相互依赖的、对环境噪声敏感的</strong>。</p>
+    <p>我们提出 <strong>ComplexMCP</strong>，一个面向上述严苛条件的评测 benchmark。它建立在 <strong>Model Context Protocol (MCP)</strong> 之上，提供 <strong>300+ 经过精细测试的工具</strong>，来源是 <strong>7 个有状态沙箱（stateful sandboxes）</strong>，覆盖从办公套件到金融系统的真实业务环境。与已有数据集不同，ComplexMCP 采用 <strong>seed-driven 架构</strong>来模拟动态环境状态与不可预测的 API 失败，从而保证评测既<em>确定性</em>又<em>多样化</em>。</p>
+    <p>我们在 <strong>full-context 与 RAG 两种范式</strong>下评测了多个 LLM，结果揭示出鲜明的性能差距：<strong>即便顶级模型，成功率也无法突破 60%</strong>，远落后于人类的 90%。基于细粒度轨迹分析，我们识别出<strong>三条根本性瓶颈</strong>：(1) <strong>工具检索饱和（tool retrieval saturation）</strong>——随着动作空间扩大，agent 无法稳定定位正确工具；(2) <strong>过度自信（over-confidence）</strong>——agent 跳过必要的环境校验；(3) <strong>策略性认输（strategic defeatism）</strong>——倾向于把失败合理化，而不是继续追求恢复。</p>
+    <p>这些发现表明：当前 agent <strong>不足以应对相互依赖的工作流</strong>。ComplexMCP 因此被定位为下一代<em>韧性自治系统（resilient autonomous systems）</em>的关键测试床。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去十天的 harness 工作正在做一件事——<em>把 agent 系统的隐含决策面外化为可评测变量</em>：<a href="../../harness/2026-05-08-1.html">Token Arena</a> 把 (provider, model, SKU) endpoint 当评测单元；<a href="../../harness/2026-05-07-1.html">Uno-Orchestra</a> 学 (model, primitive) 决策面；<a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a> 把 scaffolding 子集做 2⁵ 全因子；<a href="../../harness/2026-05-11-1.html">AgentFloor</a> 把 model-size routing 建成 capability ladder。但这些工作几乎都<em>把"工具"当作孤立 API 调用</em>。ComplexMCP 攻的是另一根硬骨头：<strong>当工具有状态、相互依赖、还会以不可预测方式失败时，agent 是否仍然可靠？</strong>这是从"toy tool-calling"到"production agent"的真实门槛。</p>
+
+    <p><strong>核心方法（MCP 原生 + seed-driven 故障 + 7 个有状态沙箱）：</strong></p>
+    <ul class="point-list">
+      <li><strong>建于 MCP 协议之上：</strong>所有 300+ 工具按 Model Context Protocol 描述与暴露，agent 调用接口与 production 完全一致——没有"toy adapter"开销，是当下最贴近真实生产 agent 的工具评测层。</li>
+      <li><strong>7 个有状态沙箱：</strong>从 office 套件到金融系统跨域覆盖。"有状态（stateful）"是关键修饰词——意味着工具调用的成功不仅取决于"参数对不对"，还取决于"环境处于什么状态"。这是把"工具相互依赖"做成第一原则。</li>
+      <li><strong>seed-driven 评测架构：</strong>用同一个 seed 可以重放整个环境状态序列与 API 失败序列。<em>确定性（deterministic）</em>+<em>多样化（diverse）</em>第一次同时成立——和单次随机 fuzz 完全不同，这给评测体系装上了"压力测试可重放"。</li>
+      <li><strong>双范式评测：</strong>同时跑 full-context（把所有工具描述塞进 context）和 RAG（按需检索工具描述），直接量化"工具检索饱和"作为 agent 失败的主要因子。</li>
+      <li><strong>失败模式细粒度归因：</strong>基于轨迹分析将失败拆为三类——retrieval saturation / over-confidence / strategic defeatism。这给 harness 工程提供了"按失败模式切片"的诊断面。</li>
+    </ul>
+
+    <p><strong>与现有 Harness / Tool benchmark 的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>ToolBench / API-Bank</th><th>τ-Bench / AppWorld</th><th>AgentFloor (2026-05-11)</th><th>ComplexMCP（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>工具语义</td><td>独立 API（mostly stateless）</td><td>少数有状态环境</td><td>tool use ladder（聚焦能力 tier）</td><td><strong>300+ MCP 原生工具，强相互依赖</strong></td></tr>
+        <tr><td>环境动力学</td><td>静态/快照</td><td>有限副作用</td><td>deterministic verifier</td><td><strong>seed-driven 动态状态 + 故障注入</strong></td></tr>
+        <tr><td>评测协议</td><td>execution success</td><td>state correctness</td><td>capability frontier 边界</td><td><strong>full-context / RAG 双范式 + 轨迹归因</strong></td></tr>
+        <tr><td>关键问题</td><td>能否调对 API</td><td>能否完成单次任务</td><td>多大模型够用</td><td><strong>能否在状态噪声下保持 long-horizon 可靠</strong></td></tr>
+        <tr><td>结论代表</td><td>顶模 80%+</td><td>能用但不可靠</td><td>开源已大半够用</td><td><strong>顶模 < 60%，距人类 90% 仍有 30+ pp 差</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 ComplexMCP 嵌进过去 12 天的 harness 时间线，可以看到一条很清晰的"<em>外化决策面 → 注入动态噪声</em>"的迁移：从 endpoint（Token Arena）→ 调度（Uno-Orchestra）→ 组件（More Is Not Always Better）→ 模型规模（AgentFloor）→ <strong>工具拓扑与环境状态（ComplexMCP）</strong>。前者是把"我们用什么"显式化，后者是把"环境怎么变"显式化。两者合起来，才是 production-grade agent harness 的基本盘。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP)</em>·MCP 原生工具调用协议规范<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Qin et al. (2023) — <em>ToolLLM / ToolBench: Facilitating LLMs to Master 16000+ Real-world APIs</em>·大规模真实 API 工具调用 baseline<br>
+    <a href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">arxiv.org/abs/2307.16789</a></div>
+    <div class="ref-item">Yao et al. (2024) — <em>τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains</em>·有状态多轮 agent benchmark<br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Trivedi et al. (2024) — <em>AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents</em>·真实应用沙箱 benchmark 参照<br>
+    <a href="https://arxiv.org/abs/2407.18901" target="_blank" rel="noopener">arxiv.org/abs/2407.18901</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·agent benchmark 经典 baseline<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·工具调用范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>300+ MCP 工具 × 7 有状态沙箱</strong>——首个跨办公套件、财务系统等真实业务的 MCP-native 工具评测层；规模上是 τ-Bench 子域工具数的 5–10×。</li>
+      <li><strong>顶级模型成功率 &lt; 60%（人类 ≈ 90%）</strong>：在动态环境与故障注入下，前沿模型与人类间存在 30+ pp 鸿沟，<em>这是当下 agent 系统在 production 部署中的核心可靠性 gap 量化</em>。</li>
+      <li><strong>seed-driven 可重放</strong>：同一 seed 重放完整状态序列与失败序列——这是 deterministic + diverse 的关键设计，使"压力测试"第一次能进入 CI pipeline。</li>
+      <li><strong>三大 root cause</strong>：(1) tool retrieval saturation 在 RAG 范式下随动作空间扩大显著恶化；(2) over-confidence 在状态变更类任务上表现为"跳过 verify 直接 act"；(3) strategic defeatism 在多跳失败后表现为放弃 recovery。</li>
+      <li><strong>full-context vs RAG 范式对比</strong>：揭示出 RAG 在大工具空间下的可扩展性优势，但同时暴露 retrieval saturation 这条新瓶颈——这是 production router/scaffolding 设计的一手依据。</li>
+      <li><strong>方法学重要性</strong>：把"工具相互依赖 + 环境噪声"做成 harness 第一原则，是从 toy tool-calling benchmark 走向 production-grade agent harness 的标志性一步。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>ComplexMCP 给 harness 引入两条新原则：<strong>(1) 工具拓扑作为评测变量、(2) 动态环境状态可重放</strong>。和 <a href="../../harness/2026-05-11-1.html">AgentFloor</a> 的 capability ladder、<a href="../../harness/2026-05-08-1.html">Token Arena</a> 的 endpoint SKU 拼起来，可以构成一个四轴坐标系 (model size, scaffolding subset, endpoint, tool topology+seed)。对你正在做的 ZipperQuant W4A4 e2e benchmark：可以借 seed-driven 思路把"输入序列分布"也固定下来——不只是 prefill_len/decode_len 长度变量，连具体 token 流也由 seed 决定，这样 W4A4 vs BF16 的对比会变成完全可重放的、按 seed 拆分的 distribution-level 对比，比单纯报均值更有说服力，也能直接定位某些 seed 上的 quality regression。NeurIPS 投稿的 ablation 也可以学它"按失败模式切片"，把性能 drop 拆为 retrieval / over-confidence / defeatism 三类。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>ComplexMCP 暴露的"<em>over-confidence + skip environment verification</em>"几乎是 agent skill safety 的核心攻击面：当 skill 在错误的环境状态下被调用，agent 不仅会失败，还可能造成<strong>不可逆副作用</strong>（误删/误转账）。这给 <a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a> 提出的 capability gate 提供了一个直接的设计原则：<em>每个高敏感 skill 调用前必须 enforce 环境状态前置条件</em>（pre-condition check）。把 ComplexMCP 的 sandbox + seed 直接复用为 agent safety harness，可以做"特定 seed 下故意触发 over-confidence，观察是否被 capability gate 拦截"——这是一个非常自然的红队 benchmark。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>seed-driven 故障注入直接给 safety benchmark 提供了缺失的<strong>"压力维度（stress dimension）"</strong>——以前的 safety benchmark 大多在 happy path 下做单次评测，ComplexMCP 让 fail injection 成为评测变量。今日 Benchmark 方向 <a href="../../benchmark/2026-05-12-1.html">Agent-ValueBench</a> 已经在做"价值潮汐"跨 harness 的现象观察——下一步自然是把 ComplexMCP 的故障注入嵌进 Agent-ValueBench 的 4 个主流 harness，看 agent 在 stress 下是否仍能保持价值一致性。这是更接近真实部署的"safety under stress"评测形态。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation</strong> · 给 5 个公开 agent benchmark 加 evidence 层，量化"看似成功"的可疑率<br>
+      <a href="https://arxiv.org/abs/2605.10448" target="_blank" rel="noopener">arxiv.org/abs/2605.10448</a></li>
+      <li><strong>Consistency as a Testable Property: Statistical Methods to Evaluate AI Agent Reliability</strong> · U-statistics + 核度量做轨迹级一致性<br>
+      <a href="https://arxiv.org/abs/2605.10516" target="_blank" rel="noopener">arxiv.org/abs/2605.10516</a></li>
+      <li><strong>Agentic Performance at the Edge: Insights from Benchmarking</strong> · 边缘 agent ≤8B 的能力-延迟 Pareto 前沿（AutoEdge / MobiSys'26）<br>
+      <a href="https://arxiv.org/abs/2605.10384" target="_blank" rel="noopener">arxiv.org/abs/2605.10384</a></li>
+      <li><strong>From Agent Loops to Deterministic Graphs: Execution Lineage for Reproducible AI-Native Work</strong> · 把 agent loop 编译为 lineage 化的 deterministic DAG<br>
+      <a href="https://arxiv.org/abs/2605.06365" target="_blank" rel="noopener">arxiv.org/abs/2605.06365</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.10787" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.10787" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.10787v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.10787" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP 协议规范</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-12 #1 · 搜索来源：arXiv list/cs.AI/2026-05 + arxiv.org/abs/2605.xxxxx<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.10787" target="_blank" rel="noopener">arxiv.org/abs/2605.10787</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

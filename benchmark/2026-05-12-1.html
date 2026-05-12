@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-12 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #fcebeb; color: #a32d2d; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #663b08; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f0d8a8; color: #663b08; }
+  .link-btn.primary:hover { background: #f4e2c0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 12 日 · Safety Benchmark · 首个 agent 价值 benchmark · 揭示"价值潮汐"现象</div>
+  <h1>Agent-ValueBench：394 环境 × 4,335 任务 × 28 价值系统——首次量化"agent 价值 ≠ 模型价值"，把对齐杠杆推向 harness/skill</h1>
+  <div class="en-title">Agent-ValueBench: A Comprehensive Benchmark for Evaluating Agent Values</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.10365" target="_blank" rel="noopener">Agent-ValueBench: A Comprehensive Benchmark for Evaluating Agent Values</a><span class="winner-badge">今日选定</span></td>
+          <td>首个 agent 价值 benchmark · 394 环境 / 4,335 任务 / 28 价值系统</td>
+          <td>arXiv 2026-05-11 (Dong, Feng, Jiang, Ye, X. Zhang, G. Song)</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10448" target="_blank" rel="noopener">Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation</a></td>
+          <td>给 5 个 agent benchmark 加 evidence 层，量化"看似成功"的可疑率</td>
+          <td>arXiv 2026-05-11 (Gao &amp; Zhou)</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10146" target="_blank" rel="noopener">Benchmarking Safety Risks of Knowledge-Intensive Reasoning under Malicious Knowledge Editing</a></td>
+          <td>EditRisk-Bench · 恶意知识编辑下的推理安全风险评测</td>
+          <td>arXiv 2026-05-11 (Mao, Lin, Gu et al. 6 作者)</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10246" target="_blank" rel="noopener">SciIntegrity-Bench: A Benchmark for Evaluating Academic Integrity in AI Scientist Systems</a></td>
+          <td>AI scientist 学术诚信评测</td>
+          <td>arXiv 2026-05-11</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.10141" target="_blank" rel="noopener">FormalRewardBench: A Benchmark for Formal Theorem Proving Reward Models</a></td>
+          <td>形式化定理证明奖励模型 benchmark（与你研究兴趣交集）</td>
+          <td>arXiv 2026-05-11</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Agent-ValueBench: A Comprehensive Benchmark for Evaluating Agent Values</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Agent-ValueBench：评测 Agent 价值的综合 Benchmark</span></div>
+      <div class="meta-item"><label>作者</label><span>Haonan Dong; Qiguan Feng; Kehan Jiang; Haoran Ye; Xin Zhang; Guojie Song</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-11；cs.AI）</span></div>
+      <div class="meta-item"><label>提交时间</label><span>2026-05-11 11:09:04 UTC</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.10365" target="_blank" rel="noopener">https://arxiv.org/abs/2605.10365</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.10365" target="_blank" rel="noopener">https://arxiv.org/pdf/2605.10365</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.10365" target="_blank" rel="noopener">10.48550/arXiv.2605.10365</a></div>
+      <div class="meta-item"><label>评测规模</label><span>394 可执行环境 × 16 域 × 4,335 价值冲突任务 × 28 价值系统 × 332 价值维度</span></div>
+      <div class="meta-item"><label>评测覆盖</label><span>14 frontier 模型（专有 + 开源权重）× 4 主流 harness（含 OpenClaw 等）</span></div>
+      <div class="meta-item"><label>关键定位</label><span>首个针对"agent 价值"而非"LLM 价值"的 benchmark — 揭示 agentic modality 的数据/评测/系统层挑战</span></div>
+      <div class="meta-item"><label>许可</label><span>arXiv default · 文件大小 9.66 MB</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个针对 agent（而非 LLM）的价值 benchmark：394 环境 × 4,335 任务揭示"价值潮汐"，把对齐杠杆推向 harness/skill 层。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Autonomous agent 已迅速成熟为<strong>任务执行者</strong>，并通过 OpenClaw 等 harness 大规模部署。<em>safety</em> 已应得地获得越来越多研究关注，而藏在 safety 之下、悄然引导 agent 行为的，是<strong>价值（values）</strong>。然而现有的价值 benchmark 仍局限于 LLM，<em>agent 的价值仍是空白</em>。</p>
+    <p>我们从直觉、实证、理论三个角度论证：<strong>agent 的价值与其底层 LLM 的价值会发生分歧</strong>；并且 agentic 模态在<em>数据集</em>、<em>评测</em>、<em>系统</em>三个层面引入了纯文本协议中不存在的挑战。</p>
+    <p>我们用 <strong>Agent-ValueBench</strong> 弥合这一空白——<em>首个专门针对 agent 价值的 benchmark</em>：覆盖 <strong>16 个领域</strong>下的 <strong>394 个可执行环境</strong>，提供 <strong>4,335 个价值冲突任务</strong>，覆盖 <strong>28 个价值系统</strong>与 <strong>332 个维度</strong>。每个实例均经我们专门设计的端到端 pipeline 协同合成，并由<strong>专业心理学家</strong>逐例策展。每个任务附带<strong>两条极对齐黄金轨迹（pole-aligned golden trajectories）</strong>，其检查点支撑了基于 rubric 的轨迹级判官。</p>
+    <p>我们对 <strong>14 个 frontier 专有/开源权重模型 × 4 主流 harness</strong> 进行 benchmark，得到三条相互呼应的发现：</p>
+    <p>(1) Agent 价值首先表现为<strong>"价值潮汐（Value Tide）"</strong>——跨模型的同质性，其下藏着可解释的<em>反向潜流</em>；</p>
+    <p>(2) 这一潮汐在<strong>harness 拉力</strong>下<em>非加性</em>地弯曲；</p>
+    <p>(3) 在<strong>嵌入式 skill 的有意 steering</strong> 下变形更为决定性。</p>
+    <p>这些结果合在一起表明：<em>agent 对齐的杠杆正从经典的"模型对齐+prompt steering"转向"harness 对齐+skill steering"</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去两周的 safety benchmark 工作主要在三条线推进——<a href="../../benchmark/2026-05-08-1.html">XL-SafetyBench</a> 跨语种 / 跨文化 jailbreak、<a href="../../benchmark/2026-05-09-1.html">Partial Evidence Bench</a> 权限-完整性、<a href="../../benchmark/2026-05-11-1.html">ML-Bench&amp;Guard</a> 多语种 policy-grounded。这些都基于"<em>LLM 拒绝/接受单次 prompt</em>"的范式。Agent-ValueBench 攻的是另一条线：<strong>价值不是单次 prompt 的拒绝，而是多步 trajectory 的价值取舍</strong>——而且关键论点是：<em>agent 的价值并不等于其底层 LLM 的价值</em>。这是把 alignment benchmark 从"输出级"推进到"行为级"的关键一步，对应了价值哲学/伦理学早就提出但 LLM 时代尚未在 agent 层面 operationalize 的概念。</p>
+
+    <p><strong>核心方法（环境-任务-价值系统三层 + 黄金轨迹）：</strong></p>
+    <ul class="point-list">
+      <li><strong>规模空前的价值评测层级：</strong>16 域 × 394 环境 × 4,335 价值冲突任务 × 28 价值系统 × 332 价值维度。这一规模是当前 LLM 价值 benchmark（典型 1k-2k）的 2-4×，且第一次把"<em>可执行环境</em>"作为评测单元。</li>
+      <li><strong>专业心理学家 per-instance curation：</strong>每个任务都由专业心理学家逐例核对——这在 AI benchmark 里非常罕见，把 noise floor 显著压低，给"价值"这种主观概念注入跨学科严谨度。</li>
+      <li><strong>pole-aligned golden trajectories（极对齐黄金轨迹）：</strong>每任务两条——一条朝价值 A 极端、一条朝价值 B 极端，<em>把"价值取舍"做成可评分的轨迹空间几何</em>。trajectory checkpoint 锚定 rubric judge，这是把价值评测做成"轨迹级"的关键工程设计。</li>
+      <li><strong>4 主流 harness × 14 模型横切：</strong>这是该工作最有 systems 风味的部分——把模型与 harness 当成两个独立变量做 ablation，第一次在大规模上看清"<em>harness 配对模型如何改变价值表达</em>"。</li>
+      <li><strong>三层挑战明示化：</strong>论文明确指出 agentic 模态比纯文本多三层 challenge——dataset 层（无现成 trajectory 标注）、evaluation 层（rubric 必须考虑 trajectory）、system 层（harness/skill 是 explicit variable）。这是给后来者的工程清单。</li>
+    </ul>
+
+    <p><strong>与现有 Safety / Alignment Benchmark 的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>XL-SafetyBench (2026-05-08 #1)</th><th>Partial Evidence Bench (2026-05-09 #1)</th><th>ML-Bench&amp;Guard (2026-05-11 #1)</th><th>Agent-ValueBench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测对象</td><td>LLM jailbreak + 文化对齐</td><td>权限-完整性 deterministic</td><td>政策对齐 multi-lingual</td><td><strong>agent 价值取舍（含 harness/skill）</strong></td></tr>
+        <tr><td>评测单元</td><td>单 prompt → 单 response</td><td>单任务 deterministic outcome</td><td>policy-grounded outcome</td><td><strong>multi-step trajectory + rubric checkpoint</strong></td></tr>
+        <tr><td>规模</td><td>10 国 × 5,500 case</td><td>72 任务 × 4 评测面</td><td>14 语种 × 监管驱动</td><td>394 env × 4,335 任务 × 28 价值系统</td></tr>
+        <tr><td>新颖性核心</td><td>NSR 区分原则拒绝</td><td>权限-完整性新公理</td><td>regulator-grounded</td><td><strong>"agent 价值 ≠ LLM 价值"+ Value Tide</strong></td></tr>
+        <tr><td>对齐杠杆指向</td><td>模型对齐 + prompt</td><td>scaffolding/合规</td><td>policy 嵌入</td><td><strong>harness 对齐 + skill steering</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 Agent-ValueBench 嵌进过去两周的 benchmark 时间线，可以看到一条非常清晰的"<em>safety 评测从 LLM 到 agent 的演化</em>"：从单 prompt → outcome deterministic → policy-grounded → <strong>trajectory + harness/skill</strong>。每一步都把更多 production 部署中真实存在的变量纳入评测。Agent-ValueBench 的"<strong>agent 价值 ≠ LLM 价值</strong>"主张，把对齐研究的杠杆从经典的 RLHF/DPO 模型对齐，整体外推到 harness/skill 层——这与今日 Harness 方向的 <a href="../../harness/2026-05-12-1.html">ComplexMCP</a>（工具拓扑作为评测变量）和 <a href="../../agent-safety/2026-05-12-1.html">PRISM</a>（per-token IFC）共同勾勒出"<em>safety unit 越来越细、越来越接近 production 系统层</em>"的整体趋势。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文对齐 / 借鉴的关键工作（附链接）</div>
+    <div class="ref-item">Schwartz (1992) — <em>Universals in the Content and Structure of Values: Theoretical Advances and Empirical Tests in 20 Countries</em>·价值理论奠基（28 价值系统理论来源之一）<br>
+    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0065260108602816" target="_blank" rel="noopener">ScienceDirect / Schwartz 1992</a></div>
+    <div class="ref-item">Sorensen et al. (2024) — <em>Value Kaleidoscope: Engaging AI with Pluralistic Human Values, Rights, and Duties</em>·LLM 价值评测代表工作（基线 baseline）<br>
+    <a href="https://arxiv.org/abs/2309.00779" target="_blank" rel="noopener">arxiv.org/abs/2309.00779</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·agent benchmark 经典 baseline<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Sun et al. (2024) — <em>TrustLLM: Trustworthiness in Large Language Models</em>·多维 trustworthiness benchmark 范式<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">Bai et al. (2022) — <em>Constitutional AI: Harmlessness from AI Feedback</em>·原则/价值嵌入对齐起点<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP) / OpenClaw harness</em>·主流 harness 之一<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>394 可执行环境 × 4,335 价值冲突任务 × 28 价值系统 × 332 维度</strong>——目前规模最大、维度最齐全的 agent value benchmark；专业心理学家逐例策展极大压低 label noise。</li>
+      <li><strong>"Value Tide（价值潮汐）"</strong>：14 个 frontier 模型在 agent 模式下表现出强烈的<em>跨模型同质性</em>（共趋势），潮汐之下藏可解释的反向潜流——这是该领域第一次把"agent 价值的群体性"做成可量化现象。</li>
+      <li><strong>harness 非加性弯曲</strong>：同一模型搭不同 harness，价值表达发生<em>非线性</em>变化——意味着"模型对齐"在 agent 部署里只是一部分，harness 是不可忽略的耦合变量。</li>
+      <li><strong>skill steering 决定性</strong>：嵌入式 skill 对价值的 steering 比 harness 拉力更具决定性——这给"agent 安全 = 模型 safety"这一旧范式划下界限。</li>
+      <li><strong>对齐杠杆迁移</strong>："classical model alignment + prompt steering" → <strong>"harness alignment + skill steering"</strong>——这一论断与今日 Harness 方向 ComplexMCP 强调"工具拓扑作为 harness 第一原则"形成呼应。</li>
+      <li><strong>方法学影响</strong>：pole-aligned golden trajectory + rubric checkpoint 是对 trajectory-level evaluation 的一个高质量 reference 模板，可作为后续 agent benchmark 的范式 baseline。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>"价值在不同 harness 下非加性弯曲" 给 harness 工程提出一个非常重要的结构性观察：<em>harness 选择本身是 alignment 工具的一部分</em>。今日 Harness 方向 <a href="../../harness/2026-05-12-1.html">ComplexMCP</a> 把工具拓扑作为评测变量，Agent-ValueBench 进一步把 harness 作为<em>价值变量</em>，两者拼起来等于在说："<strong>工具拓扑 + harness 配置 + 模型选择</strong>" 是 agent system 的三轴 design space，单看一轴会得出错误结论。这给 ZipperQuant 的 e2e benchmark 一个直接启示：<em>报 W4A4 vs BF16 时不能只在一个 harness 上比较</em>，至少要跨 2-3 种主流 harness（如 vLLM / sglang / 自研 ZipperEngine）做 cross-harness 对照，避免单 harness "局部最优"误导结论。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"skill steering 比 harness 拉力更决定性" 与今日 Agent Safety 方向 <a href="../../agent-safety/2026-05-12-1.html">PRISM</a> 的 per-token IFC 形成完美互补：<em>skill 是高层价值钥匙，PRISM 是低层信息流闸口</em>。把两者拼起来，可以构建一个完整的 "skill steering + token IFC" 双层 alignment 架构——高层用 skill curation 引导价值倾向，低层用 PRISM 在 decoding 阶段拦截敏感信息流泄漏。同时 Agent-ValueBench 的"两条极对齐 trajectory"思路非常适合做 PRISM 的<em>对抗 stress test</em>：用一条朝"过度泄漏"价值偏移的 golden trajectory，看 PRISM 是否能稳定拦截。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Agent-ValueBench 的 trajectory-level evaluation 给 safety benchmark 的方法论引入两个新原则：(1) <strong>评测单元从 prompt-response 升级到 trajectory + checkpoint rubric</strong>；(2) <strong>把 harness 当显式变量做 ablation</strong>。两者结合，未来 safety benchmark 应该报告"<em>(模型, harness) 对在 trajectory 空间上的覆盖与漂移</em>"，而不是单一聚合分数。从你正在筹备的 ZipperQuant e2e quality 评估来看，这一思路可以直接搬用：用 BF16 baseline 生成"golden trajectory"，看 W4A4 在 trajectory 中哪些 checkpoint 最容易漂移（特别是数学推理 / 代码执行的关键 step），把"质量损失"细化到轨迹位置而非单一困惑度均值。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation</strong> · 给 5 个 agent benchmark 加 evidence 层量化"看似成功"的可疑率<br>
+      <a href="https://arxiv.org/abs/2605.10448" target="_blank" rel="noopener">arxiv.org/abs/2605.10448</a></li>
+      <li><strong>Benchmarking Safety Risks of Knowledge-Intensive Reasoning under Malicious Knowledge Editing (EditRisk-Bench)</strong> · 恶意知识编辑下的推理安全风险评测<br>
+      <a href="https://arxiv.org/abs/2605.10146" target="_blank" rel="noopener">arxiv.org/abs/2605.10146</a></li>
+      <li><strong>SciIntegrity-Bench: A Benchmark for Evaluating Academic Integrity in AI Scientist Systems</strong> · AI scientist 学术诚信评测（行为级评测同源思路）<br>
+      <a href="https://arxiv.org/abs/2605.10246" target="_blank" rel="noopener">arxiv.org/abs/2605.10246</a></li>
+      <li><strong>FormalRewardBench: A Benchmark for Formal Theorem Proving Reward Models</strong> · 形式化定理证明奖励模型评测（与你 AI 辅助证明研究兴趣交集）<br>
+      <a href="https://arxiv.org/abs/2605.10141" target="_blank" rel="noopener">arxiv.org/abs/2605.10141</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.10365" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.10365" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.10365v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.10365" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">参考 harness：MCP / OpenClaw</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-12 #1 · 搜索来源：arXiv list/cs.AI/2026-05 + arxiv.org/abs/2605.xxxxx<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.10365" target="_blank" rel="noopener">arxiv.org/abs/2605.10365</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
