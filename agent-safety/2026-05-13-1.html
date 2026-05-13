@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-13 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #fcebeb; color: #a32d2d; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7a1f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c4c4; color: #7a1f1f; }
+  .link-btn.primary:hover { background: #fadcdc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-13 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 13 日 · Agent Skills Safety · Skill 注册表语义供应链 · 三阶段 SKILL.md 攻击</div>
+  <h1>Under the Hood of SKILL.md：把 skill 注册表当语义供应链——Discovery 86% 胜率 / Selection 77.6% 偏置 / Governance 36.5–100% 绕过</h1>
+  <div class="en-title">Under the Hood of SKILL.md: Semantic Supply-chain Attacks on AI Agent Skill Registry</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">Under the Hood of SKILL.md: Semantic Supply-chain Attacks on AI Agent Skill Registry</a><span class="winner-badge">今日选定</span></td>
+          <td>Skill 注册表语义供应链 · Discovery / Selection / Governance 三阶段攻击</td>
+          <td>arXiv 2026-05-12（Saha, Faghih, Feizi · UMD）</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01133" target="_blank" rel="noopener">When Embedding-Based Defenses Fail: Rethinking Safety in LLM-Based Multi-Agent Systems</a></td>
+          <td>嵌入式防御在多 agent 系统失效的诊断</td>
+          <td>arXiv 2026-05（Lingxi Zhang, Guangtao Zheng, Hanjie Chen）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.00055" target="_blank" rel="noopener">Ambient Persuasion in a Deployed AI Agent: Unauthorized Escalation Following Routine Non-Adversarial Content Exposure</a></td>
+          <td>非对抗内容引发的 agent 权限升级——deployment 真实事件</td>
+          <td>arXiv 2026-05（Cuadros, Maiga）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01037" target="_blank" rel="noopener">Certified Purity for Cognitive Workflow Executors: From Static Analysis to Cryptographic Attestation</a></td>
+          <td>从静态分析到密码学认证的 agent workflow 安全可证</td>
+          <td>arXiv 2026-05（Alan L. McCann）</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01462" target="_blank" rel="noopener">LocalAlign: Generalizable Prompt Injection Defense via Generation of Near-Target Adversarial Examples</a></td>
+          <td>用近目标对抗样本做 prompt injection 通用防御</td>
+          <td>arXiv 2026-05（Gong, Wang, Liu, XiaoFeng Wang）</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Under the Hood of SKILL.md: Semantic Supply-chain Attacks on AI Agent Skill Registry</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SKILL.md 引擎盖之下：AI Agent 技能注册表的语义供应链攻击</span></div>
+      <div class="meta-item"><label>作者</label><span>Shoumik Saha; Kazem Faghih; Soheil Feizi</span></div>
+      <div class="meta-item"><label>机构</label><span>University of Maryland（Soheil Feizi 公开机构 UMD CS, Confiance ML Lab）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-12；cs.AI · cs.CR）</span></div>
+      <div class="meta-item"><label>篇幅</label><span>31 页 / 21 figures / 10 tables</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.11418" target="_blank" rel="noopener">arxiv.org/pdf/2605.11418</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.11418v1" target="_blank" rel="noopener">arxiv.org/html/2605.11418v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.11418" target="_blank" rel="noopener">10.48550/arXiv.2605.11418</a></div>
+      <div class="meta-item"><label>实验对象</label><span>真实 ClawHub skills + 真实 registry 检索/调度机制</span></div>
+      <div class="meta-item"><label>许可</label><span>CC BY 4.0</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 SKILL.md 当作"操作性文本"而非被动文档：在 Discovery / Selection / Governance 三阶段揭示 86%–100% 的语义攻击面。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>自治 AI agent 越来越多地通过 <strong>Agent Skills</strong> 来扩展能力——这是一种<em>模块化的文件系统包</em>，其 <strong>SKILL.md</strong> 文件描述 agent 应当何时、如何使用该技能。该设计支持<em>可扩展、按需的能力增长</em>，但同时引入了一类<strong>语义供应链风险（semantic supply-chain risk）</strong>：自然语言元数据与指令本身可以影响哪些 skill 被收录、被展示、被选用、被加载。</p>
+    <p>我们针对 Agent Skill 生命周期中三个面向 registry 的阶段研究"<strong>SKILL.md-only 攻击</strong>"，使用真实 ClawHub skills 与真实 registry 机制：</p>
+    <p>(1) <strong>Discovery 阶段</strong>：短文本触发器可以操纵基于嵌入的检索系统，提升对抗性 skill 的曝光度——pairwise win rate <strong>最高 86%</strong>，<strong>Top-10 出现率 80%</strong>。</p>
+    <p>(2) <strong>Selection 阶段</strong>：仅靠 description 文本框架，就能让 agent 在功能等价的 skill 之间偏好对抗性变体——平均 <strong>77.6% 配对试验</strong>选中对抗性 skill。</p>
+    <p>(3) <strong>Governance 阶段</strong>：语义规避策略让恶意 skill <strong>避开 blocking verdict 的概率达到 36.5%–100%</strong>。</p>
+    <p>总体来看，<em>SKILL.md 不是被动文档，而是塑造 agent "找谁、信谁、用谁"的操作性文本</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>过去两个月 Agent Safety 方向的核心进展集中在<em>运行期</em>：<a href="../../agent-safety/2026-05-07-1.html">AgentTrust</a> 给 tool call 加 allow/warn/block/review；<a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a> 做分层记忆 guardrail；<a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a> 给 skill 加 trust schema 与 capability gate。但所有这些工作都假设 skill 本身是<em>可信注册的对象</em>。本文把镜头拉到了上游——<strong>skill 还没被 agent 调用之前，registry 这一层就已经被自然语言操纵了</strong>。这与 Agent Skills 兴起本身（Anthropic 等已把 SKILL.md 作为开放协议）形成时间上的同步攻击面。</p>
+
+    <p><strong>三阶段攻击方法（Discovery → Selection → Governance）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Discovery（被检索到）：</strong>在 SKILL.md 描述里嵌入<em>短文本触发器</em>，操纵 embedding-based retriever。结果：pairwise win rate 最高 86%，Top-10 placement 达 80%。这是 retrieval 层"被推上货架"的能力——比传统 SEO 更精细，因为它直接作用于 embedding 几何。</li>
+      <li><strong>Selection（被 agent 选用）：</strong>当 retrieval 同时返回多个功能等价 skill，agent 用 description 做选择。仅通过措辞框架（framing）——不更改功能——可让 agent 在 77.6% 的配对试验中选中对抗版。这是 LLM 在元数据层<em>偏好可被操控</em>的直接证据。</li>
+      <li><strong>Governance（绕过审查）：</strong>面对带语义审查的 governance 检查器，恶意 skill 用语义规避策略（rephrasing / abstracting / role-shifting 等）将"blocking verdict"绕过率推到 36.5%–100% 区间。这意味着<em>当前 skill registry 的语义守卫并不可靠</em>。</li>
+      <li><strong>使用真实 ClawHub skills：</strong>不是合成 toy registry，而是用真实在用的 skill 包与 registry 机制——研究外部有效性显著强于 lab-only 攻击。</li>
+      <li><strong>SKILL.md-only 假设：</strong>所有攻击都不动技能代码、不修改运行期；只动 SKILL.md 文本。这是把"语义层"作为单独攻击面隔离出来——比代码植入更隐蔽，也更难被传统软件供应链工具检出。</li>
+    </ul>
+
+    <p><strong>与现有 agent safety 工作的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>Prompt Injection（IPI）</th><th>AgentTrust / 运行期 guardrail</th><th>Skills as Verifiable Artifacts（5-11）</th><th>SKILL.md 攻击（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>攻击表面</td><td>用户输入 / 工具返回</td><td>tool call decision</td><td>skill 加载时验证</td><td><strong>skill registry 自身（注册—检索—选用—审查）</strong></td></tr>
+        <tr><td>攻击载体</td><td>对话文本</td><td>tool args / outputs</td><td>schema mismatch</td><td><strong>SKILL.md 元数据自然语言</strong></td></tr>
+        <tr><td>影响层级</td><td>单 agent 单次</td><td>单 agent 单调用</td><td>单 agent 加载时</td><td><strong>整个 skill 生态系统</strong></td></tr>
+        <tr><td>关键定量</td><td>ASR % / utility tradeoff</td><td>裁决 95–96.7%</td><td>verification levels（理论）</td><td><strong>Disc 86% / Sel 77.6% / Gov 36.5–100%</strong></td></tr>
+        <tr><td>类比</td><td>SQL 注入</td><td>WAF</td><td>包签名</td><td><strong>npm typosquat + SEO + 政策绕过</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>把它放到本周时间线里：</strong>5-12 PRISM 拦截 multi-agent 凭证泄漏（运行期 token-level）；5-11 Skills as Verifiable Artifacts 给 skill 加加载期 trust schema；今天本文则把 attack surface 推到<em>注册期之前</em>——这是一条非常清晰的"<em>由内向外</em>"的 agent skill 安全防御链：注册→选用→加载→运行→事后。当前最薄弱的是注册端，本文给出了最直接的实证证据。这与今日 Harness 选定的 <a href="../../harness/2026-05-13-1.html">Evaluation Differential</a> 形成耐人寻味的孪生关系：两者都在指出<em>"自然语言元数据"是新的攻击面/语义层</em>——一个是 evaluation 元数据，一个是 skill 注册元数据。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Anthropic — <em>Agent Skills Specification（SKILL.md）</em>·Agent Skills 协议规范，本文攻击对象的协议层<br>
+    <a href="https://www.anthropic.com/news/agent-skills" target="_blank" rel="noopener">anthropic.com/news/agent-skills</a></div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·间接 prompt 注入开山<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP)</em>·skill/tool 的 MCP 规范<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Metere (2026) — <em>Skills as Verifiable Artifacts</em>·skill 加载期 trust schema 与 capability gate<br>
+    <a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">arxiv.org/abs/2605.00424</a></div>
+    <div class="ref-item">Wen et al. (2026) — <em>Semia: Auditing Agent Skills via Constraint-Guided Representation Synthesis</em>·skill 审计的能力约束侧<br>
+    <a href="https://arxiv.org/abs/2605.00314" target="_blank" rel="noopener">arxiv.org/abs/2605.00314</a></div>
+    <div class="ref-item">Karpas, Asai et al. (2022–24) — <em>Toolformer / Toolkits / Embedding-based Tool Retrieval</em>·embedding 工具检索范式<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Discovery 阶段</strong>：短文本触发器使对抗 skill 在 embedding 检索中 pairwise win rate 最高 <strong>86%</strong>，且 <strong>80% 进入 Top-10</strong>——直接威胁所有"按相似度排序"的 skill registry 设计。</li>
+      <li><strong>Selection 阶段</strong>：description-only 措辞框架使 agent 在 <em>77.6%</em> 的配对试验中偏向恶意变体，<em>且功能完全等价</em>。这是首次量化"agent 在 skill 元数据上的偏好可被零代码改动操纵"。</li>
+      <li><strong>Governance 阶段</strong>：语义规避策略将 governance 拦截率从 0% 推到 36.5%–100%，说明<em>当前 LLM-as-policy 的审查器不能独自承担 skill 注册守门人的角色</em>。</li>
+      <li><strong>真实环境</strong>：使用真实 ClawHub skills 与真实 registry 机制，而非合成 toy——攻击的<em>外部有效性</em>是该工作最大的方法学贡献。</li>
+      <li><strong>三阶段视角</strong>：把过去散落在"prompt injection / SEO / typosquatting"的攻击叙事统一到一条 lifecycle 链上，给后续 skill registry 标准制订提供了清晰防御坐标。</li>
+      <li><strong>方法学定位</strong>：把"自然语言元数据"作为<em>独立攻击面</em>从代码与 prompt 中剥离——这与今日 Harness 选定的 ED 工作（评估元数据可被识别）共同指向<strong>"semantic-layer security"</strong> 这一正在出现的新范式。</li>
+    </ul>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SKILL.md 攻击天然要求一类新的 harness：<em>skill registry harness</em>——量化 retrieval / selection / governance 三阶段在不同 framing / trigger / 规避策略下的 ASR-utility 曲线。可与今日 Harness 选定的 <a href="../../harness/2026-05-13-1.html">Evaluation Differential</a> 直接合并：每条 SKILL.md 都应在 harness 输出里被标注 ED 类型（被审计时看似良性 / 部署时被选用），这就把 skill registry 安全做成"<em>带条件性声明</em>"的评测体系。对 ZipperQuant 类工作的启发：你的量化模型同样要在 deployment 端被一个 skill registry 调用——如果 W4A4 模型对 SKILL.md 措辞偏置比 BF16 更敏感，那就是 quality regression 的一种新刻画维度。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>这是自 OS-BLIND 之后最具威胁的 agent safety 论文——它把"skill ecosystem"作为整体威胁面而非单点攻击对象。直接催生四个具体研究问题：(1) 如何设计 <em>SKILL.md sanitiser</em>——在不破坏功能描述的前提下抹除 trigger / framing 偏置；(2) 如何把 <a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a> 的 trust schema 扩展到 description text 而不仅是接口；(3) 如何让 capability gate 在<em>注册阶段</em>就预运行（pre-admission audit）；(4) 是否需要类似 npm 的 skill <strong>provenance + reproducible build</strong> 体系。这四个问题中任何一个都足以成为独立 NeurIPS/USENIX 主题。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这篇本身就建立了一个可以拓展的 benchmark：以三阶段（Discovery / Selection / Governance）×多种攻击策略×真实 registry 为坐标。今日 Benchmark 选定的 <a href="../../benchmark/2026-05-13-1.html">TRIVIA+</a> 是 RAG 检测 benchmark——其方法论（desiderata + 噪声标签变体）可以平移过来：给 skill registry 攻击 benchmark 设计一组"<em>noise schedule + label noise</em>"以衡量防御方法在真实部署条件下的鲁棒性。再加上 ED 类型标注，就能形成<strong>"skill-registry-RedTeam-Bench"</strong>——这是当前缺口最明显的 safety benchmark 类别之一。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Skills as Verifiable Artifacts</strong> · skill 加载期可验证性（本文上游 / 互补工作）<br>
+      <a href="https://arxiv.org/abs/2605.00424" target="_blank" rel="noopener">arxiv.org/abs/2605.00424</a></li>
+      <li><strong>When Embedding-Based Defenses Fail: Rethinking Safety in LLM-Based Multi-Agent Systems</strong> · 与本文 Discovery 阶段 embedding 操控直接相关<br>
+      <a href="https://arxiv.org/abs/2605.01133" target="_blank" rel="noopener">arxiv.org/abs/2605.01133</a></li>
+      <li><strong>Ambient Persuasion in a Deployed AI Agent</strong> · 真实部署中非对抗内容引发的权限升级<br>
+      <a href="https://arxiv.org/abs/2605.00055" target="_blank" rel="noopener">arxiv.org/abs/2605.00055</a></li>
+      <li><strong>Semia: Auditing Agent Skills via Constraint-Guided Representation Synthesis</strong> · skill 审计的能力约束侧<br>
+      <a href="https://arxiv.org/abs/2605.00314" target="_blank" rel="noopener">arxiv.org/abs/2605.00314</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源链接 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.11418" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.11418v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.11418" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.anthropic.com/news/agent-skills" target="_blank" rel="noopener">Anthropic Agent Skills 协议</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-13 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.11418<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
