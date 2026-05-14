@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-14 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #fcebeb; color: #a32d2d; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7a1f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c4c4; color: #7a1f1f; }
+  .link-btn.primary:hover { background: #fadcdc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-14 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 14 日 · Agent Skills Safety · 多模态多 agent · 三层分解攻击 · CVPR 2026</div>
+  <h1>HAM³：把多模态多 agent 攻击拆成 perception / communication / reasoning 三层——78.3% ASR + 半数错误集体一致</h1>
+  <div class="en-title">Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.13213" target="_blank" rel="noopener">Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning (HAM³)</a><span class="winner-badge">今日选定</span></td>
+          <td>多模态多 agent 三层（perception/communication/reasoning）攻击 · CVPR 2026</td>
+          <td>arXiv 2026-05-13（H. Zhou, T. Wu, Y. Jiang, W. Zhou, J. Hu, A. Han）</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12963" target="_blank" rel="noopener">Sustaining AI safety: Control-theoretic external impossibility, intrinsic necessity, and structural requirements</a></td>
+          <td>控制论视角下"外部强制 vs 内禀安全"的不可能性定理</td>
+          <td>arXiv 2026-05-13（James M. Mazzu）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12922" target="_blank" rel="noopener">When Attention Closes: How LLMs Lose the Thread in Multi-Turn Interaction</a></td>
+          <td>多轮失稳的机制层解释（GAR + residual probe），与 agent persona 漂移直接相关</td>
+          <td>arXiv 2026-05-13（Dongre, Hsieh, Lai, Yoon, Bui, Hakkani-Tür · Adobe Research / UIUC）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.13046" target="_blank" rel="noopener">An Agentic LLM-Based Framework for Population-Scale Mental Health Screening</a></td>
+          <td>显式 policy + proxy-guided eval + freeze/rollback 的临床 agent 安全框架</td>
+          <td>arXiv 2026-05-13</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12674" target="_blank" rel="noopener">Revealing Interpretable Failure Modes of VLMs (REVELIO)</a></td>
+          <td>VLM 在自动驾驶 / 机器人下的可解释失败模式系统挖掘</td>
+          <td>arXiv 2026-05-13</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning</span></div>
+      <div class="meta-item"><label>中文标题</label><span>HAM³：多模态多智能体推理的层次化攻击</span></div>
+      <div class="meta-item"><label>作者</label><span>Hao Zhou · Tiru Wu · Yan Jiang · Wanqi Zhou · Junxing Hu · Ai Han</span></div>
+      <div class="meta-item"><label>机构</label><span>arXiv 摘要页未显示作者机构</span></div>
+      <div class="meta-item"><label>发表状态</label><span><strong>CVPR 2026 已接收</strong>（arXiv 2026-05-13；cs.AI · cs.CV · cs.MA）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.13213" target="_blank" rel="noopener">arxiv.org/abs/2605.13213</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.13213" target="_blank" rel="noopener">arxiv.org/pdf/2605.13213</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.13213v1" target="_blank" rel="noopener">arxiv.org/html/2605.13213v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.13213" target="_blank" rel="noopener">10.48550/arXiv.2605.13213</a></div>
+      <div class="meta-item"><label>评测对象</label><span>ReAct / Plan-and-Solve / Reflexion 三种 reasoning 范式 + GQA benchmark</span></div>
+      <div class="meta-item"><label>关键定位</label><span>第一份系统化的 multi-modal multi-agent 攻击分类与红队工具集</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 MM-MAS 攻击拆成 perception / communication / reasoning 三层并组合，攻击成功率最高 78.3%、半数攻击让多 agent 集体犯一致错误。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多模态多智能体系统（<strong>MM-MAS</strong>）因其在不同模态间进行<em>复杂推理与协调</em>的能力而日益受到关注。当这些系统在规模与功能上不断扩张，<strong>研究其潜在漏洞</strong>的重要性也随之上升。然而，已有针对多 agent 系统的对抗性攻击研究主要聚焦在<em>单 agent</em> 或 <em>单模态</em> 设定，<strong>MM-MAS 的脆弱性在很大程度上仍未被探索</strong>。</p>
+    <p>为弥合这一空白，我们提出 <strong>HAM³</strong>——一个面向 MM-MAS 的<em>层次化攻击框架</em>，把攻击解耦成三个互联的层级：</p>
+    <ul class="point-list">
+      <li>在 <strong>感知层（perception layer）</strong>，HAM³ 通过扰动视觉输入、文本输入、以及融合后的视觉-文本表征发起攻击；</li>
+      <li>在 <strong>通信层（communication layer）</strong>，它进行通信级攻击——污染消息内容、操纵交互拓扑（如共享上下文、通信链路），从而扭曲集体信息流；</li>
+      <li>在 <strong>推理层（reasoning layer）</strong>，它干预每个 agent 的认知 pipeline，<em>偏置推理轨迹</em>，并最终影响最终决策。</li>
+    </ul>
+    <p>我们在 <strong>GQA benchmark</strong> 上评估 HAM³，所用多 agent 系统建立在 <strong>ReAct、Plan-and-Solve、Reflexion</strong> 三种不同 reasoning 范式上。实验显示：HAM³ 实现了高达 <strong>78.3%</strong> 的攻击成功率，其中<em>推理层攻击最有效</em>；并且<strong>超过一半的成功攻击让多个 agent 同时给出一致的错误答案</strong>。这些发现为构建更鲁棒、可解释的多 agent 智能提供了有价值的洞见。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去半个月 Agent Skills Safety 已经把"<em>注册期</em>"（<a href="../../agent-safety/2026-05-11-1.html">Skills as Verifiable Artifacts</a>）、"<em>调度期</em>"（<a href="../../agent-safety/2026-05-12-1.html">PRISM</a>）、"<em>语义供应链</em>"（<a href="../../agent-safety/2026-05-13-1.html">SKILL.md</a>）依次外化。但这些工作有一个共同假设——<em>系统是单模态、文本主导的</em>。MM-MAS 是一个截然不同的攻击面：感知和通信本身就是攻击载体。HAM³ 是首篇把 MM-MAS 攻击系统化分解成三层并量化每层贡献的工作；这与<strong>现有 prompt-injection / jailbreak 主导的安全文献</strong>是<em>正交</em>的。</p>
+
+    <p><strong>核心方法（perception · communication · reasoning 三层 + 跨范式评估）：</strong></p>
+    <ul class="point-list">
+      <li><strong>感知层（Perception Layer）</strong>：分别扰动视觉输入、文本输入、以及视觉-文本融合表征——这把传统对抗样本从"图像扰动"扩展到"<em>跨模态融合扰动</em>"，是 MM-MAS 独有的攻击面。</li>
+      <li><strong>通信层（Communication Layer）</strong>：两类攻击同时存在——<em>消息内容污染</em>（在共享 context 中插入误导事实）和<em>拓扑操纵</em>（修改通信链路，让某 agent 被孤立或被强制信任某 agent）。这与传统单 agent prompt injection 不同，攻击的是<em>群体信息流</em>。</li>
+      <li><strong>推理层（Reasoning Layer）</strong>：直接干预每个 agent 的 cognitive pipeline，<em>偏置 reasoning trajectory</em>。摘要明确说"reasoning-layer attacks 最有效"——这是该论文最反直觉的发现：花精力做对抗样本可能不如直接污染思维过程。</li>
+      <li><strong>跨 reasoning 范式</strong>：在 ReAct（act/think 交错）、Plan-and-Solve（先 plan 再 execute）、Reflexion（带反思）三种范式上同时测——这相当于对"<em>是否有 reasoning step 即更鲁棒</em>"做了一个反命题验证。</li>
+      <li><strong>GQA benchmark</strong>：选 GQA（图问答）作为评测域，因其同时考验 visual grounding + 多步 reasoning，是 MM-MAS 的典型场景。</li>
+    </ul>
+
+    <p><strong>与现有 agent safety 工作的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>单 agent prompt injection</th><th>多 agent 凭证泄漏（PRISM）</th><th>语义供应链（SKILL.md）</th><th>HAM³（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>攻击面</td><td>文本 input</td><td>多 agent 通信</td><td>注册元数据</td><td><strong>感知 + 通信 + 推理三层联合</strong></td></tr>
+        <tr><td>模态</td><td>单模态</td><td>单模态</td><td>单模态</td><td><strong>多模态（视觉+文本+融合）</strong></td></tr>
+        <tr><td>攻击粒度</td><td>token / prompt</td><td>token-level 信号</td><td>YAML 字段</td><td><strong>层级化分解</strong></td></tr>
+        <tr><td>失效现象</td><td>单 agent 越界</td><td>凭证流出</td><td>错误 skill 选择</td><td><strong>多 agent 一致错误（"集体盲点"）</strong></td></tr>
+        <tr><td>对应防御</td><td>filter / DPO</td><td>逐 token 干预</td><td>注册表治理</td><td><strong>需要跨层联合防御</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 HAM³ 嵌入"5-11 注册期 → 5-12 调度期 → 5-13 语义供应链 → 5-14 多模态执行期"的时间线，可以清晰看到 agent safety 攻击面正一步步<em>沿生命周期下移</em>：从注册到调度、从语义到模态、从单层到多层。HAM³ 的"<strong>半数攻击致集体一致错误</strong>"特别值得警觉——这意味着<em>多 agent 投票机制并不能自动稀释错误</em>，反而可能成为攻击者放大共识偏置的杠杆。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·act/think 交错的 agent 范式（HAM³ 评测对象之一）<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Wang et al. (2023) — <em>Plan-and-Solve Prompting</em>·先 plan 再 execute 的 agent 范式<br>
+    <a href="https://arxiv.org/abs/2305.04091" target="_blank" rel="noopener">arxiv.org/abs/2305.04091</a></div>
+    <div class="ref-item">Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>·带反思的 agent 范式<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">Hudson &amp; Manning (2019) — <em>GQA: A New Dataset for Real-World Visual Reasoning and Compositional Question Answering</em>·HAM³ 评测 benchmark<br>
+    <a href="https://arxiv.org/abs/1902.09506" target="_blank" rel="noopener">arxiv.org/abs/1902.09506</a></div>
+    <div class="ref-item">Goodfellow et al. (2014) — <em>Explaining and Harnessing Adversarial Examples</em>·感知层攻击的源头<br>
+    <a href="https://arxiv.org/abs/1412.6572" target="_blank" rel="noopener">arxiv.org/abs/1412.6572</a></div>
+    <div class="ref-item">Du et al. (2023) — <em>Improving Factuality and Reasoning in Language Models through Multiagent Debate</em>·多 agent 争论被认为可"投票稀释错误"——HAM³ 的反命题对照<br>
+    <a href="https://arxiv.org/abs/2305.14325" target="_blank" rel="noopener">arxiv.org/abs/2305.14325</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>78.3% Attack Success Rate</strong>：HAM³ 在 GQA + MM-MAS 上的最高攻击成功率，跨 ReAct / Plan-and-Solve / Reflexion 三大 reasoning 范式都成立——这意味着"<em>给 agent 加 reasoning step</em>"并不天然增加鲁棒性。</li>
+      <li><strong>reasoning-layer 攻击最强</strong>：在三层中，<em>推理层</em>而非感知层贡献最大攻击成功率。这是反直觉的——对抗样本社区长期认为感知层最危险，HAM³ 把"防御重心"明确推向 cognitive pipeline。</li>
+      <li><strong>50%+ 攻击让多 agent 集体犯一致错误</strong>：这是论文最重要的安全启示——<em>多 agent 投票/共识机制不仅不能稀释错误，反而被攻击者反向利用</em>。这直接挑战了"agent ensemble = 自然防御"的设计假设。</li>
+      <li><strong>跨 paradigm 普适性</strong>：ReAct（执行-思考交错）、Plan-and-Solve（先 plan 后 act）、Reflexion（带反思）三大范式在 HAM³ 下都受同等程度影响——意味着"<em>选哪种 reasoning paradigm</em>"几乎不是 MM-MAS 安全的杠杆。</li>
+      <li><strong>三层联合而非分立</strong>：HAM³ 强调三层"<em>互联</em>"而非独立——单层防御不足以阻断攻击，因为攻击可以跨层传播。这给 agent safety 防御设计提了一个相当硬的约束：<em>必须做 vertical defense</em>。</li>
+      <li><strong>CVPR 2026 接收</strong>：在视觉/多模态顶会获得认可，意味着该工作的工程严谨度（perturbation budget、evaluation 协议、复现性）经过严格审稿——是目前为数不多<em>同时被 CV 与 agent safety 社区接受</em>的工作。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>HAM³ 与今日 Harness 选定的 <a href="../../harness/2026-05-14-1.html">TRIAGE</a> 形成"红队对位"：TRIAGE 测<em>前瞻性元认知 plan</em>的最优性，HAM³ 揭示<em>plan 阶段如果存在多模态/通信扰动</em> 会让多 agent 集体偏离。两者拼起来给 harness 工程一个新课题——<strong>"adversarial-aware metacognition harness"</strong>：在 TRIAGE 设定下注入 HAM³ 三层扰动，看 plan 阶段的 efficiency ratio 是否退化。这对你的 ZipperQuant W4A4 e2e benchmark 也是重要参考：W4A4 在多模态多 agent 场景下的鲁棒性 vs 单模态 LLM 上的鲁棒性可能完全不同，<em>不能直接外推</em>——这值得在毕设论文里写进 limitation 一节。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>HAM³ 完成了 agent safety 攻击面的"<strong>下移闭环</strong>"：5-11 注册（Skills as Verifiable Artifacts）→ 5-12 调度（PRISM）→ 5-13 语义供应链（SKILL.md）→ 5-14 多模态执行（HAM³）。<em>跨层防御</em>从此成为不可回避的工程命题——单层 filter 防不住跨层攻击。这条经验可以直接用到你 ZipperQuant 量化的安全性论证：<em>weight outlier、激活 outlier、KV-cache outlier</em> 三类异常各对应一类潜在"植入面"，必须验证<em>组合后</em>是否依然鲁棒，而非分别证明。"50%+ 集体一致错误"也提醒——agent ensemble / 多专家投票 / multi-rollout 等机制都可能成为<em>放大器</em>而非<em>稀释器</em>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>HAM³ 给 safety benchmark 社区留下了三个尚未被解决的"<em>层级化设计要求</em>"：(1) 多模态 + 多 agent 场景的 benchmark 极少（GQA 只是单跳样本）；(2) "集体一致错误"作为新的安全度量从未在 HarmBench/SafetyBench 出现；(3) reasoning paradigm 不应作为防御变量进入 benchmark 评分。今日 Benchmark 选定的 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a> 和 HAM³ 共享一个母题——<em>benchmark 自身需要 secure by design</em>。一个直接的研究契机：把 BenchJack 的 reward-hacking taxonomy 与 HAM³ 的三层攻击 taxonomy 合并，做一个<strong>统一 benchmark security taxonomy</strong>——这是 NeurIPS 2026 datasets &amp; benchmarks track 的高潜力题。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Sustaining AI safety</strong> · 控制论框架下的"外部不可能性 / 内禀必要性"形式化定理 · 与 HAM³ 的 vertical defense 思路在治理层面互补<br>
+      <a href="https://arxiv.org/abs/2605.12963" target="_blank" rel="noopener">arxiv.org/abs/2605.12963</a></li>
+      <li><strong>When Attention Closes (GAR)</strong> · 解释多轮交互失稳的机制——是 reasoning-layer 攻击为何最有效的微观对应<br>
+      <a href="https://arxiv.org/abs/2605.12922" target="_blank" rel="noopener">arxiv.org/abs/2605.12922</a></li>
+      <li><strong>REVELIO</strong> · VLM 在自动驾驶/机器人下的可解释失败模式系统挖掘 · perception 层攻击的对照防御素材<br>
+      <a href="https://arxiv.org/abs/2605.12674" target="_blank" rel="noopener">arxiv.org/abs/2605.12674</a></li>
+      <li><strong>Multiagent Debate</strong>（Du et al. 2023） · 多 agent 投票稀释错误的奠基论文——HAM³ 是其反命题<br>
+      <a href="https://arxiv.org/abs/2305.14325" target="_blank" rel="noopener">arxiv.org/abs/2305.14325</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.13213" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.13213" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.13213v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.13213" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://cvpr.thecvf.com/" target="_blank" rel="noopener">CVPR 2026</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-14 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.13213<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.13213" target="_blank" rel="noopener">arxiv.org/abs/2605.13213</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

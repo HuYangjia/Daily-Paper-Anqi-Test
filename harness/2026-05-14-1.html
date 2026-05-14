@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-14 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-14 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 14 日 · Harness Engineering · 前瞻性元认知 · 资源约束下的 selection/sequencing/allocation 三合一评测</div>
+  <h1>TRIAGE：在 token 预算下让 LLM 同时做"挑哪些 / 按什么序 / 给多少算力"——把"前瞻性元认知控制"做成 harness 第七维</h1>
+  <div class="en-title">TRIAGE: Evaluating Prospective Metacognitive Control in LLMs under Resource Constraints</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.8</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.13414" target="_blank" rel="noopener">TRIAGE: Evaluating Prospective Metacognitive Control in LLMs under Resource Constraints</a><span class="winner-badge">今日选定</span></td>
+          <td>前瞻性元认知 harness · selection/sequencing/allocation 三合一 · oracle-grounded</td>
+          <td>arXiv 2026-05-13（Al Nazi, Roy Dipta）</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12894" target="_blank" rel="noopener">Beyond Cooperative Simulators: Generating Realistic User Personas for Robust Evaluation of LLM Agents</a></td>
+          <td>把 user simulator 演化生成成 plug-in 控制层 · tau²-bench retail/airline</td>
+          <td>arXiv 2026-05-13（Chopra, Ghate, Caliskan, Kohno, Shah, Jaques）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12922" target="_blank" rel="noopener">When Attention Closes: How LLMs Lose the Thread in Multi-Turn Interaction</a></td>
+          <td>多轮 agent harness 失效机制 · GAR 诊断 + 通道转移框架</td>
+          <td>arXiv 2026-05-13（Dongre, Hsieh, Lai, Yoon, Bui, Hakkani-Tür）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.13171" target="_blank" rel="noopener">Formal Conjectures: An Open and Evolving Benchmark for Verified Discovery in Mathematics</a></td>
+          <td>2,615 Lean 4 题 + 1,029 open conjecture · 零污染 harness 子集</td>
+          <td>arXiv 2026-05-13（Firsching, Lezeau, Mercuri, … Kohli）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12620" target="_blank" rel="noopener">Think Twice, Act Once: Verifier-Guided Action Selection For Embodied Agents (VegAS)</a></td>
+          <td>embodied agent 验证步 + LLM 数据合成 · +36% 相对增益</td>
+          <td>arXiv 2026-05-13</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>TRIAGE: Evaluating Prospective Metacognitive Control in LLMs under Resource Constraints</span></div>
+      <div class="meta-item"><label>中文标题</label><span>TRIAGE：在资源约束下评测语言模型的"前瞻性元认知控制"</span></div>
+      <div class="meta-item"><label>作者</label><span>Zabir Al Nazi · Shubhashis Roy Dipta</span></div>
+      <div class="meta-item"><label>机构</label><span>arXiv 预印本未在摘要页公开机构（cs.AI 单独投稿）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-13；cs.AI）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.13414" target="_blank" rel="noopener">arxiv.org/abs/2605.13414</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.13414" target="_blank" rel="noopener">arxiv.org/pdf/2605.13414</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.13414v1" target="_blank" rel="noopener">arxiv.org/html/2605.13414v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.13414" target="_blank" rel="noopener">10.48550/arXiv.2605.13414</a></div>
+      <div class="meta-item"><label>关键定位</label><span>给 frontier-eval harness 装"前瞻性资源决策"——一次评测同时考三件事</span></div>
+      <div class="meta-item"><label>评估域</label><span>竞赛数学 / 研究生科学 / 代码生成 / 多学科专家知识</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      在自校准 token 预算下让模型一次性 commit "做哪些 / 按什么序 / 给多少算力"，对照 oracle 给出 triage efficiency ratio。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>把语言模型部署为 <strong>autonomous agent</strong>，所要求的远不止"<em>每个任务的准确率</em>"：当 agent 面对一个排队的问题流、并被限制在一个有限 token 预算内时，<strong>它必须在执行反馈出现之前就决定：要做哪些、以什么顺序、以及给每一题分多少算力</strong>。这正是人类认知科学研究了几十年的 <em>prospective metacognitive control（前瞻性元认知控制）</em>，但语言模型究竟有没有这种能力，<em>至今没被测过</em>。</p>
+    <p>我们提出 <strong>TRIAGE</strong>——一个新的评测框架：模型收到一个任务池、再加上一个"按它自身基线消耗校准过的 token 预算"，然后<strong>一次性 commit 一个有序计划</strong>，这个计划同时编码 selection（挑哪些）、sequencing（顺序）和 per-problem allocation（每题分配多少 token）。这个计划在一个<em>知道每题 solvability 与代价的 oracle</em> 下被打分，得到一个共同度量尺度上的 <strong>triage efficiency ratio</strong>。</p>
+    <p>我们在<strong>竞赛数学、研究生科学、代码生成、专家多学科知识</strong>四个域评测前沿 / 开源模型，并在开/关 reasoning 两个设定下测量：当前的语言模型在<strong>前瞻性元认知控制上有显著差距</strong>，揭示出一条<em>此前未被度量的能力维度</em>——它对"资源高效的 agent 部署"有直接含义。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去 12 天 harness 主线的"<em>外化决策面</em>"路线已经把 endpoint（<a href="../../harness/2026-05-08-1.html">Token Arena</a>）、scaffolding（<a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a>）、能力 ladder（<a href="../../harness/2026-05-11-1.html">AgentFloor</a>）、工具拓扑（<a href="../../harness/2026-05-12-1.html">ComplexMCP</a>）和声明语义（<a href="../../harness/2026-05-13-1.html">Evaluation Differential</a>）依次显式化。所有这些工作都默认一个事——<em>任务是逐题独立的、token 预算是无限的</em>。但真实部署里，agent 拿到的是一<strong>队列</strong>问题、一个<strong>有限</strong>预算，必须 <em>在执行前</em> 决定怎么分配。TRIAGE 是首次把这条隐含假设搬到台面，把"前瞻性元认知"作为<strong>第七个 harness 维度</strong>立起来——前面六维都还是逐题层面的。</p>
+
+    <p><strong>核心方法（task pool + self-calibrated budget + triage plan + oracle scoring）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Self-calibrated budget</strong>：预算 B 不是任意设的，而是<em>用模型自己在该任务上的基线 token 消耗</em>校准——避免"小模型被锤、大模型轻松"的 budget 偏置，使得跨模型可比。这是把 Token Arena 的"成本即评测变量"思路推进了一步。</li>
+      <li><strong>Triage plan = (S, π, a)</strong>：模型 commit 一个三元组——选中子集 S ⊆ task pool、子集上的执行顺序 π、每题 token 配额 a_i。<em>关键约束</em>：必须在看到任何执行反馈前一次性给出，因此真正在测"前瞻"。</li>
+      <li><strong>Oracle 对齐</strong>：oracle 知道每个问题对该模型的 solvability 与最优代价，<em>它生成的计划是该模型可达的全局最优解</em>——而非"理论最优"，避免拿超模型能力的题去苛责。</li>
+      <li><strong>Triage efficiency ratio</strong>：模型计划下的期望解题数 / oracle 的期望解题数，归一到 [0,1] 公共尺度——使得"小模型在小预算下"和"前沿模型在大预算下"可以同台对比。</li>
+      <li><strong>四个评估域</strong>：竞赛数学（如 MATH/AIME 类）、研究生科学（GPQA-类）、代码生成（HumanEval/MBPP-类）、专家多学科（MMLU-Pro-类）。这四个域的 solvability/代价分布完全不同，故能拆出"前瞻性元认知是否跨域稳定"。</li>
+      <li><strong>双模式：with / without reasoning</strong>：把 reasoning enable 当作受控变量，量化 chain-of-thought 是否改善前瞻性元认知——这与"<em>reasoning 改善 retrospective 但不一定改善 prospective</em>" 的认知科学假设直接对照。</li>
+    </ul>
+
+    <p><strong>与现有 harness 工作的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>传统逐题 harness</th><th>预算/成本 harness（Token Arena）</th><th>声明语义 harness（ED · 昨日）</th><th>TRIAGE（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测单位</td><td>样本 / 任务</td><td>endpoint × 任务</td><td>属性 × 评测条件</td><td><strong>计划 = (S, π, a)</strong></td></tr>
+        <tr><td>反馈位置</td><td>逐题</td><td>逐题 + 成本</td><td>事后类型化</td><td><strong>事前一次 commit · 无中间反馈</strong></td></tr>
+        <tr><td>输出物</td><td>capability score</td><td>$/正确题</td><td>conditional claim</td><td><strong>triage efficiency ratio</strong></td></tr>
+        <tr><td>跨模型可比性</td><td>弱（任务难度不同）</td><td>较强（成本归一）</td><td>语义可比</td><td><strong>oracle-grounded · 强</strong></td></tr>
+        <tr><td>人类对照</td><td>无</td><td>无</td><td>无</td><td><strong>直接对应人类认知科学</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 TRIAGE 嵌进过去 12 天的 harness 时间线，可以看出一条非常清晰的"<strong>能力维度增量</strong>"：5-08 加成本、5-09 加 scaffold、5-11 加能力 ladder、5-12 加工具拓扑、5-13 加声明语义、<em>5-14 加前瞻性元认知</em>——前面六维都仍假设"模型在每题上能独立尽力"，TRIAGE 第一次把<em>资源调度本身</em>当作能力维度。<strong>这是 harness 工程从"测能力"过渡到"测决策"的一步</strong>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Flavell (1979) — <em>Metacognition and Cognitive Monitoring</em>·人类认知科学的元认知奠基论文（前瞻性 vs 回顾性区分）<br>
+    <a href="https://psycnet.apa.org/record/1980-09388-001" target="_blank" rel="noopener">psycnet.apa.org · APA records</a></div>
+    <div class="ref-item">Fleming &amp; Lau (2014) — <em>How to measure metacognition</em>·度量元认知的方法学综述<br>
+    <a href="https://www.frontiersin.org/articles/10.3389/fnhum.2014.00443/full" target="_blank" rel="noopener">frontiersin.org · doi 10.3389/fnhum.2014.00443</a></div>
+    <div class="ref-item">Wei et al. (2022) — <em>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</em>·reasoning enable 的对照基线<br>
+    <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">arxiv.org/abs/2201.11903</a></div>
+    <div class="ref-item">Hendrycks et al. (2021) — <em>Measuring Mathematical Problem Solving With the MATH Dataset</em>·竞赛数学评测集<br>
+    <a href="https://arxiv.org/abs/2103.03874" target="_blank" rel="noopener">arxiv.org/abs/2103.03874</a></div>
+    <div class="ref-item">Rein et al. (2024) — <em>GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark</em>·研究生科学评测集<br>
+    <a href="https://arxiv.org/abs/2311.12022" target="_blank" rel="noopener">arxiv.org/abs/2311.12022</a></div>
+    <div class="ref-item">Wang et al. (2024) — <em>MMLU-Pro: A More Robust and Challenging Multi-Task Language Understanding Benchmark</em>·多学科专家知识评测集<br>
+    <a href="https://arxiv.org/abs/2406.01574" target="_blank" rel="noopener">arxiv.org/abs/2406.01574</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>三合一约束首次落地</strong>：selection / sequencing / per-problem allocation 历史上一直被分别测，TRIAGE 把它们绑成<em>一个不可分割的 commitment</em>。这意味着从今往后讨论"agent 在真实部署的资源效率"必须报这三件事的联合分布，而不是分别报准确率与平均开销。</li>
+      <li><strong>baseline-calibrated budget</strong>：用模型自己的基线 token 消耗校准 B——把"评测公平性"从手工调参变成<em>结构化机制</em>。这是过去 budget-aware harness（如 Token Arena）一直缺的一块。</li>
+      <li><strong>oracle-grounded 评分</strong>：所有计划相对于<em>该模型可达的全局最优 plan</em> 打分而非理论最优——避免"模型力所不及的题"被错误归到 metacognition gap。这是 sound 的可比尺度。</li>
+      <li><strong>显著差距</strong>：摘要明确报告"current language models exhibit substantial gaps in prospective metacognitive control"——这意味着 reasoning enable 之后，仍有相当部分 efficiency loss 来自<em>计划阶段</em>而非<em>执行阶段</em>。</li>
+      <li><strong>四域设计 → 跨域稳定性</strong>：竞赛数学、研究生科学、代码、多学科四域的 solvability/代价分布差异巨大；若 efficiency ratio 在四域上一致退化，则证明 metacognition 缺陷是"<em>架构级</em>"而非"<em>领域级</em>"的——这是评判该 harness 影响力的关键经验问题。</li>
+      <li><strong>方法学定位</strong>：在 evaluation 工程已成熟到能"外化几乎所有变量"之后，下一步是把<em>决策</em>作为评测对象。TRIAGE 是 harness 第一次把"前瞻"做成可度量量。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>TRIAGE 给"<strong>资源约束 harness</strong>"做了一次清晰的奠基。对你正在做的 ZipperQuant W4A4 e2e 实验和 KV-Cache offloading 毕设来说，这是非常直接可借的范式：把"<em>给定固定 KV-budget，让模型自己决定保留哪些层 / 哪些 token / 各分多少 cache</em>"做成 budget-calibrated harness——这不就是 prefetch / evict 决策的前瞻性元认知版本吗？同时论文 v3 的分层画像 + Coverage 实验也可加一节"<em>前瞻 vs 回顾</em>"对照：让模型在看到完整序列前 commit 一个 Top-K plan，再对照 oracle Top-K，得出 layer-wise prospective metacognitive ratio——这比单独报 recall 更能解释"为什么有的层稳定、有的层漂移"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>TRIAGE 与今日 Agent Safety 选定的 <a href="../../agent-safety/2026-05-14-1.html">HAM³</a> 形成自然对位：前者要求 agent <em>在执行前</em>合理分配资源，后者证明<em>在执行前</em> agent 的多模态/通信/推理三层都能被攻破。把两者合成一个红队设定——<em>在 metacognitive plan 阶段注入对抗 perturbation</em>——可以测出 agent "前瞻性元认知"对扰动的脆弱性。这与昨日 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md 攻击</a> 也可拼接：metacognitive 阶段恰是 skill registry 被查询的位置，<em>plan 时可被诱导去 commit 高额预算到恶意 skill</em>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>TRIAGE 给整个 safety benchmark 社区提了一个迟早要面对的命题：<em>所有的 safety/agent benchmark 都是逐题独立的，没有 budget</em>。但真实 deployment 里 safety policy 往往是预算受限的（safety filter 也是 token 成本）。借 TRIAGE 思路可设计一类 <strong>budget-aware safety benchmark</strong>：在 token-cap 下让 agent 同时挑哪些任务做、哪些拒答、哪些升级——把"safety 与 efficiency"做成 joint trade-off。今日 Benchmark 选定的 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a> 揭露的 reward-hacking 多与"<em>无成本约束的 score</em>"绑定；TRIAGE 的预算机制恰是反 reward-hack 的一种结构化补丁。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Beyond Cooperative Simulators (PPol)</strong> · 用进化程序搜索生成真实 user persona，把 user simulator 做成 plug-and-play 控制层<br>
+      <a href="https://arxiv.org/abs/2605.12894" target="_blank" rel="noopener">arxiv.org/abs/2605.12894</a></li>
+      <li><strong>When Attention Closes (GAR)</strong> · 多轮交互中 LLM 失去"thread"的机制 + 通道转移框架，是 TRIAGE 的"执行期"对应物<br>
+      <a href="https://arxiv.org/abs/2605.12922" target="_blank" rel="noopener">arxiv.org/abs/2605.12922</a></li>
+      <li><strong>Formal Conjectures (Lean 4)</strong> · 2,615 题 + 1,029 open conjecture · 零污染评测子集，可作 TRIAGE 的"低 solvability、高代价"域<br>
+      <a href="https://arxiv.org/abs/2605.13171" target="_blank" rel="noopener">arxiv.org/abs/2605.13171</a></li>
+      <li><strong>Token Arena</strong>（5-08 报告） · 把 endpoint 作为评测变量——TRIAGE 的成本基线即源于此线<br>
+      <a href="../../harness/2026-05-08-1.html">harness/2026-05-08-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.13414" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.13414" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.13414v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.13414" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-14 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.13414<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.13414" target="_blank" rel="noopener">arxiv.org/abs/2605.13414</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
