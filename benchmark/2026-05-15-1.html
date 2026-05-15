@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-15 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #fcebeb; color: #a32d2d; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff7e8; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f0fbf6; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fff7e8; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfb6; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff7e8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 15 日 · Safety Benchmark · 把"持久状态冲突"做成一等公民 · generator-backed CLI agent benchmark</div>
+  <h1>ClawForge：让 agent 在"前任留下的烂摊子"里干活——17 场景 / 6 能力维度，最强模型 strict 准确率仅 45.3%、模型间从 17% 拉开到 90%</h1>
+  <div class="en-title">ClawForge: Generating Executable Interactive Benchmarks for Command-Line Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.7</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.14133" target="_blank" rel="noopener">ClawForge: Generating Executable Interactive Benchmarks for Command-Line Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>generator-backed agent benchmark · state conflict · 17 场景 / 6 能力 / 7 frontier 模型</td>
+          <td>arXiv 2026-05-13（Lai, Xia, Ji, Xiong, Zeng et al. 11 作者）</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14002" target="_blank" rel="noopener">PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts</a></td>
+          <td>multilingual agentic discovery · FactNet 证据条件评测协议</td>
+          <td>arXiv 2026-05-13（Y. Zhu）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14061" target="_blank" rel="noopener">MathAtlas: A Benchmark for Autoformalization in the Wild</a></td>
+          <td>~52k 研究生级数学 + 依赖图 · SOTA 仅 9.8% 正确</td>
+          <td>arXiv 2026-05-13（Patel, Arias et al. 10 作者）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.13950" target="_blank" rel="noopener">Collider-Bench: Benchmarking AI Agents with Particle Physics Analysis Reproduction</a></td>
+          <td>LHC 实验复现 · 公开论文 + 开源软件 · 多步可执行 trace</td>
+          <td>arXiv 2026-05-13（Faroughy et al.）</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14164" target="_blank" rel="noopener">Unsteady Metrics and Benchmarking Cultures of AI Model Builders</a></td>
+          <td>231 benchmark × 139 release 元分析 · 63.2% 单 builder</td>
+          <td>arXiv 2026-05-13（Baack, Buschek, Bohacek）</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>ClawForge: Generating Executable Interactive Benchmarks for Command-Line Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>ClawForge：为命令行 agent 生成可执行的交互式 benchmark</span></div>
+      <div class="meta-item"><label>作者</label><span>Yuxiang Lai · Peng Xia · Haonian Ji · Kaiwen Xiong · Kaide Zeng · Jiaqi Liu · Fang Wu · Jike Zhong · Zeyu Zheng · Cihang Xie · Huaxiu Yao</span></div>
+      <div class="meta-item"><label>机构</label><span>arXiv 摘要页未公开机构（11 作者，含 Cihang Xie / Huaxiu Yao 通讯）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-13；cs.AI）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.14133" target="_blank" rel="noopener">arxiv.org/abs/2605.14133</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.14133" target="_blank" rel="noopener">arxiv.org/pdf/2605.14133</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.14133v1" target="_blank" rel="noopener">arxiv.org/html/2605.14133v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.14133" target="_blank" rel="noopener">10.48550/arXiv.2605.14133</a></div>
+      <div class="meta-item"><label>规模</label><span>17 场景 × 6 能力类别 × 7 frontier 模型</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把"<em>预先存在的部分/陈旧/冲突 artifact</em>"作为 first-class 评测维度</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      让 agent 在"<em>前任留下的烂摊子</em>"里干活——首个 generator-backed CLI benchmark，模型分布从 17%–90%，关键是"<strong>看不看 state</strong>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>交互式 agent benchmark 在<strong>可扩构造</strong>与<strong>真实工作流评测</strong>之间一直存在张力——人手编写的任务<em>难以扩展和修订</em>，静态 prompt 评测又错过那些<em>只有在 agent 操作"持久状态"时才会暴露</em>的失败。已有交互式 benchmark 大幅推进了 agent 评测，但<strong>大多从干净状态初始化任务</strong>，并不系统检验 agent 在面对<em>预先存在的部分、陈旧、或冲突 artifact</em> 时如何应对。</p>
+    <p>我们提出 <strong>ClawForge</strong>——一个<strong>generator-backed</strong> 的可执行命令行工作流 benchmark 框架。框架把场景模板、grounded slots、初始化状态、参考轨迹与 validator <strong>编译为可复现的 task 规约</strong>，并在持久工作流面上<em>逐步评测 agent</em>，使用<strong>归一化末态与可观测副作用</strong>而非"完全 trajectory 匹配"作为评分。框架被实例化为 <strong>ClawForge-Bench</strong>（17 场景，6 能力维度）。</p>
+    <p>跨 7 个 frontier 模型的结果显示：<strong>最强模型仅达 45.3% 严格正确率</strong>；所有模型的"<em>错误状态替换</em>"率均低于 17%；模型分布的最大跨度（<strong>17% → 90%</strong>）由"<em>是否在动手前先检视已有状态</em>"决定。partial-credit 与 step-efficiency 分析进一步揭示：<strong>许多失败是"近终点 closure 失败"而非早期崩溃</strong>，且不同模型在 state-conflict 下表现出<em>定性不同的失败风格</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去两周 benchmark 方向一直围绕"<em>新评测面</em>"扩展——5-08 <a href="../../benchmark/2026-05-08-1.html">XL-SafetyBench</a> 加多语种、5-09 <a href="../../benchmark/2026-05-09-1.html">Partial Evidence Bench</a> 加权限完整性、5-12 <a href="../../benchmark/2026-05-12-1.html">Agent-ValueBench</a> 加价值系统、5-13 <a href="../../benchmark/2026-05-13-1.html">TRIVIA+</a> 加 desiderata、5-14 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a> 测 benchmark 自身。本文则补上了一个长期被默认忽略的维度：<em>真实部署里 agent 拿到的从来不是干净状态</em>——它面对的是上一次执行留下的部分文件、陈旧 cache、冲突配置。<strong>ClawForge 是第一个把"state conflict"做成 first-class 评测变量的 benchmark</strong>。这一步的重要性等同于把"动作链"接到了"持续部署语境"上，与今日 Harness 选定的 <a href="../../harness/2026-05-15-1.html">ChromaFlow</a>（强调操作 telemetry）、Agent Safety 选定的 <a href="../../agent-safety/2026-05-15-1.html">知-行 gap</a>（强调内部表征）共同构成"<em>从内部到外部都不再用干净状态评测</em>"的方法学跃迁。</p>
+
+    <p><strong>核心方法（generator-backed + executable + state-conflict-aware）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Generator-backed task spec</strong>：场景模板 + grounded slots（具体值）+ 初始化状态 + 参考 trajectory + validator 一同编译——<em>每个具体任务都是从程序生成的、可重新参数化的</em>。这是过去 benchmark"手工编/众包/翻译"路径的根本性升级。</li>
+      <li><strong>持久工作流面</strong>：agent 不在每个 task 中"重生"——它面对的是上一步留下的<em>真实文件系统/进程态/环境变量</em>。这与 OSWorld、TerminalBench 不同：那些 benchmark 也用 sandbox，但每 task 通常是冷启动；本文是<em>跨任务持续状态</em>。</li>
+      <li><strong>归一化末态 + 可观测副作用评分</strong>：不强求 agent 走和 reference trajectory 一模一样的路径——只检查<em>末态等价 + 关键副作用是否被触发</em>。这是与 ChromaFlow telemetry 思想呼应的"<em>过程行为可见</em>"评分。</li>
+      <li><strong>Strict / Partial-credit / Step-efficiency 三档评分</strong>：strict 看完美正确；partial 拆功能子模块；step-efficiency 算 token/动作开销。这让"<em>近终点崩坏</em>"不被一票否决——这是 benchmark 评分体系的细分突破。</li>
+      <li><strong>17 场景 × 6 能力维度</strong>：覆盖文件、进程、网络、git、包管理、CLI 工具——是命令行 agent 的"<em>核心 capability surface</em>"。</li>
+    </ul>
+
+    <p><strong>与已有 agent benchmark 的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>OSWorld / WebArena</th><th>BenchJack（昨日）</th><th>本文（ClawForge）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>初始状态</td><td>大多干净</td><td>干净</td><td><strong>预存在部分 / 陈旧 / 冲突 artifact</strong></td></tr>
+        <tr><td>构造方式</td><td>人手 / 众包</td><td>红队生成</td><td><strong>generator-backed · 模板 + slot</strong></td></tr>
+        <tr><td>评分方式</td><td>strict / pass-rate</td><td>reward-hack 检测</td><td><strong>归一化末态 + 副作用 + 三档评分</strong></td></tr>
+        <tr><td>核心区分量</td><td>能力上限</td><td>benchmark 自身鲁棒性</td><td><strong>"是否在动手前检视已有状态"</strong></td></tr>
+        <tr><td>失败定位</td><td>整体 fail</td><td>整体 hack</td><td><strong>近终点 closure / 错误状态替换 / 早期 abort</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把 ClawForge 嵌进过去 12 天 benchmark 时间线，可以看出一条"<em>评测面下沉到真实部署</em>"的路径：5-08 多语种 → 5-09 权限完整性 → 5-12 价值系统 → 5-13 desiderata → 5-14 benchmark 自审计 → <strong>5-15 持久状态冲突</strong>。每一步都在向"真实部署 agent 实际遇到的边界条件"靠近。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Wang et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·命令行/桌面 agent 评测代表<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Zhou et al. (2023) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>·sandbox-based agent benchmark 代表<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Yang et al. (2024) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>·真实代码改 agent benchmark 标杆<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>VisualWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks</em>·sandbox 多模态 agent 评测<br>
+    <a href="https://arxiv.org/abs/2401.13649" target="_blank" rel="noopener">arxiv.org/abs/2401.13649</a></div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em>·通用 agent 评测<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Tucker (2025) — <em>TerminalBench: Evaluating LLM Agents on Real Command-Line Tasks</em>·命令行 agent 直接对照工作<br>
+    <a href="https://arxiv.org/abs/2502.05507" target="_blank" rel="noopener">arxiv.org/abs/2502.05507</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>最强模型 strict 准确率 45.3%</strong>：在仅 17 场景 / 6 能力维度的 benchmark 上，frontier 模型也只能完美完成<em>不到一半</em> 的任务。这是当前 frontier agent 仍未触及"持久状态"层面的硬证据。</li>
+      <li><strong>模型分布 17% → 90%（拉开 73 pp）</strong>：单一 benchmark 内 frontier 模型间分布如此之宽，说明这个评测面<em>区分能力强</em>——而它的判别量是"<em>是否在动手前先检视已有状态</em>"，比所谓"原始能力"更具机制层意义。</li>
+      <li><strong>错误状态替换率 &lt; 17%（所有模型）</strong>：这是一个有意思的负面发现——模型<em>很少</em>把对的状态变错（积极避免破坏），<em>更多是没改对</em>（保守不前）。这意味着 alignment 的核心问题不是"激进破坏"而是"保守失能"。</li>
+      <li><strong>近终点 closure 失败 &gt; 早期崩溃</strong>：partial-credit 分析显示<em>多数失败是"差最后一步没收尾"</em>。这与一直以来"agent 早期 plan 错"的直觉相反——更像是<em>近终点的 verifier/commit 缺失</em>。</li>
+      <li><strong>失败"风格"差异质化</strong>：不同模型在 state-conflict 下展现出<em>定性不同</em>的失败画像（有的"重写覆盖"、有的"反复探查"、有的"提前放弃"）。这意味着 agent benchmark 应配套<em>失败模式 taxonomy</em> 而不只是 pass-rate。</li>
+      <li><strong>generator-backed 可扩</strong>：场景从 17 个模板能扩到任意数量，每个 slot 可用不同 grounded value 实例化——<em>避免 benchmark 一次性枯竭</em>。这是 BenchJack（昨日）希望但未做的另一面。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>ClawForge 给了 harness 一个长期忽视的输入维度：<strong>初始 state 应作为 harness 配置参数，而非默认"clean"</strong>。这与你 KV-cache offload 实验的<em>同型问题</em>——你测 prefetch 命中率时，是否每次都从空 cache 开始？真实生产里 cache pool 永远带"前一步残留"，分布与冷启动差很大。建议毕设论文 v3 加一组实验：<strong>warm cache（带前一 batch 残留）vs cold cache</strong> 下的 hit-rate / latency 对比——这就是 ClawForge 思想在系统层的翻译。它和今日 Harness 选定的 <a href="../../harness/2026-05-15-1.html">ChromaFlow（telemetry-driven）</a> 共同支持你写一节<em>"我们不再假设 clean baseline"</em>的实验设计。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>state-conflict 与今日 Agent Safety 选定的 <a href="../../agent-safety/2026-05-15-1.html">知-行 gap</a> 拼起来格外锋利：模型在<em>面对持久状态</em>时的失败<strong>多数是"知道该看 state 但没去看"</strong>——这正是知-行 gap 的"动作"端。可以在 ClawForge 上跑一套 hidden-state probe：<em>看模型有没有"该看 state"的 cognition 方向</em>，再看它是否在 last-token 上路由进 action。如果"看 state"的 cognition 强但 action 弱，就是论文 5-15 在 tool-use 之外的<strong>第二个验证场</strong>。这正是把 agent safety 从"防攻击"扩到"防自身懒惰"的方法学桥梁。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击主线）</div>
+        <p>给 benchmark 社区一个明确的设计公式：<strong>generator + 持久状态 + 三档评分</strong>。每个新 benchmark 都应回答："是否能用模板生成？是否考虑前次残留？是否区分 strict / partial / step-efficiency？" 把这三条作为 next-gen agent benchmark 的最小集。它与昨日的 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a>（揭露 reward-hack）、5-13 <a href="../../benchmark/2026-05-13-1.html">TRIVIA+</a>（属性 desiderata）、5-12 <a href="../../benchmark/2026-05-12-1.html">Agent-ValueBench</a>（价值系统）合在一起，形成 2026-Q2 的<em>benchmark 工程方法学栈</em>——这值得你在 v3 实验章作为"评测协议来源"统一引用。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>MathAtlas</strong> · ~52k 研究生级 autoformalization benchmark + 依赖图，SOTA 仅 9.8% 正确——评测的可扩与可复现样板<br>
+      <a href="https://arxiv.org/abs/2605.14061" target="_blank" rel="noopener">arxiv.org/abs/2605.14061</a></li>
+      <li><strong>Collider-Bench</strong> · LHC 实验复现 agent benchmark，以公开论文与开源软件评测多步可执行 trace<br>
+      <a href="https://arxiv.org/abs/2605.13950" target="_blank" rel="noopener">arxiv.org/abs/2605.13950</a></li>
+      <li><strong>The Evaluation Trap</strong> · Epistematics 方法学审计 benchmark 是否真能区分能力 vs 代理行为<br>
+      <a href="https://arxiv.org/abs/2605.14167" target="_blank" rel="noopener">arxiv.org/abs/2605.14167</a></li>
+      <li><strong>BenchJack</strong>（昨日 5-14 报告） · 用 coding agent 红队 10 主流 benchmark · hackable 从 ~100% 压到 &lt;10%<br>
+      <a href="../../benchmark/2026-05-14-1.html">benchmark/2026-05-14-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.14133" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.14133" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.14133v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.14133" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2502.05507" target="_blank" rel="noopener">TerminalBench（参考）</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-15 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.14133<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.14133" target="_blank" rel="noopener">arxiv.org/abs/2605.14133</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

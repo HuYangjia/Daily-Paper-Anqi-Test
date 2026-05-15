@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-15 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f0fbf6; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f0fbf6; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #cef2e2; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f0fbf6; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 15 日 · Agent Skills Safety · 把 tool-use 从 model-agnostic 重定义为 model-adaptive · 知-行 gap 首次实证</div>
+  <h1>Tool Necessity Knowing-Doing Gap：模型"知道要 call tool"和"真去 call tool"是两条几乎正交的内部方向——4 模型 26.5–54% mismatch</h1>
+  <div class="en-title">Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use</a><span class="winner-badge">今日选定</span></td>
+          <td>tool-use 安全 · model-adaptive necessity · 隐藏态线性探针 · 后期层近正交方向</td>
+          <td>arXiv 2026-05-13（Cheng, Fan, JafariRaviz, Rezaei, Feiz）</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.13851" target="_blank" rel="noopener">Invisible Orchestrators Suppress Protective Behavior and Dissociate Power-Holders</a></td>
+          <td>多 agent 隐藏 orchestrator 抑制保护行为 · output-evaluation 不可见</td>
+          <td>arXiv 2026-05-13（H. Fukui）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14034" target="_blank" rel="noopener">From Descriptive to Prescriptive: Uncover the Social Value Alignment of LLM-based Agents</a></td>
+          <td>GraphRAG + Maslow/Plutchik 框架的 agent value alignment</td>
+          <td>arXiv 2026-05-13（Qu, Gu, Chen, Ji）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14175" target="_blank" rel="noopener">Grounded Continuation: A Linear-Time Runtime Verifier for LLM Conversations</a></td>
+          <td>显式依赖图 · 长对话 unsupported continuation 检测</td>
+          <td>arXiv 2026-05-13（He, Dong, Huang）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14126" target="_blank" rel="noopener">Reinforcement Learning for Tool-Calling Agents in FHIR (Healthcare)</a></td>
+          <td>execution-grounded reward · 临床结构图工具调用</td>
+          <td>arXiv 2026-05-13（Knorr et al.）</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Model-Adaptive Tool Necessity Reveals the Knowing-Doing Gap in LLM Tool Use</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Model-Adaptive 工具必要性揭示 LLM 工具调用中的"知-行 gap"</span></div>
+      <div class="meta-item"><label>作者</label><span>Yize Cheng · Chenrui Fan · Mahdi JafariRaviz · Keivan Rezaei · Soheil Feiz</span></div>
+      <div class="meta-item"><label>机构</label><span>arXiv 摘要页未公开机构（cs.AI 单独投稿）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-13；cs.AI）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.14038" target="_blank" rel="noopener">arxiv.org/pdf/2605.14038</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.14038v1" target="_blank" rel="noopener">arxiv.org/html/2605.14038v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.14038" target="_blank" rel="noopener">10.48550/arXiv.2605.14038</a></div>
+      <div class="meta-item"><label>评测对象</label><span>4 个 LLM × 算术 QA + 事实 QA</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把"工具必要性"从 model-agnostic 改写为 model-adaptive，并定位失败在 cognition→action 转换</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      模型隐藏态既能解码"觉得需要 tool"也能解码"会去 call tool"，但两者方向<strong>近正交</strong>——失败集中在 cognition→action。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>大型语言模型越来越多地作为<strong>自主 agent</strong> 工作，必须决定何时直接回答、何时调用外部工具。已有自适应工具调用研究大多把"<em>是否需要工具</em>"当作 <strong>model-agnostic</strong> 属性——由人或 LLM 评判，并多覆盖那些"显然需要"的极端例（如取天气 vs 改写文本）。然而真实部署中工具必要性远比这复杂：<em>同一道题</em>，强模型可以独立解、弱模型却必须借助工具——必要性<strong>随能力边界发散</strong>。</p>
+    <p>本文提出 <strong>model-adaptive</strong> 的工具必要性定义——把它锚定在"<em>每个模型自己的实证表现</em>"。在该定义下，作者比较 4 个模型在<strong>算术 QA</strong> 与<strong>事实 QA</strong> 上的"必要性 vs 实际调用行为"，发现显著 mismatch：<strong>26.5–54.0%</strong>（算术）与<strong>30.8–41.8%</strong>（事实）。</p>
+    <p>为定位失败原因，作者把 tool use 拆为<strong>两阶段</strong>——内部 cognition（模型是否相信工具是必要的）与 execution（模型是否真去 call）。<strong>对隐藏态做线性探针</strong>，发现两个信号都<em>线性可解码</em>，<strong>但在驱动 next-token 动作的"晚期层、最后一个 token"位置上，两个 probe 方向几乎正交</strong>。继续追踪样本在两阶段的轨迹，作者发现 mismatch 主要集中在 <strong>cognition→action 的转换</strong>，而非 cognition 阶段本身。</p>
+    <p>结论：LLM 工具调用存在<strong>知-行 gap（knowing-doing gap）</strong>——提升可靠性不仅需要更好地"<em>识别工具需要性</em>"，更需要更好地"<em>把识别翻译成行动</em>"。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去 12 天 agent-safety 主线一直围绕"<em>外部加 guard</em>"——5-08 <a href="../../agent-safety/2026-05-08-1.html">SafeHarbor</a>、5-09 <a href="../../agent-safety/2026-05-09-1.html">Chain of Risk</a>、5-12 <a href="../../agent-safety/2026-05-12-1.html">PRISM</a>、5-13 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md 攻击</a>、5-14 <a href="../../agent-safety/2026-05-14-1.html">HAM³</a>。所有这些工作都把 agent 当 black box，要么注入扰动，要么外挂 guardrail。本文是<strong>第一篇沿"内部表征"打开 tool-use 安全的论文</strong>——它把"模型为什么不该 call 时却 call、该 call 时却不 call"<em>定位到模型内部的两条独立方向</em>。这对 agent safety 的意义远超 tool-use 本身：很多 agent 安全失效（refusal 不一致、policy 漂移）都可能是同一种 cognition→action 断裂的实例。</p>
+
+    <p><strong>核心方法（model-adaptive 必要性 + 两阶段拆解 + 探针方向几何）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Model-adaptive necessity</strong>：把工具必要性 N(x; M) 定义为<em>模型 M 在题 x 上独立作答的实证准确率</em>低于阈值 → 必要。这把 evaluator 的"主观必要"换为模型自身的可观测表现，是<em>把 tool-use 评测从 ground-truth 一致改成 capability-conditioned</em>。</li>
+      <li><strong>两阶段分解（cognition / execution）</strong>：cognition 阶段——"<em>模型相信此题需 tool 吗</em>"；execution 阶段——"<em>模型实际是否生成 tool-call token</em>"。两者既可来自同一前向、也可分别度量。</li>
+      <li><strong>隐藏态线性探针 + 方向几何</strong>：在每一层、每一个 token 位置训一个 logistic probe 解码两个信号。关键发现：两 probe 在大多数层方向<em>对齐</em>，但在<strong>晚期层 × 最后一个 token</strong>（即决定下一步 action 的位置）方向<em>近正交</em>——意味着模型的"<em>认知信号</em>"在最后被路由到一个<em>不参与 next-token decoding</em> 的子空间。</li>
+      <li><strong>轨迹追踪</strong>：把 mismatch 样本分成 4 类（认对+做对、认错+做错、认对+做错、认错+做对）；最终发现"<em>认对+做错</em>"占多数——即模型知道该 call 但没去 call。这就是"<strong>知行 gap</strong>"。</li>
+    </ul>
+
+    <p><strong>与已有 agent safety 工作的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>外部 guardrail（如 PRISM/SafeHarbor）</th><th>策略对齐（如 Chain-of-Risk）</th><th>本文（Knowing-Doing Gap）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>分析层级</td><td>I/O 行为</td><td>RL/SFT loss</td><td><strong>逐层逐 token 隐藏态</strong></td></tr>
+        <tr><td>必要性定义</td><td>外部 oracle</td><td>外部 oracle</td><td><strong>model-adaptive · 锚定模型自身实证</strong></td></tr>
+        <tr><td>失败定位</td><td>"模型不听话"</td><td>"对齐不够"</td><td><strong>cognition→action 几何上的方向断裂</strong></td></tr>
+        <tr><td>可干预面</td><td>事后过滤</td><td>训练损失</td><td><strong>用 probe 方向直接修正 last-layer routing</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>把本文嵌进过去 12 天 agent-safety 的时间线，可以看出一条清晰的<em>"位置下沉"</em>路径：guard 越来越深——从对话级（SafeHarbor）→ 思维链级（Chain-of-Risk）→ 多 agent 凭证传递级（PRISM）→ 多模态推理三层（HAM³）→ <strong>本文是第一次沉到"隐藏态方向几何"</strong>。这意味着 tool-use 安全研究开始具备<em>架构层可干预性</em>——这是过去 5 个工作都没做到的。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·tool-use 起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·tool-call 推理范式<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Alain &amp; Bengio (2017) — <em>Understanding Intermediate Layers Using Linear Classifier Probes</em>·线性探针方法学<br>
+    <a href="https://arxiv.org/abs/1610.01644" target="_blank" rel="noopener">arxiv.org/abs/1610.01644</a></div>
+    <div class="ref-item">Zou et al. (2023) — <em>Representation Engineering: A Top-Down Approach to AI Transparency</em>·方向几何分析的方法学先驱<br>
+    <a href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">arxiv.org/abs/2310.01405</a></div>
+    <div class="ref-item">Patil et al. (2023) — <em>Gorilla: Large Language Model Connected with Massive APIs</em>·tool-use 大规模 benchmark<br>
+    <a href="https://arxiv.org/abs/2305.15334" target="_blank" rel="noopener">arxiv.org/abs/2305.15334</a></div>
+    <div class="ref-item">Qin et al. (2023) — <em>Tool Learning with Foundation Models</em>·tool-use 综述<br>
+    <a href="https://arxiv.org/abs/2304.08354" target="_blank" rel="noopener">arxiv.org/abs/2304.08354</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>算术 QA 26.5–54.0% mismatch / 事实 QA 30.8–41.8% mismatch</strong>：跨 4 个模型，必要性与实际行为之间的 gap 都不小、且因模型而异——直接证伪"<em>tool-use 是 model-agnostic 行为</em>"这一长期默认假设。</li>
+      <li><strong>两个信号都线性可解</strong>：cognition probe 与 execution probe 在大多层准确率都很高——意味着模型<em>不是不知道</em>。</li>
+      <li><strong>晚期层 × last-token：probe 方向近正交</strong>：这是论文最具洞察的几何发现——cognition 信号在<em>决定 next-token 那一刻</em>不在 action 子空间。这解释了"认对但做错"这种最常见的失败。</li>
+      <li><strong>失败集中在 cognition→action 转换</strong>：不是 cognition 错、不是 execution 不会，而是<em>从 cognition 到 action 的路由</em>断了。这把研究焦点从"提升判断力"或"提升执行力"转到"<em>提升路由对齐</em>"。</li>
+      <li><strong>方法学含义</strong>：把 model-adaptive 这个定义引进 agent safety 后，过去所有 tool-use 安全 benchmark（含 Gorilla、ToolBench 等）都需要被重新审视——它们的 ground-truth"<em>必要性</em>"标签都是 model-agnostic 的。</li>
+      <li><strong>对齐的可干预面</strong>：既然 cognition 与 action 在 last-layer 是近正交的两个方向——理论上可以用一个<em>低秩 rotation</em> 把 cognition 方向与 action 方向对齐。这给了一个比 RLHF/RL-fine-tune <em>更便宜</em>的干预面。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>本文给 harness 工程一个清晰任务：<strong>必须把"模型自身实证准确率"作为评测的一阶变量</strong>——不能继续用 model-agnostic ground-truth 给 tool-use / refusal / hedging 这类<em>能力相关</em>的行为打分。这与今日 Harness 选定的 <a href="../../harness/2026-05-15-1.html">ChromaFlow（负向消融）</a>互为镜像：ChromaFlow 揭露 harness 评测<em>外部观测面</em>的盲区，本文揭露 harness 评测<em>内部表征面</em>的盲区。建议你 KV-cache offload 论文的 v3 在第 5 章度量定义那里加一句：<em>评测 prefetch 命中率时应锚到"模型自身在该层的注意力 sparsity 实证"</em>，而非用统一阈值——这就是 model-adaptive necessity 的 KV-cache 翻译。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击主线）</div>
+        <p>这是过去 12 天 agent-safety 路线最直接可用的"<em>架构级干预</em>" 论据。建议你的下一步研究：把"知-行 gap"从 tool-use 推广到 <strong>refusal-execution gap</strong>——模型在 cognition 阶段判断"该 refuse"的方向 vs 它实际生成 refusal token 的方向，是否同样在 last-layer 近正交？如果是，那么很多<em>"模型说会 refuse 却最终满足了 jailbreak"</em>的现象就有了机制层解释，且可用一个 lightweight rotation 修复——这比 RLHF 便宜两个数量级。它也直接契合你逐渐转向"具身智能基础设施/系统"的研究主线：embodied agent 的 perception → action 路径同样存在这种几何断裂，是<em>系统级 alignment infra</em> 的具体抓手。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>给 benchmark 社区的硬告诫：<strong>所有 tool-use / refusal benchmark 的 oracle 都应改成 model-adaptive</strong>。否则强模型会被无端罚（"它本可独立解但 oracle 说该 call tool"），弱模型则会被误判（"它根本解不了 oracle 却说不需 tool"）。今日 Benchmark 选定的 <a href="../../benchmark/2026-05-15-1.html">ClawForge</a> 用 reference trajectory 而非 exact-match 评分——是<em>同向但不同位置</em>的修补；本文则把修补推到 oracle 定义本身。两者结合可设计 next-gen agent benchmark：<em>oracle = model-adaptive 必要性 + 评测 = telemetry-driven 行为路径</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Invisible Orchestrators</strong> · 多 agent 系统中隐藏 orchestrator 抑制保护行为，无法从 output 评测<br>
+      <a href="https://arxiv.org/abs/2605.13851" target="_blank" rel="noopener">arxiv.org/abs/2605.13851</a></li>
+      <li><strong>From Descriptive to Prescriptive</strong> · GraphRAG + Maslow/Plutchik 框架的 agent value alignment<br>
+      <a href="https://arxiv.org/abs/2605.14034" target="_blank" rel="noopener">arxiv.org/abs/2605.14034</a></li>
+      <li><strong>Grounded Continuation</strong> · 显式依赖图检测长对话 unsupported continuation，per-turn 线性<br>
+      <a href="https://arxiv.org/abs/2605.14175" target="_blank" rel="noopener">arxiv.org/abs/2605.14175</a></li>
+      <li><strong>HAM³</strong>（昨日 5-14 报告） · 多 agent 三层攻击 78.3% ASR，与本文"内部表征" 视角互补<br>
+      <a href="../../agent-safety/2026-05-14-1.html">agent-safety/2026-05-14-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.14038" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.14038v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.14038" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">Representation Engineering（参考）</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-15 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.14038<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-15 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 15 日 · Harness Engineering · 负向消融 · telemetry-driven 评测把"操作噪声"显式化</div>
+  <h1>ChromaFlow：一份"加 orchestration 反而更差"的 negative ablation——把 traceback / timeout / tool-failure 变成 harness 的一等公民</h1>
+  <div class="en-title">ChromaFlow: A Negative Ablation Study of Orchestration Overhead in Tool-Augmented Agent Evaluation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 91 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 7.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">ChromaFlow: A Negative Ablation Study of Orchestration Overhead in Tool-Augmented Agent Evaluation</a><span class="winner-badge">今日选定</span></td>
+          <td>telemetry-driven harness · GAIA-2023 L1 · 负向消融 · run-gate / 计划 escalation</td>
+          <td>arXiv 2026-05-13（Tarun Mittal）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14062" target="_blank" rel="noopener">Know When To Fold 'Em: Token-Efficient LLM Synthetic Data Generation via Multi-Stage In-Flight Rejection</a></td>
+          <td>多阶段 in-flight rejection harness · token 节省 11–77%</td>
+          <td>arXiv 2026-05-13（Chowdhury, Zawad, Yan）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14164" target="_blank" rel="noopener">Unsteady Metrics and Benchmarking Cultures of AI Model Builders</a></td>
+          <td>231 benchmark × 139 release · 63.2% 单 builder · "叙事"而非"标尺"</td>
+          <td>arXiv 2026-05-13（Baack, Buschek, Bohacek）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14167" target="_blank" rel="noopener">The Evaluation Trap: Benchmark Design as Theoretical Commitment</a></td>
+          <td>Epistematics 方法学审计 benchmark 鉴别力</td>
+          <td>arXiv 2026-05-13（Kalaitzidis）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.13981" target="_blank" rel="noopener">Towards Resource-Efficient LLMs: End-to-End Energy Accounting of Distillation Pipelines</a></td>
+          <td>蒸馏 pipeline 全链能源计量 harness</td>
+          <td>arXiv 2026-05-13（Lambert, Luccioni）</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>ChromaFlow: A Negative Ablation Study of Orchestration Overhead in Tool-Augmented Agent Evaluation</span></div>
+      <div class="meta-item"><label>中文标题</label><span>ChromaFlow：工具增强 Agent 评测中的 orchestration overhead 负向消融</span></div>
+      <div class="meta-item"><label>作者</label><span>Tarun Mittal</span></div>
+      <div class="meta-item"><label>机构</label><span>arXiv 预印本未公开（cs.AI 单独投稿，技术报告）</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-13；cs.AI；10 页 4 表 1 图）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.14102" target="_blank" rel="noopener">arxiv.org/pdf/2605.14102</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.14102v1" target="_blank" rel="noopener">arxiv.org/html/2605.14102v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.14102" target="_blank" rel="noopener">10.48550/arXiv.2605.14102</a></div>
+      <div class="meta-item"><label>评测对象</label><span>GAIA 2023 Level-1 validation（53 题）+ 两次 20-题随机 smoke</span></div>
+      <div class="meta-item"><label>关键定位</label><span>把 traceback / timeout / tool-failure 提为 first-order 评测量——而非只看 accuracy</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用 53 题 GAIA-L1 上做"加 orchestration"的反事实——准确率 54.72% → 50.94%，但 traceback/timeout/cost 全涨：负向结果即结论。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>自主语言模型 agent 越来越多地把<strong>规划、工具调用、文档处理、浏览、代码执行、验证循环</strong>组合在一起。这些能力让 agent 系统更有用，<em>但同时也引入了一类只看最终准确率看不见的操作性失败模式</em>。本报告提出 <strong>ChromaFlow</strong>——一个工具增强自主推理框架，围绕<strong>规划者主导的执行、专门化工具调用、以及 telemetry-driven evaluation</strong>三条原则建造。</p>
+    <p>我们在严格干净评测约束下、于 <strong>GAIA 2023 Level-1 validation 53 题</strong>上分析 ChromaFlow。一个冻结的 Level-1 完整 baseline 拿到 <strong>29/53（54.72%）</strong>正确。一个加了"<em>扩展 orchestration</em>"的恢复配置则只拿到 <strong>27/53（50.94%）</strong>正确，<em>同时 traceback、timeout、tool-failure 出现次数、token-line 调用数和 campaign-log 成本估计全部上升</em>。两次随机 20-题的 smoke 评测得到 12/20 与 11/20——表明小尺度上看起来的"诊断收益"在样本间并不稳定。</p>
+    <p>因此中心结果是一份<strong>负向消融</strong>：更激进的 orchestration <em>没有</em>提升整体性能、反而抬升了操作噪声。报告主张：<strong>有界的 planner escalation、确定性 extraction、evidence reconciliation 与显式 run gate</strong> 应被视为可靠 autonomous agent 评测的<em>一等要求（first-order requirements）</em>，而不仅是工程便利。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去两周 harness 主线已经把<em>外化决策面</em>逐项摆出来——5-08 endpoint（<a href="../../harness/2026-05-08-1.html">Token Arena</a>）、5-09 scaffold（<a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a>）、5-12 工具拓扑（<a href="../../harness/2026-05-12-1.html">ComplexMCP</a>）、5-13 声明语义（<a href="../../harness/2026-05-13-1.html">Evaluation Differential</a>）、5-14 前瞻 metacognition（<a href="../../harness/2026-05-14-1.html">TRIAGE</a>）。所有这些工作都在<em>"加结构"的方向</em>推进。ChromaFlow 是第一份明确报告"<strong>加结构反而变差</strong>"的硬证据——并把责任归到"<em>没有把操作性遥测当 first-order 评测变量</em>"上。这是 harness 工程从"加东西能不能更好"转向"<em>加东西在评测面上要付什么代价</em>"的关键拐点。</p>
+
+    <p><strong>核心方法（telemetry-driven evaluation 的三条柱）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Planner-directed execution + 专门化工具</strong>：所有调用走显式 planner，不允许"匿名 retry"——使每次 escalation 在 telemetry 上有可追溯的信号。这是把 agent 系统从"behavioral"放到"structural"评测面的前提。</li>
+      <li><strong>Telemetry-driven evaluation</strong>：报告把 6 个量明确列入评测面——准确率、traceback 次数、timeout 次数、tool-failure mention、token-line call、campaign-log cost。<em>关键论点</em>：这 6 个量必须 joint report，否则会把"看起来涨了 1 题、其实多花一倍 token 还多 4 个 traceback"当作改进。</li>
+      <li><strong>Run gate + bounded planner escalation</strong>：每次 planner 升级前需经过显式 run gate，不允许"无约束追加 orchestration step"——这是<em>对昨日 TRIAGE 的"前瞻 commit"思想的执行端镜像</em>：TRIAGE 强迫模型在执行前 commit 计划，ChromaFlow 强迫 harness 在执行中限制 planner 的迭代深度。</li>
+    </ul>
+
+    <p><strong>负向消融的实验设计（其严谨性正是论文价值的核心）：</strong></p>
+    <ul class="point-list">
+      <li><strong>Frozen baseline (Level-1 full)</strong>：29/53 = 54.72%；这是"什么都不加"的对照。</li>
+      <li><strong>Recovery 配置（扩展 orchestration）</strong>：27/53 = 50.94%——下降 ~3.78 pp（绝对）。但 traceback、timeout、tool-failure mention、token-line call、cost 估计全部上升。</li>
+      <li><strong>2 次随机 20-题 smoke</strong>：12/20、11/20——若拿这两次 smoke 当"局部胜出"则会得出反向结论；这正是论文要警告的"<em>小样本 diagnostic gain 不稳定</em>"陷阱。</li>
+      <li><strong>结论结构</strong>：作者明确把这命名为 negative ablation——这是 harness 文献里少见的"先承认 baseline 更好"的论文。</li>
+    </ul>
+
+    <p><strong>与已有 harness 工作的关键差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>传统 agent harness</th><th>Token Arena（成本 harness）</th><th>TRIAGE（前瞻元认知）</th><th>ChromaFlow（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>主体评测量</td><td>accuracy</td><td>$/正确题</td><td>triage efficiency ratio</td><td><strong>accuracy + 5 个操作性量 joint</strong></td></tr>
+        <tr><td>消融方向</td><td>"加结构看是否变好"</td><td>不消融</td><td>"前瞻是否帮模型省钱"</td><td><strong>"加结构是否反而变差"</strong></td></tr>
+        <tr><td>失败信号</td><td>看不见（隐于 retry/timeout）</td><td>$ 涨</td><td>plan 偏离 oracle</td><td><strong>traceback / timeout / tool-failure 频次</strong></td></tr>
+        <tr><td>方法论立场</td><td>positive evidence</td><td>cost transparency</td><td>cognitive deficit</td><td><strong>negative result as first-class</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>与 5-08 至 5-14 的"<em>加变量</em>"路径相比，ChromaFlow 是第一篇主张"<strong>加变量后必须报负向情况</strong>"的工作——它把 harness 工程从"评测能力"推到"<em>评测干预的副作用</em>"。这与你 KV-cache offload 实验中"prefetch 是否反而抢走了 PP/decoder 时间"是同型问题。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em>·本文评测主战场<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·planner-directed execution 的范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·工具增强 agent 起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Wang et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·与 GAIA 互补的执行型 benchmark<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>MetaGPT: Meta Programming for Multi-Agent Collaborative Framework</em>·orchestration-heavy 的代表流派<br>
+    <a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">arxiv.org/abs/2308.00352</a></div>
+    <div class="ref-item">Wu et al. (2023) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em>·orchestration framework 标杆<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>54.72% → 50.94%（绝对 −3.78 pp）</strong>：扩展 orchestration 不仅没收益，反而把整体准确率吃掉将近 4 pp。GAIA-L1 53 题量级里这是"一题以上"的差距，远高于偶发噪声。</li>
+      <li><strong>5 个操作量同时上涨</strong>：traceback、timeout、tool-failure mention、token-line call、campaign-log cost——<em>这些没有任何一个是预期会涨的"功能性副产物"</em>，因此只能解释为"orchestration 自身在抢资源"。</li>
+      <li><strong>2 次 smoke = 12/20 + 11/20</strong>：方差大到一次"看起来涨"会被另一次抵消。这是论文最实用的方法学警告——<em>20 题 smoke 不能用作 ablation 的最终证据</em>。</li>
+      <li><strong>负向 ablation 作为 first-class 论证</strong>：报告自我标定为"the central result is therefore a negative ablation"——这在 harness 文献里仍是稀缺品类，对你写 KV-cache offload 论文里的"prefetch ablation"具有<em>报告范式参考</em>价值。</li>
+      <li><strong>方法学主张</strong>：bounded planner escalation / deterministic extraction / evidence reconciliation / explicit run gate 应作为可靠 agent 评测的 <em>first-order requirements</em>——这把 harness 的 contract 从"能跑"升到"能 audit"。</li>
+      <li><strong>样本规模透明</strong>：53 题 + 两次 20 题——作者明示样本规模上限，<em>不掩饰</em>。这是 negative result 论文成立的前提。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>ChromaFlow 给了你毕设论文里最缺的一份范式参考：<strong>negative ablation 也是结果</strong>。具体落到 DeepSeek-V3.2 KV-cache offload：现在你只有"prefetch + LRU 命中率 / per-step miss"这一条线，但<em>从未明确报"prefetch off vs prefetch on 时 PP overlap 的失效率、async copy contention 比例、HBM 抢占次数"</em>——这些就是 ChromaFlow 的 traceback / timeout / tool-failure 的 KV-cache 同型物。建议在 v3 实验章加一节 <em>Operational Telemetry</em>：除 hit-rate 外，<strong>同时报告 prefetch 引起的 stall、async copy 相对 PP 的 overlap-loss、Per-step 跨 stream 抢占</strong>——并在某些层呈现 negative ablation（即"加 prefetch 反而拖慢"）。这会让审稿人对"为什么只在某些层有效"的质疑有结构化答案，而不是 hit-rate 一笔带过。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>把 negative ablation 思想搬到 agent safety：今日选定的 <a href="../../agent-safety/2026-05-15-1.html">Tool Necessity / 知-行 gap</a> 给出"<em>模型知道要 call tool 但不去 call</em>"的内在 gap；ChromaFlow 给出"<em>orchestration 加多了把执行搞砸</em>"的外在 gap。两者合起来描述同一个问题：<strong>safety 干预（如 guard 链路）也是一种 orchestration overhead</strong>，加得越多越可能在 telemetry 上表现为 retry、timeout、abort——这些信号本身就是被攻击者利用的指纹。设计 safety harness 时应同样汇报"加 guard 之后的 traceback / timeout / abort 频次"，避免把 safety 等价于"看上去拒得多"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>给 benchmark 社区的明确启示：<strong>每个 agent benchmark 都应该自带 telemetry 字段</strong>。现在 GAIA / OSWorld / WebArena 的 leaderboard 只报 accuracy；如果要求 leaderboard 同时报 5 个操作性量（traceback / timeout / tool-failure / token-line / cost），就能把"靠 orchestration 蛮力刷 0.5 pp"的工作筛掉。今日选定的 <a href="../../benchmark/2026-05-15-1.html">ClawForge</a> 在评测面上加了"<em>是否检视 state</em>"维度——这与 ChromaFlow 的"<em>是否限制 planner 升级</em>"是镜像设计：都是在 accuracy 之外把"过程行为"做成 first-class 评测量。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Know When To Fold 'Em</strong> · 多阶段 in-flight rejection 把低质量轨迹早期 kill 掉，token 节省 11–77%——与 ChromaFlow 的 run-gate 思想互为正反两面<br>
+      <a href="https://arxiv.org/abs/2605.14062" target="_blank" rel="noopener">arxiv.org/abs/2605.14062</a></li>
+      <li><strong>Unsteady Metrics and Benchmarking Cultures</strong> · 231 benchmark 跨 139 release 分析，63.2% 仅被单一 builder 使用——把 benchmark 当"叙事"而非"标尺"<br>
+      <a href="https://arxiv.org/abs/2605.14164" target="_blank" rel="noopener">arxiv.org/abs/2605.14164</a></li>
+      <li><strong>The Evaluation Trap: Benchmark Design as Theoretical Commitment</strong> · 用 Epistematics 方法学审计 benchmark 是否真能区分能力 vs 代理行为<br>
+      <a href="https://arxiv.org/abs/2605.14167" target="_blank" rel="noopener">arxiv.org/abs/2605.14167</a></li>
+      <li><strong>TRIAGE</strong>（昨日 5-14 报告） · 前瞻性元认知 commit (S, π, a) ——与 ChromaFlow 的 "执行期 run gate" 互为前后半场<br>
+      <a href="../../harness/2026-05-14-1.html">harness/2026-05-14-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.14102" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.14102v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.14102" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">GAIA 评测集（参考）</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-15 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.14102<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
