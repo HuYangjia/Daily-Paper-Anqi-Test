@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-18 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #074d3b; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #074d3b; }
+  .link-btn.primary:hover { background: #c8eddc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 18 日 · Agent Skills Safety · AI Control · 集成监控的相关性才是关键变量</div>
+  <h1>Ensemble Monitoring：12 个 GPT-4.1-Mini 监控器证伪"加算力就能更安全"——多样性比规模重要 2.4×，最好集成里 fine-tune 是必选</h1>
+  <div class="en-title">Ensemble Monitoring for AI Control: Diverse Signals Outweigh More Compute</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.4</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 7.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.15377" target="_blank" rel="noopener">Ensemble Monitoring for AI Control: Diverse Signals Outweigh More Compute</a><span class="winner-badge">今日选定</span></td>
+          <td>AI control · 12 monitor 多样性 vs 规模 · 2.4× detection gain</td>
+          <td>arXiv 2026-05-14（Koran, Yun, Tetef, Arnav, Bernabeu-Pérez）</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15215" target="_blank" rel="noopener">SkillSmith: Compiling Agent Skills into Boundary-Guided Runtime Interfaces</a></td>
+          <td>skill 编译 → 最小执行接口 · 减 token 57.44% · 减思考迭代 42.99%</td>
+          <td>arXiv 2026-05-12（Xu, Chen, Pan, Guan, Dong, Li, Pu）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15010" target="_blank" rel="noopener">Verifiable Agentic Infrastructure: Proof-Derived Authorization for Sovereign AI Systems</a></td>
+          <td>分布式信任 · proof-derived 权限 + 共识 · 可审计执行</td>
+          <td>arXiv 2026-05-18（He, Yu）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15217" target="_blank" rel="noopener">Fair outputs, Biased Internals: Causal Potency and Asymmetry of Latent Bias in LLMs</a></td>
+          <td>output-fair / internal-biased · 双层测试·高风险决策审计</td>
+          <td>arXiv 2026-05-18（Tripathy, Buckmann）</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15665" target="_blank" rel="noopener">PRISM: Prompt Reliability via Iterative Simulation and Monitoring</a></td>
+          <td>LLM drift 24h 检测窗 · LLM-as-judge · 35 agents × 3 周生产</td>
+          <td>arXiv 2026-05-15（Chaitanya, Gundakaram）</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Ensemble Monitoring for AI Control: Diverse Signals Outweigh More Compute</span></div>
+      <div class="meta-item"><label>中文标题</label><span>面向 AI Control 的集成监控：多样信号胜过算力堆砌</span></div>
+      <div class="meta-item"><label>作者</label><span>Eugene Koran, Yejun Yun, Samantha Tetef, Benjamin Arnav, Pablo Bernabeu-Pérez</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · AI Control · agent monitoring · safety</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本（2026-05-14 提交；CC BY 4.0）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.15377" target="_blank" rel="noopener">arxiv.org/abs/2605.15377</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.15377" target="_blank" rel="noopener">arxiv.org/pdf/2605.15377</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.15377v1" target="_blank" rel="noopener">arxiv.org/html/2605.15377v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.15377" target="_blank" rel="noopener">10.48550/arXiv.2605.15377</a></div>
+      <div class="meta-item"><label>monitor 池</label><span>12 个 GPT-4.1-Mini · 6 prompted + 6 fine-tuned · 单/同/异集成</span></div>
+      <div class="meta-item"><label>评测面</label><span>coding tasks · 通过标准测试但 fail adversarial input · OOD 泛化</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      多样化 monitor 集成把 misaligned action 检测增益拉高 2.4×（相对同质集成）；fine-tune 出现在每一个最佳集成里——驱动力是 diversity，不是 scale。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当 AI 系统越来越被部署到自主 agentic 设置中、并以规模化运转时，<strong>确保它们的动作既安全又对齐用户意图</strong>变得至关重要。监控 agent 动作是关键安全机制，但<em>构造可靠的 monitor 一直很难</em>，而系统规模也使人类监督变得不切实际。我们证明：<strong>把来自多样化 monitor 的信号集成起来，能提高 misaligned action 的检测能力</strong>。</p>
+    <p>我们用 prompting 与 fine-tuning 两种策略构造了 <strong>12 个 GPT-4.1-Mini monitor</strong>，并在<em>通过标准测试但在对抗输入上失败的 coding 任务</em>上评测它们。结论是：<strong>多样化集成同时优于单 monitor 和同质集成</strong>——我们最佳的 3-monitor 集成相对 3 个相同 monitor 的同质集成，<em>检测性能增益高出 2.4 倍</em>，并且这个集成在独立数据集上同样表现强劲。</p>
+    <p>我们的论点是：<strong>驱动收益的是多样性，不是 scale</strong>。最好的集成既要有强的个体表现、又要在 monitor 之间有低相关。此外，<em>每一个 top 集成里都包含 fine-tuned monitor</em>，并且这一优势在 OOD 攻击类型上仍然保持——表明 fine-tuning 解锁了仅靠 prompting 触不到的检测能力。这些结果支持：<strong>集成监控是合理推理成本下获取安全增益的实用 AI control 策略</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 agent-safety 主线一直在讨论<em>"在哪里架监督"</em>——5-08 SafeHarbor 的分层记忆 guardrail（<a href="../../agent-safety/2026-05-08-1.html">5-08</a>）、5-12 PRISM 的 multi-agent 凭证传播（<a href="../../agent-safety/2026-05-12-1.html">5-12</a>）、5-13 SKILL.md 注册表攻击（<a href="../../agent-safety/2026-05-13-1.html">5-13</a>）、5-14 HAM³ 的 multimodal multi-agent 三层攻击（<a href="../../agent-safety/2026-05-14-1.html">5-14</a>）、5-15 Tool Necessity 知-行 gap（<a href="../../agent-safety/2026-05-15-1.html">5-15</a>）。<em>这些工作几乎都默认 monitor 是单点</em>。本文是第一份认真测量"<strong>monitor 多样性</strong>"的论文——它给出的结论与"加更大模型 = 更安全"的常识相反：<em>同质堆叠 12 个相同 monitor 几乎没用，而多样化的 3 个 monitor 能拉出 2.4× 的检测增益</em>。这个发现对 AI control 文献是一个干净的相变点：把 monitor 设计的核心变量从"<em>每个 monitor 多强</em>"改写成"<em>monitor 之间相关性多低</em>"。</p>
+
+    <p><strong>核心方法：</strong></p>
+    <ul class="point-list">
+      <li><strong>monitor 池</strong>：12 个 GPT-4.1-Mini monitor——其中 6 个用 prompting 策略（不同 instruction、不同视角），6 个用 fine-tuning 策略（不同数据切片、不同标签 schema）。<em>关键设计</em>：以"<em>同模型不同训练/提示</em>"控住模型规模这一变量，干净地隔离 diversity 的因果作用。</li>
+      <li><strong>评测设置</strong>：coding 任务 candidate solution——满足标准测试但在 adversarial inputs 上失败。这是经典的"covert failure"场景：<em>常规 unit test 测不出来，需要 monitor 主动审视 latent risk</em>。</li>
+      <li><strong>集成范式</strong>：三档比较——单 monitor / 同质 N-monitor 集成 / 异质（diverse）N-monitor 集成。<em>结论</em>：3 个 diverse monitor > 12 个 homogeneous monitor。</li>
+      <li><strong>OOD 攻击泛化</strong>：在 independent 数据集 + 不同 attack type 下重测——发现 <strong>fine-tuned monitor 在 OOD 上保持优势</strong>，prompting-only 的 monitor 退化更快。</li>
+      <li><strong>低相关性是关键</strong>：作者明确报告"<em>最佳集成是 strong individual performance + low correlation between monitors 的组合</em>"——这把 monitor 设计变成一个<em>可优化的双目标问题</em>。</li>
+    </ul>
+
+    <p><strong>与现有 AI Control / monitoring 工作的差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>vanilla monitor</th><th>scale-up monitor（GPT-4o etc.）</th><th>多 monitor 投票（majority）</th><th>本文（diverse ensemble）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心假设</td><td>"找一个最强的"</td><td>"模型够大就安全"</td><td>"多数派比单点更鲁棒"</td><td><strong>"信号多样性 > 单点强度"</strong></td></tr>
+        <tr><td>变量控制</td><td>—</td><td>固定 prompt 加大模型</td><td>同 strategy 多个</td><td><strong>固定模型尺寸 × 不同 strategy</strong></td></tr>
+        <tr><td>OOD 行为</td><td>退化严重</td><td>退化但慢</td><td>跟随 base monitor 退化</td><td><strong>fine-tune 子项在 OOD 上仍稳</strong></td></tr>
+        <tr><td>核心可优化变量</td><td>个体 acc</td><td>参数规模</td><td>多数票阈值</td><td><strong>monitor 间相关系数</strong></td></tr>
+        <tr><td>实验论点</td><td>"够用"</td><td>"more is better"</td><td>"voting helps"</td><td><strong>"diversity drives gains, not scale"</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>这篇论文与 5-12 的 PRISM（多 agent 凭证传播）、5-14 的 HAM³（多 agent 三层攻击）形成<em>对称呼应</em>：前两者关心"多 agent 会扩大攻击面"，本文关心"<strong>多 monitor 能不能扩大防御面</strong>"——并给出量化答案：能，但前提是 monitor 之间不要重复信号。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Greenblatt et al. (2024) — <em>AI Control: Improving Safety Despite Intentional Subversion</em>·AI Control 概念奠基<br>
+    <a href="https://arxiv.org/abs/2312.06942" target="_blank" rel="noopener">arxiv.org/abs/2312.06942</a></div>
+    <div class="ref-item">Hubinger et al. (2024) — <em>Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training</em>·covert misaligned action 的最强实证<br>
+    <a href="https://arxiv.org/abs/2401.05566" target="_blank" rel="noopener">arxiv.org/abs/2401.05566</a></div>
+    <div class="ref-item">Pan et al. (2024) — <em>Specifying Targets to Estimating Misaligned Reward Hacking</em>·monitor 评测方法论<br>
+    <a href="https://arxiv.org/abs/2403.06870" target="_blank" rel="noopener">arxiv.org/abs/2403.06870</a></div>
+    <div class="ref-item">Lakkaraju &amp; Wattenberg (2020) — <em>"Why Should I Trust You?": Diversity in Machine Learning Ensembles</em>·diversity-vs-accuracy 经典讨论<br>
+    <a href="https://arxiv.org/abs/2007.04525" target="_blank" rel="noopener">arxiv.org/abs/2007.04525</a></div>
+    <div class="ref-item">Bowman et al. (2022) — <em>Measuring Progress on Scalable Oversight for Large Language Models</em>·scalable oversight 框架<br>
+    <a href="https://arxiv.org/abs/2211.03540" target="_blank" rel="noopener">arxiv.org/abs/2211.03540</a></div>
+    <div class="ref-item">Christiano et al. (2018) — <em>Supervising strong learners by amplifying weak experts</em>·iterated amplification 思想<br>
+    <a href="https://arxiv.org/abs/1810.08575" target="_blank" rel="noopener">arxiv.org/abs/1810.08575</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>2.4× 检测性能增益</strong>：3-monitor diverse ensemble vs 3-monitor homogeneous ensemble——在 misaligned action 检测上拉出 2.4× 差距。这一比值是论文的"招牌数字"。</li>
+      <li><strong>"Diversity drives gains, not scale"</strong>：作者明确反驳"加大 monitor 模型 = 更安全"——这是与现行<em>scale-up monitor</em>路线的直接对立宣言。</li>
+      <li><strong>每个 top ensemble 都含 fine-tune monitor</strong>：不只 fine-tune 平均更强，<em>所有最佳集成里都至少有一个 fine-tune 子项</em>——意味着 fine-tune 不是 marginal helper 而是<strong>必选成员</strong>。</li>
+      <li><strong>OOD 攻击稳定性</strong>：fine-tuned monitor 在 out-of-distribution 攻击类型上仍保持优势——证明它学到的不只是 surface pattern。这对"prompting-only safety"路线是直接的反例。</li>
+      <li><strong>低相关性 = 可工程化目标</strong>：作者把"<em>monitor 间互信息 / 错误相关系数</em>"上升为 ensemble 构造的<strong>一等优化变量</strong>——这给后续 AI control 研究提供了一个可计算的设计 knob。</li>
+      <li><strong>实用 AI control 立场</strong>：论文最终主张"reasonable inference cost 下的 ensemble"——明确把<em>成本</em>当 first-class constraint，对生产部署更友好。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>把"diversity drives gains"搬到 harness 评测：<strong>不要只让一个 LLM judge 给分</strong>。如果你 KV-cache offload 实验里要做"correctness preservation"评测，可以套用本文方法构造 3 个 diverse judge——一个 prompt-based、一个 fine-tuned、一个 rule-based（如直接对照 dense baseline 的 attention pattern），三者集成。<em>更深一层</em>：本文揭示的"低相关比强个体重要"也适用于 harness 内的 telemetry 信号选择——同今日选定的 <a href="../../harness/2026-05-18-1.html">CAX-Agent</a> 的 recovery ladder 联用，可以把"recovery 强度梯度 × monitor 多样性"做成一个二维 ablation 网格。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击主线）</div>
+        <p>这是过去一周 agent-safety 主线最有结构性的更新。它给现有的 SafeHarbor / PRISM / SKILL.md / HAM³ 提出一个共同问题：<strong>它们是否实际上在用同一类信号？</strong>——若是，多 guard 的"防御深度"是假象。建议下一步审你已有的报告：5-08 SafeHarbor（记忆 + 熵）、5-12 PRISM（凭证传播 16 维）、5-13 SKILL.md（discovery/selection/governance 三阶段），<em>用本文的"monitor 间相关性"方法量化这些 guard 是否互补</em>。这能把"我们叠了 N 层防御"的 vibe-claim 换成一个客观可计算的 diversity score。<strong>更直接的工程意义</strong>：在 agent 部署里，把 monitor pool 从"一个最强的 GPT-4o judge"换成"3 个不同 prompt × fine-tune 的 mini judge"——延迟更低、检测增益更高、OOD 更稳。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启示：<strong>报告 leaderboard 时应同时报 monitor pool 的 diversity</strong>——否则 SafetyBench / HarmBench 等的"通过率"数字会被 single-judge bias 污染。今日选定的 <a href="../../benchmark/2026-05-18-1.html">SaaS-Bench</a> 报告 strongest model &lt;4% e2e completion——这个数字非常可能受到 judge 单一性影响。建议未来 safety benchmark 强制要求 ≥3 个 diverse judge，并报告它们之间的 Cohen's κ，避免 evaluation 自身成为弱点。可与 5-14 BenchJack 形成组合：BenchJack 红队 benchmark 题目，本文红队 benchmark 评分协议。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SkillSmith · 编译 skill 成最小执行接口</strong>·boundary-first 编译时优化，与本文 runtime monitoring 互补<br>
+      <a href="https://arxiv.org/abs/2605.15215" target="_blank" rel="noopener">arxiv.org/abs/2605.15215</a></li>
+      <li><strong>Verifiable Agentic Infrastructure</strong>·proof-derived 权限 + 共识——把"信任"从 monitor 升到 infrastructure 层<br>
+      <a href="https://arxiv.org/abs/2605.15010" target="_blank" rel="noopener">arxiv.org/abs/2605.15010</a></li>
+      <li><strong>Fair outputs, Biased Internals</strong>·output-level 公平掩盖 internal bias——双层测试与 ensemble 的"多样信号"思路同源<br>
+      <a href="https://arxiv.org/abs/2605.15217" target="_blank" rel="noopener">arxiv.org/abs/2605.15217</a></li>
+      <li><strong>HAM³ · CVPR 2026</strong>（5-14 报告）·三层 multimodal multi-agent 攻击——defenders 需要多层 diverse monitor 才能匹配<br>
+      <a href="../../agent-safety/2026-05-14-1.html">agent-safety/2026-05-14-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.15377" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.15377" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.15377v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.15377" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2312.06942" target="_blank" rel="noopener">AI Control 概念论文（Greenblatt 2024）</a>
+      <a class="link-btn" href="https://www.alignmentforum.org/" target="_blank" rel="noopener">Alignment Forum（社区讨论）</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-18 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.15377<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.15377" target="_blank" rel="noopener">arxiv.org/abs/2605.15377</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

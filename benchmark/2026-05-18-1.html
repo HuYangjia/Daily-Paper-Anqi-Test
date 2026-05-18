@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-18 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f6dfb8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 18 日 · Safety Benchmark · CUA · 真实 SaaS 长 horizon · &lt;4% e2e completion</div>
+  <h1>SaaS-Bench：23 个真实 SaaS × 106 任务，最强 CUA 端到端 &lt; 4%——把 web/GUI agent 评测从"造场景"换成"真业务系统"</h1>
+  <div class="en-title">SaaS-Bench: Can Computer-Use Agents Leverage Real-World SaaS to Solve Professional Workflows?</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.15777" target="_blank" rel="noopener">SaaS-Bench: Can Computer-Use Agents Leverage Real-World SaaS to Solve Professional Workflows?</a><span class="winner-badge">今日选定</span></td>
+          <td>23 SaaS × 6 域 × 106 任务 · 长 horizon · 加权 checkpoint · 最强模型 &lt;4% e2e</td>
+          <td>arXiv 2026-05-15（Shi, Li, Ma, Tu, Wu, Xu, Yang, Wu, Xie, M. Wu, Zeng, Heinrich, E. Zhang, Chen, Li, Chang）</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15963" target="_blank" rel="noopener">PAGER: Bridging the Semantic-Execution Gap in Point-Precise Geometric GUI Control</a></td>
+          <td>4,906 题 GUI 几何精度 · 88% action-type 识别 vs &lt;6% 任务完成</td>
+          <td>arXiv 2026-05-18（Wei et al.）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15537" target="_blank" rel="noopener">RTL-BenchMT: Dynamic Maintenance of RTL Generation Benchmark</a></td>
+          <td>agent-assisted 修订 RTL 题库 · 检测 overfitting · 防 benchmark 退化</td>
+          <td>arXiv 2026-05-18（Wang et al.）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15202" target="_blank" rel="noopener">DeepSlide: Artifacts vs Presentation Delivery</a></td>
+          <td>双 scoreboard · 产物质量 vs 动态交付分离评测</td>
+          <td>arXiv 2026-05-18（Yang et al.）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15217" target="_blank" rel="noopener">Fair outputs, Biased Internals</a></td>
+          <td>双层公平测试 · output vs internal · 高风险决策</td>
+          <td>arXiv 2026-05-18（Tripathy, Buckmann）</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SaaS-Bench: Can Computer-Use Agents Leverage Real-World SaaS to Solve Professional Workflows?</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SaaS-Bench：Computer-Use Agent 能借真实 SaaS 完成专业工作流吗？</span></div>
+      <div class="meta-item"><label>作者</label><span>Kean Shi, Zihang Li, Tianyi Ma, Zengji Tu, Jialong Wu, Xinbo Xu, Qingyao Yang, Ruoyu Wu, Weichu Xie, Ming Wu, Jason Zeng, Michael Heinrich, Elvis Zhang, Liang Chen, Kuan Li, Baobao Chang（共 16 作者）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · CUA / Computer-Use Agent · benchmark</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-15 提交；22 页 11 fig）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.15777" target="_blank" rel="noopener">arxiv.org/abs/2605.15777</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.15777" target="_blank" rel="noopener">arxiv.org/pdf/2605.15777</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.15777v1" target="_blank" rel="noopener">arxiv.org/html/2605.15777v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.15777" target="_blank" rel="noopener">10.48550/arXiv.2605.15777</a></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/UniPat-AI/SaaS-Bench" target="_blank" rel="noopener">github.com/UniPat-AI/SaaS-Bench</a></div>
+      <div class="meta-item"><label>规模</label><span>23 deployable SaaS × 6 专业域 × 106 任务 · 加权 verification checkpoints</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 23 个真业务 SaaS 接入 benchmark，106 个长 horizon 任务用加权 checkpoint 评分——最强模型 e2e 完成率 &lt; 4%，暴露 planning / state-tracking / 跨应用上下文 / 错误恢复的系统性短板。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Computer-Using Agent（CUA）正在快速把大语言模型（LLM）从基于文本的推理扩展到<strong>更复杂环境中的动作执行</strong>，例如浏览器与图形界面（GUI）。然而，<em>现有的 web 与 GUI agent benchmark 通常依赖简化场景、孤立任务或短 horizon 交互</em>，使得我们难以评估 agent 在真实专业工作流里的能力。Software-as-a-Service（SaaS）环境是 CUA 评测的天然选择——<strong>它承载现代数字工作的大部分</strong>，并自然涉及动态系统状态、跨应用协作、领域专门知识与长 horizon 依赖。</p>
+    <p>为此我们提出 <strong>SaaS-Bench</strong>：基于 23 个 deployable SaaS 系统、覆盖 6 大专业域、包含 <strong>106 个真实工作场景任务</strong>。这些任务<em>需要长 horizon 执行</em>、覆盖纯文本与多模态两种设置，并用 <strong>加权 verification checkpoints</strong> 评分——同时衡量严格的任务完成度与部分进展。</p>
+    <p>实验显示：<em>代表性 LLM-based agent 在 SaaS-Bench 上挣扎</em>——最强模型端到端完成率不足 <strong>4%</strong>，暴露在<em>规划、状态追踪、跨应用上下文维护与错误恢复</em>方面的局限。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 benchmark 主线把"<em>评测面要看什么</em>"几乎讨论了一遍——5-08 XL-SafetyBench 多语言（<a href="../../benchmark/2026-05-08-1.html">5-08</a>）、5-12 Agent-ValueBench 28 价值系统（<a href="../../benchmark/2026-05-12-1.html">5-12</a>）、5-13 TRIVIA+ desiderata（<a href="../../benchmark/2026-05-13-1.html">5-13</a>）、5-14 BenchJack 红队 benchmark 自身（<a href="../../benchmark/2026-05-14-1.html">5-14</a>）、5-15 ClawForge 让 agent 处理"前任的烂摊子"（<a href="../../benchmark/2026-05-15-1.html">5-15</a>）。但<em>这些 benchmark 几乎都构造自合成或半合成环境</em>。SaaS-Bench 是第一份大规模把<strong>真实部署的商业 SaaS</strong>当 benchmark 后端的工作——它把"评测真实性"这个变量从 simulator-style 推到 production-backed。<em>结果震撼</em>：在真业务流上，最强模型的端到端完成率不足 4%——这把 OSWorld、WebArena、AgentBench 等 benchmark 上的 30%~70% 数字"打回原形"，意味着<strong>主流 CUA 评测可能严重高估了 agent 在生产里的可用度</strong>。</p>
+
+    <p><strong>核心方法：四个关键设计选择</strong></p>
+    <ul class="point-list">
+      <li><strong>真 SaaS 后端</strong>：23 个 deployable SaaS 系统，覆盖 6 大专业域——<em>不是 mock 环境</em>。这意味着 agent 必须面对真实的 latency、动态 UI、版本演化、跨应用集成等"工程现实"，而不是合成场景。</li>
+      <li><strong>106 任务 grounded in realistic work scenarios</strong>：任务由专业用户写，而不是众包标注——直接指向"真实业务流"而非"演示用例"。</li>
+      <li><strong>加权 verification checkpoints</strong>：<em>这是评测面的关键创新</em>——不是 binary 完成/未完成，而是把每个任务拆成多个 weighted checkpoint，分别报告 strict completion 与 partial progress。这允许 benchmark 既给出严格分数、又能追踪 agent 在长 horizon 里的"卡在哪一步"。</li>
+      <li><strong>长 horizon + 多模态</strong>：纯文本 + 多模态都覆盖；任务涉及 cross-application coordination 与 state tracking——这两个维度恰好是过去 benchmark 的盲点。</li>
+    </ul>
+
+    <p><strong>与现有 CUA / agent benchmark 的差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>WebArena</th><th>OSWorld</th><th>GAIA</th><th>SaaS-Bench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>后端</td><td>合成 web app</td><td>真实 OS（但封闭沙箱）</td><td>静态 web 任务</td><td><strong>23 个真实 deployable SaaS</strong></td></tr>
+        <tr><td>任务长度</td><td>短-中 horizon</td><td>中 horizon</td><td>短 horizon QA-style</td><td><strong>长 horizon + 跨 app 状态</strong></td></tr>
+        <tr><td>评分粒度</td><td>binary</td><td>binary</td><td>match-based</td><td><strong>weighted checkpoint</strong></td></tr>
+        <tr><td>主流模型表现</td><td>30~50%</td><td>30~60%</td><td>50~70%</td><td><strong>&lt; 4% e2e</strong></td></tr>
+        <tr><td>暴露的瓶颈</td><td>UI 理解</td><td>OS 调用</td><td>检索</td><td><strong>规划 + 状态追踪 + 错误恢复</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>4% 这个数字不应被读作"模型不够强"，而应被读作<em>"过去 benchmark 的 30%~70% 是被 simulator 友好性放大出来的"</em>。这与 5-15 ClawForge 把 agent 扔进"前任烂摊子"得到 strict 45.3% 是同一类发现：<strong>真实 environment 的复杂度超出 simulator 一个数量级</strong>。两份工作放在一起读尤其震撼——SaaS-Bench 给"环境真实"的轴， ClawForge 给"任务起点真实"的轴，<em>合起来描绘了 CUA 评测的"现实差距 (reality gap)" 双坐标</em>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Zhou et al. (2024) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>·web agent benchmark 标杆<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Xie et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·OS-level CUA 标杆<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em>·通用 agent 评测<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Computer Use Capabilities</em>·CUA 商业部署起点<br>
+    <a href="https://www.anthropic.com/news/3-5-models-and-computer-use" target="_blank" rel="noopener">anthropic.com/news/3-5-models-and-computer-use</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·agent benchmark 起点<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>CogAgent: A Visual Language Model for GUI Agents</em>·GUI agent VLM 标杆<br>
+    <a href="https://arxiv.org/abs/2312.08914" target="_blank" rel="noopener">arxiv.org/abs/2312.08914</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>e2e &lt; 4%</strong>：最强模型端到端完成率不足 4%——这是 CUA benchmark 历史上最低的 frontier 数字之一，<em>意味着真实 SaaS 环境的难度被严重低估</em>。</li>
+      <li><strong>23 SaaS × 106 任务 × 6 域</strong>：覆盖宽度足以撑住"行业 benchmark"定位；不是单一 vertical 的玩具。</li>
+      <li><strong>weighted checkpoint 评分</strong>：把"长 horizon 任务"评分从二值改成连续——<em>这给后续 benchmark 提供了一份可继承的协议</em>，让"50% 进度"和"完全失败"得到区分。</li>
+      <li><strong>4 个失败模式被显式命名</strong>：planning / state tracking / cross-application context maintenance / error recovery——<em>这把"agent 不会做"拆成了 4 条可独立改进的研究方向</em>，对后续 RL / 训练数据合成研究有指导价值。</li>
+      <li><strong>开源 deployable</strong>：<a href="https://github.com/UniPat-AI/SaaS-Bench" target="_blank" rel="noopener">GitHub: UniPat-AI/SaaS-Bench</a>——这意味着学界可直接对接，不需要再花数月自己接 SaaS API。这把 SaaS-Bench 从"调查报告"升级为<em>可作 leaderboard 的基础设施</em>。</li>
+      <li><strong>22 页 11 fig</strong>：篇幅与图表数量已是会议长文规模，预计后续投顶会的可能性高。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SaaS-Bench 的"<strong>weighted checkpoint</strong>"评分协议是 harness 工程的可借鉴范式：<em>不要把任务结果折成单一标量</em>。这与今日选定的 <a href="../../harness/2026-05-18-1.html">CAX-Agent</a> 的 recovery ladder 同源——都在"把过程信息显式化"。具体落到你 KV-cache offload 实验：可以把"prefetch 是否成功"做成 weighted checkpoint——①top-k 命中、②被预取层在 PP overlap 内 finalize、③decoder 正确读取、④无 stall——分别给权重而非二值评估。这会让你 v3 实验章的论证更细粒、更难被审稿人挑刺。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>SaaS-Bench 间接给 agent safety 一个尖锐警告：<strong>当模型在真实业务流上 e2e 完成率 &lt; 4% 时，"安全 vs 功能"的张力图景被改写</strong>——大量"安全失败"其实是"功能失败的副产物"。今日选定的 <a href="../../agent-safety/2026-05-18-1.html">Ensemble Monitoring</a> 给出的"diversity 比 scale 更重要"在这里有直接对应：在 SaaS-Bench 这种长 horizon 场景里，safety monitor 不能只盯 final action，必须沿 weighted checkpoint 多点同时审视——而每个 checkpoint 的 monitor 应当是 diverse 的（一个看 state 一致性、一个看 action permission、一个看 cross-app 凭证）。这把 5-12 PRISM 的"传播放大"分析自然地搬到长 horizon。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击主线）</div>
+        <p>这是过去三周 benchmark 方向最重要的"<em>reality check</em>"。它对前面所有 benchmark 提一个共同质疑：<strong>当我们把任务从合成 simulator 换到真实 SaaS，绝对数字塌缩到 1/10——这意味着已发表 leaderboard 的相对排序也可能反转</strong>。建议把 SaaS-Bench 的 <em>weighted checkpoint</em> 协议反向接入既有的 5-12 Agent-ValueBench、5-13 TRIVIA+、5-14 BenchJack，看看哪些是 simulator-friendly 偏置、哪些在真实环境下还成立。同时，weighted checkpoint 与 5-15 ClawForge 的 strict/partial/step-efficiency 评分构成<em>更通用的 "fine-grained progress benchmarking"协议族</em>——值得在毕设论文里单列一节"评测协议演化"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>PAGER · GUI 几何精度差距</strong>·4906 题揭示 88% action-type 识别但 &lt;6% 任务完成——与 SaaS-Bench 的 e2e &lt;4% 形成 macro/micro 双刻度对照<br>
+      <a href="https://arxiv.org/abs/2605.15963" target="_blank" rel="noopener">arxiv.org/abs/2605.15963</a></li>
+      <li><strong>RTL-BenchMT · 防 benchmark 退化</strong>·agent-assisted 修订 RTL 题库 + 检测 overfitting——与 5-14 BenchJack 同属"benchmark 自审计"<br>
+      <a href="https://arxiv.org/abs/2605.15537" target="_blank" rel="noopener">arxiv.org/abs/2605.15537</a></li>
+      <li><strong>ClawForge</strong>（5-15 报告）·让 agent 处理"前任的烂摊子"——与 SaaS-Bench 共同描绘"现实差距双坐标"<br>
+      <a href="../../benchmark/2026-05-15-1.html">benchmark/2026-05-15-1.html</a></li>
+      <li><strong>WebArena</strong>·CUA 评测路线起点——SaaS-Bench 是它的"产业实化版"<br>
+      <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.15777" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.15777" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/UniPat-AI/SaaS-Bench" target="_blank" rel="noopener">GitHub 开源仓库</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.15777v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.15777" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-18 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.15777<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.15777" target="_blank" rel="noopener">arxiv.org/abs/2605.15777</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-18 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 18 日 · Harness Engineering · Recovery Ladder · 把"修错"做成 harness 的可控梯度</div>
+  <h1>CAX-Agent：一份纯 Harness 工程论文——把 recovery 拆成 4 阶梯子（rule → model → context → human），三层架构 + 450 跑次定级</h1>
+  <div class="en-title">CAX-Agent: A Lightweight Agent Harness for Reliable APDL Automation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 91 分</span>
+    <span class="score-chip chip-rel">相关度 9.4</span>
+    <span class="score-chip chip-venue">来源质量 7.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 7.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.15218" target="_blank" rel="noopener">CAX-Agent: A Lightweight Agent Harness for Reliable APDL Automation</a><span class="winner-badge">今日选定</span></td>
+          <td>三层架构 + 4 阶 recovery ladder · 50 benchmark × 3 重复 = 450 跑次 · κ=0.84</td>
+          <td>arXiv 2026-05-12（Lin, Hai, He, Wang, Qiang, Yu）</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15581" target="_blank" rel="noopener">STAR: Stage-attributed Triage and Repair for RCA Agents</a></td>
+          <td>四阶段（EP/HS/AS/DR）反事实定位失败 · LangGraph · Fast/Slow Routing</td>
+          <td>arXiv 2026-05-15（Wang, Liao, Wu）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15665" target="_blank" rel="noopener">PRISM: Prompt Reliability via Iterative Simulation and Monitoring</a></td>
+          <td>把 prompt 工程当连续可靠性问题 · drift 24h 检测窗 · 35 agents × 3 周生产</td>
+          <td>arXiv 2026-05-15（Chaitanya, Gundakaram）</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15204" target="_blank" rel="noopener">SDOF: Taming the Alignment Tax in Multi-Agent Orchestration</a></td>
+          <td>FSM-约束执行 · GoalStage 自动机 + SkillRegistry pre/post · 86.5% 完成 · κ=0.94</td>
+          <td>arXiv 2026-04-20（Wang）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.15202" target="_blank" rel="noopener">DeepSlide: From Artifacts to Presentation Delivery</a></td>
+          <td>双 scoreboard 区分"产物质量"vs"动态交付" · multi-agent presentation</td>
+          <td>arXiv 2026-05-18（Yang et al.）</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>CAX-Agent: A Lightweight Agent Harness for Reliable APDL Automation</span></div>
+      <div class="meta-item"><label>中文标题</label><span>CAX-Agent：面向 APDL 自动化的轻量级 Agent Harness</span></div>
+      <div class="meta-item"><label>作者</label><span>Chenying Lin, Yichen Hai, Yi He, Ran Wang, Haiyan Qiang, Liang Yu</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · MAPDL 有限元仿真 · Agent Harness 工程</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本 v1（2026-05-12 提交；IEEE 会议格式 8 页；CC BY 4.0）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.15218" target="_blank" rel="noopener">arxiv.org/abs/2605.15218</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.15218" target="_blank" rel="noopener">arxiv.org/pdf/2605.15218</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.15218v1" target="_blank" rel="noopener">arxiv.org/html/2605.15218v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.15218" target="_blank" rel="noopener">10.48550/arXiv.2605.15218</a></div>
+      <div class="meta-item"><label>评测对象</label><span>50 标准结构 benchmark × 3 次重复 × 3 recovery 策略 = 450 case-runs</span></div>
+      <div class="meta-item"><label>关键定位</label><span>"<em>Agent Harness paradigm</em>"= 在 LLM 与 solver 之间嵌入 domain orchestration middleware</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent 的"修错"显式拆成 rule → model → context → human 四阶 recovery ladder，并以 450 跑次定级——model_only 完成率 0.9267，零干预率 0.84。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>把大语言模型部署在 MAPDL 有限元仿真任务上时面临实际可靠性挑战：<strong>没有结构化的执行控制、工具封装与故障恢复</strong>，输出会不一致、任务失败常见。<em>Agent Harness 范式</em>通过在中间插入 domain-specific 的 orchestration middleware 来管理工具生命周期、工作流状态与恢复升级，正是为了解决这一问题。本论文呈现 <strong>CAX-Agent</strong>——一个面向 MAPDL 自动化的轻量级 agent harness 架构，并实证评估了它的核心组件：<em>recovery policy</em>。</p>
+    <p>CAX-Agent 把执行分为三层——<strong>LLM service / agent harness / solver backend</strong>——并配以一个 <strong>recovery ladder</strong>：从确定性 rule patching 升级到 model-driven regeneration，再到 context enrichment，最后到人工干预。评测覆盖 3 种 recovery 策略（<code>no_recovery</code>、<code>rule_only</code>、<code>model_only</code>）在 50 道标准结构 benchmark 上各跑 3 次，共 <strong>450 case-runs</strong>。</p>
+    <p><strong>model_only 拿到最佳完成率 0.9267、任务分 3.59/4、综合分 9.16/10、零干预率 0.84</strong>——大幅领先 <code>rule_only</code> 与 <code>no_recovery</code>，Cliff's δ ∈ [0.81, 0.87]（大效应量）。inter-rater agreement <strong>κ = 0.84</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 harness 主线一直在<em>外化决策面</em>：5-08 endpoint（<a href="../../harness/2026-05-08-1.html">Token Arena</a>）、5-09 scaffold（<a href="../../harness/2026-05-09-1.html">More Is Not Always Better</a>）、5-12 工具拓扑（<a href="../../harness/2026-05-12-1.html">ComplexMCP</a>）、5-13 声明语义（<a href="../../harness/2026-05-13-1.html">Evaluation Differential</a>）、5-14 前瞻 metacognition（<a href="../../harness/2026-05-14-1.html">TRIAGE</a>）、5-15 负向消融（<a href="../../harness/2026-05-15-1.html">ChromaFlow</a>）。这些工作回答的都是<em>"评测面要看什么"</em>。CAX-Agent 把视角换到<em>"运行时要修什么"</em>——它把 agent 在工具调用失败后该怎么爬出来，写成<strong>有梯度的 recovery 升级路径</strong>，而不是"出错就 retry / 出错就降级到 human"。这是 harness 工程从"评测层"下沉到"运行时控制层"的一个干净样本。</p>
+
+    <p><strong>核心方法：三层架构 + 四阶 recovery ladder</strong></p>
+    <ul class="point-list">
+      <li><strong>三层架构</strong>：<code>LLM service</code>（推理）↔ <code>agent harness</code>（编排/工具/状态/恢复）↔ <code>solver backend</code>（MAPDL）。<em>关键设计</em>：harness 不是单纯的"调度胶水"——它持有 workflow 状态、tool lifecycle 和 recovery 决策树，<strong>把 LLM 的不确定性吸收在 harness 这一层，不让它穿透到 solver</strong>。</li>
+      <li><strong>recovery ladder（4 阶梯子）</strong>：①<em>deterministic rule patching</em>——能用规则修就不调模型；②<em>model-driven regeneration</em>——让 LLM 看错误信息重生成；③<em>context enrichment</em>——把更多 solver 状态、工具文档、上一次失败的 trace 注入再让模型来；④<em>human intervention</em>——以上都失败才告警。<em>这一阶梯把"修错成本"做成单调递增的可观测变量</em>。</li>
+      <li><strong>定级实验</strong>：消融了梯子上的不同分段——<code>no_recovery</code>（梯子全关）/ <code>rule_only</code>（只第一阶）/ <code>model_only</code>（只第二阶）。每策略 50 题 × 3 重复 = 150 跑次，共 450 跑次。<em>这是 harness 论文里少见的"按 recovery 强度做 ablation"</em>。</li>
+      <li><strong>评分协议</strong>：完成率（task is solvable）+ 任务分（4 分制）+ 综合分（10 分制）+ 零干预率（不需要人介入的比例）。inter-rater κ = 0.84，证明评分稳定。</li>
+    </ul>
+
+    <p><strong>与现有 harness 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>vanilla LangChain/LangGraph</th><th>SDOF（FSM 约束）</th><th>Agentic Harness Engineering（4-29）</th><th>CAX-Agent（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心抽象</td><td>graph router</td><td>state machine + skill pre/post</td><td>observability-driven 演化</td><td><strong>recovery ladder（4 阶）</strong></td></tr>
+        <tr><td>修错策略</td><td>retry / 失败抛出</td><td>blocked + audit</td><td>动态修改 harness 自身</td><td><strong>逐阶升级 rule→model→context→human</strong></td></tr>
+        <tr><td>消融对象</td><td>工具集合 / topology</td><td>FSM 边</td><td>哪些 observability 信号</td><td><strong>recovery 强度</strong></td></tr>
+        <tr><td>关键指标</td><td>completion</td><td>completion + 拒断率</td><td>improvement Δ</td><td><strong>零干预率（自治度）</strong></td></tr>
+        <tr><td>评分稳定性证据</td><td>—</td><td>κ=0.94</td><td>—</td><td>κ=0.84（rater）+ Cliff's δ 0.81~0.87</td></tr>
+      </tbody>
+    </table>
+
+    <p>这篇论文的价值不在 MAPDL 本身（应用面有限），而在<strong>它给出了 recovery ladder 这个可被任意 domain harness 复用的 abstraction</strong>。任何在 agent + 外部确定性工具（solver、CAD、数据库、git、shell）之间架 harness 的工程，都可以套同一份 4 阶梯子做 ablation。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·LLM tool-use 起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·tool 调用范式<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Wu et al. (2023) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em>·orchestration framework 标杆<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>MetaGPT: Meta Programming for Multi-Agent Collaborative Framework</em>·多 agent 协作流派<br>
+    <a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">arxiv.org/abs/2308.00352</a></div>
+    <div class="ref-item">Chase (2022+) — <em>LangChain</em>·tool / chain 编程的事实标准<br>
+    <a href="https://github.com/langchain-ai/langchain" target="_blank" rel="noopener">github.com/langchain-ai/langchain</a></div>
+    <div class="ref-item">ANSYS Inc. — <em>ANSYS Parametric Design Language (APDL)</em>·MAPDL 仿真后端<br>
+    <a href="https://www.ansys.com/products/structures/ansys-mechanical-apdl" target="_blank" rel="noopener">ansys.com/products/structures/ansys-mechanical-apdl</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>完成率 0.9267 / 任务分 3.59/4 / 综合 9.16/10（model_only）</strong>：相比 <code>no_recovery</code> 与 <code>rule_only</code> 大效应量提升，Cliff's δ ∈ [0.81, 0.87]——这是<em>非参数效应量大档</em>，说明梯子第二阶的收益不是噪声。</li>
+      <li><strong>零干预率 0.84</strong>：约 84% 的 case 完全不需要人类介入即被 harness 自动恢复——这把 "agent 自治度" 做成了一个<em>可量化的 harness 出口指标</em>，而不是 vibe-checked claim。</li>
+      <li><strong>450 case-runs · κ = 0.84（rater agreement）</strong>：这是少数报告了"评分协议本身被验证"的 harness 论文，意味着论文对自己的评测面也下了 audit——<em>属于"harness 内的 harness"</em>。</li>
+      <li><strong>recovery 梯子的"梯度"本身是论点</strong>：作者明确把恢复升级写成线性偏序，<strong>不让"恢复"塌缩成黑盒 retry</strong>——这是把 reliability engineering 的 SRE 思路（incident severity ladder、escalation policy）搬到了 LLM-agent harness。</li>
+      <li><strong>scope 透明</strong>：论文把自己定位为 "lightweight"，不试图扩到任意工程仿真，而是固定 MAPDL 做 deep-dive。<em>这种"先在窄域内做完整 recovery 工程，再向其他域迁移"的写法，是 harness 论文应有的科学诚实</em>。</li>
+      <li><strong>方法学外推</strong>：4 阶梯子可直接迁到 <em>git agent / CAD agent / 数据库 agent / KV-cache offload runtime</em>——只要有一个确定性后端 + LLM 决策面，recovery ladder 都成立。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>CAX-Agent 给了一份<strong>把"修错"做成可消融变量</strong>的工程蓝本——这正是你 KV-cache offload 实验里现在缺的东西。你的 prefetch + Top-K 索引体系本质上就是一份"recovery ladder"：①规则触发的预取（top-k indexing pre-load）→②基于命中预测的 model-style 预取（ask predictor）→③context enrichment（提前一层把 query 信息塞进 prefetch decision）→④fallback（HBM miss 时 sync H2D）。建议在毕设 v3 实验章直接借 CAX-Agent 的写法<strong>做"recovery 强度"ablation</strong>：no_prefetch / rule_only（top-k）/ model_only（learned predictor）/ context_enrichment（query-aware）。这把现在分散的几条曲线整合成一条<em>单调升级的工程论证</em>，并配上 Cliff's δ 这种非参数效应量——比单看 hit-rate 数字更可发表。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>recovery ladder 的镜像形式可以做成 <em>safety escalation ladder</em>：①确定性 policy 检查（regex / schema）→②model-as-judge → ③ask-clarification 注入更多 user context → ④ block + human review。今日选定的 <a href="../../agent-safety/2026-05-18-1.html">Ensemble Monitoring</a> 给出 "diversity 比 scale 更重要" 的 monitor-集成证据；把它接到 CAX-Agent 的梯子里——<strong>monitor 不再是单一关卡，而是阶梯上的不同等级</strong>，可以按"危险度"自适应升级。这是把 AI control 从"yes/no 闸门"升级到"分级响应"的一种结构化做法。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启示：<strong>每个 agent benchmark 都应该附 recovery 强度坐标轴</strong>。今日选定的 <a href="../../benchmark/2026-05-18-1.html">SaaS-Bench</a> 报告"strongest model 仅 &lt;4% e2e completion"——这个数字本身没意义，因为没说"agent 在 recovery 上能爬几阶梯子"。CAX-Agent 的 4 阶坐标可以直接搬到 benchmark：报告"在 rule_only/model_only/context_enrichment 三档下的 completion 曲线"——把"无 recovery 时的 raw 能力"和"配齐 harness 后的有效能力"分开评，避免 benchmark 数字被 harness 工程"白嫖"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>STAR · Stage-attributed Triage and Repair for RCA Agents</strong>·把 RCA 拆 4 阶段，counterfactual 定位 fault stage——与 recovery ladder 互补，前者是"在哪里坏"、后者是"怎么修"<br>
+      <a href="https://arxiv.org/abs/2605.15581" target="_blank" rel="noopener">arxiv.org/abs/2605.15581</a></li>
+      <li><strong>SDOF · Multi-Agent Orchestration with FSM</strong>·把多 agent 执行约束到状态机，与 CAX-Agent 三层架构形成"FSM + recovery ladder"对照<br>
+      <a href="https://arxiv.org/abs/2605.15204" target="_blank" rel="noopener">arxiv.org/abs/2605.15204</a></li>
+      <li><strong>PRISM · Continuous Prompt Reliability</strong>·LLM drift 24h 检测窗 + LLM-as-judge——与 recovery ladder 同属"把 reliability 工程化"，但作用在 prompt 而非 tool<br>
+      <a href="https://arxiv.org/abs/2605.15665" target="_blank" rel="noopener">arxiv.org/abs/2605.15665</a></li>
+      <li><strong>Agentic Harness Engineering</strong>（4-29 报告）·observability-driven 自动演化 harness——CAX-Agent 是其工程化版本<br>
+      <a href="../../harness/2026-04-29-1.html">harness/2026-04-29-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.15218" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.15218" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.15218v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.15218" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+      <a class="link-btn" href="https://www.ansys.com/products/structures/ansys-mechanical-apdl" target="_blank" rel="noopener">MAPDL 文档（背景）</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-18 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.15218<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.15218" target="_blank" rel="noopener">arxiv.org/abs/2605.15218</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
