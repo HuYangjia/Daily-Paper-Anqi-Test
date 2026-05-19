@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-19 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #fcebeb; color: #a32d2d; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #6b3f08; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f0d9a8; color: #6b3f08; }
+  .link-btn.primary:hover { background: #f4e1c4; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-19 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 19 日 · Safety Benchmark · Closed-Loop Multimodal Verification · 让 agent 自己看自己生成的产物</div>
+  <h1>MM-ToolBench (TOBench)：100 个真实工具任务 × 27 MCP servers / 324 tools，用 closed-loop 多模态自校验把 Claude Opus 4.6 拍到 32.0%（人类 94.0%）</h1>
+  <div class="en-title">MM-ToolBench: A Task-Oriented Omni-Modal Benchmark for Real-World Tool-Using Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.16909" target="_blank" rel="noopener">MM-ToolBench (TOBench): Task-Oriented Omni-Modal Benchmark for Real-World Tool-Using Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>27 MCP × 324 tools × 100 tasks · closed-loop multimodal verify · Claude Opus 4.6 32.0% / 人 94.0%</td>
+          <td>arXiv 2605.16909（Z. Liu, W. Dong, Y. Tan, Y. Qu, H. Yin, C. Si）2026-05-16</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.16675" target="_blank" rel="noopener">LinAlg-Bench: Forensic Benchmark Revealing Structural Failure Modes</a></td>
+          <td>660 SymPy 题 · 10 模型 6,600 输出 · 1,156 失败 → 10 类标签 · 4×4 行为阈值</td>
+          <td>arXiv 2605.16675（Agarwal, Rajbhar, J）2026-05-15</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.17044" target="_blank" rel="noopener">PersonaArena: Dynamic Simulation for Persona-Level Role-Playing</a></td>
+          <td>动态模拟 · multi-agent 辩论评判 · 用户生成内容构建角色库</td>
+          <td>arXiv 2605.17044（W. Shi et al.）2026-05-17</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.17104" target="_blank" rel="noopener">Scientific Logicality Enriched Methodology for LLM Reasoning</a></td>
+          <td>科学逻辑性评估 · 物理领域 · 数据采样方法</td>
+          <td>arXiv 2605.17104（Z. Yu et al.）2026-05-17</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.16727" target="_blank" rel="noopener">PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play</a></td>
+          <td>population-based 非对称自我对弈 · 教师-学生 LoRA · 代码/数学 benchmark</td>
+          <td>arXiv 2605.16727（Castanyer et al.）2026-05-16</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>MM-ToolBench: A Task-Oriented Omni-Modal Benchmark for Real-World Tool-Using Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>MM-ToolBench：面向真实世界工具使用 Agent 的全模态任务基准</span></div>
+      <div class="meta-item"><label>arXiv 标题别名</label><span>TOBench（提交版标题与正文统一）</span></div>
+      <div class="meta-item"><label>作者</label><span>Zhiqiang Liu, Wenhui Dong, Yilang Tan, Yuwen Qu, Haochen Yin, Chenyang Si</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · multi-modal · tool use · MCP-based agent</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本（2026-05-16 提交）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.16909" target="_blank" rel="noopener">arxiv.org/abs/2605.16909</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.16909" target="_blank" rel="noopener">arxiv.org/pdf/2605.16909</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.16909v1" target="_blank" rel="noopener">arxiv.org/html/2605.16909v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.16909" target="_blank" rel="noopener">10.48550/arXiv.2605.16909</a></div>
+      <div class="meta-item"><label>开源仓库</label><a href="https://github.com/Pi3AI/TOBench" target="_blank" rel="noopener">github.com/Pi3AI/TOBench</a></div>
+      <div class="meta-item"><label>规模</label><span>100 可执行任务 · 2 macro 任务族 · 20 子类 · 27 MCP servers · 324 tools</span></div>
+      <div class="meta-item"><label>关键发现</label><span>Claude Opus 4.6 task success <strong>32.0%</strong> · 人类基线 <strong>94.0%</strong></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"工具使用 + 计算机使用 + 多模态推理"打包到一个闭环：agent 必须执行工具、检视渲染产物、自我修正——15 个前沿模型在该 closed-loop 多模态评测下大幅退化（Claude Opus 4.6 仅 32.0%）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>越来越多场景期待<strong>工具使用型 agent</strong>能在真实的专业工作流中运行——它们必须解释多模态输入、协调外部工具、检视中间产物、并在最终输出之前修正自己的行为。但现有 benchmark 往往把<em>tool use、computer use、multimodal reasoning 拆开</em>评测，留下了 benchmark 设置与现实端到端全模态工具使用之间的<strong>能力断层</strong>。</p>
+    <p>为了弥合这个断层，我们提出 <strong>MM-ToolBench</strong>——一个面向<em>任务</em>的全模态工具使用 benchmark 与评测 harness。MM-ToolBench 包含 <strong>100 个可执行任务</strong>，来自两个 macro 任务族——<em>Customer Service</em> 与 <em>Intelligent Creation</em>——覆盖 20 个子类切片，由 <strong>27 个 MCP servers / 324 个工具</strong>支撑。其核心设计是<strong>闭环多模态验证（closed-loop multimodal verification）</strong>：agent 必须执行工具、检视渲染或转换后的产物、并在输出不满足任务要求时<em>自我修正</em>。</p>
+    <p>为了让这种评测可扩展且可验证，MM-ToolBench 把<strong>基于 MCP 的执行</strong>与<strong>任务专属的 grounded 评估器</strong>耦合，并辅以一条<em>半自动化的构建管线</em>（覆盖场景发现、任务实例化、评估器合成、人类审核）。</p>
+    <p>在 <strong>15 个当代 agent 模型</strong>上的实验显示：MM-ToolBench 高度有挑战性——<em>Claude Opus 4.6</em>（被普遍视为最强 coding-agent 模型之一）<strong>task success 仅 32.0%</strong>，远低于人类基线的 <strong>94.0%</strong>。我们将 MM-ToolBench 视为通过<em>闭环多模态验证</em>评估并推动下一代全模态工具使用 agent 的实用基础。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 benchmark 主线一直在做"<em>更接近真实业务</em>"的迁移——5-12 价值评测的 Agent-ValueBench、5-13 长上下文 RAG 的 TRIVIA+、5-14 BenchJack 的 reward-hack 审计、5-15 ClawForge 的"前任烂摊子"、5-18 SaaS-Bench 的真实业务系统（CUA e2e &lt; 4%）。所有这些 benchmark 都共享同一个未解决的痛点：<strong>它们要么测 tool use（一次性工具调用），要么测 computer use（GUI 操作），要么测 multimodal reasoning（图片理解），但<em>没有一个</em>把三者打成一个闭环</strong>。MM-ToolBench 正是把"agent 自己看自己生成的产物 + 自我修正"做成 first-class——这是从"open-loop benchmark"到"closed-loop benchmark"的范式跃迁。</p>
+
+    <p><strong>核心方法：MCP-native + closed-loop verify + grounded evaluator</strong></p>
+    <ul class="point-list">
+      <li><strong>MCP 原生执行</strong>：直接采用 27 个 Model Context Protocol servers / 324 个真实工具——<em>这意味着 benchmark 不是"工具的桩"，而是"真实的工具生态"</em>。任何对 MCP 协议的能力差距会立刻被暴露。</li>
+      <li><strong>Closed-Loop 多模态验证</strong>：每个任务要求 agent 做"<em>调用工具 → 检视产物（图像/文件/状态）→ 自我修正</em>"的闭环。这把单纯的"输出对不对"升级为"<em>agent 能不能识别自己输出错了，并改正</em>"——更贴近真实人类工作流。</li>
+      <li><strong>Grounded Evaluator + 半自动构建</strong>：每个任务都有<em>专属</em>的 grounded evaluator（不是 LLM-as-judge 的笼统打分），构建管线包含场景发现、任务实例化、evaluator 合成、人工审核四步——保证评测器自身可解释、可重现。</li>
+      <li><strong>双 macro 任务族</strong>：Customer Service（更多 tool 协调与用户对话）+ Intelligent Creation（更多多模态生成与产物迭代）。覆盖 20 个子类，确保评测面足够宽。</li>
+      <li><strong>15 模型 head-to-head + 人类基线</strong>：15 个当代 agent 模型直接对比，并提供 94.0% 的人类基线作为天花板——给"agent 距离人类有多远"提供可比刻度。</li>
+    </ul>
+
+    <p><strong>与现有 agent benchmark 的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>τ-Bench / ToolBench（一次工具）</th><th>OSWorld / WebArena（GUI）</th><th>SaaS-Bench（5-18，真业务）</th><th>MM-ToolBench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测对象</td><td>tool call 正确率</td><td>GUI 完成率</td><td>真实 SaaS 端到端</td><td><strong>tool + GUI + 多模态产物的闭环</strong></td></tr>
+        <tr><td>是否要 agent 看产物</td><td>否</td><td>看截图但不强制</td><td>是（业务结果）</td><td><strong>是（rendered/transformed artifact）</strong></td></tr>
+        <tr><td>评估器形态</td><td>LLM-judge</td><td>规则脚本</td><td>业务规则</td><td><strong>per-task grounded evaluator</strong></td></tr>
+        <tr><td>工具基底</td><td>合成工具</td><td>OS/Web</td><td>真实 SaaS</td><td><strong>MCP servers（行业标准）</strong></td></tr>
+        <tr><td>最强模型成功率</td><td>~70%+</td><td>~40%</td><td>&lt; 4% e2e</td><td><strong>32.0%（Claude Opus 4.6）</strong></td></tr>
+        <tr><td>对 agent 工程的杠杆</td><td>tool routing</td><td>GUI 视觉理解</td><td>业务对接</td><td><strong>self-verify + self-correct loop</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>MM-ToolBench 的真正贡献：<strong>把"agent 能不能在错误产物前停下来"做成可量化的 benchmark dimension</strong>。这是 benchmark 设计哲学的一次升级——评测的不再只是"agent 能做什么"，而是"agent 能不能识别自己做错了"。这一坐标在 32.0% vs 94.0% 的人机差距里清晰可见。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Yao et al. (2024) — <em>τ-Bench: Tau Benchmark for Tool-Augmented Real-World Agent Evaluation</em>·tool-use benchmark 标杆<br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Xie et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·GUI agent benchmark<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Zhou et al. (2024) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>·web agent benchmark<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Anthropic (2024+) — <em>Model Context Protocol (MCP)</em>·tool 接入的事实标准<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Qin et al. (2024) — <em>ToolBench: ToolEval for LLM Tool-Use Capability</em>·大规模 tool-use benchmark 起点<br>
+    <a href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">arxiv.org/abs/2307.16789</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>AgentBench: Evaluating LLMs as Agents</em>·通用 agent 评测起点<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>32.0% vs 94.0%（Claude Opus 4.6 vs 人）</strong>：3× 差距——明确说明"看上去强"的 coding-agent 模型在闭环多模态自校验任务上仍是早期阶段。</li>
+      <li><strong>27 MCP servers × 324 tools</strong>：直接接行业标准协议，<em>不是合成工具</em>——意味着任何 MCP 兼容 agent 都可立刻拿来跑分，benchmark 与真实生态零适配成本。</li>
+      <li><strong>per-task grounded evaluator</strong>：每个任务都有专属判分器（不靠 LLM-as-judge 的笼统打分），可重现性比 LLM-judge 类 benchmark 高出一个量级。</li>
+      <li><strong>半自动构建管线</strong>：场景发现 → 任务实例化 → evaluator 合成 → 人工审核四步——这是 benchmark 工程化（不是"手工写题"）的范本，可被其他 benchmark 直接复用。</li>
+      <li><strong>20 个子类切片</strong>：覆盖足够宽，避免"在某一类工具上过拟合"——既能给整体打分，也能 per-slice 暴露 agent 的强弱项。</li>
+      <li><strong>双任务族</strong>：Customer Service（对话密集 + 工具协调）vs Intelligent Creation（多模态生成密集 + 产物迭代）——这两类任务对 agent 的能力剖面完全不同，能给出"agent 在不同 workflow 类型下退化模式"的对比。</li>
+      <li><strong>方法学外推</strong>：closed-loop multimodal verification 的设计可直接搬到任意 agent benchmark——只要任务输出能被渲染或转换成可视化产物，就能要求 agent 自校验自修正。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击主线）</div>
+        <p>MM-ToolBench 把 benchmark 设计的"<strong>真实工具生态</strong>"和"<strong>闭环自校验</strong>"两条主线焊在一起——前者解决"工具有真假"，后者解决"产物有对错"。结合昨天 SaaS-Bench 的"真实业务系统"和 5-15 ClawForge 的"前任烂摊子"，整个 agent benchmark 已经收敛到三轴：（1）真实生态轴（MCP / SaaS / 真用户痕迹）；（2）闭环自校验轴（agent 看自己产物 + 自纠正）；（3）能力剖面轴（task family 切片）。建议在你的"agent benchmark 综述"里把这三轴作为<em>必报维度</em>，并把 MM-ToolBench 的 32.0% vs 94.0% gap 与 SaaS-Bench &lt; 4% e2e 联读——它们一起证明 agent 离"真实工作流交付"还有 1～2 个数量级的工程差。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>"<em>agent 必须看自己的产物</em>"是一种新型 harness 信号源。当前你的 KV-cache offload runtime 只用 cache hit / latency 这种<em>低级</em>信号驱动决策；MM-ToolBench 提示一种更高级的信号——<strong>从输出产物倒推 runtime 决策是否合理</strong>。例如：当 prefetch 策略导致下游 logits 出现微小漂移时，可以用一个"产物 verifier"（小 LLM 比较 baseline vs offload 的输出）来判定本轮 offload 是否实际"成功"。这把 hit-rate 这种 cache-级信号升级为<em>"语义级"自校验</em>。结合今日 harness 的 ANNEAL（typed patch + canary）与 agent-safety 的 SPG，整个 runtime 就能：cache 决策 → SPG 测语义损失 → ANNEAL 写回 typed policy patch → MM-ToolBench 风格的产物对比作为最终 ground truth。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 skill safety 的启示：<strong>skill 不只要能用，更要"自己能识别自己用错了"</strong>。MM-ToolBench 的 closed-loop verification 给出了一种结构化做法——任何 skill 输出（包括对 file system 的修改、API 调用结果、生成的多模态产物）都必须可被 agent 自校验。结合今日 safety 选定的 memory laundering 与 5-13 SKILL.md 供应链，可以推断：<em>self-verifying skill</em> 是阻止 laundered 状态污染下游决策的关键防线——只要每条 skill 的输出能被独立 evaluator grounded 验证，错误产物就不会被压入 memory。值得作为 agent skill SDK 的标准接口。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SaaS-Bench（5-18 报告）</strong>·真实 SaaS 业务系统的 e2e 评测——与 MM-ToolBench 互补：前者重业务真实，后者重多模态闭环<br>
+      <a href="../../benchmark/2026-05-18-1.html">benchmark/2026-05-18-1.html</a></li>
+      <li><strong>ClawForge（5-15 报告）</strong>·让 agent 在前任烂摊子里干活——给 MM-ToolBench 提供"任务初始状态非干净"这一未来扩展<br>
+      <a href="../../benchmark/2026-05-15-1.html">benchmark/2026-05-15-1.html</a></li>
+      <li><strong>LinAlg-Bench: Forensic Benchmark</strong>·诊断式 benchmark + 自动法医管道——为 MM-ToolBench 提供"评估器自身可解释"的相邻路径<br>
+      <a href="https://arxiv.org/abs/2605.16675" target="_blank" rel="noopener">arxiv.org/abs/2605.16675</a></li>
+      <li><strong>Multi-Paradigm Agent Interaction (buddyMe)</strong>·五阶 pipeline + 六维评估 schema——与 MM-ToolBench 的 closed-loop verify 形成"框架描述 vs benchmark 实证"对照<br>
+      <a href="https://arxiv.org/abs/2605.16821" target="_blank" rel="noopener">arxiv.org/abs/2605.16821</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.16909" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.16909" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.16909v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.16909" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://github.com/Pi3AI/TOBench" target="_blank" rel="noopener">GitHub: Pi3AI/TOBench</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP 官网</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-19 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.16909<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.16909" target="_blank" rel="noopener">arxiv.org/abs/2605.16909</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

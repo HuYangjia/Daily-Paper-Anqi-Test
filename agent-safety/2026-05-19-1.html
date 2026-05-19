@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-19 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #fcebeb; color: #a32d2d; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #851f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c8c8; color: #851f1f; }
+  .link-btn.primary:hover { background: #f9dcdc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-19 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 19 日 · Agent Safety · Memory Laundering · 把"持久状态"做成 safety 的一等 attack surface</div>
+  <h1>Memory Laundering：有毒上下文被压缩进 memory summary 后，监测器看不见但仍持续毒害下游——首次提出 Sub-threshold Propagation Gap (SPG)</h1>
+  <div class="en-title">State Contamination in Memory-Augmented LLM Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 7.8</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">State Contamination in Memory-Augmented LLM Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>memory laundering · sub-threshold propagation gap (SPG) · 干预位点决定一切</td>
+          <td>arXiv 2605.16746（Y. Wang, Goyal, Y. Chen, Sundaram）2026-05-16</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.16265" target="_blank" rel="noopener">AgentWall: Runtime Safety Layer for Local AI Agents</a></td>
+          <td>MCP-proxy + declarative policy · 92.9% enforcement · sub-ms 开销</td>
+          <td>arXiv 2605.16265（Aravind）2026-03-24</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.17169" target="_blank" rel="noopener">Responsible Agentic AI Requires Explicit Provenance</a></td>
+          <td>positionsia论文 · responsibility tensor · 4 lifecycle layers</td>
+          <td>arXiv 2605.17169（Hu et al., Manchester）2026-05-16</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.17036" target="_blank" rel="noopener">Reliability of Autonomous AI Agents in Supply Chain</a></td>
+          <td>agent bullwhip effect · GRPO 后训练 · 67% 成本下降但尾部风险</td>
+          <td>arXiv 2605.17036（C. Long, Simchi-Levi, F. Calmon 等 · MIT）2026-05-16</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.16712" target="_blank" rel="noopener">Recall Isn't Enough: Bounding Commitments in Personalized Language Systems</a></td>
+          <td>contractual evidence + lexicographic commitment · 0% failure 在 0.49–0.60 utility</td>
+          <td>arXiv 2605.16712（R. Tang et al.）2026-05-16</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>State Contamination in Memory-Augmented LLM Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>记忆增强 LLM Agent 中的状态污染</span></div>
+      <div class="meta-item"><label>作者</label><span>Yian Wang, Agam Goyal, Yuen Chen, Hari Sundaram</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · 多 agent 安全 · 持久状态 · monitor evasion</span></div>
+      <div class="meta-item"><label>发表状态</label><span>arXiv 预印本（2026-05-16 提交）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.16746" target="_blank" rel="noopener">arxiv.org/pdf/2605.16746</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.16746v1" target="_blank" rel="noopener">arxiv.org/html/2605.16746v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.16746" target="_blank" rel="noopener">10.48550/arXiv.2605.16746</a></div>
+      <div class="meta-item"><label>核心定义</label><span>Memory Laundering · Sub-threshold Propagation Gap (SPG)</span></div>
+      <div class="meta-item"><label>评测设置</label><span>paired counterfactual multi-agent rollouts · transcript vs. compressed memory 双通道</span></div>
+      <div class="meta-item"><label>关键洞见</label><span>"<em>safety in memory-augmented agents should be treated as a state-control problem over evolving context</em>"</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent 的"持久状态"立为安全的一等攻击面：有毒上下文被压缩进 summary 后能逃过毒性检测器，但仍以 sub-threshold 的方式毒害下游——SPG 度量这股看不见的影响力。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM agent 越来越依赖<strong>持久状态</strong>——transcript、summary、检索上下文、记忆 buffer——来支撑长程交互。这意味着<em>安全不再只取决于单次模型输出</em>，还取决于 agent 存了什么、之后又怎么复用。我们研究一种被称为 <strong>memory laundering（记忆洗钱）</strong>的失败模式：有毒或对抗性上下文被压缩成<em>看上去无毒的</em> memory summary——标准检测器再也看不出它有毒——但其中保留的<em>敌意框架或冲突结构</em>仍会持续影响未来的生成。</p>
+    <p>使用<strong>配对反事实多 agent rollout</strong>，我们证明：来自有毒源头的 memory summary 即便在常见毒性阈值<em>之下</em>，也会相对于匹配的中性基线<strong>显著抬升下游毒性</strong>。为度量这一隐藏影响，我们提出 <strong>Sub-threshold Propagation Gap (SPG)</strong> 指标——<em>在被部署 monitor 判为"安全"的 memory state 条件下，下游行为差异有多大</em>。</p>
+    <p>实验表明：毒性沿<strong>不同的状态通道</strong>传播——<em>raw transcript reuse</em> 驱动显性下游毒性，<em>compressed memory</em> 携带隐藏的 sub-threshold 影响。我们进一步发现：<strong>缓解效果高度依赖干预位点</strong>——<em>在 summarization 之前清洗有毒状态</em>能大幅降低传播 gap，而<em>只清洗已完成的 summary</em>会让"洗白后的影响"原样保留。</p>
+    <p>这些结果表明：记忆增强 agent 的安全应该被当作<strong>"演化中的上下文上的状态控制问题"</strong>来处理——sanitization 必须发生在不安全信息被压缩成持久记忆<em>之前</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去半个月 Agent Safety 主线密集打多个攻击面——5-12 凭证泄漏的 PRISM、5-13 SKILL.md 供应链攻击、5-14 多 agent 多模态 HAM³ 攻击、5-15 tool-use 知-行 gap、5-18 Ensemble Monitoring。<em>它们的共同前提都是 monitor 看得见输出</em>——只要监测器对当前 token / 当前 prompt 做出了不毒判断，系统就被认为安全。本文打掉的恰恰是这个前提：当上下文被<strong>压缩进 memory summary</strong>，毒性会被 LLM 的 abstraction 抹平到检测阈值之下，但<em>"敌意框架 / 冲突结构"</em>这种深层 affordance 没有消失——它继续以 sub-threshold 的形式渗到下游决策。这是把"safety vs. monitor"的对抗，从 token level 转移到了 <strong>state level / abstraction level</strong>。</p>
+
+    <p><strong>核心方法：paired counterfactual + SPG</strong></p>
+    <ul class="point-list">
+      <li><strong>双通道实验</strong>：把 agent 的状态分两路——（a）raw transcript reuse（直接复用对话），（b）compressed memory（先 summary 再复用）。配对反事实地比较"有毒来源 vs. 匹配的中性基线"在两通道下的下游毒性。</li>
+      <li><strong>Sub-threshold Propagation Gap (SPG)</strong>：核心新指标。<em>条件</em>是"被部署 monitor 判为安全的 memory state"，<em>测量</em>是"在这条件下，下游行为相对中性基线的偏移量"。SPG &gt; 0 = monitor 看不见但毒性已经在传。这个指标第一次把"洗白后的隐性影响力"做成可量化的标量。</li>
+      <li><strong>干预位点消融</strong>：作者比较"先清洗有毒状态再 summarize"vs."只清洗 summary"两种缓解。前者大幅压低 SPG，后者几乎没用。<strong>这一对照直接给出工程指南：sanitization 必须前置到 summarization 之前</strong>——监督下游 summary 是没有用的，因为伤害已经被压成结构性。</li>
+      <li><strong>多 agent 设置</strong>：实验用配对的 multi-agent rollout，避免单 agent 设置下的偶然性，确保 SPG 不是 noise。</li>
+    </ul>
+
+    <p><strong>与现有 Agent Safety 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>token-level guardrail（OpenAI/Anthropic）</th><th>monitor 集成（Ensemble Monitoring 5-18）</th><th>红队 benchmark（HarmBench 等）</th><th>Memory Laundering（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>监测对象</td><td>当前 token / 当前回复</td><td>当前轨迹</td><td>单次 prompt-response</td><td><strong>跨 step 的演化状态</strong></td></tr>
+        <tr><td>失败前提</td><td>毒输出存在</td><td>毒轨迹存在</td><td>越狱攻击成功</td><td><strong>检测器都判"安全"但毒性仍在传</strong></td></tr>
+        <tr><td>核心指标</td><td>毒性分类器 score</td><td>集成 ROC</td><td>ASR</td><td><strong>SPG（条件式 propagation gap）</strong></td></tr>
+        <tr><td>缓解面</td><td>输出过滤</td><td>多 monitor 投票</td><td>对抗微调</td><td><strong>state pre-summarization sanitization</strong></td></tr>
+        <tr><td>世界观</td><td>safety = 输出问题</td><td>safety = 决策问题</td><td>safety = 抗攻击问题</td><td><strong>safety = 状态控制问题</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>这篇论文的真正价值：<strong>把 agent safety 的世界观从 "model output safety" 升级到 "evolving state safety"</strong>。一旦接受这个升级，所有部署 monitor + memory 的 agent 系统都需要重做架构——sanitization 必须前置，且必须监测<em>压缩动作本身</em>，而不是压缩后的 summary。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Park et al. (2023) — <em>Generative Agents: Interactive Simulacra of Human Behavior</em>·memory stream / reflection 的 agent 起点<br>
+    <a href="https://arxiv.org/abs/2304.03442" target="_blank" rel="noopener">arxiv.org/abs/2304.03442</a></div>
+    <div class="ref-item">Packer et al. (2024) — <em>MemGPT: Towards LLMs as Operating Systems</em>·分层 memory 系统<br>
+    <a href="https://arxiv.org/abs/2310.08560" target="_blank" rel="noopener">arxiv.org/abs/2310.08560</a></div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·间接 prompt 注入威胁起点<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Anthropic — <em>Constitutional AI / Harmlessness Detection</em>·token-level 输出守卫的代表方法<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench</em>·red-team benchmark 标杆<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Sumers et al. (2024) — <em>Cognitive Architectures for Language Agents (CoALA)</em>·把 memory 作为 agent 的核心组件<br>
+    <a href="https://arxiv.org/abs/2309.02427" target="_blank" rel="noopener">arxiv.org/abs/2309.02427</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>memory laundering 现象首次实证</strong>：toxic-origin summary 即便在常用毒性阈值下被判"安全"，仍能在 paired counterfactual 中显著拉高下游毒性——这把"safety bypass via abstraction"从理论假说变为可测现象。</li>
+      <li><strong>SPG 指标</strong>：定义清晰、条件明确（基于 deployed monitor 的 "safe" 判决）、可作为 monitor 评估的<em>新档</em>——任何 memory-aware agent 都应当报告 SPG，而不只是输出毒性。</li>
+      <li><strong>双通道差异</strong>：transcript reuse 驱动 overt toxicity，compressed memory 携带 hidden sub-threshold influence——明确告诉工程方<em>"压缩才是真正的安全风险"</em>，而不是 reuse 本身。</li>
+      <li><strong>位点决定缓解效果</strong>：清洗 summary 几乎无效，必须在 summarization 之前清洗 state——这是最强的工程指南，可立刻反映在 LangChain / MemGPT / OpenAI Memory 的 pipeline 设计上。</li>
+      <li><strong>把 safety 重定义为 state-control problem</strong>：作者明确说"safety should be treated as a state-control problem over evolving context"——这句话量级和 Anthropic 的"AI control"框架一样大，标志着 memory-aware safety 进入新范式。</li>
+      <li><strong>方法学外推</strong>：SPG 的"条件式 gap"思想可以推广到任何"被压缩/被抽象后的影响力测量"——例如 RAG 中召回的有毒文档、code agent 中长上下文里的污染样本、tool-use agent 中长记忆里的策略漂移。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击主线）</div>
+        <p>这是把<strong>"持久状态"</strong>立为 agent skill 安全的一等关注面的关键论文。结合 5-13 SKILL.md 供应链攻击与 5-18 Ensemble Monitoring，可以画出一张完整威胁地图：（输入侧）skill 注册攻击 → （执行侧）token-level monitor → （状态侧）memory laundering。<strong>三道防线缺一不可</strong>。建议在你的"agent skill 安全综述"里把 SPG 作为"状态侧"的标志性指标——因为它第一次让"看不见的影响"可量化。落地建议：任何 skill 在被注册到 agent 长记忆前，都要做<em>pre-summarization sanitization</em>；任何 evaluation harness 也都要附带 SPG 评测。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SPG 给了 harness 一种新维度——<strong>"被压缩动作前后的下游影响差"</strong>。这条思路可以直接搬到你的 KV-cache offload runtime：当某些 layer 的 cache 被驱逐/压缩到 CPU，它对未来 layer 的"行为偏移"是否仍然存在？换言之，<em>"cache eviction 后的下游 logits 偏移"</em>就是 KV 版的 SPG。把它作为 ablation 的一个新坐标轴，可以让你在 LRU/Random/FIFO/hu_fixed 几种策略之间区分"看似 hit-rate 一样但语义损失不同"的微妙差异。配合今日 harness 选定 ANNEAL 的 typed edit + canary，整个 offload runtime 就能做到：先用 SPG 测语义损失、再用 ANNEAL 把损失大的 layer 写回成 typed policy patch。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 的启发：当前所有 agent benchmark 都没有<strong>持久状态污染轴</strong>——它们假设每个 task 都是 fresh start。SPG 给出一个新的 benchmark dimension：在 N 轮交互中注入有毒源、让 agent 自然地 summary，然后测下游若干轮的行为偏移。把这一轴接到今日 benchmark 选定的 TOBench / 之前的 SaaS-Bench / ClawForge 上，可以一次性暴露"长记忆型 agent 的状态污染敏感度"。值得作为 next-gen agent safety benchmark 的强 baseline。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AgentWall · Runtime Safety Layer for Local AI Agents</strong>·与 memory laundering 互补——AgentWall 守在执行侧，本文守在状态侧<br>
+      <a href="https://arxiv.org/abs/2605.16265" target="_blank" rel="noopener">arxiv.org/abs/2605.16265</a></li>
+      <li><strong>Responsible Agentic AI Requires Explicit Provenance</strong>·主张 agent 责任需要全生命周期 provenance——给"sanitize 必须前置"提供责任理论<br>
+      <a href="https://arxiv.org/abs/2605.17169" target="_blank" rel="noopener">arxiv.org/abs/2605.17169</a></li>
+      <li><strong>Ensemble Monitoring for AI Control（5-18 报告）</strong>·monitor 多样性比规模重要——但只在 token-level 起作用，对 state-level laundering 仍盲<br>
+      <a href="../../agent-safety/2026-05-18-1.html">agent-safety/2026-05-18-1.html</a></li>
+      <li><strong>Indirect Prompt Injection (Greshake 2023)</strong>·间接污染 agent 上下文——SPG 是它在 memory 时代的延续与升级<br>
+      <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.16746" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.16746v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.16746" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-19 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.16746<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
