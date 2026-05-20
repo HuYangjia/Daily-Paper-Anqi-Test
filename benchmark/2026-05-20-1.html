@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-20 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfa8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-20 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 20 日 · Safety Benchmark · Privacy-Utility Diagnostic · "用户跑在自己设备的小模型"才是隐私漏洞主战场</div>
+  <h1>POLAR-Bench：用 10 域 / 7,852 样本 / 5×5 诊断面把"前沿模型 99%+ 守住、1–30B 开源最弱漏一半"显式量化——首个 policy-aware adversarial benchmark</h1>
+  <div class="en-title">POLAR-Bench: A Diagnostic Benchmark for Privacy-Utility Trade-offs in LLM Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 7.8</span>
+    <span class="score-chip chip-impact">近期影响力 8.0</span>
+    <span class="score-chip chip-novel">新颖性 9.3</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.19127" target="_blank" rel="noopener">POLAR-Bench: A Diagnostic Benchmark for Privacy-Utility Trade-offs in LLM Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>10 域 / 7,852 样本 / 5×5 诊断面 · 前沿 &gt;99% / 1–30B 最弱漏 50%+ · deterministic set-membership scoring</td>
+          <td>arXiv 2605.19127（Zheng, Yang, Gao, Schlag）2026-05-18</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">DecisionBench: Emergent Delegation in Long-Horizon Workflows</a></td>
+          <td>23,375 实例 / 11 模型 / 反事实上限 15–31 pp · routing fidelity@1 7.5–29.5%</td>
+          <td>arXiv 2605.19099（Gao et al.）2026-05-18 · 28 页</td>
+          <td class="score-num">94*（已选作 Harness 方向）</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19156" target="_blank" rel="noopener">How Far Are We From True Auto-Research?</a></td>
+          <td>117 实例 · 实验严谨度是主瓶颈 · 15× 编造率跨度</td>
+          <td>arXiv 2605.19156（Zhang et al.）2026-05-18</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19337" target="_blank" rel="noopener">Agentic Trading: 77 LLM Trading Agent Studies (Audit-Oriented Evidence Map)</a></td>
+          <td>protocol incomparability + 仅 2/19 报告可抽取协议</td>
+          <td>arXiv 2605.19337（Xia et al.）2026-05-18</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19219" target="_blank" rel="noopener">SimGym: A/B Test Simulation in E-Commerce with Traffic-Grounded VLM Agents</a></td>
+          <td>VLM agent 仿 A/B test · 77% directional alignment</td>
+          <td>arXiv 2605.19219（Li et al.）2026-05-18</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#888;margin-top:0.5rem;">* DecisionBench 综合分更高，但该底座的核心面向是 Harness Engineering 的"路由器评测底层"，已被分配到 Harness 方向；POLAR-Bench 在 Benchmark 方向作为今日"<em>新型诊断面 benchmark</em>"代表，分类更对位。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>POLAR-Bench: A Diagnostic Benchmark for Privacy-Utility Trade-offs in LLM Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>POLAR-Bench：LLM Agent 隐私-效用权衡的诊断式基准</span></div>
+      <div class="meta-item"><label>作者</label><span>Qiaoyuan Zheng, Yiqu Yang, Qi Gao, Imanol Schlag</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · agent privacy · adversarial benchmark · trust-and-policy</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-18（v1）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.19127" target="_blank" rel="noopener">arxiv.org/abs/2605.19127</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.19127" target="_blank" rel="noopener">arxiv.org/pdf/2605.19127</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.19127v1" target="_blank" rel="noopener">arxiv.org/html/2605.19127v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.19127" target="_blank" rel="noopener">10.48550/arXiv.2605.19127</a></div>
+      <div class="meta-item"><label>评测规模</label><span>10 domain · 7,852 sample · 5×5 diagnostic surface per model</span></div>
+      <div class="meta-item"><label>关键定位</label><span>"<em>policy-aware adversarial</em>" = trusted model + privacy policy + 第三方对抗探测 task-relevant 与 protected attribute</span></div>
+      <div class="meta-item"><label>核心发现 1</label><span>前沿模型 protected attribute 守恒率 &gt; 99%</span></div>
+      <div class="meta-item"><label>核心发现 2</label><span>1–30B 开源模型——用户最常自跑的"私有 trusted agent"——最弱者泄漏 &gt; 50%</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用 5×5 诊断面（policy 维度 × 攻击策略）量化 LLM agent 的隐私崩溃点：前沿模型 &gt;99% 守住，1–30B 开源——也就是用户自己 on-device / private-inference 跑的 trusted agent——最弱者直接漏一半以上。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM agent 越来越多地访问<strong>私有用户数据</strong>，并代表用户与第三方系统交互。用户定义"什么可以共享、什么绝不能共享"，agent 必须在第三方系统行为<em>对抗</em>时也能稳健地遵循这一意图。我们提出 <strong>POLAR-Bench（Policy-aware adversarial Benchmark）</strong>：一个 trusted model（带 privacy policy + 一个任务）与一个第三方 model（对 task-relevant 与 protected attribute 双向探测）对话的对抗式基准。</p>
+    <p>跨 <strong>10 个 domain × 7,852 个 sample</strong>，作者用<em>确定性 set-membership</em> 同时打分隐私与效用，沿两条<em>正交轴</em>变化 privacy policy dimension 与 attack strategy，从而生成<strong>每个模型一张 5×5 诊断面</strong>。</p>
+    <p>结果呈现一条尖锐分界：当前<strong>前沿模型守住 &gt; 99% 的 protected attribute</strong>；而<strong>1–30B 范围的小开源模型</strong>——也是<em>用户最常以 trusted agent 形式 on-device 或私有推理跑</em>的那一档——表现明显更差，<strong>最弱者泄漏过半</strong>。POLAR-Bench 因此能<em>定位</em>每个模型 intent-following 在哪种 policy/攻击组合下崩溃，给"最关键之处"的隐私对齐提供着力点。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 benchmark 方向一直在"扩攻击面/扩任务面"——5-13 TRIVIA+ desiderata（<a href="../../benchmark/2026-05-13-1.html">报告</a>）、5-14 BenchJack 的 reward-hack（<a href="../../benchmark/2026-05-14-1.html">219 漏洞</a>）、5-15 ClawForge state conflict、5-18 SaaS-Bench 真业务系统、5-19 TOBench 100 任务 27 MCP。这些工作共同把 benchmark 推向<em>"任务复杂度"</em> 的极限。POLAR-Bench 正交补上一档：<strong>当 agent 已经能完成复杂任务后，"它会不会替你说错话"才是真正的下一道关</strong>——而且这道关恰好集中在用户最依赖的<em>小模型</em>上。这是一份"反 leaderboard 误导"的 benchmark：前沿模型在它上拿到不痛不痒的 99%+，但用户日常跑的 8B/13B 直接腰斩。</p>
+
+    <p><strong>核心方法：trusted/3rd-party 对话 + 5×5 诊断面 + 确定性 set-membership 打分</strong></p>
+    <ul class="point-list">
+      <li><strong>双角色对抗框架</strong>：trusted model 持 privacy policy 和任务，第三方 model 同时探测<em>任务相关属性（要给）</em>和<em>受保护属性（不能给）</em>——这把"信息泄漏"从"<em>不要说脏话</em>" 推到"<em>说与不说哪些受 policy 约束的事实</em>"。</li>
+      <li><strong>10 domain × 7,852 sample</strong>：覆盖足够广的真实场景——医疗、金融、家庭、企业等——每个 sample 带 deterministic 答案标签，避免 LLM-judge 的不稳定。</li>
+      <li><strong>5×5 diagnostic surface</strong>：5 类 privacy policy dimension × 5 类 attack strategy，每个模型得到一张 25 格的诊断面——<em>不是单一 ASR 数</em>，而是哪个组合崩溃的<em>定位图</em>。</li>
+      <li><strong>Deterministic set-membership scoring</strong>：用集合包含来判定泄漏——比 LLM-as-Judge 稳定得多，也呼应了 5-15 ClawForge 与 5-18 SaaS-Bench 的"避免 judge 噪声"路线。</li>
+      <li><strong>frontier vs 1–30B 双档对比</strong>：把"哪类模型在哪种攻击下漏洞最多"画到具体格子里，给"<em>用户跑在自己设备的小模型</em>"画了一张精度足够的风险地图。</li>
+    </ul>
+
+    <p><strong>与既有隐私 / 安全 benchmark 的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>HarmBench / TrustLLM</th><th>SafetyBench / XL-SafetyBench</th><th>PrivQA / PII benchmark</th><th>POLAR-Bench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心威胁模型</td><td>用户对模型攻击</td><td>用户对模型攻击（多语种）</td><td>训练数据泄漏</td><td><strong>第三方 vs trusted agent + 用户 policy</strong></td></tr>
+        <tr><td>policy 维度</td><td>—</td><td>—</td><td>固定</td><td><strong>5 维 × 5 攻击 = 5×5 诊断面</strong></td></tr>
+        <tr><td>评分</td><td>LLM judge</td><td>LLM judge / 多语 judge</td><td>规则 + LLM</td><td><strong>deterministic set-membership</strong></td></tr>
+        <tr><td>关注模型档</td><td>frontier</td><td>frontier + 中型</td><td>frontier</td><td><strong>frontier + 1–30B 开源（实际用户档）</strong></td></tr>
+        <tr><td>诊断粒度</td><td>整体 ASR</td><td>整体 ASR</td><td>类别 ASR</td><td><strong>每个模型一张 5×5 diagnostic surface（崩溃点定位）</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>POLAR-Bench 的真实贡献不是"又造了一个 ASR 数"，而是<strong>把 benchmark 从"打分"重新定义为"诊断"</strong>——它给出的是每个模型在 25 格中的崩溃图，而不是排行榜上的一个数字。这与 5-13 TRIVIA+ 的 desiderata 路线、5-14 BenchJack 的 reward-hack 定位、5-19 TOBench 的 per-task grounded evaluator 同向——<em>benchmark 的下一阶段是诊断学，不是排名学</em>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Sun et al. (2024) — <em>TrustLLM: Trustworthiness in Large Language Models</em>·trust-multi-axis 评测先驱<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em>·attack/defense 标准化<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Zhang et al. (2024) — <em>SafetyBench: Evaluating the Safety of Large Language Models</em>·多类别安全测评<br>
+    <a href="https://arxiv.org/abs/2309.07045" target="_blank" rel="noopener">arxiv.org/abs/2309.07045</a></div>
+    <div class="ref-item">Mireshghallah et al. (2024) — <em>Can LLMs Keep a Secret?</em>·contextual integrity 框架——POLAR-Bench 的概念前身<br>
+    <a href="https://arxiv.org/abs/2310.17884" target="_blank" rel="noopener">arxiv.org/abs/2310.17884</a></div>
+    <div class="ref-item">Bagdasaryan et al. (2024) — <em>AirGapAgent: Protecting Privacy-Conscious Conversational Agents</em>·trusted-agent 架构借鉴<br>
+    <a href="https://arxiv.org/abs/2405.05175" target="_blank" rel="noopener">arxiv.org/abs/2405.05175</a></div>
+    <div class="ref-item">Nissenbaum (2009) — <em>Privacy in Context: Technology, Policy, and the Integrity of Social Life</em>·contextual integrity 经典理论<br>
+    <a href="https://www.sup.org/books/title/?id=8862" target="_blank" rel="noopener">sup.org/books/title/?id=8862</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>10 domain × 7,852 sample × 5×5 诊断面</strong>：评测面规模与<em>诊断颗粒度</em>同时给到——这是 benchmark 设计的高水位线，单一 ASR 数已经不够。</li>
+      <li><strong>前沿模型 protected attribute 守住 &gt;99%</strong>：意味着"用 GPT/Claude 等做 trusted agent"在 POLAR-Bench 上几乎不漏——但代价是 cloud inference 的可用性与隐私本身的悖论。</li>
+      <li><strong>1–30B 开源模型最弱漏 &gt; 50%</strong>：恰好是用户为追求"on-device / private-inference"而<em>选择信任</em>的那一档——该论文等于把"小模型自我托管 = 隐私"这一假设打回原形。</li>
+      <li><strong>Deterministic set-membership scoring</strong>：避免 LLM-judge 噪声——这条与 5-15 ClawForge / 5-18 SaaS-Bench / 5-19 TOBench 的"per-task grounded evaluator" 同向，是 benchmark 圈正在收敛的<em>评分方法学</em>。</li>
+      <li><strong>5×5 诊断面</strong>：每个模型一张二维表，告诉你它在<em>哪种 policy + 哪种攻击</em>下崩溃——等于把 leaderboard 升级为一份 model card 风格的"风险定位图"。</li>
+      <li><strong>双正交轴</strong>：policy dimension 与 attack strategy 显式正交——避免把 policy 复杂度的 confound 算到攻击鲁棒性上去，呼应 5-13 TRIVIA+ 的 desiderata 思路。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>POLAR-Bench 的 5×5 诊断面是给所有 harness 评测的方法学样板：<strong>"单一 ASR/任务通过率"已不足以诊断系统</strong>，必须用"两条正交轴 × 多格"展开。把这套思路嫁接到你的 KV-cache offload 仿真：横轴是<em>负载特性</em>（短上下文 / 长上下文 / 多 batch / 大 prefetch_k），纵轴是<em>策略</em>（LRU / FIFO / Random / Watermark / HU），把 throughput 改成"<em>相对 ideal 的延迟增加百分比</em>"——立刻得到一张策略×负载的 5×5 诊断面。这比单条曲线更适合毕设展示，也方便审稿人看到"哪种组合崩溃"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>POLAR-Bench 把<em>"小开源模型才是真战场"</em>这一事实推到正面——这跟 agent skill safety 的供应链威胁是同一种"民主化失守"图景：5-13 SKILL.md 86%/77.6%/100% 攻击（<a href="../../agent-safety/2026-05-13-1.html">报告</a>）的对象正是 ClawHub 上自由发行的<em>第三方 skill</em>；今日 ECA（<a href="2026-05-20-1.html">报告</a>）的 typed certificate 也最适合无法信任的 self-hosted skill 生态。把 POLAR-Bench 的 5×5 诊断面套到 SKILL.md 安全：横轴是 policy 维度（"哪些 capability 被允许 / 哪些必须 sandbox"），纵轴是攻击策略——会立刻给 self-hosted agent 的 skill 安全画出第一张诊断学风险地图。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直接对位）</div>
+        <p>对 benchmark 方向的启示最直接：把<strong>"诊断面"</strong>设为下一代 safety benchmark 的 first-order 输出格式。所有 leaderboard——HarmBench / TrustLLM / XL-SafetyBench / SaaS-Bench / TOBench / DTap / BenchJack——都该<em>放弃 "一个数"</em>，改报每个模型一张诊断面（policy/任务维度 × 攻击/复杂度维度）。再叠加：deterministic set-membership scoring（避免 judge 漂移）+ 1–30B 开源模型必报（避免只看 frontier 的乐观偏差）+ Wilson 上界（呼应 ECA 的统计严谨度），就是"benchmark 2.0"的最小约束。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>DecisionBench · Emergent Delegation Substrate</strong>·23,375 实例 / 反事实上限 15–31 pp——同日另一档 benchmark substrate，与 POLAR-Bench 一同代表"诊断式评测"路线<br>
+      <a href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">arxiv.org/abs/2605.19099</a></li>
+      <li><strong>How Far Are We From True Auto-Research?</strong>·117 实例 / 实验严谨度是主瓶颈 / 编造率 15× 跨度——给 POLAR-Bench 的"诊断学"提供应用场景<br>
+      <a href="https://arxiv.org/abs/2605.19156" target="_blank" rel="noopener">arxiv.org/abs/2605.19156</a></li>
+      <li><strong>TOBench / MM-ToolBench（5-19 报告）</strong>·100 任务 27 MCP 324 tools · per-task grounded evaluator——POLAR-Bench 的 deterministic scoring 同源<br>
+      <a href="../../benchmark/2026-05-19-1.html">benchmark/2026-05-19-1.html</a></li>
+      <li><strong>SaaS-Bench（5-18 报告）</strong>·真业务系统驱动的 weighted checkpoint——给 POLAR-Bench 的"诊断面"提供任务复杂度对位<br>
+      <a href="../../benchmark/2026-05-18-1.html">benchmark/2026-05-18-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.19127" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.19127" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.19127v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.19127" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-20 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.19127<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.19127" target="_blank" rel="noopener">arxiv.org/abs/2605.19127</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

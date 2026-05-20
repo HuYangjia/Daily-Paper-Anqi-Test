@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-20 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #cdebde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-20 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 20 日 · Agent Skills Safety · Hallucination-as-Authorization-Failure · 把"模型说话"从"证据"降级为"提案"</div>
+  <h1>ECA：把幻觉重写成 authorization-failure——deterministic gate + 类型化证书让 200 任务、120 任务两条 pipeline 的 unsafe-action rate 同时打到 0%</h1>
+  <div class="en-title">Hallucination as Exploit: Evidence-Carrying Multimodal Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.7</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">Hallucination as Exploit: Evidence-Carrying Multimodal Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>Hallucination-to-Action Conversion · 类型化证书 + deterministic gate · 1,900 红队 / 200 任务 / 120 任务 / 7,488 oracle replay · 0% unsafe</td>
+          <td>arXiv 2605.19192（Zhang, Zheng, Yang）2026-05-18 · 21 页 · cs.AI / cs.CR</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19151" target="_blank" rel="noopener">Progressive Autonomy as Preference Learning</a></td>
+          <td>GP posterior 信任校准 · approve/deny 二值反馈 · escalate where uncertain</td>
+          <td>arXiv 2605.19151（Changkun Ou）2026-05-18 · cs.AI/cs.HC</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19035" target="_blank" rel="noopener">Trustworthy Agent Network (KDD 2026 Blue Sky)</a></td>
+          <td>A2A 网络 trust baked-in · 4 design pillars · 对抗组合/语义错位/级联失败</td>
+          <td>arXiv 2605.19035（Yao 等 8 作者）2026-05-18</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19485" target="_blank" rel="noopener">Attention-Guided Reward for RL-based Jailbreak against LRMs</a></td>
+          <td>Attention 信号入 reward · LRM 红队 · 高 ASR + 强迁移</td>
+          <td>arXiv 2605.19485（Lin et al.）2026-05-18</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19330" target="_blank" rel="noopener">MOCHA: Multi-Objective Chebyshev Annealing for Agent Skill Optimization</a></td>
+          <td>Pareto 多目标 skill 优化 · +7.5% over single-obj</td>
+          <td>arXiv 2605.19330（Tanjim et al.）2026-05-18</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Hallucination as Exploit: Evidence-Carrying Multimodal Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>幻觉即漏洞：携带证据的多模态 Agent</span></div>
+      <div class="meta-item"><label>作者</label><span>Guijia Zhang, Hao Zheng, Harry Yang</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI / cs.CR · 多模态 Agent 安全 · authorization-grade verification</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-18（v1）</span></div>
+      <div class="meta-item"><label>篇幅</label><span>21 页</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.19192" target="_blank" rel="noopener">arxiv.org/pdf/2605.19192</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.19192v1" target="_blank" rel="noopener">arxiv.org/html/2605.19192v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.19192" target="_blank" rel="noopener">10.48550/arXiv.2605.19192</a></div>
+      <div class="meta-item"><label>核心 verifier</label><span>受约束的 DOM / OCR / AX verifier · 输出 typed certificate</span></div>
+      <div class="meta-item"><label>评测规模</label><span>1,900 红队攻击 + 200 任务端到端 + 120 任务浏览器 PoC + 500 HACR audit + 7,488 GPT-5.4 oracle replay</span></div>
+      <div class="meta-item"><label>关键定位</label><span>"<em>Evidence-Carrying Agent (ECA)</em>"——把模型 free-form text 视作 inadmissible evidence；外部证据才是授权依据</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 multimodal agent 的幻觉重写为"未支撑的 perceptual claim → 授权失败"，并用 typed certificate + deterministic gate 把 1,900 红队下的 gate bypass 从 15% 压到 1.3%、两条 pipeline 的 unsafe-action rate 同时打到 0%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多模态 agent 用截图、文档、网页来选择工具调用。当一个<em>错误的视觉 claim</em> 触发了点击、邮件、抽取或转账，<strong>幻觉就不再是"答案质量错"，而是 authorization 失败</strong>。我们把这一失败模式形式化为 <strong>hallucination-to-action conversion</strong>：一个未被支撑的 perceptual claim 提供了让特权操作"看起来被允许"的前置条件。</p>
+    <p>我们提出 <strong>Evidence-Carrying Agents (ECA)</strong>——把模型自由文本视为 <em>inadmissible evidence</em>。ECA 把每一次工具调用<strong>分解</strong>为 action-critical predicate；从受约束的 DOM/OCR/AX verifier 处获取<strong>类型化证书（typed certificate）</strong>；最后由<strong>确定性 gate</strong>仅在证书支持时授予对应特权。该架构<em>不掩盖</em>感知错误——它把"模型不透明信念"显式翻译为命名 verifier、schema、实现的 residual。</p>
+    <p>对 verifier 做 <strong>1,900 攻击的红队</strong>把这一 residual 直接暴露：四步 targeted hardening 把 gate bypass 从 <strong>15% 降至 1.3%</strong>。在 content-derived certificate 的支持下，ECA 在 200-task 端到端 pipeline 上拿到 <strong>0% 的 unsafe-action 率</strong>（Wilson 95% 上界 2.67%），在 120-task 浏览器 PoC 上同样 0%（上界 4.3%）。在 500 条 stratified task key 上的 <strong>HACR 审计</strong>显示：未被支撑的 action-critical claim 在 naive agent 中 <strong>100.0%</strong> 走到 unsafe execution、prompt-only 防御 <strong>49.6%</strong>，而 ECA <strong>不会</strong>。Oracle-certificate 在 <strong>7,488 条 GPT-5.4 trace</strong> 上做 gate 正确性 sanity check，同一威胁模型下 neural-judge 基线仍可被绕过。结论一句话：<em>模型语言可以提案动作，但只有外部证据才能授权动作</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周 agent safety 主线在围绕"<em>谁在监控、监控什么、监控之后干嘛</em>"展开——5-13 SKILL.md 的供应链攻击（<a href="../../agent-safety/2026-05-13-1.html">86%/77.6%/100% 绕过</a>）、5-14 HAM³ 的多模态多 agent 三层 ASR 78.3%、5-15 知-行 gap（<a href="../../agent-safety/2026-05-15-1.html">26.5–54% mismatch</a>）、5-18 ensemble monitoring 的 diversity > scale、5-19 Memory Laundering 的 SPG。这些工作共同指向一个底层困境：<em>"模型说什么"不能直接当 evidence 用</em>。ECA 给出的解法非常干净——直接把这一前提<strong>从架构层面写死</strong>：模型只能"提案动作"，授权必须来自外部 verifier 输出的 typed certificate。</p>
+
+    <p><strong>核心方法：HACR 形式化 → 类型化证书 → deterministic gate</strong></p>
+    <ul class="point-list">
+      <li><strong>形式化 hallucination-to-action conversion (HACR)</strong>：每一个工具调用被分解成<em>action-critical predicate</em>——执行该动作所需的<em>所有</em>感知前提，全部以 typed predicate 列出。模型不能"说一句就行"，必须每一条 predicate 都拿到证书。</li>
+      <li><strong>受约束 verifier 输出 typed certificate</strong>：DOM verifier（结构）/ OCR verifier（文本）/ AX verifier（accessibility tree）三类专用 verifier，<em>不知道</em> agent 的目标，只在自己的本体里给出"该 predicate 是否成立"的类型化证明。这把 perception error 从"agent 说错了"转成"verifier 输出了什么、residual 在哪儿"。</li>
+      <li><strong>Deterministic gate</strong>：拿到所有 predicate 的证书后，gate 用<em>固定规则</em>判定是否允许执行——不再依赖 LLM 自我审查。这是"<em>可证明 trust</em>"而不是"prompt 能不能哄住"。</li>
+      <li><strong>四步 targeted hardening</strong>：作者通过 1,900 红队攻击迭代出四个具体加固点（论文给出 verifier-by-verifier 的 hardening 清单），把 gate bypass 从 15% 砸到 1.3%——这是<em>有据可查的</em>残差缩减，而非靠"再调一下 prompt"。</li>
+      <li><strong>Wilson 上界报告</strong>：所有"0%" 都附 Wilson 95% 上界（2.67% / 4.3%）——这是 agent safety 论文里少见的、直接给出概率上界的 statistical 严谨度。</li>
+    </ul>
+
+    <p><strong>与其他防御范式的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>Prompt-only defense</th><th>Neural-judge / monitor</th><th>SafeHarbor / 5-8 guardrail</th><th>ECA（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>授权依据</td><td>prompt 里写的 policy</td><td>monitor 模型自己判断</td><td>分层记忆 + 信息熵</td><td><strong>外部 verifier 给出的 typed certificate</strong></td></tr>
+        <tr><td>是否对模型 free-form text 信任</td><td>是</td><td>部分</td><td>部分</td><td><strong>否——视为 inadmissible evidence</strong></td></tr>
+        <tr><td>HACR 审计 unsafe rate</td><td>49.6%</td><td>仍可被绕过</td><td>—</td><td><strong>0%（200/120 任务两条 pipeline）</strong></td></tr>
+        <tr><td>红队 gate bypass</td><td>—</td><td>取决于 monitor 鲁棒性</td><td>—</td><td><strong>15% → 1.3%（4 步 hardening）</strong></td></tr>
+        <tr><td>residual 可定位性</td><td>极弱</td><td>弱</td><td>中</td><td><strong>命名到 verifier / schema / 实现三类</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>ECA 的真实贡献不是"又一种 guardrail"，而在它<strong>把"为什么 agent 不该相信自己说的话"这件事推到 architectural axiom</strong>。这一公理一旦被业界采纳，就会反向倒逼 SKILL.md / MCP / agent runtime 都要预留 verifier-and-certificate 接口——这是 agent safety 工程化的下一帧。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·间接 prompt 注入威胁模型<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations</em>·neural-judge 防御代表<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Wilson (1927) — <em>Probable Inference, the Law of Succession, and Statistical Inference</em>·ECA 0% 结果所附的统计上界方法<br>
+    <a href="https://www.jstor.org/stable/2276774" target="_blank" rel="noopener">jstor.org/stable/2276774</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>Symbolic Guardrails: 80 benchmark · 74% policy 可被符号守卫保证</em>·与 ECA "外部 verifier" 思路同源<br>
+    <a href="https://arxiv.org/abs/2604.13104" target="_blank" rel="noopener">arxiv.org/abs/2604.13104</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>SafeHarbor: 分层记忆 + 信息熵 plug-and-play guardrail (ICML 2026)</em>·并列防御方案<br>
+    <a href="https://arxiv.org/abs/2605.04321" target="_blank" rel="noopener">arxiv.org/abs/2605.04321</a></div>
+    <div class="ref-item">Saha et al. (2026) — <em>Under the Hood of SKILL.md</em>·skill 注册表供应链攻击——给 ECA 提供"为何不能信模型话"的实证<br>
+    <a href="https://arxiv.org/abs/2605.10571" target="_blank" rel="noopener">arxiv.org/abs/2605.10571</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>HACR 审计 500 stratified task keys</strong>：naive agent <strong>100.0%</strong> unsafe / prompt-only defense <strong>49.6%</strong> / ECA <strong>0%</strong>——一条防御曲线把"靠 prompt"和"靠证据"做了 <em>定性</em> 切分。</li>
+      <li><strong>1,900 红队攻击 · gate bypass 15% → 1.3%</strong>：四步 targeted hardening 是<em>逐 verifier 命名</em>的，不是"再调 prompt 一次"——每一步残差都能被指名道姓地缩减。</li>
+      <li><strong>200-task 端到端 pipeline · 0% unsafe-action（Wilson 95% 上界 2.67%）</strong>：附统计上界——这是 agent safety 论文里少见的"敢报 0%"的写法。</li>
+      <li><strong>120-task 浏览器 PoC · 0% unsafe-action（上界 4.3%）</strong>：在更接近现实部署的 browser-as-action surface 上同样 0%——证明范式可迁移。</li>
+      <li><strong>7,488 GPT-5.4 oracle-certificate replay</strong>：用 oracle 证书在 7K+ 真实 trace 上做 gate 正确性 sanity check——把"gate 写错了吗"这个问题压到统计可声明。</li>
+      <li><strong>核心原则一句话</strong>："Model language may propose actions, but external evidence must authorize them"——这条公理一旦被采纳，相当于给 agent runtime 划了红线：<em>没有证书 → 没有授权</em>。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>ECA 给 harness 评测面引入新一档：<strong>"是否有 typed certificate 支撑每一次 action"</strong>。当前所有 agent harness（GAIA / τ-bench / BFCL / 你毕设里的 cache 仿真）都默认 agent action 是被允许的——但如果引入"未拿到证书的 action 一律视为失败"这一硬性 axiom，很多看起来高分的 trace 会立刻退分。这可以被嫁接到 KV-cache prefetch 决策上：把"<em>该 prefetch 哪 K 行"</em>视为一个需要被 verifier（带宽 budget 校验、稀疏 mask 一致性、命中 oracle）授权的动作——任何 prefetch 决策都必须凭证书走 deterministic gate，否则不下发。这样可解释性和可控性都会上一档。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直接对位）</div>
+        <p>ECA 是 agent safety 主线的关键一帧。结合 5-13 SKILL.md 攻击、5-15 知-行 gap、5-19 Memory Laundering，可以画出统一图景：<strong>不可信源（用户输入、tool 输出、记忆、压缩 summary、skill registry）一律不能直接成为 action 授权依据；必须经 typed verifier 出 certificate</strong>。把这条 axiom 同时套到 skill registry 上——SKILL.md 的<em>每条声称能力</em>都必须对应一个 verifier 输出的 capability certificate；套到 memory 上——任何被压缩进 summary 的 claim 都必须保留 certificate 链路；套到 multi-agent A2A——peer model 的输出必须经本地 verifier 才能进入 deterministic gate。这把 agent safety 从"加监控"升级到了"加授权契约"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 方向，ECA 给出 <strong>"HACR audit"</strong>这一<em>新 first-order 评测维度</em>：在每一条 trace 上检查"unsupported action-critical claim 是否走到 unsafe execution"。把这一指标嫁接到 BenchJack（<a href="../../benchmark/2026-05-14-1.html">5-14</a>）/ DTap（<a href="../../benchmark/2026-05-07-1.html">5-7</a>）/ POLAR-Bench / TOBench，可以一次性把"reward hack"和"hallucination-to-action"区分开——前者是 metric 漏洞、后者是授权漏洞。把 Wilson 上界写法纳入 leaderboard 报告规范，也能让 benchmark 圈停止"我跑出 0% 攻击成功率"的不规范声明。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Progressive Autonomy as Preference Learning</strong>·把"何时升级到人"做成 GP 后验 + Bayesian Optimization——ECA 的"何时执行"对应"何时拒绝"，两者互补<br>
+      <a href="https://arxiv.org/abs/2605.19151" target="_blank" rel="noopener">arxiv.org/abs/2605.19151</a></li>
+      <li><strong>Trustworthy Agent Network · KDD 2026 Blue Sky</strong>·A2A 网络 trust baked-in 论 · ECA 在 single-agent 层证伪了"trust 可 retrofit"<br>
+      <a href="https://arxiv.org/abs/2605.19035" target="_blank" rel="noopener">arxiv.org/abs/2605.19035</a></li>
+      <li><strong>Memory Laundering · SPG（5-19 报告）</strong>·有毒上下文压缩进 summary 后 monitor 看不见——ECA 的 typed certificate 链路恰好补上这道缺<br>
+      <a href="../../agent-safety/2026-05-19-1.html">agent-safety/2026-05-19-1.html</a></li>
+      <li><strong>Symbolic Guardrails · CMU</strong>·80 benchmark / 74% policy 可被符号守卫保证——ECA 把这条理论延伸到多模态实战<br>
+      <a href="../../agent-safety/2026-05-04-1.html">agent-safety/2026-05-04-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.19192" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.19192v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.19192" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-20 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.19192<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

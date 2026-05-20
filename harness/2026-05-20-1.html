@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-20 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-20 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 20 日 · Harness Engineering · Delegation Substrate · 把"质量恒定"的孤岛逼出"编排信号"</div>
+  <h1>DecisionBench：用 23,375 实例 + 5 条件参考扫 + 反事实上限，给"emergent delegation"做一个可被任意路由器复用的 harness 底座</h1>
+  <div class="en-title">DecisionBench: A Benchmark for Emergent Delegation in Long-Horizon Agentic Workflows</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">DecisionBench: A Benchmark for Emergent Delegation in Long-Horizon Agentic Workflows</a><span class="winner-badge">今日选定</span></td>
+          <td>Delegation harness substrate · 23,375 实例 · GAIA / τ-bench / BFCL · 11 模型 7 厂家 · 反事实上限</td>
+          <td>arXiv 2605.19099（Gao, Wang, Yu, Ma, Qu）2026-05-18 · 28 页 9 fig 11 tab</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19604" target="_blank" rel="noopener">Formal Skill: Programmable Runtime Skills for Efficient and Accurate LLM Agents</a></td>
+          <td>FairyClaw 开源 runtime · JSON metadata + Python executor + hook · Harness-Bench 上 token-efficient</td>
+          <td>arXiv 2605.19604（Zhang et al.）2026-05-19</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19576" target="_blank" rel="noopener">Library Drift: Diagnosing and Fixing a Silent Failure Mode in Self-Evolving LLM Skill Libraries</a></td>
+          <td>append-only evidence log · 0.258 → 0.584 pass@1 · 8 ablation</td>
+          <td>arXiv 2605.19576（Zhang et al.）2026-05-19</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19447" target="_blank" rel="noopener">SERL: Selective Hindsight Distillation for Multi-Turn Agents</a></td>
+          <td>Multi-turn agent RL · ALFWorld 90.0% · WebShop 80.1%</td>
+          <td>arXiv 2605.19447（Li et al.）2026-05-18</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19337" target="_blank" rel="noopener">Agentic Trading: Audit-Oriented Evidence Map of 77 LLM Trading Agent Studies</a></td>
+          <td>protocol incomparability + reproducibility gap · 仅 2/19 报告可抽取协议</td>
+          <td>arXiv 2605.19337（Xia et al.）2026-05-18</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>DecisionBench: A Benchmark for Emergent Delegation in Long-Horizon Agentic Workflows</span></div>
+      <div class="meta-item"><label>中文标题</label><span>DecisionBench：长程 Agent 工作流中"涌现式委派"的评测底座</span></div>
+      <div class="meta-item"><label>作者</label><span>Yuxuan Gao, Megan Wang, Yi Ling Yu, Zijian Carl Ma, Ao Qu</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL · cs.MA · 多 Agent 编排评测</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-18（v1）</span></div>
+      <div class="meta-item"><label>篇幅</label><span>28 页 · 9 图 · 11 表</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">arxiv.org/abs/2605.19099</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.19099" target="_blank" rel="noopener">arxiv.org/pdf/2605.19099</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.19099v1" target="_blank" rel="noopener">arxiv.org/html/2605.19099v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.19099" target="_blank" rel="noopener">10.48550/arXiv.2605.19099</a></div>
+      <div class="meta-item"><label>开源仓库</label><a href="https://huggingface.co/decisionbench" target="_blank" rel="noopener">huggingface.co/decisionbench</a>（substrate + 220 run archives）</div>
+      <div class="meta-item"><label>评测规模</label><span>n = 23,375 任务实例 · 11 peer 模型 · 7 厂家 · 5 条件 reference sweep · 220 per-condition run archives</span></div>
+      <div class="meta-item"><label>关键定位</label><span>"<em>delegation substrate</em>" = 把"路由器/profile/多步委派"全部视作可插拔模块的可复用 harness 底层</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"代理是否会聪明地把活儿派出去"从一句话直觉做成可量化 harness：4 条 awareness 条件下 mean quality 几乎相同（|β|≤0.010），但 routing fidelity@1 在 7.5%–29.5% 之间——质量评测看不见编排信号，DecisionBench 看得见。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>我们提出 <strong>DecisionBench</strong>——长程 Agent 工作流中"涌现式委派"的<em>评测底座</em>。该底座固定五件事：（1）任务集合（GAIA、τ-bench、BFCL multi-turn）；（2）peer 模型池（<strong>11 模型，7 厂家</strong>）；（3）委派接口（<code>call_model</code> 加可选的 <code>read_profile</code> 通道）；（4）确定性的 skill-annotation 层；（5）多轴评测面——质量、成本、延迟、委派率、routing fidelity@k、厂家自偏、以及一个<strong>反事实委派上限（counterfactual ceiling）</strong>。底座对"peer 信息如何生成或传递"<em>不做假设</em>——所以可学习的路由器、更丰富的 peer 记忆、自适应 profile 构造、以及多步委派都能在<em>同一把尺</em>下评测。</p>
+    <p>作者用一次<strong>5 条件参考扫</strong>（n = <strong>23,375</strong> 任务实例）刻画该底座，得到三个 benchmark-level 发现：</p>
+    <ul class="point-list">
+      <li>(i) <strong>Mean end-task quality 在四种 awareness 条件下统计不可分辨</strong>（|β| ≤ 0.010, p ≥ 0.21）——这意味着<em>只看质量的评测会错过整条编排信号</em>。</li>
+      <li>(ii) <strong>Routing fidelity@1 在 7.5%–29.5% 区间</strong>，且在质量相同的情况下也呈现这一巨大跨度——<em>delivery channel</em>（按需 tool vs 预加载 description）的影响压倒了 description 的<em>内容</em>本身。</li>
+      <li>(iii) <strong>反事实上限</strong>把"完美委派"的极限放在<em>所有任务集</em>测得性能<strong>之上 15–31 个百分点</strong>——给未来的编排方法留出明确的、可被基准量化的进步空间。</li>
+    </ul>
+    <p>作者公开 substrate、annotation layer、reference intervention suite、analysis pipeline、以及 220 个 per-condition run archives。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周的 harness 主线刻画了一个清晰的趋势——5-13 的 declarative semantics（<a href="../../harness/2026-05-13-1.html">Evaluation Differential</a>）、5-14 的 prospective metacognition（<a href="../../harness/2026-05-14-1.html">TRIAGE</a>）、5-15 的 negative ablation（<a href="../../harness/2026-05-15-1.html">ChromaFlow</a>）、5-18 的 recovery ladder（<a href="../../harness/2026-05-18-1.html">CAX-Agent</a>）、5-19 的 governed symbolic patch（<a href="../../harness/2026-05-19-1.html">ANNEAL</a>）——"加 orchestration 不一定更好"已经被反复证伪。但"<em>谁该做 orchestration 这件事</em>"还没有公共底座。DecisionBench 的关键贡献是<strong>把"emergent delegation"做成跟 GAIA/τ-bench/BFCL 同一档的 first-class 评测面</strong>，并明确指出<em>"只看 mean quality 会错过整条信号"</em>。这就是为什么 4 个 awareness 条件下 |β| ≤ 0.010 的同时，routing fidelity@1 拉开了 7.5%–29.5% 的跨度——传统 quality benchmark 在这个 substrate 上是<em>盲的</em>。</p>
+
+    <p><strong>核心方法：5 件可插拔零件 + 多轴评测 + 反事实上限</strong></p>
+    <ul class="point-list">
+      <li><strong>固定底座：3 任务集 + 11 模型 + 1 委派接口 + 1 skill-annotation 层 + 多轴指标</strong>——所有变量被显式列在 substrate 边界上，让任何路由器/peer memory/profile 构造方法都能"换零件"地参与评测。</li>
+      <li><strong>多轴指标 7 维同测</strong>：quality / cost / latency / delegation rate / routing fidelity@k / vendor self-preference / counterfactual-delegation ceiling——后两项是<em>新引入的两条 first-order 维度</em>，用来区分"碰巧好"和"真知道该派给谁"。</li>
+      <li><strong>反事实委派上限</strong>：每条任务都计算"如果完美委派会是什么质量"——给出"上限-当前"差距，把进步空间<em>量化到任务级</em>。</li>
+      <li><strong>5 条件参考扫（reference sweep）</strong>：no-awareness / on-demand / preloaded-name / preloaded-description / oracle-routing——同一 substrate 跑 5 次，观察"哪条信号能被切掉而 quality 不动"。</li>
+      <li><strong>220 run archives 公开</strong>：不只是数据，整条 reference intervention suite 与 analysis pipeline 都开源——<em>任何后续路由器可以直接对接、无需重建评测面</em>。</li>
+    </ul>
+
+    <p><strong>与现有 agent benchmark / harness 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>GAIA / τ-bench / BFCL</th><th>HELM / OpenAI evals</th><th>AgentBench / DTap</th><th>DecisionBench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心被测对象</td><td>单 agent 完成长程任务</td><td>单模型 capability score</td><td>单 agent 工作流</td><td><strong>"何时把活派给谁" 这个决策本身</strong></td></tr>
+        <tr><td>是否暴露编排信号</td><td>否（只看 final quality）</td><td>否</td><td>部分（task-level）</td><td><strong>是（routing fidelity@k + counterfactual ceiling）</strong></td></tr>
+        <tr><td>peer 信息接口</td><td>无</td><td>无</td><td>固定</td><td><strong><code>call_model</code> + 可选 <code>read_profile</code>，可被任何路由器复用</strong></td></tr>
+        <tr><td>规模 / 可复现</td><td>较小或专域</td><td>大但单层</td><td>中等</td><td><strong>23,375 instances + 220 archives + HF release</strong></td></tr>
+        <tr><td>给后续方法留的杠杆</td><td>—</td><td>—</td><td>—</td><td><strong>反事实上限把"还差多少"量化到 15–31 pp</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>DecisionBench 真正的贡献不在"又一个 benchmark"，而在它<strong>把 agent harness 的评测面从"任务完成质量"拓展到了"路由决策质量"</strong>——这是 5-13 ED、5-14 TRIAGE、5-15 ChromaFlow 这一脉"评测面拓宽"工作的下一帧。一旦反事实上限被广泛接受，路由器/profile 设计领域就有了一个 unambiguous 的"学习目标"。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: a benchmark for General AI Assistants</em>·DecisionBench 三大任务源之一<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Yao et al. (2024) — <em>τ-bench: A Benchmark for Tool-Agent-User Interaction</em>·真实工具-用户多回合任务<br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Berkeley Function-Calling Leaderboard team — <em>BFCL multi-turn</em>·multi-turn 函数调用基准<br>
+    <a href="https://gorilla.cs.berkeley.edu/leaderboard.html" target="_blank" rel="noopener">gorilla.cs.berkeley.edu/leaderboard.html</a></div>
+    <div class="ref-item">Wu et al. (2024) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation</em>·多 agent 编排框架<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>MetaGPT: Meta Programming for Multi-Agent Collaborative Framework</em>·多 agent SOP<br>
+    <a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">arxiv.org/abs/2308.00352</a></div>
+    <div class="ref-item">Liang et al. (2023) — <em>HELM: Holistic Evaluation of Language Models</em>·多轴评测理念<br>
+    <a href="https://arxiv.org/abs/2211.09110" target="_blank" rel="noopener">arxiv.org/abs/2211.09110</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>23,375 任务实例 × 11 peer 模型 × 5 条件参考扫</strong>：把 substrate 跑到了"统计可声明"的规模——任何后续路由器都可以直接对接而不必自己再扫一遍。</li>
+      <li><strong>4 awareness 条件下 mean quality 不可分辨</strong>（|β| ≤ 0.010, p ≥ 0.21）——铁证"<em>只看 quality 的 benchmark 是盲的</em>"，编排信号必须看 routing 维度。</li>
+      <li><strong>routing fidelity@1 ∈ [7.5%, 29.5%]</strong>（4× 跨度）：在 quality 几乎相同的情况下，路由对错差 4 倍——这个差恰好藏在<em>delivery channel</em>（按需 vs 预加载）里，而非 description 内容。</li>
+      <li><strong>反事实委派上限：完美 routing 比当前测得高 15–31 pp</strong>（任务集间）——给未来路由器一个明确的"还有多少肉可以咬"。</li>
+      <li><strong>vendor self-preference 维度</strong>：把"模型偏向自家厂家"的 bias 第一次纳入正式评测面——这是 multi-vendor agent ecosystem 的<em>bias-aware metric</em>。</li>
+      <li><strong>220 per-condition run archives + analysis pipeline 全开源</strong>（HF）：substrate 真正可复现，不是"附录里给个 prompt"——这一条本身就是 harness engineering 实践的高水位线。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>DecisionBench 给了你 KV-cache offload 评测一个直接对位的"<strong>substrate 思维</strong>"：你目前的 GPU 缓存仿真本质上就是一个委派问题——"哪些 K 行该被 prefetch、哪些该 keep on GPU、哪些该让它走 H2D"。模仿 DecisionBench 的<em>反事实上限</em>，给毕设加一条<strong>"完美 prefetch 上限"</strong>曲线——任何驱逐+预取策略组合都可以被这个上限标尺度量"还差多少 pp"。同样，把 quality（throughput）与 routing fidelity（命中率/带宽利用率）<em>两轴同测</em>——不让 throughput 单一指标盖住 prefetch 决策的好坏。再加一个 <em>delivery channel</em> 类比：on-demand fetch vs preloaded prefetch_k，哪条路径让带宽更宽——这就是你已经在做的，但 DecisionBench 给了你一份"标准化报告模板"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 agent safety 的迁移路径：把 skill 安全也做成 5 条件参考扫——无 awareness（盲调用）/ on-demand（执行时审）/ preloaded name（仅看 skill ID）/ preloaded description（看 SKILL.md）/ oracle authorization（人工金标）。沿用 DecisionBench 的 mean quality 不可分辨而 routing 拉开的发现，可以预测：<em>很多 skill registry 的"安全性能"在 mean quality 下看不见，但在"是否调对了正确 skill"维度上拉开极大跨度</em>——这跟 5-13 SKILL.md 攻击（<a href="../../agent-safety/2026-05-13-1.html">86%/77.6%/100% 绕过</a>）完全同一调子，DecisionBench 给了一个量化它的工具。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 方向的启发更直接：<strong>反事实上限</strong>是一个普适 first-order 评测维度——任何 benchmark 都应该报告 "完美策略上限-当前最强模型"差距，而不只是 "当前最强 / leaderboard"。这个习惯一旦推开，会立刻让 BenchJack（<a href="../../benchmark/2026-05-14-1.html">5-14 报告</a>）的 reward-hack taxonomy 升级——hacking 现在可以被"反事实上限是否被超过"判定。同样，把 vendor self-preference 加为标配维度，会改变所有"GPT 评 GPT、Claude 评 Claude"的 judge 设计：DTap、ML-Bench&amp;Guard 等 benchmark 都该补这一项。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Formal Skill · 可编程 runtime skill</strong>·JSON metadata + Python executor + hook governance + skill-local state——给 DecisionBench 的 substrate 提供 skill-annotation 层的可能实现<br>
+      <a href="https://arxiv.org/abs/2605.19604" target="_blank" rel="noopener">arxiv.org/abs/2605.19604</a></li>
+      <li><strong>Library Drift · 自演化技能库的隐性故障</strong>·append-only evidence log + outcome-driven retirement + active-cap——把 skill lifecycle 治理做成 0.258→0.584 pass@1 的实证<br>
+      <a href="https://arxiv.org/abs/2605.19576" target="_blank" rel="noopener">arxiv.org/abs/2605.19576</a></li>
+      <li><strong>SERL · Multi-turn 选择性后视蒸馏</strong>·ALFWorld 90.0% / WebShop 80.1%——给 DecisionBench 的"路由器训练"提供一种 RL 路径<br>
+      <a href="https://arxiv.org/abs/2605.19447" target="_blank" rel="noopener">arxiv.org/abs/2605.19447</a></li>
+      <li><strong>Trustworthy Agent Network (KDD 2026 Blue Sky)</strong>·A2A 网络的"trust 必须 baked-in 而非 bolted-on"——给 DecisionBench 的 vendor self-preference 维度提供概念依据<br>
+      <a href="https://arxiv.org/abs/2605.19035" target="_blank" rel="noopener">arxiv.org/abs/2605.19035</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.19099" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.19099v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.19099" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://huggingface.co/decisionbench" target="_blank" rel="noopener">Hugging Face: decisionbench</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-20 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.19099<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.19099" target="_blank" rel="noopener">arxiv.org/abs/2605.19099</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
