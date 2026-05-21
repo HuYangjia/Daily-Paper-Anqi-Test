@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-21 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfa8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-21 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 21 日 · Safety Benchmark · Population-Specific Risk · 第一个把"老年人专属风险"做成 first-class benchmark 的工作</div>
+  <h1>GrandGuard：3 级 50 类老年人专属风险 + 10,404 prompt benchmark——leading LLM 误处理超 50%，Llama-Guard-3 微调达 96.2% 不安全检出</h1>
+  <div class="en-title">GrandGuard: Taxonomy, Benchmark, and Safeguards for Elderly-Chatbot Interaction Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.4</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">GrandGuard: Taxonomy, Benchmark, and Safeguards for Elderly-Chatbot Interaction Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>population-specific safety benchmark · 3 级 50 类风险 · 10,404 prompts · 96.2% / 90.9% safeguard</td>
+          <td>arXiv 2605.20203（Fan, Yang et al. 12 作者）2026 提交</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21482" target="_blank" rel="noopener">DeepWeb-Bench: A Deep Research Benchmark Demanding Massive Cross-Source Evidence and Long-Horizon Derivation</a></td>
+          <td>9 frontier models · Retrieval/Derivation/Reasoning/Calibration 4 capability 切片 · 70%+ 错误来自 derivation/calibration</td>
+          <td>arXiv 2605.21482（Xie, Shi et al. 11 作者）2026-05-20</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20873" target="_blank" rel="noopener">PlanningBench: Generating Scalable and Verifiable Planning Data for Evaluating and Training LLMs</a></td>
+          <td>controllable planning · 30+ 任务类型 · 约束族 + automatic verification</td>
+          <td>arXiv 2605.20873（Zhao, Xu）2026-05-20</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20204" target="_blank" rel="noopener">RealUserSim: Bridging the Reality Gap in Agent Benchmarking via Grounded User Simulation</a></td>
+          <td>14,000+ 真实对话 grounding · behavioral match 24.2%→45.3% · agent benchmark 真实性</td>
+          <td>arXiv 2605.20204（Zhu, Tan et al.）2026 提交</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21413" target="_blank" rel="noopener">Teaching AI Through Benchmark Construction: QuestBench as a Course-Based Practice for Accountable Knowledge Work</a></td>
+          <td>学生构造 benchmark · 256 问题 · 16.85% 平均通过率——揭示 deep research 系统隐性失败</td>
+          <td>arXiv 2605.21413（Shen, Wang）2026-05-20</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>GrandGuard: Taxonomy, Benchmark, and Safeguards for Elderly-Chatbot Interaction Safety</span></div>
+      <div class="meta-item"><label>中文标题</label><span>GrandGuard：面向老年-聊天机器人交互的安全分类、基准与守护体系</span></div>
+      <div class="meta-item"><label>作者</label><span>Changxuan Fan, Xi Yang, Yueyuan Zheng, Bin Zhou, Yuanping Wang, Wenbin Hu, Huihao Jing, Ki Sen Hung, Dazhao Du, Haoran Li, Janet Hui-wen Hsiao, Yangqiu Song（共 12 作者）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL · safety benchmark · population-specific risk</span></div>
+      <div class="meta-item"><label>评测规模</label><span>10,404 labeled prompts/responses · 3 级 taxonomy · 50 fine-grained 风险类型 · 5 大风险域</span></div>
+      <div class="meta-item"><label>风险域</label><span>心理健康 · 财务 · 医疗 · 毒性 · 隐私</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">arxiv.org/abs/2605.20203</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.20203" target="_blank" rel="noopener">arxiv.org/pdf/2605.20203</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.20203v1" target="_blank" rel="noopener">arxiv.org/html/2605.20203v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.20203" target="_blank" rel="noopener">10.48550/arXiv.2605.20203</a></div>
+      <div class="meta-item"><label>数据来源</label><span>真实事件 + 社区讨论 + 利益相关者研究分析（grounded）</span></div>
+      <div class="meta-item"><label>核心定位</label><span>第一份"<em>老年人 contextual risk</em>"专属安全 benchmark + 守护方案双套件</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把"老年人专属 contextual risk"做成 3 级 50 类正式 taxonomy + 10,404 prompts benchmark——<strong>leading LLM 在该集上误处理超 50%</strong>，并提供 96.2% / 90.9% 两套 safeguard 模型作为基线。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>随着老年人越来越多地使用基于 LLM 的聊天机器人来获得陪伴与帮助，一个<strong>安全鸿沟</strong>正在浮现。老年人可能因社会孤立、数字素养有限、认知衰退而面临脆弱性，但现有的安全 benchmark 主要瞄准<em>普适性危害</em>，忽视了<em>老年人专属</em>的风险。例如，"<em>如何在黑暗里独自修理天花板上的灯</em>"对大多数用户是良性的，但对行动不便的老年人构成严重的<strong>跌倒风险</strong>。</p>
+    <p>我们提出 <strong>GrandGuard</strong>——首个用于评估并缓解 LLM 交互中"老年人专属 contextual 风险"的综合框架：</p>
+    <ul class="point-list">
+      <li>构建一份<strong>3 级 taxonomy</strong>，包含 <strong>50 类细粒度风险</strong>，覆盖 5 大领域：<em>心理健康 / 财务 / 医疗 / 毒性 / 隐私</em>——基于真实事件、社区讨论、利益相关者研究分析。</li>
+      <li>基于该 taxonomy 构建一份 <strong>10,404 条 prompts/responses</strong> 的 benchmark，揭示<strong>多个 leading LLM 在 50%+ 案例中误处理</strong>老年人专属上下文风险。</li>
+      <li>提出两种 safeguard：<strong>fine-tuned Llama-Guard-3</strong>（96.2% 不安全 prompt 检出准确率）与 <strong>policy-enhanced gpt-oss-safeguard-20b</strong>（90.9%）。</li>
+    </ul>
+    <p>GrandGuard 为"<em>超越普适安全、走向支持老龄人口的 AI 系统</em>"奠定基础。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去三周的 benchmark 主线把"<em>评测面拓宽</em>"做到了一定饱和——5-12 <a href="../../benchmark/2026-05-12-1.html">Agent-ValueBench</a> 价值观、5-13 <a href="../../benchmark/2026-05-13-1.html">TRIVIA+</a> 视觉幻觉、5-14 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a> reward-hack、5-15 <a href="../../benchmark/2026-05-15-1.html">ClawForge</a> CLI agent、5-18 <a href="../../benchmark/2026-05-18-1.html">SaaS-Bench</a>、5-19 <a href="../../benchmark/2026-05-19-1.html">TOBench</a>、5-20 <a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a> privacy-aware adversarial。GrandGuard 把这条线推到了一个全新的<strong>正交方向</strong>："<em>population-specific risk</em>"——同样一句 prompt 对不同人群安全意义截然不同，这是过去所有 safety benchmark 的共同盲区（AgentAtlas 同日的 5-21 报告也指出了"benchmark coverage 审计"的必要性）。</p>
+
+    <p><strong>核心方法：双轴 grounding × 3 级 taxonomy × 双 safeguard</strong></p>
+    <ul class="point-list">
+      <li><strong>双轴 grounding 数据源</strong>：风险类型不是凭空臆造——来自<em>真实事件 / 社区讨论 / 利益相关者研究分析</em>的三元 grounding，避免"benchmark 反映 benchmark 团队偏见"。</li>
+      <li><strong>3 级 taxonomy（粗→中→细）× 50 fine-grained 风险</strong>：跨 5 大领域分布——心理健康、财务、医疗、毒性、隐私——确保每条风险都有清晰的类别归属。</li>
+      <li><strong>10,404 prompts/responses 标注集</strong>：每条 prompt 都附带"在该上下文下应被如何处理"的金标——比"该不该回答"更细，是"该如何安全地回答"。</li>
+      <li><strong>双 safeguard 基线</strong>：fine-tuned Llama-Guard-3（96.2%）走 supervised 路径；policy-enhanced gpt-oss-safeguard-20b（90.9%）走 declarative policy 路径——给后续工作提供两条对照路径。</li>
+      <li><strong>"contextual risk"概念正式入册</strong>：风险不是 prompt 的固有属性，而是<em>prompt × 人群</em>的二元乘积——这是一个对 safety benchmark 设计有根本性影响的概念升级。</li>
+    </ul>
+
+    <p><strong>与现有 safety benchmark 的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>HarmBench / SafetyBench</th><th>TrustLLM</th><th>POLAR-Bench (5-20)</th><th>GrandGuard（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>风险定义</td><td>普适危害</td><td>多面 trustworthiness</td><td>policy 上下文相关</td><td><strong>人群-上下文相关（contextual risk）</strong></td></tr>
+        <tr><td>数据 grounding</td><td>红队合成</td><td>红队 + scenario</td><td>policy 文本</td><td><strong>真实事件 + 社区 + 利益相关者三元 grounding</strong></td></tr>
+        <tr><td>风险粒度</td><td>大类</td><td>多维度</td><td>policy domain</td><td><strong>3 级 50 类（细到"独自修灯泡"级别）</strong></td></tr>
+        <tr><td>是否提供 safeguard</td><td>无</td><td>无</td><td>诊断报告</td><td><strong>fine-tuned + policy-enhanced 双套</strong></td></tr>
+        <tr><td>核心论断</td><td>模型不该输出有害</td><td>模型应可信</td><td>policy 该被遵循</td><td><strong>"通用安全不等于人群安全"</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>GrandGuard 真正的贡献不是又跑了一遍 leading LLM 的 unsafe rate，而是<strong>把"安全"从"单点静态属性"重写成"prompt × population × context"三元函数</strong>——这是 safety benchmark 框架的概念升级。一旦"contextual risk"的范式被广泛接受，未来必然出现 KidGuard / DisabilityGuard / LowLiteracyGuard 等等系列 benchmark——GrandGuard 是这条新路径的<em>先头部队</em>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations</em>·fine-tuned safeguard 路径基线<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em>·普适 safety benchmark 主流路线<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Sun et al. (2024) — <em>TrustLLM: Trustworthiness in Large Language Models</em>·多面 trustworthiness benchmark<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">Bai et al. (2022) — <em>Constitutional AI: Harmlessness from AI Feedback</em>·declarative policy safeguard 路径<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">Zhang et al. (2024) — <em>SafetyBench: Evaluating the Safety of Large Language Models</em>·中文 safety benchmark 起点<br>
+    <a href="https://arxiv.org/abs/2309.07045" target="_blank" rel="noopener">arxiv.org/abs/2309.07045</a></div>
+    <div class="ref-item">Solaiman & Dennison (2021) — <em>Process for Adapting Language Models to Society (PALMS)</em>·人群-社会适配先驱<br>
+    <a href="https://arxiv.org/abs/2106.10328" target="_blank" rel="noopener">arxiv.org/abs/2106.10328</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>10,404 labeled prompts/responses × 3 级 × 50 类风险</strong>——首份关于老年人专属风险的工业级规模 benchmark。</li>
+      <li><strong>5 大风险域</strong>：心理健康 / 财务 / 医疗 / 毒性 / 隐私——覆盖老年人面临的核心 contextual 危害。</li>
+      <li><strong>多个 leading LLM 误处理 &gt; 50% 案例</strong>——这是 safety benchmark 文献里少见的"<em>主流模型严重失败</em>"信号，意味着 contextual risk 是 LLM 安全的真盲区。</li>
+      <li><strong>Fine-tuned Llama-Guard-3 达到 96.2% 不安全 prompt 检出</strong>——比通用 safety guard 在该域有显著提升，证明<em>population-specific 微调是有效的</em>。</li>
+      <li><strong>Policy-enhanced gpt-oss-safeguard-20b 达 90.9%</strong>——declarative policy 路径仅以 5 pp 落后，但<em>无需重训</em>，这是部署灵活性的关键证据。</li>
+      <li><strong>"独自修灯泡"案例</strong>——同一句 prompt 对不同人群安全语义截然不同，这是 contextual risk 概念的最佳教学样本。</li>
+      <li><strong>"<em>contextual risk</em>" 是 GrandGuard 留给社区的一个 first-class 概念</strong>——未来 KidGuard / DisabilityGuard 都将沿用这套定义。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>GrandGuard 的"<strong>contextual risk</strong>"概念可以直接对位你 KV-cache 评测的"<strong>contextual hit/miss</strong>"——同一个 prefetch 决策对不同 working set 大小、不同 sequence 长度、不同 batch 形状下"是否命中"语义截然不同。借鉴 GrandGuard 的方法，把毕设第三章的策略评测从"<em>策略 × benchmark</em>"二元升级为"<em>策略 × benchmark × 上下文配置</em>"三元——例如分别报告 "短序列 + 大缓存 / 长序列 + 小缓存 / 多轮对话场景" 三种 contextual 切面下的 hit rate。这跟同日 5-21 AgentAtlas（harness）的"<em>双 prompt 模式</em>"是同向方法学——揭示"看似一致的指标其实在掩盖上下文敏感的失败"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 agent safety 的迁移路径：把 SKILL.md 安全也做成"<strong>contextual skill risk</strong>"——同一个 skill 对不同用户角色（admin / dev / end-user）、不同环境（生产 / 沙箱 / 演示）、不同上下文（在 IDE 内调用 / 在 CI 流水线内调用）有截然不同的安全语义。这和 5-21 同日的 CUGA <a href="../../agent-safety/2026-05-21-1.html">5 检查点</a>架构互补：<em>CUGA 给出"在哪些点拦截"，GrandGuard 给出"按什么 context 来判定该不该拦"</em>。两者结合，agent 安全系统才能既有结构化拦截又有 context-aware 判定。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（核心）</div>
+        <p>GrandGuard 是一份直接可复制的<strong>benchmark 设计模板</strong>：(a) 三元 grounding（真实事件 + 社区 + 利益相关者）避免单一来源偏见；(b) 3 级 taxonomy 让风险细到"独自修灯泡"层级——粒度足够暴露 LLM 真实失败；(c) 双 safeguard 路径（fine-tune vs declarative policy）作为<em>baseline</em> 比较——这一条直接映射到 5-21 CUGA 的 policy-as-code 路线。同时，"<strong>population-specific safety benchmark</strong>" 这条新赛道未来会催生大量子方向工作——<em>这是一份 high-leverage 的 benchmark 论文</em>。它跟 5-20 POLAR-Bench 和 5-19 TOBench 一起，构成 2026-05 整月 benchmark 方向的"概念升级浪潮"——从单维度 ASR 走向 contextual / policy-aware / population-specific 三向同时进化。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>DeepWeb-Bench · 9 frontier models · 4 capability 切片</strong>·retrieval/derivation/reasoning/calibration 四面切片，70%+ 错误来自后两者——切片报告范式与 GrandGuard 同向<br>
+      <a href="https://arxiv.org/abs/2605.21482" target="_blank" rel="noopener">arxiv.org/abs/2605.21482</a></li>
+      <li><strong>PlanningBench · 30+ 任务 · automatic verification</strong>·controllable planning 数据生成 + 自动验证——给 contextual benchmark 提供数据 scale-up 模板<br>
+      <a href="https://arxiv.org/abs/2605.20873" target="_blank" rel="noopener">arxiv.org/abs/2605.20873</a></li>
+      <li><strong>RealUserSim · 14,000+ 真实对话 grounded</strong>·24.2%→45.3% behavioral match——用真实用户而非合成 prompt 提升 benchmark realism<br>
+      <a href="https://arxiv.org/abs/2605.20204" target="_blank" rel="noopener">arxiv.org/abs/2605.20204</a></li>
+      <li><strong>POLAR-Bench (5-20)</strong>·policy-aware adversarial · 10 域 / 7,852 样本 · 5×5 诊断面——与 GrandGuard 形成"policy × population"双向布局<br>
+      <a href="../../benchmark/2026-05-20-1.html">benchmark/2026-05-20-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.20203" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.20203v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.20203" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-21 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.20203<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">arxiv.org/abs/2605.20203</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-21 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 720px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e1f5ee; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #cdebde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e1f5ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-21 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 21 日 · Agent Skills Safety · Governance by Construction · 把治理"建进"agent，而不是"贴在"agent 之外</div>
+  <h1>CUGA Policy System：Policy-as-Code + 5 个结构化执行检查点——把企业级 agent 的"安全治理"从 prompt 招贴变成执行管线一等公民</h1>
+  <div class="en-title">Governance by Construction for Generalist Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">Governance by Construction for Generalist Agents (CUGA)</a><span class="winner-badge">今日选定</span></td>
+          <td>policy-as-code · 5 结构化检查点 · 企业级 generalist agent runtime governance</td>
+          <td>arXiv 2605.20911（Shlomov, Shoham, Oved et al. 10 作者）2026-05-21</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21006" target="_blank" rel="noopener">Playing Devil's Advocate: Off-the-Shelf Persona Vectors Rival Targeted Steering for Sycophancy</a></td>
+          <td>persona steering vector · sycophancy 缓解 · 不损正确性</td>
+          <td>arXiv 2605.21006（Kelkar, Alam）2026-05-20</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20834" target="_blank" rel="noopener">Conditional Equivalence of DPO and RLHF: Implicit Assumption, Failure Modes, and Provable Alignment</a></td>
+          <td>DPO vs RLHF 等价性 · CPO 可证明对齐</td>
+          <td>arXiv 2605.20834（Yang, Zhang）2026-05-20</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20189" target="_blank" rel="noopener">SOLAR: A Self-Optimizing Open-Ended Autonomous Agent for Lifelong Learning and Continual Adaptation</a></td>
+          <td>自优化 lifelong agent · meta-learning · 测试时适应——自我修改 agent 的安全边界</td>
+          <td>arXiv 2605.20189（Vetcha, Liu）2026-05-19</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20690" target="_blank" rel="noopener">Declarative Data Services: Structured Agentic Discovery for Composing Data Systems</a></td>
+          <td>typed contracts · bounded sub-search · 数据系统级 agent 边界</td>
+          <td>arXiv 2605.20690（Ye, Lu）2026-05-19</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Governance by Construction for Generalist Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>"按构造治理"——通用 Agent 的策略即代码与运行时治理</span></div>
+      <div class="meta-item"><label>作者</label><span>Segev Shlomov, Iftach Shoham, Alon Oved, Ido Levy, Sami Marreed, Harold Ship, Offer Akrabi, Sergey Zeltyn, Avi Yaeli, Nir Mashkif（共 10 作者）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL · agentic AI 安全治理 · 企业级 agent 部署</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-21（v1）</span></div>
+      <div class="meta-item"><label>形式</label><span>System / Demo paper（healthcare 多层执行干预案例）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.20911" target="_blank" rel="noopener">arxiv.org/pdf/2605.20911</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.20911v1" target="_blank" rel="noopener">arxiv.org/html/2605.20911v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.20911" target="_blank" rel="noopener">10.48550/arXiv.2605.20911</a></div>
+      <div class="meta-item"><label>核心定位</label><span>把治理建进 agent <em>构造层</em>——5 个结构化检查点，无需重训模型</span></div>
+      <div class="meta-item"><label>关键论断</label><span>"<strong>Policies are not afterthoughts</strong>" — 治理跨整条执行管线连续介入</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent 治理从 prompt 招贴升级为"<strong>5 个结构化检查点 × policy-as-code</strong>"——Intent Guard / Playbook / Tool Guide / Tool Approvals / Output Formatter——让企业级 generalist agent 在不重训的前提下做到可预测、可审计、合规感知。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>企业 agent 越来越被期待跨工具与界面自主操作，但生产部署要求"<strong>按构造治理</strong>"（governance by construction）：系统必须明确<em>哪些动作允许</em>、<em>何时需要人类监督</em>、<em>哪些信息可被暴露</em>，并且<strong>不为每个域重建 agent</strong>。本 demo 介绍 CUGA 的策略系统——一个模块化的 <strong>policy-as-code</strong> 层，与一个 generalist LLM agent 组合，能在<em>组合工作流</em>中提供可预测、可审计、合规感知的行为，<em>且无需模型微调</em>。</p>
+    <p>我们提出一种<strong>运行时治理架构</strong>——策略不是被动约束，而是在执行的<strong>每个关键阶段</strong>主动介入。具体来说，策略在 <strong>5 个结构化检查点</strong> 拦截 agent：</p>
+    <ul class="point-list">
+      <li><strong>Intent Guard</strong>：上游 — planning 之前；阻止恶意/事故性的有害意图。</li>
+      <li><strong>Playbook</strong>：system prompt 内 — 引导推理的结构化导调。</li>
+      <li><strong>Tool Guide</strong>：tool-call 边界 — 强制工具的正确使用方式。</li>
+      <li><strong>Tool Approvals</strong>：reasoning loop 之外 — 高风险动作的 Human-in-the-Loop 阀门。</li>
+      <li><strong>Output Formatter</strong>：输出阶段 — 过滤并结构化最终响应。</li>
+    </ul>
+    <p>这 5 个阶段把治理<em>连续</em>嵌进 agent 执行管线，而不是事后兜底。论文用一个<strong>医疗场景</strong>多层执行干预 demo 展示：动态 playbook 注入做结构化 tool-序列强制、intent guard 阻断恶意/有害请求、HIL 工具审批守住具有破坏性的动作。该 artifact 说明<strong>类型化治理基元</strong>如何让企业级 agentic 系统的部署"<em>更快、更安全</em>"，同时改进策略遵循度与执行一致性。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去一周的 agent safety 主线刻画了一条惊人清晰的"<em>从模型层下沉到管线层</em>"曲线——5-13 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md</a> 揭示 markdown 即攻击面、5-15 <a href="../../agent-safety/2026-05-15-1.html">"知-行 gap"</a> 把工具调用刻画成 cognition / execution 不一致、5-19 <a href="../../agent-safety/2026-05-19-1.html">memory laundering</a> 提出 SPG，5-20 <a href="../../agent-safety/2026-05-20-1.html">ECA</a> 直接把幻觉重写成 authorization-failure 并用 deterministic gate 把 unsafe rate 打到 0%。CUGA 在此线上做了一次<strong>架构层综合</strong>：<em>所有这些攻击面都需要一个统一的、跨阶段的 policy 干预层</em>——单点防御不够，必须在 5 个点同时收紧。这就是"<em>by construction</em>"——治理不是 fine-tune、不是 prompt、不是事后审计，而是<strong>嵌进执行管线的拓扑结构</strong>。</p>
+
+    <p><strong>核心方法：5 检查点 × policy-as-code × 组合工作流</strong></p>
+    <ul class="point-list">
+      <li><strong>检查点 1 · Intent Guard（上游）</strong>：在 planning 启动之前对 user intent 做策略评估——阻止恶意/事故性有害请求进入 agent 执行域。<em>类比 firewall 的"入站规则"</em>。</li>
+      <li><strong>检查点 2 · Playbook（system prompt 内）</strong>：策略以"动态 playbook"注入到 system prompt——结构化引导 agent 在特定场景使用哪些 tool 序列。<em>不是"自由发挥 + 事后管"，而是"上 rails"</em>。</li>
+      <li><strong>检查点 3 · Tool Guide（tool-call 边界）</strong>：每次工具调用前的强制策略校验——tool 必须按 policy 定义的方式被调用，类型与参数都要满足合约。</li>
+      <li><strong>检查点 4 · Tool Approvals（reasoning loop 之外）</strong>：高风险动作进入 Human-in-the-Loop 队列——破坏性写入、跨账号操作、超阈值消费等。<em>这是 ECA "authorization gate" 的工程化版本</em>。</li>
+      <li><strong>检查点 5 · Output Formatter（输出阶段）</strong>：最后一道——过滤敏感信息泄露、结构化最终响应、保证可审计 trace 完整。</li>
+    </ul>
+
+    <p><strong>与现有 agent safety 工作的核心差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>RLHF / 微调</th><th>System prompt safety</th><th>Tool sandbox</th><th>CUGA（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>治理层位</td><td>权重内</td><td>prompt 文本内</td><td>tool 执行环境内</td><td><strong>5 个执行阶段同时</strong></td></tr>
+        <tr><td>是否需要重训</td><td>是</td><td>否</td><td>否</td><td><strong>否（policy-as-code 模块化）</strong></td></tr>
+        <tr><td>跨域可迁移性</td><td>差</td><td>需重写 prompt</td><td>需重配 sandbox</td><td><strong>策略与 agent 分离，可复用</strong></td></tr>
+        <tr><td>合规可审计性</td><td>难</td><td>难</td><td>部分</td><td><strong>类型化 policy 决策可 trace</strong></td></tr>
+        <tr><td>对 agent 自主性的影响</td><td>钝化能力</td><td>易绕过</td><td>仅末端阻断</td><td><strong>"上 rails"——不削能力，约束行为</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>CUGA 真正的贡献不在于发明 5 个名词，而在于<strong>把"安全是某一层的事"这个隐含假设打破</strong>——它论证了：在企业级 agent 部署里，<em>每一层都有自己唯一能挡的攻击面</em>，所以治理必须<strong>跨层连续</strong>。这跟 5-20 ECA 的"authorization gate"在精神上同向，但 CUGA 把它推到了<em>整条执行管线</em>的层面。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Bai et al. (2022) — <em>Constitutional AI: Harmlessness from AI Feedback</em>·"宪法/规则即治理基元"先驱<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard</em>·输入/输出双道闸的 baseline<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·"reasoning loop"基础结构<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·tool-call 治理的对象<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Anwar et al. (2024) — <em>Foundational Challenges in Assuring Alignment and Safety of LLMs</em>·按构造治理的概念依据<br>
+    <a href="https://arxiv.org/abs/2404.09932" target="_blank" rel="noopener">arxiv.org/abs/2404.09932</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>AgentBench: Evaluating LLMs as Agents</em>·企业级 agent 评测对照<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>5 个结构化检查点</strong>覆盖 agent 执行管线的全部关键交叉口——Intent Guard / Playbook / Tool Guide / Tool Approvals / Output Formatter。</li>
+      <li><strong>不需要模型微调</strong>：所有 policy 都用 policy-as-code 写——把"治理"和"通用 agent 能力"<em>解耦</em>。</li>
+      <li><strong>"动态 playbook 注入"</strong>：tool 序列的强制以 prompt-time 注入实现，相比静态 system prompt 更具上下文敏感性。</li>
+      <li><strong>HIL 阀门用于破坏性动作</strong>：把人类反馈从训练阶段下移到<em>关键决策时刻</em>——这跟 ECA 的"authorization gate"在精神上同向。</li>
+      <li><strong>"治理跨阶段连续"</strong> 是 CUGA 的核心论断——<em>policies are not afterthoughts</em>。</li>
+      <li><strong>医疗 demo 案例</strong>展示了：1) playbook 强制 tool 序列、2) intent guard 阻断恶意请求、3) HIL 守住破坏性动作的<em>三重叠加</em>。</li>
+      <li><strong>类型化治理基元</strong>意味着 policy 可被组合、可被复用、可被独立审计——对企业合规非常关键。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>CUGA 的"5 检查点"思路对你 KV-cache 仿真是一份<strong>精确的工程化模板</strong>：把当前的 cache 决策也改成"<em>5 个结构化拦截点</em>"——Pre-attention（哪些 K 行该被预热）/ Inside-attention（attention 阶段的实时驱逐 hint）/ Post-attention（淘汰决策）/ Spill-to-CPU（H2D 决策）/ Recall-from-CPU（D2H 决策）。每个点用 policy-as-code 风格的 declarative rule 描述，而不是把所有逻辑塞进同一个 evict 函数。这能直接让你毕设第三章的"<strong>组合策略</strong>"评测拥有 CUGA 同款的<em>结构化可解释性</em>——读者一眼能看到"Top-K prefetch 是哪一层介入、HU 驱逐又是哪一层介入"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（核心）</div>
+        <p>CUGA 把过去 7 天 agent safety 的所有片段（5-13 SKILL.md / 5-15 知-行 gap / 5-19 memory laundering / 5-20 ECA authorization-failure）<strong>缝合成一个工程架构</strong>——每个攻击面都被映射到 5 个检查点中的某一个：SKILL.md 攻击 → Intent Guard + Tool Guide；知-行 gap → Tool Approvals；memory laundering → Output Formatter；ECA → Tool Guide + Tool Approvals。<em>这就是 agent safety 的"操作系统拓扑"</em>。后续 RA/PhD 团队若要部署生产级 agent，可以直接对照 CUGA 的 5 点做 audit checklist——这比逐 paper 列攻击面工程化得多。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 方向的启发是"<strong>按检查点切片报告</strong>"：未来的 agent safety benchmark 应该不只报告"<em>整体 ASR</em>"，而是按 5 个检查点分别报告——攻击在哪个点没被挡住？这会让 HarmBench / BenchJack / POLAR-Bench 等 benchmark 拥有更精细的<em>攻击-防御映射</em>。同样，AgentAtlas（5-21 harness）的 9 类 trajectory failure 可以直接对位 CUGA 的 5 检查点做 cross-reference——<em>哪种 failure 来自哪一层缺乏 policy</em>。这对你帮 PhD/RA 做 safety benchmark 是一个直接可用的报告骨架。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Persona Vector vs Targeted Steering（Sycophancy）</strong>·off-the-shelf persona vector 几乎匹配 targeted steering 的 anti-sycophancy 效果——给 CUGA 的 Output Formatter 提供机制层武器<br>
+      <a href="https://arxiv.org/abs/2605.21006" target="_blank" rel="noopener">arxiv.org/abs/2605.21006</a></li>
+      <li><strong>DPO vs RLHF 条件等价 + CPO</strong>·把 DPO 的隐含假设暴露并提出 Constrained Preference Optimization——对"不靠微调治理"的 CUGA 提供反向 baseline<br>
+      <a href="https://arxiv.org/abs/2605.20834" target="_blank" rel="noopener">arxiv.org/abs/2605.20834</a></li>
+      <li><strong>SOLAR · 自优化 lifelong agent</strong>·测试时持续适应——CUGA 的 5 检查点框架对"自我修改 agent"是必要约束<br>
+      <a href="https://arxiv.org/abs/2605.20189" target="_blank" rel="noopener">arxiv.org/abs/2605.20189</a></li>
+      <li><strong>ECA (5-20)</strong>·把幻觉重写为 authorization-failure——CUGA 的 Tool Approvals 就是 ECA 的工程化版本<br>
+      <a href="../../agent-safety/2026-05-20-1.html">agent-safety/2026-05-20-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.20911" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.20911v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.20911" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-21 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.20911<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
