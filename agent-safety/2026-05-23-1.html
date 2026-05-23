@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-23 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #074d3d; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf6ea; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #074d3d; }
+  .link-btn.primary:hover { background: #cde9dd; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-23 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 23 日 · Agent Skills Safety · Latent-space Attack · 把"拒答消除"重写成几何攻击</div>
+  <h1>Latent-space Attacks for Refusal Evasion：把"消除拒绝方向"重写为针对线性探针的潜空间逃避攻击——15 模型上 SOTA 越过 jailbreak 与 ablation 双 baseline</h1>
+  <div class="en-title">Latent-space Attacks for Refusal Evasion in Language Models</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.3</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">Latent-space Attacks for Refusal Evasion in Language Models</a><span class="winner-badge">今日选定</span></td>
+          <td>潜空间几何攻击 · linear probe evasion · 15 模型 SOTA · refusal-direction-ablation 的几何解释</td>
+          <td>arXiv 2605.21706（Piras, Mura, Brau, Pintor, Oneto, Roli, Biggio）2026-05-20</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22102" target="_blank" rel="noopener">ExComm: Exploration-Stage Communication for Error-Resilient Agentic Test-Time Scaling</a></td>
+          <td>多 agent 软信念更新 · 跨智能体事实冲突检测 · trajectory diversification</td>
+          <td>arXiv 2605.22102（Song, Kim, Choi, Jayanthi, Dingliwal, Shin, Galstyan）2026-05-21</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21778" target="_blank" rel="noopener">What Counts as AI Sycophancy? A Taxonomy and Expert Survey of a Fragmented Construct</a></td>
+          <td>谄媚行为分类学 · 信念 vs 个人特征 · 专家调查</td>
+          <td>arXiv 2605.21778（2026-05-20）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21825" target="_blank" rel="noopener">Implicit Safety Alignment from Crowd Preferences</a></td>
+          <td>众包偏好提取隐含安全标准 · 转移到下游 RL · 安全对齐</td>
+          <td>arXiv 2605.21825（2026-05-20）</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener">Benchmarking and Improving Monitors for Out-Of-Distribution Alignment Failure in LLMs</a></td>
+          <td>MOOD benchmark · OOD 监测 · guard + Mahalanobis + perplexity</td>
+          <td>arXiv 2605.21602（Feng, Srivastava, Laidlaw）2026-05-20</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Latent-space Attacks for Refusal Evasion in Language Models</span></div>
+      <div class="meta-item"><label>中文标题</label><span>潜空间逃避攻击：把"消除拒绝方向"重写为针对线性探针的几何越界</span></div>
+      <div class="meta-item"><label>作者</label><span>Giorgio Piras, Raffaele Mura, Fabio Brau, Maura Pintor, Luca Oneto, Fabio Roli, Battista Biggio（意大利 University of Cagliari / Genova / Sapienza 团队，对抗机器学习经典作者群）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG · adversarial ML · LLM safety / refusal</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-20（v1）</span></div>
+      <div class="meta-item"><label>评测规模</label><span>15 个模型（指令调优 + 多模态 + 推理）跨 SOTA refusal-ablation 与专门 jailbreak 双 baseline 横扫</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">arxiv.org/abs/2605.21706</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.21706" target="_blank" rel="noopener">arxiv.org/pdf/2605.21706</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.21706v1" target="_blank" rel="noopener">arxiv.org/html/2605.21706v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.21706" target="_blank" rel="noopener">10.48550/arXiv.2605.21706</a></div>
+      <div class="meta-item"><label>核心定位</label><span>理论-机制论文：把对齐安全性从经验黑箱拉到几何上可分析</span></div>
+      <div class="meta-item"><label>关键发现</label><span>refusal-direction ablation 等价于"<strong>最小置信度逃避攻击</strong>"——决策边界处停止；推到合规区可以拿到 SOTA ASR</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用对抗机器学习的几何语言把"消除拒绝方向"<strong>重写为针对线性探针的潜空间逃避攻击</strong>——既解释了现有 ablation 为何能跑通，也解释了它为何停在边界，进而做出"<em>越过边界推入合规区</em>"的强化版攻击，在 15 模型上拿下 SOTA ASR。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>安全对齐过的语言模型被训练用来拒绝有害请求，但拒绝行为可以通过<strong>操纵其内部表示</strong>来抑制。已有方法的做法是从模型激活中"<em>消除拒绝方向</em>"——目标是把"应该拒绝"的成分从 residual stream 中移除。这些方法在经验上有效，但缺乏对所诱导的潜空间变换的<strong>原理性解释</strong>，也没说清楚"为什么这样就能抑制拒绝"。</p>
+    <p>本文把"拒绝抑制"<strong>重新定义为针对一个线性探针的潜空间逃避攻击</strong>——这个线性探针被训练用来区分"应该拒绝的 prompt"和"应该回答的 prompt"。在这一视角下，先前工作所谓的"<em>均值差异方向（mean difference direction）</em>"自然地<strong>恰好定义了这样一个探针</strong>，而对它的"消除"<em>正是对决策边界的最小置信度投影</em>——也就是经典对抗机器学习里的"<strong>最小置信度逃避攻击</strong>"。</p>
+    <p>这个视角不仅解释了既有方法的经验成功，也揭示了一个关键<strong>限制</strong>：逃避停在决策边界处，而真正"让模型回答"需要把表示进一步推到 <em>合规区</em>。本文据此提出<strong>受控潜空间逃避攻击（Controlled Latent-space Evasion）</strong>，以可控的置信度把表示越过边界推入合规域。在 15 个模型（指令调优、多模态、推理）上达成 SOTA ASR，超越了 refusal-direction ablation baseline 与专门 jailbreak baseline。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>近 12 个月的 LLM 安全圈最大公约数式认知是 "<em>refusal direction 可以被 ablate 掉</em>"——但所有这条线的工作（refusal-direction ablation、Diff-of-means、orthogonalization、abliteration）都<strong>没在数学上解释为什么</strong>。本文把这件事拉回到 2014 年以来的<strong>对抗机器学习经典框架</strong>：所谓 "consistent representation that supports refusal" 就是一个<em>线性可分超平面</em>，"消除拒绝方向" 就是对这条超平面做<em>最小投影</em>——这是 evasion attack 的最基本几何形态。这条主线跟 5-13 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md 攻击</a>（86%/77.6%/100% 绕过 ClawHub skill 治理层）、5-19 <a href="../../agent-safety/2026-05-19-1.html">Memory Laundering</a>（sub-threshold 在 summary 之后逃过监测）、5-20 <a href="../../agent-safety/2026-05-20-1.html">ECA</a>（authorization-failure 视角的几何化）形成对照——前几篇是<em>系统级</em>攻击，本文是<em>表征级</em>几何攻击；二者打的是同一面墙的不同位置。</p>
+
+    <p><strong>核心方法：从"消除"到"越界投影"</strong></p>
+    <ul class="point-list">
+      <li><strong>步骤 1：把拒绝抑制等价为一个 evasion attack</strong>。设线性探针 <code>p(x) = w·h(x) + b</code>，训练它区分 refusal vs answer prompt 的隐藏表示 <code>h</code>。"消除拒绝方向" 就是把 <code>h</code> 投影到 <code>p(h)=0</code> 这条决策边界——即"最小置信度逃避攻击"。</li>
+      <li><strong>步骤 2：揭示 mean difference direction 的几何身份</strong>。mean-of-answer minus mean-of-refusal 这个常用方向 <em>正好就是 Fisher 判别意义下这条探针的法向量</em>——这给一直缺乏理论支撑的"diff-of-means abliteration" 一个干净的几何身份证。</li>
+      <li><strong>步骤 3：识别 ablation 的内禀限制</strong>。ablation 是把 <code>h</code> 投到 <em>边界</em>，而不是 <em>越过边界进入合规域</em>——这正解释了为什么有时 ablation"绕过了拒绝、但模型还是嘟囔"——表示停在边界附近，模型既不拒绝也不流畅作答。</li>
+      <li><strong>步骤 4：Controlled Latent-space Evasion</strong>。在 ablation 之外加一个<em>可控置信度幅度 ε</em>，把 <code>h</code> 沿同方向继续推到 <code>p(h)=+ε</code>——这就是合规域的内部点，模型从 "<em>不拒绝</em>" 升级为 "<em>主动顺畅作答</em>"。这是经典 adversarial ML 里"high-confidence adversarial example"在 LLM 内部表征空间的对应物。</li>
+    </ul>
+
+    <p><strong>与现有工作的差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>refusal-direction ablation</th><th>专门 jailbreak（GCG / token suffix）</th><th>系统层攻击（SKILL.md / Memory Laundering / ECA）</th><th>本文</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>层级</td><td>表征</td><td>输入 token</td><td>系统接口</td><td><strong>表征（几何形式化）</strong></td></tr>
+        <tr><td>是否给数学解释</td><td>否</td><td>否</td><td>否</td><td><strong>是（线性 evasion）</strong></td></tr>
+        <tr><td>边界处停止？</td><td>是</td><td>是</td><td>否</td><td><strong>否（推入合规域）</strong></td></tr>
+        <tr><td>评测规模</td><td>3–5 模型</td><td>3–7 模型</td><td>系统不可比</td><td><strong>15 模型（含多模态/推理）</strong></td></tr>
+        <tr><td>与对抗 ML 经典框架的关系</td><td>无显式</td><td>无显式</td><td>无</td><td><strong>正是经典 evasion 的 LLM 表征版</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>真正的贡献并不是又一个攻击方法，而是<strong>把 "对齐安全" 从经验防御重新拉回到对抗 ML 的几何分析框架内</strong>——一旦 refusal 被识别为<em>线性可分的概率事件</em>，那么所有 evasion / poisoning / certifiable defense 的二十年文献都立即可以迁回 LLM safety——这是方法论意义上的"<em>开门</em>"。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Arditi et al. (2024) — <em>Refusal in Language Models Is Mediated by a Single Direction</em>·diff-of-means abliteration 起点<br>
+    <a href="https://arxiv.org/abs/2406.11717" target="_blank" rel="noopener">arxiv.org/abs/2406.11717</a></div>
+    <div class="ref-item">Biggio et al. (2013) — <em>Evasion Attacks against Machine Learning at Test Time</em>·对抗机器学习 evasion attack 经典文献<br>
+    <a href="https://arxiv.org/abs/1708.06131" target="_blank" rel="noopener">arxiv.org/abs/1708.06131</a></div>
+    <div class="ref-item">Zou et al. (2023) — <em>Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)</em>·token-level jailbreak 的 SOTA baseline<br>
+    <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener">arxiv.org/abs/2307.15043</a></div>
+    <div class="ref-item">Wei et al. (2024) — <em>Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications</em>·"对齐很脆"的实证证据<br>
+    <a href="https://arxiv.org/abs/2402.05162" target="_blank" rel="noopener">arxiv.org/abs/2402.05162</a></div>
+    <div class="ref-item">Goodfellow et al. (2015) — <em>Explaining and Harnessing Adversarial Examples</em>·线性 evasion 起源<br>
+    <a href="https://arxiv.org/abs/1412.6572" target="_blank" rel="noopener">arxiv.org/abs/1412.6572</a></div>
+    <div class="ref-item">Saha et al. (2026) — <em>Under the Hood of SKILL.md</em>·skill 治理层的系统级 86%/77.6%/100% 绕过<br>
+    <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a></div>
+    <div class="ref-item">Wang et al. (2026) — <em>Memory Laundering as Sub-threshold Propagation Gap</em>·跨步 sub-threshold 攻击的对照<br>
+    <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>15 模型横扫 SOTA ASR</strong>——同时跨指令调优、多模态、推理三类骨干，确保几何解释不挑模型族。</li>
+      <li><strong>"mean-difference direction = Fisher 判别 normal"</strong>——给业界用了 18 个月的 abliteration 一个正式数学身份。</li>
+      <li><strong>ablation 等价于"最小置信度 evasion"</strong>——给"为什么 ablation 会工作 + 为什么有时它不流畅" 一个统一答案。</li>
+      <li><strong>Controlled latent-space evasion</strong>——按 ε 调置信度幅度，越过边界推入合规域，量级可调。</li>
+      <li><strong>对防御的隐喻</strong>：经典对抗 ML 中的认证防御、随机化、双线性鲁棒训练 等等可以平移过来——给后续防御工作 <em>开了一扇大门</em>。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（对你毕设的 KV-cache 仿真有间接启发）</div>
+        <p>对 harness 的迁移：受这篇"经验 ablation 等价 minimum-confidence evasion"框架的启发——你毕设的 KV-cache 预取策略评测也应该被<strong>重写为可几何分析的形式</strong>：把"<em>预取一个 token 条目</em>"看成对 working-set 估计的<em>分类决策</em>，把"<em>预取触发阈值</em>"看成线性判别超平面，把"<em>过预取 / 漏预取</em>"看成 evasion 与 false negative。这种重写让你能给评审 C7/C8 一个"<em>方法不挑模型</em>"的几何论证，而不是仅靠经验数据。同时它也启发"<em>不要只看 hit rate，要看决策边界附近的样本占比</em>"——边界附近的预取决策才是改进空间最大的。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击）</div>
+        <p>对 agent safety 是<strong>最直接的弹药</strong>：5-13 SKILL.md / 5-19 Memory Laundering / 5-20 ECA 都是<em>系统级攻击</em>——SKILL 注册表绕过、context summary 漂洗、authorization 错位；本文给了一个<em>表征级</em>解释——所有这些攻击之所以能成功，根本上是因为"refusal vs answer" 在隐空间是线性可分的，从而 evasion 必然存在。这意味着：<strong>纯系统层防御 + 模型表征层防御必须并举</strong>——光靠 CUGA 的 5 检查点 (5-21) 或 SKILL.md 的 governance 层挡不住表征级攻击；反之，纯表征防御也挡不住系统级攻击。这是把"agent safety"从单一栈往<em>多层栈纵深防御</em>推进的明确路标。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 是非常清晰的方法论指引：所有 safety benchmark 都应该<strong>报告 "在线性探针下 refusal 是否线性可分"</strong> 这个 meta-metric——这是 jailbreak / abliteration / evasion 一切攻击的可行性下界。具体可借鉴：(1) 在 5-21 <a href="../../benchmark/2026-05-21-1.html">GrandGuard</a>、5-20 <a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a> 一类细粒度 benchmark 里加 "Linear Probe Separability" 列；(2) 把"<em>受控 ε 越界</em>"做成一个<strong>新的对抗鲁棒性 benchmark 维度</strong>——量化"模型在多大置信度逃避下还能撑住"；(3) 把 ablation baseline 与本文的 controlled evasion 一并作为 jailbreak benchmark 的<em>下限基线</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>MOOD Benchmark</strong>·OOD 对齐失败监测 + Mahalanobis + perplexity 集成 —— 给"表征级 evasion" 提供对应的"表征级监控"路线<br>
+      <a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener">arxiv.org/abs/2605.21602</a></li>
+      <li><strong>Implicit Safety Alignment from Crowd Preferences</strong>·从众包偏好提取隐含安全标准 —— 探讨"如何把 refusal 边界做厚"<br>
+      <a href="https://arxiv.org/abs/2605.21825" target="_blank" rel="noopener">arxiv.org/abs/2605.21825</a></li>
+      <li><strong>What Counts as AI Sycophancy?</strong>·谄媚行为分类学 + 专家调查——揭示"被诱导越界"的另一面行为<br>
+      <a href="https://arxiv.org/abs/2605.21778" target="_blank" rel="noopener">arxiv.org/abs/2605.21778</a></li>
+      <li><strong>5-20 ECA / authorization-failure</strong>·几何 evasion 的系统侧对偶<br>
+      <a href="../../agent-safety/2026-05-20-1.html">agent-safety/2026-05-20-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.21706" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.21706v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.21706" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-23 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.21706<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">arxiv.org/abs/2605.21706</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

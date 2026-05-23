@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-23 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #e1f5ee; color: #0f6e56; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf6ea; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #5e3403; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf6ea; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #5e3403; }
+  .link-btn.primary:hover { background: #f7e1bc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf6ea; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-23 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 23 日 · Safety Benchmark · State-Gated Retrieval · 把 search agent benchmark 从"找到答案"换成"把网站状态配对"</div>
+  <h1>SGR-Bench：100 任务 / 6 源族 / 12 数据生态——让 search agent 必须先把网站状态（filter / view / scope / hierarchy）配置对，最强 agent 项级 F1 仅 66.18%</h1>
+  <div class="en-title">SGR-Bench: Benchmarking Search Agents on State-Gated Retrieval</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.4</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.22219" target="_blank" rel="noopener">SGR-Bench: Benchmarking Search Agents on State-Gated Retrieval</a><span class="winner-badge">今日选定</span></td>
+          <td>state-gated retrieval · 100 任务 6 源族 12 数据生态 · 8 CLI agent + 3 商业产品 · F1 66.18%</td>
+          <td>arXiv 2605.22219（N. Li, H. Shen, M. Liu, Y. Han, Z. Shi, S. Xie, Yun Ma · PKU-AI-Web）2026-05-21</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener">Benchmarking and Improving Monitors for Out-Of-Distribution Alignment Failure in LLMs (MOOD)</a></td>
+          <td>OOD 对齐失败监测 benchmark · guard + Mahalanobis + perplexity · 召回 39%→45%</td>
+          <td>arXiv 2605.21602（Feng, Srivastava, Laidlaw）2026-05-20</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21740" target="_blank" rel="noopener">SMDD-Bench: Can LLMs Solve Real-World Small Molecule Drug Design Tasks?</a></td>
+          <td>502 任务多轮 long-horizon · drug design agent benchmark</td>
+          <td>arXiv 2605.21740（2026-05-20）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21739" target="_blank" rel="noopener">AttuneBench: A Conversation-Based Benchmark for LLM Emotional Intelligence</a></td>
+          <td>200 真实多轮对话 · emotional intelligence benchmark</td>
+          <td>arXiv 2605.21739（2026-05-20）</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22047" target="_blank" rel="noopener">Active Evidence-Seeking and Diagnostic Reasoning in Large Language Models for Clinical Decision Support</a></td>
+          <td>OSCE-inspired patient simulator benchmark · 主动证据获取</td>
+          <td>arXiv 2605.22047（2026-05-21）</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SGR-Bench: Benchmarking Search Agents on State-Gated Retrieval</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SGR-Bench：状态门控检索——让 search agent 必须把网站"配置状态"先调对再取答案</span></div>
+      <div class="meta-item"><label>作者</label><span>Ningyuan Li, Haiyang Shen, Mugeng Liu, Yudong Han, Zhuofan Shi, Sixiong Xie, Yun Ma（北京大学 PKUAIWeb 团队）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · search agent · web agent benchmark · state-gated retrieval</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-21（v1，work in progress · 23 页 7 图）</span></div>
+      <div class="meta-item"><label>评测规模</label><span>100 任务 / 6 源族 / 12 公共数据生态 · 8 CLI-agent LLM 系统 + 3 商业 search-agent 产品 · 156 失败轨迹人工审计</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.22219" target="_blank" rel="noopener">arxiv.org/abs/2605.22219</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.22219" target="_blank" rel="noopener">arxiv.org/pdf/2605.22219</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.22219v1" target="_blank" rel="noopener">arxiv.org/html/2605.22219v1</a></div>
+      <div class="meta-item"><label>数据集</label><a href="https://huggingface.co/datasets/PKUAIWeb/SGR-BENCH" target="_blank" rel="noopener">huggingface.co/datasets/PKUAIWeb/SGR-BENCH</a></div>
+      <div class="meta-item"><label>核心定位</label><span>新任务族 benchmark：状态门控检索（State-Gated Retrieval）</span></div>
+      <div class="meta-item"><label>关键发现</label><span>最强系统项级 F1 仅 <strong>66.18%</strong>；失败 37.2% 是 <em>检索范围漂移</em>、27.6% 是 <em>标准不匹配</em></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 search agent benchmark 从 "<em>能不能找到答案</em>" 重写为 "<strong>能不能先把网站的过滤器 / 视图 / 层级 / 范围状态调对</strong>"——100 任务 × 12 数据生态揭示最强 agent 项级 F1 仅 66.18%、37.2% 失败源于检索范围漂移。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>本文提出 <strong>SGR-Bench</strong>，一个用于评估 search agent 在 "<em>状态门控检索（State-Gated Retrieval, SGR）</em>" 任务上的 benchmark。<strong>SGR 任务</strong> 是指：要拿到答案，agent 必须先发现合适的网站，<em>并把该网站的检索状态（filter、view、scope、hierarchy）配置对</em>——只有当状态配对了，对应的结构化答案才会浮现出来。这类任务在政府数据门户、统计局、专利库、学术数据库、地图服务等公共数据生态中极为常见，但传统 search benchmark 都把它绕开。</p>
+    <p>SGR-Bench 包含 <strong>100 个专家策划任务</strong>，覆盖 <strong>6 个源族</strong> 与 <strong>12 个公共数据生态</strong>。每个任务需要 agent 同时完成"<em>找到正确网站 + 配置正确状态 + 产出结构化答案</em>"三件事。同时提供<strong>双重问题表述</strong>——约束引导（明示要满足哪些约束）vs 目标导向（只给目标，约束需自行推断）——支持显式 vs 隐式指导对比。</p>
+    <p>评测了 <strong>8 个 CLI 代理 LLM 系统</strong> 与 <strong>3 个商业 search-agent 产品</strong>。最强系统的<strong>项级 F1 仅 66.18%</strong>。对 156 条可分析失败轨迹的人工审计揭示了主导失败模式：<strong>检索范围漂移（37.2%）</strong> 与 <strong>标准不匹配（27.6%）</strong>——agent 容易在非靶网站、错误层级或错误过滤器下交付"看似合理但全错"的答案。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去半年的 agent benchmark 已经把"能不能完成最终任务"这件事打磨得很细：5-14 <a href="../../benchmark/2026-05-14-1.html">BenchJack</a>（reward-hack taxonomy）、5-15 <a href="../../benchmark/2026-05-15-1.html">ClawForge</a>（state conflict）、5-19 <a href="../../benchmark/2026-05-19-1.html">MM-ToolBench</a>（closed-loop tool）、5-20 <a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a>（5×5 诊断面）、5-21 <a href="../../benchmark/2026-05-21-1.html">GrandGuard</a>（context risk）。SGR-Bench 把这条线推到一个<strong>更微观的失败族</strong>：在很多公共数据生态里，"<em>找对网站</em>" 还不够——你必须把过滤器、视图、scope、hierarchy 这些<em>状态</em>都配置对，结构化答案才会显形。这是被既有 benchmark 系统性绕过的一类任务，但在政府开放数据 / 统计局 / 专利库等场景里恰恰是<strong>真实工作量的最大头</strong>。</p>
+
+    <p><strong>核心方法：state-gated 任务族 + 双问题表述 + 项级 F1 + 人工审计</strong></p>
+    <ul class="point-list">
+      <li><strong>定义新任务族 SGR</strong>。把"<em>状态配置</em>"列为搜索任务的一等公民——和"找网站"、"查询关键词"并列。SGR 任务的成功定义为<em>状态被配对 + 结构化答案被取出</em>，而不是任意能给出文字答案就算赢。</li>
+      <li><strong>100 专家策划任务 × 6 源族 × 12 数据生态</strong>。源族包含政府开放数据门户、统计局、专利库、地图服务、学术 API、文档系统等。每个任务由领域专家策划——保证<em>状态门控的真实性而非合成</em>。</li>
+      <li><strong>双重问题表述</strong>：(a) <em>约束引导</em>——明示"<em>请在这些约束下完成</em>"，agent 只需把约束翻译成状态；(b) <em>目标导向</em>——只给目标，agent 必须自己推断该开哪些过滤器。两条 setup 让"<em>显式指引 vs 隐式自主</em>"的能力差被分离测量。</li>
+      <li><strong>项级 F1 评分 + 156 轨迹人工审计</strong>。用 item-level F1 计算"对几项答对几项"，再对所有可分析失败轨迹做人工归因——产出 7 类失败模式，其中两类占 64.8%：检索范围漂移（37.2%） + 标准不匹配（27.6%）。</li>
+    </ul>
+
+    <p><strong>与既有 search agent benchmark 的差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>WebArena/OSWorld（任务-完成）</th><th>BrowseComp/SearchBench（开放问答）</th><th>5-19 MM-ToolBench</th><th>SGR-Bench（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测核心</td><td>能否完成任务</td><td>能否给出正确答案</td><td>能否在 closed-loop 内调对工具</td><td><strong>能否把网站"状态"配对</strong></td></tr>
+        <tr><td>是否要求结构化答案</td><td>否</td><td>多为文字答案</td><td>部分</td><td><strong>是（状态配对后自然显形）</strong></td></tr>
+        <tr><td>失败归因</td><td>轨迹片段</td><td>正/错</td><td>tool error</td><td><strong>7 类 + 156 人工轨迹审计</strong></td></tr>
+        <tr><td>数据生态多样性</td><td>少（5–10）</td><td>少</td><td>27 MCP servers</td><td><strong>12 公共数据生态 / 6 源族</strong></td></tr>
+        <tr><td>任务规模</td><td>~150–600</td><td>~100–500</td><td>100</td><td><strong>100（专家策划，长尾）</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>真正的贡献并不只是 100 个新任务，而是<strong>给"什么是真正难的搜索任务"添加了一条新轴：状态配置的难度</strong>——在公共数据生态里，agent 的失败常常发生在"<em>看起来在搜，但搜的根本不是该搜的子集</em>"，这跟模型大小关系不大，跟 agent 是否真正"理解上下文 + 把控状态"高度相关。<em>项级 F1 仅 66.18% + 37.2% 范围漂移</em>是给 search agent 社区的一记冷水。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Zhou et al. (2024) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>·web agent benchmark 经典对照<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Xie et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·OS 级任务对照<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Wei et al. (2025) — <em>BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents</em>·开放问答 browse benchmark<br>
+    <a href="https://arxiv.org/abs/2504.12516" target="_blank" rel="noopener">arxiv.org/abs/2504.12516</a></div>
+    <div class="ref-item">Yao et al. (2024) — <em>τ-bench: A Benchmark for Tool-Agent-User Interaction</em>·工具-agent-用户多回合<br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Liu et al. (2026) — <em>MM-ToolBench (TOBench)</em>·closed-loop MCP tool benchmark<br>
+    <a href="https://arxiv.org/abs/2605.16909" target="_blank" rel="noopener">arxiv.org/abs/2605.16909</a></div>
+    <div class="ref-item">Lai et al. (2026) — <em>ClawForge</em>·CLI agent benchmark / state conflict<br>
+    <a href="https://arxiv.org/abs/2605.14133" target="_blank" rel="noopener">arxiv.org/abs/2605.14133</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>项级 F1 上限 66.18%</strong>——最强 search-agent 系统在 SGR 任务上仍然有约 1/3 项无法答对。</li>
+      <li><strong>检索范围漂移 37.2%</strong>——agent 经常在非靶网站、错误 scope 或错误层级下"假装在搜"。</li>
+      <li><strong>标准不匹配 27.6%</strong>——agent 找到了正确网站，但没有把过滤器调到正确组合，给出"看起来对、其实错"的答案。</li>
+      <li><strong>双问题表述</strong>——约束引导 vs 目标导向，让"<em>显式监督</em> vs <em>自主推断</em>" 的能力差被显式分离。</li>
+      <li><strong>12 公共数据生态 / 6 源族</strong>——政府数据门户、统计局、专利库、地图、学术、文档；覆盖真实工作量主流。</li>
+      <li><strong>156 失败轨迹人工审计</strong>——把"为什么失败"从模型评判变成可校验的人工归因。</li>
+      <li><strong>已开源数据集</strong>——Hugging Face <em>PKUAIWeb/SGR-BENCH</em>，可直接复现。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（毕设可借鉴）</div>
+        <p>把"<strong>state-gated</strong>"这一概念<em>跨域迁移到 KV-cache 仿真评测</em>：你毕设里"prefetch + 双水位线驱逐"也是一种"<strong>state-gated</strong>"——只有当 GPU 缓存的水位、热度图、轨迹簇等多状态变量同时配对，hit 才会发生；评测时不能只看 hit rate，还要看"<em>状态配对成功率</em>"和"<em>失败时是哪一项状态没对齐</em>"。具体可以借鉴 SGR-Bench 的"<em>项级 F1</em>"思想——把 hit 拆成"<em>token 条目级是否被预取对</em>" 和 "<em>预取时机是否对</em>" 两条独立指标，再像 SGR-Bench 一样做<em>失败轨迹归因</em>。这正好对应你毕设附录补充的 CNN/Linear 学习型预取器对照实验需要展示的"<em>不仅有结果，还能解释为什么</em>"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 agent safety 的迁移：把 SGR 的"<strong>状态配对错</strong>"翻译成 safety 域的"<strong>权限范围错</strong>"——很多 agent 安全失败并不是"做了不该做的事"，而是"<em>在错误的 scope 上做了对的事</em>"——这跟 5-21 <a href="../../agent-safety/2026-05-21-1.html">CUGA Policy</a> 的 Intent Guard、5-13 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md</a> 的 governance 绕过、5-20 <a href="../../agent-safety/2026-05-20-1.html">ECA</a> 的 authorization-failure 同源。可以做一个"Safety-SGR" 类比 benchmark：让 agent 必须先配置好 ACL / scope / persona，才能拿到合法答案——失败归因 7 类直接套用。这给"agent skills safety"补一个非常缺的<em>权限-状态评测面</em>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击）</div>
+        <p>对 benchmark 设计的方法论是<strong>直接弹药</strong>：(1) <strong>把"<em>项级 F1</em>" 写进所有 benchmark 标准报告项</strong>——单值正确率太粗、不利于诊断；(2) <strong>双问题表述协议</strong>（约束引导 vs 目标导向）<em>是任意 agent benchmark 都该补上的</em>——它把"<em>显式监督蒸出能力</em>"（呼应 5-21 <a href="../../harness/2026-05-21-1.html">AgentAtlas</a>）量化得更细；(3) <strong>156 轨迹人工审计 + 7 失败族</strong>是细粒度诊断的范式——既不是单跑分也不是全自动 LLM-judge，而是"<em>跑分 + 抽样人工归因</em>"两层；(4) <strong>状态配对作为新评测维度</strong>——所有跨网站 / 跨 SaaS / 跨 MCP 的 benchmark 都该加上，跟 5-18 <a href="../../benchmark/2026-05-18-1.html">SaaS-Bench</a> 的 weighted checkpoint 互补。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>MOOD Benchmark</strong>·OOD 对齐失败监测 + Mahalanobis + perplexity 集成 — guard 召回 39%→45%<br>
+      <a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener">arxiv.org/abs/2605.21602</a></li>
+      <li><strong>SMDD-Bench</strong>·502 任务 long-horizon 药物设计 agent benchmark<br>
+      <a href="https://arxiv.org/abs/2605.21740" target="_blank" rel="noopener">arxiv.org/abs/2605.21740</a></li>
+      <li><strong>Active Evidence-Seeking Clinical Decision</strong>·OSCE patient simulator benchmark<br>
+      <a href="https://arxiv.org/abs/2605.22047" target="_blank" rel="noopener">arxiv.org/abs/2605.22047</a></li>
+      <li><strong>5-19 MM-ToolBench (TOBench)</strong>·closed-loop MCP tool benchmark · per-task grounded evaluator<br>
+      <a href="../../benchmark/2026-05-19-1.html">benchmark/2026-05-19-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.22219" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.22219" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.22219v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://huggingface.co/datasets/PKUAIWeb/SGR-BENCH" target="_blank" rel="noopener">HuggingFace 数据集</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.22219" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new 列表</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-23 #1 · 搜索来源：arXiv list/cs.AI/new + arxiv.org/abs/2605.22219<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.22219" target="_blank" rel="noopener">arxiv.org/abs/2605.22219</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
