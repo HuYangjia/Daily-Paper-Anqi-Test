@@ -20,10 +20,12 @@
   .dir-card.harness .dir-icon{background:#e6f1fb}
   .dir-card.safety  .dir-icon{background:#e1f5ee}
   .dir-card.bench   .dir-icon{background:#faeeda}
+  .dir-card.personal .dir-icon{background:#f0e9ff}
   .dir-card h2{font-size:1rem;font-weight:500;margin-bottom:.3rem}
   .dir-card.harness h2{color:#0c447c}
   .dir-card.safety  h2{color:#085041}
   .dir-card.bench   h2{color:#633806}
+  .dir-card.personal h2{color:#4f2e8d}
   .dir-card p{font-size:.82rem;color:#888;line-height:1.55;margin-bottom:.9rem}
   .dir-meta{display:flex;align-items:center;justify-content:space-between}
   .count-badge{font-size:.75rem;color:#aaa}
@@ -40,6 +42,7 @@
   .tag-harness{background:#e6f1fb;color:#185fa5}
   .tag-safety {background:#e1f5ee;color:#0f6e56}
   .tag-bench  {background:#faeeda;color:#854f0b}
+  .tag-personal{background:#f0e9ff;color:#5b3aa0}
   .paper-meta{flex:1}
   .paper-title{font-size:.92rem;font-weight:500;line-height:1.43;margin-bottom:.2rem}
   .paper-sub{font-size:.79rem;color:#888}
@@ -91,10 +94,35 @@
         <span class="arrow">→</span>
       </div>
     </a>
+    <a class="dir-card personal" href="my-papers/index.html">
+      <div class="dir-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2.6l1.75 3.55 3.92.57-2.84 2.77.67 3.9L9 11.55l-3.5 1.84.67-3.9L3.33 6.72l3.92-.57L9 2.6z" fill="#7a58c5" opacity=".25"/><path d="M9 2.6l1.75 3.55 3.92.57-2.84 2.77.67 3.9L9 11.55l-3.5 1.84.67-3.9L3.33 6.72l3.92-.57L9 2.6z" stroke="#5b3aa0" stroke-width="1.1" fill="none"/></svg>
+      </div>
+      <h2>我的自选论文</h2>
+      <p>手动收集的高价值论文与中文分析，适合沉淀你的重点追踪方向</p>
+      <div class="dir-meta">
+        <span class="count-badge">1 篇报告</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
   </div>
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="my-papers/2026-05-25-1.html">
+        <div class="date-badge">
+          <div class="month">May</div>
+          <div class="day">25</div>
+        </div>
+        <span class="dir-tag tag-personal">My Papers</span>
+        <div class="paper-meta">
+          <div class="paper-title">[Caroline Trippel · Formal Arch/Chip] 形式化论文全集收集（严格 arch/chip）与逐篇分析</div>
+          <div class="paper-sub">19 篇纳入 + strict 筛选 + 去重说明 · #1</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="benchmark/2026-05-25-1.html">
         <div class="date-badge">

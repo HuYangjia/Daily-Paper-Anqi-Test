@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #1 · Caroline Trippel 形式化论文全集 · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #5b3aa0; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.4rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 880px; line-height: 1.45; }
+  .hero .en-title { font-size: 0.87rem; color: #888; margin-bottom: 1.1rem; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #f0e9ff; color: #5b3aa0; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 960px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1.1rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 0.95rem; padding-bottom: 0.5rem; border-bottom: 1px solid #f0efe9; }
+  p { font-size: 0.91rem; margin-bottom: 0.75rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.3rem; }
+  th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.6rem; text-align: left; border: 1px solid #e8e8e4; color: #666; }
+  td { padding: 0.48rem 0.6rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  tr:hover td { background: #fbfbf9; }
+  a { color: #5b3aa0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .ok { font-weight: 600; color: #0f6e56; }
+  .no { font-weight: 600; color: #a32d2d; }
+  .paper { border-left: 3px solid #d4c2f8; padding-left: 0.95rem; margin-bottom: 1rem; }
+  .paper h3 { font-size: 0.98rem; font-weight: 500; margin-bottom: 0.2rem; color: #3e2868; }
+  .meta { font-size: 0.82rem; color: #777; margin-bottom: 0.35rem; }
+  .summary { font-size: 0.88rem; color: #3a3a38; }
+  ul { margin: 0.35rem 0 0.2rem 1rem; }
+  li { font-size: 0.88rem; margin-bottom: 0.35rem; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.2rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="./index.html">我的自选论文</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · my-papers 子系列 · Caroline Trippel</div>
+  <h1>[Caroline Trippel · Formal Arch/Chip] 形式化论文全集收集（严格 arch/chip）与逐篇分析</h1>
+  <div class="en-title">Complete Collection and Per-Paper Analysis of Caroline Trippel's Formal Methods Work for Architecture and Chips</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">全集完整性 95</span>
+    <span class="score-chip chip-rel">主题相关度 9.8</span>
+    <span class="score-chip chip-venue">来源可靠性 9.4</span>
+    <span class="score-chip chip-impact">代表性 9.5</span>
+    <span class="score-chip chip-novel">方法创新性 9.3</span>
+    <span class="score-chip chip-open">可复核性 9.0</span>
+  </div>
+</div>
+
+<main>
+  <div class="card">
+    <div class="card-title">收集范围与数据源</div>
+    <p><strong>范围约束：</strong>仅纳入和 <em>formal methods for architecture/chip</em> 直接相关的论文（含会议/期刊、arXiv、workshop short）。</p>
+    <p><strong>权威来源：</strong><a href="https://cs.stanford.edu/~trippel/" target="_blank" rel="noopener">Caroline Trippel 主页</a>、<a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Trippel Lab Publications</a>、<a href="https://scholar.google.com/citations?user=5yqgCREAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>、<a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV</a>。</p>
+    <p><strong>去重原则：</strong>同一研究主版本优先级为 会议/期刊 &gt; Top Picks/扩展综述 &gt; arXiv 早期版；若某 arXiv 为独立成果（如 MeltdownPrime/SpectrePrime）则单独保留。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">候选全集筛选结果（严格 arch/chip formal）</div>
+    <table>
+      <thead>
+        <tr><th>论文</th><th>类型</th><th>纳入</th><th>筛选理由</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ArMOR (ISCA 2015)</td><td>Conference</td><td class="ok">是</td><td>异构架构 MCM 形式化建模与自动转换，核心 formal-for-arch。</td></tr>
+        <tr><td>Counterexamples and Proof Loophole (arXiv 2016)</td><td>arXiv</td><td class="ok">是</td><td>C/C++ 到 POWER/ARMv7 编译映射证明漏洞，直接形式化推理。</td></tr>
+        <tr><td>TriCheck (ASPLOS 2017)</td><td>Conference</td><td class="ok">是</td><td>软件/ISA/微架构三层一致性验证的代表作。</td></tr>
+        <tr><td>Full-Stack MCM Verification with TriCheck (Top Picks 2018)</td><td>Top Picks</td><td class="no">否</td><td>与 ASPLOS17 同一主线扩展解读，按去重规则并入 TriCheck 主条目。</td></tr>
+        <tr><td>CheckMate (MICRO 2018)</td><td>Conference</td><td class="ok">是</td><td>基于形式化 exploit pattern 的硬件安全验证与自动攻击合成。</td></tr>
+        <tr><td>CheckMate Approach (Top Picks 2019)</td><td>Top Picks</td><td class="no">否</td><td>与 MICRO18 同主成果，保留会议主版本。</td></tr>
+        <tr><td>ILA-MCM (FMCAD 2018)</td><td>Conference</td><td class="ok">是</td><td>将 axiomatic MCM 与 ILA 结合用于 SoC 级验证。</td></tr>
+        <tr><td>MeltdownPrime and SpectrePrime (arXiv 2018)</td><td>arXiv</td><td class="ok">是</td><td>独立攻击家族论文，虽源自 CheckMate，但结论与实验独立。</td></tr>
+        <tr><td>TransForm (ISCA 2020)</td><td>Conference</td><td class="ok">是</td><td>Transistency 模型形式化规范与 litmus 合成。</td></tr>
+        <tr><td>Synthesizing Formal Models from RTL (MICRO 2021)</td><td>Conference</td><td class="ok">是</td><td>RTL 到 µspec 自动抽取，直击 formal 流程瓶颈。</td></tr>
+        <tr><td>Relational Models of Microarchitectures (arXiv 2021)</td><td>arXiv</td><td class="ok">是</td><td>面向硬件安全分析的关系模型化，formal security 基础工作。</td></tr>
+        <tr><td>Axiomatic Hardware-Software Contracts (ISCA 2022)</td><td>Conference</td><td class="ok">是</td><td>硬件-软件安全契约的形式化规范与验证。</td></tr>
+        <tr><td>Scalable Assurance via Verifiable HW-SW Contracts (OSCAR 2022)</td><td>Workshop</td><td class="ok">是</td><td>契约验证路线 workshop 版，属于你要求的 short paper 范畴。</td></tr>
+        <tr><td>G-QED (DAC 2023)</td><td>Conference</td><td class="ok">是</td><td>QED 预硅验证扩展，属于芯片 formal verification。</td></tr>
+        <tr><td>Towards Improving Verification Productivity ... SVA (DAV 2023)</td><td>Workshop</td><td class="ok">是</td><td>自然语言到 SVA，直接服务芯片形式化验证效率。</td></tr>
+        <tr><td>Design for Hardware Memory Model Verification (PLARCH 2023)</td><td>Workshop</td><td class="ok">是</td><td>内存模型验证设计方法，主题高度匹配。</td></tr>
+        <tr><td>RTL2MµPATH (MICRO 2024)</td><td>Conference</td><td class="ok">是</td><td>Processor RTL 侧信道分析中的多路径形式化合成框架。</td></tr>
+        <tr><td>MCM-Aware Cache Coherence (FMCAD 2024)</td><td>Conference</td><td class="ok">是</td><td>异构硬件 cache coherence 与 MCM 的统一形式化。</td></tr>
+        <tr><td>Automatically Uncovering Hardware Side-Channels ... (OSCAR 2025)</td><td>Workshop</td><td class="ok">是</td><td>MICRO24 方法在 workshop 扩展演示，满足 workshop 收录要求。</td></tr>
+        <tr><td>Formal Foundations of MemGlue Consistency Protocol (FMSD 2025)</td><td>Journal</td><td class="ok">是</td><td>对 FMCAD24 结果的形式化基础加强，属于独立期刊版本。</td></tr>
+        <tr><td>Specification and Formal Verification of HW-SW Contracts (IEEE Computer 2025)</td><td>Magazine</td><td class="ok">是</td><td>对契约体系的结构化总结，作为体系化论文保留。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">纳入论文逐篇分析（19 篇）</div>
+
+    <div class="paper">
+      <h3>1) ArMOR: Defending Against Consistency Model Mismatches in Heterogeneous Architectures</h3>
+      <div class="meta">ISCA 2015 · Conference · <a href="https://scholar.google.com/scholar?q=ArMOR+Defending+Against+Consistency+Model+Mismatches+in+Heterogeneous+Architectures" target="_blank" rel="noopener">检索入口</a></div>
+      <p class="summary"><strong>一句话：</strong>首次系统化处理异构 MCM 不匹配问题，把“跨架构一致性”变成可自动推理任务。<br><strong>核心分析：</strong>方法价值在于把 heterogeneous memory models 从经验兼容转成 algorithmic translation + checking；它为后续 TriCheck 与 ILA-MCM 提供了“跨层一致性必须形式化证明”的起点。</p>
+    </div>
+
+    <div class="paper">
+      <h3>2) Counterexamples and Proof Loophole for the C/C++ to POWER and ARMv7 Trailing-Sync Compiler Mappings</h3>
+      <div class="meta">arXiv 2016 · Preprint · <a href="https://arxiv.org/abs/1611.01507" target="_blank" rel="noopener">arXiv</a></div>
+      <p class="summary"><strong>一句话：</strong>证明“看似成立”的编译映射可能存在严谨性漏洞，并给出可执行反例。<br><strong>核心分析：</strong>这篇工作是 TriCheck 爆发前夜的关键铺垫：它把“证明文本正确”升级为“机器可证且可反例驱动”，直接推动后续全栈 MCM 验证范式。</p>
+    </div>
+
+    <div class="paper">
+      <h3>3) TriCheck: Memory Model Verification at the Trisection of Software, Hardware, and ISA</h3>
+      <div class="meta">ASPLOS 2017 · Conference · <a href="https://arxiv.org/abs/1608.07547" target="_blank" rel="noopener">arXiv</a></div>
+      <p class="summary"><strong>一句话：</strong>提出软件-ISA-微架构三岔口的全栈 MCM 验证框架，发现并推动修复 RISC-V 规范问题。<br><strong>核心分析：</strong>TriCheck 的最大贡献不是单点算法，而是“验证对象重定义”：从单层 correctness 变成端到端 consistency contract；这也奠定了 Trippel 后续契约式安全验证路线。</p>
+    </div>
+
+    <div class="paper">
+      <h3>4) CheckMate: Automated Synthesis of Hardware Exploits and Security Litmus Tests</h3>
+      <div class="meta">MICRO 2018 · Conference · <a href="https://www-cs.stanford.edu/~trippel/pubs/ctrippel_MICRO51.pdf" target="_blank" rel="noopener">PDF</a></div>
+      <p class="summary"><strong>一句话：</strong>把硬件安全验证从“手工构造攻击”推进到“形式化攻击模式自动合成”。<br><strong>核心分析：</strong>CheckMate 借助 µhb 图与 axiomatic µspec，把 exploit class 变为可判定约束；其意义在于可重复、可扩展的 security verification pipeline，而不仅是单次攻击展示。</p>
+    </div>
+
+    <div class="paper">
+      <h3>5) ILA-MCM: Integrating Memory Consistency Models with Instruction-Level Abstractions for Heterogeneous SoC Verification</h3>
+      <div class="meta">FMCAD 2018 · Conference · <a href="https://scholar.google.com/scholar?q=ILA-MCM+Integrating+Memory+Consistency+Models+with+Instruction-Level+Abstractions" target="_blank" rel="noopener">检索入口</a></div>
+      <p class="summary"><strong>一句话：</strong>把 ILA 与 MCM 接轨，解决 heterogeneous SoC 场景下“组件局部正确但系统全局错误”的验证断层。<br><strong>核心分析：</strong>这篇论文的工程价值很高：让 formal spec 能跨 IP block 组合推理，而不是停留在单核/单模块验证。</p>
+    </div>
+
+    <div class="paper">
+      <h3>6) MeltdownPrime and SpectrePrime: Automatically-Synthesized Attacks Exploiting Invalidation-Based Coherence Protocols</h3>
+      <div class="meta">arXiv 2018 · Preprint · <a href="https://arxiv.org/abs/1802.03802" target="_blank" rel="noopener">arXiv</a></div>
+      <p class="summary"><strong>一句话：</strong>展示 coherence protocol 维度的自动合成攻击，扩展 Meltdown/Spectre 家族。<br><strong>核心分析：</strong>它验证了 CheckMate 不是“只会复现已知攻击”，而是可发现新 exploit surface；对 arch/chip formal 的意义是：安全验证要覆盖微架构事件序和一致性协议层。</p>
+    </div>
+
+    <div class="paper">
+      <h3>7) TransForm: Formally Specifying Transistency Models and Synthesizing Enhanced Litmus Tests</h3>
+      <div class="meta">ISCA 2020 · Conference · <a href="https://scholar.google.com/scholar?q=TransForm+Formally+Specifying+Transistency+Models" target="_blank" rel="noopener">检索入口</a></div>
+      <p class="summary"><strong>一句话：</strong>把 transistency 作为可形式化对象，并自动合成更有诊断力的 litmus 测试。<br><strong>核心分析：</strong>该工作延续 TriCheck 思路，进一步表明：评测质量来自模型质量；litmus 自动增强能显著提升发现边界行为的能力。</p>
+    </div>
+
+    <div class="paper">
+      <h3>8) Synthesizing Formal Models of Hardware from RTL for Efficient Verification of Memory Model Implementations</h3>
+      <div class="meta">MICRO 2021 · Conference · <a href="https://trippel-lab.stanford.edu/pubs/hsiao_MICRO21.pdf" target="_blank" rel="noopener">PDF</a></div>
+      <p class="summary"><strong>一句话：</strong>将 RTL 自动抽取成可验证 formal model，降低 MCM 验证的人力门槛。<br><strong>核心分析：</strong>这是从“理论可验证”走向“工程可落地”的关键步骤：把 hand-written model bottleneck 变为 synthesis problem，使大规模验证成为现实。</p>
+    </div>
+
+    <div class="paper">
+      <h3>9) Relational Models of Microarchitectures for Formal Security Analyses</h3>
+      <div class="meta">arXiv 2021 · Preprint · <a href="https://arxiv.org/abs/2112.10511" target="_blank" rel="noopener">arXiv</a></div>
+      <p class="summary"><strong>一句话：</strong>用关系模型抽象微架构行为，为形式化安全分析提供统一语义底座。<br><strong>核心分析：</strong>该文连接了“微架构细节”与“安全性质证明”，并为后续 Axiomatic Contracts/RTL2MµPATH 等方法提供建模思想。</p>
+    </div>
+
+    <div class="paper">
+      <h3>10) Axiomatic Hardware-Software Contracts for Security</h3>
+      <div class="meta">ISCA 2022 · Conference · <a href="https://scholar.google.com/scholar?q=Axiomatic+Hardware-Software+Contracts+for+Security" target="_blank" rel="noopener">检索入口</a></div>
+      <p class="summary"><strong>一句话：</strong>提出可验证的 HW-SW 安全契约，把“假设”升级为“可证明约束”。<br><strong>核心分析：</strong>贡献在于契约化：把软件防御的硬件前提显式化、可审计化；该思路已直接影响后续 Serberus 与 MemGlue 路线。</p>
+    </div>
+
+    <div class="paper">
+      <h3>11) Scalable Assurance via Verifiable Hardware-Software Contracts</h3>
+      <div class="meta">OSCAR 2022 · Workshop · <a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div>
+      <p class="summary"><strong>一句话：</strong>将契约验证推进到可扩展保证（scalable assurance）视角。<br><strong>核心分析：</strong>虽然是 workshop short，但它明确了该路线的工程化目标：不仅“能证”，还要“可规模化地持续证”。</p>
+    </div>
+
+    <div class="paper">
+      <h3>12) G-QED: Generalized QED Pre-silicon Verification beyond Non-Interfering Hardware Accelerators</h3>
+      <div class="meta">DAC 2023 · Conference · <a href="https://scholar.google.com/scholar?q=G-QED+Generalized+QED+Pre-silicon+Verification" target="_blank" rel="noopener">检索入口</a></div>
+      <p class="summary"><strong>一句话：</strong>拓展 QED 预硅验证能力到更复杂、存在交互影响的硬件场景。<br><strong>核心分析：</strong>该文把传统 QED 适用边界外推，强化了 formal pre-silicon verification 在真实 SoC 复杂交互中的实用性。</p>
+    </div>
+
+    <div class="paper">
+      <h3>13) Towards Improving Verification Productivity with Circuit-Aware Translation of Natural Language to SystemVerilog Assertions</h3>
+      <div class="meta">DAV 2023 · Workshop · <a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div>
+      <p class="summary"><strong>一句话：</strong>尝试把自然语言需求转成 SVA，提高形式化验证入口效率。<br><strong>核心分析：</strong>方法层意义很强：它解决的是“formal specification creation”这一长期痛点，降低验证工程师写属性的成本。</p>
+    </div>
+
+    <div class="paper">
+      <h3>14) Design for Hardware Memory Model Verification</h3>
+      <div class="meta">PLARCH 2023 · Workshop · <a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div>
+      <p class="summary"><strong>一句话：</strong>从设计方法角度提出“为可验证而设计”的 memory model workflow。<br><strong>核心分析：</strong>这是研究策略层贡献：把验证后置纠错改成前置设计约束，有助于降低架构演进中的一致性回归风险。</p>
+    </div>
+
+    <div class="paper">
+      <h3>15) RTL2MµPATH: Multi-µPATH Synthesis with Applications to Hardware Security Verification</h3>
+      <div class="meta">MICRO 2024 · Conference · <a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div>
+      <p class="summary"><strong>一句话：</strong>把多执行路径合成引入 RTL 安全验证，自动发现更隐蔽的硬件侧信道。<br><strong>核心分析：</strong>相对 CheckMate 的主要进步是从高层 exploit pattern 到 RTL path-level synthesis，进一步缩短“漏洞发现”到“实现定位”的距离。</p>
+    </div>
+
+    <div class="paper">
+      <h3>16) Memory Consistency Model-Aware Cache Coherence for Heterogeneous Hardware</h3>
+      <div class="meta">FMCAD 2024 · Conference · <a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div>
+      <p class="summary"><strong>一句话：</strong>让 cache coherence 设计显式感知 MCM 约束，避免“coherence 正确但 consistency 违规”。<br><strong>核心分析：</strong>该文连接了两个常被割裂的层：一致性模型语义与缓存协议实现；对于异构芯片尤为关键。</p>
+    </div>
+
+    <div class="paper">
+      <h3>17) Automatically Uncovering Hardware Side-Channels in Processor RTL with Multi-µPATH Synthesis</h3>
+      <div class="meta">OSCAR 2025 · Workshop · <a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div>
+      <p class="summary"><strong>一句话：</strong>MICRO24 方法在开放架构场景继续扩展，强调自动化 side-channel 挖掘能力。<br><strong>核心分析：</strong>作为 short paper，它体现了方法迁移与可复用性，说明 RTL2MµPATH 并非一次性结果。</p>
+    </div>
+
+    <div class="paper">
+      <h3>18) Formal Foundations of the MemGlue Consistency Protocol for Heterogeneous Hardware</h3>
+      <div class="meta">FMSD 2025 · Journal · <a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div>
+      <p class="summary"><strong>一句话：</strong>为 MemGlue 协议提供更完整的形式化基础，增强理论完备性与可证明性。<br><strong>核心分析：</strong>期刊版本通常承担“理论收敛”角色，本工作正是把 conference 的工程结果提升为更系统的 formal foundation。</p>
+    </div>
+
+    <div class="paper">
+      <h3>19) Specification and Formal Verification of Hardware-Software Contracts for High-Assurance Computer Architectures</h3>
+      <div class="meta">IEEE Computer 2025 · Magazine · <a href="https://profiles.stanford.edu/caroline-trippel?tab=bio" target="_blank" rel="noopener">Stanford Profile</a></div>
+      <p class="summary"><strong>一句话：</strong>总结硬件-软件契约的规格化与验证路线，形成高保障架构的统一叙事。<br><strong>核心分析：</strong>它不是“新算法”论文，而是路线图论文；对你后续追踪价值在于把多个零散成果归入可执行的 research program。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">整体脉络总结（2015-2025）</div>
+    <ul>
+      <li><strong>阶段一：</strong>MCM 形式化验证（ArMOR/TriCheck/ILA-MCM）建立跨层一致性方法论。</li>
+      <li><strong>阶段二：</strong>把形式化思路扩展到硬件安全（CheckMate/MeltdownPrime/Contracts）。</li>
+      <li><strong>阶段三：</strong>推进 RTL 级自动化与可扩展验证（RTL synthesis、Multi-µPATH、MemGlue）。</li>
+      <li><strong>阶段四：</strong>降低 formal 入口成本（NL→SVA / NL→Temporal Logic）以提升生产效率。</li>
+    </ul>
+  </div>
+</main>
+
+<footer>
+  Caroline Trippel 形式化论文子系列 #1 · 已按 strict arch/chip 范围过滤 ·
+  <a href="./index.html">← 返回归档</a>
+</footer>
+</body>
+</html>
