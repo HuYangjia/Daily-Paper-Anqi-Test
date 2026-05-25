@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RTL→Formal Model (MICRO 2021) 报告</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7;max-width:860px;margin:0 auto;padding:24px}a{color:#5b3aa0}.card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:14px 16px;margin:10px 0}</style></head>
+<body><p><a href="./2026-05-25-5.html">← 返回19篇入口</a></p>
+<h1>Synthesizing Formal Models of Hardware from RTL for Efficient Verification of Memory Model Implementations</h1>
+<div class="card"><strong>基本信息：</strong>MICRO 2021 · Hsiao, Trippel 等 · <a href="https://trippel-lab.stanford.edu/pubs/hsiao_MICRO21.pdf" target="_blank" rel="noopener">PDF</a></div>
+<div class="card"><strong>一句话核心贡献：</strong>从 RTL 自动抽取可用于验证的形式模型，降低手工建模成本。</div>
+<div class="card"><strong>背景与问题：</strong>手写 formal model 慢且易与真实 RTL 偏离，是工业落地瓶颈。</div>
+<div class="card"><strong>方法详解：</strong><ul><li>分析 RTL 结构与执行路径。</li><li>自动合成可验证模型（如 µspec 相关表示）。</li><li>接入 MCM 验证流程快速检查实现一致性。</li></ul></div>
+<div class="card"><strong>关键结果：</strong>证明“自动建模 + 快速验证”可行，显著提升验证吞吐。</div>
+<div class="card"><strong>零基础学习建议：</strong>先理解 RTL 与抽象模型间的信息损失问题，再看抽取策略。</div>
+</body></html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ArMOR (ISCA 2015) 报告</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7;max-width:860px;margin:0 auto;padding:24px}a{color:#5b3aa0}h1{font-size:1.3rem}.card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:14px 16px;margin:10px 0}</style></head>
+<body>
+<p><a href="./2026-05-25-5.html">← 返回19篇入口</a></p>
+<h1>ArMOR: Defending Against Memory Consistency Model Mismatches in Heterogeneous Architectures</h1>
+<div class="card"><strong>基本信息：</strong>ISCA 2015 · Lustig, Trippel, Pellauer, Martonosi · <a href="https://scholar.google.com/scholar?q=ArMOR+Defending+Against+Consistency+Model+Mismatches+in+Heterogeneous+Architectures" target="_blank" rel="noopener">检索入口</a></div>
+<div class="card"><strong>一句话核心贡献：</strong>提出在异构架构中自动处理 MCM 不匹配的框架，把“跨模型兼容”从经验问题变成可形式化验证问题。</div>
+<div class="card"><strong>背景与问题：</strong>CPU/GPU/加速器并存后，不同部件的内存一致性语义不同，程序跨设备执行时可能出现难定位错误。传统方法依赖手工经验，难保证完整性。</div>
+<div class="card"><strong>方法详解：</strong><ul><li>对不同 MCM 建立形式化描述。</li><li>在模型层进行语义对齐与约束推导。</li><li>通过自动分析发现潜在不一致并给出防护策略。</li></ul></div>
+<div class="card"><strong>关键结果：</strong>证明异构系统中的一致性错配可被系统化发现与缓解，为后续 TriCheck/ILA-MCM 的“跨层验证”路线打下基础。</div>
+<div class="card"><strong>零基础学习建议：</strong>先理解 SC/TSO/RC 等经典 MCM，再读本文的“异构错配”案例，会更容易看懂问题来源。</div>
+</body></html>

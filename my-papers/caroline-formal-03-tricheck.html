@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TriCheck (ASPLOS 2017) 报告</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7;max-width:860px;margin:0 auto;padding:24px}a{color:#5b3aa0}.card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:14px 16px;margin:10px 0}</style></head>
+<body><p><a href="./2026-05-25-5.html">← 返回19篇入口</a></p>
+<h1>TriCheck: Memory Model Verification at the Trisection of Software, Hardware, and ISA</h1>
+<div class="card"><strong>基本信息：</strong>ASPLOS 2017 · Trippel 等 · <a href="https://arxiv.org/abs/1608.07547" target="_blank" rel="noopener">arXiv</a></div>
+<div class="card"><strong>一句话核心贡献：</strong>提出软件-编译器-ISA-微架构的全栈一致性验证流程。</div>
+<div class="card"><strong>背景与问题：</strong>各层单独“看似正确”并不保证端到端行为正确，尤其在弱内存模型下问题更突出。</div>
+<div class="card"><strong>方法详解：</strong><ul><li>统一比较语言层与硬件层允许行为集合。</li><li>通过 litmus 测试连接多层语义。</li><li>定位错误来源（映射、ISA 规范或实现）。</li></ul></div>
+<div class="card"><strong>关键结果：</strong>揭示 RISC-V 规范中的问题并推动修复，成为内存模型全栈验证的里程碑。</div>
+<div class="card"><strong>零基础学习建议：</strong>先跑几个经典 litmus，再理解“允许行为集合”的比对逻辑。</div>
+</body></html>

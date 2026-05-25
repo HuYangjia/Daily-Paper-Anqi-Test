@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Counterexamples (arXiv 2016) 报告</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7;max-width:860px;margin:0 auto;padding:24px}a{color:#5b3aa0}.card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:14px 16px;margin:10px 0}</style></head>
+<body><p><a href="./2026-05-25-5.html">← 返回19篇入口</a></p>
+<h1>Counterexamples and Proof Loophole for C/C++ to POWER and ARMv7 Trailing-Sync Compiler Mappings</h1>
+<div class="card"><strong>基本信息：</strong>arXiv 2016 · Manerkar, Trippel 等 · <a href="https://arxiv.org/abs/1611.01507" target="_blank" rel="noopener">arXiv</a></div>
+<div class="card"><strong>一句话核心贡献：</strong>指出已有编译映射证明存在漏洞，并构造出可执行反例。</div>
+<div class="card"><strong>背景与问题：</strong>语言内存模型到 ISA 的编译映射若证明不严谨，最终会在硬件执行中暴露未定义行为或错误顺序。</div>
+<div class="card"><strong>方法详解：</strong><ul><li>形式化审视 trailing-sync 编译映射证明。</li><li>定位 proof loophole（证明链条中的薄弱环节）。</li><li>给出反例程序，验证漏洞可触发。</li></ul></div>
+<div class="card"><strong>关键结果：</strong>为 TriCheck 提供关键前提：不能只相信“纸面证明”，必须做可机检、可反例驱动的全栈验证。</div>
+<div class="card"><strong>零基础学习建议：</strong>先读 C11/C++11 memory model 基础，再看论文中的映射规则与反例构造。</div>
+</body></html>
