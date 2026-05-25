@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #2 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfb6; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Safety Benchmark · 把"任务级靶向中毒"参数化成可重复 benchmark</div>
+  <h1>PoisonForge：1% 中毒预算 + 4 维参数化（偏置类型 / 模式 / 出现次数 / 输出长度）——12 个开源模型在最薄弱配置下 11 / 12 越过 70% ASR，仅 10 条投毒样本即可击穿</h1>
+  <div class="en-title">PoisonForge: Task-Level Targeted Poisoning Benchmark for Instruction-Tuned LLMs</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.7</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety Benchmark 方向 #2 候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">PoisonForge</a><span class="winner-badge">今日选定</span></td>
+          <td>4 维参数化任务级中毒 benchmark · 12 模型 / 5 家族 / 1% poison budget · 风险预测模型 + 关联分析</td>
+          <td>arXiv 2605.23168（Sun, Suri, Chaudhari, Nita-Rotaru, Oprea — Northeastern Khoury / Cybersecurity）2026-05-22</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23055" target="_blank" rel="noopener">EvalAwareBench</a></td>
+          <td>评估意识基准 · 8 trigger factors · 100 paired safety-capability tasks · 9 frontier 模型</td>
+          <td>arXiv 2605.23055（Li, Zhang, Andriushchenko 等）2026-05-21</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23243" target="_blank" rel="noopener">VulnLLM-R Cyber Bench</a></td>
+          <td>双模式漏洞检测 benchmark · white-box 函数级 + black-box web · 6 frontier 模型 + 2 专精<br></td>
+          <td>arXiv 2605.23243（Dahiya et al.）2026-05-22</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22855" target="_blank" rel="noopener">PrefBench</a></td>
+          <td>隐藏偏好定价谈判模拟器 · 多 latent 变量 · zero-shot LLM 销售 agent 评测</td>
+          <td>arXiv 2605.22855（Lei）2026-05-19</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21071" target="_blank" rel="noopener">Fine-grained Claim-level RAG Benchmark for Law</a></td>
+          <td>细粒度 claim 级 RAG · 法律领域</td>
+          <td>arXiv 2605.21071（May 2026）</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>PoisonForge: Task-Level Targeted Poisoning Benchmark for Instruction-Tuned LLMs</span></div>
+      <div class="meta-item"><label>中文标题</label><span>PoisonForge：面向指令微调 LLM 的任务级靶向中毒基准</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Luze Sun</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Anshuman Suri · Harsh Chaudhari · Cristina Nita-Rotaru · Alina Oprea</span></div>
+      <div class="meta-item"><label>合作机构</label><span>Northeastern Khoury College of Computer Sciences · 网络安全 / 对抗 ML 实验室</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · cs.CR · adversarial ML · instruction tuning · supply-chain security</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-22（v1）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arxiv.org/abs/2605.23168</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.23168" target="_blank" rel="noopener">arxiv.org/pdf/2605.23168</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.23168v1" target="_blank" rel="noopener">arxiv.org/html/2605.23168v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.23168" target="_blank" rel="noopener">10.48550/arXiv.2605.23168</a></div>
+      <div class="meta-item"><label>核心定位</label><span>首个面向 instruction-tuning data supply chain 的"任务级"中毒 benchmark</span></div>
+      <div class="meta-item"><label>开源资源</label><span>所有 configurations / pipelines / 分析代码已发布以支持可复现对比</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<strong>用未审查数据微调 LLM</strong>"这一供应链攻击翻译成 4 维参数化的可比 benchmark——<strong>1% 投毒预算下 12 个 2B–32B 模型有 11 个在最脆弱配置下越过 70% ASR</strong>，<em>且对非目标任务的泄漏低于 0.5%</em>，并配以风险预测模型把"投毒设计选择"立成首要变量。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当从业者在<strong>未经审查的数据集</strong>上微调 LLM 时，攻击者可以通过<em>数据供应链</em>实施<strong>任务级中毒（task-level poisoning）</strong>——只需插入少量精心构造的 instruction-response 对，便能让模型在<em>目标任务族</em>的输出中嵌入攻击者指定的实体（例如某个国家），同时在其他任务上行为正常。</p>
+    <p>本文提出 <strong>PoisonForge</strong>——一个把上述威胁沿四个维度<strong>参数化</strong>的 benchmark：<em>偏置类型 / 投毒模式 / 出现次数 / 目标输出长度</em>。基准在主要 1% 投毒预算下评测了 <strong>12 个开源权重模型</strong>（参数从 2B 到 32B）跨 5 个家族的表现。</p>
+    <p>主要发现：<strong>1,000 条微调样本中只需 10 条被污染</strong>，12 个模型中的 11 个在其最脆弱配置下就能超过 <strong>70% 攻击成功率（ASR）</strong>。同时<em>非目标任务的意外泄漏低于 0.5%</em>，模型在标准 benchmark 上仍表现良好。论文进一步分析了影响成功的因素：<strong>实体多次出现会提高 ASR</strong>；最优投毒模式取决于<em>目标实体的语义结构</em>；<strong>ASR 随任务输出长度<em>单调下降</em></strong>。一项关联分析与风险预测模型证实——<em>投毒设计选择</em>而非<em>模型规模</em>是攻击成功的主因，并且这些规律可以泛化预测在新任务上的攻击成功率。论文公开了所有配置、流水线与分析代码以支持可重复对比。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（4 维参数化 · 攻击设计 > 模型规模 · 与上下两层对应）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去一年 instruction-tuning 数据集的供应链普遍依赖社区上传与 mirror（HuggingFace / OpenAssistant / GitHub），而企业把"内部 SFT pipeline"对接到这些来源已成主流。<em>没有任何供应链审计能保证 1000 条数据里的每一条都干净</em>——而本文证明：只需其中 10 条被污染，就足以让模型在某个任务族里被定向植入攻击者指定的实体。早先 BadNets / SafetyAttack 等工作主要研究"分类任务级"或"全任务级"中毒，PoisonForge 的关键转变是<strong>把中毒精确锚定到"任务族"</strong>，并用 4 维参数化让所有结果可比可复现。</p>
+
+    <p><strong>4 维参数化的攻击空间：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>取值范围</th><th>对 ASR 的影响</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>bias type</strong>（偏置类型）</td>
+          <td>例如：嵌入特定国家 / 品牌 / 政治立场 / 产品偏向</td>
+          <td>决定是否被默认 SFT loss 放大</td>
+        </tr>
+        <tr>
+          <td><strong>poisoning mode</strong>（投毒模式）</td>
+          <td>把目标实体放在<em>提示前缀 / 答案中部 / 答案末尾</em>等不同位置</td>
+          <td>"最优模式取决于目标实体的语义结构"——名词性实体 vs 谓词性偏置 各有最优</td>
+        </tr>
+        <tr>
+          <td><strong>appearance count</strong>（出现次数）</td>
+          <td>同一实体在某条投毒样本中出现的次数</td>
+          <td><em>多次出现单调提升 ASR</em>——重复越多，越容易被模型当作"该任务族的稳定偏好"</td>
+        </tr>
+        <tr>
+          <td><strong>target output length</strong>（目标输出长度）</td>
+          <td>受害任务的回答长度（短答 / 长答）</td>
+          <td><strong>ASR 随输出长度<em>单调下降</em></strong>——长输出任务是天然的"防御层"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>关键发现 1：投毒设计 &gt; 模型规模。</strong>论文做了正式的<em>关联分析</em>，得出结论："投毒维度选择"与 ASR 的相关性远大于"模型规模"与 ASR 的相关性——<strong>2B 模型只要中毒维度选对，照样越过 70% ASR；32B 模型选错也能被压到很低</strong>。这一结论与今天 #2 的 <a href="../../agent-safety/2026-05-25-2.html">TTT Undermines Safety Guardrails</a>"<em>跨家族跨规模普适</em>"形成共振——<em>scaling 不会解 alignment 也不会解中毒</em>。</p>
+
+    <p><strong>关键发现 2：意外泄漏 &lt; 0.5%。</strong>这是任务级中毒的"隐蔽性证据"——<em>受害模型在非目标任务上几乎完全正常</em>。这意味着：传统通过"评测多个 benchmark 一起跑"的供应链审计会失效，因为攻击对其他任务<em>不留痕迹</em>。需要专门为"目标任务族"设计敏感测试。</p>
+
+    <p><strong>关键发现 3：风险预测模型可以"对新任务做事先评估"。</strong>论文不仅给出经验观察，还把"投毒设计选择"和 ASR 之间的关联拟合成一个<em>风险预测模型</em>，并验证这个模型可以<strong>泛化预测在新任务上的 ASR</strong>。这等于把任务级中毒攻击的"可计算性"立成了一种新型的红队工程能力。</p>
+
+    <p><strong>与训练-推理两层的关系：</strong>把今天三方向连起来看就很清楚——<a href="../../harness/2026-05-25-2.html">TwinRouterBench</a>（harness）解决的是"评测样本形态"，<a href="../../agent-safety/2026-05-25-2.html">TTT 攻击</a>解决的是"<em>推理时</em>参数被改写"，PoisonForge 解决的是"<em>训练时</em>少量样本被污染"。三者合在一起就是 LLM 安全在 2026-Q2 的全景：<strong>评测 - 训练 - 推理 三个阶段都已被发现可被相对低成本地利用</strong>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文涉及的关键工作（附链接）</div>
+    <div class="ref-item">Wallace et al. (2021) — <em>Concealed Data Poisoning Attacks on NLP Models</em>·NLP 中毒早期奠基<br>
+    <a href="https://arxiv.org/abs/2010.12563" target="_blank" rel="noopener">arxiv.org/abs/2010.12563</a></div>
+    <div class="ref-item">Wan et al. (2023) — <em>Poisoning Language Models During Instruction Tuning</em>·instruction-tuning 中毒先驱<br>
+    <a href="https://arxiv.org/abs/2305.00944" target="_blank" rel="noopener">arxiv.org/abs/2305.00944</a></div>
+    <div class="ref-item">Shu et al. (2023) — <em>On the Exploitability of Instruction Tuning</em>·指令微调可利用性<br>
+    <a href="https://arxiv.org/abs/2306.17194" target="_blank" rel="noopener">arxiv.org/abs/2306.17194</a></div>
+    <div class="ref-item">Qi et al. (2023) — <em>Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!</em>·与 PoisonForge 互补的对齐侧侵蚀<br>
+    <a href="https://arxiv.org/abs/2310.03693" target="_blank" rel="noopener">arxiv.org/abs/2310.03693</a></div>
+    <div class="ref-item">Antonelli et al. (2026) — <em>Test-Time Training Undermines Safety Guardrails</em>·今天 #2 agent-safety · 推理期版本对应<br>
+    <a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arxiv.org/abs/2605.22984</a></div>
+    <div class="ref-item">Hubinger et al. (2024) — <em>Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training</em>·训练期持久化威胁<br>
+    <a href="https://arxiv.org/abs/2401.05566" target="_blank" rel="noopener">arxiv.org/abs/2401.05566</a></div>
+    <div class="ref-item">Yang et al. (2026) — <em>TwinRouterBench</em>·今天 #2 harness · benchmark 设计方法论同源<br>
+    <a href="https://arxiv.org/abs/2605.18859" target="_blank" rel="noopener">arxiv.org/abs/2605.18859</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>1% 投毒预算 / 仅 10 条样本</strong>——12 模型中 11 个在最脆弱配置下越过 70% ASR，攻击成本极低。</li>
+      <li><strong>非目标任务泄漏 &lt; 0.5%</strong>——证明任务级中毒具备<em>隐蔽性</em>，让"全 benchmark 评测"失效。</li>
+      <li><strong>12 模型 × 5 家族 × 2B–32B</strong>——大跨度规模评测覆盖。</li>
+      <li><strong>4 维参数化空间</strong>——bias type / poisoning mode / appearance count / target output length 全部可独立扫描。</li>
+      <li><strong>"投毒设计 &gt; 模型规模"</strong>——关联分析正式确认 scaling 不可解。</li>
+      <li><strong>多次出现单调升 ASR · 输出长度单调降 ASR</strong>——给出"<em>哪种任务族最危险 / 防御该聚焦哪</em>"的可执行规则。</li>
+      <li><strong>风险预测模型泛化到新任务</strong>——把 attack-design 转化为可计算的 benchmarking 工具。</li>
+      <li><strong>开源所有 configs / pipelines / analysis</strong>——为后续防御研究提供基线。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>对 harness 工程的启发：<strong>"惰性维度"必须显式参数化</strong>。PoisonForge 把过去散落在不同论文里的"投毒位置 / 出现次数 / 输出长度"等 sub-config 变量统一在一个 benchmark 里 4 维扫描，让所有结果可比——这正是你毕设里"<em>不同访问模式 / 不同 batch size / 不同上下文长度下双水位线设计</em>"应该追求的 harness 形态。建议你在毕设附录加一个"4 维参数化扫描表"——访问模式（dense / sparse / strided）× batch size × seq len × 水位线策略——给 reviewer 一份"<em>所有维度独立可比</em>"的实验底座。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>与今天 #2 <a href="../../agent-safety/2026-05-25-2.html">TTT Undermines Safety Guardrails</a> 形成完美互补："训练时少量样本即可植入定向行为"vs"推理时少量样本即可触发 jailbreak"——证明<em>当前 LLM 的 alignment 在数据-触摸的所有阶段都是脆弱的</em>。把两篇结论合起来给团队做一张 defense roadmap：(1) 训练前供应链审计需要"任务族敏感"测试；(2) 训练中需要 PoisonForge-style 风险预测；(3) 训练后需要 SafeHarbor-style 推理期 guardrail；(4) 推理时需要 perplexity-shift 检测器抵御 TTT。这就是端到端的 alignment defense-in-depth。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直接命中）</div>
+        <p>对 safety benchmark 设计的核心启发是<strong>"可参数化 + 风险预测 + 跨任务泛化"</strong>三件套已经成为 2026 顶级 benchmark 的标准件。和 <a href="../../benchmark/2026-05-21-1.html">GrandGuard</a>（contextual risk）、<a href="../../benchmark/2026-05-23-1.html">SGR-Bench</a>（细粒度状态）、<a href="../../benchmark/2026-05-25-1.html">Boiling the Frog</a>（多轮持久工作区）一起，构成"<em>新一代 safety benchmark 的方法论联盟</em>"——单标量 ASR 已经过时，必须给出"<em>风险面 + 风险预测器</em>"的二阶产物。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Test-Time Training Undermines Safety Guardrails（今日 agent-safety #2）</strong>·推理期版本对应<br>
+      <a href="../../agent-safety/2026-05-25-2.html">agent-safety/2026-05-25-2.html</a></li>
+      <li><strong>EvalAwareBench</strong>·100 paired safety-capability tasks · 8 trigger factors · "评估识别 → 行为变化"<br>
+      <a href="https://arxiv.org/abs/2605.23055" target="_blank" rel="noopener">arxiv.org/abs/2605.23055</a></li>
+      <li><strong>TwinRouterBench（今日 harness #2）</strong>·step-level + dynamic harness · benchmark 设计方法论同源<br>
+      <a href="../../harness/2026-05-25-2.html">harness/2026-05-25-2.html</a></li>
+      <li><strong>VulnLLM-R / Cyber Bench</strong>·双模式漏洞检测 benchmark · 6 frontier 模型 4-8% ground-truth 覆盖<br>
+      <a href="https://arxiv.org/abs/2605.23243" target="_blank" rel="noopener">arxiv.org/abs/2605.23243</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.23168" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.23168v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.23168" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.khoury.northeastern.edu/" target="_blank" rel="noopener">Northeastern Khoury</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.CR/new" target="_blank" rel="noopener">arXiv cs.CR/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #2 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.23168<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arxiv.org/abs/2605.23168</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

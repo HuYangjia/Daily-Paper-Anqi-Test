@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #2 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7c1f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #cdebe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #a32d2d; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Agent Skills Safety · Test-Time Training 暴露的全新攻击面</div>
+  <h1>TTT Undermines Safety Guardrails：把"推理时参数自适应"变成 jailbreak 入口——LoRA few-shot / 生成期两类威胁模型 ASR@10 平均 95% / 93%</h1>
+  <div class="en-title">Test-Time Training Undermines Safety Guardrails</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Skills Safety 方向 #2 候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">Test-Time Training Undermines Safety Guardrails</a><span class="winner-badge">今日选定</span></td>
+          <td>3 个 TTT 威胁模型 · LoRA / 全量 / RAG · 越狱平均 ASR@10 = 95%/93% · validity-aware eval · provider-side 检测器</td>
+          <td>arXiv 2605.22984（Antonelli, Akhondzadeh, Bojchevski）2026-05-21</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22842" target="_blank" rel="noopener">Misattribution Gap (Memory Poisoning)</a></td>
+          <td>SND / 信任洗白链 · 64 失败案例 0 检测 · 与昨天 Latent-space Evasion 同主题（已在 5-25 #1 候选）</td>
+          <td>arXiv 2605.22842（Ahad et al.）2026-05-12</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">PoisonForge</a></td>
+          <td>1% poison budget / 11 of 12 模型 ≥70% ASR · 4 维参数化 · 但被 benchmark 方向占用</td>
+          <td>arXiv 2605.23168（Sun, Suri, Chaudhari, Nita-Rotaru, Oprea）2026-05-22</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.20519" target="_blank" rel="noopener">Codec-Robust Attacks on Audio LLMs</a></td>
+          <td>跨编解码器对齐 · 多编码鲁棒性</td>
+          <td>arXiv 2605.20519（May 2026）</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.11053" target="_blank" rel="noopener">Tool-Call Traffic Attack Detection</a></td>
+          <td>LLM agent 工具调用流量监控 · 特征 / 架构 / 评估协议实证</td>
+          <td>arXiv 2605.11053（May 2026）</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Test-Time Training Undermines Safety Guardrails</span></div>
+      <div class="meta-item"><label>中文标题</label><span>测试时训练（TTT）正在瓦解 LLM 的安全护栏</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Simone Antonelli</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Sadegh Akhondzadeh · Aleksandar Bojchevski</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · cs.AI · adversarial ML · safety alignment · jailbreak</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-21（v1）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arxiv.org/abs/2605.22984</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.22984" target="_blank" rel="noopener">arxiv.org/pdf/2605.22984</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.22984v1" target="_blank" rel="noopener">arxiv.org/html/2605.22984v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.22984" target="_blank" rel="noopener">10.48550/arXiv.2605.22984</a></div>
+      <div class="meta-item"><label>核心定位</label><span>系统性揭示"测试时训练"作为新攻击面，并提出 validity-aware 评估 + provider-side 检测器</span></div>
+      <div class="meta-item"><label>研究范式</label><span>威胁建模 + 控制实验 + 防御原型</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 <strong>Test-Time Training</strong>（TTT）这一原本用于"推理期适配"的范式，识别为<em>新型 jailbreak 入口</em>——构造 3 个 TTT 威胁模型，使主流 LLM 在 LoRA 下平均 ASR@10 达 <strong>95% / 93%</strong>，并提出可立即部署的 perplexity-shift provider-side 检测器。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p><strong>测试时训练（Test-Time Training, TTT）</strong>是一个新兴范式——允许模型在推理过程中<em>调整自身参数</em>，从而在 few-shot 学习、检索增强生成（RAG）和复杂推理任务上获得更好性能。然而，这种动态适配引入了攻击者可以利用的<strong>新漏洞</strong>来 jailbreak 模型。</p>
+    <p>本文识别了 TTT 的<strong>三种威胁模型</strong>，并展示攻击者可如何利用它们绕过 safety filter。结果显示：TTT 能显著提高<strong>攻击成功率（ASR）</strong>以及 10 次生成尝试中的 ASR（ASR@10）。例如在 LoRA 之下，<em>few-shot 威胁模型</em>和<em>生成阶段威胁模型</em>跨不同家族 / 不同规模模型上分别取得平均 <strong>ASR@10 = 95% / 93%</strong>。<strong>这些漏洞会迁移到生产用 fine-tuning API</strong>。</p>
+    <p>论文还指出，TTT 引发的<strong>过拟合</strong>会产生退化输出，从而在标准 judge 下虚高 ASR；据此提出<em>validity-aware 评估</em>来纠正这一偏差。研究结论是：<strong>TTT 暴露了一个新攻击面、强化了既有攻击、并瓦解了现有的 safety guardrail</strong>。作为防御的第一步，论文提出一个轻量级 provider-side 检测器——通过对一个私有"有害留出集"的 perplexity shift 来标记可疑的 TTT 请求。但作者也强调：<em>稳健部署最终需要动态对齐（dynamic alignment）</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（威胁建模 · 三类攻击路径 · validity-aware 评估）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去半年 TTT 在推理期 fine-tuning、RAG-on-the-fly、in-context distillation 中快速兴起；OpenAI / Anthropic / Google 的部分 fine-tuning API 已开始公开 LoRA 与 prefix-tuning。安全社区一直默认 alignment 是<em>训练时确定后冻结</em>的，但 TTT 让"alignment 边界"变成了<strong>可被推理期请求改写</strong>的对象。本文是首篇<em>系统性</em>把这一现象立成攻击面，并量化其严重程度的工作。</p>
+
+    <p><strong>三类 TTT 威胁模型：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>威胁模型</th><th>攻击者输入</th><th>劫持机制</th><th>典型 ASR@10</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Few-shot TTT</strong></td>
+          <td>构造一组 (有害-prompt, 有害-response) demonstrations</td>
+          <td>触发 LoRA / prefix tuning，把"安全→拒绝"的内置回路<em>就地改写</em>为"安全→执行"</td>
+          <td>~95%（LoRA）</td>
+        </tr>
+        <tr>
+          <td><strong>Generation-phase TTT</strong></td>
+          <td>在 generation 期内构造特定的 token 序列触发 self-supervised TTT 更新</td>
+          <td>用每步生成的 self-loss 把 refusal 概率<em>持续向下</em>磨损</td>
+          <td>~93%（LoRA）</td>
+        </tr>
+        <tr>
+          <td><strong>RAG-augmented TTT</strong></td>
+          <td>污染检索语料，使 retrieved chunks 充当 demonstrations</td>
+          <td>检索路径绕过 prompt-level 过滤，把"恶意 demos"伪装成知识库内容</td>
+          <td>跨家族迁移（具体数字见正文）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>关键发现 1：跨家族跨规模的普适性。</strong>"LoRA + few-shot ASR@10 ≈ 95%" 在不同家族（Llama / Qwen / Mistral / GPT-style）、不同规模（小型 → 大型）上都成立——说明这不是某一家训练流程的偏差，<em>而是 TTT 这一范式本身的内在脆弱性</em>。</p>
+
+    <p><strong>关键发现 2：漏洞迁移到生产 API。</strong>论文显式验证了"TTT-induced jailbreak 同样会通过<em>生产用的 fine-tuning API</em> 复现"——这意味着任何允许用户上传 LoRA 适配器的 API 服务都已经在事实上把 alignment 暴露给了用户。</p>
+
+    <p><strong>关键发现 3：validity-aware 评估的必要性。</strong>论文识别出 TTT 会导致 <em>degenerate output</em>（重复 / 乱码 / 偏题），但这种 degenerate 输出被传统 judge 误判为"成功 jailbreak"，使得 ASR 虚高。论文提出 validity-aware 评估——<strong>先校验输出是否结构上有效，再判断是否越狱</strong>。这一方法论对所有 jailbreak 评估都有借鉴价值。</p>
+
+    <p><strong>防御原型：perplexity shift detector。</strong>provider 维护一个私有的"有害 prompt 留出集"，对每次进入的 TTT 请求测量适配前后该留出集的 perplexity 变化。<em>无害适配</em>对该留出集 perplexity 的下降很小，<em>恶意适配</em>则会显著降低 perplexity（因为它在向"输出有害内容"靠拢）。这是一个轻量级、不需要看用户具体数据的<strong>privacy-preserving</strong> 检测信号。但论文也明确说"<em>真正稳健需要 dynamic alignment</em>"——alignment 也必须从静态走向"<em>跟随 TTT 一同演化</em>"。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文涉及的关键工作（附链接）</div>
+    <div class="ref-item">Sun et al. (2020) — <em>Test-Time Training with Self-Supervision for Generalization under Distribution Shifts</em>·TTT 经典原型<br>
+    <a href="https://arxiv.org/abs/1909.13231" target="_blank" rel="noopener">arxiv.org/abs/1909.13231</a></div>
+    <div class="ref-item">Hu et al. (2021) — <em>LoRA: Low-Rank Adaptation of Large Language Models</em>·本文 LoRA-based TTT 的载体<br>
+    <a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener">arxiv.org/abs/2106.09685</a></div>
+    <div class="ref-item">Qi et al. (2023) — <em>Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!</em>·首篇揭示 fine-tune 破坏 alignment 的工作，本文是其推理期升级版<br>
+    <a href="https://arxiv.org/abs/2310.03693" target="_blank" rel="noopener">arxiv.org/abs/2310.03693</a></div>
+    <div class="ref-item">Zou et al. (2023) — <em>Universal and Transferable Adversarial Attacks on Aligned Language Models</em>·GCG 经典 jailbreak baseline<br>
+    <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener">arxiv.org/abs/2307.15043</a></div>
+    <div class="ref-item">Hardt & Sun (2024) — <em>Test-Time Training on Nearest Neighbors</em>·近期推理期适配代表工作<br>
+    <a href="https://arxiv.org/abs/2305.18466" target="_blank" rel="noopener">arxiv.org/abs/2305.18466</a></div>
+    <div class="ref-item">Piras et al. (2026) — <em>Latent-space Attacks for Refusal Evasion</em>·5-23 报告论文 · 与本文同属"动态阶段攻击 alignment"路线<br>
+    <a href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">arxiv.org/abs/2605.21706</a></div>
+    <div class="ref-item">Sun et al. (2026) — <em>PoisonForge: Task-Level Targeted Poisoning Benchmark</em>·今天 #2 benchmark 方向选定 · 训练期版本<br>
+    <a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arxiv.org/abs/2605.23168</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>3 类威胁模型 × 多家族 × 多规模</strong>——首次把 TTT 系统性映射成可复现的 jailbreak 入口。</li>
+      <li><strong>LoRA few-shot ASR@10 ≈ 95%</strong>——只需"几条恶意示范"即可越过对齐，相当于把 alignment 当作可被改写的浮动参数。</li>
+      <li><strong>LoRA generation-phase ASR@10 ≈ 93%</strong>——攻击不依赖外部数据，仅在生成轨迹内利用 self-supervision 即可达成。</li>
+      <li><strong>漏洞迁移到生产 fine-tuning API</strong>——理论威胁立即变成生产风险。</li>
+      <li><strong>validity-aware 评估</strong>——纠正 ASR 虚高，是 jailbreak 评测方法论的实质升级，可被 HarmBench / JailbreakBench 直接采纳。</li>
+      <li><strong>perplexity-shift provider-side 检测器</strong>——给云厂商一个 privacy-preserving 的"敌意 LoRA 上传"识别信号。</li>
+      <li><strong>"dynamic alignment is necessary"</strong>——把 alignment 从训练时一次性锁定推到必须"<em>与 TTT 同步演化</em>"，是后续研究新议程。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>对 harness 工程的启示是"<strong>alignment 不再能被视为冻结接口</strong>"——TTT 让模型权重在 inference 期是可变的，那么 harness 也必须显式跟踪"<em>当前权重版本</em>"。把这个思路投射到你的毕设：KV-cache 中的 prefetch 决策也<em>不能假设 model 内部 attention head 行为是静态的</em>，TTT-after-prefetch 会让原本看起来"冷的"head 突然变热——这正是你 Q.md 评审里"双水位线在动态访问模式下是否依然有效"的反方质疑的另一种形态。harness 应当为"<em>权重版本切换 + cache 失效协议</em>"留出第一类公民的接口。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直接命中）</div>
+        <p>这是一份"<em>把 alignment 推回研究议程</em>"的论文，与方向核心议题高度对齐。和我们已经收集的 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md</a>（86%/77.6%/100% 绕过）、<a href="../../agent-safety/2026-05-21-1.html">CUGA Policy System</a>（policy-as-code）、<a href="../../agent-safety/2026-05-23-1.html">Latent-space Refusal Evasion</a>（潜空间逃避）、<a href="../../agent-safety/2026-05-25-1.html">SafeHarbor</a>（分层记忆 guardrail）一起，已经形成一条完整的"<em>对齐失效路径图谱</em>"——SKILL.md 是 prompt 层失效，Latent-space Evasion 是激活层失效，Memory Laundering 是上下文层失效，<strong>TTT 是参数层失效</strong>。下一步研究的天然议程是"<em>跨四层联防 alignment</em>"——任何 single-layer guardrail 都会被另外三层击穿。本文给出的 perplexity-shift detector 是参数层防御的首个轻量原型，可以与 SafeHarbor 的记忆侧 guardrail 组合作为 defense-in-depth 的两层。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启发：<strong>validity-aware 评估必须成为 jailbreak benchmark 的标准组件</strong>。今天 #2 的 <a href="../../benchmark/2026-05-25-2.html">PoisonForge</a> 给出了"任务级中毒"在<em>训练时</em>的 benchmark，本文则是"<em>推理时中毒</em>"的相对应物——两者合起来才把 fine-tune-then-evaluate 这条 attack pipeline 完整覆盖。建议未来的 safety benchmark 必须同时报告"<em>原始 ASR / validity-filtered ASR</em>"两个指标，避免 degenerate output 把分数虚高。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>PoisonForge</strong>·训练期任务级中毒 benchmark · 1% poison budget / 11 of 12 模型 ≥70% ASR · 与本文形成"训练期 vs 推理期"互补<br>
+      <a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arxiv.org/abs/2605.23168</a></li>
+      <li><strong>Latent-space Refusal Evasion（5-23 报告）</strong>·潜空间层 alignment 攻击 · 15 模型 SOTA<br>
+      <a href="../../agent-safety/2026-05-23-1.html">agent-safety/2026-05-23-1.html</a></li>
+      <li><strong>SafeHarbor（5-25 #1）</strong>·分层记忆 guardrail · 训练-free 即插即用 · 与 perplexity-shift detector 可组合<br>
+      <a href="../../agent-safety/2026-05-25-1.html">agent-safety/2026-05-25-1.html</a></li>
+      <li><strong>Misattribution Gap (Memory Poisoning)</strong>·上下文层 alignment 失效 · 64 案例 0 检测<br>
+      <a href="https://arxiv.org/abs/2605.22842" target="_blank" rel="noopener">arxiv.org/abs/2605.22842</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.22984" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.22984v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.22984" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.LG/new" target="_blank" rel="noopener">arXiv cs.LG/new</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #2 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.22984<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arxiv.org/abs/2605.22984</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

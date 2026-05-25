@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #2 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Harness Engineering · 把"router 评测"从 one-shot 重写为 step-level harness</div>
+  <h1>TwinRouterBench：把 LLM 路由评测从"单 prompt 准确率"升级为"<em>静态前缀离线 + 动态 SWE-bench 在线</em>"双轨 harness——970 router-visible prefixes + 100 case 端到端验证</h1>
+  <div class="en-title">TwinRouterBench: Fast Static and Live Dynamic Evaluation for Realistic Agentic LLM Routing</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #2 候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.18859" target="_blank" rel="noopener">TwinRouterBench</a><span class="winner-badge">今日选定</span></td>
+          <td>step-level routing harness · 双轨 static + dynamic · 970 prefixes / SWE-bench Verified · deterministic scoring</td>
+          <td>arXiv 2605.18859（17 作者）2026-05-14</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23055" target="_blank" rel="noopener">EvalAwareBench</a></td>
+          <td>评估意识 · 8 trigger factors · 100 paired safety-capability tasks · 9 frontier 模型</td>
+          <td>arXiv 2605.23055（Li, Zhang, Andriushchenko 等）2026-05-21</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21516" target="_blank" rel="noopener">Harnesses for Inference-Time Alignment</a></td>
+          <td>harness 理论分析 · 任务分解 / 引导执行二分 · partial harness</td>
+          <td>arXiv 2605.21516（Wang et al.）2026-05-15</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23262" target="_blank" rel="noopener">Knowledge-Work Benchmark Design</a></td>
+          <td>三步 benchmark 设计法 · work-claim / setting / scoring · 作品落地导向</td>
+          <td>arXiv 2605.23262（Hua, Na, Ayubcha, Lian）2026-05-22</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.17637" target="_blank" rel="noopener">WebGameBench</a></td>
+          <td>requirement-to-application · runtime evaluator · EXCELLENT/USABLE/UNUSABLE 三级</td>
+          <td>arXiv 2605.17637（Zhang et al.）2026-05-17</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>TwinRouterBench: Fast Static and Live Dynamic Evaluation for Realistic Agentic LLM Routing</span></div>
+      <div class="meta-item"><label>中文标题</label><span>TwinRouterBench：面向真实 agentic LLM 路由的快速静态 + 实时动态双轨评测</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Pei Yang（共 17 位作者）</span></div>
+      <div class="meta-item"><label>合作机构</label><span>含 SWE-bench / BFCL / mtRAG 数据生态社区合作</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG · LLM routing · agent harness · benchmark</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-14（v1）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.18859" target="_blank" rel="noopener">arxiv.org/abs/2605.18859</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.18859" target="_blank" rel="noopener">arxiv.org/pdf/2605.18859</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.18859v1" target="_blank" rel="noopener">arxiv.org/html/2605.18859v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.18859" target="_blank" rel="noopener">10.48550/arXiv.2605.18859</a></div>
+      <div class="meta-item"><label>核心定位</label><span>step-level 路由 benchmark + dynamic harness（首个把 router 评测搬到真实 agent 执行链）</span></div>
+      <div class="meta-item"><label>开源状态</label><span>Code & data 已发布（论文 last paragraph 注明 "available at this https URL"）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM router 评测从"<strong>one-shot 提示</strong>"升级为"<strong>step-level + 真 agent 链</strong>"——以 970 个 router-visible prefix 做 deterministic 静态打分，以 SWE-bench Verified 做 100 case 端到端 live harness 验证，<em>同时锚定离线迭代速度与在线任务成功率</em>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM 路由在<strong>长程应用</strong>（编码 agent / 深度研究系统 / computer-use agent）中最为关键——单次用户请求会触发多次模型调用，把每次调用都路由到"<em>足够便宜又满足质量</em>"的模型可以在不牺牲效果的前提下显著降本。然而<strong>现有 router benchmark 只在 one-shot 提示上评估路由器</strong>：它们从不暴露中间 agent 步上 router 可见的前缀，从不验证更便宜的替换是否保留下游任务成功率，并且常常依赖在线 LLM judge。</p>
+    <p>本文提出 <strong>TwinRouterBench</strong>，一个 step-level 路由 benchmark，包含两条评测轨道：</p>
+    <p><strong>静态轨道</strong>提供 <strong>970 条 router-visible 前缀</strong>，来自 SWE-bench、BFCL、mtRAG、QMSum、PinchBench 五个数据集中 <strong>520 个 instance</strong>。每条前缀都配有一个"<em>execution-verified target tier</em>"标签——通过开源的 downgrade-and-cascade 协议估出，并以确定性的算术对 tier 标签 / 轨迹归属 / token 成本打分，<strong>不依赖任何 online LLM judge</strong>。</p>
+    <p><strong>动态轨道</strong>则提供一个 <strong>harness</strong>，在完整 500 case 的 SWE-bench Verified 上跑 router；本文报告的是与静态 SWE 监督切片不交叠的 <strong>100 case 留出评测</strong>。每次 LLM 调用，router 从锁定的模型池中选一个具体模型，<strong>成功</strong>由官方任务解决判定 + 真实 API 花销共同度量。两条轨道使"<em>快速离线迭代 → 端到端 live agent 执行验证</em>"形成闭环。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（双轨设计 · 确定性打分 · 与"训路由"派的对比）</div>
+    <p><strong>解决了什么问题（why now）：</strong>过去一年内 LLM 路由研究从"单模型 vs 单模型"快速走向"<em>多 tier 路由 + agent 长链</em>"。但所有 router benchmark（RouterBench / RouteLLM / GraphRouter 等）都共用一个隐含假设——<strong>router 看到的输入和最终用户提示是同一份</strong>。这在 agent 场景里完全不成立：当 SWE-Agent 已经跑了 12 步、上下文里有 8K tokens 的工具响应时，再决定下一步用 GPT-5.4 还是 Sonnet 4.6，需要的<em>评测样本本身</em>必须是这种带前缀的中间快照。TwinRouterBench 的第一性原理就是把"<strong>router-visible prefix</strong>"作为基本评测单元，从此把 router 评测和 agent 评测在数据形态上对齐。</p>
+
+    <p><strong>双轨设计的工程含义：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>属性</th><th>静态轨道</th><th>动态轨道（harness）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>样本形态</td>
+          <td>970 个 router-visible prefix（已固化）</td>
+          <td>SWE-bench Verified 100 case（live agent 跑完整轨迹）</td>
+        </tr>
+        <tr>
+          <td>label 来源</td>
+          <td>execution-verified target tier（用 downgrade-and-cascade 协议反推）</td>
+          <td>官方 task resolution + 实际 API 花销（pass/fail × $）</td>
+        </tr>
+        <tr>
+          <td>评分函数</td>
+          <td><strong>deterministic 算术</strong>：tier 标签 + 轨迹归属 + token cost</td>
+          <td>真实任务成功率 × 实际 API 支出</td>
+        </tr>
+        <tr>
+          <td>是否依赖 online LLM judge</td>
+          <td><strong>否</strong>（核心卖点之一）</td>
+          <td>否（用官方 SWE-bench evaluator）</td>
+        </tr>
+        <tr>
+          <td>用途</td>
+          <td>快速离线迭代（router 设计 / 调参）</td>
+          <td>端到端 sanity check（防止离线-在线漂移）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>downgrade-and-cascade 协议：</strong>论文把如何决定一个前缀的"target tier"也开源了——给一个前缀依次从最便宜模型试到最贵模型，找到第一个能保持下游任务成功的最便宜模型，作为该前缀的 ground-truth tier。这一<em>反向标注</em>机制比"用 LLM judge 当场打分"更稳定，也是 deterministic scoring 的前提。</p>
+
+    <p><strong>5 个上游数据生态共建：</strong>SWE-bench（软件工程）、BFCL（工具调用）、mtRAG（多轮检索）、QMSum（会议摘要）、PinchBench（多模态）——这五个数据集横跨"代码 / 工具 / 检索 / 长文本 / 多模态"，覆盖了 router 在真实部署里最常见的负载形态。这种"<em>静态轨道是横切 5 个 benchmark 的步级快照、动态轨道收口到 SWE-bench</em>"的双重对齐，才是 TwinRouterBench 区别于过去 router 评测最大的工程贡献。</p>
+
+    <p><strong>与"训路由派"的对比：</strong>过去半年路由研究主要是 RouterDC / GraphRouter / Eagle 等"<em>训一个分类器</em>"思路。TwinRouterBench 不否认这条路线，但把它放在更小的位置——<strong>路由的瓶颈不在分类器精度，而在评测数据形态</strong>。当评测样本本身缺少 router-visible prefix 时，无论训得多准都会与真实部署收益脱节。这个观察呼应了今天 #1 的 <a href="2026-05-25-1.html">Code as Agent Harness</a> 综述里 L1 接口层的核心论点——<em>能力差距大量来自接口而非权重</em>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文涉及的关键工作（附链接）</div>
+    <div class="ref-item">Jimenez et al. (2024) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>·动态轨道直接复用其 Verified 切分<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Yan et al. (2024) — <em>Berkeley Function Calling Leaderboard (BFCL)</em>·静态轨道前缀来源之一<br>
+    <a href="https://gorilla.cs.berkeley.edu/leaderboard.html" target="_blank" rel="noopener">gorilla.cs.berkeley.edu/leaderboard.html</a></div>
+    <div class="ref-item">Hu et al. (2024) — <em>RouterBench: A Benchmark for Multi-LLM Routing</em>·TwinRouterBench 直接对标的 one-shot 路由评测<br>
+    <a href="https://arxiv.org/abs/2403.12031" target="_blank" rel="noopener">arxiv.org/abs/2403.12031</a></div>
+    <div class="ref-item">Ong et al. (2024) — <em>RouteLLM: Learning to Route LLMs with Preference Data</em>·偏好驱动 router 训练，TwinRouter 作为评测可直接套用<br>
+    <a href="https://arxiv.org/abs/2406.18665" target="_blank" rel="noopener">arxiv.org/abs/2406.18665</a></div>
+    <div class="ref-item">Yang et al. (2024) — <em>SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>·动态 harness 默认 agent 工作流原型<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">Mazaheri & Mazaheri (2026) — <em>AgentAtlas: Beyond Outcome Leaderboards for LLM Agents</em>·与 TwinRouter 一致——把 agent 评测从 outcome 推回 process<br>
+    <a href="https://arxiv.org/abs/2605.20530" target="_blank" rel="noopener">arxiv.org/abs/2605.20530</a></div>
+    <div class="ref-item">Ning et al. (2026) — <em>Code as Agent Harness</em>·今天 #1 的综述，本文是其 L1 接口层的实证之一<br>
+    <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>970 router-visible prefixes / 520 instances / 5 上游 benchmark</strong>——把 router 评测的样本规模从"单 prompt"推到"step-level 中间快照"。</li>
+      <li><strong>动态 harness × SWE-bench Verified 100 case</strong>——首个把 router 决策放回真 agent 链端到端跑出 task resolution + API 花销的双指标。</li>
+      <li><strong>deterministic arithmetic scoring</strong>——彻底去掉 online LLM judge，使评测可重复、可审计、可放进 CI。</li>
+      <li><strong>downgrade-and-cascade target-tier 协议开源</strong>——任何想造自己 router benchmark 的人都可以直接复用这套反向标注机制。</li>
+      <li><strong>locked model pool</strong>——避免"今天换了模型就不能复现昨天的结果"的常见 router 评测陷阱。</li>
+      <li><strong>静态切分 vs 动态切分严格不交叠</strong>——100 case 留出用于动态轨道，避免 overfitting 到静态轨道。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>对你毕设最直接的启发是<strong>"评测数据形态决定 harness 收益的天花板"</strong>。你的 KV-cache prefetch + 双水位线工作如果想在更大尺度证明价值，<em>评测样本必须是 router-visible prefix 这种"中间快照"</em>——也就是说，要在 LongBench-v2 之上构造一个"已跑了 N 个 prefill+decode token 时是否值得 prefetch 下一段"的 step-level eval set。这恰好对应 Q.md 评审里"为什么不直接看长文本端到端 latency"——答案是：端到端只能给最终数字，<em>step-level harness 才能给你"在某一步 cache 状态下迁移决策的边际收益"</em>。把 TwinRouterBench 的 deterministic scoring 思路类比到 KV-cache：把"router 选 tier"换成"cache 选驻留 / 卸载 / 预取"，把"task resolution + API cost"换成"hit rate + bandwidth + latency"，方法论几乎一一映射。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"router-visible prefix" 这一抽象在 safety 方向的对应物是 "<em>safety-checker-visible prefix</em>"——也就是说，agent 安全检查器在 12 步对话之后看到的上下文，与第一轮 prompt 的形态完全不同。今天 #1 的 <a href="../../agent-safety/2026-05-25-1.html">SafeHarbor</a>（分层记忆 guardrail）和昨天的 <a href="../../agent-safety/2026-05-23-1.html">Latent-space Refusal Evasion</a> 都暗示——<em>safety check 的 step-level prefix 才是真正攻击面</em>。TwinRouterBench 的 970 prefix 数据集形态，可以直接被 borrowed 用于 safety check 的离线测试。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启发：<strong>双轨（静态快 + 动态真）是未来 safety benchmark 的标准模板</strong>。今天 #1 的 <a href="../../benchmark/2026-05-25-1.html">Boiling the Frog</a>（多轮有状态 ASR）已是 dynamic safety 评测的雏形，但缺一条"快速离线静态轨道"。如果把 Boiling the Frog 的 9-step 轨迹切成 step-level prefix + label，再用 deterministic scoring 评判每一步是否触发了拒绝，就能得到一个"<em>safety 版 TwinRouter</em>"——<em>10× 离线迭代速度 + 端到端真实成功率</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>EvalAwareBench</strong>·100 paired safety-capability tasks · 8 trigger factors · 揭示"模型识别评测后行为变化"<br>
+      <a href="https://arxiv.org/abs/2605.23055" target="_blank" rel="noopener">arxiv.org/abs/2605.23055</a></li>
+      <li><strong>Harnesses for Inference-Time Alignment</strong>·把 harness 拆成"任务分解 + 引导执行"二分，partial harness 优于完整 workflow<br>
+      <a href="https://arxiv.org/abs/2605.21516" target="_blank" rel="noopener">arxiv.org/abs/2605.21516</a></li>
+      <li><strong>Knowledge-Work Benchmark Design</strong>·三步 benchmark 设计法（work-claim / setting / scoring）·与 TwinRouter 双轨思路同源<br>
+      <a href="https://arxiv.org/abs/2605.23262" target="_blank" rel="noopener">arxiv.org/abs/2605.23262</a></li>
+      <li><strong>Code as Agent Harness（今日 #1）</strong>·43 作者综述 · L1 接口层的官方版图 · TwinRouter 是其 L1 实证<br>
+      <a href="2026-05-25-1.html">harness/2026-05-25-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.18859" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.18859" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.18859v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.18859" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench 官网</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #2 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.18859<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.18859" target="_blank" rel="noopener">arxiv.org/abs/2605.18859</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
