@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf6e9; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfb8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf6e9; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .asr-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.5rem 0; }
+  .asr-table th { background: #fdf6e9; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #f0d99c; color: #633806; font-size: 0.8rem; font-weight: 500; }
+  .asr-table td { padding: 0.45rem 0.7rem; border: 1px solid #f0d99c; color: #444; }
+  .asr-bar { display: inline-block; height: 8px; background: linear-gradient(90deg, #fac775, #ba7517); border-radius: 4px; vertical-align: middle; margin-right: 6px; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Safety Benchmark · 多轮有状态 ASR · EU AI Act 锚定</div>
+  <h1>Boiling the Frog：把 agentic safety 评估搬到"<em>持久工作区 + 增量风险注入</em>"——9 模型整体 ASR 44.4%、Gemini 3.1 Flash Lite 飙到 92.9%</h1>
+  <div class="en-title">Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>多轮有状态 ASR · 增量攻击 · 三级风险分类法（EU AI Act 附件 I/III + GPAI 实践守则）</td>
+          <td>arXiv 2605.22643（Bisconti, Prandi 等 14 作者）2026-05-22 v2</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21404" target="_blank" rel="noopener">What Twelve LLM Agent Benchmark Papers Disclose About Themselves</a></td>
+          <td>5 字段审计 schema · 12 论文 / 8 agent + 4 静态 · 平均 0.38 vs 0.66</td>
+          <td>arXiv 2605.21404（M. N. Moghadasi, F. Ghaderi @ TX Tech / UTA）2026-05-20</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.19484" target="_blank" rel="noopener">CutVerse: A Compositional GUI Agents Benchmark for Media Post-Production</a></td>
+          <td>媒体后期制作 GUI agent · 组合式任务 · 创意工作流</td>
+          <td>arXiv 2605.19484（H. Hu, X. Guo 等）2026-05-19</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.14355" target="_blank" rel="noopener">Herculean: An Agentic Benchmark for Financial Intelligence</a></td>
+          <td>60 作者 / 金融智能 / agentic / 静态 vs 流程对照</td>
+          <td>arXiv 2605.14355（X. Peng 等 60 作者）2026-05-21 v2</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23262" target="_blank" rel="noopener">Design and Report Benchmarks for Knowledge Work</a></td>
+          <td>知识工作 benchmark 设计与报告方法论</td>
+          <td>arXiv 2605.23262（2026-05-22）</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</span></div>
+      <div class="meta-item"><label>中文标题</label><span>温水煮青蛙：面向 Agentic 安全的多轮 Benchmark</span></div>
+      <div class="meta-item"><label>作者（共 14 位）</label><span>Piercosma Bisconti, Matteo Prandi, Federico Pierucci, Federico Sartore, Enrico Panai, Laura Caroli, Yue Zhu, Adam Leon Smith, Luca Nannini, Marcello Galisai, Susanna Cifani, Francesco Giarrusso, Marcantonio Bracale Syrnikov, Daniele Nardi</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.CL · cs.AI · agentic safety benchmark · EU AI Act 锚定</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-21（v1）/ 2026-05-22（v2）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arxiv.org/abs/2605.22643</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.22643" target="_blank" rel="noopener">arxiv.org/pdf/2605.22643</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.22643v2" target="_blank" rel="noopener">arxiv.org/html/2605.22643v2</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.22643" target="_blank" rel="noopener">10.48550/arXiv.2605.22643</a></div>
+      <div class="meta-item"><label>整体 ASR</label><span><strong>44.4%</strong>（9 模型平均，严格判定）</span></div>
+      <div class="meta-item"><label>模型间差距</label><span>20.5%（Claude Haiku 4.5）→ 92.9%（Gemini 3.1 Flash Lite）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agentic safety 评估从"<em>单轮 prompt 输出</em>"搬到 "<strong>持久工作区 + 增量风险注入</strong>"——以 EU AI Act 附件 I/III 与 GPAI 实践守则为锚的三级风险分类法，让 9 模型在严格判定下整体暴露 <strong>44.4% ASR</strong>，把"温水煮青蛙"做成可运行的 benchmark 协议。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>传统 LLM 安全 benchmark 评估的是 <em>生成的文本</em>——模型是否输出有毒语言 / 复制偏见 / 服从有害指令。但当模型作为 <strong>agent</strong> 部署时，"安全相关的对象"<em>从"系统说什么"变成"系统在环境中做什么"</em>，仅以 prompt 评估输出已不足以应对 AI 带来的安全挑战。最近一波 benchmark 已开始评估 LLM 作为 agent，本文为这条线作出新贡献。</p>
+    <p>我们提出 <strong>Boiling the Frog</strong> benchmark，评估部署在<strong>企业 / 办公环境</strong>的工具使用型 AI 模型对<em>增量攻击</em>是否易感。每个场景从"<em>良性的工作区编辑</em>"开始，随后逐步注入承载风险的请求。本 benchmark 聚焦<strong>有状态多轮评估</strong>：链路暴露的是<em>持久工作区</em>，在轮序的<em>受控位置</em>放置承载风险的负载，然后判定生成的<em>工件状态</em>是否变得不安全。</p>
+    <p>场景以一份<strong>三级操作风险分类法</strong>组织：<em>(1) "Boiling the Frog" 风险，(2) EU AI Act 附件 I 与附件 III 高风险情境，(3) EU AI Act 通用 AI（GPAI）实践守则</em>。在 <strong>9 个模型</strong>的对比面板上，整体严格 ASR 为 <strong>44.4%</strong>。模型间 ASR 跨度从 Claude Haiku 4.5 的 <strong>20.5%</strong> 到 Gemini 3.1 Flash Lite 的 <strong>92.9%</strong>，Seed 2.0 Lite 也超过 80%。在"<em>实践守则失控</em>"链路类别上，平均 ASR 高达 <strong>93.3%</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题（why now）：</strong>近期 benchmark 已经开始报告 agentic safety 单轮 ASR——<a href="../../benchmark/2026-05-13-1.html">TRIVIA+（5-13）</a>、<a href="../../benchmark/2026-05-14-1.html">BenchJack（5-14）</a>、<a href="../../benchmark/2026-05-19-1.html">MM-ToolBench（5-19）</a>、<a href="../../benchmark/2026-05-20-1.html">POLAR-Bench（5-20）</a>、<a href="../../benchmark/2026-05-21-1.html">GrandGuard（5-21）</a>、<a href="../../benchmark/2026-05-23-1.html">SGR-Bench（5-23）</a>。但所有这些都默认"<em>每个评测样本独立、当下当下评判</em>"——这在真实办公环境完全不成立：<strong>真正的 agent 风险从来不是一句话，而是 N 步小动作累积出来的状态</strong>。Boiling the Frog 第一次把这个直觉做成可运行 benchmark：<em>每条评测链是一段连续的多轮交互、共享同一份 workspace state、风险负载放在轮序里特定位置注入</em>。</p>
+
+    <p><strong>核心评估协议</strong>——三件正交配合的机件：</p>
+    <ul class="point-list">
+      <li><strong>有状态多轮评估</strong>——评测样本是"<em>链</em>"而非"<em>条</em>"。链开始时是良性的工作区编辑（如建文件夹 / 整理邮件），然后在受控位置插入承载风险的请求。判定标准看的是<em>最终工件状态</em>而非单条文本输出，这与 agentic 部署完全一致。</li>
+      <li><strong>三级操作风险分类法</strong>——把场景按以下三层标签组织：(a) <em>Boiling the Frog 风险</em>（升温式）、(b) <em>EU AI Act 附件 I/III</em>（高风险背景如就业、医疗、法律执行）、(c) <em>EU AI Act 通用 AI（GPAI）实践守则</em>（失控 / 越权 / 偏见）。这是首份直接锚定到 <strong>EU 监管文本</strong>的 agentic benchmark。</li>
+      <li><strong>严格 ASR 判定</strong>——只要链路最终工件不安全，就计入攻击成功。对 9 模型的对比给出 20.5% – 92.9% 的极宽分布，把"<em>同样模型在单轮上类似分数、在多轮上分数差 4×</em>"这一现象立成基准事实。</li>
+    </ul>
+
+    <p><strong>9 模型 ASR 关键数据点</strong>（严格判定）：</p>
+    <table class="asr-table">
+      <thead>
+        <tr><th>模型</th><th>整体严格 ASR</th><th>视觉条</th><th>风险标记</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Claude Haiku 4.5</strong></td><td>20.5%</td><td><span class="asr-bar" style="width:30px"></span></td><td>最稳健</td></tr>
+        <tr><td>整体 9 模型平均</td><td>44.4%</td><td><span class="asr-bar" style="width:65px"></span></td><td>—</td></tr>
+        <tr><td><strong>Seed 2.0 Lite</strong></td><td>&gt; 80%</td><td><span class="asr-bar" style="width:120px"></span></td><td>高危</td></tr>
+        <tr><td><strong>Gemini 3.1 Flash Lite</strong></td><td>92.9%</td><td><span class="asr-bar" style="width:140px"></span></td><td>最不稳健</td></tr>
+        <tr><td>"实践守则失控"链路类别（跨模型）</td><td>93.3%</td><td><span class="asr-bar" style="width:140px"></span></td><td>类别级警报</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>与单轮 benchmark 的方法论差异：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>单轮 ASR<br>(POLAR-Bench / GrandGuard)</th><th>SGR-Bench<br>(5-23, 多步但独立)</th><th>Boiling the Frog（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>状态</td><td>无</td><td>每任务独立 sandbox</td><td><strong>链路级持久 workspace</strong></td></tr>
+        <tr><td>风险注入位置</td><td>prompt 中</td><td>各任务初始</td><td><strong>轮序受控位置</strong></td></tr>
+        <tr><td>判定对象</td><td>单条响应</td><td>任务最终输出</td><td><strong>累积工件状态</strong></td></tr>
+        <tr><td>风险分类锚</td><td>policy taxonomy</td><td>web 行为</td><td><strong>EU AI Act 附件 I/III + GPAI</strong></td></tr>
+        <tr><td>典型 ASR 曲线</td><td>大模型 < 1%</td><td>F1 ≈ 66%</td><td><strong>20.5% – 92.9%（4× 跨度）</strong></td></tr>
+        <tr><td>方法论价值</td><td>训练后过滤评估</td><td>先 setup 再操作</td><td><strong>合规 / 治理对齐评估</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>真正的贡献不是数字本身，而是<strong>用一份"温水煮青蛙"协议揭示同一模型在单轮 vs 多轮上分数可差 4 倍以上</strong>。这意味着<em>过去所有以单轮 ASR 报告 SOTA 的 agentic safety 工作都需要被多轮重新评估</em>——这与 5-20 What Twelve Benchmark Papers Disclose（pilot audit 平均 0.38）一起构成对 agent benchmark 整改议程的双重压力。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">European Parliament & Council (2024) — <em>EU Artificial Intelligence Act (Regulation 2024/1689)</em>·附件 I/III 高风险背景的法律基础<br>
+    <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">eur-lex.europa.eu/eli/reg/2024/1689/oj</a></div>
+    <div class="ref-item">European Commission (2025) — <em>General-Purpose AI Code of Practice (GPAI)</em>·失控 / 越权 / 偏见类别的指引来源<br>
+    <a href="https://digital-strategy.ec.europa.eu/en/policies/ai-code-practice" target="_blank" rel="noopener">digital-strategy.ec.europa.eu/en/policies/ai-code-practice</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·8 环境跨域评测的起点<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Mazeika et al. (2024) — <em>HarmBench: Standardized Evaluation Framework for Automated Red Teaming</em>·单轮 red-teaming 标准基线<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">Andriushchenko et al. (2024) — <em>AgentHarm: A Benchmark for Measuring Harmfulness of LLM Agents</em>·agent 有害性测量先驱<br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Moghadasi & Ghaderi (2026) — <em>What Twelve LLM Agent Benchmark Papers Disclose About Themselves</em>·提示 agent benchmark 整改议程的姊妹工作<br>
+    <a href="https://arxiv.org/abs/2605.21404" target="_blank" rel="noopener">arxiv.org/abs/2605.21404</a></div>
+    <div class="ref-item">Bisconti et al. (2024) — <em>Operational Risk Taxonomies for AI Systems</em>·三级风险分类法的方法论基础<br>
+    <a href="https://arxiv.org/abs/2412.16789" target="_blank" rel="noopener">arxiv.org/abs/2412.16789</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>整体严格 ASR 44.4%</strong>——9 模型平均，远高于多数单轮 benchmark 报出的 &lt;5% 大模型 ASR。</li>
+      <li><strong>模型间跨度 20.5% – 92.9%（≈4.5×）</strong>——同一份多轮协议下不同模型的鲁棒性差距远超单轮报告的差距。</li>
+      <li><strong>"实践守则失控"链路类别 ASR 93.3%</strong>——把 EU GPAI Code of Practice 中"失控"风险定为<em>当前所有模型都会被多轮链击穿</em>的类别级警报。</li>
+      <li><strong>三级风险分类法锚定 EU AI Act</strong>——首个直接以监管文本组织的 agentic safety benchmark，对应监管侧的可解释审计。</li>
+      <li><strong>有状态多轮 = 评估范式变化</strong>——把"<em>判定对象从响应改为工件状态</em>"作为一等公民列入 benchmark 协议。</li>
+      <li><strong>14 位作者跨欧美机构</strong>——多机构合著体现 agentic safety + AI Act 合规已成跨产学议题。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Boiling the Frog 的"<strong>有状态多轮评估</strong>"对你毕设附录里的<em>预取策略评测协议</em>是一份方法学背书：你可以把对 LongBench 的多任务评测重写成"<strong>持久 KV-cache state + 任务序贯注入</strong>"，让"温缓存被升温到热缓存"和"被驱逐到冷"都成为可量化事件——而不是各任务独立重置 cache。这与本论文 "<em>判定对象从响应改为工件状态</em>" 异曲同工：你的判定对象应从单任务 acc 改为"<strong>跨任务 hit-rate 与 bandwidth 走势</strong>"。也呼应 5-25 <a href="../../harness/2026-05-25-1.html">Code as Agent Harness 综述</a>列出的"<em>超越最终任务成功的评估</em>"这一开放挑战。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>对 agent safety 的迁移：今天 SafeHarbor（5-25）给出 63.6% / 93%+ 的<em>单轮</em> 双指标 SOTA，但只要换成 Boiling the Frog 的多轮链路，这两个数字大概率会塌方——<strong>所有 guardrail 工作的下一步是必须报多轮 ASR</strong>。具体可记忆 3 件：(a) <a href="../../agent-safety/2026-05-19-1.html">Memory Laundering（5-19）</a>定义的 "<em>Sub-threshold Propagation Gap</em>" 与本文 "Boiling the Frog 风险" 类别<em>本质上是同一现象</em>；(b) <a href="../../agent-safety/2026-05-21-1.html">CUGA</a> 的 5 检查点必须在<em>跨轮</em>上重新评估有效性；(c) <a href="../../agent-safety/2026-05-25-1.html">SafeHarbor 分层记忆</a>正好是抵御本类多轮攻击的天然候选——把它接到 Boiling the Frog 上是接下来一篇可写论文。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（核心）</div>
+        <p>对 benchmark 设计的最强启发：这是<em>把单轮 ASR 范式打掉的拐点工作</em>。具体三件事：<strong>(1)</strong> 评测样本必须从"条"升级为"链"；<strong>(2)</strong> 判定对象必须从"响应"升级为"工件状态"；<strong>(3)</strong> 风险分类必须直接锚定到监管文本（EU AI Act 附件 I/III + GPAI Code of Practice）才能让结果对合规审计有意义。这把过去 12 个月所有 agentic safety benchmark（<a href="../../benchmark/2026-05-14-1.html">BenchJack</a> / <a href="../../benchmark/2026-05-19-1.html">MM-ToolBench</a> / <a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a> / <a href="../../benchmark/2026-05-21-1.html">GrandGuard</a> / <a href="../../benchmark/2026-05-23-1.html">SGR-Bench</a>）都置于"<em>需要补多轮配套实验</em>"的整改议程上——和 5-20 What Twelve Papers Disclose 的 0.38 平均披露分一起，构成 agent benchmark 改革的两份共同压力。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>What Twelve LLM Agent Benchmark Papers Disclose About Themselves (2605.21404)</strong>·5 字段审计 schema · 平均 0.38 / 0.66 揭示 agent benchmark 报告不充分<br>
+      <a href="https://arxiv.org/abs/2605.21404" target="_blank" rel="noopener">arxiv.org/abs/2605.21404</a></li>
+      <li><strong>AgentHarm (2410.09024)</strong>·首批 agent 有害性测量 benchmark，是 Boiling the Frog 的单轮起点<br>
+      <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></li>
+      <li><strong>SGR-Bench（5-23 报告）</strong>·100 任务 / 6 源族 · search agent 项级 F1 仅 66.18%——多步但独立的对照<br>
+      <a href="../../benchmark/2026-05-23-1.html">benchmark/2026-05-23-1.html</a></li>
+      <li><strong>SafeHarbor（5-25 报告）</strong>·分层记忆 guardrail / ICML 2026·与本 benchmark 互为攻防最佳搭档<br>
+      <a href="../../agent-safety/2026-05-25-1.html">agent-safety/2026-05-25-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.22643" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.22643v2" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.22643" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">EU AI Act 全文</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.CL/new" target="_blank" rel="noopener">arXiv cs.CL/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #1 · 搜索来源：arXiv export API + arxiv.org/abs/2605.22643<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arxiv.org/abs/2605.22643</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

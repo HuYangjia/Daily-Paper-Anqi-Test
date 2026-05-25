@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Harness Engineering · Survey · 把"代码"立成 agent 基础设施的统一视角</div>
+  <h1>Code as Agent Harness：43 作者综述把"代码"重写为 agent 推理-行动-环境-验证四位一体的执行基质</h1>
+  <div class="en-title">Code as Agent Harness — A Unified View of Code as the Operational Substrate for Agent Infrastructure</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.3</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">Code as Agent Harness</a><span class="winner-badge">今日选定</span></td>
+          <td>系统性综述 · 三层组织（接口 / 机制 / 多 agent 扩展）· 七大应用域 · 六类开放挑战</td>
+          <td>arXiv 2605.18747（43 作者，UIUC + Meta + UCB 等）2026-05-18</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21516" target="_blank" rel="noopener">Harnesses for Inference-Time Alignment over Execution Trajectories</a></td>
+          <td>理论分析 · 任务分解 / 引导执行二分 · 过度分解 / 修剪 / 幻觉三种失败模式 · partial harness</td>
+          <td>arXiv 2605.21516（Wang et al.）2026-05-15</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noopener">SkillOpt: Executive Strategy for Self-Evolving Agent Skills</a></td>
+          <td>文本空间技能优化器 · 6 benchmark / 7 模型 / 3 框架 / 52 单元 · GPT-5.5 上 +19~+24.8 pp</td>
+          <td>arXiv 2605.23904（15 作者）2026-05-22</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23899" target="_blank" rel="noopener">From Raw Experience to Skill Consumption</a></td>
+          <td>5 域 utility-based · 提取/消费一致性差 · meta-skill 矫正</td>
+          <td>arXiv 2605.23899（2026-05-22）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.21825" target="_blank" rel="noopener">Toward AI VIS Co-Scientists</a></td>
+          <td>端到端 vis-app harness · IEEE SciVis 验证</td>
+          <td>arXiv 2605.21825（Miao et al.）2026-05-20</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Code as Agent Harness</span></div>
+      <div class="meta-item"><label>中文标题</label><span>代码即 Agent Harness：把代码立成 Agent 基础设施的统一视角</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Xuying Ning（UIUC 等机构）· 共 43 位作者</span></div>
+      <div class="meta-item"><label>合作机构（含）</label><span>UIUC · UCB · Meta · 中山大学 · 中科大 · UCLA · 芝大 等</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.CL · cs.AI · agent infrastructure · code reasoning · multi-agent</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-18（v1，survey）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.18747" target="_blank" rel="noopener">arxiv.org/pdf/2605.18747</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.18747v1" target="_blank" rel="noopener">arxiv.org/html/2605.18747v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.18747" target="_blank" rel="noopener">10.48550/arXiv.2605.18747</a></div>
+      <div class="meta-item"><label>开源仓库</label><a href="https://github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers" target="_blank" rel="noopener">github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers</a></div>
+      <div class="meta-item"><label>核心定位</label><span>系统性综述——把"代码"作为 agent 基础设施的统一执行基质</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<strong>代码</strong>"从"agent 的目标输出"重新定义为 "<strong>agent 推理 / 行动 / 环境建模 / 基于执行的验证</strong>"四位一体的<em>执行基质</em>，并以"接口 → 机制 → 多 agent 扩展"三层结构组织起 harness 工程的研究地图。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>近期 LLM 在<strong>理解和生成代码</strong>方面表现出强大能力——从竞赛编程一直到 repo 级软件工程。在新兴的 <strong>agentic 系统</strong>中，<em>代码不再仅仅是目标输出</em>，它越来越多地充当 agent 推理、行动、环境建模与基于执行的验证的"<strong>执行基质（operational substrate）</strong>"。我们通过 agent harness 的视角刻画这一转变，并提出 "<strong>code as agent harness</strong>" 这一统一视角——以代码作为 agent 基础设施的中心。</p>
+    <p>为系统化研究这一视角，本文围绕三个相互连接的层组织：<strong>第一层</strong>研究 <em>harness 接口</em>——代码如何把 agent 与推理、行动、环境建模相连接；<strong>第二层</strong>研究 <em>harness 机制</em>——长期执行所需的规划、记忆、工具使用，以及让 harness 可靠 / 自适应的反馈驱动控制与优化；<strong>第三层</strong>讨论 harness 从单 agent 到 <em>多 agent</em> 的扩展，共享代码工件如何支撑多 agent 协调、审查和验证。</p>
+    <p>跨越这三层，本文汇总了"代码即 harness"的代表性方法和实际应用，覆盖：编码助手、GUI/OS 自动化、具身 agent、科学发现、个性化推荐、DevOps 与企业工作流。文末进一步梳理了 <strong>harness 工程的开放挑战</strong>：(1) 超越最终任务成功的评估、(2) 不完整反馈下的验证、(3) 无回归（regression-free）的 harness 改进、(4) 多 agent 间的一致共享状态、(5) 安全关键动作的人类监督、(6) 对多模态环境的扩展。这份综述把"代码作为 agent harness"作为通向<em>可执行、可验证、有状态</em>的 AI agent 系统的统一路线图。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（视角·三层·开放挑战）</div>
+    <p><strong>解决了什么问题（why a survey now）：</strong>2026-04 至 5-23 这一波 harness 研究线（<a href="../../harness/2026-05-13-1.html">Evaluation Differential</a> · <a href="../../harness/2026-05-15-1.html">ChromaFlow</a> · <a href="../../harness/2026-05-19-1.html">ANNEAL</a> · <a href="../../harness/2026-05-21-1.html">AgentAtlas</a> · <a href="../../harness/2026-05-23-1.html">Life-Harness</a>）反复指向同一件事——<em>能力差距大量来自"接口"而非"权重"</em>。但社区一直缺一份"地图"：哪些工作算 harness？harness 由哪几个机制构成？多 agent 场景下 harness 如何扩展？本文给出的答案是把"<strong>代码</strong>"立成 harness 的物理载体——所有 agent 工件（plan / skill / memory snapshot / tool spec / verifier）<em>都可以表达为可执行代码</em>，从而获得统一的形式化处理。</p>
+
+    <p><strong>三层组织结构</strong>——把 harness 工程拆成可独立研究的子领域：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>层级</th><th>关键问题</th><th>代表机制</th><th>对应近期工作</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>L1 接口层</strong>（Harness Interface）</td>
+          <td>代码如何把 agent 连到推理 / 行动 / 环境建模？</td>
+          <td>action 表示（function call / DSL / Python）· environment contract · observation schema</td>
+          <td>Life-Harness（5-23）的 <em>contract</em> 维度</td>
+        </tr>
+        <tr>
+          <td><strong>L2 机制层</strong>（Harness Mechanisms）</td>
+          <td>长期执行下规划 / 记忆 / 工具如何被组织、被反馈优化？</td>
+          <td>plan-as-code · memory snapshot · feedback-driven control · regression-free 改进</td>
+          <td>SkillOpt（5-22）<em>文本空间优化器</em> · ANNEAL（5-19）符号补丁</td>
+        </tr>
+        <tr>
+          <td><strong>L3 多 agent 扩展</strong>（Multi-Agent Scaling）</td>
+          <td>共享代码工件如何支撑协调 / 审查 / 验证？</td>
+          <td>shared code artifact · 多 agent 一致状态 · 跨 agent verifier</td>
+          <td>AgentCo-op · The Log is the Agent（事件溯源）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>七大应用域</strong>——综述把"代码即 harness"的实际落地分布在：</p>
+    <ul class="point-list">
+      <li><strong>编码助手</strong>——Codex / Claude Code / Cursor 等的 harness 是 IDE-rooted code 工件</li>
+      <li><strong>GUI / OS 自动化</strong>——把 GUI 操作编译成可回放的 Python script，OSWorld 等环境</li>
+      <li><strong>具身 agent</strong>——把"行动序列"用代码表达，便于物理仿真器 verify</li>
+      <li><strong>科学发现</strong>——AI co-scientist 把假设 / 数据探索写成 notebook 单元，verifier 自动运行</li>
+      <li><strong>个性化与推荐</strong>——把用户偏好建成可执行 policy</li>
+      <li><strong>DevOps</strong>——CI/CD 流水线本身就是天然的 harness</li>
+      <li><strong>企业工作流</strong>——RPA + LLM agent 的混合调度</li>
+    </ul>
+
+    <p><strong>六大开放挑战</strong>——这份综述真正的研究价值在最后这一章：</p>
+    <ul class="point-list">
+      <li><strong>超越最终任务成功的评估</strong>——光看 success rate 不足以衡量 harness 的可靠性，需要轨迹层 / 接口层指标（<em>呼应 5-13 Evaluation Differential</em>）</li>
+      <li><strong>不完整反馈下的验证</strong>——真实环境往往无法即时返回 ground-truth，verifier 必须在不完整 / 嘈杂反馈下工作</li>
+      <li><strong>无回归 harness 改进</strong>——演化 harness 时不能让原有任务退化，与 SkillOpt（5-22）的"严格改进保留集"思想一致</li>
+      <li><strong>多 agent 一致共享状态</strong>——多 agent 系统下"一份代码、多个 agent"的版本一致性</li>
+      <li><strong>安全关键动作的人类监督</strong>——把"必须 escalate to human"做成 harness 的内建检查点（与 CUGA 5-21 / SafeHarbor 系列一脉相承）</li>
+      <li><strong>多模态环境扩展</strong>——把视觉 / 音频 / 物理动作纳入 code-based harness</li>
+    </ul>
+
+    <p><strong>与"训模型派"对照：</strong>这份综述实际上是过去 12 个月 harness 研究路线的官方版图。Life-Harness（5-23）只动接口拿到 88.5% 相对提升，AgentAtlas（5-21）发现 14–40 pp 来自 prompt 监督，本综述则给出方法论解释——<em>这些工作都属于把"代码"作为 harness 物理载体的早期实践</em>。其真正贡献不是新方法，而是<strong>把分散的 harness 研究重新编组成一份可继续推进的 research agenda</strong>，并以 GitHub Awesome 列表形式提供持续维护的活地图。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本综述涉及的关键工作（附链接）</div>
+    <div class="ref-item">Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·"思考 + 行动"轨迹形态原型，code-as-harness 的精神先驱<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Wang et al. (2023) — <em>Voyager: An Open-Ended Embodied Agent with LLMs</em>·把 Minecraft 行动写成可重用 JS 代码，code-as-skill 的奠基<br>
+    <a href="https://arxiv.org/abs/2305.16291" target="_blank" rel="noopener">arxiv.org/abs/2305.16291</a></div>
+    <div class="ref-item">Liang et al. (2023) — <em>Code as Policies: Language Model Programs for Embodied Control</em>·首次正面提出"code 作为 policy"<br>
+    <a href="https://arxiv.org/abs/2209.07753" target="_blank" rel="noopener">arxiv.org/abs/2209.07753</a></div>
+    <div class="ref-item">Yang et al. (2024) — <em>SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>·把 ACI 视作 code harness 的接口侧最小实现<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·8 环境跨域评测起点，是 harness "评估超越 success" 这一挑战的反例<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Mazaheri & Mazaheri (2026) — <em>AgentAtlas: Beyond Outcome Leaderboards for LLM Agents</em>·把 prompt 监督 14–40 pp 提升量化，对应 L1 接口层证据<br>
+    <a href="https://arxiv.org/abs/2605.20530" target="_blank" rel="noopener">arxiv.org/abs/2605.20530</a></div>
+    <div class="ref-item">Xu et al. (2026) — <em>Life-Harness: Adapting the Interface, Not the Model</em>·四维接口干预的实证落地，与本综述 L1 同源<br>
+    <a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arxiv.org/abs/2605.22166</a></div>
+    <div class="ref-item">Yang et al. (2026) — <em>SkillOpt: Executive Strategy for Self-Evolving Agent Skills</em>·L2 机制层 "regression-free 改进" 的具体实现<br>
+    <a href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noopener">arxiv.org/abs/2605.23904</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>43 位作者跨机构合作</strong>——UIUC · UCB · Meta · 中山大学 · 中科大 · UCLA · 芝大等，体现"代码即 harness"已成共识方向。</li>
+      <li><strong>三层组织 × 七大应用域 × 六类开放挑战</strong>——综述提供 3×7×6 的二维结构化研究地图。</li>
+      <li><strong>"Code = 推理 + 行动 + 环境建模 + 验证"四位一体</strong>——把过去四个独立研究线（CoT / Tool Use / World Model / Verifier）统一到一个执行基质上。</li>
+      <li><strong>GitHub Awesome 列表持续维护</strong>——<a href="https://github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers" target="_blank" rel="noopener">YennNing/Awesome-Code-as-Agent-Harness-Papers</a> 提供活地图，可作研究入口。</li>
+      <li><strong>明确 6 类开放挑战</strong>——把"评估超越 success / regression-free 改进 / 多 agent 一致状态 / human oversight / 多模态"立为优先研究议程。</li>
+      <li><strong>多 agent 扩展是综述的最终落脚点</strong>——共享代码工件作为协调 / 审查 / 验证的"公共基板"。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>这份综述给你的<strong>毕设附录章节</strong>提供了一份"研究地图"模板：你可以把"<em>KV-cache prefetch + 双水位线驱逐</em>"工作显式映射到 L1 接口层（runtime 接口契约：哪些 KV 条目 / 哪些 token / 何时迁移）+ L2 机制层（CNN/Linear 预取器作为 feedback-driven 控制）+ L3 多 agent 暂不涉及。<em>"超越最终任务成功的评估"</em>这一开放挑战正好是你毕设关心的"不能只看 LongBench acc，还要看 hit-rate / bandwidth / latency 三轴"——可在论文 conclusion 直接引用本综述作为 harness 工程方向的官方依据。<em>"regression-free 改进"</em>则呼应你 Q.md 评审里关于"双水位线不能让原有 cache hit pattern 退化"的质疑，给你一个在更高抽象层背书的术语。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"<em>安全关键动作的人类监督</em>" 这一开放挑战正好桥接 Agent Safety 方向：<a href="../../agent-safety/2026-05-21-1.html">CUGA Policy System</a>（5 个结构化检查点）、<a href="../../agent-safety/2026-05-13-1.html">SKILL.md</a>（86%/77.6%/100% 绕过）、<a href="../../agent-safety/2026-05-20-1.html">ECA</a>（authorization-failure gate）这三件工作可以一并解读为"<em>把 human-in-the-loop 编译成可执行 code-based gate</em>"——本综述提供了把它们归为同一类的语言。综述强调 "code 作为 verifier" 也直接对应 ECA 的 typed certificate 与 CUGA 的 tool approval。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启发：综述明确指出"<em>超越最终任务成功的评估</em>"是首要开放挑战，把"成功率"这一单维标量重写为"接口层 + 轨迹层 + 验证层"多维度。这是 <a href="../../benchmark/2026-05-23-1.html">SGR-Bench</a>（task / item-level F1）、<a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a>（5×5 诊断面）、<a href="../../benchmark/2026-05-21-1.html">GrandGuard</a>（contextual risk 三级体系）等近期细粒度 benchmark 的方法论根源——也提示明天我们追的"Boiling the Frog"（多轮有状态 ASR）属于"<em>把 benchmark 搬到 stateful 工作区</em>"这一新分支。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Harnesses for Inference-Time Alignment over Execution Trajectories</strong>·把 harness 拆成"任务分解 + 引导执行"二分，给出过度分解 / 修剪 / 幻觉三种失败的理论分析<br>
+      <a href="https://arxiv.org/abs/2605.21516" target="_blank" rel="noopener">arxiv.org/abs/2605.21516</a></li>
+      <li><strong>SkillOpt · 文本空间技能优化器</strong>·对应本综述 L2 "regression-free harness 改进" 议程的具体落地<br>
+      <a href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noopener">arxiv.org/abs/2605.23904</a></li>
+      <li><strong>Life-Harness（5-23 报告）</strong>·四维接口干预 / 116-126 改进 / 88.5% 平均提升——本综述 L1 接口层最佳实证<br>
+      <a href="../../harness/2026-05-23-1.html">harness/2026-05-23-1.html</a></li>
+      <li><strong>From Raw Experience to Skill Consumption</strong>·5 域 utility-based 框架 · 提取 / 消费一致性差 · meta-skill 矫正<br>
+      <a href="https://arxiv.org/abs/2605.23899" target="_blank" rel="noopener">arxiv.org/abs/2605.23899</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.18747" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.18747v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn primary" href="https://github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers" target="_blank" rel="noopener">GitHub Awesome 列表</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.18747" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #1 · 搜索来源：arXiv export API + arxiv.org/abs/2605.18747<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

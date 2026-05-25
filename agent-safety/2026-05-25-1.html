@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f0faf6; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #d0ede0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f0faf6; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-25 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 25 日 · Agent Skills Safety · ICML 2026 Accepted · 训练-free 即插即用 guardrail</div>
+  <h1>SafeHarbor：分层记忆增强 guardrail 用熵驱动节点分裂/合并自演化——GPT-4o 上 63.6% 良性效用同时维持 93%+ 拒绝率</h1>
+  <div class="en-title">SafeHarbor: Hierarchical Memory-Augmented Guardrail for LLM Agent Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">SafeHarbor: Hierarchical Memory-Augmented Guardrail for LLM Agent Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>Training-free / 分层记忆树 / 增强对抗生成 / 信息熵自演化 / 节点分裂-合并</td>
+          <td>arXiv 2605.05704（Z. Liu, Z. Ying et al. 8 作者）<strong>ICML 2026 Accepted</strong> · 2026-05-22 v2</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">SkillSafetyBench: Evaluating Agent Safety under Skill-Facing Attack Surfaces</a></td>
+          <td>155 对抗样本 / 47 任务 / 6 风险域 / 30 安全类别 / 规则验证器 · CLI agent</td>
+          <td>arXiv 2605.12015（C. Jin, A. Wang, Z. Wei et al.）2026-05-12</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22842" target="_blank" rel="noopener">The Misattribution Gap: When Memory Poisoning Looks Like Model Failure</a></td>
+          <td>SND 攻击（信任洗钱链）· 510 检查点 4 分类器零检测 · 反事实组合 87.5% / 流控 97%</td>
+          <td>arXiv 2605.22842（Ahad et al. 6 作者）2026-05-12</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23723" target="_blank" rel="noopener">MemAudit: Post-hoc Auditing of Poisoned Agent Memory</a></td>
+          <td>反事实记忆影响 + 一致性图 · MINJA 攻击下 QA 70%→0%, RAP 83.3%→0%</td>
+          <td>arXiv 2605.23723（12 作者）2026-05-22</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23311" target="_blank" rel="noopener">DART: Semantic Recoverability for Structured Tool Agents</a></td>
+          <td>语义可恢复边界 · LangGraph 上 0 不安全已接纳回滚 · 5 域审计</td>
+          <td>arXiv 2605.23311（K. Yang, P. Li et al. 6 作者）2026-05-22</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SafeHarbor: Hierarchical Memory-Augmented Guardrail for LLM Agent Safety</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SafeHarbor：面向 LLM Agent 安全的分层记忆增强 Guardrail</span></div>
+      <div class="meta-item"><label>作者</label><span>Zhe Liu, Zonghao Ying, Wenxin Zhang, Quanchen Zou, Deyue Zhang, Dongdong Yang, Xiangzheng Zhang, Hao Peng（共 8 作者）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.CR · cs.AI · agentic safety · context-aware guardrail · 训练-free</span></div>
+      <div class="meta-item"><label>发表会议</label><span><strong>ICML 2026 Accepted</strong></span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-07（v1）/ 2026-05-22（v2 修订）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.05704" target="_blank" rel="noopener">arxiv.org/pdf/2605.05704</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.05704" target="_blank" rel="noopener">10.48550/arXiv.2605.05704</a></div>
+      <div class="meta-item"><label>开源代码</label><a href="https://github.com/ljj-cyber/SafeHarbor" target="_blank" rel="noopener">github.com/ljj-cyber/SafeHarbor</a></div>
+      <div class="meta-item"><label>关键发现 1</label><span>GPT-4o 上 <strong>63.6% 良性效用</strong>（远超 over-refusal baseline）</span></div>
+      <div class="meta-item"><label>关键发现 2</label><span>同时维持 <strong>93%+ 拒绝率</strong> 抵御明确恶意攻击</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用"<strong>增强对抗生成</strong>"提取上下文感知的防御规则、用"<strong>分层记忆树</strong>"做动态规则注入、用"<strong>信息熵自演化</strong>"通过节点分裂/合并持续优化结构——把 LLM agent guardrail 从静态守则升级为<em>训练-free / 即插即用 / 自演化</em>的精确决策边界。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>基础模型的最新进展已把 LLM 从被动对话系统变成<strong>能够推理和工具执行</strong>的自主 agent。这些能力释放了重要的实用价值，但也引入<em>新的安全风险</em>——攻击者可能操纵 agent 在真实环境中执行有害动作。现有防御策略可以缓解这些威胁，但常常难以平衡<strong>安全与效用</strong>，导致对良性用户请求的过度拒绝（over-refusal）。</p>
+    <p>为缓解这一权衡，本文提出 <strong>SafeHarbor</strong>——一个为 LLM agent 建立<em>精确决策边界</em>的新颖框架。SafeHarbor 不依赖静态守则，而是通过<strong>增强对抗生成</strong>提取上下文感知的防御规则。我们设计了一个<strong>本地分层记忆系统</strong>用于动态规则注入，提供 <em>training-free、高效、即插即用</em> 的解决方案。此外，我们还引入<strong>基于信息熵的自演化机制</strong>，通过<em>动态节点分裂与合并</em>持续优化记忆结构。</p>
+    <p>大量实验表明 SafeHarbor 在<strong>模糊良性任务</strong>和<strong>明确恶意攻击</strong>上均达到 SOTA，特别是在 GPT-4o 上达到峰值良性效用 <strong>63.6%</strong>，同时对有害请求维持<strong>超过 93% 的稳健拒绝率</strong>。源代码已公开在 <a href="https://github.com/ljj-cyber/SafeHarbor" target="_blank" rel="noopener">github.com/ljj-cyber/SafeHarbor</a>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（背景·方法·差异）</div>
+    <p><strong>解决了什么问题：</strong>这条研究线在过去两个月反复指向同一痛点——agent guardrail 的"<strong>safety-utility 跷跷板</strong>"。<a href="../../agent-safety/2026-05-13-1.html">SKILL.md（5-13）</a> 揭示静态守则被 86% / 77.6% / 100% 绕过，<a href="../../agent-safety/2026-05-21-1.html">CUGA（5-21）</a> 用 5 个结构化检查点 + policy-as-code 但仍是离线规则集，<a href="../../agent-safety/2026-05-20-1.html">ECA（5-20）</a> 用 typed certificate gate 把 unsafe 打到 0% 但需要应用侧重写。SafeHarbor 选了<strong>第三条路</strong>：既不重训模型权重、也不重写应用接口，而是把 guardrail 做成一个<em>自演化的本地分层记忆系统</em>，通过对抗生成和信息熵自动产出 / 调整规则。</p>
+
+    <p><strong>核心方法：三件正交配合的机件</strong></p>
+    <ul class="point-list">
+      <li><strong>增强对抗生成（Enhanced Adversarial Generation）</strong>——不靠人工写守则，而是让对抗生成器主动产生"<em>边界 case</em>"，从这些 case 蒸出"上下文感知"的防御规则。这是 SkillSafetyBench（5-12）所说"<em>本地化非用户攻击可以持续诱导不安全行为</em>"的反向解药——既然攻击面是本地工件 / 技能上下文，规则就必须按上下文动态生成。</li>
+      <li><strong>本地分层记忆系统（Local Hierarchical Memory）</strong>——把规则组织成树状层级，按动态查询路径激活相关规则注入到 agent prompt 中。"<em>本地</em>" + "<em>分层</em>" + "<em>动态注入</em>" 三件一起保证了 training-free + plug-and-play 这两个工程属性。</li>
+      <li><strong>信息熵自演化（Entropy-Based Self-Evolution）</strong>——以记忆树各节点的熵为信号，过高即<em>分裂</em>（说明该节点覆盖太杂），过低即<em>合并</em>（说明冗余），让记忆结构自己漂移到与威胁分布匹配的形态。这一点借鉴了 b-tree / lsm-tree 的运行时再平衡思想，但应用到了"<em>规则空间</em>"。</li>
+    </ul>
+
+    <p><strong>与近期 guardrail 研究的对照：</strong></p>
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>静态守则<br>(SKILL.md 反例)</th><th>CUGA<br>(5-21 检查点)</th><th>ECA<br>(5-20 deterministic gate)</th><th>SafeHarbor（本文）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>是否需重训权重</td><td>否</td><td>否</td><td>否</td><td><strong>否</strong></td></tr>
+        <tr><td>是否需改应用</td><td>否</td><td>是（结构化检查点）</td><td>是（certificate API）</td><td><strong>否（即插即用）</strong></td></tr>
+        <tr><td>规则来源</td><td>人工</td><td>policy-as-code</td><td>类型系统</td><td><strong>对抗生成（自动）</strong></td></tr>
+        <tr><td>规则演化</td><td>静态</td><td>静态</td><td>类型升级</td><td><strong>熵驱动节点分裂/合并</strong></td></tr>
+        <tr><td>过度拒绝控制</td><td>很差</td><td>较好</td><td>需 oracle 校准</td><td><strong>SOTA：63.6% 良性效用</strong></td></tr>
+        <tr><td>会议</td><td>—</td><td>arXiv</td><td>arXiv</td><td><strong>ICML 2026</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>关键差异点：</strong>SafeHarbor 是这一波 guardrail 研究里少数<em>同时处理"模糊良性"与"明确恶意"两端</em>的工作。"模糊良性"包括用户写得不清楚的合法请求 / 与禁忌词字面相似但语义安全的查询——这是 over-refusal 的主源；"明确恶意"包括 jailbreak prompt / 工具滥用诱导。论文同时给出 63.6%（良性 utility）与 93%+（恶意拒绝）说明记忆树的<em>层级分支</em>真的把两类决策路径分开了，而不是一个普通 logistic 阈值在两端权衡。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文借鉴 / 对照的关键工作（附链接）</div>
+    <div class="ref-item">Inan et al. (2023) — <em>Llama Guard: LLM-based Input-Output Safeguard</em>·静态守则的代表对照<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Zou et al. (2023) — <em>Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)</em>·对抗生成的方法论先验<br>
+    <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener">arxiv.org/abs/2307.15043</a></div>
+    <div class="ref-item">Yi et al. (2024) — <em>Jailbreak Attacks and Defenses Against LLM (Survey)</em>·攻击 / 防御分类的综述基础<br>
+    <a href="https://arxiv.org/abs/2407.04295" target="_blank" rel="noopener">arxiv.org/abs/2407.04295</a></div>
+    <div class="ref-item">Wang et al. (2024) — <em>SafeBench / Comprehensive LLM Safety Evaluation</em>·过度拒绝量化评测的来源<br>
+    <a href="https://arxiv.org/abs/2406.12247" target="_blank" rel="noopener">arxiv.org/abs/2406.12247</a></div>
+    <div class="ref-item">Shlomov et al. (2026) — <em>CUGA: Governance by Construction for AI Agents</em>·结构化检查点的对照<br>
+    <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></div>
+    <div class="ref-item">Zhang et al. (2026) — <em>ECA: Hallucination as Authorization Failure</em>·deterministic gate 路线的对照<br>
+    <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a></div>
+    <div class="ref-item">Jin et al. (2026) — <em>SkillSafetyBench</em>·本地化技能攻击面，是 SafeHarbor 的最佳测试场<br>
+    <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>GPT-4o 上 63.6% 良性效用</strong>——在该会上模糊良性任务（与禁忌词字面相似的合法请求）上达到 SOTA，证明分层记忆树有效降低了 over-refusal。</li>
+      <li><strong>93%+ 恶意拒绝率</strong>——同时维持对明确攻击的高拒绝率，证明双端不冲突。</li>
+      <li><strong>Training-free + plug-and-play</strong>——不需要 fine-tune 也不需要重写 agent 应用，只需作为 wrapper 插入即可。</li>
+      <li><strong>信息熵驱动节点分裂/合并</strong>——把规则空间结构化为可在线再平衡的树，是 guardrail 研究里少见的"<em>规则结构本身可演化</em>"机制。</li>
+      <li><strong>ICML 2026 Accepted</strong>——会议级背书，区别于多数仍在 arXiv 阶段的 guardrail 工作。</li>
+      <li><strong>开源仓库 ljj-cyber/SafeHarbor</strong>——含完整对抗生成器与记忆树实现，可直接接入 LangGraph / LlamaIndex。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>SafeHarbor 的 "<strong>分层记忆 + 熵驱动分裂/合并</strong>" 是一份对你毕设<em>双水位线 KV-cache 管理</em>的极佳灵感互文：(1) 把"热缓存 / 温缓存 / 冷卸载"看作三层记忆树，根据"访问熵"动态分裂或合并，是双水位线策略的逻辑等价物；(2) "training-free + plug-and-play" 这个工程美学正好对应你毕设强调的"不改 DSA 模型权重，只改 KV runtime"边界；(3) 论文给出"<em>同时优化 efficiency-side 与 safety-side</em>"的双指标双 SOTA，可借鉴为你 hit-rate / bandwidth 双轴报告模板的思路。可在论文 chapter 6 引为"运行时数据结构自演化"的相关工作。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（核心）</div>
+        <p>SafeHarbor 是这一波 guardrail 路线里最完整的一份"<em>第三条路答卷</em>"——不重训、不改应用、自演化。具体可记忆 4 件：<strong>(a)</strong> 增强对抗生成 = 自动出 <a href="../../agent-safety/2026-05-13-1.html">SKILL.md 类</a> 的攻击 case 反向蒸规则；<strong>(b)</strong> 分层记忆树 = 把 <a href="../../agent-safety/2026-05-21-1.html">CUGA 的 5 检查点</a>软化为可动态生长的层级；<strong>(c)</strong> 熵自演化 = 给 <a href="../../agent-safety/2026-05-20-1.html">ECA 的 typed certificate</a> 提供"<em>规则空间维护</em>"的运行时机制；<strong>(d)</strong> ICML 2026 接收意味着这条路线已被会议侧承认。建议把 SafeHarbor + ECA + CUGA + SKILL.md 串成你 6 月小组分享的"<strong>guardrail 三路线</strong>"主线。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>对 benchmark 设计的启发：必须<em>同时报告 safety-axis 与 utility-axis</em>，不能只看一个。SafeHarbor 给出 63.6% / 93%+ 这对双指标对 benchmark 协议设计是直接示范——<a href="../../benchmark/2026-05-21-1.html">GrandGuard</a>（contextual risk 三级）、<a href="../../benchmark/2026-05-20-1.html">POLAR-Bench</a>（5×5 诊断面）、即将到来的 <a href="../../benchmark/2026-05-25-1.html">Boiling the Frog</a>（多轮 ASR）都应在报告时把 over-refusal / utility 一同报告，否则方法论将不可比较。SkillSafetyBench（5-12, 155 cases）和 SafeHarbor 形成攻击-防御的最佳配对。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SkillSafetyBench (2605.12015)</strong>·155 对抗 case / 47 任务 / 6 风险域——SafeHarbor 的最佳测试场<br>
+      <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></li>
+      <li><strong>The Misattribution Gap (2605.22842)</strong>·SND 攻击通过信任洗钱链绕过监测器——对 SafeHarbor 记忆系统的反向压力测试<br>
+      <a href="https://arxiv.org/abs/2605.22842" target="_blank" rel="noopener">arxiv.org/abs/2605.22842</a></li>
+      <li><strong>MemAudit (2605.23723)</strong>·反事实记忆影响 + 一致性图——MINJA 攻击下 70%→0% / 83.3%→0%<br>
+      <a href="https://arxiv.org/abs/2605.23723" target="_blank" rel="noopener">arxiv.org/abs/2605.23723</a></li>
+      <li><strong>CUGA Policy System (5-21 报告)</strong>·5 个结构化执行检查点——SafeHarbor 的硬路径对照<br>
+      <a href="../../agent-safety/2026-05-21-1.html">agent-safety/2026-05-21-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.05704" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/ljj-cyber/SafeHarbor" target="_blank" rel="noopener">GitHub 开源代码</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.05704v2" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.05704" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.CR/new" target="_blank" rel="noopener">arXiv cs.CR/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-25 #1 · 搜索来源：arXiv export API + arxiv.org/abs/2605.05704<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
