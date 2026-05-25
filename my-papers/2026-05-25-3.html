@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #3 · Caroline Trippel 扩展论文逐篇分析 · Daily Paper Tracker</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.72}
+  header{background:#fff;border-bottom:1px solid #e8e8e4;padding:1rem 1.5rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+  header a{font-size:.85rem;color:#888;text-decoration:none}
+  header a:hover{color:#5b3aa0}
+  .sep{color:#ccc;font-size:.85rem}
+  .hero{background:#fff;border-bottom:1px solid #e8e8e4;padding:2rem 1.25rem 1.6rem;text-align:center}
+  .hero h1{font-size:1.3rem;font-weight:500;max-width:860px;margin:0 auto .4rem;line-height:1.42}
+  .hero p{font-size:.86rem;color:#888;max-width:860px;margin:0 auto}
+  .chips{display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap;margin-top:.9rem}
+  .chip{font-size:.75rem;font-weight:500;padding:3px 10px;border-radius:20px}
+  .chip.total{background:#eaf3de;color:#3b6d11}
+  .chip.scope{background:#f0e9ff;color:#5b3aa0}
+  .chip.note{background:#e6f1fb;color:#185fa5}
+  main{max-width:980px;margin:2rem auto;padding:0 1.25rem}
+  .card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:1.3rem 1.45rem;margin-bottom:1rem}
+  .card-title{font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:#bbb;margin-bottom:.85rem;padding-bottom:.45rem;border-bottom:1px solid #f0efe9}
+  .paper{border-left:3px solid #d9caf8;padding-left:.9rem;margin-bottom:1rem}
+  .paper:last-child{margin-bottom:0}
+  .paper h3{font-size:.97rem;font-weight:500;color:#3f276f;margin-bottom:.2rem}
+  .meta{font-size:.81rem;color:#777;margin-bottom:.3rem}
+  ul{margin-left:1rem}
+  li{font-size:.88rem;margin-bottom:.28rem;color:#3a3a38}
+  a{color:#5b3aa0;text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{text-align:center;font-size:.76rem;color:#bbb;padding:2.2rem 1rem}
+  footer a{color:#bbb}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="./index.html">我的自选论文</a>
+  <span class="sep">/</span>
+  <span style="font-size:.85rem;color:#444">2026-05-25 #3</span>
+</header>
+
+<div class="hero">
+  <h1>[Caroline Trippel · Formal Arch/Chip 扩展集] 之前检索结果其余论文逐篇分析补全</h1>
+  <p>这篇补全 #1/#2 之外的“已检索到论文”，包含安全、验证自动化、方法工具链与少量跨域论文（用于完整学习图谱）。</p>
+  <div class="chips">
+    <span class="chip total">补全 18 篇</span>
+    <span class="chip scope">检索全集补齐</span>
+    <span class="chip note">逐篇分析</span>
+  </div>
+</div>
+
+<main>
+  <div class="card">
+    <div class="card-title">说明</div>
+    <ul>
+      <li>本页覆盖你要求的“之前检索到但尚未展开”的论文；与 #1/#2 不重复。</li>
+      <li>部分论文偏系统/ML/工具链，不是 strict arch/chip formal 主线，但为作者研究脉络的重要分支。</li>
+      <li>每条按“问题-方法-学习要点”给出可学习摘要。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">逐篇分析（补全集）</div>
+
+    <div class="paper"><h3>1) Protean: A Programmable Spectre Defense (HPCA 2026)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>Spectre 防护策略碎片化、难随场景动态调整。</li><li><strong>方法：</strong>可编程防护机制，把防御策略参数化并可组合。</li><li><strong>学习要点：</strong>防护从“固定补丁”转向“可编排策略层”。</li></ul></div>
+
+    <div class="paper"><h3>2) Automating Requirements Formalization (ICSE 2026)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>需求到形式规格转换耗时且语义易偏差。</li><li><strong>方法：</strong>LLM + distinguishing traces 做语义校验闭环。</li><li><strong>学习要点：</strong>规格生成必须配“可区分轨迹”做反例校正。</li></ul></div>
+
+    <div class="paper"><h3>3) Analyzing and Exploiting Branch Mispredictions in Microcode (arXiv 2025)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>microcode 层分支预测失误可形成新攻击通路。</li><li><strong>方法：</strong>系统分析失预测利用条件并构造利用路径。</li><li><strong>学习要点：</strong>安全边界要下探到 microcode 级细节。</li></ul></div>
+
+    <div class="paper"><h3>4) VeriCoder: Enhancing LLM-Based RTL Code Generation ... (arXiv 2025)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV</a></div><ul><li><strong>问题：</strong>LLM 生成 RTL 正确性不可控。</li><li><strong>方法：</strong>引入 functional correctness validation 反馈环。</li><li><strong>学习要点：</strong>代码生成和形式验证应“共设计”而非串行。</li></ul></div>
+
+    <div class="paper"><h3>5) Automatically Uncovering Hardware Side-Channels ... (OSCAR 2025)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV</a></div><ul><li><strong>问题：</strong>侧信道路径空间大、手工分析难覆盖。</li><li><strong>方法：</strong>基于 Multi-µPATH 合成自动发现路径。</li><li><strong>学习要点：</strong>自动路径合成是 RTL 安全评估关键能力。</li></ul></div>
+
+    <div class="paper"><h3>6) Formal Foundations of MemGlue ... (FMSD 2025)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV</a></div><ul><li><strong>问题：</strong>异构一致性协议需要更严格理论基础。</li><li><strong>方法：</strong>给出 MemGlue 协议形式化语义与性质证明框架。</li><li><strong>学习要点：</strong>期刊版常用于沉淀“可证明边界”。</li></ul></div>
+
+    <div class="paper"><h3>7) Specification and Formal Verification of HW-SW Contracts ... (IEEE Computer 2025)</h3><div class="meta"><a href="https://profiles.stanford.edu/caroline-trippel?tab=bio" target="_blank" rel="noopener">Stanford Profile</a></div><ul><li><strong>问题：</strong>契约式验证如何形成可推广方法论。</li><li><strong>方法：</strong>总结 contract 规范、验证与系统落地路径。</li><li><strong>学习要点：</strong>适合作为你建立“个人验证框架”的纲领文。</li></ul></div>
+
+    <div class="paper"><h3>8) RTL2MµPATH (MICRO 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>RTL 层攻击路径难穷举。</li><li><strong>方法：</strong>多路径合成 + 安全验证任务实例化。</li><li><strong>学习要点：</strong>连接“实现细节”与“可验证安全性”。</li></ul></div>
+
+    <div class="paper"><h3>9) Memory Consistency Model-Aware Cache Coherence ... (FMCAD 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>coherence 与 MCM 不协同会出现隐藏违规。</li><li><strong>方法：</strong>MCM-aware 协议设计与形式化检查。</li><li><strong>学习要点：</strong>协议正确性必须做跨层语义验证。</li></ul></div>
+
+    <div class="paper"><h3>10) Translating NL to Temporal Logics with LLMs and Model Checkers (FMCAD 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>自然语言需求难直接进入模型检查。</li><li><strong>方法：</strong>LLM 转换时序逻辑 + model checker 验证回路。</li><li><strong>学习要点：</strong>自动规格化必须和验证器耦合，避免“幻觉规格”。</li></ul></div>
+
+    <div class="paper"><h3>11) Serberus: Protecting Cryptographic Code from Spectres ... (SP 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>密码代码在推测执行下泄漏风险高。</li><li><strong>方法：</strong>编译期防护 + 硬件前提验证。</li><li><strong>学习要点：</strong>软件防护需配硬件假设验证才可靠。</li></ul></div>
+
+    <div class="paper"><h3>12) Model Selection for Latency-Critical Inference Serving (EuroSys 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>延迟敏感推理服务模型选择难兼顾成本与 SLA。</li><li><strong>方法：</strong>系统层选择策略与性能权衡建模。</li><li><strong>学习要点：</strong>展示 Trippel 研究在系统优化方向的延展。</li></ul></div>
+
+    <div class="paper"><h3>13) nl2spec (CAV 2023)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>非结构化需求难直接转时序逻辑。</li><li><strong>方法：</strong>交互式 NL→TL 流程，用人机回合减少语义漂移。</li><li><strong>学习要点：</strong>“交互式”通常比一次性生成更稳。</li></ul></div>
+
+    <div class="paper"><h3>14) G-QED (DAC 2023)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>复杂加速器验证覆盖不足。</li><li><strong>方法：</strong>Generalized QED 提升预硅验证覆盖。</li><li><strong>学习要点：</strong>验证方法需要面向复杂系统交互演化。</li></ul></div>
+
+    <div class="paper"><h3>15) Design for Hardware Memory Model Verification / Mitigating Spectre / TAGS (PLARCH 2023)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV</a></div><ul><li><strong>问题：</strong>架构设计缺乏验证友好与事件序统一框架。</li><li><strong>方法：</strong>三篇 workshop 从 MCM 验证、Spectre 协同防护、分布式事件序框架补齐方法面。</li><li><strong>学习要点：</strong>这是“方法论工具箱”条目，适合用来构建你的实践 checklist。</li></ul></div>
+
+    <div class="paper"><h3>16) RecShard / RecSSD / Failure-Tolerant Training / SLO-NNs（2021-2022）</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>推荐系统在存储、训练恢复、SLO 约束下的系统瓶颈。</li><li><strong>方法：</strong>分别从内存优化、近数据处理、容错训练、SLO-aware 设计给出工程方案。</li><li><strong>学习要点：</strong>虽非 strict formal 主线，但帮助理解作者系统研究广度。</li></ul></div>
+
+    <div class="paper"><h3>17) Opening Pandora's Box (ISCA 2021)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>微架构泄漏途径存在系统性未知空间。</li><li><strong>方法：</strong>系统化归纳和实证，揭示新的泄漏机制。</li><li><strong>学习要点：</strong>安全研究要重视“机制枚举 + 统一分类”。</li></ul></div>
+
+    <div class="paper"><h3>18) Dissertation + SoK + BMVC/ArXiv Reverse Engineering Branch（2019-2021）</h3><div class="meta"><a href="https://www.cs.princeton.edu/techreports/2019/012.pdf" target="_blank" rel="noopener">Dissertation</a></div><ul><li><strong>问题：</strong>并发正确性与安全验证如何统一，及跨域安全（视觉特征逆向）问题。</li><li><strong>方法：</strong>博士论文给出总框架；SoK 与后续工作扩展到 broader security surfaces。</li><li><strong>学习要点：</strong>把主线方法迁移到新场景是高价值能力。</li></ul></div>
+  </div>
+</main>
+
+<footer>
+  Caroline Trippel 子系列 #3 · 检索全集补全版 ·
+  <a href="./index.html">← 返回归档</a>
+</footer>
+</body>
+</html>

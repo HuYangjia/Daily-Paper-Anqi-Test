@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #2 · Caroline Trippel 逐篇深度学习版 · Daily Paper Tracker</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.72}
+  header{background:#fff;border-bottom:1px solid #e8e8e4;padding:1rem 1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+  header a{font-size:.85rem;color:#888;text-decoration:none}
+  header a:hover{color:#5b3aa0}
+  header .sep{color:#ccc;font-size:.85rem}
+  .hero{background:#fff;border-bottom:1px solid #e8e8e4;padding:2.1rem 1.25rem 1.7rem;text-align:center}
+  .hero .date{font-size:.73rem;color:#aaa;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.6rem}
+  .hero h1{font-size:1.32rem;font-weight:500;max-width:860px;margin:0 auto .45rem;line-height:1.42}
+  .hero p{font-size:.86rem;color:#888;max-width:860px;margin:0 auto}
+  .chips{display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap;margin-top:.95rem}
+  .chip{font-size:.75rem;padding:3px 10px;border-radius:20px;font-weight:500}
+  .chip.total{background:#eaf3de;color:#3b6d11}
+  .chip.scope{background:#f0e9ff;color:#5b3aa0}
+  .chip.depth{background:#e6f1fb;color:#185fa5}
+  main{max-width:980px;margin:2rem auto;padding:0 1.25rem}
+  .card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:1.35rem 1.5rem;margin-bottom:1rem}
+  .title{font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:#bbb;margin-bottom:.9rem;padding-bottom:.45rem;border-bottom:1px solid #f0efe9}
+  .paper{border-left:3px solid #d9caf8;padding:.2rem .2rem .2rem .9rem;margin-bottom:1rem}
+  .paper:last-child{margin-bottom:0}
+  .paper h3{font-size:.98rem;font-weight:500;color:#412a72;margin-bottom:.2rem}
+  .meta{font-size:.81rem;color:#777;margin-bottom:.35rem}
+  ul{margin-left:1rem}
+  li{font-size:.88rem;margin-bottom:.28rem;color:#3a3a38}
+  a{color:#5b3aa0;text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{text-align:center;font-size:.76rem;color:#bbb;padding:2.3rem 1rem}
+  footer a{color:#bbb}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="./index.html">我的自选论文</a>
+  <span class="sep">/</span>
+  <span style="font-size:.85rem;color:#444">2026-05-25 #2</span>
+</header>
+
+<div class="hero">
+  <div class="date">2026 年 5 月 25 日 · 学习版补全</div>
+  <h1>[Caroline Trippel · Formal Arch/Chip] 19 篇论文逐篇深度分析（学习提纲 + 方法要点 + 复现实操）</h1>
+  <p>这篇是对 #1 的补全版本：每篇都按“问题-方法-结论-学习重点-复现建议”展开，便于系统学习。</p>
+  <div class="chips">
+    <span class="chip total">覆盖 19/19</span>
+    <span class="chip scope">strict arch/chip formal</span>
+    <span class="chip depth">逐篇学习导向</span>
+  </div>
+</div>
+
+<main>
+  <div class="card">
+    <div class="title">学习顺序建议</div>
+    <ul>
+      <li><strong>基础线：</strong>ArMOR → TriCheck → ILA-MCM → TransForm（先打牢 memory-model 形式化）</li>
+      <li><strong>安全线：</strong>CheckMate → MeltdownPrime/SpectrePrime → Contracts → RTL2MµPATH</li>
+      <li><strong>工程线：</strong>RTL-to-model synthesis、QED、NL-to-SVA（关注“如何让 formal 真正跑起来”）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="title">逐篇学习卡片（19 篇）</div>
+
+    <div class="paper"><h3>1) ArMOR (ISCA 2015)</h3><div class="meta"><a href="https://scholar.google.com/scholar?q=ArMOR+Defending+Against+Consistency+Model+Mismatches+in+Heterogeneous+Architectures" target="_blank" rel="noopener">检索入口</a></div><ul><li><strong>问题：</strong>异构系统中不同 MCM 语义不一致，导致跨设备行为不可预测。</li><li><strong>方法：</strong>形式化描述 + 自动化推理/转换，显式建模跨模型语义桥接。</li><li><strong>学习重点：</strong>理解“语义对齐”比“单点优化”更关键。</li><li><strong>复现建议：</strong>先复做最小 litmus 集，观察不同 MCM 下可观测差异。</li></ul></div>
+
+    <div class="paper"><h3>2) Counterexamples and Proof Loophole (arXiv 2016)</h3><div class="meta"><a href="https://arxiv.org/abs/1611.01507" target="_blank" rel="noopener">arXiv</a></div><ul><li><strong>问题：</strong>编译映射证明可能存在“看似正确但不可机证”的漏洞。</li><li><strong>方法：</strong>构造可执行反例击穿 proof loophole。</li><li><strong>学习重点：</strong>“证明文本”与“模型可证”是两回事。</li><li><strong>复现建议：</strong>对同一映射实现反例驱动检查。</li></ul></div>
+
+    <div class="paper"><h3>3) TriCheck (ASPLOS 2017)</h3><div class="meta"><a href="https://arxiv.org/abs/1608.07547" target="_blank" rel="noopener">arXiv</a></div><ul><li><strong>问题：</strong>语言、编译器、ISA、硬件的 MCM 可能分层正确但整体错误。</li><li><strong>方法：</strong>全栈三岔口验证，统一比较允许行为集合。</li><li><strong>学习重点：</strong>形式化对象从“单层”升级到“端到端契约”。</li><li><strong>复现建议：</strong>先跑经典 RISC-V/C11 litmus 用例。</li></ul></div>
+
+    <div class="paper"><h3>4) CheckMate (MICRO 2018)</h3><div class="meta"><a href="https://www-cs.stanford.edu/~trippel/pubs/ctrippel_MICRO51.pdf" target="_blank" rel="noopener">PDF</a></div><ul><li><strong>问题：</strong>硬件安全验证依赖手工构造攻击，覆盖不系统。</li><li><strong>方法：</strong>利用 µhb/µspec 形式化攻击模式，自动合成 exploit 和安全 litmus。</li><li><strong>学习重点：</strong>把“攻击经验”转成“可判定约束”。</li><li><strong>复现建议：</strong>先复现论文内两类攻击模式再扩展自定义 pattern。</li></ul></div>
+
+    <div class="paper"><h3>5) ILA-MCM (FMCAD 2018)</h3><div class="meta"><a href="https://scholar.google.com/scholar?q=ILA-MCM+Integrating+Memory+Consistency+Models+with+Instruction-Level+Abstractions" target="_blank" rel="noopener">检索入口</a></div><ul><li><strong>问题：</strong>异构 SoC 的组件级正确性难以合成为系统级正确性。</li><li><strong>方法：</strong>ILA + axiomatic MCM 联合建模。</li><li><strong>学习重点：</strong>组合验证（compositional verification）的价值。</li><li><strong>复现建议：</strong>选双核/异构最小 SoC 场景先打通。</li></ul></div>
+
+    <div class="paper"><h3>6) MeltdownPrime/SpectrePrime (arXiv 2018)</h3><div class="meta"><a href="https://arxiv.org/abs/1802.03802" target="_blank" rel="noopener">arXiv</a></div><ul><li><strong>问题：</strong>一致性协议中的失效传播可形成新的旁路攻击面。</li><li><strong>方法：</strong>自动合成攻击程序验证可利用性。</li><li><strong>学习重点：</strong>coherence protocol 也是安全验证核心层。</li><li><strong>复现建议：</strong>对比 classic Spectre 与 Prime 变体的触发条件。</li></ul></div>
+
+    <div class="paper"><h3>7) TransForm (ISCA 2020)</h3><div class="meta"><a href="https://scholar.google.com/scholar?q=TransForm+Formally+Specifying+Transistency+Models+and+Synthesizing+Enhanced+Litmus+Tests" target="_blank" rel="noopener">检索入口</a></div><ul><li><strong>问题：</strong>传统 litmus 对新型 transistency 行为诊断力不足。</li><li><strong>方法：</strong>形式化 transistency 词汇并自动生成增强测试。</li><li><strong>学习重点：</strong>测试生成与模型规格应协同演化。</li><li><strong>复现建议：</strong>基于同一模型比较原始/增强 litmus 检出率。</li></ul></div>
+
+    <div class="paper"><h3>8) Synthesizing Formal Models from RTL (MICRO 2021)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/pubs/hsiao_MICRO21.pdf" target="_blank" rel="noopener">PDF</a></div><ul><li><strong>问题：</strong>手写 formal model 成本高、易偏离 RTL 实现。</li><li><strong>方法：</strong>从 RTL 自动抽取可用于 Check 系列的形式模型。</li><li><strong>学习重点：</strong>formal adoption 的瓶颈在“建模工程化”。</li><li><strong>复现建议：</strong>先做小流水线核，验证模型抽取正确性。</li></ul></div>
+
+    <div class="paper"><h3>9) Relational Models of Microarchitectures (arXiv 2021)</h3><div class="meta"><a href="https://arxiv.org/abs/2112.10511" target="_blank" rel="noopener">arXiv</a></div><ul><li><strong>问题：</strong>微架构安全属性难以统一表达与比较。</li><li><strong>方法：</strong>关系模型化（relational modeling）以统一描述执行差异。</li><li><strong>学习重点：</strong>关系视角可同时表达正确性与泄漏行为。</li><li><strong>复现建议：</strong>从两种攻击情形构建 relation check baseline。</li></ul></div>
+
+    <div class="paper"><h3>10) Axiomatic HW-SW Contracts for Security (ISCA 2022)</h3><div class="meta"><a href="https://scholar.google.com/scholar?q=Axiomatic+Hardware-Software+Contracts+for+Security" target="_blank" rel="noopener">检索入口</a></div><ul><li><strong>问题：</strong>软件防御常依赖隐含硬件假设，难验证。</li><li><strong>方法：</strong>把假设写成可验证契约并进行形式化检查。</li><li><strong>学习重点：</strong>从“文档假设”转向“可机证约束”。</li><li><strong>复现建议：</strong>把一个常见防御策略拆成 contract clauses。</li></ul></div>
+
+    <div class="paper"><h3>11) Scalable Assurance via Verifiable Contracts (OSCAR 2022)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div><ul><li><strong>问题：</strong>契约验证如何规模化落到真实项目。</li><li><strong>方法：</strong>在 workshop 中给出扩展实践路径。</li><li><strong>学习重点：</strong>关注验证流水线与团队协作接口。</li><li><strong>复现建议：</strong>给自己的项目先定义 3-5 条最关键 contract。</li></ul></div>
+
+    <div class="paper"><h3>12) G-QED (DAC 2023)</h3><div class="meta"><a href="https://scholar.google.com/scholar?q=G-QED+Generalized+QED+Pre-silicon+Verification" target="_blank" rel="noopener">检索入口</a></div><ul><li><strong>问题：</strong>传统 QED 在复杂加速器交互下覆盖有限。</li><li><strong>方法：</strong>Generalized QED + 分解策略提升预硅验证能力。</li><li><strong>学习重点：</strong>QED 思想可与 formal flow 深度耦合。</li><li><strong>复现建议：</strong>从 non-interfering 到 interfering 场景逐步扩展。</li></ul></div>
+
+    <div class="paper"><h3>13) NL to SVA for Verification Productivity (DAV 2023)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div><ul><li><strong>问题：</strong>属性编写是 formal 工程中高门槛环节。</li><li><strong>方法：</strong>结合电路上下文把自然语言转为 SVA。</li><li><strong>学习重点：</strong>大模型可作为“spec 生成助手”而非替代验证器。</li><li><strong>复现建议：</strong>先挑稳定模块，做 NL→SVA→model check 闭环。</li></ul></div>
+
+    <div class="paper"><h3>14) Design for Hardware MCM Verification (PLARCH 2023)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div><ul><li><strong>问题：</strong>设计阶段缺少面向验证的 memory-model 指导。</li><li><strong>方法：</strong>提出 design-for-verifiability 的实践方向。</li><li><strong>学习重点：</strong>验证前置比事后修 bug 成本低得多。</li><li><strong>复现建议：</strong>在架构评审中加入 MCM 可验证性检查项。</li></ul></div>
+
+    <div class="paper"><h3>15) RTL2MµPATH (MICRO 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>RTL 级侧信道路径复杂，手工穷举困难。</li><li><strong>方法：</strong>Multi-µPATH synthesis 自动揭示可利用路径。</li><li><strong>学习重点：</strong>路径合成是把 formal 与安全挖掘结合的关键桥梁。</li><li><strong>复现建议：</strong>对单核实验设计先做 path ranking 与验证。</li></ul></div>
+
+    <div class="paper"><h3>16) MCM-Aware Cache Coherence (FMCAD 2024)</h3><div class="meta"><a href="https://trippel-lab.stanford.edu/publications" target="_blank" rel="noopener">Lab Publications</a></div><ul><li><strong>问题：</strong>cache coherence 与 MCM 分离设计导致全局语义漏洞。</li><li><strong>方法：</strong>使 coherence 机制显式受 MCM 约束。</li><li><strong>学习重点：</strong>协议正确性要在语义层闭环验证。</li><li><strong>复现建议：</strong>先构造最小反例，验证模型对违规行为的捕获能力。</li></ul></div>
+
+    <div class="paper"><h3>17) Automatically Uncovering Hardware Side-Channels ... (OSCAR 2025)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div><ul><li><strong>问题：</strong>如何把 RTL2MµPATH 推广到更开放、可迭代场景。</li><li><strong>方法：</strong>以 workshop 形式给出扩展验证案例。</li><li><strong>学习重点：</strong>方法迁移能力与可重复评估。</li><li><strong>复现建议：</strong>记录每轮发现路径与 false-positive 变化。</li></ul></div>
+
+    <div class="paper"><h3>18) Formal Foundations of MemGlue (FMSD 2025)</h3><div class="meta"><a href="https://cs.stanford.edu/people/trippel/trippel_CV.pdf" target="_blank" rel="noopener">CV 来源</a></div><ul><li><strong>问题：</strong>conference 结果需要更完整理论化证明。</li><li><strong>方法：</strong>给出 MemGlue 协议形式化基础与性质论证。</li><li><strong>学习重点：</strong>从工程实证到理论完备性的过渡。</li><li><strong>复现建议：</strong>按论文给出的性质列表逐条写检查条件。</li></ul></div>
+
+    <div class="paper"><h3>19) Spec and Formal Verification of HW-SW Contracts (IEEE Computer 2025)</h3><div class="meta"><a href="https://profiles.stanford.edu/caroline-trippel?tab=bio" target="_blank" rel="noopener">Stanford Profile</a></div><ul><li><strong>问题：</strong>如何把零散成果组织成可实践的高保障架构路线。</li><li><strong>方法：</strong>用契约中心化叙事统一 correctness/security/reliability。</li><li><strong>学习重点：</strong>把“方法”变成“体系”（research program）。</li><li><strong>复现建议：</strong>结合 #10 构建你自己的 contract 模板库。</li></ul></div>
+  </div>
+
+  <div class="card">
+    <div class="title">你可以怎么用这套材料</div>
+    <ul>
+      <li>每周选 2 篇，按“问题-方法-证据-局限”做复盘笔记。</li>
+      <li>把 TriCheck/CheckMate/Contracts/RTL2MµPATH 当作四个里程碑，构建自己的 formal roadmap。</li>
+      <li>如果你愿意，我下一步可以继续把这 19 篇拆成 19 个独立页面（每篇都达到日报同等粒度）。</li>
+    </ul>
+  </div>
+</main>
+
+<footer>
+  Caroline Trippel 子系列 #2 · 逐篇深度学习版 ·
+  <a href="./index.html">← 返回归档</a>
+</footer>
+</body>
+</html>

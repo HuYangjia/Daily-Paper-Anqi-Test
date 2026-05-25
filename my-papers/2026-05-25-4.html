@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-25 #4 · Caroline Trippel 检索全集逐条分析总表 · Daily Paper Tracker</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f5;color:#2c2c2a;line-height:1.7}
+  header{background:#fff;border-bottom:1px solid #e8e8e4;padding:1rem 1.4rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+  header a{font-size:.85rem;color:#888;text-decoration:none}
+  header a:hover{color:#5b3aa0}
+  .sep{color:#ccc;font-size:.85rem}
+  .hero{background:#fff;border-bottom:1px solid #e8e8e4;padding:2rem 1.2rem 1.55rem;text-align:center}
+  .hero h1{font-size:1.28rem;font-weight:500;max-width:920px;line-height:1.42;margin:0 auto .42rem}
+  .hero p{font-size:.86rem;color:#888;max-width:920px;margin:0 auto}
+  .chips{display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap;margin-top:.9rem}
+  .chip{font-size:.74rem;font-weight:500;padding:3px 10px;border-radius:20px}
+  .chip.total{background:#eaf3de;color:#3b6d11}
+  .chip.scope{background:#f0e9ff;color:#5b3aa0}
+  .chip.type{background:#e6f1fb;color:#185fa5}
+  main{max-width:1080px;margin:2rem auto;padding:0 1.2rem}
+  .card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:1.25rem 1.35rem;margin-bottom:1rem}
+  .title{font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:#bbb;margin-bottom:.85rem;padding-bottom:.42rem;border-bottom:1px solid #f0efe9}
+  p{font-size:.9rem;color:#3a3a38;margin-bottom:.55rem}
+  table{width:100%;border-collapse:collapse;font-size:.81rem}
+  th{background:#f7f7f5;font-weight:500;padding:.45rem .55rem;text-align:left;border:1px solid #e8e8e4;color:#666}
+  td{padding:.46rem .55rem;border:1px solid #e8e8e4;vertical-align:top;color:#444}
+  tr:hover td{background:#fbfbf9}
+  .sub{font-size:.78rem;color:#777}
+  a{color:#5b3aa0;text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{text-align:center;font-size:.76rem;color:#bbb;padding:2.2rem 1rem}
+  footer a{color:#bbb}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="./index.html">我的自选论文</a>
+  <span class="sep">/</span>
+  <span style="font-size:.85rem;color:#444">2026-05-25 #4</span>
+</header>
+
+<div class="hero">
+  <h1>[Caroline Trippel · 检索全集最终版] 所有已检索论文逐条分析总表（不遗漏）</h1>
+  <p>本页将此前检索到的全部条目逐条展开为学习摘要，覆盖会议/期刊/arXiv/workshop/学位论文等全部文献类型。</p>
+  <div class="chips">
+    <span class="chip total">总计 47 条</span>
+    <span class="chip scope">全检索结果</span>
+    <span class="chip type">逐条学习分析</span>
+  </div>
+</div>
+
+<main>
+  <div class="card">
+    <div class="title">说明与口径</div>
+    <p>你要求“之前检索到的都要”，所以这里采用<strong>全收录</strong>口径：不仅有 strict arch/chip formal 主线，也含扩展系统/工具链/跨域条目。若同题存在会议版与 top-picks/arXiv 版，也分条保留便于学习版本演化。</p>
+    <p>学习建议：先读 #2（主线深度版），再用本页做查漏补全与版本对照。</p>
+  </div>
+
+  <div class="card">
+    <div class="title">A. 主线 formal for arch/chip（核心 19 + 相关版本）</div>
+    <table>
+      <thead><tr><th>论文</th><th>来源</th><th>逐条分析（学习要点）</th></tr></thead>
+      <tbody>
+        <tr><td>ArMOR: Defending Against Consistency Model Mismatches in Heterogeneous Architectures</td><td>ISCA 2015</td><td>奠定异构 MCM 对齐框架；重点学“跨模型语义翻译”思想。</td></tr>
+        <tr><td>Counterexamples and Proof Loophole for C/C++ to POWER and ARMv7 Trailing-Sync Compiler Mappings</td><td>arXiv 2016</td><td>展示形式证明漏洞可被反例击穿；重点学“反例优先”的验证思维。</td></tr>
+        <tr><td>Exploring the Trisection of Software, Hardware, and ISA in Memory Model Design</td><td>arXiv 2016</td><td>TriCheck 早期预印本；重点学三层协同验证问题定义。</td></tr>
+        <tr><td>TriCheck: Memory Model Verification at the Trisection of Software, Hardware, and ISA</td><td>ASPLOS 2017</td><td>全栈验证代表作；重点学如何统一比较不同层的允许行为。</td></tr>
+        <tr><td>Full-Stack Memory Consistency Model Verification with TriCheck</td><td>IEEE Micro Top Picks 2018</td><td>对 ASPLOS17 的凝练与影响扩展版；重点看工程启示总结。</td></tr>
+        <tr><td>ILA-MCM: Integrating Memory Consistency Models with Instruction-Level Abstractions ...</td><td>FMCAD 2018</td><td>把 ILA 与 MCM 融合到 SoC 验证；重点学组合式验证接口。</td></tr>
+        <tr><td>CheckMate: Automated Synthesis of Hardware Exploits and Security Litmus Tests</td><td>MICRO 2018</td><td>将硬件攻击验证自动化；重点学 µspec/µhb 约束表达能力。</td></tr>
+        <tr><td>Security Verification through Automatic Hardware-Aware Exploit Synthesis: The CheckMate Approach</td><td>IEEE Micro Top Picks 2019</td><td>CheckMate 方法论总结版；适合快速把握研究价值与边界。</td></tr>
+        <tr><td>MeltdownPrime and SpectrePrime: Automatically-Synthesized Attacks ...</td><td>arXiv 2018</td><td>独立攻击系列；重点学一致性协议如何形成旁路攻击面。</td></tr>
+        <tr><td>Concurrency and Security Verification in Heterogeneous Parallel Systems</td><td>Princeton PhD 2019</td><td>总纲论文；建议作为 TriCheck+CheckMate 主线总复盘读物。</td></tr>
+        <tr><td>TransForm: Formally Specifying Transistency Models and Synthesizing Enhanced Litmus Tests</td><td>ISCA 2020</td><td>把 transistency 变成可规格化对象；重点学“模型驱动测试生成”。</td></tr>
+        <tr><td>Synthesizing Formal Models of Hardware from RTL for Efficient Verification ...</td><td>MICRO 2021</td><td>降低形式化建模门槛；重点学 RTL 到 formal model 的自动抽取路线。</td></tr>
+        <tr><td>Relational Models of Microarchitectures for Formal Security Analyses</td><td>arXiv 2021</td><td>关系模型统一安全语义；重点学 relation 视角的表达能力。</td></tr>
+        <tr><td>Axiomatic Hardware-Software Contracts for Security</td><td>ISCA 2022</td><td>把软硬件安全假设契约化；重点学 contract clause 设计。</td></tr>
+        <tr><td>Scalable Assurance via Verifiable Hardware-Software Contracts</td><td>OSCAR 2022</td><td>契约路线 workshop 扩展；重点看规模化落地方向。</td></tr>
+        <tr><td>Design for Hardware Memory Model Verification</td><td>PLARCH 2023</td><td>设计前置验证观；重点学 design-for-verifiability 思维。</td></tr>
+        <tr><td>RTL2MµPATH: Multi-µPATH Synthesis with Applications to Hardware Security Verification</td><td>MICRO 2024</td><td>RTL 安全路径自动发现；重点学 path synthesis 在安全验证中的作用。</td></tr>
+        <tr><td>Automatically Uncovering Hardware Side-Channels in Processor RTL with Multi-µPATH Synthesis</td><td>OSCAR 2025</td><td>MICRO24 的开放生态扩展；重点看方法可迁移性。</td></tr>
+        <tr><td>Memory Consistency Model-Aware Cache Coherence for Heterogeneous Hardware</td><td>FMCAD 2024</td><td>coherence 与 MCM 跨层统一；重点学协议语义闭环。</td></tr>
+        <tr><td>Formal Foundations of the MemGlue Consistency Protocol for Heterogeneous Hardware</td><td>FMSD 2025</td><td>期刊理论化版本；重点看性质证明与定义完备性。</td></tr>
+        <tr><td>Specification and Formal Verification of Hardware-Software Contracts for High-Assurance Computer Architectures</td><td>IEEE Computer 2025</td><td>体系化综述；重点学从方法到 research program 的组织方式。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="title">B. 形式化自动化与验证生产力分支</div>
+    <table>
+      <thead><tr><th>论文</th><th>来源</th><th>逐条分析（学习要点）</th></tr></thead>
+      <tbody>
+        <tr><td>nl2spec: Interactively Translating Unstructured Natural Language to Temporal Logics with LLMs</td><td>CAV 2023</td><td>把自然语言需求转成时序逻辑；重点学“交互式纠错”优于一步到位。</td></tr>
+        <tr><td>Towards Improving Verification Productivity with Circuit-Aware Translation of NL to SVA</td><td>DAV 2023</td><td>面向 SVA 生成；重点学电路上下文对规格准确性的提升。</td></tr>
+        <tr><td>Translating Natural Language to Temporal Logics with LLMs and Model Checkers</td><td>FMCAD 2024</td><td>引入 model checker 闭环；重点学“生成+验证”的双系统协作。</td></tr>
+        <tr><td>Automating Requirements Formalization: Using LLMs and Low-Complexity Distinguishing Traces ...</td><td>ICSE 2026</td><td>需求形式化自动化；重点学 distinguishing traces 作为语义护栏。</td></tr>
+        <tr><td>VeriCoder: Enhancing LLM-Based RTL Code Generation through Functional Correctness Validation</td><td>arXiv 2025</td><td>LLM 生成 RTL 的正确性增强；重点学 validation-in-the-loop。</td></tr>
+        <tr><td>G-QED: Generalized QED Pre-silicon Verification beyond Non-Interfering Hardware Accelerators</td><td>DAC 2023</td><td>QED 框架泛化；重点学复杂加速器场景的预硅验证扩展。</td></tr>
+        <tr><td>Scaling Up Hardware Accelerator Verification using A-QED with Functional Decomposition</td><td>FMCAD 2021</td><td>用分解策略提升 A-QED 可扩展性；重点学 decomposition 工程技巧。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="title">C. 安全攻击面与防护分支（非纯 formal 但已检索）</div>
+    <table>
+      <thead><tr><th>论文</th><th>来源</th><th>逐条分析（学习要点）</th></tr></thead>
+      <tbody>
+        <tr><td>Opening Pandora's Box: A Systematic Study of New Ways Microarchitecture Can Leak Private Data</td><td>ISCA 2021</td><td>系统化扩展微架构泄漏面；重点学 attack taxonomy 建模方法。</td></tr>
+        <tr><td>Serberus: Protecting Cryptographic Code from Spectres at Compile-Time</td><td>SP 2024</td><td>编译期防护 + 硬件假设校验；重点学软硬件协同防护契约。</td></tr>
+        <tr><td>Hardware-Software Codesign for Mitigating Spectre</td><td>PLARCH 2023</td><td>协同设计取向；重点看 mitigation 的分层责任划分。</td></tr>
+        <tr><td>Protean: A Programmable Spectre Defense</td><td>HPCA 2026</td><td>可编程防护机制；重点学 policy programmability 对防御生命周期的价值。</td></tr>
+        <tr><td>Analyzing and Exploiting Branch Mispredictions in Microcode</td><td>arXiv 2025</td><td>microcode 层攻击面研究；重点看低层实现细节如何破坏上层假设。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="title">D. 系统/ML/跨域扩展分支（检索全集中的其余条目）</div>
+    <table>
+      <thead><tr><th>论文</th><th>来源</th><th>逐条分析（学习要点）</th></tr></thead>
+      <tbody>
+        <tr><td>SLO-NNs: Service Level Objective-Aware Neural Networks</td><td>EuroMLSys 2022</td><td>面向 SLO 的模型系统协同；重点学性能目标驱动模型配置。</td></tr>
+        <tr><td>Dynamic Network Adaptation at Inference</td><td>arXiv 2022</td><td>推理时网络自适应；重点学 runtime adaptation 与延迟/精度折中。</td></tr>
+        <tr><td>RecShard: Statistical Feature-Based Memory Optimization for Industry-Scale Neural Recommendation</td><td>ASPLOS 2022</td><td>推荐系统内存优化；重点学特征统计驱动的系统优化路径。</td></tr>
+        <tr><td>RecSSD: Near Data Processing for SSD Based Recommendation Inference</td><td>ASPLOS 2021</td><td>NDP 思路降低数据搬运开销；重点学存储-计算协同设计。</td></tr>
+        <tr><td>Model Selection for Latency-Critical Inference Serving</td><td>EuroSys 2024</td><td>延迟关键服务的选模策略；重点学 SLA 驱动决策框架。</td></tr>
+        <tr><td>Understanding and Improving Failure Tolerant Training ... with Partial Recovery</td><td>MLSys 2021</td><td>容错训练机制；重点学恢复策略对训练效率与稳定性的影响。</td></tr>
+        <tr><td>Porcupine: A Synthesizing Compiler for Vectorized Homomorphic Encryption</td><td>PLDI 2021</td><td>同态加密编译器合成；重点学编译自动化与加密计算性能协同。</td></tr>
+        <tr><td>Mitigating Reverse Engineering Attacks on Local Feature Descriptors</td><td>BMVC 2021</td><td>视觉特征逆向防护；重点学跨域安全方法迁移。</td></tr>
+        <tr><td>Analysis and Mitigations of Reverse Engineering Attacks on Local Feature Descriptors</td><td>arXiv 2021</td><td>BMVC 的扩展预印本；重点看实验细节与缓解策略补充。</td></tr>
+        <tr><td>NL2FOL: Translating Natural Language to First-Order Logic for Logical Fallacy Detection</td><td>arXiv 2024</td><td>自然语言到一阶逻辑；重点学逻辑表示与下游判别任务结合。</td></tr>
+        <tr><td>DAM: Differentiated Access Memory Systems and Applications</td><td>DAM 2024</td><td>差异化内存系统视角；重点学 device-system-software 联动叙事。</td></tr>
+        <tr><td>Future of Memory: Massive, Diverse, Tightly Integrated with Compute ...</td><td>IEDM 2025</td><td>内存未来路线展望；重点学跨层协同的研究议题定义方式。</td></tr>
+        <tr><td>Fast, Accurate, and Novel Performance Evaluations with PinCPU</td><td>OSCAR 2025</td><td>性能评测工具方向；重点学评测基础设施对研究迭代速度的影响。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="title">你接下来可以怎么学</div>
+    <p><strong>阶段 1（主线打底）</strong>：读 A 组中 ArMOR/TriCheck/CheckMate/Contracts/RTL2MµPATH 五篇。</p>
+    <p><strong>阶段 2（自动化能力）</strong>：读 B 组 nl2spec/FMCAD24-NL2TL/VeriCoder。</p>
+    <p><strong>阶段 3（拓展视野）</strong>：读 C+D 组，理解作者如何把方法迁移到安全防护和系统优化。</p>
+  </div>
+</main>
+
+<footer>
+  Caroline Trippel 子系列 #4 · 检索全集逐条总表 ·
+  <a href="./index.html">← 返回归档</a>
+</footer>
+</body>
+</html>
