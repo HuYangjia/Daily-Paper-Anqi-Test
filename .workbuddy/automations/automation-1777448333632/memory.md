@@ -3,6 +3,18 @@
 
 ## 执行历史摘要
 
+### 2026-05-25（追加 #2 — 三方向同步）
+- 三方向各生成 #2 报告（同日第二轮）
+- 选定篇目：
+  - Harness: TwinRouterBench (arXiv 2605.18859, Pei Yang 等 17 作者 2026-05-14) 93 分 — step-level LLM routing harness 双轨：static 970 router-visible prefixes (520 instances 来自 SWE-bench/BFCL/mtRAG/QMSum/PinchBench) + dynamic SWE-bench Verified 100 case；deterministic arithmetic scoring（无 online judge）；downgrade-and-cascade 协议反向标注 target tier
+  - Agent Safety: TTT Undermines Safety Guardrails (arXiv 2605.22984, Antonelli/Akhondzadeh/Bojchevski 2026-05-21) 94 分 — 把测试时训练立成新 jailbreak 入口；3 类威胁模型（few-shot/generation-phase/RAG-aug）；LoRA few-shot ASR@10 ≈ 95%、generation-phase ≈ 93% 跨家族跨规模；漏洞迁移到生产 fine-tuning API；validity-aware 评估纠正退化输出；perplexity-shift provider-side detector；强调 dynamic alignment
+  - Benchmark: PoisonForge (arXiv 2605.23168, Sun/Suri/Chaudhari/Nita-Rotaru/Oprea, Northeastern Khoury, 2026-05-22) 92 分 — 任务级靶向中毒 benchmark；4 维参数化（bias type/poisoning mode/appearance count/output length）；1% poison budget · 12 模型 / 5 家族 / 2B-32B；10 条投毒样本 → 11/12 模型 ≥70% ASR；非目标任务泄漏 < 0.5%；ASR 随出现次数单调升 / 输出长度单调降；风险预测模型可泛化预测新任务 ASR
+- 三方向叙事链："训练-推理-评测三阶段 LLM 安全全景"——TwinRouterBench 给 router 评测重写数据形态；TTT 攻击是推理时 alignment 失效；PoisonForge 是训练时数据供应链失效；三件事合起来证明"scaling 不解 alignment / 不解中毒 / 不解评测形态"
+- 候选对比：Harness — EvalAwareBench (91) / Inference-Time Alignment (90) / Knowledge Work Bench Design (89) / WebGameBench (88)；Safety — Misattribution Gap (90) / Codec-Robust Audio (87) / Tool-Call Traffic (86)；Benchmark — EvalAwareBench (91) / VulnLLM-R Cyber (90) / PrefBench (87) / Law RAG (86)
+- 三方向 index + 根 index 各插一条；count-badge 24/23/22 → 25/24/23
+- commit d16dd92, push 成功（origin/main）
+- 数据源：arxiv.org/list/cs.AI/new + arxiv.org/abs/<id>（export API 在此小时返回 0 行 → fallback 列表抓取）
+
 ### 2026-05-25（每日 18:00 — 三方向同步）
 - 三方向各生成 #1 报告
 - 选定篇目：
