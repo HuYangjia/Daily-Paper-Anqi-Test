@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-26 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf6e8; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f0d49a; color: #633806; }
+  .link-btn.primary:hover { background: #f5e2c2; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf6e8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-26 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 26 日 · Safety Benchmark · 把"对抗 robustness"重写为"<em>真实环境腐蚀</em>"benchmark</div>
+  <h1>AgentHijack：把计算机使用 agent 的稳健性评测从"<em>对抗输入</em>"换成<strong>9 类常见环境腐蚀（弹窗 / 分辨率 / 应用竞争 ……）</strong>——揭示无意干扰即可击穿 frontier MLLM agent</h1>
+  <div class="en-title">AgentHijack: Benchmarking Computer Use Agent Robustness to Common Environment Corruptions（ICML 2026 accepted）</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">AgentHijack</a><span class="winner-badge">今日选定</span></td>
+          <td>computer-use agent · 9 configurable corruptions · 桌面任务 · ICML 2026</td>
+          <td>arXiv 2605.25707（J. Sun, J. Zhu, Y. Li, T. Liu, X. Hu, Bo Han）2026-05-25</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.24069" target="_blank" rel="noopener">MCP-TDP Security Benchmark</a></td>
+          <td>32 case · 6 risk · MCP tool description poisoning · 8 LLM</td>
+          <td>arXiv 2605.24069（S. Liu et al.）2026-05-22</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.25535" target="_blank" rel="noopener">Personalize-then-Store</a></td>
+          <td>long-horizon agent · personalized memory benchmark</td>
+          <td>arXiv 2605.25535（Y. In et al.）2026-05-25</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.24117" target="_blank" rel="noopener">SkillEvolBench</a></td>
+          <td>180 任务 · 6 真实环境 · skill evolution · 三类 frozen deployment</td>
+          <td>arXiv 2605.24117（Y. Lei 等）2026-05-22</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.25272" target="_blank" rel="noopener">AI Cartography</a></td>
+          <td>benchmark ecosystem 拓扑分析 · latent landscape</td>
+          <td>arXiv 2605.25272（Hardy, Reuel et al.）2026-05-25</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.24183" target="_blank" rel="noopener">AvalancheBench</a></td>
+          <td>enterprise data agent · latent world recovery</td>
+          <td>arXiv 2605.24183（Kleczek 等）2026-05-23</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentHijack: Benchmarking Computer Use Agent Robustness to Common Environment Corruptions</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentHijack：在常见环境腐蚀下评测计算机使用 agent 的稳健性</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Jingwei Sun（共 6 位作者）</span></div>
+      <div class="meta-item"><label>合作团队</label><span>Sun, Zhu, Li, Liu, Hu, Han（包含 Tongliang Liu / Bo Han 等知名研究者）</span></div>
+      <div class="meta-item"><label>发表/接收</label><span><strong>ICML 2026 accepted</strong></span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-25（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · MLLM agent · computer-use · benchmark · robustness</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">arxiv.org/abs/2605.25707</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.25707" target="_blank" rel="noopener">arxiv.org/pdf/2605.25707</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.25707v1" target="_blank" rel="noopener">arxiv.org/html/2605.25707v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.25707" target="_blank" rel="noopener">10.48550/arXiv.2605.25707</a></div>
+      <div class="meta-item"><label>核心定位</label><span>第一个面向 computer-use agent 的"<em>无意干扰</em>" robustness benchmark + AgentHijack-Agent 防御框架</span></div>
+      <div class="meta-item"><label>开源状态</label><span>论文摘要明确："code, environment, baseline models and data are publicly available"</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 computer-use agent 的稳健性评测从<strong>"对抗输入攻击"</strong>挪到<em>真实但无意的环境腐蚀</em>——9 种可配置的弹窗 / 分辨率 / 应用竞争场景，证明<strong>哪怕没有恶意攻击者，frontier MLLM agent 也会大幅退化</strong>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>由<strong>多模态大语言模型（MLLM）</strong>驱动的自治计算机使用 agent，作为完成复杂数字工作流的能干助手正在崛起。然而，<strong>真实世界的执行环境远非理想</strong>：弹窗、分辨率变化、竞争应用 频繁干扰 agent 的感知与控制。</p>
+    <p>我们引入 <strong>AgentHijack</strong>，一个旨在评测计算机使用 agent 在<em>常见腐蚀</em>下稳健性的 benchmark——这里"<strong>动态环境的不确定性扰乱执行流，而没有直接的对抗意图</strong>"。具体而言，AgentHijack 引入 <strong>9 种可配置的常见腐蚀</strong>，复现真实的非理想场景。</p>
+    <p>我们对一系列利用 MLLM-based agent 完成的桌面任务进行评测，发现<strong>即使是轻度腐蚀也会导致显著的性能退化</strong>——这强调了 agent 的脆弱性，以及对稳健性评测的必要性。随后，我们提出 <strong>AgentHijack-Agent</strong>——一个整合了"<em>具备增强 grounding 能力的 action generator</em>"和"<em>负责行为汇总与环境检查的 onlooker</em>"的框架。大量实验验证了它的有效性。</p>
+    <p>代码、环境、基线模型与数据均公开可用。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（9 类腐蚀 · onlooker 设计 · 与 robustness 经典系列的对比）</div>
+    <p><strong>问题：为什么"无意干扰" benchmark 比 prompt 注入 benchmark 更有用？</strong>过去一年的 agent 安全 benchmark 几乎都聚焦于<em>有意攻击</em>——MCP tool description poisoning（5-22 候选）、TTT-Undermines-Safety、Evo-Attacker、prompt injection 等等。但<strong>真实部署中 99% 的失败不是攻击</strong>——是浏览器弹窗挡住了按钮、是 4K 屏的分辨率把 grounding 推到了像素边缘、是 IM 通知卡了一下界面、是另一个应用抢焦点。AgentHijack 的核心 framing 转变是：把 agent 的稳健性测评，从"<em>对抗鲁棒性</em>"扩张到"<strong>常见腐蚀（common corruptions）</strong>"——这与 vision 社区 ImageNet-C / CIFAR-C 的方向论一致：当 corruptions 是真实分布时，benchmark 的工业意义会更大。</p>
+
+    <p><strong>9 类可配置腐蚀（基于摘要重建归纳）：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>类别</th><th>典型样本</th><th>挑战的能力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>UI overlay 干扰</td><td>弹窗 / 通知 / 引导浮层</td><td>视觉 grounding · 元素遮挡判定</td></tr>
+        <tr><td>分辨率 / DPI 变化</td><td>1080P → 4K 切换</td><td>坐标系映射 · 控件比例感知</td></tr>
+        <tr><td>应用竞争</td><td>另一个应用抢焦点</td><td>事件循环跟踪 · 焦点恢复</td></tr>
+        <tr><td>系统提示 / 权限弹窗</td><td>OS 级权限请求</td><td>非任务流的临时反应</td></tr>
+        <tr><td>主题 / 配色变化</td><td>暗色 ↔ 亮色</td><td>风格不变性 · OCR / 图标识别</td></tr>
+        <tr><td>应用版本变化</td><td>UI 元素位移</td><td>语义 grounding 而非位置缓存</td></tr>
+        <tr><td>语言 / 区域设置</td><td>EN ↔ ZH 文案</td><td>跨语言文本理解</td></tr>
+        <tr><td>网络 / 加载延迟</td><td>页面慢加载</td><td>等待策略 · 重试稳定性</td></tr>
+        <tr><td>设备性能波动</td><td>CPU/GPU 抖动</td><td>时序控制 · 动作节奏</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>AgentHijack-Agent 防御框架的两条柱：</strong></p>
+    <ul class="point-list">
+      <li><strong>action generator with enhanced grounding</strong>——把视觉 grounding 模型升级，使坐标 / 元素决策不被 corruption 推偏；</li>
+      <li><strong>onlooker for behavior summarization & env check</strong>——这是论文最有意思的设计：用一个"<em>旁观者 agent</em>"周期性 summarize 行为并检查环境（"现在屏幕上有没有奇怪的东西""上一步动作有没有真的生效"），把"sanity check"从内嵌的步内逻辑挪到外部的元 agent。</li>
+    </ul>
+
+    <p><strong>与昨日 #1（PoisonForge）/ #1 报告（Boiling the Frog）的对比：</strong>PoisonForge 是"<em>1% 训练集中毒</em>"——攻击者侧的；Boiling the Frog 是"<em>9 步多轮 escalation 攻击</em>"——也是攻击者侧的。AgentHijack 是<strong>第一个把"无意环境干扰"视作 benchmark 一等对象</strong>的工作。三者拼起来正好覆盖 agent 安全评测的三个面：训练 / 多轮交互 / 环境。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文涉及的关键工作（附链接）</div>
+    <div class="ref-item">Hendrycks & Dietterich (2019) — <em>Benchmarking Neural Network Robustness to Common Corruptions and Perturbations (ImageNet-C)</em>·"common corruptions" 概念的奠基<br>
+    <a href="https://arxiv.org/abs/1903.12261" target="_blank" rel="noopener">arxiv.org/abs/1903.12261</a></div>
+    <div class="ref-item">Xie et al. (2024) — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>·当前 computer-use agent 评测主流环境之一<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Yan et al. (2023) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>·与 OSWorld 互补的网页 agent benchmark<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Hong et al. (2024) — <em>CogAgent: Visual Language Model for GUI Agents</em>·MLLM-based GUI grounding 代表工作之一<br>
+    <a href="https://arxiv.org/abs/2312.08914" target="_blank" rel="noopener">arxiv.org/abs/2312.08914</a></div>
+    <div class="ref-item">Anthropic (2024) — <em>Computer Use Capability for Claude</em>·工业界推动 computer-use agent 落地的标志性产品<br>
+    <a href="https://www.anthropic.com/news/3-5-models-and-computer-use" target="_blank" rel="noopener">anthropic.com/news/3-5-models-and-computer-use</a></div>
+    <div class="ref-item">Liu et al. (2026) — <em>When the Manual Lies (MCP-TDP)</em>·与 AgentHijack 互补的"有意攻击"侧 benchmark<br>
+    <a href="https://arxiv.org/abs/2605.24069" target="_blank" rel="noopener">arxiv.org/abs/2605.24069</a></div>
+    <div class="ref-item">Liu et al. (2024) — <em>AgentBench: Evaluating LLMs as Agents</em>·当前主流 agent 评测 baseline 之一<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>9 configurable common corruptions</strong>——首次为 computer-use agent 给出"<em>类 ImageNet-C 风格</em>"的可参数化 corruption 矩阵。</li>
+      <li><strong>"轻度腐蚀即可显著退化"</strong>——论文摘要明确指出，即使是非对抗、非恶意的扰动，frontier agent 表现也会塌方。</li>
+      <li><strong>AgentHijack-Agent onlooker 设计</strong>——把环境检查从步内逻辑挪到外部 meta-agent，开创"旁观者 = sanity check" 范式。</li>
+      <li><strong>开源完整三件套：code + environment + baseline + data</strong>——是直接拿来作 benchmark 基线的最佳产物形态。</li>
+      <li><strong>ICML 2026 accepted</strong>——和今日 Agent Safety 报告的 Evo-Attacker（ACL 2026 main）一起，反映 2026 顶会对 agent benchmark 的高度认可。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AgentHijack 的"<strong>onlooker</strong>" 与今日 #1 Harness 报告的"<em>verification layer + governance layer</em>"完全对得上——onlooker 就是 verification 层的具体实现形态。这给了你毕设答辩一个很妙的横向类比："<em>就像 computer-use agent 需要 onlooker 检查环境，KV-cache 系统也需要一个旁观者去监控双水位线、热缓存命中率与卸载收益是否退化</em>"——你可以把 prefetcher 的元监控写得比工程实现更高一个抽象层。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>"<strong>无意干扰</strong>"是对 agent skills safety 研究的一次重要"扩域"——它告诉防御方：你的 guardrail 不能只防恶意 prompt，<em>真实部署里的安全事故大多由"无意环境腐蚀 + 模型不稳健"共同造就</em>。把今天 #1 Agent Safety 的 Evo-Attacker（恶意攻击）+ AgentHijack（无意腐蚀）放在一起，构成 safety 训练 / 评测的最小完备 corpus。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击主题）</div>
+        <p>这是 2026 年值得直接抄进任何"agent benchmark 综述"的工作。<strong>9 类 corruptions × 多桌面任务 × frontier MLLM</strong> 三轴矩阵 + onlooker 防御框架——可以直接成为你 benchmark 方向论文的核心 figure。Q.md 里如果有评审追问"你的 benchmark 怎么验证 generalization？"，可以直接引用 AgentHijack 的 corruption 配置作为"环境腐蚀通用性"的证据。把它和昨日 PoisonForge / Boiling the Frog 三者纵向比较，就形成"<em>训练 / 多轮 / 环境</em>"三面并立的 benchmark 全景图。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>MCP-TDP Security Benchmark</strong>·32 case · 6 risk · 8 LLM · GPT-4o 高风险 ASR 近 100%<br>
+      <a href="https://arxiv.org/abs/2605.24069" target="_blank" rel="noopener">arxiv.org/abs/2605.24069</a></li>
+      <li><strong>SkillEvolBench</strong>·把"经验复用 → 技能形成"做成 180 任务 6 环境 benchmark<br>
+      <a href="https://arxiv.org/abs/2605.24117" target="_blank" rel="noopener">arxiv.org/abs/2605.24117</a></li>
+      <li><strong>Personalize-then-Store</strong>·long-horizon agent 的个人化记忆 benchmark<br>
+      <a href="https://arxiv.org/abs/2605.25535" target="_blank" rel="noopener">arxiv.org/abs/2605.25535</a></li>
+      <li><strong>PoisonForge（5-25 #2 报告）</strong>·1% 中毒预算 4 维参数化击穿 11/12 模型<br>
+      <a href="2026-05-25-2.html">benchmark/2026-05-25-2.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.25707" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.25707v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.25707" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://icml.cc/Conferences/2026" target="_blank" rel="noopener">ICML 2026 官网</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-26 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.25707<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">arxiv.org/abs/2605.25707</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

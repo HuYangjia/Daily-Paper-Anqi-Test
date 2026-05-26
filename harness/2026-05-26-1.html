@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-26 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "·"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-26 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 26 日 · Harness Engineering · 把"harness"从工程缩写升级为可扩展研究范式</div>
+  <h1>From Model Scaling to System Scaling：当模型扩展见顶时，应该改为"<em>scaling the harness</em>"——把执行层（记忆 / 上下文 / 技能路由 / 编排 / 验证 / 治理）作为一等设计与评测对象</h1>
+  <div class="en-title">From Model Scaling to System Scaling: Scaling the Harness in Agentic AI</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">Scaling the Harness</a><span class="winner-badge">今日选定</span></td>
+          <td>position paper · agent harness 七大组件 · CheetahClaws 参考实现 · vs Claude Code / OpenClaw</td>
+          <td>arXiv 2605.26112（Shangding Gu）2026-05-25</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.23950" target="_blank" rel="noopener">Stop Comparing LLM Agents Without Disclosing the Harness</a></td>
+          <td>position paper · Binding Constraint Thesis · variance decomposition · 评测披露标准</td>
+          <td>arXiv 2605.23950（Y. Zhang et al.）2026-05-07</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.24539" target="_blank" rel="noopener">DemoEvolve</a></td>
+          <td>demonstration-bootstrapped harness evolution · Liar's Dice / Balatro · 长程稀疏反馈</td>
+          <td>arXiv 2605.24539（Lirong Che 等）2026-05-23</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.24213" target="_blank" rel="noopener">Towards Evaluation Engineering</a></td>
+          <td>ML evaluation harnesses 实证研究 · 工业实践经验 · 工程角度 harness</td>
+          <td>arXiv 2605.24213（Z. Zhao 等）2026-05-23</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.25665" target="_blank" rel="noopener">Meta-Engineering Harnesses</a></td>
+          <td>contract-driven adversarial verification · early-defect harness · AI-native software</td>
+          <td>arXiv 2605.25665（S. Sengupta 等）2026-05-25</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.25045" target="_blank" rel="noopener">AION</a></td>
+          <td>time series harness · next-generation tasks · 实践向 harness</td>
+          <td>arXiv 2605.25045（T. Zhan 等）2026-05-24</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>From Model Scaling to System Scaling: Scaling the Harness in Agentic AI</span></div>
+      <div class="meta-item"><label>中文标题</label><span>从模型扩展到系统扩展：在 agentic AI 中扩展"harness"</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Shangding Gu（独著）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-25（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG · agentic AI · system design · evaluation</span></div>
+      <div class="meta-item"><label>性质</label><span>Position paper · Research agenda · Reference implementation</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.26112" target="_blank" rel="noopener">arxiv.org/pdf/2605.26112</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.26112v1" target="_blank" rel="noopener">arxiv.org/html/2605.26112v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.26112" target="_blank" rel="noopener">10.48550/arXiv.2605.26112</a></div>
+      <div class="meta-item"><label>核心定位</label><span>position paper + reference harness（CheetahClaws）+ 与 Claude Code / OpenClaw 对照</span></div>
+      <div class="meta-item"><label>开源状态</label><span>论文摘要明确指出 CheetahClaws 是 Python-native reference harness，链接随论文一同公开</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 "<strong>harness</strong>" 从工程缩写升格为<em>可扩展、可评测、可治理</em>的一等研究对象——并给出由 <strong>七大组件 + 三大瓶颈 + 六类评测维度</strong> 构成的 system-scaling 研究议程。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>本文研究 agentic AI 中的下一个主要瓶颈，即 <strong>系统扩展（system scaling）</strong>，而非单一的模型扩展：围绕 foundation model 设计可审计、持久、模块化、可验证的体系结构。我们把这一转向称为 "<em>scaling the harness</em>"——把环绕 foundation model 的结构化执行层视为<strong>一等设计、评测和优化对象</strong>。</p>
+    <p>尽管最近的大语言模型已经让 agent 可以使用工具、检索信息、维护记忆和执行长程工作流，但当前的评测仍然以模型为中心，往往把 agent 简化为 final-task success，而把记忆、检索、工具使用、编排、验证、治理这些都当作次要实现细节。这种框架越来越不够用，因为 agent 的性能涌现自 <strong>foundation model、记忆基质、上下文构造器、技能路由层、编排循环、验证与治理层</strong> 之间的交互。它们共同构成 <em>agent harness</em>，把模型能力翻译成长程 agent 行为。</p>
+    <p>我们通过三个核心瓶颈研究 scaling the harness：<strong>上下文治理（context governance）、可信记忆（trustworthy memory）和动态技能路由（dynamic skill routing）</strong>，以及协调和约束它们的编排和治理机制。我们进一步勾勒了 <strong>harness-level benchmark</strong> 的研究议程，超越 one-shot 任务成功，去衡量轨迹质量、记忆卫生、上下文效率、通信保真度、验证成本以及随时间的安全演化。</p>
+    <p>为使讨论具体化，我们开发了 <strong>CheetahClaws</strong> —— 一个 Python-native 参考 harness，并把它与 <strong>Claude Code、OpenClaw</strong> 进行对比。我们的核心主张是：未来 agentic AI 的进步将<em>同样依赖系统设计</em>，而不只是更强的 foundation model。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（七大组件 · 三大瓶颈 · 六大评测维度）</div>
+    <p><strong>问题背景：</strong>2025-2026 上半年的 agent 评测有一个隐性的"模型独裁"——所有数字（SWE-bench resolution rate、AgentBench score、WebArena success）都只看 final-task success，把记忆错配、上下文越界、技能路由失败、工具调用泄露、轨迹被污染等问题统统压扁到一个标量。这种模型为中心的评测在 GPT-5.4、Claude Opus 4.6、Gemini 3.1 这种 frontier model 之间几乎已经测不出差距，<em>性能差距实际来自 harness 而非模型</em>——这与今日候选 #2（Y. Zhang et al. 的 <a href="https://arxiv.org/abs/2605.23950" target="_blank" rel="noopener">"Binding Constraint Thesis"</a>）一致。本文是对这一现象的系统性回应。</p>
+
+    <p><strong>七大组件视角：</strong>论文把 agent harness 分解为 7 个一等组件——</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>组件</th><th>角色</th><th>scaling 维度</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Foundation model</td><td>核心策略</td><td>权重 / 推理 / 工具调用能力</td></tr>
+        <tr><td>Memory substrate</td><td>持久状态</td><td>容量、写入纪律、回收节奏、抗污染</td></tr>
+        <tr><td>Context constructor</td><td>请求级注入</td><td>token 预算、结构化拼装、来源治理</td></tr>
+        <tr><td>Skill-routing layer</td><td>动态分派</td><td>技能粒度、路由触发器、灰度策略</td></tr>
+        <tr><td>Orchestration loop</td><td>多步控制</td><td>计划 / 重试 / 中断 / 收尾的 deterministic 度</td></tr>
+        <tr><td>Verification layer</td><td>自动验证</td><td>断言粒度、ground truth 形态、cost-of-correctness</td></tr>
+        <tr><td>Governance layer</td><td>策略执行</td><td>Allow-list / Deny-list / 审计 / 审批 / 合规</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>三大核心瓶颈：</strong>论文在 7 个组件中圈出三个最受瓶颈牵制的——<strong>context governance（上下文治理）、trustworthy memory（可信记忆）、dynamic skill routing（动态技能路由）</strong>。这三者的共同点是：它们都不是模型权重决定的，而是<em>由 harness 设计者直接控制</em>。</p>
+
+    <p><strong>六大评测维度：</strong>这是论文最有 actionable 价值的部分——把 harness benchmark 从"final-task success"展开为：</p>
+
+    <ul class="point-list">
+      <li><strong>轨迹质量（trajectory quality）</strong>：每一步是不是无浪费、可解释、可追踪。</li>
+      <li><strong>记忆卫生（memory hygiene）</strong>：写入是否最小化、是否及时遗忘、是否抗污染。</li>
+      <li><strong>上下文效率（context efficiency）</strong>：token 预算下信息密度、prompt 重复率、冷启动成本。</li>
+      <li><strong>通信保真（communication fidelity）</strong>：跨 agent / 跨工具传递信息是否丢失、是否被歪曲。</li>
+      <li><strong>验证成本（verification cost）</strong>：每步断言所付出的额外 inference / 工具调用 / 时间。</li>
+      <li><strong>安全演化（safe evolution over time）</strong>：harness 自我演化时不退化、不引入新缺口。</li>
+    </ul>
+
+    <p><strong>CheetahClaws 参考实现：</strong>论文不止于 position-paper 层面——它给出了一个 Python-native reference harness CheetahClaws，并和两个工业 harness（<a href="https://www.anthropic.com/news/claude-code" target="_blank" rel="noopener">Claude Code</a>、OpenClaw）做横向对比，把抽象的 scaling 主张落到可对照的代码骨架上。这种"<em>论文 + 参考实现 + 工业 baseline</em>"三件套是当前 agent 系统研究的最高完整度形态，也是它能在六大维度全部高于今日其他候选的关键。</p>
+
+    <p><strong>与"Stop Comparing LLM Agents"（候选 #2）的关系：</strong>Y. Zhang 等的 Binding Constraint Thesis 是这篇论文的实证基础——它通过 control-theoretic 形式化和 variance decomposition 论证 harness 引致的方差经常超过模型引致的方差，甚至会发生 ranking reversal。<em>本文则是把那个观察做成了完整的 research agenda</em>。两篇可以视作姊妹论文。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">本文涉及的关键工作（附链接）</div>
+    <div class="ref-item">Yunbei Zhang et al. (2026) — <em>Stop Comparing LLM Agents Without Disclosing the Harness</em>·Binding Constraint Thesis 与本文为姊妹论文<br>
+    <a href="https://arxiv.org/abs/2605.23950" target="_blank" rel="noopener">arxiv.org/abs/2605.23950</a></div>
+    <div class="ref-item">Anthropic (2025) — <em>Claude Code</em>·本文用作工业 harness baseline 之一<br>
+    <a href="https://www.anthropic.com/news/claude-code" target="_blank" rel="noopener">anthropic.com/news/claude-code</a></div>
+    <div class="ref-item">Jimenez et al. (2024) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>·当前最常被 harness 演练的长程任务集<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Yang et al. (2024) — <em>SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>·"接口即能力"的早期实证<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">Mialon et al. (2023) — <em>GAIA: a benchmark for General AI Assistants</em>·long-horizon agent 评测早期奠基工作<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·model-centric agent 评测的代表<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">Ning et al. (2026) — <em>Code as Agent Harness</em>·我们 5-25 #1 报告的 harness 综述<br>
+    <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>7 大组件 + 3 大瓶颈 + 6 大评测维度</strong>——把 harness 研究从模糊的工程概念变成可枚举、可对照的 schema。</li>
+      <li><strong>CheetahClaws Python-native reference harness</strong>——首个明确以"<em>scaling 研究对象</em>"为定位的开源 harness，可与 Claude Code、OpenClaw 直接横评。</li>
+      <li><strong>"模型为中心评测不再够用"</strong>——明确把 final-task success 单一指标视作 system-scaling 的最大障碍，呼应今日候选 #2 的 variance decomposition。</li>
+      <li><strong>研究议程级路线图</strong>——为 harness benchmark 列出"trajectory quality / memory hygiene / context efficiency / communication fidelity / verification cost / safe evolution"六个一等指标，可直接被下游 benchmark 论文引用。</li>
+      <li><strong>Position paper × reference impl × 工业 baseline 三件套</strong>——目前在 harness 范畴里完整度最高的研究产出形态。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>这是迄今最完整的 harness 研究议程。它把"harness"明确分成 <strong>memory substrate / context constructor / skill-routing layer</strong> 三个最 KV-cache 友好的子系统——而你毕设的 <em>"稀疏注意力 KV-cache 卸载 + 双水位线 GPU 热缓存 + CNN/Linear prefetcher"</em> 工作恰好可以贴在 memory substrate 这一层。论文用"<strong>memory hygiene</strong>"作为评测维度，给了你一个绝佳的论文框架——把 LongBench-v2 上的 hit rate / bandwidth / 取胜窗口都重新包装成"<em>harness-level memory hygiene 指标</em>"，比在毕设答辩里只讲"系统优化"高一个抽象层。Q.md 评审里对"为什么不直接看 latency"的质疑，也可以反引这篇论文的"final-task success 不再够用"作为 first principle 答辩弹药。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>论文的"<strong>safe evolution over time</strong>"维度直接命中 Agent Skills Safety 的核心问题——技能、记忆、context 的演化往往悄悄越过 guardrail，且单步指标看不出来。把昨日 #1 的 SafeHarbor（分层 guardrail）+ 昨日 #2 的 TTT-Undermines-Safety 放进 CheetahClaws 的 governance layer 来评估，可以构成一个 self-contained "<em>safety-aware harness</em>"原型——这是当前安全方向最缺的产物形态。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>"6 大评测维度" 已经构成完整 benchmark 论文的骨架。把每一维度展开为 1～2 个具体测试集（trajectory quality 用 SWE-bench 的轨迹标注、memory hygiene 用注入式污染、context efficiency 用 token utility curve 等等），即可造出一个"<em>harness-level safety benchmark</em>"。这恰好补上 5-25 #2 PoisonForge 这种"单维 attack benchmark"之外的系统级评测空白。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Stop Comparing LLM Agents Without Disclosing the Harness</strong>·Binding Constraint Thesis · variance decomposition<br>
+      <a href="https://arxiv.org/abs/2605.23950" target="_blank" rel="noopener">arxiv.org/abs/2605.23950</a></li>
+      <li><strong>DemoEvolve</strong>·demonstration-bootstrapped harness evolution（Liar's Dice / Balatro 长程稀疏反馈）<br>
+      <a href="https://arxiv.org/abs/2605.24539" target="_blank" rel="noopener">arxiv.org/abs/2605.24539</a></li>
+      <li><strong>Towards Evaluation Engineering</strong>·实证调研工业界的 ML evaluation harness 实践<br>
+      <a href="https://arxiv.org/abs/2605.24213" target="_blank" rel="noopener">arxiv.org/abs/2605.24213</a></li>
+      <li><strong>Code as Agent Harness（5-25 #1 报告）</strong>·43 作者综述 · 三层组织 / 七大应用域<br>
+      <a href="2026-05-25-1.html">harness/2026-05-25-1.html</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.26112" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.26112v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.26112" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-26 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.26112<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
