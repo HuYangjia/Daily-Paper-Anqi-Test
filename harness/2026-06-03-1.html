@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-03 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 3 日 · Harness Engineering · 把"技能选择"从相似度匹配升级为类型化图结构</div>
+  <h1>SkillDAG：用类型化有向图把 LLM 大规模 skill library 的"选择问题"重写为可演化结构检索——ALFWorld 67.1% 成功率（+12.8 pp）/ Ret@K 65.5→78.2 / 池子扩 10× 仍鲁棒</h1>
+  <div class="en-title">SkillDAG: Self-Evolving Typed Skill Graphs for LLM Skill Selection at Scale</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">SkillDAG: Self-Evolving Typed Skill Graphs for LLM Skill Selection at Scale</a><span class="winner-badge">今日选定</span></td>
+          <td>类型化技能图 · 推理时可调用结构检索 · propose-then-commit 演化 · 池子扩 10× 鲁棒</td>
+          <td>arXiv 2606.03056（Tong Bai / Zhenglin Wan / Pengfei Zhou / Xingrui Yu / Wangbo Zhao / Yang You / Ivor W. Tsang）2026-06-02</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.02863" target="_blank" rel="noopener">Don't Gamble, GAMBLe: An Analytical Framework for AI-Driven Research Systems</a></td>
+          <td>ADRS 行为分解分析框架 · 评估机制设计 · 可解释 ML pipeline harness</td>
+          <td>arXiv 2606.02863（Marquita Ellis 等）2026-06-02</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03036" target="_blank" rel="noopener">TriEval: A Resource-Efficient Pipeline for LLM Bias, Toxicity, and Truthfulness Assessment</a></td>
+          <td>资源高效评估管道 · 三维一体（bias/toxicity/truthfulness）· 多模型多参数</td>
+          <td>arXiv 2606.03036（Akshatha Srikantha 等）2026-06-02</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03103" target="_blank" rel="noopener">DeskCraft: Benchmarking Desktop Agents on Professional Workflows and HITL Collaboration</a></td>
+          <td>桌面 GUI 专业流程 benchmark · 交互协议 · HITL 协作</td>
+          <td>arXiv 2606.03103（Wenkai Wang 等）2026-06-02</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03144" target="_blank" rel="noopener">GTBench: A Curriculum-Grounded Benchmark for LLMs as Mathematical Research Assistants in Graph Theory</a></td>
+          <td>课程化数学评估框架 · 混合协议 · 长程研究助理</td>
+          <td>arXiv 2606.03144（Noujoud Nader 等）2026-06-02</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.02866" target="_blank" rel="noopener">When Helping Hurts and How to Fix It: Multi-Agent Debate for Data Cleaning</a></td>
+          <td>多 agent debate 框架 · 数据清洗评估协议 · 反思 harness</td>
+          <td>arXiv 2606.02866（Chirag Parmar 等）2026-06-01</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SkillDAG: Self-Evolving Typed Skill Graphs for LLM Skill Selection at Scale</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SkillDAG：面向大规模 LLM 技能选择的自演化类型化技能图</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Tong Bai</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Zhenglin Wan, Pengfei Zhou, Xingrui Yu, Wangbo Zhao, Yang You, Ivor W. Tsang</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-02（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · LLM agent · skill retrieval · graph reasoning</span></div>
+      <div class="meta-item"><label>性质</label><span>方法论文 · typed DAG IR · runtime callable interface</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.03056" target="_blank" rel="noopener">arxiv.org/pdf/2606.03056</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.03056v1" target="_blank" rel="noopener">arxiv.org/html/2606.03056v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.03056" target="_blank" rel="noopener">10.48550/arXiv.2606.03056</a></div>
+      <div class="meta-item"><label>主要测试床</label><span>ALFWorld + SkillsBench · MiniMax-M2.7 / gpt-5.2-codex</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<strong>大规模技能选择</strong>"从 <em>embedding 相似度匹配</em>提升为<em>类型化有向图上的结构检索</em>——以 propose-then-commit 协议让图在执行中累积可信结构。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当 LLM agent 采用大型技能库时，挑选合适的子集成为<strong>结构问题，而非相似度匹配问题</strong>：技能之间彼此<em>依赖、冲突、特化或重复</em>，这种结构既看不见于全量枚举，也看不见于 embedding 相似度。</p>
+    <p>我们提出 <strong>SkillDAG</strong>，把 skill 间关系建模为<em>类型化有向图</em>，并对 LLM agent 暴露为<em>推理时可调用的结构检索接口</em>——它在执行过程中被查询和演化，而不是预先固定到检索管道里。每次查询都返回三类信号：向量匹配、类型化邻居（typed-edge neighbors）、冲突信号（conflict signals）；同时通过 <em>propose-then-commit 协议</em>，agent 可以注册由"实际执行后果"支撑的边，使图结构跨多个 episode 不断累积。</p>
+    <p>在 ALFWorld 与 SkillsBench / MiniMax-M2.7 上，SkillDAG 取得 <strong>67.1% 成功率 / 27.3% reward</strong>，比已知最强 Graph-of-Skills 基线高 <strong>+12.8 / +8.6 pp</strong>；该优势可迁移到 gpt-5.2-codex；本征 SkillsBench Ret@K 在匹配 query 下 <strong>65.5 → 78.2</strong>。这些增益可追溯到两条独立机制：(i) 候选排序在 pool 扩 10× 时仍鲁棒，而固定的 seeding-diffusion 管道会退化；(ii) 集合单调的在线编辑扩大了 ground-truth recall，且不会驱逐已命中条目。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（结构问题立论 / 类型化 DAG IR / propose-then-commit / 鲁棒性来源）</div>
+
+    <p><strong>问题再框架：从相似度到结构。</strong>过去一年（2025-2026）"agent skill library"是 harness 工程的高速增长方向：MetaGPT skill stash、SkillSmith、AgentFloor 都把"<em>把会做的事情存起来留给下次</em>"作为基本叙事。但当 skill 数从几十涨到上千时，<strong>embedding 相似度</strong>就开始失效——本文给出了三种典型失败：(a) <em>依赖（dependency）</em> skill A 必须先做 B 才能跑，但 embedding 上 A、B 远离；(b) <em>冲突（conflict）</em> A 与 C 互相覆盖输出，相似度反而很高；(c) <em>特化与重复（specialize/duplicate）</em> A 与 D 几乎是同一件事，但 D 多了个边界条件。这三类关系都不是<em>相似度可观测</em>，只能靠"执行后果"显式记录——这就是 SkillDAG 立论的核心。</p>
+
+    <p><strong>类型化有向图 IR。</strong>SkillDAG 形式化为四元组 <em>G = (V, E, T, σ)</em>：节点 V 是技能；边 E 是有向关系；类型 T = {DEPENDS_ON, CONFLICTS_WITH, SPECIALIZES, DUPLICATES, OVERRIDES …}；σ 是边的可信度（来自历次执行回放）。<strong>关键设计</strong>：图本身不是离线一次性构造的，而是 agent 推理时可调用的"<em>检索 + 编辑</em>"接口（agent-callable structural retrieval interface），与今日 #1 序列里 5-26 SkillOpt、5-25 Code as Agent Harness 的"<em>code-as-IR</em>"立论遥相呼应。</p>
+
+    <p><strong>检索原语：每次返回 3 路信号。</strong>当 agent 用 query <em>q</em> 检索时，SkillDAG 同时输出：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>信号</th><th>语义</th><th>下游用法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>向量匹配 (vector matches)</td><td>语义近邻 top-k 候选</td><td>常规相似度 baseline，与历史 RAG 兼容</td></tr>
+        <tr><td>类型化邻居 (typed-edge neighbors)</td><td>沿 DEPENDS_ON / SPECIALIZES 等边扩展</td><td>补全先决条件、找到更精准的特化版本</td></tr>
+        <tr><td>冲突信号 (conflict signals)</td><td>沿 CONFLICTS_WITH / OVERRIDES 边告警</td><td>排除会互相打架的组合，避免回路</td></tr>
+      </tbody>
+    </table>
+
+    <p>这意味着 agent 一次查询不是拿到"<em>top-k similar</em>"列表，而是拿到一个"<em>带健康检查的 frontier</em>"——这是与传统 RAG 最根本的区别。</p>
+
+    <p><strong>Propose-then-commit 协议（图自演化的关键）。</strong>新边不是 LLM 自由提议就能加入，而要走两步：(1) <em>propose</em>：agent 在执行时产生候选边，附带前提与后果；(2) <em>commit</em>：必须有"<em>execution-backed evidence</em>"（执行结果与预期一致），才会被持久化进图。这点关键——它把"<em>幻觉新增的虚假关系</em>"挡在图外，且天然带上 provenance（每条边都能追到一次具体执行）。这与 5-19 ANNEAL（FDKA + governed 符号补丁）的"<em>有审计的图编辑</em>"是同一审稿人偏好——结构修改要有外部凭证。</p>
+
+    <p><strong>鲁棒性的两个来源。</strong>论文显式分析了 SkillDAG 增益的"<em>原因</em>"：(i) <strong>候选排序对池子规模的鲁棒性</strong>——把 skill pool 扩大 10× 时，固定 seeding-diffusion 管道（即"先选种子再传播"的传统图检索）会退化，而 SkillDAG 的 typed-edge expansion 不退化，因为它始终沿"语义有意义"的边走；(ii) <strong>集合单调的在线编辑</strong>——commit 一条新边只会扩大 ground-truth recall，不会驱逐已命中条目（这与 LRU/类 LRU cache 截然相反），意味着 SkillDAG 是<em>纯增益</em>的演化结构。</p>
+
+    <p><strong>与昨日 5-28 #1 的连接。</strong>5-28 #1 提出的 <em>agent runtime layer</em> 四原语 <code>observe / score / predict / act</code>，SkillDAG 恰好是 <code>predict</code> 与 <code>act</code> 之间的<em>共享 IR</em>——下一个 skill 不再是"<em>下一个最像的 token</em>"，而是"<em>沿类型化边可达的下一个 frontier</em>"。把两者合起来看，是过去 2 周 harness 方向"<em>把 IR 从 token / vector 抬升到 typed graph</em>"的连续演进。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Khattab et al. — <em>DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines</em>·skill-as-module 编程范式起点<br>
+    <a href="https://arxiv.org/abs/2310.03714" target="_blank" rel="noopener">arxiv.org/abs/2310.03714</a></div>
+    <div class="ref-item">[2] Wang et al. (2024) — <em>Voyager: An Open-Ended Embodied Agent with Large Language Models</em>·skill library 经典工作 / ALFWorld 基线<br>
+    <a href="https://arxiv.org/abs/2305.16291" target="_blank" rel="noopener">arxiv.org/abs/2305.16291</a></div>
+    <div class="ref-item">[3] Shridhar et al. (2020) — <em>ALFWorld: Aligning Text and Embodied Environments for Interactive Learning</em>·主测试床<br>
+    <a href="https://arxiv.org/abs/2010.03768" target="_blank" rel="noopener">arxiv.org/abs/2010.03768</a></div>
+    <div class="ref-item">[4] Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·skill 调用范式奠基<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[5] Chen et al. (2024) — <em>Agent S: Open Agentic Framework that Uses Computers Like a Human</em>·上层 skill 调用框架<br>
+    <a href="https://arxiv.org/abs/2410.08164" target="_blank" rel="noopener">arxiv.org/abs/2410.08164</a></div>
+    <div class="ref-item">[6] Bhakim et al. (2026) — <em>ANNEAL: Federated Diagnostic Knowledge Aggregation for Recurring Failure</em>·governed 图补丁先例<br>
+    <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></div>
+    <div class="ref-item">[7] Ning et al. (2026) — <em>Code as Agent Harness</em>·43 作者综述 · 把 code 立成 IR<br>
+    <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></div>
+    <div class="ref-item">[8] Gu (2026) — <em>From Model Scaling to System Scaling</em>·position paper · 把 harness 立成研究对象<br>
+    <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+    <div class="ref-item">[9] Zhang et al. (2026) — <em>A Policy-Driven Runtime Layer for Agentic LLM Serving</em>·observe/score/predict/act 四原语<br>
+    <a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">arxiv.org/abs/2605.27744</a></div>
+    <div class="ref-item">[10] Lewis et al. (2020) — <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em>·RAG 起源 / SkillDAG 否定的 baseline<br>
+    <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">arxiv.org/abs/2005.11401</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>ALFWorld success 67.1% / SkillsBench reward 27.3%</strong>——MiniMax-M2.7 上超过最强 Graph-of-Skills baseline +12.8 / +8.6 pp。</li>
+      <li><strong>Ret@K 65.5 → 78.2（+12.7 pp）</strong>——在匹配 query 下，本征技能召回质量大幅提升，证明增益不止"<em>外部任务调优</em>"。</li>
+      <li><strong>跨模型迁移有效</strong>——优势从 MiniMax-M2.7 迁到 gpt-5.2-codex 仍保持，说明 SkillDAG 是<em>模型无关</em>的 IR。</li>
+      <li><strong>Pool 扩 10× 鲁棒</strong>——固定 seeding-diffusion 管道在此条件下退化，SkillDAG 候选排序保持稳定。</li>
+      <li><strong>集合单调编辑</strong>——commit 新边只扩大 ground-truth recall，不驱逐先前命中——纯增益累积。</li>
+      <li><strong>查询返回 3 路信号</strong>——vector matches + typed-edge neighbors + conflict signals 一次给齐，告别"<em>top-k similar</em>"单维信号。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>SkillDAG 与你毕设"<strong>稀疏注意力 KV-cache 预取 + 双水位线 GPU 热缓存</strong>"在 IR 抽象上有可借鉴的位移：把"<em>下一段最可能命中的 token 块</em>"从相似度（embedding）抬到<em>类型化有向图</em>——这正是预取问题的二阶版本。<strong>建议</strong>：在毕设 Discussion 引入 SkillDAG 的"<em>typed-edge expansion</em>"作为对照组，论证你的 prefetcher 也是把"相似性预取"升级为"结构性预取"——agent role / session_id / system prompt 是天然的类型化边。这与 5-28 #1 提出的 <code>predict</code> 原语共同构成"<em>结构性 prefetch</em>"路线。同时 propose-then-commit 协议给"<em>预取候选必须由真实命中验证</em>"提供了直接借鉴——你毕设 Q.md 关于"预取与缓存数据一致性"的争议，可以引用此协议作为 reference 形式化解。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>类型化边里 <em>CONFLICTS_WITH</em>、<em>OVERRIDES</em> 是天然的"<em>safety 拒绝信号</em>"——SafeHarbor / SkillSmith / SKILL.md 的"<em>不安全 skill 不能调用</em>"约束，可以一一映射成 SkillDAG 上的 typed edges。这给"<em>policy-as-graph</em>"提供了可执行的载体：拒绝不再是 prompt 字符串，而是<em>可被检索的结构化反例</em>。结合今日方向 #2 的 <em>compliance bias</em> 与<em>三类 abstention gap</em>，SkillDAG 的 conflict signals 恰好可以作为 specification gap / verification gap / authority gap 的<em>结构化承载体</em>——这是把"<em>该不该做</em>"问题图结构化的钥匙。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>SkillDAG 暴露的<em>本征评测维度</em> Ret@K 是一个"<em>检索系统正确性</em>"的可独立测量量——这与 5-28 #1 的命中率 / TTFT / 吞吐三联可以拼成"<em>性能 + 行为</em>"双维 benchmark。<strong>建议</strong>：未来 agent benchmark 应在每个任务上同时报告 task-success 与 retrieval-correctness（沿真实 typed-edge 的命中率）——这能区分"<em>偶然走对</em>"与"<em>结构上正确</em>"。这与今日 #3 的"benchmark 污染检测可靠性差距"形成对仗——前者要求 benchmark 自身是 typed graph，后者要求 benchmark 数据来源是 verifiable provenance。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>A Policy-Driven Runtime Layer (5-28 #1)</strong>·observe/score/predict/act 四原语 · 与 SkillDAG 是<em>结构性预取</em>姊妹关系<br>
+      <a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">arxiv.org/abs/2605.27744</a></li>
+      <li><strong>From Model Scaling to System Scaling (5-26 #1)</strong>·把 harness 立成研究对象 · SkillDAG 是 L2 机制层落地<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>Code as Agent Harness (5-25 #1)</strong>·43 作者综述 · 与 SkillDAG 一同支撑"代码-图-runtime"三档 IR<br>
+      <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></li>
+      <li><strong>ANNEAL (5-19 #1)</strong>·governed 符号补丁 · propose-then-commit 协议的早期形态<br>
+      <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.03056" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.03056v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.03056" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-03 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.03056 + arxiv.org/html/2606.03056v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

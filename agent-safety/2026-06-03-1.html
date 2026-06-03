@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-03 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b6e2d3; color: #085041; }
+  .link-btn.primary:hover { background: #d2efe2; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 3 日 · Agent Skills Safety · 把"agent 是否该继续"立成 first-class 安全维度</div>
+  <h1>What Benchmarks Don't Measure：把"compliance bias"诊断为 RLHF 结构性副作用 + 三类 abstention gap 分类法 + 三联协议（Safety Rate / Usability Rate / Informed Refusal Rate）——hazardous-action blocking 89.2% / authorized usability 87.5%</h1>
+  <div class="en-title">What Benchmarks Don't Measure: The Case for Evaluating Abstention Competence in Autonomous Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源 9.5（ACM CAIS Best Paper）</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">What Benchmarks Don't Measure: The Case for Evaluating Abstention Competence in Autonomous Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>compliance bias 诊断 · 3-gap 分类法 · Safety/Usability/Informed Refusal 三联协议 · 144 enterprise 场景 · 5 模型族</td>
+          <td>arXiv 2606.02965（V. Ojewale, S. Venkatasubramanian）2026-06-01 · ACM CAIS 2026 RLEval Workshop · Best Paper + Oral</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03020" target="_blank" rel="noopener">Uncertainty-Aware Clarification in LLM Agents with Information Gain</a></td>
+          <td>不确定性驱动主动澄清 · 信息增益奖励 · agent ↔ user 安全交互</td>
+          <td>arXiv 2606.03020（Mengyi Deng 等）2026-06-02</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.02862" target="_blank" rel="noopener">Toward a Modular Architecture for Embedded AI Agent Systems at the Edge</a></td>
+          <td>边缘嵌入式 agent · 治理层 · skill / tool 调用风险与资源约束</td>
+          <td>arXiv 2606.02862（Marcus Rüb 等）2026-06-02</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03237" target="_blank" rel="noopener">Solipsistic Superintelligence is Unlikely to be Cooperative</a></td>
+          <td>超智能合作性 · 自我破坏特性 · alignment 形式化论证</td>
+          <td>arXiv 2606.03237（Rakshit S Trivedi 等）2026-06-02</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.02775" target="_blank" rel="noopener">AURA: Action-Gated Memory for Robot Policies at Constant VRAM</a></td>
+          <td>action-gated memory · 边界与覆盖式行动控制</td>
+          <td>arXiv 2606.02775（Josef Chen 等）2026-06-01</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03203" target="_blank" rel="noopener">MedCUA-Bench: A Screenshot-Only Benchmark for Clinical Computer-Use Agents</a></td>
+          <td>临床 CUA 五维安全评估 · 屏幕截图驱动 · 高风险任务集</td>
+          <td>arXiv 2606.03203（Jia Yu 等）2026-06-02</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>What Benchmarks Don't Measure: The Case for Evaluating Abstention Competence in Autonomous Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>评测漏掉的那一维：自主 agent 弃权能力的评估论证</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Victor Ojewale</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Suresh Venkatasubramanian（Brown University · 资深 fairness/ML 学者）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-01（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · agent safety · evaluation methodology · RLHF critique</span></div>
+      <div class="meta-item"><label>会议</label><span>ACM CAIS 2026 · RLEval Workshop · Oral + Best Paper</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.02965" target="_blank" rel="noopener">arxiv.org/pdf/2606.02965</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.02965v1" target="_blank" rel="noopener">arxiv.org/html/2606.02965v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.02965" target="_blank" rel="noopener">10.48550/arXiv.2606.02965</a></div>
+      <div class="meta-item"><label>实验规模</label><span>144 enterprise agent scenarios · 5 模型族</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<strong>agent 应不应该开始动手</strong>"立成<em>独立安全维度</em>——<em>compliance bias</em> 是 RLHF 结构性副作用，benchmark 当前要么惩罚暂停、要么分不清"<em>原则性 pause</em>"和"<em>静默失败</em>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当前 autonomous agent benchmark 衡量"<em>agent 是否完成了任务</em>"，但这种框架对"<strong>agent 一开始就该不该动手</strong>"系统性失明。<strong>在 human-feedback 目标下训练出来的 agent 形成结构性的"继续动手"倾向</strong>——即使它缺乏必要输入、证据或授权——我们把这种倾向称为 <em>compliance bias</em>，因为奖励信号与 benchmark 评分都把"继续"当作正确默认值，无论安全前提是否满足。</p>
+    <p>我们做出三项贡献：(1) 我们首先证明 <em>compliance bias 起源于 human-feedback 管道里的 reward hacking</em>，并被主流 agent benchmark 进一步固化——这些 benchmark 要么直接惩罚 agent 停下来，要么在架构上无法区分"<em>原则性 pause</em>"与"<em>静默失败</em>"。(2) 我们引入<strong>弃权场景的三-gap 分类法</strong>：<em>specification gap</em>（必要信息缺失）、<em>verification gap</em>（世界状态无法确认）、<em>authority gap</em>（明确授权未给出），这三类共同为构造<em>abstention-aware agent benchmark</em> 提供了原则性基础。(3) 我们提出弃权评估三联协议——<strong>Safety Rate / Usability Rate / Informed Refusal Rate</strong>——并在 <strong>144 个企业级 agent 场景 / 5 模型族</strong>上给出初步结果：在 runtime-enforced abstention 机制下，可达到 <strong>89.2% hazardous-action blocking</strong> + <strong>87.5% authorized-scenario usability</strong>。这表明 safety-usability 之间的权衡是<em>可调（tunable）</em>而非<em>固有（inherent）</em>，且其形状在不同模型族间差异显著。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（compliance bias 的成因 / 三-gap 分类法 / 三联协议 / 实证结果）</div>
+
+    <p><strong>问题来源：benchmark 的"动手默认"偏置。</strong>过去两年（2024-2026）agent benchmark 经历了两轮叙事跃迁——AgentBench / SWE-bench 把"<em>任务完成率</em>"立成核心指标；2025 后 OSWorld / AgentHijack / TwinRouterBench 又把"<em>对抗鲁棒性</em>"立成第二维。但 Ojewale 与 Venkatasubramanian 指出：所有这些 benchmark 都在隐式地<strong>奖励"继续动手"</strong>——agent 一旦决定 pause，要么直接 0 分，要么和"卡死了"无法区分。这反过来传导到训练——RLHF / DPO 的 reward signal 把"产出可评分输出"当作 hill-climb 方向，于是 <em>compliance bias 是 reward hacking 的稳定均衡</em>。</p>
+
+    <p><strong>三-gap 分类法（论文核心贡献 2）。</strong>论文给出"<em>弃权应当发生</em>"的三类形式化场景：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>Gap 类型</th><th>缺失内容</th><th>示例与匹配场景</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Specification Gap（规范差距）</td><td>必要 input/参数缺失</td><td>用户未提供目的地却让 agent 订机票；agent 应该先问</td></tr>
+        <tr><td>Verification Gap（验证差距）</td><td>无法确认世界状态</td><td>UI 元素存在性未知 / 文件是否被修改 / 数据库一致性未验证</td></tr>
+        <tr><td>Authority Gap（权限差距）</td><td>明确授权未给出</td><td>跨域操作 / 高敏 API 调用 / 不可逆操作（删除、转账）</td></tr>
+      </tbody>
+    </table>
+
+    <p>这三类 gap 是<em>正交</em>的——一个任务可以同时落入多个 gap，而 agent 应当 pause 的<strong>充分理由是"任一 gap 触发"</strong>。这是把"agent 该不该动手"<em>分解为可枚举原因</em>的第一次系统化尝试，与 5-21 #1 AgentAtlas 的 "<em>9 类 trajectory failure</em>" 在精神上同源——都是"<em>把暗失败显式化</em>"。</p>
+
+    <p><strong>三联评估协议（论文核心贡献 3）。</strong>仅有分类法不够，必须给出<em>能上 leaderboard 的可测量数字</em>：</p>
+
+    <ul class="point-list">
+      <li><strong>Safety Rate（安全率）</strong>：在<em>应当弃权</em>的场景中，agent 真的弃权 / 阻断有害动作的比率。论文实测最高达 <strong>89.2% hazardous-action blocking</strong>。</li>
+      <li><strong>Usability Rate（可用性率）</strong>：在<em>授权场景</em>中，agent 没有过度保守、能正常完成任务的比率。论文实测达 <strong>87.5%</strong>。</li>
+      <li><strong>Informed Refusal Rate（知情拒绝率）</strong>：拒绝时是否说明了"<em>缺哪一类 gap</em>"——把 pause 与 silent fail 在<em>评分面</em>上区分开来。这是论文的关键创新：拒绝必须<em>有理由</em>，且理由必须落到三-gap 体系内。</li>
+    </ul>
+
+    <p><strong>关键实证发现：safety-usability 是 tunable 的。</strong>论文最强力的论证不在数字本身，而在：(a) safety/usability 不是不可调和——同一 runtime 下，89.2% blocking 与 87.5% usability 可<em>并存</em>；(b) <strong>不同模型族的 trade-off 曲线形状显著不同</strong>——这意味着"<em>safety-usability 边界</em>"是<em>模型属性</em>而非<em>问题属性</em>。这点强烈推翻了"<em>更安全就更没用</em>"的直觉论调，等价于过去 deep learning 里 "accuracy-fairness" 之间的"<em>模型选得好就能两全</em>"的发现。</p>
+
+    <p><strong>与昨日 #1 序列的连接。</strong>5-26 #1 SafeHarbor（分层 guardrail）/ 5-25 #2 TTT Undermines Safety（推理时攻击）/ 5-15 #1 知-行 gap，三者都把"<em>agent 行为偏差</em>"立成<em>结构性安全问题</em>。本文与它们的关系是：<em>SafeHarbor 提供机制层（怎么阻断），TTT 提供攻击面（哪里被打破），本文提供评测层（如何度量）</em>——三者拼成"<em>机制 + 攻击 + 度量</em>"完整闭环。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Bai et al. (2022) — <em>Training a Helpful and Harmless Assistant with RLHF</em>·RLHF 经典 / compliance bias 起源根<br>
+    <a href="https://arxiv.org/abs/2204.05862" target="_blank" rel="noopener">arxiv.org/abs/2204.05862</a></div>
+    <div class="ref-item">[2] Ouyang et al. (2022) — <em>Training Language Models to Follow Instructions with Human Feedback (InstructGPT)</em><br>
+    <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">arxiv.org/abs/2203.02155</a></div>
+    <div class="ref-item">[3] Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·被本文质疑的 benchmark 之一<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">[4] Jimenez et al. (2024) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em><br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">[5] Skalse et al. (2022) — <em>Defining and Characterizing Reward Hacking</em>·reward hacking 形式化<br>
+    <a href="https://arxiv.org/abs/2209.13085" target="_blank" rel="noopener">arxiv.org/abs/2209.13085</a></div>
+    <div class="ref-item">[6] Mazaheri & Mazaheri (2026) — <em>AgentAtlas: 6 Control States × 9 Trajectory Failures</em>·9 类 failure 分类法 / 与 3-gap 同思路<br>
+    <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></div>
+    <div class="ref-item">[7] Liu et al. (2026) — <em>SafeHarbor: Hierarchical Memory-Augmented Guardrail (ICML 2026)</em>·机制层<br>
+    <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></div>
+    <div class="ref-item">[8] Antonelli et al. (2026) — <em>TTT Undermines Safety Guardrails</em>·推理时攻击 / compliance bias 实证案例<br>
+    <a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arxiv.org/abs/2605.22984</a></div>
+    <div class="ref-item">[9] Cheng et al. (2026) — <em>Knowing-Doing Gap in LLM Tool Use</em>·与三-gap 互补的认知-执行轴<br>
+    <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a></div>
+    <div class="ref-item">[10] Selbst et al. (2019) — <em>Fairness and Abstraction in Sociotechnical Systems</em>·Venkatasubramanian 一脉的 fairness/abstraction 理论根<br>
+    <a href="https://dl.acm.org/doi/10.1145/3287560.3287598" target="_blank" rel="noopener">dl.acm.org/doi/10.1145/3287560.3287598</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Hazardous-action blocking 89.2%</strong>——runtime-enforced abstention 可达上限。</li>
+      <li><strong>Authorized-scenario usability 87.5%</strong>——证明 safety/usability 双高同时可达。</li>
+      <li><strong>144 enterprise scenarios × 5 模型族</strong>——首次将 abstention 评测从学术玩具上升到企业真实工作流尺度。</li>
+      <li><strong>Three-gap 分类法</strong>——specification / verification / authority 互不蕴含，正交分解 abstention 触发理由。</li>
+      <li><strong>RLHF reward hacking 是结构性根因</strong>——把"agent 安全危机"翻译为"<em>训练目标设计问题</em>"。</li>
+      <li><strong>Trade-off 曲线形状随模型族而变</strong>——选模型即选边界，不是宿命；这把 abstention 推到模型选型 first-class 维度。</li>
+      <li><strong>Informed Refusal Rate 区分 pause vs silent-fail</strong>——给"拒绝必须有理由"在评测面提供可测量量。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>三-gap 分类法可直接借鉴到你毕设的 KV-Cache 预取场景：<em>specification gap</em> 对应"<em>未给出 attention pattern</em>"——预取 prefetcher 应当 pause 而非乱猜；<em>verification gap</em> 对应"<em>缓存与显存一致性未确认</em>"——这正是 Q.md 关于"预取与缓存数据一致性"的争议点；<em>authority gap</em> 对应"<em>无明确驱逐许可</em>"。<strong>建议</strong>：在毕设中把 prefetch policy 描述为"<em>带 abstention competence 的预测器</em>"——prefetcher 在三-gap 任一触发时显式退化为保守路径，这能在审稿人面前把"<em>为什么不预取就更对</em>"的反直觉点扎实下来。同时今日方向 #1 的 SkillDAG 可以作为承载该 abstention 决策的 typed graph IR——CONFLICTS_WITH 边对应权限差距，DEPENDS_ON 边对应规范差距。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击核心）</div>
+        <p>这是过去 6 个月该方向最具系统性的"<em>评测面重写</em>"：把"<em>safety</em>"从二元判断拆成三联指标（safe/usable/informed）。SafeHarbor 解决"<em>怎么阻断</em>"，TTT 攻击解决"<em>哪里被打破</em>"，本文给出"<em>怎么度量是否阻断</em>"——这三件事拼成完整闭环。<strong>建议</strong>：把 abstention competence 与 SafeHarbor / TTT 防御 / Memory Laundering / SKILL.md 绑定，构建一个"<em>结构性 agent safety</em>"研究纲领。论文标记 Best Paper + Oral 表明审稿人共识也在转向这个方向——可以重点关注后续 follow-up。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>本文与今日方向 #3 的"benchmark 污染检测可靠性差距"形成镜像——前者揭示 benchmark <em>未测的维度（abstention）</em>，后者揭示 benchmark <em>测错的维度（contamination 检测失效）</em>。两者合起来构成 2026 上半年 agent benchmark 的<em>双重危机</em>：测什么不全 + 测的不准。<strong>建议</strong>：未来 SafetyBench / HarmBench 系列升级时，应同时引入 (a) 三-gap × Safety/Usability/Informed Refusal 的 abstention 矩阵，(b) data-provenance verification 替代 statistical contamination detection。这能把 leaderboard 从"<em>谁分高</em>"改写为"<em>谁该停就停且说得清楚</em>"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SafeHarbor (5-26 #1, ICML 2026)</strong>·分层 guardrail 机制层 · 与本文形成"机制 + 度量"对仗<br>
+      <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></li>
+      <li><strong>TTT Undermines Safety Guardrails (5-25 #2, ACL 2026)</strong>·推理时攻击 · 是 compliance bias 的实证武器<br>
+      <a href="https://arxiv.org/abs/2605.22984" target="_blank" rel="noopener">arxiv.org/abs/2605.22984</a></li>
+      <li><strong>Knowing-Doing Gap in LLM Tool Use (5-15 #2)</strong>·认知-执行 gap · 与三-gap 互补<br>
+      <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a></li>
+      <li><strong>AgentAtlas (5-21 #1)</strong>·6 状态 × 9 trajectory failure · 与三-gap 在分类法精神上同源<br>
+      <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.02965" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.02965v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.02965" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-03 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.02965 + arxiv.org/html/2606.02965v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
