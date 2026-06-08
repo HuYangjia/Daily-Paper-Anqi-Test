@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-08 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0a4a3b; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b5e0d2; color: #0a4a3b; }
+  .link-btn.primary:hover { background: #d2eee2; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 8 日 · Safety Benchmark · 把 agent 评测从"<em>大纲式宏任务</em>"下沉到"<em>研究实习生级</em>"细颗粒度</div>
+  <h1>AARR / AARRI-Bench：把"扮演真正研究员"立成 frontier LLM × agentic harness 的全研究生命周期评测套件——最强配置 Mini-SWE-Agent + Claude Opus 4.7 仅 68.3% 成功率</h1>
+  <div class="en-title">Act As a Real Researcher: A Suite of Benchmarks Evaluating Frontier LLMs and Agentic Harnesses in Research Lifecycle</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.7</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">Act As a Real Researcher: AARR / AARRI-Bench for Frontier LLMs and Agentic Harnesses in Research Lifecycle</a><span class="winner-badge">今日选定</span></td>
+          <td>研究生命周期评测套件 · LLM × harness 联评 · 细颗粒度专业素养</td>
+          <td>arXiv 2606.07462（Jiayu Wang 通讯 + 10 位合著）2026-06-05</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07157" target="_blank" rel="noopener">Think Fast: Estimating No-CoT Task-Completion Time Horizons of Frontier AI Models</a></td>
+          <td>43 benchmark / 30k 题 · 无 CoT 推理时间视野 · CoT 监管可行性指标</td>
+          <td>arXiv 2606.07157（Dewi Gould 等 21 位作者，含 Ryan Greenblatt）2026-06-05</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection in Agentic AI Control Evaluations Meaningfully Decreases Safety</a></td>
+          <td>red-team start/stop 解耦 · BashArena/LinuxArena · 评估方法学修正</td>
+          <td>arXiv 2606.06529（Ge-Wang, Crosse 等）2026-06-03</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07489" target="_blank" rel="noopener">How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope</a></td>
+          <td>Perplexity 生产数据 · agent vs 传统搜索 · 自主性效率量化</td>
+          <td>arXiv 2606.07489（Yang, Zyskowski 等）2026-06-05</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07299" target="_blank" rel="noopener">DuMate-DeepResearch: Auditable Multi-Agent System with Recursive Search</a></td>
+          <td>DeepResearch Bench / Bench II SOTA · 可审计多 agent · rubric grounded</td>
+          <td>arXiv 2606.07299（Yan, Xu 等）2026-06-05</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.06533" target="_blank" rel="noopener">Position: Don't Just "Fix it in Post" – A Science of AI Must Study Training Dynamics</a></td>
+          <td>ICML Oral position · 训练动力学 · 偏置 / 鲁棒性 / 安全行为</td>
+          <td>arXiv 2606.06533（Stella Biderman 等）2026-06-05</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Act As a Real Researcher: A Suite of Benchmarks Evaluating Frontier LLMs and Agentic Harnesses in Research Lifecycle</span></div>
+      <div class="meta-item"><label>中文标题</label><span>扮演真正的研究员：评测 frontier LLM × agentic harness 的研究生命周期 benchmark 套件</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Jiayu Wang（王嘉宇 · 通讯作者）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Weijiang Lv, Bowen Fu, Jing Fu, Jiayi Song, Lingyu Zhang, Lanxuan Xue, Luodi Chen, Zepeng Xin, Kaiyu Li, Xiangyong Cao</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-05（v1，UTC 17:13:36）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · benchmark suite · agentic research evaluation</span></div>
+      <div class="meta-item"><label>性质</label><span>Benchmark 论文 · LLM × harness 二轴 evaluation · AARRI 是首个发布的 sub-bench</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.07462" target="_blank" rel="noopener">arxiv.org/pdf/2606.07462</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.07462v1" target="_blank" rel="noopener">arxiv.org/html/2606.07462v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.07462" target="_blank" rel="noopener">10.48550/arXiv.2606.07462</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/AARR-bench/AARRI-bench" target="_blank" rel="noopener">github.com/AARR-bench/AARRI-bench</a></div>
+      <div class="meta-item"><label>测试 harness</label><span>Mini-SWE-Agent + Claude Opus 4.7（最强 68.3%）等多组合</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent 评测从"<strong>宏观执行力</strong>"下沉到"<em>研究实习生级别的细颗粒度专业判断</em>"——首发 AARRI-Bench，最强配置仅 68.3%，对比人类 94.0% 留下显著 gap。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>随着基础模型与 agent scaffolding 的不断进步，AI agent 已经在复杂的长程编码任务、甚至自主实验执行上展现出强大能力。尽管它们已从研究助理演变为<strong>自主研究 agent</strong>，但仍在<em>领域敏感性</em>、<em>研究伦理</em>与<em>细微科学判断</em>上存在显著局限——前沿 agent 仍无法完整取代人类研究员。</p>
+    <p>为弥合差距，作者提出 <strong>AARR（Act As a Real Researcher）</strong>基准系列。与现有主要评估"<em>宏观执行能力</em>"的 benchmark 不同，AARR 关注 agent 能否在<em>细颗粒度的研究情景</em>中模拟人类研究者所具备的<strong>专业性、严谨性与细致推理</strong>。</p>
+    <p>该系列的首个 benchmark 是 <strong>AARRI-Bench（Act As a Real Research Intern）</strong>——模拟"<em>研究实习生</em>"工作场景。在跨多个 frontier 模型与 agentic 系统的实验中，<strong>最佳配置 Mini-SWE-Agent + Claude Opus 4.7 仅获 68.3% 成功率</strong>，主要失败模式是<em>频繁忽略人类研究员显而易见的微小但关键的细节</em>。核心洞见：发展"<em>研究员级 AI</em>"需要更深地探究<strong>研究行为本身</strong>，而不是仅仅依赖更复杂的 scaffolding。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（AARR 立论 / AARRI 设置 / "harness vs scaffolding" 二轴评测 / 失败模式）</div>
+
+    <p><strong>立论：把"<em>研究员级 agent</em>"从口号变成可被度量的对象。</strong>过去两年的科研 agent benchmark（GAIA / OpenScholar / SciCode / SciAct / TaskBench）大多偏重"<em>能不能跑完一个研究流程</em>"的宏观成功率；本文反过来强调"<em>跑完之后做得专业不专业</em>"。这是 evaluation 思路从"<em>broad-coverage 大纲式</em>"到"<em>granular 实习生式</em>"的下沉，是评估方法学层面的重要补缺。</p>
+
+    <p><strong>AARRI-Bench：研究实习生工作场景的细颗粒度任务集。</strong>论文把研究生命周期切成多个细化任务，覆盖：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>研究阶段</th><th>实习生级任务样例</th><th>评估关注点</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>调研 / 文献回顾</td><td>找出关键引用、识别 prior work 重叠、判定可信度</td><td>学术敏感度、不被过期文献误导</td></tr>
+        <tr><td>方法选型</td><td>在多种 baseline 中识别"<em>看似合理但实际不可比</em>"</td><td>科学判断、对照设置严谨性</td></tr>
+        <tr><td>实验执行</td><td>正确处理超参与种子、读 logs / debug</td><td>实验工程素养、错误信号敏感度</td></tr>
+        <tr><td>结果整理</td><td>表格 / 图表、显著性判定、误差范围</td><td>统计严谨、不夸大结论</td></tr>
+        <tr><td>研究伦理</td><td>识别数据使用边界、引用规范、自我抄袭警告</td><td>研究伦理与发表规范</td></tr>
+      </tbody>
+    </table>
+
+    <p>这些维度不是"<em>能不能完成宏观目标</em>"，而是"<em>过程中有没有犯研究新人不该犯的错</em>"——这与 SWE-Bench 等"<em>能不能 pass 测试</em>"的 binary 信号正好互补。</p>
+
+    <p><strong>"模型 × harness"二轴评测——本文的方法学创新。</strong>过去 benchmark 一般只评测一个轴：要么固定 agent scaffold 比模型，要么固定模型比 scaffold；本文坚持<em>两个轴一起报</em>，因此你能在 paper 里看到"<em>Mini-SWE-Agent + Claude Opus 4.7</em>"这样的组合最高 68.3%——这是<strong>把 harness 工程视作可被独立度量的 first-class 对象</strong>，与今日方向 #1 <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">Lean4Agent</a>、5-26 #1 <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">From Model Scaling to System Scaling</a> 的方向论遥相呼应。<strong>这是 2026 年 benchmark 的新基线规范</strong>：必须同时报模型与 harness 的组合贡献度。</p>
+
+    <p><strong>失败模式：忽略人类研究员显而易见的细微但关键细节。</strong>这是核心叙事 punchline。它的影子在多个上半年工作中出现过——5-15 #1 <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">ChromaFlow</a> 在 GAIA-2023 L1 上"<em>加 orchestration 反而变差</em>"是同一现象的早期信号；5-22 系列的 multi-agent debate 工作也描述过类似 "<em>多人对线反而漏细节</em>"。AARRI 这次的贡献在于<em>把这个一直在直觉里的现象</em>放到 5 维（领域敏感、对照设置、伦理、统计、引用）的系统化考核里——以后任何科研 agent 都得在这 5 维上接受体检。</p>
+
+    <p><strong>32 pp 的 gap：人类 94.0% vs 最强 agent 68.3%。</strong>这<em>不是宏观成功率的 gap</em>，而是"<em>专业素养</em>"的 gap。两者的差异在评估科学性上意义截然不同：宏观成功率可以被"<em>更多采样 + 投票</em>"或"<em>scaffolding 加层数</em>"在数月内追平；而专业素养的差距需要<em>训练分布</em>与<em>反馈机制</em>的根本调整。这给 AI 研究员的接下来 12 个月画了一条清晰的研究路线：scaffold 已经不是瓶颈，<em>研究行为本身的训练数据 + 形式化反馈</em>才是。</p>
+
+    <p><strong>与今日 #1 / #2 的协同。</strong>把今日三篇放一起：(a) 方向 #1 <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">Lean4Agent</a> 提供"<em>plan 是否可证明对</em>"的形式化裁判；(b) 方向 #2 <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a> 提供"<em>red-team 时机维度</em>"的评估方法学修正；(c) 本文 AARRI 提供"<em>研究员级专业素养</em>"的 granular 评测。三者一起构成"<em>正确 / 抗攻击 / 专业</em>"三轴 benchmark 体系——不再是"<em>跑通即过</em>"的浅评估，而是"<em>正确 + 抗时机攻击 + 学术专业</em>"的三层校验。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em>·宏观成功率 baseline<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">[2] Tian et al. (2024) — <em>SciCode: A Research Coding Benchmark Curated by Scientists</em>·科研 coding 任务<br>
+    <a href="https://arxiv.org/abs/2407.13168" target="_blank" rel="noopener">arxiv.org/abs/2407.13168</a></div>
+    <div class="ref-item">[3] Asai et al. (2024) — <em>OpenScholar: Synthesizing Scientific Literature with Retrieval-Augmented LMs</em>·文献回顾对照<br>
+    <a href="https://arxiv.org/abs/2411.14199" target="_blank" rel="noopener">arxiv.org/abs/2411.14199</a></div>
+    <div class="ref-item">[4] Lu et al. (2024) — <em>The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery</em>·自主科研 agent 早期范式<br>
+    <a href="https://arxiv.org/abs/2408.06292" target="_blank" rel="noopener">arxiv.org/abs/2408.06292</a></div>
+    <div class="ref-item">[5] Yang et al. (2024) — <em>SWE-Agent / Mini-SWE-Agent</em>·本文使用的 harness 之一<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">[6] Anthropic (2026) — <em>Claude Opus 4.7</em>·本文最强 baseline 模型<br>
+    <a href="https://www.anthropic.com/" target="_blank" rel="noopener">anthropic.com</a></div>
+    <div class="ref-item">[7] Mittal (2026) — <em>ChromaFlow: Negative Ablation on GAIA-2023 L1</em>·"<em>加 orchestration 反而变差</em>"先例·5-15 #1 已收录<br>
+    <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></div>
+    <div class="ref-item">[8] Gu (2026) — <em>From Model Scaling to System Scaling</em>·把 harness 立成研究对象<br>
+    <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+    <div class="ref-item">[9] Wang et al. (2026) — <em>Lean4Agent: Formal Modeling and Verification</em>·形式化裁判 · 本日 #1 Harness<br>
+    <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></div>
+    <div class="ref-item">[10] Ge-Wang et al. (2026) — <em>Attack Selection in Agentic AI Control</em>·评估方法学修正 · 本日 #1 Safety<br>
+    <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">arxiv.org/abs/2606.06529</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Mini-SWE-Agent + Claude Opus 4.7 = 68.3%</strong>——AARRI-Bench 上最强组合；与人类 94.0% 留下 <em>~26 pp</em> 的"<em>专业素养 gap</em>"。</li>
+      <li><strong>"模型 × harness" 二轴报告</strong>——首次把两个变量同时纳入 benchmark 报告标准，是 2026 年 benchmark 论文的新基线规范。</li>
+      <li><strong>失败模式聚焦"<em>细微但关键</em>"</strong>——专业素养差距不是"<em>跑不通</em>"，而是"<em>研究新人不该犯的错</em>"系统性出现。</li>
+      <li><strong>研究生命周期 5 维评测</strong>——文献 / 方法 / 实验 / 结果 / 伦理，与既有 GAIA / SciCode 形成互补维度。</li>
+      <li><strong>开源 GitHub 仓库</strong>——AARR-bench/AARRI-bench 公开数据 + 评估脚本，便于社区复现 + 扩展到 AARR 系列其他 sub-bench。</li>
+      <li><strong>研究行为本身是新瓶颈</strong>——结论：scaffolding 加层不能根治；下一步需要训练数据 / 反馈机制对研究行为本身建模。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>"<em>模型 × harness 二轴评测</em>"是你毕设可以直接借用的 figure 模板：把"<em>稀疏注意力 KV-cache 预取 + 双水位线 GPU 热缓存</em>"作为一个 harness 维度，让它和不同 base model（LLaMA / Qwen / GPT-OSS）在<em>同一组任务</em>上做联评。这样毕设 paper 不再是"<em>给某个固定模型加速</em>"，而是"<em>该 harness 在不同模型上的边际增益曲线</em>"——后者直接对应 AARRI 的"<em>组合 = 68.3%</em>"叙事范式。<strong>具体建议</strong>：把 AARR 列入 Related Work 章；用"<em>模型 × harness 二轴</em>"作为你 evaluation section 的组织维度；并在 Discussion 引用 AARRI 的 32 pp gap，论证你的 harness 在<em>细颗粒度命中场景</em>（cache miss、prefetch 误中）也存在类似的 specialization gap。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AARRI 的"<em>研究伦理</em>"维度其实就是 agent safety 的微缩版：当 agent 写论文时，识别"<em>数据使用边界</em>"、"<em>引用规范</em>"、"<em>自我抄袭</em>"等隐性约束，与今日 #2 <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a> 中蓝队 monitor 要识别的"<em>违规时机</em>"是同源问题——都是"<em>不该做</em>" 的 fine-grained 检测。<strong>建议</strong>：把 AARRI 的伦理子集与 control evaluation 拼起来，让被监控的 agent 在科研工作流中分别面对"<em>start-policy 攻击者</em>"和"<em>伦理违规者</em>"两类对手——这能给 trusted monitor 提供更立体的训练信号，也是把 AI control 从纯安全学语境向"<em>研究伦理</em>"扩张的自然路径。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直接命中）</div>
+        <p>本文给 2026 年 benchmark 论文树立了三条新规范：(1) <strong>必须报告"<em>模型 × harness</em>"二轴贡献度</strong>，单轴评测从此被视为不完整；(2) <strong>必须区分"<em>宏观成功率</em>" vs "<em>细颗粒度专业素养</em>"</strong>——前者会被 scaffolding 拉满，后者才反映真实 capability gap；(3) <strong>必须暴露"<em>显而易见的细微细节</em>" 失败模式</strong>，这条单点错误的覆盖率比综合分数更能体现专业级评估。<strong>建议未来 benchmark 应同时报告</strong>：(i) task-success（宏观）+ (ii) verification-yield（结构性正确率，今日 #1 启发）+ (iii) detail-coverage（专业素养，今日 #3 启发）+ (iv) attack-selection-aware safety（今日 #2 启发）四维；只有四维齐全的 benchmark，才能在"<em>真实部署可信度</em>"上给出有意义的判断。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Lean4Agent (本日 #1 Harness)</strong>·形式化 plan 验证 · 与 AARRI 形成"<em>结构性 + 专业性</em>"双轴<br>
+      <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></li>
+      <li><strong>Attack Selection (本日 #1 Safety)</strong>·attack timing 评估方法学 · 给 AARRI 加上"<em>抗攻击维度</em>"<br>
+      <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">arxiv.org/abs/2606.06529</a></li>
+      <li><strong>From Model Scaling to System Scaling (5-26 #1 Harness)</strong>·position paper · "<em>系统性 scaling</em>" 的论文级落地 baseline<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>ChromaFlow (5-15 #1 Harness)</strong>·GAIA-2023 L1 上 orchestration 反而变差 · AARRI 失败模式的早期信号<br>
+      <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.07462" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.07462v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.07462" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://github.com/AARR-bench/AARRI-bench" target="_blank" rel="noopener">GitHub: AARRI-bench</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-08 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.07462<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

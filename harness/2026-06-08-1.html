@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-08 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 8 日 · Harness Engineering · 把 agent 工作流交给依赖类型证明检查器</div>
+  <h1>Lean4Agent：用 Lean4 依赖类型形式化语言为 agent workflow 与 trajectory 建模并机械化验证——通过验证的工作流平均 +11.94 pp，LeanEvolve 在 SWE-Bench-Verified 困难子集再 +7.47 pp</h1>
+  <div class="en-title">Lean4Agent: Formal Modeling and Verification for Agent Workflow and Trajectory</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">Lean4Agent: Formal Modeling and Verification for Agent Workflow and Trajectory</a><span class="winner-badge">今日选定</span></td>
+          <td>依赖类型 IR · agent workflow 形式化验证 · trajectory 故障定位 · LeanEvolve 自动修订</td>
+          <td>arXiv 2606.06523（Ruida Wang, Jerry Huang, Pengcheng Wang, Xuanqing Liu, Luyang Kong, Tong Zhang）2026-06-02</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">Act As a Real Researcher: AARR/AARRI Benchmarks for Frontier LLMs and Agentic Harnesses</a></td>
+          <td>研究生命周期评估套件 · harness 配置对比 · Mini-SWE-Agent + Claude Opus 4.7 仅 68.3%</td>
+          <td>arXiv 2606.07462（Jiayu Wang 等 11 位作者）2026-06-05</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07017" target="_blank" rel="noopener">The Sim-to-Real Gap of Foundation Model Agents: A Unified MDP Perspective</a></td>
+          <td>KDD 2026 Blue Sky Ideas · 把 agent 评测差距形式化为 MDP 四要素 · 倡议标准化 stress-test</td>
+          <td>arXiv 2606.07017（Xiaoou Liu, Tiejin Chen, Weibo Li, Xiyang Hu, Hua Wei）2026-06-05</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07033" target="_blank" rel="noopener">StainFlow: Entity-Stain Tracking for Process Rewards in GUI Agents</a></td>
+          <td>GUI Agent 过程奖励 · 网络流污点追踪 · trajectory 判别器 · AndroidWorld / OGRBench</td>
+          <td>arXiv 2606.07033（Hao 等）2026-06-05</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07308" target="_blank" rel="noopener">Off-Policy Evaluation with Strategic Agents via Local Disclosure</a></td>
+          <td>战略性 agent 行为下的 off-policy 评估 · 双重稳健估计器</td>
+          <td>arXiv 2606.07308（Vo, Reddy 等）2026-06-05</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07299" target="_blank" rel="noopener">DuMate-DeepResearch: An Auditable Multi-Agent System</a></td>
+          <td>可审计多 agent DR 框架 · DeepResearch Bench / Bench II SOTA · 递归检索 + rubric grounded reasoning</td>
+          <td>arXiv 2606.07299（Yan, Xu 等）2026-06-05</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Lean4Agent: Formal Modeling and Verification for Agent Workflow and Trajectory</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Lean4Agent：面向 agent 工作流与轨迹的形式化建模与验证</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Ruida Wang（王瑞达）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Jerry Huang, Pengcheng Wang, Xuanqing Liu, Luyang Kong, Tong Zhang</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-02（v1，UTC 18:46:50）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG · cs.LO · cs.SE</span></div>
+      <div class="meta-item"><label>性质</label><span>方法 + 工具论文 · Lean4 dependent type IR · 首个使用 DT-FL 验证 agent 行为的框架</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.06523" target="_blank" rel="noopener">arxiv.org/pdf/2606.06523</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.06523v1" target="_blank" rel="noopener">arxiv.org/html/2606.06523v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.06523" target="_blank" rel="noopener">10.48550/arXiv.2606.06523</a></div>
+      <div class="meta-item"><label>主要测试床</label><span>SWE-Bench-Verified 困难子集 + ELAIP-Bench 子集 · 5 个领先 LLM 横向对比</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把 <strong>Lean4 依赖类型语言</strong>变成 agent workflow / trajectory 的<em>可机械验证 IR</em>——形式化保障从"<em>跑得通</em>"升级为"<em>类型检查通过</em>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>赋予大语言模型以执行<strong>可靠多步工作流</strong>的能力，已成为 AI 的核心挑战。尽管近期 agent 能力快速跃迁，多数 agent 系统<strong>仍然缺乏形式化方法</strong>来规约、验证与调试自身的工作流和执行轨迹。我们的研究受到一个数学领域类比的启发：自然语言（NL）固有的歧义催生了形式语言（FL）的发展。</p>
+    <p>本文提出 <strong>Lean4Agent</strong>——据我们所知，这是<em>第一个</em>以 Lean4 这种依赖类型形式语言来对 agent 行为进行建模与验证的框架。它的两大组件是：(1) <strong>FormalAgentLib</strong>：一个可扩展的 Lean4 库，支持在显式假设下对 agent 工作流进行<em>语义一致性</em>的形式化建模与验证，并通过轨迹定位<em>执行时故障</em>；(2) <strong>LeanEvolve</strong>：在 FormalAgentLib 之上利用验证结果<em>自动修订</em>工作流，进一步提升 agent 能力。</p>
+    <p>在 SWE-Bench-Verified 困难子集与 ELAIP-Bench 子集上，对 5 个领先 LLM 的实验显示：<strong>通过验证的工作流相对未通过验证的工作流，平均提升 +11.94%</strong>；<strong>LeanEvolve 在 SWE 上再额外提升 +7.47%</strong>。这一结果不仅证明了形式化验证对 agent 行为的实质性增益，也为"<em>用具有强表达力的依赖类型形式语言机械化建模和验证 agent 行为</em>"这条新研究路线奠定了基础。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（FormalAgentLib / LeanEvolve / 与 SkillDAG 的差异 / 与 ANNEAL 的对照）</div>
+
+    <p><strong>立论：把 agent 行为送进证明检查器。</strong>过去一年（2025-2026）harness 工程的主旋律是"<em>把 IR 抬高一档</em>"——<a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">Code as Agent Harness</a> 把 IR 抬到代码、<a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">SkillDAG</a> 把 IR 抬到类型化有向图、<a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">A Policy-Driven Runtime Layer</a> 把 IR 抬到 observe/score/predict/act 四原语。<strong>Lean4Agent 把 IR 再抬一档——直接抬到依赖类型的形式证明系统。</strong>核心赌注：agent workflow 不仅是<em>过程</em>（process），也可以是<em>命题</em>（proposition）——前置条件、不变式、后置条件都能写成 Lean4 类型，trajectory 是这个类型的"<em>居民</em>"（inhabitant）。</p>
+
+    <p><strong>FormalAgentLib：从规约到验证的可复用证明库。</strong>第一个组件是一个可扩展的 Lean4 库，作用如下表：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>能力</th><th>语义</th><th>下游用法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>显式假设下的工作流建模</td><td>用 Lean4 类型刻画前置条件 / 不变式 / 后置条件</td><td>把"<em>这条 plan 是否合理</em>"变成 type-checking 问题</td></tr>
+        <tr><td>语义一致性验证</td><td>验证 plan 的子步骤组合是否仍满足全局规约</td><td>排除"<em>看似合理但条件不闭包</em>"的虚假 plan</td></tr>
+        <tr><td>执行时故障定位</td><td>当 trajectory 偏离规约，从证明义务（proof obligations）反推故障节点</td><td>给出可机械验证的 root cause 而不是事后总结</td></tr>
+      </tbody>
+    </table>
+
+    <p>这意味着"<em>调试 agent 失误</em>"第一次有了和形式化软件验证完全相同的工具链：plan failure 不再是日志里若隐若现的字符串，而是<em>没有被居民填满的命题</em>——找到那个洞，就是找到了 root cause。</p>
+
+    <p><strong>LeanEvolve：让验证结果反哺 plan 改写。</strong>第二个组件 LeanEvolve 把 FormalAgentLib 的验证报告作为信号源，自动修订工作流——这是一种"<em>结构性 self-improvement</em>"：不是在 prompt 里写"<em>请你检查并修改</em>"，而是把"<em>类型不通过</em>"作为<em>编译期错误</em>反馈给 plan 重写器，逼迫候选 plan 闭包到一个可证明对的形态。在 SWE-Bench-Verified 困难子集上，LeanEvolve 在已经经过验证的 baseline 之上再补 +7.47 pp，说明<em>形式验证既是过滤器、又是教师</em>——这是与 5-19 <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">ANNEAL</a>（governed 符号补丁 + canary）相同审稿人偏好的连续演进：把"<em>修</em>"挂上"<em>外部凭证</em>"。</p>
+
+    <p><strong>与 SkillDAG / Code as Agent Harness 的差异。</strong>SkillDAG 让 agent 在执行时调用<em>结构化检索</em>（vector + typed-edge + conflict 三路信号）；Code as Harness 把<em>代码</em>立成 IR；Lean4Agent 则把<em>命题与证明</em>立成 IR。差异在于"<em>谁是裁判</em>"：SkillDAG 的裁判是历史执行回放，Code as Harness 的裁判是 Python 解释器，Lean4Agent 的裁判是 Lean4 kernel。<strong>三者一旦组合</strong>：用代码作为执行物，用类型化图作为检索物，用 Lean4 类型作为可证明物——一条三档梯度的"<em>从 token 到证明</em>"IR 链路就成形了。这正是当前 harness 工程"<em>越证越硬</em>"的方向。</p>
+
+    <p><strong>实验信号怎么读。</strong>论文的核心数据有两条：第一，"<em>过验证的 plan</em>" vs "<em>没过验证的 plan</em>"，平均成功率差 +11.94 pp——这是<em>验证作为过滤器</em>的价值。第二，LeanEvolve 进一步 +7.47 pp——这是<em>验证作为反馈教师</em>的边际价值。两者相加是 19.4 pp 的总体抬升，且来自<em>同一类型化 IR 的两次复用</em>，是少数能把"<em>形式方法是否对 agent 实际有用</em>"这一长期争议落地为正面数据的工作之一。SWE-Bench-Verified 困难子集与 ELAIP-Bench 都是有人盯着的硬测试床，这条收益不是温室增益。</p>
+
+    <p><strong>研究路线意义。</strong>过去三十年形式化软件验证主要服务"<em>程序员写出的程序</em>"，而 Lean4Agent 把它的客户换成了"<em>LLM 写出的工作流</em>"——这是一次<em>方法论降维</em>：当 LLM 把 plan 当作 program 输出，program 验证学的全部基础设施都自动适用。后续两到三年，能否在 agent runtime 里嵌一个"<em>常驻 Lean4 kernel</em>"用作每一步 plan 的 type-checker，将决定 agentic 系统能不能拥有真正可证明的安全/正确性边界——而不是靠"<em>多采样 + 投票</em>"摘取经验主义的低果。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] de Moura & Ullrich (2021) — <em>The Lean 4 Theorem Prover and Programming Language</em>·Lean4 系统奠基<br>
+    <a href="https://leanprover.github.io/papers/lean4.pdf" target="_blank" rel="noopener">leanprover.github.io/papers/lean4.pdf</a></div>
+    <div class="ref-item">[2] Jimenez et al. (2024) — <em>SWE-Bench: Can Language Models Resolve Real-World GitHub Issues?</em>·主要测试床<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">[3] Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·plan-act-observe 范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[4] Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>·自我修订对照<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">[5] Yang et al. (2024) — <em>SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>·SWE-Bench 上 agent 基线<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">[6] Bhakim et al. (2026) — <em>ANNEAL: Governed Symbolic Knowledge Patches</em>·有审计的图编辑先例<br>
+    <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></div>
+    <div class="ref-item">[7] Bai et al. (2026) — <em>SkillDAG: Self-Evolving Typed Skill Graphs</em>·typed-edge IR 同期姊妹工作<br>
+    <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></div>
+    <div class="ref-item">[8] Ning et al. (2026) — <em>Code as Agent Harness</em>·43 作者综述 · 把 code 立成 IR<br>
+    <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></div>
+    <div class="ref-item">[9] Gu (2026) — <em>From Model Scaling to System Scaling</em>·position paper · harness 立成研究对象<br>
+    <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+    <div class="ref-item">[10] Avigad et al. — <em>Mathematics in Lean / mathlib4</em>·Lean4 库工程的当代基线<br>
+    <a href="https://leanprover-community.github.io/mathematics_in_lean/" target="_blank" rel="noopener">leanprover-community.github.io/mathematics_in_lean</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>+11.94 pp（5 模型平均）</strong>——通过 FormalAgentLib 验证的工作流，对未通过验证的工作流的<em>纯过滤器收益</em>。</li>
+      <li><strong>+7.47 pp（SWE-Bench-Verified 困难子集）</strong>——LeanEvolve 在已过滤 baseline 之上的<em>验证反馈教师收益</em>，与第一项可叠加。</li>
+      <li><strong>5 个领先 LLM 通用</strong>——增益不绑定单一基模，证明 Lean4 IR 的"<em>模型无关性</em>"。</li>
+      <li><strong>可定位执行时故障</strong>——证明义务的"<em>没填满的洞</em>"直接对应 trajectory 中的失败节点，root cause 可机械化。</li>
+      <li><strong>测试床为难度子集</strong>——SWE-Bench-Verified 困难子集 + ELAIP-Bench，避免"<em>简单题白送</em>"的虚高。</li>
+      <li><strong>新研究领域</strong>——首次将依赖类型 FL 用作 agent 行为 IR，标记一条与"<em>多采样 + 投票</em>"完全正交的可证明性路线。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Lean4Agent 与你毕设"<strong>稀疏注意力 KV-cache 预取 + 双水位线 GPU 热缓存</strong>"在 IR 抽象上具有<em>可继承</em>的位移逻辑：把"<em>这次预取是否安全</em>"从经验性命中率变成<em>可形式化的不变式</em>——例如"<em>预取项必须落在当前 attention pattern 的传递闭包内</em>"。<strong>建议</strong>：在毕设 Discussion 章引入 Lean4Agent 作为对照案例，论证你的 prefetcher 也能写成<em>可机械验证的契约</em>——例如 "load(block_i) ⇒ preimage(attention_pattern, i) 非空"——这远比单纯展示命中率更有评审说服力。同时 LeanEvolve 给"<em>预取策略的自动修订</em>"提供了一种纯结构性反馈方案：当某次预取的形式化前提失败时，由形式化错误信号反向修改策略，而不是依赖 RL 信号。这与今日方向 #2 的<em>形式化攻击窗口</em>互文——前者把"<em>该预取啥</em>"形式化，后者把"<em>该攻击啥</em>"形式化。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Lean4Agent 给"<em>safety policy as type</em>"提供了第一份可执行教材：把"<em>不能把 PII 发到外部</em>"、"<em>API 调用必须先经审计</em>"等政策写成 Lean4 类型而不是 prompt 字符串——任何 plan 的 type-checking 失败都<em>等价</em>于政策违反。这与今日方向 #2（<a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a>）形成强对仗：当攻击者懂得"<em>战略性地选择何时下手</em>"，blue-team 也必须把<em>合法操作窗口</em>形式化为不变式，而不只靠 monitor 模型的判别能力。把 Lean4Agent 嵌入 control evaluation harness，能让 monitor 在每一步直接得到"<em>当前 plan 类型化检查通过</em>"或"<em>违反第 X 条规约</em>"的硬信号——这是让 control protocol 从经验性走向可证明性的钥匙。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Lean4Agent 暴露了一个新的<em>本征评估维度</em>：<strong>verification yield</strong>——给定 N 条候选 plan，多少比例能通过形式化验证。它和 SkillDAG 的 Ret@K 一样，是<em>独立于任务成功率的可机械化评估量</em>。<strong>建议</strong>：未来 agent benchmark 应该同时报告 task-success 与 verification-yield——前者衡量"<em>偶然走对</em>"，后者衡量"<em>结构上正确</em>"。这恰好与今日 #3（<a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">AARRI-Bench</a>）的"<em>仅 68.3% 成功</em>"形成补全：68.3% 当中有多少 plan 是<em>能过类型检查的偶然走对</em>，多少是<em>压根写不出可证明 plan 的运气</em>，二者对未来 frontier 模型评估意义截然不同。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SkillDAG (6-03 #1)</strong>·typed-edge IR · 与 Lean4Agent 共同构成"<em>检索-推理-证明</em>"三档<br>
+      <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></li>
+      <li><strong>Code as Agent Harness (5-25 #1)</strong>·43 作者综述 · 与 Lean4Agent 是 IR 抬升路线两端<br>
+      <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></li>
+      <li><strong>From Model Scaling to System Scaling (5-26 #1)</strong>·position paper · Lean4Agent 是 verification-cost 维度的具体载体<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>ANNEAL (5-19 #1)</strong>·governed 符号补丁 · Lean4Agent 的"<em>有外部凭证再修</em>"早期形态<br>
+      <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.06523" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.06523v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.06523" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://leanprover.github.io/" target="_blank" rel="noopener">Lean4 主页</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-08 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.06523<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
