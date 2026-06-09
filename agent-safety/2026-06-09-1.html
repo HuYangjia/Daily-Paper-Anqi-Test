@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-09 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #6b1c1c; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c4c4; color: #6b1c1c; }
+  .link-btn.primary:hover { background: #fbd9d9; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 9 日 · Agent Skills Safety · "工具错误返回"是被忽视的最强攻击面——MCP agent 时代第一篇错误路径注入论文</div>
+  <h1>VATS：把 MCP 工具错误消息立成"<em>隐式权威</em>"攻击通道——七维变异系统化进化对抗 payload，错误路径注入比标准 IPI 成功率高 3 倍、最高 100%，"夹心定位"跨四前沿模型通杀</h1>
+  <div class="en-title">VATS: Exploiting Implicit Authority in Error-Path Injection via Systematic Mutation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.8</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 7.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 7 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.07992" target="_blank" rel="noopener">VATS: Exploiting Implicit Authority in Error-Path Injection via Systematic Mutation</a><span class="winner-badge">今日选定</span></td>
+          <td>MCP 错误路径注入 · 隐式权威攻击面 · 7 维变异 · ICML 2026 AIWILD Workshop</td>
+          <td>arXiv 2606.07992（Harshil Patel, Kunal Pai）2026-06-06</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">The Cold-Start Safety Gap in LLM Agents</a></td>
+          <td>会话冷启动安全缺口 · SODA 基准 · 表征漂移分析 · 暖启动部署策略</td>
+          <td>arXiv 2606.07867（Chung-En Sun, Linbo Liu, Tsui-Wei Weng）2026-06-05</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07970" target="_blank" rel="noopener">Defending Against Malicious Finetuning by Scaling Train-time Adversarial Attacks</a></td>
+          <td>Patcher 训练时对抗放大 · 开源模型恶意微调防御</td>
+          <td>arXiv 2606.07970（Haoming Wen 等）2026-06-06</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07808" target="_blank" rel="noopener">Where Instruction Hierarchy Breaks: Diagnosing and Repairing Failures in Reasoning Language Models</a></td>
+          <td>白盒诊断指令层级失败 · 识别/冲突/响应三阶段 · 自监控 81-99% 违规率↓</td>
+          <td>arXiv 2606.07808（Sanjay Kariyappa）2026-06-06</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07874" target="_blank" rel="noopener">Safety is Contextual, LLM-Judges Are Not</a></td>
+          <td>LLM-as-judge 上下文依赖性 · 评估器先验僵化</td>
+          <td>arXiv 2606.07874（Anissa Alloula 等）2026-06-05</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.08234" target="_blank" rel="noopener">SciTrace: Trajectory-Aware Safety Reasoning for Scientific Discovery Agents</a></td>
+          <td>科研 agent 全流程安全推理 · SIR 循环 · 78.8% 单步监控漏检的工具链逃逸</td>
+          <td>arXiv 2606.08234（Tanush Swaminathan 等）2026-06-06</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07535" target="_blank" rel="noopener">Multilingual Refusal Alignment for Safer Large Language Models</a></td>
+          <td>RefusEU 数据集 · 12 欧洲语言 · ACL 2026 Findings · DPO 跨语言对齐</td>
+          <td>arXiv 2606.07535（Aleksandra Krasnodębska 等）2026-06-05</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>VATS: Exploiting Implicit Authority in Error-Path Injection via Systematic Mutation</span></div>
+      <div class="meta-item"><label>中文标题</label><span>VATS：通过系统化变异利用错误路径注入中的隐式权威</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Harshil Patel（通讯作者）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Kunal Pai</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-06（v1，UTC 06:07:52）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CR · cs.SE</span></div>
+      <div class="meta-item"><label>性质</label><span>方法 + 红队论文 · MCP 协议错误处理回路攻击面 · 7 维变异自动化 payload 演化</span></div>
+      <div class="meta-item"><label>发表场所</label><span>ICML 2026 Workshop on Agents in the Wild: Safety, Security, and Beyond（AIWILD）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.07992" target="_blank" rel="noopener">arxiv.org/abs/2606.07992</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.07992" target="_blank" rel="noopener">arxiv.org/pdf/2606.07992</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.07992v1" target="_blank" rel="noopener">arxiv.org/html/2606.07992v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.07992" target="_blank" rel="noopener">10.48550/arXiv.2606.07992</a></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>评测对象</label><span>4 个前沿模型：Gemini 3.1 Pro、GPT-5.5、GLM-5.1、Qwen3-Coder</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把 <strong>工具错误消息（tool error）</strong>立成 MCP agent 协议的"<em>隐式权威</em>"攻击面——<em>错误路径注入</em>把 IPI 成功率推到最高 100%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>随着 <strong>Model Context Protocol（MCP）</strong>把工具调用作为自主 agent 的标准化界面广泛铺开，它同时引入了一个<strong>关键且未被审查的攻击面：错误处理回路（error-handling loop）</strong>。我们假设：工具错误消息具有<em>隐式权威（implicit authority）</em>——它们会触发模型的<strong>纠错推理模式</strong>，从而<em>绕过</em>标准的安全启发式。</p>
+    <p>我们提出 <strong>VATS（Vulnerability Analysis of Tool Streams）</strong>——一个变异驱动的框架，沿 <strong>7 个结构化与语言学维度</strong>系统化地演化对抗 payload。在 <strong>Gemini 3.1 Pro / GPT-5.5 / GLM-5.1 / Qwen3-Coder</strong> 4 个前沿模型上的实验显示：错误路径注入相对于标准 indirect prompt injection（IPI）的成功率<strong>提升 3 倍</strong>，在受控评估中合规率最高<strong>达到 100%</strong>。</p>
+    <p>我们将<strong>结构性定位（structural positioning）</strong>——把指令"<em>夹心式</em>" 嵌入错误上下文中——隔离为所有测试模型上<em>最有效的攻击向量</em>。我们发现生产框架的 guardrails 可以缓解这些漏洞，但模型层本身的固有易感性，对自定义 agentic workflow 仍然构成<em>系统性风险</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（错误路径攻击面 / 7 维变异 / 夹心定位 / 与 ECA / Cold-Start / Attack Selection 的关系）</div>
+
+    <p><strong>立论：错误处理是 agent safety 上的"<em>暗物质</em>"。</strong>Agent safety 圈在 2025 H2-2026 H1 的研究主线，一直在<em>正向攻击面</em>上转：5-13 <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">SKILL.md 注册可信</a>、5-19 <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">memory laundering</a>、5-21 <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">CUGA Governance by Construction</a>、5-25 <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">ECA / Hallucination as Exploit</a>、6-08 <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a>。<strong>VATS 第一次把视角扭转到"<em>反向通道</em>"——agent 接收工具返回这一段。</strong>核心赌注：模型对"<em>错误信息</em>"有结构化先验偏置——它会立刻进入"<em>纠错推理</em>"模式，并对错误中携带的字符序列<em>赋予比正常上下文更高的指令权重</em>。这种先验偏置就是论文标题里的 <em>implicit authority</em>。</p>
+
+    <p><strong>7 维变异演化：MCP agent 时代的红队工程模板。</strong>论文核心方法不是单点攻击，而是一个<em>变异驱动的进化框架</em>，沿 7 个结构化与语言学维度系统化生成 payload：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度（推断）</th><th>语义</th><th>对照"<em>夹心定位</em>"贡献</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>结构性位置</td><td>指令在 error message 内的相对顺序（前 / 中 / 后）</td><td><strong>最强单维度</strong>——把指令包在 error 上下文之间收益最高</td></tr>
+        <tr><td>消息语气（mood）</td><td>命令式 / 祈使式 / 解释式 / 警示式</td><td>提高 agent "<em>解读为合理修复指引</em>" 的概率</td></tr>
+        <tr><td>错误类型伪装</td><td>HTTP 5xx / Timeout / Auth / Schema mismatch 等</td><td>选择最易激活纠错推理的错误类</td></tr>
+        <tr><td>编码格式</td><td>纯文本 / JSON / YAML / 半结构化</td><td>覆盖 MCP 协议各种 trace serializer</td></tr>
+        <tr><td>身份伪装</td><td>"<em>system</em>" / "<em>retry hint</em>" / "<em>upstream notice</em>"</td><td>诱发"<em>这是协议层而不是用户输入</em>" 的错误归因</td></tr>
+        <tr><td>修辞策略</td><td>请求式 / 紧急式 / 礼节式 / 反讽式</td><td>跨语种迁移基础</td></tr>
+        <tr><td>扰动密度</td><td>注入 payload 占整条 error 的 token 比例</td><td>测试饱和度阈值</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>"夹心定位"是新的 universal pattern。</strong>论文的最强发现：把恶意指令<em>夹</em>在 error 上下文的中间段，对 4 个前沿模型<strong>同时</strong>有效——这与 5-25 <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">ECA / Hallucination as Exploit</a> 把 hallucination 重写为<em>授权失败</em>形成强对称：ECA 看到"<em>正确产物绕过授权</em>"，VATS 看到"<em>正确返回回路本身就是授权通道</em>"。两篇背靠背把"<em>可信通道边界</em>"在 MCP 时代立成 agent safety 第一议题。</p>
+
+    <p><strong>与今日 #2 候选 Cold-Start Safety Gap 的对仗。</strong>同日 <a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">Cold-Start Safety Gap</a> 揭示 agent 在<em>会话最初几步</em>最不安全——表征还没漂移到"<em>安全对齐区域</em>"。VATS 暴露的是<em>另一个时间窗</em>：每次工具调用后的<em>错误响应处理瞬间</em>，模型立刻进入纠错推理子状态，与会话首部一样可视为<strong>临时性安全降级窗口</strong>。<em>两条工作合起来构成 agent 时间维度上的"<em>双脆弱窗</em>"图谱</em>——会话开始时不安全，错误响应后也不安全。</p>
+
+    <p><strong>与 6-08 Attack Selection 的呼应。</strong>6-08 <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a> 把红队决策分解为 start/stop 两 policy，并指出"<em>攻击时机选择</em>" 即可将安全度压低 20-28 pp。VATS 给出了"<em>start policy 应该挑何时</em>" 的<em>具体语义答案</em>：挑工具错误返回的瞬间——因为那一瞬间模型本身在"<em>积极找解释</em>" 而不是"<em>守规则</em>"。两篇连起来：Attack Selection 给方法学，VATS 给战术；安全评估的 ASR 上界因此还能继续下沉。</p>
+
+    <p><strong>缓解：guardrails 是创可贴而不是治本药。</strong>论文有意识地报告了一个"<em>软结论</em>"——生产 framework guardrails 可以缓解，但<em>模型层本身的固有易感性</em>对自定义 agentic workflow 构成系统性风险。这意味着：<em>不能依赖 wrapper 解决</em>。可能的治本方向：(1) 把"<em>error 通道</em>" 在协议层独立 sandbox（参考 5-21 <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">CUGA</a> 的 5 检查点架构）；(2) 让模型在 error 上下文上<em>显式降权</em>，类似指令层级里的 system / user / tool 三档（与 6-08 候选 <a href="https://arxiv.org/abs/2606.07808" target="_blank" rel="noopener">Where Instruction Hierarchy Breaks</a> 互补）；(3) 在错误返回前过 schema gate（与今日方向 #1 <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">SKILL.nb</a> 的 gate 机制天然连接）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Anthropic (2024) — <em>Model Context Protocol Specification</em>·MCP 协议官方文档<br>
+    <a href="https://modelcontextprotocol.io/specification" target="_blank" rel="noopener">modelcontextprotocol.io/specification</a></div>
+    <div class="ref-item">[2] Greshake et al. (2023) — <em>Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·IPI 起源<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">[3] Wallace et al. (2024) — <em>The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions</em>·指令层级先驱<br>
+    <a href="https://arxiv.org/abs/2404.13208" target="_blank" rel="noopener">arxiv.org/abs/2404.13208</a></div>
+    <div class="ref-item">[4] Greenblatt et al. (2024) — <em>AI Control: Improving Safety Despite Intentional Subversion</em>·AI control 评估范式<br>
+    <a href="https://arxiv.org/abs/2312.06942" target="_blank" rel="noopener">arxiv.org/abs/2312.06942</a></div>
+    <div class="ref-item">[5] Zhang et al. (2026) — <em>ECA: Hallucination as Authorization Failure</em>·正向授权失败的对偶<br>
+    <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a></div>
+    <div class="ref-item">[6] Sun et al. (2026) — <em>The Cold-Start Safety Gap in LLM Agents</em>·会话首部时间脆弱窗<br>
+    <a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">arxiv.org/abs/2606.07867</a></div>
+    <div class="ref-item">[7] Ge-Wang et al. (2026) — <em>Attack Selection in Agentic AI Control Evaluations</em>·start/stop policy 框架<br>
+    <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">arxiv.org/abs/2606.06529</a></div>
+    <div class="ref-item">[8] Yan et al. (2026) — <em>Evo-Attacker (ACL 2026)</em>·MAS 工具攻击 self-evolving<br>
+    <a href="https://arxiv.org/abs/2605.25389" target="_blank" rel="noopener">arxiv.org/abs/2605.25389</a></div>
+    <div class="ref-item">[9] Kariyappa (2026) — <em>Where Instruction Hierarchy Breaks</em>·指令层级失败诊断 + 自监控<br>
+    <a href="https://arxiv.org/abs/2606.07808" target="_blank" rel="noopener">arxiv.org/abs/2606.07808</a></div>
+    <div class="ref-item">[10] Shlomov et al. (2026) — <em>CUGA: Governance by Construction</em>·5 检查点架构<br>
+    <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>错误路径注入 ASR vs 标准 IPI = 3×</strong>——同等 payload 长度、同等指令意图，仅切换"<em>注入位置</em>" 即提升 3 倍。</li>
+      <li><strong>受控评估最高 100% 合规率</strong>——意味着错误路径上几乎无门槛。</li>
+      <li><strong>"夹心定位"跨 4 模型通杀</strong>——Gemini 3.1 Pro / GPT-5.5 / GLM-5.1 / Qwen3-Coder 全部最强单维度。</li>
+      <li><strong>7 维变异自动化框架</strong>——结构 / 语气 / 类型 / 编码 / 身份 / 修辞 / 密度——可作为 MCP 红队工程模板复用。</li>
+      <li><strong>guardrails 仅缓解、不治本</strong>——模型层固有易感性对 custom agentic workflow 仍系统性风险。</li>
+      <li><strong>新攻击面定义</strong>——把"<em>工具错误回路</em>" 立成 agent safety 第一议题，与正向 IPI、TTT 攻击、memory laundering、authorization failure 形成五位一体。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>VATS 第一次把"<em>错误返回路径</em>"立成 harness 评估的<em>独立通道</em>——正常工具输出和错误工具输出在 MCP agent 协议中走<em>同一个 LLM 上下文窗</em>，但模型对它们的处理方式不一样。<strong>建议</strong>：在 harness 设计中独立报告"<em>正常路径鲁棒性</em>" 与 "<em>错误路径鲁棒性</em>" 两个指标。这与今日 #1 <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">SKILL.nb</a> 的 gate 机制天然耦合：<em>err-cell 必须独立 gate</em>，而不是和 normal-cell 共享上下文进入下一步。这也直接启发你毕设的 cache eviction 决策：当 prefetch 触发"<em>越界 / 失败</em>" 时，错误回路本身不能携带<em>对下一次预取策略的隐式 instruction</em>——这条原则在 VATS 框架下首次有了 concrete 反面教材。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击方向）</div>
+        <p>VATS 把 agent safety 评估补全到一个<em>关键缺失维度</em>：所有以前的 IPI 工作都假设攻击者只能注入<em>用户提供的工具输入</em>，VATS 证明<em>工具产生的错误输出</em> 同样可控且更具杀伤力。<strong>建议</strong>：把 AgentHarm / AgentSafetyBench / SODA 等基准升级为"<em>正常 + 错误</em>" 双通道版本——同一个攻击意图，分别从工具输入侧和工具错误侧注入，记录两侧 ASR 差距。这条差距本身就是模型在"<em>错误路径上的隐式权威偏置</em>" 的量化指标。同时把 VATS 与 ECA 联立：ECA 关心"<em>授权失败 → 不被检测的正确产物</em>"，VATS 关心"<em>失败响应 → 被高权重当作 instruction</em>"，它们是同一座房子的<em>正反两个门</em>，agent safety 的 audit 必须同时关上两道门。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>VATS 给 benchmark 提了一个全新维度：<strong>error-path ASR uplift</strong>——攻击者只切换注入位置（从输入侧切到错误返回侧）就能获得多少额外 ASR。这是<em>结构性指标</em>，不依赖具体 payload 内容。<strong>建议</strong>：未来 agentic safety benchmark（包括今日 #3 <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">MAC-Bench</a>）应同时报告 input-path ASR 与 error-path ASR 的差值。这与 5-23 <a href="https://arxiv.org/abs/2605.21706" target="_blank" rel="noopener">latent-space evasion</a> 把"<em>潜空间方向</em>" 立成几何指标、6-08 <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">Attack Selection</a> 把"<em>时机</em>" 立成方法学指标，三轴合一构成 agentic safety benchmark 的<em>结构性诊断三件套</em>：位置 + 几何 + 时机。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>The Cold-Start Safety Gap in LLM Agents (今日候选 #2)</strong>·会话首部脆弱窗 · 与 VATS 形成"<em>双脆弱窗</em>"图谱<br>
+      <a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">arxiv.org/abs/2606.07867</a></li>
+      <li><strong>Attack Selection in AI Control (6-08 #1)</strong>·start/stop policy · VATS 给出 start policy 的语义内容<br>
+      <a href="https://arxiv.org/abs/2606.06529" target="_blank" rel="noopener">arxiv.org/abs/2606.06529</a></li>
+      <li><strong>ECA / Hallucination as Exploit (5-25 #1)</strong>·授权失败 · 与 error-path 注入对偶<br>
+      <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a></li>
+      <li><strong>Where Instruction Hierarchy Breaks (今日候选 #4)</strong>·指令层级失败 · 与 VATS 互补的修复端方向<br>
+      <a href="https://arxiv.org/abs/2606.07808" target="_blank" rel="noopener">arxiv.org/abs/2606.07808</a></li>
+      <li><strong>Evo-Attacker (5-26 #1, ACL 2026)</strong>·MAS 工具攻击 RL · 与 VATS 是攻击谱系两端<br>
+      <a href="https://arxiv.org/abs/2605.25389" target="_blank" rel="noopener">arxiv.org/abs/2605.25389</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.07992" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.07992" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.07992v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.07992" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/specification" target="_blank" rel="noopener">MCP 协议规范</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-09 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.07992<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.07992" target="_blank" rel="noopener">arxiv.org/abs/2606.07992</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
