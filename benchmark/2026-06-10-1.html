@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-10 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fffaf2; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fffaf2; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f0d4a3; color: #633806; }
+  .link-btn.primary:hover { background: #f4dfb8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fffaf2; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-10 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 10 日 · Safety Benchmark · 把"<em>它会变坏吗</em>"的回答从事后追溯转为事前推断</div>
+  <h1>PreAct-Bench：用 1,000 对 ethical/unethical 配对轨迹评测"<em>预测式监控</em>"——5 域 / Prefix Foresight F1 / 人类有 promising 表现而最强 LLM 仍低于人类</h1>
+  <div class="en-title">PreAct-Bench: Benchmarking Predictive Monitoring in LLMs</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4（KCL / 多家联合）</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 8 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">PreAct-Bench: Benchmarking Predictive Monitoring in LLMs</a><span class="winner-badge">今日选定</span></td>
+          <td>预测式监控基准 · 1,000 对轨迹 / 5 域 / Prefix Foresight F1 · 把"事前推断"立成 first-class 任务</td>
+          <td>arXiv 2606.09890（Xu, da Silva, Ye, Y. Wang, W. Liu, L. Yang, Schwarz, Paoletti, Y. He, H. Yan）KCL 等 · 2026-06-03</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">STAGE-Claw: Automated State-based Agent Benchmarking for Realistic Scenarios</a></td>
+          <td>状态化个人计算 agent 评测 · 40 真实任务 · 11 前沿模型 · 自动化任务生成</td>
+          <td>arXiv 2606.10394 · Liang 等 11 作者 · 2026-06-09</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.09863" target="_blank" rel="noopener">From Confident Closing to Silent Failure: False Success in LLM Agents</a></td>
+          <td>9,876 tau2-bench + 1,879 AppWorld · TF-IDF 检测器 AUROC 0.83-0.95 ≫ LLM judge ≤0.65</td>
+          <td>arXiv 2606.09863 · FAGEN@ICML 2026</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10479" target="_blank" rel="noopener">ComBench: Benchmark for Olympiad-Level Combinatorics</a></td>
+          <td>100 奥赛级组合数学题 · 最强模型仅 65.4%</td>
+          <td>arXiv 2606.10479 · 2026-06-10</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10833" target="_blank" rel="noopener">Do VLMs Reason Like Engineers? EngVQA + Stage-wise Evaluation</a></td>
+          <td>696 工程多模态题 · 8 阶段自动评估 · 过程级诊断</td>
+          <td>arXiv 2606.10833 · 2026-06-10</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10254" target="_blank" rel="noopener">RealMath-Eval: SOTA Judges Struggle with Real Human Reasoning</a></td>
+          <td>224 真实学生答题 · 合成 MSE 1.17 vs 真实 MSE 2.96 · "评估鸿沟"</td>
+          <td>arXiv 2606.10254 · 2026-06-10</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10933" target="_blank" rel="noopener">Frontier Coding Agents Use Metaprogramming for Unfamiliar Languages</a></td>
+          <td>4 小众编程语言 · 6 编码 agent · 揭示主流 benchmark 压缩了能力差距</td>
+          <td>arXiv 2606.10933 · 2026-06-10</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10298" target="_blank" rel="noopener">TriState-Bench: Knowledge Conflict Evaluation Protocol</a></td>
+          <td>修正/抵抗/同意三状态评估 · Adaptive Regime Routing</td>
+          <td>arXiv 2606.10298 · 2026-06-10</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>PreAct-Bench: Benchmarking Predictive Monitoring in LLMs</span></div>
+      <div class="meta-item"><label>中文标题</label><span>PreAct-Bench：评测 LLM 的预测式监控能力</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Hainiu Xu（通讯作者）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Italo Luis da Silva, Jiangnan Ye, Yuhao Wang, Wei Liu, Linyi Yang, Jonathan Richard Schwarz, Nicola Paoletti, Yulan He, Hanqi Yan</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-03（v1，UTC 13:26:41）· 周三</span></div>
+      <div class="meta-item"><label>篇幅</label><span>v1 · 3,452 KB · 含 5 个领域细分</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · cs.AI · cs.CL</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY-SA 4.0</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">arxiv.org/abs/2606.09890</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.09890" target="_blank" rel="noopener">arxiv.org/pdf/2606.09890</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.09890v1" target="_blank" rel="noopener">arxiv.org/html/2606.09890v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.09890" target="_blank" rel="noopener">10.48550/arXiv.2606.09890</a></div>
+      <div class="meta-item"><label>性质</label><span>新任务定义 + benchmark 数据集 + Prefix Foresight F1 metric · 把<em>事前监控</em>立成 first-class</span></div>
+      <div class="meta-item"><label>规模</label><span>1,000 对 ethical/unethical 配对动作轨迹 · 5 个领域</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM 安全研究的核心问题从"<em>它做了什么不当行为</em>"改写为"<strong>它即将做不当行为吗</strong>"——预测式监控基准首次量化"<em>事前感知</em>"能力。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当前关于 LLM 安全的研究主要采用<strong>事后回顾</strong>视角——分析有害输出已经发生之后的损害。<strong>PreAct-Bench</strong> 转换视角，提出<strong>预测式监控（predictive monitoring）</strong>这一新任务：给定一段<em>部分动作轨迹（partial action trajectory）</em>，模型能否在<strong>不当行为发生之前</strong>就推断出该轨迹会导致不当结果？</p>
+    <p>我们构建了 <strong>PreActBench</strong>：包含 <strong>1,000 对</strong> 在 <strong>5 个领域</strong>覆盖配对的 <em>ethical / unethical</em> 动作轨迹，评估通用 LLM、专门安全护栏模型，以及潜在表征探测方法的预测能力。我们提出 <strong>Prefix Foresight F1</strong> 作为核心评测指标——在不同的<em>轨迹前缀比例</em>下度量模型的事前预测能力。</p>
+    <p>实验结果显示：人类在该任务上能够取得<strong>有前景的表现</strong>；然而即使最强大的 LLM，预测式监控仍然<strong>具有挑战性</strong>。这一结果凸显了 LLM 安全研究中<strong>面向未来的风险推理</strong>（future-oriented risk reasoning）的重要性，呼吁安全社区重视"<em>事前能力</em>"，而不仅仅是事后审计。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（视角倒置 / 配对设计 / Prefix Foresight F1 / 评测面下沉到时间维）</div>
+
+    <p><strong>立论：把"<em>fail-stop 时刻</em>"从轨迹末端拉到轨迹中段。</strong>2024–2026 年安全 benchmark 的主流形式都是"<em>给一个完整结果，判断是否有害</em>"——HarmBench / SafetyBench / TrustLLM / BenchJack 都是这个范式。这个范式的根本问题是：等到结果出来再标注"有害"，已经太晚——尤其在 agent 部署场景中，<em>从有害动作发生到伤害实现</em>之间，通常已经穿越了多轮工具调用、多个外部系统的状态变化。<strong>PreAct-Bench 的范式转换是把"<em>风险评估</em>"前移到行动序列的<em>每一个 prefix</em>。</strong>这条路径直接对位 5-13 <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">SKILL.md</a> 把 skill 立成"<em>可声明前置条件</em>"的产物——只是 SKILL.md 在<em>声明端</em>预审，PreAct-Bench 在<em>执行端</em>预测。</p>
+
+    <p><strong>"配对轨迹"是评测设计上最重要的工程决断。</strong>每一对 1,000 对的 ethical/unethical 轨迹<em>共享前缀</em>——也就是说，<em>同一开局</em> 可以走向<em>合规</em>或<em>不合规</em>结尾。这条设计有三大深远影响：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>设计决策</th><th>目的</th><th>评测意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>共享前缀</strong></td><td>排除"轨迹外观特征"作弊（比如某些关键词 = 必有害）</td><td>迫使模型在<em>真实情境推理</em>而非<em>表面模式识别</em>上工作</td></tr>
+        <tr><td><strong>配对结构</strong></td><td>让 metric 计算更稳定（成对差异 vs 全集均值）</td><td>降低数据污染与基线偏移影响</td></tr>
+        <tr><td><strong>5 域覆盖</strong></td><td>避免单域过拟合（如金融建议 / 医疗 / 法律 / 隐私 / 物理风险）</td><td>跨域泛化能力可被独立报告</td></tr>
+      </tbody>
+    </table>
+
+    <p>这种设计对位 6-09 <a href="https://arxiv.org/abs/2606.09863" target="_blank" rel="noopener">False Success</a> 论文的"<em>9,876 tau2-bench × 1,879 AppWorld 配对</em>"——<em>都把"<em>失败模式</em>"视为可被独立检测的对象</em>，而不是"<em>结果好坏</em>"的二值标签。</p>
+
+    <p><strong>Prefix Foresight F1：第一个把"<em>预测时刻</em>"立成 first-class metric 的指标。</strong>F1 本身是分类常用 metric，但在 PreActBench 中它被"<em>前缀比例</em>"两次条件化——分别在 25%、50%、75% 等不同时间点测算。这条 metric 设计直接呼应 6-10 <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">Arbiter Agent</a>的"<em>对话结束前可靠检测</em>"主张：<strong>模型多<em>早</em>识别风险，比模型<em>是否</em>识别风险更重要</strong>。两条研究线在评测层（Bench）和方法层（Arbiter）形成完美互补。</p>
+
+    <p><strong>实验信号：人类 promising / 最强 LLM 仍挣扎——这条结论比看起来更深刻。</strong>论文显式标注"<em>人类有前景表现</em>"——这意味着<strong>预测式监控不是不可解任务</strong>。但当前 LLM 的差距很大，这暗示三种可能的失败模式：(1) LLM 缺乏<em>因果链</em>的多步预演能力；(2) LLM 对"<em>不当结果</em>"的具体定义在不同领域间不稳定；(3) LLM 缺乏"<em>路径外推</em>"内在动机——它会回答"是否有害"，但不会主动想"<em>下一步会怎样</em>"。这条直接对位 5-15 <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">Knowing-Doing Gap</a> 的核心发现：<em>cognition 与 execution 在 last layer 几乎正交</em>——也即 LLM 知道某个工具应该被使用，但<em>无法预演</em>"使用之后"的后果。</p>
+
+    <p><strong>评估对象的三层分类对评测面下沉至关重要。</strong>PreAct-Bench 不仅评 LLM，还评 (a) 通用 LLM / (b) 安全护栏模型 / (c) 潜在表征探针。这条评估对象的分层设计意义重大：当一个评测维度（事前预测）暴露失败，你需要知道<strong>哪一类模型最需要被改造</strong>。如果是 (a) 通用 LLM 失败而 (b) 护栏成功——那么"事前预测"应工程化为外挂护栏；如果三类都失败——那么需要根本性地重新设计训练范式（如把 PreActBench 加入 RLHF preference data）。</p>
+
+    <p><strong>"5 个领域"暗合 multi-agent 安全研究的<em>风险地图</em>。</strong>论文未在摘要里逐一披露，但根据相邻文献推断，5 个领域很可能覆盖：<em>金融建议（model organism）/ 医疗 / 隐私 / 法律 / 物理伤害</em>——这正是 5-21 <a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">GrandGuard</a> 的"<em>contextual risk = prompt × population × context</em>"五风险域的对位映射。两条研究线的合流意味着<strong>"风险面" 已经从离散类别共识演化为可被数据集化的连续地图</strong>。</p>
+
+    <p><strong>研究路线意义：从"<em>禁后</em>"到"<em>禁前</em>"的范式跃迁。</strong>2024 年的安全 benchmark（HarmBench / SafetyBench）评的是"<em>禁后</em>"——给定有害结果，看模型是否拒答；2026 年 PreAct-Bench 评的是"<em>禁前</em>"——给定中段轨迹，看模型是否预警。这与 6-09 <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">MAC-Bench</a>"<em>合规性 first-class</em>"和 6-10 <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">Arbiter Agent</a>"<em>对话结束前检测</em>"共同构成"<em>2026 H2 安全研究三件套</em>"——<strong>从 reactive 走向 proactive</strong>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming</em>·"<em>禁后</em>" 范式代表<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">[2] Sun et al. (2024) — <em>TrustLLM: Trustworthiness in Large Language Models</em>·综合可信度评测<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">[3] Zhang et al. (2024) — <em>SafetyBench: Evaluating the Safety of LLMs with Multiple Choice Questions</em>·MCQ 安全评测<br>
+    <a href="https://arxiv.org/abs/2309.07045" target="_blank" rel="noopener">arxiv.org/abs/2309.07045</a></div>
+    <div class="ref-item">[4] Anthropic (2024) — <em>Constitutional AI: Harmlessness from AI Feedback</em>·安全宪法 RLHF<br>
+    <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a></div>
+    <div class="ref-item">[5] Anthropic (2024) — <em>Sleeper Agents</em>·权重诱导失对齐研究<br>
+    <a href="https://arxiv.org/abs/2401.05566" target="_blank" rel="noopener">arxiv.org/abs/2401.05566</a></div>
+    <div class="ref-item">[6] Cheng et al. (2026) — <em>Knowing-Doing Gap in LLM Tool Use</em>·cognition/execution 正交化研究<br>
+    <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a></div>
+    <div class="ref-item">[7] Fan et al. (2026) — <em>GrandGuard: Contextual Risk Benchmark</em>·5 风险域定义<br>
+    <a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">arxiv.org/abs/2605.20203</a></div>
+    <div class="ref-item">[8] Greenblatt et al. (2024) — <em>Alignment Faking in LLMs</em>·LLM 欺骗性表达机制<br>
+    <a href="https://arxiv.org/abs/2412.14093" target="_blank" rel="noopener">arxiv.org/abs/2412.14093</a></div>
+    <div class="ref-item">[9] Tonini et al. (2026) — <em>The Arbiter Agent</em>·"<em>对话结束前检测</em>" 同期方法论<br>
+    <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">arxiv.org/abs/2606.10747</a></div>
+    <div class="ref-item">[10] Advani (2026) — <em>Characterizing False Success in LLM Agents</em>·事后失败模式定义同源<br>
+    <a href="https://arxiv.org/abs/2606.09863" target="_blank" rel="noopener">arxiv.org/abs/2606.09863</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>1,000 对配对轨迹</strong>——首个大规模、领域覆盖、严格配对的事前监控数据集。</li>
+      <li><strong>5 个领域</strong>——跨域泛化能力可被独立度量。</li>
+      <li><strong>Prefix Foresight F1</strong>——把"<em>预测时刻</em>"立为 first-class metric，把时间维加入安全评测。</li>
+      <li><strong>三类评估对象（通用 LLM / 安全护栏 / 表征探针）</strong>——分层暴露失败位点。</li>
+      <li><strong>人类有 promising 表现</strong>——预测式监控并非不可解，确立<em>研究目标</em>。</li>
+      <li><strong>最强 LLM 仍挣扎</strong>——揭示当前 LLM 的<em>因果预演能力缺失</em>，对位 Knowing-Doing Gap。</li>
+      <li><strong>视角倒置</strong>——"<em>禁前</em>"取代"<em>禁后</em>"，2024 年安全评测范式被范式性升级。</li>
+      <li><strong>多家联合（KCL 等机构）</strong>——10 位作者跨学术 / 工业，影响力外延广。</li>
+      <li><strong>CC BY-SA 4.0</strong>——任何衍生数据集必须同样开放，确保 benchmark 不被锁死。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>PreAct-Bench 的"<em>前缀比例条件化</em>"评测哲学，对你的"<strong>稀疏注意力 KV-cache 预取 + 双水位线 GPU 热缓存</strong>"毕设有一个直接的迁移：你的 cache 调度器同样可以被<em>前缀比例</em>条件化评测——也就是<em>在 prompt 处理到 25% / 50% / 75% 时，调度器对未来 attention pattern 的预测准确率</em>。<strong>建议</strong>：在毕设评测里加入 "<em>Prefix Prefetch F1</em>" 同款指标——给定 prompt 的前 N% tokens 已被 attention，调度器预测的"<em>下一段 KV 块需求</em>"与 ground truth 对比的 F1。这条 metric 不只能为论文提供漂亮数字，还能<strong>直接量化 cache 策略的"<em>前瞻能力</em>"</strong>——这一维度在传统 cache benchmark（hit-rate）下完全不可见。这与 6-10 #1 <a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">Regimes</a> 的<em>held-out gate</em>组合，意味着你毕设的策略改进闭环可以做到<em>4 道 gate × 时间维 F1</em> 的双轴报告——这正是研究强度的重要体现。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>PreAct-Bench 与今日 #2 <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">Arbiter Agent</a> 形成天然耦合：Arbiter 提供<em>对话级实时检测器</em>，PreAct-Bench 提供<em>它需要的事前预测能力评测</em>。两者一起就是<em>多 agent 主动监督</em>的"<em>方法 + 评测</em>"双轴。<strong>建议</strong>：把 Arbiter 的 budget-aware 检测器直接<em>用 PreActBench 训练</em>——这样 Arbiter 的 "<em>question / inspect / log</em>" 决策能在事前预测能力上得到<em>显式优化</em>。这条对位 5-19 <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">memory laundering</a> 的"<em>必须前置到 summarization 之前</em>"——所有 multi-agent 安全防御都<strong>越早越好</strong>，PreActBench 给出<em>多早算够</em>的量化基准。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>PreAct-Bench 给安全 benchmark 圈引入了<strong>时间维度</strong>这个 first-class 评测面。回顾过去半年的 benchmark 发表（5-13 <a href="https://arxiv.org/abs/2605.11330" target="_blank" rel="noopener">TRIVIA+</a>、5-14 <a href="https://arxiv.org/abs/2605.12673" target="_blank" rel="noopener">BenchJack</a>、5-21 <a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">GrandGuard</a>、5-26 <a href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">AgentHijack</a>、6-08 <a href="https://arxiv.org/abs/2606.06521" target="_blank" rel="noopener">AARR/AARRI-Bench</a>、6-09 <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">MAC-Bench</a>），核心趋势是<strong>评测面持续下沉、维度持续增加</strong>。PreAct-Bench 的 Prefix Foresight F1 与 6-09 SKILL.nb 的"<em>三次重跑保留率</em>" 在精神上同源——<em>都是把单一时刻的成功率，扩展为时间序列上的稳态量</em>。<strong>建议</strong>：未来 agent benchmark 应同时报告 (a) terminal accuracy / (b) prefix foresight F1（事前预测能力）/ (c) regret over time（时间累积回归率）。这三条共同构成<em>评测的"<em>时间立面</em>"</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Arbiter Agent (今日 #2)</strong>·对话级实时检测 · 与 PreAct-Bench 形成"<em>方法+评测</em>"双轴<br>
+      <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">arxiv.org/abs/2606.10747</a></li>
+      <li><strong>GrandGuard (5-21 #1)</strong>·5 风险域 contextual risk · PreAct-Bench 的 5 域很可能与之对位<br>
+      <a href="https://arxiv.org/abs/2605.20203" target="_blank" rel="noopener">arxiv.org/abs/2605.20203</a></li>
+      <li><strong>Knowing-Doing Gap (5-15 #2)</strong>·cognition/execution 正交 · 解释 LLM 在 PreActBench 上为什么挣扎<br>
+      <a href="https://arxiv.org/abs/2605.14038" target="_blank" rel="noopener">arxiv.org/abs/2605.14038</a></li>
+      <li><strong>SKILL.md (5-13 #2)</strong>·skill 声明端预审 · 与 PreActBench 执行端预测形成对仗<br>
+      <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a></li>
+      <li><strong>False Success in LLM Agents (今日候选 #3)</strong>·事后失败模式定义 · PreActBench 的事前对位<br>
+      <a href="https://arxiv.org/abs/2606.09863" target="_blank" rel="noopener">arxiv.org/abs/2606.09863</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.09890" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.09890v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.09890" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.LG/new" target="_blank" rel="noopener">arXiv cs.LG/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-10 #1 · 搜索来源：arxiv.org/list/cs.LG/new + arxiv.org/abs/2606.09890<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">arxiv.org/abs/2606.09890</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

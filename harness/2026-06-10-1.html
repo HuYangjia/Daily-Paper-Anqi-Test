@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-10 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-10 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 10 日 · Harness Engineering · 把 agent 自我改进做成可审计、留出门控的"一等工作流"</div>
+  <h1>Regimes / ActiveGraph：用 event-sourced runtime 把 agent 改进闭环立成事件流——LongMemEval-S 五划分中四个 +0.05~+0.10 准确率提升、把"reader prompt"作为 discovery probe</h1>
+  <div class="en-title">Regimes: An Auditable, Held-Out-Gated Improvement Loop Demonstrated on LongMemEval with ActiveGraph</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 7 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">Regimes: An Auditable, Held-Out-Gated Improvement Loop on LongMemEval with ActiveGraph</a><span class="winner-badge">今日选定</span></td>
+          <td>事件溯源 runtime · 4 道 gate（static / sandbox / in-sample / held-out） · failure-regime taxonomy · prompt-as-discovery-probe</td>
+          <td>arXiv 2606.10241（Yohei Nakajima）2026-06-08，30 页 / 5 图 / 开源</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10752" target="_blank" rel="noopener">AutoPDE: Reliable Agentic PDE Solving via Explicitly Represented Solver Strategies</a></td>
+          <td>把求解器策略立成可显式表示 / 可检查 / 可修订对象 · PDE Agent Bench 通过率 +14.2 pp</td>
+          <td>arXiv 2606.10752 · 2026-06-10</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10209" target="_blank" rel="noopener">Less Context, Better Agents: Efficient Context Engineering for Long-Horizon Tool-Using LLM Agents</a></td>
+          <td>剪枝最近 5 工具调用 + 摘要 · Microsoft Dynamics 365 财务工作流 · 91.6% 完成率</td>
+          <td>arXiv 2606.10209 · 2026-06-10</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10507" target="_blank" rel="noopener">HIPIF: Hierarchical Planning and Information Folding for Long-Horizon LLM Agent Learning</a></td>
+          <td>分层规划 + 信息折叠 · 长视界 agent 任务 · 显式子目标 + 历史折叠</td>
+          <td>arXiv 2606.10507 · 2026-06-10</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10457" target="_blank" rel="noopener">Trace2Policy: From Expert Behavior Traces to Self-Evolving Decision Agents</a></td>
+          <td>EISR 错误驱动迭代规则细化 · 70%→79.6% · 部署 22 天验证 · 合规敏感场景</td>
+          <td>arXiv 2606.10457 · 2026-06-10</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10299" target="_blank" rel="noopener">What Spatial Memory Must Store: Occlusion as the Test for Language-Agent Memory</a></td>
+          <td>把空间记忆与可见性谓词分离 · 遮挡测试作为评测器</td>
+          <td>arXiv 2606.10299 · 2026-06-10</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10532" target="_blank" rel="noopener">ActiveMem: Distributed Active Memory for Long-Horizon LLM Reasoning</a></td>
+          <td>异构互补记忆架构 · BrowseComp-Plus / GAIA SOTA</td>
+          <td>arXiv 2606.10532 · 2026-06-10</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Regimes: An Auditable, Held-Out-Gated Improvement Loop Demonstrated on LongMemEval with ActiveGraph</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Regimes：基于 ActiveGraph 的可审计、留出集门控 agent 改进闭环——以 LongMemEval 为示范</span></div>
+      <div class="meta-item"><label>作者</label><span>Yohei Nakajima（独著）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-08（v1，UTC 23:04:35）· 周一</span></div>
+      <div class="meta-item"><label>版本 / 篇幅</label><span>v1 · 30 页 · 5 图 · 561 KB</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI（Artificial Intelligence）</span></div>
+      <div class="meta-item"><label>性质</label><span>系统论文 + 公开 substrate · 把"controlled improvement"立成 first-class workflow</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arxiv.org/abs/2606.10241</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.10241" target="_blank" rel="noopener">arxiv.org/pdf/2606.10241</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.10241v1" target="_blank" rel="noopener">arxiv.org/html/2606.10241v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.10241" target="_blank" rel="noopener">10.48550/arXiv.2606.10241</a></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/yoheinakajima/regimes" target="_blank" rel="noopener">github.com/yoheinakajima/regimes</a>（含 committed runs）</div>
+      <div class="meta-item"><label>主要测试床</label><span>LongMemEval-S（500 问题池 / 5 个 seeded held-out splits）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用 <strong>append-only 事件日志</strong> 作 agent 状态的确定性投影，把"<em>诊断 → 补丁 → 留出集门控 → 提升 / 丢弃</em>"做成<strong>每一步本身就是事件</strong>的可审计闭环。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>自主改进闭环之所以难以信任，是因为<strong>改进过程通常以"外挂脚手架"形式螺接到 agent 上</strong>——失败不被记录、诊断无法回放、提升或丢弃决策落到旁路数据库而不是 agent 自己的历史里。我们展示：<strong>事件溯源（event-sourced）的 agent runtime 能消除这种摩擦，把"受控改进"变成一等工作流</strong>。</p>
+    <p>当 agent 状态是<em>追加式（append-only）事件日志</em>的<strong>确定性投影</strong>时，失败会被记录、运行能从其日志精确回放、候选补丁的作用域被限制在<em>类型化的管线接缝（typed pipeline seams）</em>、所有 gate 可审计，且每一次提升或丢弃都是一个事件。</p>
+    <p>我们在 <strong>ActiveGraph</strong> runtime 上实现了名为 <strong>Regimes</strong> 的闭环：诊断失败的评估 → 在管线某点提出修复 → 仅在通过<strong>静态检查、沙箱执行、样本内评估、留出集验证</strong>这<em>四道门</em>之后才提升。该闭环 <strong>target-agnostic</strong>——同一控制流经统一接口可作用于不同任务。</p>
+    <p>在 <strong>LongMemEval-S</strong> 上，主要的失败模式不是<em>检索</em>，而是<strong>调和（reconciliation）</strong>——证据已在组装好的上下文里，但 reader 仍给出错答。在 <strong>5 个 seeded held-out 划分</strong>上，Regimes 发现的<strong>reader-prompt 修复</strong>使最终留出集准确率在 4 个划分上提升 <strong>+0.05~+0.10</strong>，在 1 个 over-promotion 划分上提升 <strong>+0.01</strong>；其中 2 个划分单独显著（seed 5 未对其顺序提升结构进行调整）；汇总计数仅作描述性参考，因为 5 个划分共享同一 500 题池。</p>
+    <p>持久贡献为：<strong>(1) ActiveGraph 作为可审计基板</strong>使受控改进闭环工程化可行；<strong>(2) 留出集门控的闭环</strong>本身；<strong>(3) failure-regime taxonomy</strong>——把每种失败路由到管线某具体位置（其相对无路由基线的边际价值是主要开放问题）；<strong>(4) prompt-as-discovery-probe 假设</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（事件溯源 / 类型化接缝 / 留出集门控 / failure-regime taxonomy）</div>
+
+    <p><strong>立论：自主改进的真问题不在"会不会改"，而在"改完算不算数"。</strong>2026 H1 自主改进 agent 已经百花齐放——5-19 <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">ANNEAL</a> 把修复立成 governed 符号补丁、5-26 <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">Gu 的 system scaling</a> 把 verification cost 立成评测维度、6-08 <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">Lean4Agent</a> 把工作流抬到证明系统、6-09 <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">SKILL.nb</a> 把 lifecycle 治理立成评测维度。<strong>但所有这些都默认了一个事</strong>：改完之后的 agent 状态是<em>权威的</em>、<em>不可回放的</em>、<em>不可问责的</em>。Regimes 的赌注是反向的：如果 agent 状态本身就是 append-only 事件日志的确定性投影，那么"提升 / 丢弃"决策就<strong>一定</strong>能被审计、被回放、被驳回。</p>
+
+    <p><strong>事件溯源 runtime 的工程哲学：状态 = 事件流的投影。</strong>这条思路在金融系统、CQRS 架构、Git 等已成熟二十年，但首次被用作 <em>agent 自主改进的工程根基</em>。在 ActiveGraph 中：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>事件类别</th><th>记录内容</th><th>下游意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>RUN</strong>（一次任务执行）</td><td>任务输入、agent 决策序列、工具调用、最终输出、评估分数</td><td>失败分析的 ground truth；可从日志逐步重放</td></tr>
+        <tr><td><strong>FAILURE</strong>（评估失败）</td><td>失败实例 + 路由到 failure-regime 的某一位置（管线 N）</td><td>定义"补丁应作用在哪一接缝"</td></tr>
+        <tr><td><strong>PATCH_PROPOSED</strong>（候选补丁）</td><td>类型化的管线接缝、修改前后版本、修改理由</td><td>限定补丁的作用域，避免"全局乱改"</td></tr>
+        <tr><td><strong>GATE_PASSED / GATE_FAILED</strong>（门控）</td><td>四道 gate 各自结果（static / sandbox / in-sample / held-out）</td><td>每道门是独立的 commit point，单一 gate 失败 → 自动回滚</td></tr>
+        <tr><td><strong>PROMOTION / DISCARD</strong>（最终决策）</td><td>是否把补丁纳入 agent 主流程</td><td>本身就是事件——后续可回滚、可审计</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>四道门控的真正价值：分离"代码错误 / 局部成功 / 全局回归"三种风险。</strong>静态检查（编译 / 类型 / 静态规范）拦下平凡补丁错误；沙箱执行验证<em>不会破坏环境</em>；样本内评估验证补丁<em>能修当前失败</em>；留出集（held-out）才决定是否<em>对未见数据有效</em>。这一层设计直接对位 ML 圈的 train / val / test，但首次用在 agent 改进闭环——<strong>"补丁过 in-sample 就 promote"是过去半年最流行也最隐蔽的 p-hacking 来源</strong>，它直接驱动 6-09 候选 #2 PACE 的 anytime-valid 提交检验。Regimes 的 held-out 门控走的是经典 frequentist 路线，它和 PACE 形成了"<em>prompt-level 改进 vs 系统级评测公允</em>"的两条互补防线。</p>
+
+    <p><strong>Failure-regime taxonomy：把"它哪里错了"路由到"修在哪一步"。</strong>论文最具普适价值的洞见是：在 LongMemEval-S 上，<em>主导失败不是检索失败，而是 reconciliation 失败</em>——证据已在 reader 的输入里，但 reader 给出了错答。这个发现把 RAG / 长记忆系统圈子的研究方向重新校准：<strong>把研究投入压在 retrieval 上是错配 — reader 才是瓶颈</strong>。Regimes 把这条洞察工程化成了 taxonomy：每个失败实例都被映射到管线某一具体位置（retriever / 上下文组装 / reader 等），失败位置决定补丁作用域。这是一种"<em>把诊断学嵌入运行时</em>"的设计哲学，与 6-08 <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">Lean4Agent</a> "类型作为外部凭证" 在精神上同源。</p>
+
+    <p><strong>"Prompt 作为 discovery probe"：把 prompt 改写从"trick"升级为"研究方法"。</strong>多年来 prompt engineering 一直被视为缺乏理论的 trick；Regimes 提出一种新的解释：<em>prompt 改写就是对 LLM 行为流形的探针实验</em>。在 LongMemEval-S 上，所有的修复都集中在 reader prompt，5 个划分中 4 个划分能稳定带来 +0.05~+0.10 的准确率提升——这暗示"<em>哪一类 prompt 微调有效</em>"本身是一个可被实验、可被分类、可被复现的研究对象。这一点对应于 5-25 <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">Code as Agent Harness</a> "代码作为推理基质" 的另一极：<em>不是用代码取代 prompt，而是反过来用结构化方法研究 prompt</em>。</p>
+
+    <p><strong>实验信号怎么读：4 / 5 划分稳定提升，1 个 over-promotion——把"<em>诚实声明负面信号</em>"立成范例。</strong>论文显式承认：5 个 splits 共享 500 题池，所以汇总计数<em>仅作描述性参考</em>；其中 1 个 split 仅 +0.01 是因为 over-promotion；2 个 splits 单独显著，但 seed 5 没有针对顺序提升做调整。这种<strong>对统计弱点的诚实声明</strong>本身就是 agent 评测圈子稀缺的研究品质——和 6-08 <a href="https://arxiv.org/abs/2606.06521" target="_blank" rel="noopener">AARR/AARRI-Bench</a> "把 harness 与模型解耦报告" 共同构成 2026 年中"<em>评测要老老实实承认混淆变量</em>"的姿态。</p>
+
+    <p><strong>研究路线意义：把"agent 改进"从行为学问题变成系统学问题。</strong>Regimes 之前，自主改进 agent 的主要研究范式是 RLHF / RL post-training / Reflexion 等"<em>行为层</em>"方法；Regimes 把范式拉到"<em>系统层</em>"——你需要的不是更强的反思器，而是<strong>把每次反思的输入 / 输出 / 决策都立成可回放事件</strong>。这条路径直接对位软件工程圈过去十年的 trace-based observability（OpenTelemetry / Jaeger 等）——<em>当 agent 进入生产，可观测性必须先于智能性</em>。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Wu et al. (2024) — <em>LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</em>·主要测试床<br>
+    <a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">arxiv.org/abs/2410.10813</a></div>
+    <div class="ref-item">[2] Shinn et al. (2023) — <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>·自反思 agent 起点<br>
+    <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener">arxiv.org/abs/2303.11366</a></div>
+    <div class="ref-item">[3] Madaan et al. (2023) — <em>Self-Refine: Iterative Refinement with Self-Feedback</em>·自我修改基线<br>
+    <a href="https://arxiv.org/abs/2303.17651" target="_blank" rel="noopener">arxiv.org/abs/2303.17651</a></div>
+    <div class="ref-item">[4] Anthropic / Devin / Claude Code — <em>Agent runtime 系列工业实现</em>·Regimes 对位的工业基线<br>
+    <a href="https://www.anthropic.com/research/code-as-agent-harness" target="_blank" rel="noopener">anthropic.com/research/code-as-agent-harness</a></div>
+    <div class="ref-item">[5] Nakajima (2023) — <em>BabyAGI</em>·作者前驱开源 autonomous agent 项目<br>
+    <a href="https://github.com/yoheinakajima/babyagi" target="_blank" rel="noopener">github.com/yoheinakajima/babyagi</a></div>
+    <div class="ref-item">[6] Lewis et al. (2020) — <em>RAG: Retrieval-Augmented Generation</em>·LongMemEval 的主流方法<br>
+    <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">arxiv.org/abs/2005.11401</a></div>
+    <div class="ref-item">[7] Bhakim et al. (2026) — <em>ANNEAL: Governed Symbolic Knowledge Patches</em>·governed repair 同源<br>
+    <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></div>
+    <div class="ref-item">[8] El Hattami, Chapados, Pal (2026) — <em>SKILL.nb: Selective Formalization & Gated Execution</em>·lifecycle 治理同源<br>
+    <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></div>
+    <div class="ref-item">[9] Wang et al. (2026) — <em>Lean4Agent: 形式化 IR for Agent Workflow</em>·形式化谱系上端<br>
+    <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></div>
+    <div class="ref-item">[10] Gu (2026) — <em>From Model Scaling to System Scaling</em>·verification cost 立为评测维度<br>
+    <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>4 / 5 splits 留出集准确率提升 +0.05~+0.10</strong>——稳定的边际改进，验证 prompt-as-discovery-probe 假设。</li>
+      <li><strong>1 / 5 splits 仅 +0.01（over-promotion）</strong>——论文显式承认负面信号；4 道 gate 仍能拦下大多数过度提升。</li>
+      <li><strong>主导失败模式：reader reconciliation 而非 retrieval</strong>——把 RAG 圈研究重心从检索器拨向 reader。</li>
+      <li><strong>500 题共享池</strong>——5 个划分非独立，论文显式声明汇总计数仅描述性。</li>
+      <li><strong>4 道 gate（static / sandbox / in-sample / held-out）</strong>——把"<em>p-hacking-by-loop</em>"问题工程化分离。</li>
+      <li><strong>Append-only 事件日志</strong>——agent 状态成为可回放、可审计、可回滚对象。</li>
+      <li><strong>Failure-regime taxonomy</strong>——把"它错在哪"路由到"补丁作用在哪一接缝"，统一改进闭环的语义层。</li>
+      <li><strong>Target-agnostic</strong>——同一控制流通过统一接口对接不同任务，迁移成本接近零。</li>
+      <li><strong>开源</strong>——GitHub 仓库含 committed runs，可完整复现 LongMemEval-S 的 5 个划分实验。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Regimes 给你的"<strong>稀疏注意力 KV-cache 预取 + 双水位线 GPU 热缓存</strong>"毕设最直接的工程范式启发是<em>把每次预取决策、每次水位调整、每次驱逐都立成事件流</em>——而不是 just-in-time 计算的隐式状态。<strong>建议</strong>：(1) 在毕设 runtime 里加入<em>append-only 决策事件日志</em>——每次 prefetch / evict / 水位调整都写一条事件，含触发条件 / 当时 attention pattern hash / KV-cache 命中率快照；(2) 评测层引入<em>4 道 gate</em>对位 — static gate 验证策略本身合法（cache 总量上限）、sandbox gate 验证策略<em>不破坏正确性</em>（与 baseline 对照 logits 一致）、in-sample gate 验证 hit-rate 提升、<em>held-out gate</em> 验证未见 prompt 上仍然 hit-rate 提升；(3) 最重要的：<em>把"策略提升"本身立成事件</em>——这意味着你的毕设<strong>可以诚实承认 some workloads regress</strong>，而不是被迫只报"平均 hit-rate 提升 X%"。这条诚实姿态在 ML systems 论文里少见且非常加分。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Regimes 对今日方向 #2 <a href="https://arxiv.org/abs/2606.10747" target="_blank" rel="noopener">Arbiter Agent</a>（多智能体 misalignment 检测）形成天然耦合：Arbiter 在<em>对话级</em>工作，但当 misalignment 被检测出来需要<em>修</em>时，Regimes 提供的<em>事件溯源 + held-out gate</em> 就是修复的工程基底。<strong>建议</strong>：把 Arbiter 的 inspection budget 决策、Regimes 的 promotion / discard 决策<em>合并到同一事件流</em>——所有"<em>检测 / 干预 / 修复 / 提升</em>"四类操作变成统一事件，安全审计与改进审计共享 trace。这条路径直接对位 5-19 <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">memory laundering</a>：当 sub-threshold 状态污染发生时，事件溯源是唯一能让"修复回到第一次污染源"的工程基底。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Regimes 给 agent benchmark 引入了一个新的报告维度：<strong>报告 over-promotion 比例</strong>。当一个改进闭环在 N 个 held-out splits 上仅在 N-1 个有提升、1 个 over-promote 时，<em>这个 1 个就是 benchmark 报告的关键数据</em>。<strong>建议</strong>：未来 agent benchmark（包括今日 #3 <a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">PreAct-Bench</a>、5-26 <a href="https://arxiv.org/abs/2605.25707" target="_blank" rel="noopener">AgentHijack</a>、6-08 <a href="https://arxiv.org/abs/2606.06521" target="_blank" rel="noopener">AARR/AARRI-Bench</a>）应同时报告 (a) 平均提升 / (b) over-promotion 比例 / (c) failure-regime 分布。这与 6-03 <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">What Benchmarks Don't Measure</a> 提出的"<em>safety-usability tunable</em>"在精神上同源——<em>评测面必须从"<em>能不能做对</em>"扩展到"<em>提升是不是诚实的</em>"</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SKILL.nb (6-09 #1)</strong>·选择性形式化 + 门控执行 · 与 Regimes 共同构成 lifecycle 治理两条线<br>
+      <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></li>
+      <li><strong>Lean4Agent (6-08 #1)</strong>·依赖类型形式化 IR · 与 Regimes 形成"<em>类型 vs 事件</em>"两种凭证范式<br>
+      <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></li>
+      <li><strong>ANNEAL (5-19 #1)</strong>·governed 符号补丁 · Regimes 对其 gate 概念的工程化扩展<br>
+      <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></li>
+      <li><strong>System Scaling (5-26 #1)</strong>·把 verification cost 立为评测维度 · Regimes 是其 verification 主线参考实现<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>AutoPDE (今日候选 #2)</strong>·把求解器策略立成可显式表示对象 · 与 Regimes 把补丁立成 typed seam 同构<br>
+      <a href="https://arxiv.org/abs/2606.10752" target="_blank" rel="noopener">arxiv.org/abs/2606.10752</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.10241" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.10241v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/yoheinakajima/regimes" target="_blank" rel="noopener">GitHub 开源</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.10241" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">LongMemEval 数据集</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-10 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.10241<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arxiv.org/abs/2606.10241</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
