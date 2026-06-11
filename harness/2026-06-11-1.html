@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-11 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-11 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 11 日 · Harness Engineering · 把 "技能组织方式" 立成可独立测量的 harness 维度</div>
+  <h1>SkillJuror：用语义受控变体 + 匹配多试验 + 轨迹证据测量"渐进式披露 vs 扁平化"——SkillsBench 82 任务上每条轨迹接触资源数 1.18 → 3.85，验证器通过率 +4.1%</h1>
+  <div class="en-title">SkillJuror: Measuring How Agent Skill Organization Changes Runtime Behavior</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 7 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.11543" target="_blank" rel="noopener">SkillJuror: Measuring How Agent Skill Organization Changes Runtime Behavior</a><span class="winner-badge">今日选定</span></td>
+          <td>Skill 组织方式 vs 内容 · Progressive Disclosure 与扁平化 · 语义受控变体 + 多试验匹配 · 轨迹证据 · 82 任务 SkillsBench</td>
+          <td>arXiv 2606.11543（Z. Chen / Z. Guo / B. Huang / B. Lu / J. Lin / Y. Zhou / W. Zhang）2026-06-10</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">SciConBench + SciConHarness: Clean-Room Evaluation of Scientific Conclusion Synthesis</a></td>
+          <td>9.11K 问题 + clean-room harness · 8 前沿 agent F1 仅 0.337 · 净室评测立成方法学</td>
+          <td>arXiv 2606.11337 · 79 页 / 34 图 · 2026-06-09</td>
+          <td class="score-num">94*（已分配 benchmark 方向）</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12329" target="_blank" rel="noopener">PROJECTMEM: Local-First Event-Sourced Memory & Judgment Layer for Coding Agents</a></td>
+          <td>Memory-as-Governance · append-only event log · MCP-served projection · 预动作门控阻止重复失败修复</td>
+          <td>arXiv 2606.12329 · 12 页 · 2026-06-11</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11440" target="_blank" rel="noopener">INFRAMIND: Infrastructure-Aware Multi-Agent Orchestration</a></td>
+          <td>Hierarchical CMDP + RL · 实时系统负载 / 队列深度 / 缓存利用率 · +7.6 pp 准确率 / 7× 延迟下降</td>
+          <td>arXiv 2606.11440 · 2026-06-11</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11680" target="_blank" rel="noopener">HORMA: Hierarchical Organize-and-Retrieve Memory Agent</a></td>
+          <td>file-system-like 层级记忆 · RL-trained navigation · LongMemEval / ALFWorld 仅 22.17% token 预算</td>
+          <td>arXiv 2606.11680 · 2026-06-11</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11290" target="_blank" rel="noopener">FlowBank: Query-Adaptive Workflow Optimization through Precompute-and-Reuse</a></td>
+          <td>三阶段（Diversifying / Curating / Matching）· 5 benchmarks 平均最高分 · +14.92% over hand-crafted</td>
+          <td>arXiv 2606.11290 · 2026-06-11</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11435" target="_blank" rel="noopener">Agent Skill Evaluation and Evolution: Frameworks and Benchmarks</a></td>
+          <td>四类范式（execution feedback / trajectory distillation / compression / RL）综述 · skill-centric benchmark 对比</td>
+          <td>arXiv 2606.11435 · survey · 2026-06-11</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.11521" target="_blank" rel="noopener">Counterexample Guided Learning in the Large using Reasoning Agents</a></td>
+          <td>反例引导细化 + 反思修复回路 · 正则表达式归纳 3.2%→38.1% / 38.9%→74.1%</td>
+          <td>arXiv 2606.11521 · 2026-06-11</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">* SciConBench 评分实为 94 分，但因为同时也是今日最强 benchmark 方向候选，按方向分配规则归入 benchmark 方向 #1。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SkillJuror: Measuring How Agent Skill Organization Changes Runtime Behavior</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SkillJuror：测量 agent 技能组织方式如何改变运行时行为</span></div>
+      <div class="meta-item"><label>作者</label><span>Zhiyu Chen, Zihan Guo, Bo Huang, Bingwei Lu, Jianghao Lin, Yuanjian Zhou, Weinan Zhang（7 位）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-10（v1，UTC 01:11:50）· 周三</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.SE</span></div>
+      <div class="meta-item"><label>性质</label><span>系统论文 + 评测框架 + 开源 · 把"技能组织方式"立为独立可测维度</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.11543" target="_blank" rel="noopener">arxiv.org/abs/2606.11543</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.11543" target="_blank" rel="noopener">arxiv.org/pdf/2606.11543</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.11543v1" target="_blank" rel="noopener">arxiv.org/html/2606.11543v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.11543" target="_blank" rel="noopener">10.48550/arXiv.2606.11543</a></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/zhiyuchen-ai/skill-juror" target="_blank" rel="noopener">github.com/zhiyuchen-ai/skill-juror</a></div>
+      <div class="meta-item"><label>主要测试床</label><span>SkillsBench（82 任务 · 410 匹配多试验）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent skill 的<strong>组织方式</strong>（"<em>渐进式披露 vs 扁平化</em>"）从内容里剥离出来作为<strong>独立可测变量</strong>，证明组织方式<em>先改变运行时行为再改变结果</em>——SkillsBench 82 任务上轨迹接触资源数 1.18 → 3.85、验证器通过率 +4.1%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Agent Skills 在推理时为大语言模型 agent 注入<strong>程序性知识</strong>，但当前 benchmark 极少区分一个 Skill <em>说了什么</em> 与 <em>它如何被组织</em>。我们通过 <strong>Progressive Disclosure（渐进式披露）</strong>研究这一区分：让一个简洁的根文件按需把 agent 引导到支持资源；并将其与<strong>归一化的扁平化基线</strong>对比。</p>
+    <p>我们提出 <strong>SkillJuror</strong>，一个评估 Skill 写作范式的框架，通过 <em>语义受控变体</em>、<em>匹配的多试验评估</em> 与 <em>轨迹证据</em>，在<strong>保持任务知识不变</strong>的条件下进行测量。</p>
+    <p>在 <strong>82 任务的 SkillsBench</strong> 研究中，Progressive Disclosure 在<em>聚合结果之前先改变了运行时行为</em>：每条轨迹接触的不同 Skill 资源数从 <strong>1.18 上升到 3.85</strong>，有效的 uptake 事件从 <strong>1.33 上升到 3.92</strong>。它也带来了相对扁平化基线的 <strong>+17 / 410 匹配试验 (+4.1%)</strong> 的额外验证器通过试验。</p>
+    <p>该收益<em>取决于任务</em>。<strong>Progressive Disclosure 在支持资源用于指导实现 / 检查 / 修复时有帮助，但在成功取决于精确输出约定、数值阈值或长产物生成管线时表现较弱</strong>。这些结果表明：<strong>Skill 组织不只是"呈现形式"</strong>——它会改变 agent 搜索与应用程序性知识的方式，而结果上的收益取决于暴露的资源对当前任务<em>是否可操作</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（语义受控变体 / 匹配多试验 / Progressive Disclosure / 行为先于结果）</div>
+
+    <p><strong>立论：当前 benchmark 把"<em>说了什么</em>"和"<em>怎么组织</em>"混为一谈。</strong>2026 H1 已经形成一个明确共识：Anthropic 5-13 SKILL.md（<a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arXiv 2605.11418</a>）把 Skill 立为"<em>声明型可注册的程序知识资产</em>"；6-03 SkillDAG（<a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arXiv 2606.03056</a>）把 skill 检索从相似度匹配升级为类型化有向图；6-09 SKILL.nb（<a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arXiv 2606.08049</a>）把 lifecycle 治理立成评测维度。<em>然而所有这些工作都默认了同一件事</em>：写得好的 Skill 自然会被 agent 用得好。SkillJuror 的赌注是对这一假设直接做反事实——<strong>同一份程序性知识，在两种组织形态下，agent 的运行时行为差异是否大到足以与"内容"分开测量</strong>？答案是<strong>是</strong>。</p>
+
+    <p><strong>方法学贡献：把"组织方式"从"内容"中剥离的三件套。</strong>SkillJuror 的工程难点是<em>如何在保持任务知识不变的前提下只改变组织</em>，作者给出三件套：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>工具</th><th>作用</th><th>对应解决的混淆</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>语义受控变体（semantically controlled variants）</strong></td><td>对同一组 skill 资源做归一化重写——内容字面表述、知识量、token 数全部对齐，仅"<em>是否一上来就把所有内容塞给 agent</em>"这一组织维度变化</td><td>排除"<em>Progressive Disclosure 写得更短/更详细</em>"造成的伪相关</td></tr>
+        <tr><td><strong>匹配多试验评估（matched multi-trial evaluations）</strong></td><td>每个 (任务 × 变体) 对都跑多次试验，用同一组 seed 与采样策略——410 试验对作为统计基线</td><td>排除采样噪声"<em>偶然让一种形态看起来更好</em>"</td></tr>
+        <tr><td><strong>轨迹证据（trajectory evidence）</strong></td><td>除了最终是否通过验证器，还记录"<em>每条轨迹接触了哪些 skill 资源 / 资源被实际使用还是只被读取</em>"</td><td>排除"<em>组织变化只让 agent <em>看起来</em>不同但其实做了同一件事</em>"的虚假改进</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心发现一：组织方式先改变行为，再改变结果。</strong>这是论文最重要的方法学发现：在 82 任务 SkillsBench 上，<em>聚合结果（验证器通过率）只增 4.1%</em>，但<em>每条轨迹接触的不同 skill 资源数从 1.18 跳到 3.85（+226%）</em>、有效的 uptake 事件从 1.33 跳到 3.92（+195%）。这说明 Progressive Disclosure <strong>在很大程度上改变了 agent 与知识库的交互方式，而这些行为变化只有一部分翻译成了最终结果改进</strong>。SkillJuror 因此立成了一种"<em>行为指标先于结果指标</em>"的评测范式——和 6-10 Regimes（<a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arXiv 2606.10241</a>）的 4 道 gate 并列：Regimes 在<em>纵向</em>用事件溯源把改进闭环立成事件流，SkillJuror 在<em>横向</em>用轨迹证据把"<em>知识被如何使用</em>"立成可测量行为。</p>
+
+    <p><strong>核心发现二：Progressive Disclosure 的收益是 task-dependent。</strong>论文用大量篇幅证明这不是一句简单的"<em>有时管用有时不管用</em>"——而是有<strong>具体边界条件</strong>：<em>当支持资源用于指导<em>实现</em>、<em>检查</em>、<em>修复</em>时，渐进式披露能帮 agent 找到合适的指引</em>；<em>但当成功取决于<em>精确输出约定</em>、<em>数值阈值</em>、<em>长产物生成管线</em>时，渐进式披露反而较弱——因为这些场景需要<em>一次性把所有约束摆在 agent 面前</em>，按需暴露反而让 agent 错过关键约束</em>。这一发现把"Progressive Disclosure 是否更好"这一直白问题<em>升级</em>成"<em>哪些任务面应该用 Progressive，哪些任务面应该用 flat</em>"的<em>方法学决策问题</em>——几乎可以预见会成为下半年 agent skill 写作圈的引用标杆。</p>
+
+    <p><strong>哲学定位：把 SKILL.md 圈子从"<em>怎么写</em>"推向"<em>怎么测</em>"。</strong>过去半年大量工作教 agent 团队"<em>如何写出可复用、可注册、可治理的 SKILL.md</em>"（5-13 SKILL.md / 5-25 SkillSafetyBench / 6-09 SKILL.nb），但<em>"怎么知道我写得对"</em>这一元层一直缺位。SkillJuror 是首个把"<em>写作范式选择本身</em>"立成<em>可受控对照实验</em>的框架——它对位 ML 圈的 ablation study 文化，把 agent skill 写作从"<em>艺术</em>"推向"<em>实验科学</em>"。这与 6-08 AARR/AARRI-Bench（<a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arXiv 2606.07462</a>）"<em>把 harness 与模型解耦报告</em>" 在精神上同源——都是把"<em>写法 vs 模型</em>"两条混淆变量切开。</p>
+
+    <p><strong>开源价值：可复现的 ablation 平台。</strong>GitHub <a href="https://github.com/zhiyuchen-ai/skill-juror" target="_blank" rel="noopener">zhiyuchen-ai/skill-juror</a> 提供 82 任务 SkillsBench + 语义受控变体 + 匹配多试验 runner。任何在生产中维护 SKILL.md 的团队（包括 Anthropic Claude Code、Devin、Manus 等）都可以把自家 skill 文件接入做<em>组织变体 ablation</em>——这条复现链是过去半年缺位的工程基础设施。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Anthropic (2025) — <em>Claude Code: Agent Skills (SKILL.md)</em>·Progressive Disclosure 的最早工业实践<br>
+    <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></div>
+    <div class="ref-item">[2] J. Wynne et al. (2026) — <em>SKILL.md: Skills as Verifiable Artifacts</em>·5-13 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a></div>
+    <div class="ref-item">[3] Bai et al. (2026) — <em>SkillDAG: 类型化有向图取代相似度检索</em>·6-03 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></div>
+    <div class="ref-item">[4] El Hattami / Chapados / Pal (2026) — <em>SKILL.nb: 选择性形式化 + 门控执行 lifecycle 治理</em>·6-09 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></div>
+    <div class="ref-item">[5] Wei et al. (2022) — <em>Chain-of-Thought Prompting</em>·程序性知识注入的最早范式<br>
+    <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">arxiv.org/abs/2201.11903</a></div>
+    <div class="ref-item">[6] Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting</em>·tool-use agent 起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[7] Schick et al. (2023) — <em>Toolformer</em>·程序性知识自学起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">[8] Nakajima (2026) — <em>Regimes: Event-Sourced Improvement Loop</em>·6-10 #1 · 行为指标先于结果指标的同源思想<br>
+    <a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arxiv.org/abs/2606.10241</a></div>
+    <div class="ref-item">[9] Wang et al. (2026) — <em>Lean4Agent: 形式化 IR for Agent Workflow</em>·6-08 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></div>
+    <div class="ref-item">[10] J. Wang et al. (2026) — <em>AARR/AARRI-Bench: harness 与模型解耦评测</em>·6-08 #3<br>
+    <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>每条轨迹接触不同 skill 资源数：1.18 → 3.85（+226%）</strong>——组织方式直接改变 agent 的"<em>读图广度</em>"。</li>
+      <li><strong>有效 uptake 事件：1.33 → 3.92（+195%）</strong>——<em>读到</em>之外，<em>真正用起来</em> 的资源也实质增加。</li>
+      <li><strong>验证器通过率：+17 / 410 = +4.1%</strong>——结果改进存在但远小于行为改进，这本身就是关键发现。</li>
+      <li><strong>82 任务 SkillsBench</strong>——首个语义受控的 skill 组织实验床。</li>
+      <li><strong>Progressive Disclosure 优势区</strong>：实现指导 / 检查 / 修复——核心是<em>稀疏需求</em>。</li>
+      <li><strong>Progressive Disclosure 劣势区</strong>：精确输出约定 / 数值阈值 / 长产物生成管线——核心是<em>稠密约束</em>。</li>
+      <li><strong>方法学贡献</strong>：语义受控变体 + 匹配多试验 + 轨迹证据三件套。</li>
+      <li><strong>核心论断</strong>：Skill 组织 ≠ 呈现形式，它<em>先于</em>结果指标改变 agent 的搜索与应用方式。</li>
+      <li><strong>开源</strong>：GitHub zhiyuchen-ai/skill-juror，可作为生产 SKILL.md 的 ablation 平台。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>SkillJuror 给你的 KV-cache 毕设的最直接启发是：<strong>把"系统行为"与"系统结果"分两层报告</strong>。当前 ML systems 论文绝大多数只报告 hit-rate / latency 等<em>结果指标</em>；SkillJuror 强调<em>行为指标先于结果指标</em>。<strong>建议在毕设里同时报告</strong>：(a) <em>结果层</em>—— hit-rate、平均延迟、p99；(b) <em>行为层</em>—— 平均每个 token 实际访问的 KV-cache 块数 / 预取触发率 / 驱逐前的平均访问次数 / 双水位线越线频率；(c) <em>组织层 ablation</em>—— 用 SkillJuror 的"<em>语义受控变体</em>"思路，把 cache 组织方式（线性 / 分块 / hierarchical）做成<em>剥离出来的独立变量</em>，与 cache 大小 / 算法分开报告。这条做法直接对位 SkillJuror 的"<em>把组织方式从内容剥离</em>"哲学，能让你的论文具备 Anthropic / Google 系统圈子的方法学严谨度。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>SkillJuror 与今日方向 #2 <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">Impossibility of ELK</a> 的耦合最深远：当 ELK 不可能性定理证明<em>仅靠行为反馈无法保证 agent honest</em>，自然推论是——<em>必须把行为内部结构纳入评测</em>。SkillJuror 的"<em>轨迹证据</em>"恰好是这条路径的工程化：不只看 agent 输出对不对，还看 agent 内部访问了哪些资源、用了哪些资源、依赖哪些 skill。把这两者合起来：<strong>未来 agent safety benchmark 必须同时报告 (a) 行为输出 / (b) 程序性轨迹 / (c) 内部表征</strong>——三层证据缺一不可。这条结合也直接呼应 5-19 <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">memory laundering</a> 的"<em>sub-threshold 状态污染需要轨迹层证据</em>"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>SkillJuror 的方法学三件套（语义受控变体 / 匹配多试验 / 轨迹证据）是<strong>所有未来 agent benchmark 都应该采纳的实验设计原则</strong>。今日方向 #3 <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">SciConBench / SciConHarness</a> 的"<em>clean-room evaluation</em>" 与 SkillJuror 的"<em>语义受控变体</em>"形成对位——两者都试图把<em>变量</em>从<em>混淆</em>中分离出来。<strong>建议</strong>：未来 agent benchmark 报告时<em>必须显式声明</em>：(a) 哪些维度做了对照（控制了什么）；(b) 哪些维度仍是混淆（可能解释看到的提升）；(c) <em>结果层 vs 行为层</em>的指标分离。这一姿态在 6-03 <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">What Benchmarks Don't Measure</a> "<em>safety-usability tunable</em>"、6-09 <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">MAC-Bench</a> "<em>CSR / MG 双指标</em>"、6-10 <a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">PreAct-Bench</a> "<em>Prefix Foresight F1</em>" 之后，构成 2026 H2 benchmark 方法学的统一姿态。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SKILL.nb (6-09 #1)</strong>·选择性形式化 + 门控执行 · 与 SkillJuror 共同构成"<em>写法 + 测法</em>"两条线<br>
+      <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></li>
+      <li><strong>SkillDAG (6-03 #1)</strong>·类型化有向图取代相似度检索 · 与 SkillJuror 形成"<em>组织 vs 检索</em>"两种切入角度<br>
+      <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></li>
+      <li><strong>SKILL.md (5-13 #2)</strong>·程序性知识立成 verifiable artifact · SkillJuror 的直接前置工作<br>
+      <a href="https://arxiv.org/abs/2605.11418" target="_blank" rel="noopener">arxiv.org/abs/2605.11418</a></li>
+      <li><strong>Regimes (6-10 #1)</strong>·event-sourced 改进闭环 · 与 SkillJuror 形成"<em>纵向时间 vs 横向资源</em>"两条行为证据轴<br>
+      <a href="https://arxiv.org/abs/2606.10241" target="_blank" rel="noopener">arxiv.org/abs/2606.10241</a></li>
+      <li><strong>Agent Skill Evaluation Survey (今日候选)</strong>·四类范式 + skill-centric benchmark 综述<br>
+      <a href="https://arxiv.org/abs/2606.11435" target="_blank" rel="noopener">arxiv.org/abs/2606.11435</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.11543" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.11543" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.11543v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/zhiyuchen-ai/skill-juror" target="_blank" rel="noopener">GitHub 开源</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.11543" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-11 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.11543<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.11543" target="_blank" rel="noopener">arxiv.org/abs/2606.11543</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
