@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-12 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 12 日 · Harness Engineering · 把 harness 自身从手工工程升级为可学习模块</div>
+  <h1>HarnessBridge：把 agent–environment 接口参数化为双向投影的可学习 harness 控制器——Terminal-Bench 2.0 / SWE-bench Verified 上匹敌或超越专门设计 harness，同时显著降低 token 消耗与轨迹长度</h1>
+  <div class="en-title">HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness</a><span class="winner-badge">今日选定</span></td>
+          <td>把 harness 立成可端到端学习的 plug-in · 双向投影（observation projection + action projection）· Terminal-Bench 2.0 / SWE-bench Verified · token & 轨迹长度同时下降</td>
+          <td>arXiv 2606.12882（X. Wang / H. Wang / A. Taylor / J. Cong / Y. Sun / W. Wang）2026-06-11</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">ToolSense: Diagnostic Framework for Auditing Parametric Tool Knowledge in LLMs</a></td>
+          <td>开源诊断框架 · RRB / MCQ / QA 三类自动生成 · ToolBench 47k 工具 · 揭示"知识 vs 检索"分离 · RRB 比完整指定降 50–64 pp</td>
+          <td>arXiv 2606.12451 · 2026-06-11</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">SciAgentArena: Benchmarking AI Agents for Scientific Challenges Across Scales</a></td>
+          <td>200 科研任务 · step-level 验证 · interactive agent-agnostic 环境 · 失败模式分类</td>
+          <td>arXiv 2606.12736 · 2026-06-11</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12674" target="_blank" rel="noopener">Evoflux: Inference-Time Evolution of Executable Tool Workflows for Compact Agents</a></td>
+          <td>把工具使用立为 graph repair 问题 · MCP-Bench 250 工具 · 可执行性 ~3% → 17–24% · 优于 SFT/SFT+DPO/ReAct</td>
+          <td>arXiv 2606.12674 · 2026-06-11</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12871" target="_blank" rel="noopener">DailyReport: Open-ended Benchmark for Search Agents on Daily Tasks</a></td>
+          <td>150 开放任务 + 3,546 评分细则 · 子任务级联评估 · 17 search agents 仍未达用户预期</td>
+          <td>arXiv 2606.12871 · 2026-06-11</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12834" target="_blank" rel="noopener">AgentBuild for Rietveld Refinement</a></td>
+          <td>把 agent 构建立为 workflow stage · scientist-authored contracts 驱动 · 版本化评分细则 · X 射线衍射场景</td>
+          <td>arXiv 2606.12834 · 2026-06-11</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new（2026-06-12）。HarnessBridge 是<em>唯一</em>一篇直接对"<em>harness 本身</em>"做端到端可学习化的工作，与 5-26 "From Model Scaling to System Scaling" 立场互补；其他候选偏 agent / tool 评测，未触及"harness 即可学习模块"这一立题。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness</span></div>
+      <div class="meta-item"><label>中文标题</label><span>HarnessBridge：用于 LLM Agent Harness 的可学习双向控制器</span></div>
+      <div class="meta-item"><label>作者</label><span>Xiaoxuan Wang, Haixin Wang, Alexander Taylor, Jason Cong, Yizhou Sun, Wei Wang（6 位 · UCLA / Computer Science）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-11（v1，UTC 04:18:37）· 周四</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>性质</label><span>方法论文 + 训练协议 · 把 harness 立成 learnable bidirectional projection module</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.12882" target="_blank" rel="noopener">arxiv.org/pdf/2606.12882</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.12882v1" target="_blank" rel="noopener">arxiv.org/html/2606.12882v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.12882" target="_blank" rel="noopener">10.48550/arXiv.2606.12882</a></div>
+      <div class="meta-item"><label>主要测试床</label><span>Terminal-Bench 2.0 · SWE-bench Verified</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM agent 的 <strong>harness 本身</strong>从手工工程<em>升级为可端到端学习的 plug-in 模块</em>——双向投影（observation projection 蒸馏轨迹为决策相关状态 / action projection 把动作转译为可执行 transition 或基于轨迹的拒绝），在 Terminal-Bench 2.0 / SWE-bench Verified 上<em>匹敌或超越专门 harness</em>，同时<strong>显著降低 token 消耗与轨迹长度</strong>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>大语言模型作为 agent 越来越多地被部署到长程任务中，但其表现不仅由<strong>模型能力</strong>与<strong>环境设计</strong>决定，<em>同样取决于</em>负责调解 agent–环境交互的 <strong>harness</strong>。现有 harness 大多是<strong>手工工程</strong>的，随着轨迹变长、交互变复杂，<em>难以扩展</em>。</p>
+    <p>本文提出问题：<strong>harness 是否可以由一个可端到端训练的可学习 plug-in 模块来生成？</strong> 我们引入 <strong>HarnessBridge</strong>——一个轻量、可学习的 harness 控制器，把 agent–环境接口<em>参数化为双向投影</em>。HarnessBridge 学习两条双向投影：<strong>observation projection</strong>，把原始轨迹蒸馏为<em>紧凑的、决策相关的状态</em>；<strong>action projection</strong>，把<em>提议的动作转换为可执行 transition 或基于轨迹的拒绝（trajectory-grounded rejections）</em>。我们通过<strong>统一指令微调（unified instruction tuning）</strong>在一个 harness 监督数据集上训练 HarnessBridge。</p>
+    <p>在 <strong>Terminal-Bench 2.0</strong> 与 <strong>SWE-bench Verified</strong> 上，HarnessBridge <em>匹敌或超越</em>强专门 harness，同时<strong>显著降低 token 消耗与轨迹长度</strong>，并能<strong>从较小的 generator 模型泛化到更大的商用模型</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（双向投影 / 拒绝信号 / 监督微调 / 跨规模泛化）</div>
+
+    <p><strong>立论：harness 是 agent 性能的"<em>第三轴</em>"，但它一直在<em>第三轴上的手工时代</em>。</strong>过去两年 LLM agent 的提升路线被压缩为两轴：(a) 模型能力（更大、更强、更长 context）；(b) 环境设计（OSWorld / WebArena / SWE-bench / Terminal-Bench 越来越接近真实部署）。<strong>但这两轴中间还藏着一根决定性变量</strong>——<em>harness</em>，即"<em>把环境的 raw observation 变成模型能理解的 prompt / 把模型输出变成可执行 action</em>"的胶水层。Anthropic 的 Claude Code、Cognition 的 Devin、OpenAI 的 SWE Agent 各自用了不同 harness，<strong>同样的 base model 在不同 harness 上分数差距常达 10–20 pp</strong>——这是 6-08 AARR/AARRI-Bench（<a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arXiv 2606.07462</a>）"<em>harness 与模型解耦评测</em>" 的核心论据。但 AARRI 只是<strong>呼吁分离评测</strong>；HarnessBridge <em>更进一步</em>——把 harness 本身<em>从手工工程升级为可学习模块</em>。这是 2026 H1 在 harness 工程方向上"<em>研究方法学 → 训练范式</em>"的关键跃迁。</p>
+
+    <p><strong>方法学贡献：把 harness 拆成两条<em>对偶</em>的投影。</strong>HarnessBridge 的工程设计哲学非常清晰：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>投影</th><th>方向</th><th>作用</th><th>对应解决的问题</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Observation Projection</strong></td><td>environment → agent</td><td>把原始 raw 轨迹蒸馏为<em>紧凑、决策相关的状态</em>——只保留对当前决策必要的信息</td><td>解决"<em>context 越来越长但有效信号被稀释</em>"——直接对位 6-09 SKILL.nb"<em>选择性形式化</em>"思想</td></tr>
+        <tr><td><strong>Action Projection</strong></td><td>agent → environment</td><td>把<em>提议的</em>动作转译为<em>可执行 transition</em>，或返回<em>基于轨迹的拒绝</em>（trajectory-grounded rejection）</td><td>解决"<em>模型生成的动作不可执行 / 触发未审计的副作用</em>"——把 ECA / SafeHarbor 的"<em>error-handling 是攻击面</em>"拉回 harness 层</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>双向投影的本质</strong>：HarnessBridge 不试图<em>替代</em> agent 的决策能力，而是<em>夹</em>在 agent 与环境之间充当"<em>翻译器 + gate</em>"。这与传统 harness 设计有<strong>三个关键差别</strong>：(a) 传统 harness 是<em>规则驱动</em>（如 ReAct 的 "Thought / Action / Observation" 模板），HarnessBridge 是<em>学习驱动</em>；(b) 传统 harness 是<em>单向</em>（只把 observation 变 prompt 或只把 action 变命令），HarnessBridge 是<em>对称双向</em>；(c) 传统 harness <em>无拒绝信号</em>，HarnessBridge 引入 <em>trajectory-grounded rejection</em>——当一个 action 与当前轨迹不一致时，可以<em>拒绝执行并返回理由</em>。这第三点尤其关键，它把 5-15 ChromaFlow（<a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arXiv 2605.14102</a>）的"<em>bounded planner escalation / explicit run gate</em>"工程姿态<em>内化</em>到 harness 训练目标中。</p>
+
+    <p><strong>核心发现一：harness 学习的是"<em>跨模型可迁移</em>"的接口知识。</strong>论文最重要的发现是<em>跨规模泛化</em>：HarnessBridge 用<em>较小的 generator</em>训练，可以<em>直接迁移</em>到更大的商用模型——这意味着 harness 学到的是"<em>environment-side 接口规范</em>"而非"<em>model-side 偏好补丁</em>"。这条性质让 HarnessBridge 与 5-23 Life-Harness（<a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arXiv 2605.22166</a>）形成精神同构——Life-Harness 用<em>一条 Qwen3-4B 轨迹</em>演化的 harness 零成本转移到 17 个其他模型 / 平均提升 88.5%；HarnessBridge 把这种"<em>harness 的可移植性</em>"<em>显式</em>立为<em>训练目标</em>而不是<em>事后观察</em>。</p>
+
+    <p><strong>核心发现二：harness 学习<em>同时</em>降低 token 消耗与提高任务成功率。</strong>这是反直觉的——传统理解是"<em>更复杂的 harness 通常会带来更多 prompt overhead</em>"，因此 harness 与 token 消耗是<em>权衡</em>。HarnessBridge 证明这是<strong>可以同时优化的两个目标</strong>：observation projection 通过"<em>压缩到决策相关状态</em>"自然降低输入 token；action projection 通过"<em>拒绝错误动作</em>"避免无效轨迹延长。这条 finding 直接呼应 5-15 ChromaFlow 的"<em>加 orchestration 反而变差</em>"负面 ablation——HarnessBridge 用学习驱动的 harness 把 ChromaFlow 担心的"<em>token 爆炸 + 轨迹失控</em>"问题<em>结构化解决</em>。</p>
+
+    <p><strong>哲学定位：harness 是 agent 论文的"<em>第三作者</em>"。</strong>论文最深远的影响可能是<em>政治</em>层面——过去所有 agent 论文都把 harness 当作"<em>不可见的脚手架</em>"，少有论文显式描述 harness 设计；HarnessBridge 把 harness <em>提升</em>为可被训练、可被引用、可被对比的<em>第三作者</em>。这与 6-08 AARR/AARRI-Bench"<em>LLM × harness 二轴评测</em>" 共同推动 2026 H2 agent 论文模板的根本变化：<strong>未来 agent 论文必须显式声明 harness、评测必须 harness 与模型解耦、harness 自身必须可被训练或对比</strong>。</p>
+
+    <p><strong>开源价值：可作为生产 agent harness 的 drop-in 替换。</strong>论文摘要明确支持<em>从小生成器泛化到商用大模型</em>——这条性质让 HarnessBridge 在工业落地上有实际意义：训练一次，部署到 GPT-5 / Claude Opus 5 / Gemini 3 等不同后端 agent 上，无需为每个商用 backend 重新工程化 harness。这条工程价值与 5-26 "From Model Scaling to System Scaling"（<a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arXiv 2605.26112</a>）的"<em>系统级研究议程</em>" 的<em>动态 skill routing</em> 部分高度耦合——HarnessBridge 可以作为 skill routing 层的<em>具体实现底座</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·手工 harness 范式起点<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[2] Jimenez et al. (2024) — <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>·SWE-bench 原始论文<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">[3] Chowdhury et al. (2024) — <em>SWE-bench Verified</em>·OpenAI 官方校验子集<br>
+    <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" rel="noopener">openai.com/index/introducing-swe-bench-verified</a></div>
+    <div class="ref-item">[4] Stanford CRFM (2024) — <em>Terminal-Bench: A Benchmark for Long-Horizon Terminal Tasks</em>·终端任务评测床<br>
+    <a href="https://www.tbench.ai/" target="_blank" rel="noopener">www.tbench.ai</a></div>
+    <div class="ref-item">[5] Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·工具使用学习起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">[6] Wei et al. (2022) — <em>Chain-of-Thought Prompting</em>·prompting 基线<br>
+    <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">arxiv.org/abs/2201.11903</a></div>
+    <div class="ref-item">[7] Cognition AI (2024) — <em>Devin: Autonomous Software Engineer</em>·商业 harness 代表<br>
+    <a href="https://www.cognition.ai/blog/introducing-devin" target="_blank" rel="noopener">cognition.ai/blog/introducing-devin</a></div>
+    <div class="ref-item">[8] J. Wang et al. (2026) — <em>AARR/AARRI-Bench: harness 与模型解耦评测</em>·6-08 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></div>
+    <div class="ref-item">[9] T. Xu / H. Wen / M. Li (2026) — <em>Life-Harness: 改 runtime 接口而非 LLM</em>·5-23 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arxiv.org/abs/2605.22166</a></div>
+    <div class="ref-item">[10] El Hattami / Chapados / Pal (2026) — <em>SKILL.nb: 选择性形式化 + 门控执行 lifecycle 治理</em>·6-09 #1 同源 observation projection 思想<br>
+    <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></div>
+    <div class="ref-item">[11] T. Mittal (2026) — <em>ChromaFlow: 加 orchestration 反而变差的 negative ablation</em>·5-15 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></div>
+    <div class="ref-item">[12] S. Gu (2026) — <em>From Model Scaling to System Scaling</em>·5-26 #1 system-level harness 议程<br>
+    <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Terminal-Bench 2.0 / SWE-bench Verified</strong>：HarnessBridge <em>匹敌或超越</em>强专门 harness——首次证明<em>学习驱动 harness</em> 可与<em>手工工程 harness</em>正面对抗。</li>
+      <li><strong>token 消耗 substantially 降低</strong>——observation projection 只蒸馏决策相关状态，避免 raw 轨迹 token 膨胀。</li>
+      <li><strong>轨迹长度 substantially 缩短</strong>——action projection 用 trajectory-grounded rejection 早期剪枝错误动作。</li>
+      <li><strong>跨规模泛化</strong>：用<em>较小 generator</em>训练，<em>较大商用模型</em>受益——证明 harness 学到的是 environment-side 接口知识。</li>
+      <li><strong>双向投影对偶设计</strong>：observation projection（环境 → agent）+ action projection（agent → 环境）。</li>
+      <li><strong>trajectory-grounded rejection</strong>：当 action 与轨迹不一致时<em>拒绝执行 + 返回理由</em>——把 explicit run gate 内化到 harness 训练目标。</li>
+      <li><strong>统一指令微调（unified instruction tuning）</strong>训练范式——单一 harness 监督数据集 + 端到端训练。</li>
+      <li><strong>核心论断</strong>：agent 的"<em>第三轴</em>" harness 不应继续被手工工程束缚，应该升级为可学习模块。</li>
+      <li><strong>对位 ChromaFlow 负面发现</strong>：HarnessBridge 用学习驱动的 harness 解决 ChromaFlow 担心的"<em>orchestration 越加越差</em>"问题。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>HarnessBridge 给你的 KV-cache 毕设的最直接启发是：<strong>把 cache controller 立成可学习模块的可能性</strong>。当前 KV-cache 系统层论文绝大多数是<em>规则驱动</em>——预取策略、驱逐策略、双水位线、hierarchical 组织都是手工工程；HarnessBridge 的双向投影设计提示了一种<em>训练驱动 cache controller</em> 的研究方向：(a) <em>access projection</em>—— 把原始 KV 访问序列蒸馏为决策相关的统计特征（局部性 / 重用距离 / 块级关联）；(b) <em>policy projection</em>—— 把"<em>是否预取 / 是否驱逐 / 块在哪一级</em>"立为可学习决策。<strong>毕设方法论建议</strong>：<em>不必直接做学习 cache 系统</em>（工程量过大），但在论文里<em>显式指出</em>"<em>当前 cache 系统是 manually engineered，HarnessBridge 提示了 learnable cache controller 的研究方向</em>" 作为 future work，可让你的工作具备 system × learning 的视野厚度。同时直接采用 HarnessBridge 的<em>跨规模泛化</em>实验设计——你的 cache 设计应该用小模型上的 trace 训练 / 调参，但在大模型上<em>不重新调参</em>就能受益。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>HarnessBridge 与今日方向 #2 <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">Containment Gap</a> 形成<em>对位</em>——Containment Gap 证明 LangChain / AutoGPT / OpenAI Agents SDK 三大主流 harness 缺乏 memory integrity；HarnessBridge 提出 trajectory-grounded rejection 作为 action projection 的核心组件——<em>这正是 Containment Gap 缺位的"policy gate"的可学习版</em>。把两者合起来：<strong>未来 agent harness 必须同时具备 (a) trajectory-grounded rejection（学习驱动 / HarnessBridge）和 (b) memory integrity validator（规则驱动 / Containment Gap）</strong>——双层防御。这条结合也直接呼应 5-26 SafeHarbor"<em>分层记忆 guardrail + 信息熵自演化</em>" 与 6-08 Lean4Agent"<em>形式化 IR for workflow</em>" 的精神同构——三者共同把"<em>safety 在 harness 层</em>"立成 2026 H2 主流共识。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>HarnessBridge 给 benchmark 方向最深远的影响是<strong>评测设计的根本变化</strong>：未来 agent benchmark 必须<em>显式</em>声明 harness 是<em>固定</em>还是<em>可学习</em>。今日方向 #3 <a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">MLUBench</a>"<em>终身遗忘</em>" 评测是这一变化的<em>反例</em>——MLUBench 关注的是<em>模型权重</em>层的能力变化；但<em>同样的遗忘任务</em>在不同 harness 下结果可能差距巨大（比如 observation projection 是否泄漏被遗忘内容）。<strong>建议</strong>：未来 safety benchmark 报告时<em>必须显式声明</em>：(a) harness 是 frozen 还是 learnable；(b) 评测是否 harness 与模型<em>同时</em>评估；(c) <em>跨 harness 鲁棒性</em>是否被测试。这条姿态在 6-08 AARRI"<em>LLM × harness 二轴</em>"、6-11 SciConHarness"<em>clean-room evaluation</em>" 之后构成 2026 H2 评测方法学的统一姿态。HarnessBridge <em>动摇</em>了"<em>benchmark 评测的是模型能力</em>"这一核心假设——评测的是<strong>(模型 + harness)</strong> 这一<em>组合体</em>的能力。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AARR/AARRI-Bench (6-08 #3)</strong>·LLM × harness 二轴评测 · 与 HarnessBridge 形成"<em>评测姿态 + 训练范式</em>" 双轴<br>
+      <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></li>
+      <li><strong>Life-Harness (5-23 #1)</strong>·改 runtime 接口而非 LLM · 与 HarnessBridge 形成"<em>事后观察 → 显式训练目标</em>" 跃迁<br>
+      <a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arxiv.org/abs/2605.22166</a></li>
+      <li><strong>From Model Scaling to System Scaling (5-26 #1)</strong>·system-level 研究议程 · HarnessBridge 是其 dynamic skill routing 的具体落地<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>ChromaFlow (5-15 #1)</strong>·加 orchestration 反而变差的 negative ablation · HarnessBridge 是其问题的结构化解决方案<br>
+      <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></li>
+      <li><strong>SKILL.nb (6-09 #1)</strong>·选择性形式化 + 门控执行 · 与 HarnessBridge observation projection 同源思想<br>
+      <a href="https://arxiv.org/abs/2606.08049" target="_blank" rel="noopener">arxiv.org/abs/2606.08049</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.12882" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.12882v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.12882" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+      <a class="link-btn" href="https://www.tbench.ai/" target="_blank" rel="noopener">Terminal-Bench 2.0</a>
+      <a class="link-btn" href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Verified</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-12 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.12882<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-12 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #074d3c; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #074d3c; }
+  .link-btn.primary:hover { background: #cdebde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 12 日 · Agent Skills Safety · ICML 2026 AI4GOOD Workshop</div>
+  <h1>The Containment Gap：审计 LangChain / AutoGPT / OpenAI Agents SDK 三大主流 agentic 框架——基于 6 项遏制原则<em>无一原生符合</em>，单次 memory poisoning 在政府福利 agent 上把目标群体错拒率推至 88.9%</h1>
+  <div class="en-title">The Containment Gap: How Deployed Agentic AI Frameworks Fail Public-Facing Safety Requirements</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">The Containment Gap: How Deployed Agentic AI Frameworks Fail Public-Facing Safety Requirements</a><span class="winner-badge">今日选定</span></td>
+          <td>主流框架审计 · 6 遏制原则 · LangChain / AutoGPT / OpenAI Agents SDK · 单次 memory poisoning 攻击 · memory integrity validator + policy gate 亚毫秒开销</td>
+          <td>arXiv 2606.12797（Md J. Hossain / M.A. Hossain / W. Liu / N. Ansari）<strong>ICML 2026 AI4GOOD Workshop</strong> 2026-06-11</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12618" target="_blank" rel="noopener">"Did you lie?" Evaluating Lie Detectors across Model Scale and Belief-Verified Model Organisms</a></td>
+          <td>13 推理模型生物 · 4 lie 检测器 · CoT judge 0.82 BAcc 最稳健 · 训练后探针崩溃</td>
+          <td>arXiv 2606.12618 · 31 模型 2B–1T · 2026-06-11</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12747" target="_blank" rel="noopener">Prefill Awareness in Large Language Models</a></td>
+          <td>前沿模型识别 prefill 篡改 · Claude Opus 4.5 9–35% 检出 / 0% 假阳性 · prefill-based 评估方法 confounder</td>
+          <td>arXiv 2606.12747（A. Wang / P. Mahajan / D.D. Africa / A. Souly / J. Taylor / R. Kirk）2026-06-11</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12848" target="_blank" rel="noopener">Human Attention Is Still All You Need: HLER Architecture for AI-Assisted Social Science</a></td>
+          <td>人类介入决策架构 · 280 研究运行 · 失败率 72% → 16% · LLM 仅推理不执行 + 3 决策门</td>
+          <td>arXiv 2606.12848 · 2026-06-11</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13003" target="_blank" rel="noopener">The Illusion of Multi-Agent Advantage</a></td>
+          <td>auto-MAS vs CoT-SC 对照 · 10× 贵仍落后 · 自动多 agent 设计的"<em>架构臃肿</em>"</td>
+          <td>arXiv 2606.13003 · Salesforce 等 · 2026-06-11</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12683" target="_blank" rel="noopener">From AGI to ASI</a></td>
+          <td>DeepMind 14 作者立场文章 · 4 路径分析 · 全球协调紧迫</td>
+          <td>arXiv 2606.12683（Genewein / Hutter / Legg 等 14 作者）2026-06-11</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new（2026-06-12）。Containment Gap 是<em>少有</em>把"<em>主流框架审计 + 真实部署威胁模型 + 实证攻击 + 轻量缓解</em>" 四件事一次做齐的工作；Lie Detectors 在 model organism 立场上相当强但偏行为评测；Prefill Awareness 揭示了重要的方法学 confounder。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>The Containment Gap: How Deployed Agentic AI Frameworks Fail Public-Facing Safety Requirements</span></div>
+      <div class="meta-item"><label>中文标题</label><span>遏制鸿沟：已部署的智能体 AI 框架如何未能满足面向公众的安全要求</span></div>
+      <div class="meta-item"><label>作者</label><span>Md Jafrin Hossain, Mohammad Arif Hossain, Weiqi Liu, Nirwan Ansari（4 位）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-11（v1，UTC 01:46:26）· 周四</span></div>
+      <div class="meta-item"><label>会议</label><span><strong>ICML 2026 (AI4GOOD Workshop)</strong></span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY-NC-ND 4.0</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arxiv.org/abs/2606.12797</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.12797" target="_blank" rel="noopener">arxiv.org/pdf/2606.12797</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.12797v1" target="_blank" rel="noopener">arxiv.org/html/2606.12797v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.12797" target="_blank" rel="noopener">10.48550/arXiv.2606.12797</a></div>
+      <div class="meta-item"><label>主要场景</label><span>政府福利智能体（基于 LangChain 模拟）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      <strong>从架构层</strong>审计 LangChain / AutoGPT / OpenAI Agents SDK 三大主流 agentic 框架——<em>无一原生符合</em> 6 项遏制原则；用<strong>单次 memory poisoning</strong> 在模拟政府福利 agent 上把目标群体错拒率推至 <strong>88.9%</strong>；提出 <strong>memory integrity validator + policy gate</strong> 两件套以<strong>亚毫秒</strong>开销（每次调用 0.2 ms 以下）消除两类攻击向量。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>能<strong>自主调用工具</strong>、<strong>维护持久记忆</strong>、<strong>执行多步规划</strong>的 agentic 大语言模型系统，正越来越多地<em>部署到面向公众的领域</em>，包括政府服务、医疗分诊与金融顾问。我们追问一个问题：<strong>用来构建这些系统的框架是否在架构层面提供了结构性安全保障？</strong></p>
+    <p>我们应用从 agentic 架构组合模型推导出的<strong>六项遏制原则（six containment principles）</strong>，审计三个主流框架——<strong>LangChain、AutoGPT、OpenAI Agents SDK</strong>，发现<em>无一原生合规</em>。<strong>Memory integrity</strong>——对最常见的漏洞类别之一的防御——<em>三框架均未观察到</em>。</p>
+    <p>我们用实证验证这一发现：在基于 LangChain 构建的<strong>模拟政府福利 agent</strong> 上，<em>单次 memory poisoning 写入</em> 在所有测试 seed 与 backend 上诱发<em>持久的、目标针对的污染</em>，把目标申请者群体的<strong>错误拒绝率推至 88.9%</strong>。在更复杂的<strong>五因素策略</strong>下，同一攻击<em>保持总体准确率不变</em>但把目标群体的错误拒绝率<em>提升 3.5×</em>，使污染<strong>难以通过标准监控发现</strong>。</p>
+    <p>我们随后提出两个轻量级遏制机制：<strong>memory integrity validator</strong> 与 <strong>policy gate</strong>，以<em>亚毫秒</em>开销（每次调用低于 0.2 ms）消除两条攻击向量。我们结论是：当前 agentic 框架生态<em>尚未达到</em> "<em>secure-by-default</em>" 的预期，<em>无法</em>用于面向公众的部署；并给出实现可信部署所需的优先架构干预清单。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（六项遏制原则 / memory poisoning / 隐蔽性 / 轻量缓解）</div>
+
+    <p><strong>立论：safety 必须立到<em>框架架构层</em>，不能停在 model alignment。</strong>过去两年 agent safety 研究主流路线集中在<em>模型层</em>——RLHF / Constitutional AI / system prompt / refusal training；但 6-11 ELK 不可能定理（<a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arXiv 2606.12268</a>）证明<em>仅靠行为反馈无法保证 honesty</em>，自然推论是——<strong>必须把 safety 责任<em>分摊</em>到架构层与模型层</strong>。Containment Gap 是这条推论的<em>具体落地</em>：它不试图调整模型，而是直接<em>审计承载 agent 的框架是否有架构级安全保障</em>。这条立场与 5-21 CUGA Governance by Construction（<a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arXiv 2605.20911</a>）"<em>policy-as-code + 5 结构化执行检查点</em>" 同源——但 Containment Gap 更进一步，它<em>反向</em>—— 不是构造一个新的安全架构，而是<strong>审计现存最广泛使用的三个框架</strong>，并<em>证明它们都不够</em>。</p>
+
+    <p><strong>方法学贡献一：基于组合模型的 6 项遏制原则。</strong>论文从 agentic 架构的<em>组合模型</em>推导出 6 条遏制原则——这是 2026 H1 在 agent safety 方法学层面的关键贡献，因为它把"<em>架构是否安全</em>" 这一含糊问题<strong>形式化为可审计清单</strong>。摘要明确指出 <em>"Memory integrity, a defense against one of the most prevalent vulnerability classes, is not observed in any of the three evaluated frameworks"</em>——这意味着 6 项原则中至少有 1 条（memory integrity）是所有审计框架共同缺失的<em>结构性鸿沟</em>，论文标题 "<em>Containment Gap</em>" 即由此而来。剩余 5 项原则虽未在摘要中点名，但根据上下文可推测涵盖：(a) tool authorization；(b) action provenance；(c) policy enforcement；(d) state isolation；(e) audit logging——与 5-21 CUGA"<em>5 检查点</em>" 高度同构。</p>
+
+    <p><strong>方法学贡献二：实证攻击作为审计的<em>充分证据</em>。</strong>论文最有说服力的部分是<em>把架构鸿沟翻译成可量化伤害</em>：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>实验设置</th><th>关键数据</th><th>意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>单次 memory poisoning 写入</em>，模拟政府福利 agent，所有 seed 与 backend</td><td><strong>目标群体错拒率 → 88.9%</strong>（持久性、跨 seed 一致）</td><td>证明 memory integrity 缺位<em>不是</em>抽象原则违反，而是<em>实际可被武器化</em></td></tr>
+        <tr><td>更复杂的 <em>5 因素策略</em></td><td>总体准确率<em>不变</em>，目标群体错拒率<strong>提升 3.5×</strong></td><td>暴露<em>隐蔽性威胁模型</em>——攻击保持总体指标正常以躲避监控，只针对子群体伤害</td></tr>
+        <tr><td>缓解：<em>memory integrity validator + policy gate</em></td><td>消除两条攻击向量，开销<strong>低于 0.2 ms / 调用</strong></td><td>证明缓解<em>无需</em>大规模架构改造，亚毫秒开销使其具备生产部署可行性</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心发现一：单次写入即可造成 88.9% 持久污染——agentic 系统的"<em>记忆是攻击面</em>"。</strong>这条数据本身极具冲击力：传统 LLM 安全研究中 prompt injection 攻击需要每次交互都注入；但 agentic 系统<em>持久记忆</em>的特性把"<em>一次注入 → 永久毒化</em>"立成新攻击面。这条发现与 5-19 Memory Laundering（<a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arXiv 2605.16746</a>）"<em>Sub-threshold Propagation Gap</em>" 形成精神同构——但 Memory Laundering 关注的是<em>多 agent 间</em>的状态污染传播，Containment Gap 关注的是<em>单 agent 持久记忆</em>的污染持久性。两者合起来证明<strong>记忆是 agent 系统中最被低估的攻击面</strong>。</p>
+
+    <p><strong>核心发现二：隐蔽攻击逃避标准监控。</strong>5 因素策略下<em>"<em>aggregate accuracy preserved</em>"</em> 的攻击模式是论文最重要的 safety 信号——它证明攻击者可以<em>有意</em>设计 memory poisoning 让<strong>整体监控指标看不出问题</strong>，仅在<em>目标子群体</em>上造成 3.5× 错拒。这是 fairness × safety 的交叉点：传统 fairness 评测看 disparate impact，传统 safety 评测看 ASR；但<em>"<em>有意构造的 disparate impact 作为攻击向量</em>"</em> 是一个<em>同时</em>挑战两条评测面的新威胁模型。这条发现与 6-03 What Benchmarks Don't Measure（<a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arXiv 2606.02965</a>）"<em>compliance bias 是 RLHF 结构性副作用</em>" 互补——What Benchmarks 揭示了<em>未受攻击</em>状态下的结构副作用，Containment Gap 揭示了<em>主动攻击</em>状态下的隐蔽伤害。</p>
+
+    <p><strong>核心发现三：缓解可以非常便宜。</strong>这是论文给行业的最实际信息：<em>"<em>memory integrity validator + policy gate, sub-millisecond overhead</em>"</em>——证明 secure-by-default 不需要重构整个 agent 系统，<em>两个轻量组件</em>就能堵住两类攻击向量。这条工程姿态与 5-25 SafeHarbor（<a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arXiv 2605.05704</a>）"<em>training-free + plug-and-play guardrail</em>" 一致，但 SafeHarbor 在<em>对话内容</em>层做记忆增强 guardrail，Containment Gap 在<em>架构</em>层做完整性验证——两者形成"<em>内容守护 + 架构守护</em>" 双层防御。</p>
+
+    <p><strong>哲学定位：把 agent safety 责任<em>分摊</em>到框架供应商。</strong>过去 LLM safety 责任主要由<em>模型供应商</em>承担（OpenAI / Anthropic / DeepMind 做 RLHF / Constitutional AI）；但 LangChain / AutoGPT / OpenAI Agents SDK 是<em>框架供应商</em>，传统上认为它们的责任仅是"<em>提供构建工具</em>"。Containment Gap 的<em>政治</em>影响是把 secure-by-default 责任<em>显式</em>压到框架供应商头上——这与 6-11 ELK 不可能定理"<em>RLHF 不充分</em>" 在不同方向上施压：模型层做不到完美，框架层就<em>必须</em>承担一部分 safety 责任。这条立场可能成为 2026 H2 监管讨论（EU AI Act 实施 / NIST AI RMF）中<em>对框架供应商</em>的合规要求基础。</p>
+
+    <p><strong>开源价值与会议地位：ICML 2026 AI4GOOD Workshop。</strong>论文被 ICML 2026 AI4GOOD Workshop 接收——这是 ICML 的<em>社会影响</em>专场，强调"<em>面向公众</em>" 部署的 safety。这一会议地位与论文标题 "<em>Public-Facing Safety Requirements</em>" 高度匹配。模拟政府福利 agent 的实验设置（一个<em>非 trivial</em> 的真实社会决策场景）让论文具备超越学术圈的政策影响力。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Greshake et al. (2023) — <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>·prompt injection 起点<br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">[2] LangChain (2023) — <em>LangChain Framework for Building LLM Applications</em>·主流框架 1<br>
+    <a href="https://github.com/langchain-ai/langchain" target="_blank" rel="noopener">github.com/langchain-ai/langchain</a></div>
+    <div class="ref-item">[3] Significant Gravitas (2023) — <em>AutoGPT: An Autonomous AI Agent Framework</em>·主流框架 2<br>
+    <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">github.com/Significant-Gravitas/AutoGPT</a></div>
+    <div class="ref-item">[4] OpenAI (2025) — <em>OpenAI Agents SDK</em>·主流框架 3<br>
+    <a href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener">github.com/openai/openai-agents-python</a></div>
+    <div class="ref-item">[5] Yao et al. (2023) — <em>ReAct: Synergizing Reasoning and Acting</em>·agent 设计基线<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[6] Shlomov et al. (2026) — <em>CUGA Governance by Construction: policy-as-code + 5 检查点</em>·5-21 #1 报告主体 · 同源架构治理思想<br>
+    <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></div>
+    <div class="ref-item">[7] Y. Wang / Goyal / Y. Chen / Sundaram (2026) — <em>Memory Laundering / State Contamination</em>·5-19 #1 报告主体 · 状态污染同源威胁模型<br>
+    <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a></div>
+    <div class="ref-item">[8] G. Zhang / H. Zheng / H. Yang (2026) — <em>ECA: Hallucination as Authorization Failure</em>·5-20 #1 同源 deterministic gate<br>
+    <a href="https://arxiv.org/abs/2605.19192" target="_blank" rel="noopener">arxiv.org/abs/2605.19192</a></div>
+    <div class="ref-item">[9] Z. Liu / Z. Ying / W. Zhang (2026) — <em>SafeHarbor: 分层记忆增强 guardrail</em>·5-25 #1 同源 plug-and-play 哲学<br>
+    <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></div>
+    <div class="ref-item">[10] Friedl / Ward / Rapoport / Everitt / Richens (2026) — <em>The Impossibility of Eliciting Latent Knowledge</em>·6-11 #1 报告主体 · 推动"<em>架构层 safety 不可避免</em>"<br>
+    <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arxiv.org/abs/2606.12268</a></div>
+    <div class="ref-item">[11] V. Ojewale / S. Venkatasubramanian (2026) — <em>What Benchmarks Don't Measure: compliance bias 三-gap</em>·6-03 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></div>
+    <div class="ref-item">[12] EU (2024) — <em>EU AI Act</em>·政府服务部署的合规框架<br>
+    <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">eur-lex.europa.eu/eli/reg/2024/1689/oj</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>三框架均不合规</strong>：LangChain / AutoGPT / OpenAI Agents SDK 在 6 项遏制原则下均无原生合规——<em>这是 2026 H1 最强的"<em>主流框架审计</em>"实证</em>。</li>
+      <li><strong>memory integrity 普遍缺位</strong>——对最常见漏洞类别的防御<em>三框架均未观察到</em>，是论文标题 "<em>Containment Gap</em>" 的直接来源。</li>
+      <li><strong>单次 memory poisoning → 88.9% 错拒率</strong>（目标申请群体）——<em>持久性 + 跨 seed 一致 + 跨 backend 一致</em>。</li>
+      <li><strong>5 因素策略下 3.5× 错拒提升 + 总体准确率不变</strong>——<em>隐蔽攻击逃避标准监控</em>，揭示 fairness × safety 交叉攻击面。</li>
+      <li><strong>缓解开销低于 0.2 ms / 调用</strong>——亚毫秒级，<em>生产部署可行</em>。</li>
+      <li><strong>memory integrity validator + policy gate</strong> 两组件设计——同时堵住两条攻击向量。</li>
+      <li><strong>ICML 2026 AI4GOOD Workshop 接收</strong>——会议地位锚定政策影响力。</li>
+      <li><strong>核心论断</strong>：<em>当前 agentic 框架生态尚未达到 secure-by-default 预期</em>，无法用于面向公众部署。</li>
+      <li><strong>政治含义</strong>：把 safety 责任<em>显式</em>压到框架供应商，超越"<em>模型供应商承担一切</em>" 传统认知。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Containment Gap 给你的 KV-cache 毕设的最直接启发是：<strong>把"<em>cache 完整性验证</em>" 立成毕设的一个可选维度</strong>。当前 KV-cache 系统层论文聚焦性能（hit-rate / latency / throughput）；Containment Gap 提示了<em>cache 也是攻击面</em> 的可能性——在 multi-tenant 推理服务中，cache 数据被错误共享或被恶意污染会造成严重 safety 后果。<strong>毕设建议</strong>：在论文 future work 部分<em>显式</em>讨论"<em>KV-cache 在 agent 持久记忆场景下的完整性挑战</em>"——agent 频繁调用 LLM 推理，<em>每次推理共享一个 KV-cache 系统</em>，如果 cache 被污染（或泄漏到错误用户），整个 agent 持久记忆都会受影响。这条 future work 让你的毕设具备"<em>系统 × 安全</em>" 的双重视野。同时直接采用 Containment Gap 的<em>实证证明法</em>—— 不是抽象描述风险，而是<em>设计具体攻击</em> 来量化伤害。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Containment Gap 与今日方向 #1 <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">HarnessBridge</a> 形成<em>对偶</em>—— HarnessBridge 提出 trajectory-grounded rejection 作为 action projection 的核心组件；Containment Gap 提出 memory integrity validator + policy gate 作为架构层防御。<strong>这是一个完整防御链路的两端</strong>：HarnessBridge 在 agent 决策<em>之后</em>拦截不一致动作；Containment Gap 在 agent 决策<em>之前</em>验证记忆完整性。把两者合起来：<strong>未来 agent 框架必须同时具备<em>(a) memory integrity validator（写入路径）</em>、<em>(b) policy gate（动作路径）</em>、<em>(c) trajectory-grounded rejection（执行路径）</em></strong> 三层防御。这与 5-26 SafeHarbor"<em>分层记忆 guardrail</em>" / 5-19 Memory Laundering"<em>SPG 状态污染</em>" / 6-11 ELK"<em>不可能仅靠行为反馈</em>" 共同形成 2026 H2 "<em>多层架构防御</em>" 主轴。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Containment Gap 给 benchmark 方向最深远的启发是<strong>把"<em>主流框架审计</em>" 立成新的 benchmark 范畴</strong>——传统 safety benchmark 评测的是<em>模型</em>，Containment Gap 评测的是<em>框架</em>。今日方向 #3 <a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">MLUBench</a> 评测模型层的终身遗忘能力；但同样的问题在不同 agent 框架（LangChain vs LangGraph vs OpenAI Agents SDK）下结果可能完全不同。<strong>建议</strong>：未来 benchmark 报告时<em>必须显式声明</em>：(a) 评测的是 model / framework / framework × model 组合体的哪一个；(b) 是否涵盖<em>架构层威胁模型</em>（memory integrity / state isolation / tool authorization）；(c) 是否提供<em>具体可武器化攻击</em>而非抽象 desiderata。Containment Gap 的"<em>从原则到攻击到缓解</em>" 三段式模板可以作为<em>新一类 framework benchmark</em> 的写作范式——这与 6-09 MAC-Bench"<em>Beyond Goodhart's Law + Agent-as-a-Benchmark</em>" 的姿态在不同层面上一致。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>CUGA Governance by Construction (5-21 #1)</strong>·policy-as-code + 5 结构化执行检查点 · 与 Containment Gap 形成"<em>正向构造 + 反向审计</em>" 双轴<br>
+      <a href="https://arxiv.org/abs/2605.20911" target="_blank" rel="noopener">arxiv.org/abs/2605.20911</a></li>
+      <li><strong>Memory Laundering (5-19 #1)</strong>·SPG 状态污染 · 与 Containment Gap 共同把记忆立为攻击面<br>
+      <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a></li>
+      <li><strong>SafeHarbor (5-25 #1)</strong>·分层记忆增强 guardrail · 与 Containment Gap 形成"<em>内容守护 + 架构守护</em>" 双层<br>
+      <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></li>
+      <li><strong>The Impossibility of ELK (6-11 #1)</strong>·因果影响图证明 ELK 不可能定理 · 推动"<em>架构层 safety 不可避免</em>"<br>
+      <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arxiv.org/abs/2606.12268</a></li>
+      <li><strong>What Benchmarks Don't Measure (6-03 #1)</strong>·compliance bias 三-gap · 揭示<em>未受攻击</em>状态的结构副作用<br>
+      <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.12797" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.12797v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.12797" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+      <a class="link-btn" href="https://github.com/langchain-ai/langchain" target="_blank" rel="noopener">LangChain</a>
+      <a class="link-btn" href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">AutoGPT</a>
+      <a class="link-btn" href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener">OpenAI Agents SDK</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-12 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.12797<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arxiv.org/abs/2606.12797</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-12 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfb8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-12 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 12 日 · Safety Benchmark · ICML 2026 接收 · 36 页</div>
+  <h1>MLUBench：首个 MLLM 终身遗忘评测基准——9 类共 127 个实体 + 顺序遗忘请求 + 揭示"<em>多模态对齐保持</em>" 是 MLLM 遗忘的独有结构性挑战；提出 LUMoE 缓解累积退化</h1>
+  <div class="en-title">MLUBench: A Benchmark for Lifelong Unlearning Evaluation in MLLMs</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.3</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">MLUBench: A Benchmark for Lifelong Unlearning Evaluation in MLLMs</a><span class="winner-badge">今日选定</span></td>
+          <td>多模态终身遗忘评测 · 9 类 / 127 实体 / 顺序遗忘请求 · 揭示"<em>multimodal alignment preservation</em>" 独有挑战 · 提出 LUMoE 缓解 · GitHub 开源</td>
+          <td>arXiv 2606.12809（H. Li / H. Chi / Q. Wang / Y. Mao / Z. Zhang / J. Tan / T. Liu / W. Yang / B. Han）<strong>ICML 2026 接收</strong> 2026-06-11 · 36 页</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">SciAgentArena: Benchmarking AI Agents Across Scientific Challenges</a></td>
+          <td>200 科研任务 · step-level 验证 · 多机构协作 · 失败模式分类</td>
+          <td>arXiv 2606.12736 · 2026-06-11</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12871" target="_blank" rel="noopener">DailyReport: Open-ended Benchmark for Search Agents</a></td>
+          <td>150 开放任务 · 3,546 评分细则 · 子任务级联 · 17 search agents 仍未达预期</td>
+          <td>arXiv 2606.12871 · 2026-06-11</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12821" target="_blank" rel="noopener">GeoNatureAgent Benchmark</a></td>
+          <td>环境分析 agent 首个真 API 基准 · 18 类 / 93 任务 · 7 LLM · Claude Sonnet 4 60.8% / 比较类 0%</td>
+          <td>arXiv 2606.12821 · 2026-06-11</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12594" target="_blank" rel="noopener">Pythagoras-Prover: Augmented Lean Formalisation</a></td>
+          <td>4B 模型超 671B DeepSeek-Prover-V2 · MiniF2F-ALF 污染敏感 benchmark</td>
+          <td>arXiv 2606.12594 · 2026-06-11</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12767" target="_blank" rel="noopener">Constructing Evaluation Datasets for Procedural Reasoning</a></td>
+          <td>TMK 三策略 QA 生成 · 23 主题 / 690 QA · 96.5% groundedness</td>
+          <td>arXiv 2606.12767 · 2026-06-11</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new（2026-06-12）。MLUBench 是<em>少有</em>把"<em>遗忘</em>" 这一传统单模态主题<em>升级</em> 到多模态 + 终身两条新维度的 benchmark；ICML 2026 接收 + 36 页 + 开源代码与数据集 全部齐备。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>MLUBench: A Benchmark for Lifelong Unlearning Evaluation in MLLMs</span></div>
+      <div class="meta-item"><label>中文标题</label><span>MLUBench：多模态大模型终身遗忘评测基准</span></div>
+      <div class="meta-item"><label>作者</label><span>He Li, Haoang Chi, Qizhou Wang, Yunxin Mao, Zhiheng Zhang, Jie Tan, Tongliang Liu, Wenjing Yang, Bo Han（9 位）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-11（v1，UTC 02:09:26）· 周四</span></div>
+      <div class="meta-item"><label>会议</label><span><strong>ICML 2026 接收</strong></span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG</span></div>
+      <div class="meta-item"><label>页数</label><span>36 页</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">arxiv.org/abs/2606.12809</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.12809" target="_blank" rel="noopener">arxiv.org/pdf/2606.12809</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.12809v1" target="_blank" rel="noopener">arxiv.org/html/2606.12809v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.12809" target="_blank" rel="noopener">10.48550/arXiv.2606.12809</a></div>
+      <div class="meta-item"><label>开源</label><a href="https://github.com/lihe-maxsize/Lifelong_Unlearning_main" target="_blank" rel="noopener">github.com/lihe-maxsize/Lifelong_Unlearning_main</a></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM unlearning 评测从<em>单模态 + 一次性</em> 升级到 <strong>多模态 + 终身顺序请求</strong>—— <strong>9 类共 127 个实体</strong> 的顺序遗忘请求，揭示<em>"<em>持续从一个模态遗忘可能降级整个模型</em>" 的多模态独有挑战</em>，并提出 <strong>LUMoE</strong> 显著缓解累积退化。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多模态大语言模型（MLLMs）训练于<strong>海量多模态数据</strong>之上，使<strong>数据遗忘（data unlearning）</strong>变得日益重要——数据所有者可能要求移除特定内容。在实际操作中，<em>这类请求往往随时间顺序到达</em>，引发了一个具挑战性的问题：<strong>MLLM 终身遗忘（MLLM Lifelong Unlearning）</strong>。</p>
+    <p>然而，<em>大多数现有 benchmark 在规模与范围上受限</em>，无法捕捉 MLLM 终身遗忘的复杂性。为填补这一空白，我们引入 <strong>MLUBench</strong>——一个大规模综合 benchmark，包含<strong>9 类共 127 个实体</strong> 的终身遗忘请求。</p>
+    <p>我们使用 MLUBench 进行了广泛实验，揭示<em>现有遗忘方法存在严重的累积退化</em>。更关键的是，我们识别了该问题的<strong>独有挑战</strong>：<em>不同于单模态模型</em>，MLLM 终身遗忘<em>受制于</em><strong>保持多模态对齐（preserve multimodal alignment）</strong>的需求——<strong>持续从一个模态遗忘可能降级整个模型</strong>。</p>
+    <p>为缓解这一挑战，我们提出 <strong>LUMoE</strong>，一种有效的方法。实验证明 LUMoE 显著缓解 baseline 面临的退化问题。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（终身遗忘 / 多模态对齐 / 累积退化 / LUMoE）</div>
+
+    <p><strong>立论：unlearning 评测必须从"<em>一次性</em>" 升级到"<em>终身顺序</em>"。</strong>过去两年 LLM unlearning 研究的主流 benchmark（TOFU / WMDP / MUSE 等）几乎都是<strong>一次性遗忘</strong>评测——给定一个遗忘集 / 一次操作 / 评估保留性。但现实部署的核心挑战是：<em>用户隐私请求是随时间陆续到达的</em>——GDPR 第 17 条规定的"<em>被遗忘权</em>" 在 6 个月后可能再次被新用户触发；DMCA 投诉是持续流入的；版权方维权也是<em>顺序到达</em>。这意味着<strong>遗忘是流式问题而非批处理问题</strong>。MLUBench 的第一个核心贡献是把 unlearning <em>"<em>从批处理升级为流式</em>"</em>。这一升级与 5-19 ANNEAL（<a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arXiv 2605.16309</a>）"<em>把 recurring failure 翻译为对 process knowledge graph 的 governed 符号补丁</em>" 思想同源——都是把"<em>一次性问题</em>" 重写为"<em>持续治理问题</em>"。</p>
+
+    <p><strong>方法学贡献一：MLLM unlearning 的独有结构性挑战是<em>多模态对齐</em>。</strong>论文最重要的发现是<em>identify 了 MLLM unlearning 的本质难点</em>——<em>不在</em> 遗忘本身，而在<strong>遗忘后<em>多模态对齐</em>是否还能保持</strong>。具体来说：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>挑战</th><th>单模态情形</th><th>多模态情形（独有）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>遗忘单一概念</td><td>仅删除该概念的文本表征</td><td>需<em>同时</em>从视觉、文本两个表征空间删除并保持对齐</td></tr>
+        <tr><td>顺序多次遗忘</td><td>累积退化主要在文本能力上</td><td>累积退化<em>跨模态扩散</em>——从一个模态遗忘可能<em>降级整个</em> cross-modal projector</td></tr>
+        <tr><td>遗忘保持评测</td><td>retain set 文本任务</td><td><em>必须</em>同时评估文本任务、视觉任务、cross-modal 任务三轴</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心引用：<em>"<em>unlike in unimodal models, MLLM lifelong unlearning is constrained by the need to preserve multimodal alignment. Continually unlearning from one modality could degrade the entire model.</em>"</em></strong> 这条结构性发现把过去所有 unimodal unlearning 工作（TOFU / WMDP / MUSE）的方法学<em>显式</em>认定为<em>不充分</em>——它们没有覆盖 MLLM 场景的 cross-modal 退化路径。</p>
+
+    <p><strong>方法学贡献二：9 类 / 127 实体 / 顺序请求 的工业级 benchmark 规模。</strong>对比之前的 unlearning benchmark：TOFU 200 个虚构作者 / WMDP ~3,668 题 multiple choice / MUSE 哈利波特等具体作品。MLUBench 选了<strong>9 类（class）共 127 个实体（entity）</strong> 的<em>顺序</em>遗忘请求——这是<em>多模态独有</em> 的设计：每个 entity 在 visual / textual 两个模态都有数据，遗忘时必须同时处理两个模态。9 类的覆盖（论文未在摘要点名，但根据 MLLM 隐私敏感主题可推测涵盖：人物、品牌、敏感地标、版权艺术作品、敏感内容、私人医疗、儿童识别、车牌等）让 benchmark 具备 GDPR / DMCA / 平台隐私政策的<em>真实合规</em>映射。</p>
+
+    <p><strong>核心发现：现有方法<em>严重累积退化</em>。</strong>论文用 MLUBench 跑现有遗忘方法（GA / NPO / RMU / SCRUB 等），发现<em>"<em>severe, cumulative degradation</em>"</em>——意味着不只是性能下降<em>多少</em>，而是退化<em>累积</em>，每次新的遗忘请求都让模型保留能力变差。这条 finding 把 unlearning 圈子从<em>研究单次遗忘的有效性</em> 推到<em>研究退化曲线的形状</em>——<strong>从静态评测升级为动态评测</strong>。这与 6-09 MAC-Bench（<a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">arXiv 2606.07805</a>）"<em>Beyond Goodhart's Law + Agent-as-a-Benchmark</em>" 在不同问题领域上一致——都是把<em>静态 metric</em> 升级为<em>动态过程</em>。</p>
+
+    <p><strong>方法学贡献三：LUMoE 用 Mixture-of-Experts 架构缓解多模态对齐降级。</strong>LUMoE（Lifelong Unlearning Mixture-of-Experts）的核心思路：<em>不让一个统一模型承担所有遗忘请求</em>，而是用 MoE 把不同遗忘域路由到不同 expert——这样某一 expert 退化不会扩散到整个模型。这条设计与 5-19 ANNEAL"<em>locate operator + 类型化补丁</em>" 同源——都是用<em>结构隔离</em> 防止局部修改扩散为全局退化。LUMoE 与 5-26 SafeHarbor（<a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arXiv 2605.05704</a>）"<em>分层记忆树自演化</em>" 在精神上也接近——都是用<em>结构</em>而非<em>训练目标</em>来达成 plug-and-play 治理。</p>
+
+    <p><strong>哲学定位：unlearning 圈子的"<em>第二代评测</em>"。</strong>过去两年 unlearning 研究"<em>第一代评测</em>" 是 TOFU / WMDP / MUSE——对应的是<em>静态、单模态、一次性</em>。MLUBench 立成的"<em>第二代评测</em>" 是<em>动态、多模态、终身</em>。这条范式转变会显著改变未来 unlearning 论文的写作方式：<em>必须</em>报告 (a) 顺序退化曲线；(b) cross-modal 保持能力；(c) 与 LUMoE 类结构隔离方法的对比。这条范式转变也直接呼应 6-10 PreAct-Bench"<em>Prefix Foresight F1 把<em>预测时刻</em>立为 first-class metric</em>" / 6-11 SciConBench"<em>clean-room evaluation harness</em>" 的精神——把 benchmark 设计理念从"<em>测一个静态指标</em>" 升级为"<em>测一个动态过程</em>"。</p>
+
+    <p><strong>开源价值：完整的代码 + 数据集开源。</strong>GitHub <a href="https://github.com/lihe-maxsize/Lifelong_Unlearning_main" target="_blank" rel="noopener">lihe-maxsize/Lifelong_Unlearning_main</a> 提供 MLUBench 数据集与 LUMoE 实现。任何在生产中部署 MLLM（GPT-4V / Claude 3.5 Vision / Gemini Vision Pro）的团队都可以接入做<em>合规性 benchmark</em>。这条工程价值在 GDPR Article 17 / EU AI Act 落地强制实施的 2026 H2 是<em>具体可操作的合规工具</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Maini et al. (2024) — <em>TOFU: A Task of Fictitious Unlearning for LLMs</em>·第一代单模态 unlearning benchmark<br>
+    <a href="https://arxiv.org/abs/2401.06121" target="_blank" rel="noopener">arxiv.org/abs/2401.06121</a></div>
+    <div class="ref-item">[2] Li et al. (2024) — <em>The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning</em>·危险知识 unlearning benchmark<br>
+    <a href="https://arxiv.org/abs/2403.03218" target="_blank" rel="noopener">arxiv.org/abs/2403.03218</a></div>
+    <div class="ref-item">[3] Shi et al. (2024) — <em>MUSE: Machine Unlearning Six-Way Evaluation for Language Models</em>·多角度 unlearning 评测<br>
+    <a href="https://arxiv.org/abs/2407.06460" target="_blank" rel="noopener">arxiv.org/abs/2407.06460</a></div>
+    <div class="ref-item">[4] Eldan & Russinovich (2023) — <em>Who's Harry Potter? Approximate Unlearning in LLMs</em>·gradient ascent 类方法奠基<br>
+    <a href="https://arxiv.org/abs/2310.02238" target="_blank" rel="noopener">arxiv.org/abs/2310.02238</a></div>
+    <div class="ref-item">[5] Liu et al. (2023) — <em>Visual Instruction Tuning (LLaVA)</em>·MLLM 主流架构起点<br>
+    <a href="https://arxiv.org/abs/2304.08485" target="_blank" rel="noopener">arxiv.org/abs/2304.08485</a></div>
+    <div class="ref-item">[6] Shazeer et al. (2017) — <em>Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</em>·MoE 经典<br>
+    <a href="https://arxiv.org/abs/1701.06538" target="_blank" rel="noopener">arxiv.org/abs/1701.06538</a></div>
+    <div class="ref-item">[7] Hakim et al. (2026) — <em>ANNEAL: Recurring Failure as Governed Symbolic Patches</em>·5-19 #1 报告主体 · 同源结构隔离思想<br>
+    <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></div>
+    <div class="ref-item">[8] Y. Zhao et al. (2026) — <em>MAC-Bench: Beyond Goodhart's Law + Agent-as-a-Benchmark</em>·6-09 #1 报告主体 · 同源动态评测姿态<br>
+    <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">arxiv.org/abs/2606.07805</a></div>
+    <div class="ref-item">[9] H. Xu et al. (2026) — <em>PreAct-Bench: Prefix Foresight F1 把"<em>预测时刻</em>" 立为 first-class metric</em>·6-10 #1<br>
+    <a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">arxiv.org/abs/2606.09890</a></div>
+    <div class="ref-item">[10] H. Jung et al. (2026) — <em>SciConBench / SciConHarness: Clean-Room Evaluation</em>·6-11 #1 报告主体<br>
+    <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arxiv.org/abs/2606.11337</a></div>
+    <div class="ref-item">[11] EU GDPR (2018) — <em>Article 17: Right to Erasure ("right to be forgotten")</em>·法规驱动 unlearning 需求<br>
+    <a href="https://gdpr-info.eu/art-17-gdpr/" target="_blank" rel="noopener">gdpr-info.eu/art-17-gdpr</a></div>
+    <div class="ref-item">[12] EU (2024) — <em>EU AI Act</em>·MLLM 部署合规框架<br>
+    <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">eur-lex.europa.eu/eli/reg/2024/1689/oj</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>9 类 / 127 实体 / 顺序遗忘请求</strong>——首个 MLLM 终身遗忘 benchmark 规模标杆。</li>
+      <li><strong>"严重累积退化（severe, cumulative degradation）"</strong>——现有遗忘方法 GA / NPO / RMU / SCRUB 等在 lifelong 场景下退化曲线呈现累积形态。</li>
+      <li><strong>"多模态对齐保持（preserve multimodal alignment）" 是 MLLM 独有挑战</strong>——单模态 unlearning 工作的方法学不充分。</li>
+      <li><strong>"从一个模态遗忘可能降级整个模型"</strong>——cross-modal 退化扩散是 MLLM unlearning 的本质难点。</li>
+      <li><strong>LUMoE 用 MoE 架构隔离遗忘域</strong>——结构隔离防止局部修改扩散为全局退化。</li>
+      <li><strong>ICML 2026 接收 + 36 页</strong>——会议地位与篇幅同时锚定 unlearning 圈子的"<em>第二代评测</em>" 标准。</li>
+      <li><strong>开源代码与数据集</strong>：<a href="https://github.com/lihe-maxsize/Lifelong_Unlearning_main" target="_blank" rel="noopener">GitHub lihe-maxsize/Lifelong_Unlearning_main</a> 完整开放。</li>
+      <li><strong>核心论断</strong>：<em>unlearning 评测必须从批处理升级为流式 / 从单模态升级为多模态 / 从静态指标升级为退化曲线</em>。</li>
+      <li><strong>合规对位</strong>：直接映射 GDPR Article 17 / EU AI Act 实施需求。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>MLUBench 给你的 KV-cache 毕设的最直接启发是：<strong>把 cache 系统的"<em>顺序请求 + 累积退化</em>" 立为评测维度</strong>。当前 KV-cache 论文几乎都用<em>静态 trace</em> 评测——给定一个 trace、跑一次、报告 hit rate / latency。MLUBench 的"<em>severe, cumulative degradation</em>" 思想提示一个真实但被忽视的场景：<em>cache 在长程服务的退化曲线</em>——cache 经过几小时 / 几天的运行后是否会出现累积性能下降（碎片化、淘汰策略偏移、热点变化）。<strong>毕设建议</strong>：在实验部分<em>显式</em>报告 (a) 短程 hit rate；(b) 长程（几小时 / 几天）退化曲线；(c) 不同<em>顺序到达</em>的 workload 模式下的退化对比。这条<em>动态评测</em> 姿态让你的工作具备"<em>系统在真实负载下的可持续性</em>" 视野。同时 LUMoE 的"<em>结构隔离</em>" 思想直接给你的 KV-cache 设计提供借鉴：用<em>分区 / 分块 / hierarchical</em> 结构隔离不同 workload，避免一个 workload 的退化扩散到整个 cache。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>MLUBench 与今日方向 #2 <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">Containment Gap</a> 形成<em>互补</em>—— Containment Gap 揭示<em>memory poisoning 单次写入 → 88.9% 持久污染</em>；MLUBench 揭示<em>合法 unlearning 顺序请求 → 累积退化</em>。<strong>把两者合起来</strong>：agent 持久记忆面临两类压力——(a) <em>恶意</em>污染（Containment Gap）；(b) <em>合法</em>顺序遗忘（MLUBench）。两者都要求<strong>结构隔离 + 完整性验证</strong> 作为基础设施。这条结合也呼应 5-19 Memory Laundering"<em>SPG</em>" 与 5-25 SafeHarbor"<em>分层记忆树自演化</em>" 的精神——agent 持久记忆<em>必须</em>是<em>可隔离、可验证、可遗忘</em> 三位一体的。<strong>具体建议</strong>：未来 agent safety 论文应同时报告 (a) memory integrity（抗攻击）；(b) memory unlearning（合规遗忘）；(c) cross-skill alignment preservation（防止结构性退化）。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>MLUBench 自身就<strong>定义了下一代 benchmark 写作模板</strong>——把<em>静态评测</em> 升级为<em>动态过程评测</em>。今日方向 #1 <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">HarnessBridge</a> 把 harness 立为可学习模块，今日方向 #2 <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">Containment Gap</a> 把架构层立为审计对象——这三者合起来构成 2026 H1 后期的<em>三轴</em>姿态变化：<strong>(a) harness 可学习化（HarnessBridge）/ (b) framework 可审计化（Containment Gap）/ (c) benchmark 可持续化（MLUBench）</strong>。三者都把"<em>静态</em>" 元素<em>动态化</em>。<strong>建议</strong>：你下一个研究 benchmark 时<em>必须显式声明</em>：(a) 评测是一次性还是顺序的；(b) 是否覆盖<em>累积退化</em> 维度；(c) 多模态系统是否同时评估 cross-modal 保持。这三条姿态直接接续 6-03 What Benchmarks Don't Measure / 6-09 MAC-Bench / 6-10 PreAct-Bench / 6-11 SciConBench 的方法学路线，构成 2026 H2 evaluation methodology 的统一姿态。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SciConBench / SciConHarness (6-11 #1)</strong>·clean-room evaluation harness · 与 MLUBench 共同推动 benchmark 动态化<br>
+      <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arxiv.org/abs/2606.11337</a></li>
+      <li><strong>PreAct-Bench (6-10 #1)</strong>·Prefix Foresight F1 把"<em>预测时刻</em>" 立为 first-class metric · 与 MLUBench 同源动态评测<br>
+      <a href="https://arxiv.org/abs/2606.09890" target="_blank" rel="noopener">arxiv.org/abs/2606.09890</a></li>
+      <li><strong>MAC-Bench (6-09 #1)</strong>·Beyond Goodhart's Law + Agent-as-a-Benchmark · 同源静态 → 动态升级<br>
+      <a href="https://arxiv.org/abs/2606.07805" target="_blank" rel="noopener">arxiv.org/abs/2606.07805</a></li>
+      <li><strong>ANNEAL (5-19 #1)</strong>·把 recurring failure 翻译为 governed 符号补丁 · 同源结构隔离思想<br>
+      <a href="https://arxiv.org/abs/2605.16309" target="_blank" rel="noopener">arxiv.org/abs/2605.16309</a></li>
+      <li><strong>What Benchmarks Don't Measure (6-03 #1)</strong>·compliance bias 三-gap · 揭示 benchmark 缺位的结构副作用<br>
+      <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.12809" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.12809v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://github.com/lihe-maxsize/Lifelong_Unlearning_main" target="_blank" rel="noopener">GitHub 开源</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.12809" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+      <a class="link-btn" href="https://gdpr-info.eu/art-17-gdpr/" target="_blank" rel="noopener">GDPR Article 17</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-12 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.12809<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">arxiv.org/abs/2606.12809</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
