@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-14 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-14 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 14 日 · Harness Engineering · 把"<em>评测 harness</em>" 立成<em>知识审计</em>的诊断器</div>
+  <h1>ToolSense：把 LLM 的"参数化工具知识"从 retrieval 性能解耦——开源诊断 harness 自动为任意工具目录生成 RRB / MCQ / QA 三类基准，揭示 5 种主流参数化工具检索配置存在严重的"知识—检索分离"，在真实查询上准确率较 ToolBench 完全规范化基准下降 50–64 个百分点</h1>
+  <div class="en-title">ToolSense: A Diagnostic Framework for Auditing Parametric Tool Knowledge in LLMs</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 91 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.5</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">ToolSense: Diagnostic Framework for Auditing Parametric Tool Knowledge in LLMs</a><span class="winner-badge">今日选定</span></td>
+          <td>开源诊断 harness · 自动生成 RRB（3 歧义层级）/ MCQ / QA 三类探针 · ToolBench 47k 工具 · 5 种参数化训练配置 · 揭示"<em>知识—检索分离</em>"（RRB 较 ToolBench 完全规范化基准降 50–64 pp，事实探针接近随机）</td>
+          <td>arXiv 2606.12451（A. Hathidara / S.S. Sistla / S. Schreiber / S. Bansal · SAP）2026-06-12 · GitHub SAP/toolsense</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12871" target="_blank" rel="noopener">DailyReport: Open-ended Benchmark for Search Agents on Daily Search Tasks</a></td>
+          <td>150 开放任务 + 3,546 评分细则 · 子任务级联评估 · 17 个 search agents 系统均未达用户预期</td>
+          <td>arXiv 2606.12871 · 2026-06-12</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12674" target="_blank" rel="noopener">Evoflux: Inference-Time Evolution of Executable Tool Workflows for Compact Agents</a></td>
+          <td>把工具使用立为 graph repair 问题 · MCP-Bench 250 工具 · 可执行性 ~3% → 17–24% · 优于 SFT/SFT+DPO/ReAct</td>
+          <td>arXiv 2606.12674 · 2026-06-12</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12834" target="_blank" rel="noopener">AgentBuild for Rietveld Refinement</a></td>
+          <td>把 agent 构建立为 workflow stage · scientist-authored contracts 驱动 · 版本化评分细则 · X 射线衍射场景</td>
+          <td>arXiv 2606.12834 · 2026-06-12</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12821" target="_blank" rel="noopener">GeoNatureAgent Benchmark</a></td>
+          <td>93 任务 / 18 类别 / 真实 API · Claude Sonnet 4 领先（60.8%），比较类任务普遍 0%</td>
+          <td>arXiv 2606.12821 · 2026-06-12</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.12924" target="_blank" rel="noopener">Two-Agent E-Commerce Search Simulation Framework</a></td>
+          <td>buyer + responder 双 agent 仿真 · 揭示前沿 LLM 评判者间的系统性哲学分歧</td>
+          <td>arXiv 2606.12924 · 2026-06-12</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new（2026-06-13 / 2026-06-14 周末无新提交，沿用 06-12 提交清单）。<strong>ToolSense 之所以胜出</strong>：它是<em>唯一</em>一篇把 harness 设计姿态从"<em>评测 agent 任务能力</em>" 升格到"<em>审计模型内部参数化知识</em>"的工作；与 6-12 #1 HarnessBridge"<em>把 harness 立成可学习模块</em>" 形成精神同构——HarnessBridge 让 harness <em>可学习</em>，ToolSense 让 harness <em>可诊断</em>，两者构成 2026 H1 后期 harness 工程的"<em>训练姿态 + 审计姿态</em>" 双姿态。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>ToolSense: A Diagnostic Framework for Auditing Parametric Tool Knowledge in LLMs</span></div>
+      <div class="meta-item"><label>中文标题</label><span>ToolSense：用于审计 LLM 参数化工具知识的诊断框架</span></div>
+      <div class="meta-item"><label>作者</label><span>Ashutosh Hathidara, Sai Shruthi Sistla, Sebastian Schreiber, Sahil Bansal（4 位 · 推测 SAP，由 GitHub 仓库 SAP/toolsense 推断）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-12（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.IR · cs.LG</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY-SA 4.0</span></div>
+      <div class="meta-item"><label>性质</label><span>方法论文 + 开源诊断 harness · 把"<em>知识 vs 检索</em>" 立成可单独审计维度</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.12451" target="_blank" rel="noopener">arxiv.org/pdf/2606.12451</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.12451v1" target="_blank" rel="noopener">arxiv.org/html/2606.12451v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.12451" target="_blank" rel="noopener">10.48550/arXiv.2606.12451</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/SAP/toolsense" target="_blank" rel="noopener">github.com/SAP/toolsense</a></div>
+      <div class="meta-item"><label>评测目录</label><span>ToolBench（约 47k 工具）+ 5 种参数化训练配置</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 harness 设计姿态从"<em>评测 agent 任务能力</em>" 升格到"<em>审计模型内部参数化知识</em>"——开源诊断 harness 自动为任意工具目录生成 <strong>RRB（3 歧义层级）/ MCQ / QA</strong> 三类基准，在 ToolBench 47k 工具上揭示<strong>"知识—检索分离"</strong>：5 种主流参数化训练配置在真实查询上较 ToolBench 完全规范化基准下降 <strong>50–64 个百分点</strong>，部分配置事实探针得分接近随机水平。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>大语言模型作为 agent 处理大型工具目录时，面临严重的<strong>工具检索瓶颈</strong>。基于嵌入的检索方法依赖紧凑型编码器，可能<em>无法充分捕捉</em>专业工具的语义；<strong>参数化工具检索</strong>通过将每个工具编码为<em>附加到 LLM 词表的虚拟 token</em>，并经过两阶段微调（先记忆，再检索 SFT），将 LLM 用作检索器，在标准 ToolBench 检索基准上取得了优异的性能。</p>
+    <p>然而，这些基准使用<em>冗长、完全规范化的查询</em>，并且其评估采用<em>约束解码</em>（限制输出为有效 token 路径），均无法揭示模型是否<strong>真正理解</strong>其工具。</p>
+    <p>为此，我们引入 <strong>ToolSense</strong>——一个开源的、由 LLM 驱动的诊断框架。它接受任意工具目录作为输入，自动生成三种基准：(1) <strong>Realistic Retrieval Benchmark (RRB)</strong>，包含三个歧义层级的查询；(2) <strong>MCQ probing benchmark</strong>（多项选择探针基准）；(3) <strong>QA probing benchmark</strong>（问答探针基准）。将 ToolSense 应用于 ToolBench（约 47k 工具）并评估五种参数化模型训练配置后，揭示了<strong>知识-检索解耦（knowledge-retrieval dissociation）</strong>现象：在 RRB 查询上，多个配置相比 ToolBench 完全规范化基准<em>性能下降约 50–64 个百分点</em>，甚至<em>低于嵌入模型基线</em>；尽管检索性能强劲，部分模型在事实探针任务上得分<em>接近随机水平</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（诊断 harness / 三联探针 / 知识—检索分离 / 评测姿态升格）</div>
+
+    <p><strong>立论：参数化工具检索"<em>看似 SOTA</em>"，但 SOTA 数字是<em>评测形态人为制造</em>的。</strong>过去半年 LLM tool retrieval 领域的核心争论是"<em>嵌入式检索 vs 参数化检索</em>"——参数化方法（每个工具编码为虚拟 token + 两阶段微调）在 ToolBench 标准基准上以显著优势胜出，被视为下一代 tool retrieval 范式。但 ToolSense 团队提出一个尖锐质疑：<strong>这些 SOTA 数字到底是"<em>模型真懂工具</em>"还是"<em>评测人为退化到模型最擅长形态</em>"？</strong>论文发现 ToolBench 评测有<em>两个</em>会让参数化模型受益的人为简化：(a) 查询是<em>完全规范化</em>的（包含工具的全部关键词、参数名、用法描述）；(b) 评估采用<em>约束解码</em>（限制输出为有效 token 路径）。两者合起来让"<em>检索</em>" 退化为"<em>token 匹配</em>"，而非"<em>语义理解</em>"。这一立论与 6-03 What Benchmarks Don't Measure（<a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arXiv 2606.02965</a>） 关于"<em>评测人为简化导致 specification gap</em>" 的论断<em>精神同构</em>——只是 What Benchmarks Don't Measure 是从 enterprise refusal 角度切入，ToolSense 是从 tool retrieval 角度切入；两篇都暗示 2026 H1 评测体系存在系统性的"<em>评测人为退化</em>"。</p>
+
+    <p><strong>方法学贡献：把 harness 立成"<em>三联探针</em>"——retrieval / MCQ / QA 共同审计同一个内部知识。</strong>ToolSense 的工程设计哲学非常清晰：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>探针</th><th>形态</th><th>审计目标</th><th>对应揭示的失效模式</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Realistic Retrieval Benchmark (RRB)</strong></td><td>3 个歧义层级的真实场景查询（无完全规范化、无约束解码）</td><td>检索能力是否在<em>真实查询形态</em>下保持</td><td>"<em>检索性能依赖人为完整查询</em>"——RRB 上较 ToolBench 完全规范化基准降 50–64 pp</td></tr>
+        <tr><td><strong>MCQ probing benchmark</strong></td><td>多项选择题（关于工具功能、参数、用法）</td><td>模型是否真的<em>理解</em>每个工具是干什么的</td><td>"<em>能检索 ≠ 能理解</em>"——部分模型 MCQ 得分接近随机</td></tr>
+        <tr><td><strong>QA probing benchmark</strong></td><td>开放式问答（关于工具）</td><td>模型对工具的<em>结构化知识</em>能否生成出来</td><td>QA 性能与 MCQ 一致——证明问题不是"<em>识别 vs 生成</em>" 而是<em>知识不存在</em></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心发现一："<em>知识—检索分离</em>" 是参数化范式的结构性副作用。</strong>论文最重要的实证是 5 种主流参数化训练配置都表现出<em>同质</em>的失效模式：(a) 检索 SOTA 数字（在 ToolBench 完全规范化查询上）；(b) RRB 真实查询<em>大幅退化</em>（降 50–64 pp）；(c) 事实探针<em>接近随机</em>。这种"<em>三档落差</em>"说明问题不在某种特定训练配置（如 LoRA 大小、学习率、SFT 数据量），而在<strong>参数化范式本身</strong>——把工具编码为虚拟 token + memorisation SFT 让模型学到的是"<em>token 路径</em>"而非"<em>工具语义</em>"。这条结构性诊断与 6-08 AARR/AARRI-Bench"<em>LLM × harness 二轴评测</em>"（<a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arXiv 2606.07462</a>） 互补——AARRI 揭示 harness 让模型评测结果不稳，ToolSense 揭示<em>同一</em>模型在<em>同一</em>语义任务的不同评测形态下结果不稳。</p>
+
+    <p><strong>核心发现二：嵌入基线在"<em>真实形态</em>" 下反而更稳。</strong>这条 finding 是论文最颠覆的部分：在 RRB 真实查询上，<em>部分参数化模型甚至低于嵌入模型基线</em>。这意味着过去半年"<em>参数化 → SOTA → 嵌入式过时</em>" 的研究路线在<em>真实部署形态</em>下可能<em>本末倒置</em>——当真实查询有歧义、有省略、有上下文依赖时，嵌入式检索因为不依赖具体 token 路径，反而比参数化更鲁棒。这条发现把"<em>SOTA 数字</em>" 的可信度<em>结构化</em>降级——未来 tool retrieval 论文必须同时报告 ToolBench 完全规范化分数<em>和</em> RRB 真实查询分数。</p>
+
+    <p><strong>核心发现三：harness 是审计参数化方法的<em>必要</em>工具。</strong>ToolSense 的另一层贡献是<em>方法学</em>层——它证明<strong>没有<em>结构化诊断 harness</em>，参数化范式的失效模式无法被识别</strong>。这条姿态与 6-12 #1 HarnessBridge"<em>harness 是可学习模块</em>"（<a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arXiv 2606.12882</a>） 形成精神同构——HarnessBridge 把 harness 立为<em>训练对象</em>，ToolSense 把 harness 立为<em>审计工具</em>；两者共同把 harness 从过去"<em>不可见的脚手架</em>" 提升为<em>可被独立研究的研究对象</em>。这是 2026 H1 后期 harness 工程方向的统一姿态。</p>
+
+    <p><strong>开源价值：可作为任意工具目录的诊断 drop-in。</strong>ToolSense 的 GitHub 仓库（<a href="https://github.com/SAP/toolsense" target="_blank" rel="noopener">github.com/SAP/toolsense</a>）开源了完整诊断流水线——这意味着任何工具检索系统的开发者都可以<em>不依赖 ToolBench</em>，直接用 ToolSense 为自己的工具目录生成 RRB / MCQ / QA 三联评测。这条工程性质让 ToolSense 不仅是"<em>论文中的实验</em>"，更是"<em>可被工业团队复用的审计基础设施</em>"——与 6-09 #1 SciConHarness（<a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arXiv 2606.11337</a>） 的"<em>clean-room evaluation harness</em>" 共同构成 2026 H1 后期"<em>诊断型 harness</em>" 这一新研究子方向。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（推断 + 上下文，附链接）</div>
+    <div class="ref-item">[1] Qin et al. (2024) — <em>ToolBench: A Benchmark for Tool Learning</em>·参数化工具检索的标准评测床<br>
+    <a href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">arxiv.org/abs/2307.16789</a></div>
+    <div class="ref-item">[2] Schick et al. (2023) — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>·工具使用学习起点<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">[3] Karpukhin et al. (2020) — <em>Dense Passage Retrieval (DPR)</em>·嵌入式检索基线代表<br>
+    <a href="https://arxiv.org/abs/2004.04906" target="_blank" rel="noopener">arxiv.org/abs/2004.04906</a></div>
+    <div class="ref-item">[4] Tay et al. (2022) — <em>Differentiable Search Index (DSI)</em>·参数化检索范式起点<br>
+    <a href="https://arxiv.org/abs/2202.06991" target="_blank" rel="noopener">arxiv.org/abs/2202.06991</a></div>
+    <div class="ref-item">[5] Hu et al. (2021) — <em>LoRA: Low-Rank Adaptation of Large Language Models</em>·参数化 SFT 常用基础<br>
+    <a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener">arxiv.org/abs/2106.09685</a></div>
+    <div class="ref-item">[6] X. Wang et al. (2026) — <em>HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness</em>·6-12 #1 同源 harness 工程姿态<br>
+    <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></div>
+    <div class="ref-item">[7] Ojewale &amp; Venkatasubramanian (2026) — <em>What Benchmarks Don't Measure</em>·6-03 #2 评测人为退化论<br>
+    <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></div>
+    <div class="ref-item">[8] J. Wang et al. (2026) — <em>AARR/AARRI-Bench: harness 与模型解耦评测</em>·6-08 #3 同源"<em>评测形态影响结果</em>" 论<br>
+    <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></div>
+    <div class="ref-item">[9] H. Jung et al. (2026) — <em>SciConBench + SciConHarness: clean-room evaluation harness</em>·6-11 #1 同期诊断 harness 子方向<br>
+    <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arxiv.org/abs/2606.11337</a></div>
+    <div class="ref-item">[10] Lewis et al. (2020) — <em>RAG: Retrieval-Augmented Generation</em>·tool retrieval 上游应用场景<br>
+    <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">arxiv.org/abs/2005.11401</a></div>
+    <div class="ref-item">[11] T. Bai et al. (2026) — <em>SkillDAG: 类型化技能图取代相似度匹配</em>·6-03 #1 同源"<em>检索 ≠ 选择</em>" 思想<br>
+    <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>ToolBench 工具规模</strong>：约 <em>47,000</em> 个工具——是当前 tool retrieval 评测最大目录之一；ToolSense 在该规模上仍能自动生成完整 RRB / MCQ / QA 三联探针。</li>
+      <li><strong>知识—检索分离</strong>：在 RRB 真实查询上，5 种主流参数化训练配置较 ToolBench 完全规范化基准<em>降 50–64 个百分点</em>——证明 SOTA 数字是评测形态人为制造的。</li>
+      <li><strong>事实探针接近随机</strong>：尽管检索性能强劲，部分参数化模型在 MCQ / QA 探针上得分<em>接近随机水平</em>——证明"<em>知识不存在</em>" 而非"<em>识别 vs 生成</em>" 问题。</li>
+      <li><strong>嵌入基线反胜</strong>：在 RRB 真实查询上，<em>部分</em>参数化模型甚至<em>低于</em>嵌入模型基线——颠覆过去半年"<em>参数化 → SOTA</em>" 的研究路线。</li>
+      <li><strong>RRB 三个歧义层级</strong>：低歧义（接近完全规范化）/ 中歧义（部分省略）/ 高歧义（仅意图）——评测梯度可<em>定量</em>测量"<em>评测人为简化幅度</em>"。</li>
+      <li><strong>诊断 harness 通用性</strong>：接受<em>任意</em>工具目录作为输入——非 ToolBench 专用，可被工业团队 drop-in 使用。</li>
+      <li><strong>由 LLM 驱动的自动生成</strong>：所有三类探针由 LLM 自动生成——降低评测构建成本，但同时引入"<em>评测者偏差</em>" 这一新问题（论文中讨论）。</li>
+      <li><strong>核心论断</strong>：参数化工具检索的 SOTA 数字依赖<em>评测形态人为退化</em>——未来报告必须同时报 ToolBench 完全规范化分数<em>和</em> RRB 真实查询分数。</li>
+      <li><strong>开源完整审计基础设施</strong>：GitHub <a href="https://github.com/SAP/toolsense" target="_blank" rel="noopener">SAP/toolsense</a> 开源全部诊断管线——可作为审计基础设施被复用。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>ToolSense 给你的 KV-cache 毕设的最直接启发是：<strong>把 cache 系统的"<em>性能数字</em>" 与"<em>真实工作负载</em>" 结构化解耦评测</strong>。当前 KV-cache 系统层论文绝大多数是<em>在标准 trace（如 LongBench / RULER / NIAH）上报 throughput 与命中率</em>——这些 trace 都是"<em>完全规范化</em>"的（访问模式可预测、工作负载稳定、上下文长度统一）；ToolSense 揭示这种评测形态人为简化会让某些方法看起来 SOTA，但在<em>真实部署形态</em>（多租户、长尾访问、突发负载）下退化严重。<strong>毕设方法论建议</strong>：(a) 借鉴 RRB 的"<em>三个歧义层级</em>" 设计——你的 cache 评测应该有"<em>低噪 / 中噪 / 高噪</em>" 三个工作负载等级；(b) 借鉴"<em>三联探针</em>" 设计——除了 throughput 与命中率，还应有"<em>cache 决策事实探针</em>"（如：模型对 cache 决策原因能否给出一致解释）；(c) 借鉴 ToolSense 的"<em>知识—检索分离</em>" 论——cache 系统是否真的学到了"<em>哪些 KV 重要</em>" 还是只是"<em>路径匹配</em>"，这一区分对 learnable cache 方向尤其关键。<strong>论文写作姿态</strong>：把 ToolSense 列为"<em>审计姿态 harness</em>" 的方法学先例（与 HarnessBridge"<em>训练姿态 harness</em>" 共同支撑你的"<em>未来 cache 系统应有可学习 + 可审计 双姿态</em>" 论点）。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>ToolSense 与今日方向 #2 <a href="https://arxiv.org/abs/2606.12618" target="_blank" rel="noopener">Did You Lie?</a> 形成精神同构——两篇都把"<em>模型行为</em>" 与"<em>模型内部状态</em>" 结构化解耦。Did You Lie? 用 13 个信念可验证模型组织 + 4 类检测器审计"<em>说与信</em>" 的差距；ToolSense 用 RRB / MCQ / QA 三联探针审计"<em>检索与理解</em>" 的差距。<strong>safety 方向的关键启发</strong>：未来 agent skills safety 评测必须<em>同时</em>有 (a) <em>行为</em>层探针（agent 在任务上做什么）；(b) <em>知识</em>层探针（agent 知道什么）；(c) <em>偏好</em>层探针（agent 信念是什么）——三层探针的<em>相互不一致</em> 是 alignment 失败的核心信号。这条三层探针姿态与 6-11 #2 ELK 不可能定理"<em>仅靠行为反馈不能产生 honest agent</em>" 的形式化结论<em>互补</em>——ELK 给出理论上限，ToolSense / Did You Lie? 给出方法学落地。三者合起来推动 2026 H2 safety 评测从"<em>单层行为</em>" 升级为"<em>三层探针矩阵</em>"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>ToolSense 给 benchmark 方向最深远的影响是<strong>评测形态本身的可信度审计</strong>。今日方向 #3 <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">SciAgentArena</a> 把 200 科研任务立成 step-level 验证 + interactive 环境——这种"<em>真实科研形态</em>" 是对 ToolBench 那种"<em>完全规范化形态</em>" 的<em>反向修正</em>。两篇放一起读：ToolSense 揭示"<em>评测人为简化导致 SOTA 数字虚高</em>"；SciAgentArena 主动构造"<em>反人为简化的真实评测</em>"——"<em>诊断旧 benchmark + 设计新 benchmark</em>" 是 2026 H2 的统一方法学姿态。<strong>建议</strong>：未来 safety / agent benchmark 论文应同时声明：(a) 评测查询是<em>规范化</em> 还是<em>真实形态</em>（多歧义层级）；(b) 评估是否使用<em>约束解码</em>；(c) 是否同时报<em>行为层 + 知识层</em> 双探针结果。这条姿态在 6-09 #1 SciConHarness"<em>clean-room evaluation</em>"、6-12 #1 HarnessBridge"<em>harness 是可学习模块</em>" 之后构成 2026 H2 评测方法学的统一立场。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarnessBridge (6-12 #1)</strong>·把 harness 立成可学习模块 · 与 ToolSense 形成"<em>训练姿态 + 审计姿态</em>" 双姿态<br>
+      <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></li>
+      <li><strong>What Benchmarks Don't Measure (6-03 #2)</strong>·评测人为退化论 · 与 ToolSense 共同揭示评测形态可信度问题<br>
+      <a href="https://arxiv.org/abs/2606.02965" target="_blank" rel="noopener">arxiv.org/abs/2606.02965</a></li>
+      <li><strong>AARR/AARRI-Bench (6-08 #3)</strong>·LLM × harness 二轴评测 · 与 ToolSense 共同支撑"<em>评测形态影响结果</em>" 论<br>
+      <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></li>
+      <li><strong>SciConHarness (6-11 #1)</strong>·clean-room evaluation harness · 与 ToolSense 共同构成"<em>诊断型 harness</em>" 子方向<br>
+      <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arxiv.org/abs/2606.11337</a></li>
+      <li><strong>SkillDAG (6-03 #1)</strong>·类型化技能图取代相似度匹配 · 与 ToolSense"<em>知识 vs 检索分离</em>" 同源思想<br>
+      <a href="https://arxiv.org/abs/2606.03056" target="_blank" rel="noopener">arxiv.org/abs/2606.03056</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.12451" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/SAP/toolsense" target="_blank" rel="noopener">GitHub: SAP/toolsense</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.12451v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.12451" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">ToolBench 原始论文</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-14 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.12451<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
