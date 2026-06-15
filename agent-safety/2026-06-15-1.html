@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-15 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf6ea; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #085041; }
+  .link-btn.primary:hover { background: #d0eee0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 15 日 · Agent Skills Safety · 把 Agent 隐私防护从"<em>云端依赖</em>" 挪到"<em>客户端可信代理</em>"</div>
+  <h1>MINIM：基于 Contextual Integrity 的客户端本地 UI 观察隐私最小化代理——双分数（敏感度 s + 任务条件必要性 n）+ 三元披露策略（Keep / Abstract / Remove）+ CI-aware 加权损失，在 WebArena 衍生 662 测试集上把任务无关敏感泄露压低到 Full Observation 的 <strong>10.1%（降 89.9%）</strong>，TCNP-I 99.31%，2FA / 密码 / Slack 通知 >99.9% 抑制率，节点保留率仅 12% 远低于 Llama-3.3-70B 等 LLM 基线 25.8–34.5%（ICML 2026 接收）</h1>
+  <div class="en-title">Minim: Privacy-Aware Minimal View for Agents via Trusted Local Sanitization</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">MINIM: Privacy-Aware Minimal View for Agents via Trusted Local Sanitization</a><span class="winner-badge">今日选定</span></td>
+          <td>Contextual Integrity 客户端本地代理 · 双分数（s 任务无关 + n 任务条件） · K/A/R 三元策略 · GATv2 + CI-aware 加权损失 · 89.9% 泄露抑制 + 99.31% TCNP-I 双优 · 12% 节点保留率显著低于 LLM 基线（ICML 2026 接收）</td>
+          <td>arXiv 2606.13949（H. Yu / C. Zhang / H. Jin / S. Shi / N. Zhang / Y.T. Hou / W. Lou，Virginia Tech + WUSTL）2026-06-11 · CC BY 4.0 · GitHub yyyyhx/MINIM</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14200" target="_blank" rel="noopener">When Should Agent Trust Be Conditional? Skill-Conditional Reputation Attacks</a></td>
+          <td>开放 agent 平台 skill-conditional 信任 · 跨技能廉价证据攻击 · routing regret 0 → 0.94</td>
+          <td>arXiv 2606.14200 · 2026-06-13 · Y. Xia / T. Wang</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14476" target="_blank" rel="noopener">When the Tool Decides: LLM Agents Defer Blindly to GNN Tools</a></td>
+          <td>实证 agent 不行使判断 · 97.6%-99.2% 与 GNN 完全一致 · 越强 backbone deferral 越多</td>
+          <td>arXiv 2606.14476 · 2026-06-13 · Z. Wang / P. Vemuri</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13884" target="_blank" rel="noopener">Capability Minimization as Safety Primitive: Risk-Aware Causal Gating</a></td>
+          <td>因果效应估计 + 校准风险控制 · least-privilege LLM agents · 决定执行/推迟/放弃</td>
+          <td>arXiv 2606.13884 · 2026-06-13 · L.G. Iyer / R.S. Babu</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14130" target="_blank" rel="noopener">Contract-Based Compositional Shielding for Safe MARL</a></td>
+          <td>多 agent 安全协调 + 运行时 shield · contract-based · 解决 decentralised shield 排除最优团队行为</td>
+          <td>arXiv 2606.14130 · 2026-06-13 · O. Adalat / E. Hamel-De le Court / F. Belardinelli</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14149" target="_blank" rel="noopener">Trust but Verify: Mitigating Medical Hallucinations</a></td>
+          <td>多 agent 医疗安全审计 + 103 临床 MCQ 对抗数据集 · 已撤回药物推荐风险检测</td>
+          <td>arXiv 2606.14149 · 2026-06-13 · 5 作者</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-15 提交清单）。<strong>MINIM 之所以胜出</strong>：它把 6-12 #2 Containment Gap"<em>memory integrity validator</em>" 从架构层进一步推到<em>客户端可信代理</em>层——首次把 Contextual Integrity（Nissenbaum 2004 隐私理论奠基）+ 双分数 + 三元策略落地为<em>实际可部署</em>的 GATv2 本地模型；而且不是简单 Allow/Deny，而是用 <em>Abstract</em> 中间动作保留结构角色但屏蔽敏感值，回收 +2.81pp TCNP-I 与 +4.41pp TCNP；ICML 2026 接收背书；与 6-14 #1 Did You Lie?"<em>测谎器审计</em>"形成"<em>检测 + 防御</em>" 双姿态。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Minim: Privacy-Aware Minimal View for Agents via Trusted Local Sanitization</span></div>
+      <div class="meta-item"><label>中文标题</label><span>MINIM：基于可信本地代理的智能体隐私感知最小化视图</span></div>
+      <div class="meta-item"><label>作者</label><span>Hexuan Yu, Chaoyu Zhang, Heng Jin, Shanghao Shi, Ning Zhang, Y. Thomas Hou, Wenjing Lou（7 位）</span></div>
+      <div class="meta-item"><label>推测机构</label><span>Virginia Tech（Y.T. Hou / W. Lou）+ Washington University in St. Louis（N. Zhang）</span></div>
+      <div class="meta-item"><label>资助方</label><span>ONR (N00014-24-1-2730 等) · ARO (W911NF-24-1-0155) · NSF (2433904 / 2247560 等多项)</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-11（v1）</span></div>
+      <div class="meta-item"><label>领域 / 会议</label><span>cs.AI · <strong>ICML 2026 接收</strong>（韩国首尔）</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">arxiv.org/abs/2606.13949</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.13949" target="_blank" rel="noopener">arxiv.org/pdf/2606.13949</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.13949v1" target="_blank" rel="noopener">arxiv.org/html/2606.13949v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.13949" target="_blank" rel="noopener">10.48550/arXiv.2606.13949</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/yyyyhx/MINIM" target="_blank" rel="noopener">github.com/yyyyhx/MINIM</a></div>
+      <div class="meta-item"><label>评测床</label><span>WebArena 衍生 5,403 (tree, task) 变体（150 唯一可访问性树 / 27 任务类型 / 3 域：Shopping / Reddit / Gmail）→ 训练 4,741 / 测试 662</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM agent 的"<em>UI 状态隐私防护</em>" 从"<em>云端依赖 + 二元 Allow/Deny</em>" 升级为<strong>客户端可信本地代理 + 三元 K/A/R 策略</strong>——基于 Contextual Integrity 理论，为每个 UI 元素学习<em>任务无关敏感度 s + 任务条件必要性 n</em> 双分数；用 CI-aware 加权损失（高 s + 低 n 节点惩罚加大）防御最有害披露；GATv2 模型轻量本地部署；WebArena 衍生 662 测试集上把任务无关敏感泄露压低到 Full Observation 的 <strong>10.1%（降 89.9%）</strong>，TCNP-I <strong>99.31%</strong>，2FA / 密码 / Slack 通知 <strong>>99.9% 抑制</strong>，节点保留率 <strong>12%</strong>（Llama-3.3-70B 基线 34.5%）；ICML 2026 接收。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>现代基于 LLM 的自主 agent 越来越依赖丰富的 UI 状态观察，以在复杂数字环境中实现可靠的 action grounding。然而，许多部署即便<em>大多数元素与当前任务无关</em>，仍把<strong>完整 UI 状态</strong>传输至远程推理服务器，可能泄露敏感但不必要的上下文（认证码、私人通知、后台应用状态等）。</p>
+    <p>我们提出 <strong>MINIM</strong>——一个<strong>可信本地 broker</strong>，在任何观察离开设备前于客户端进行<em>隐私感知最小化</em>。基于 <strong>Contextual Integrity (CI)</strong>，MINIM 为每个 UI 元素学习<em>双分数表示</em>，预测<em>任务无关的固有敏感度 sᵢ</em> 和<em>任务条件下的必要性 nᵢ,ₜ</em>。两分数驱动一个<strong>三元披露策略</strong>：保留必要元素、按需<em>抽象化</em>敏感属性、移除任务无关内容。我们优化一个 <em>CI-aware 目标</em>，对高风险内容的必要性误差施加更强惩罚，从而在保留任务关键信息的同时实现<em>激进剪枝</em>。基于 WebArena 衍生的真实 UI 观察实验显示，MINIM 在保留任务关键语义上下文与可靠 agent 操作所需的<em>交互可用性</em> 的同时，<strong>大幅降低任务无关敏感泄露</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（CI 落地 / 双分数 / 三元 K-A-R 策略 / CI-aware 加权损失 / 部署形态）</div>
+
+    <p><strong>立论：把"<em>contextual integrity</em>" 从理论推到部署形态。</strong>过去 20 年，Helen Nissenbaum 的 contextual integrity（CI，2004）是隐私理论的基石——"<em>信息是否合规取决于<em>角色 + 目的 + 转移规则</em>"。但 CI 在 LLM 时代的<em>实际部署落地</em>一直缺位：5-19 Memory Laundering 揭示有毒上下文被压缩进 summary 后监测器看不见；6-12 #2 Containment Gap 审计 LangChain / AutoGPT / OpenAI Agents SDK 三大 framework 全部缺乏 memory integrity；6-13 #1 ELK 不可能定理证明仅靠行为反馈不能产生诚实 agent。MINIM 的姿态是：<strong>当 model 层和架构层都做不出 honesty / safety 时，把防护推到<em>客户端</em>，在数据离开设备前用 CI 强约束做<em>privacy-preserving sanitization</em></strong>。这条姿态与今日方向 #3 <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">WorkBench Revisited</a>"<em>capability 与 safety 同向提升</em>" 形成精神同构——agent 防护必须从"<em>事后过滤</em>"前移到"<em>数据源头</em>"。</p>
+
+    <p><strong>系统设计一：双分数表示——任务无关敏感度 + 任务条件必要性。</strong>MINIM 的核心创新是为每个 UI 元素 eᵢ 学习<em>两个</em>独立分数：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>分数</th><th>符号</th><th>范围</th><th>语义</th><th>例：2FA 验证码</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>敏感度</strong></td><td>sᵢ</td><td>[0, 10]</td><td>任务无关的<em>固有</em>披露风险——一旦泄露后果有多严重</td><td>sᵢ = 10（高）</td></tr>
+        <tr><td><strong>必要性</strong></td><td>nᵢ,ₜ</td><td>[0, 10]</td><td>任务 T 条件下完成意图的必要程度</td><td>购物任务 nᵢ,ₜ = 0（无关）<br>登录任务 nᵢ,ₜ = 10</td></tr>
+      </tbody>
+    </table>
+
+    <p>这种<em>正交</em>分解非常关键——它解决了过去 LLM-based 隐私过滤的"<em>规模并非银弹</em>"问题（实验中 Llama-3.3-70B 的 TISL 0.312 反而<em>高于</em> Llama-3-8B 的 0.206）：单个分数无法同时刻画"<em>这条信息有多敏感</em>" 和"<em>这条信息对当前任务有多必要</em>"。MINIM 用 GATv2（3 层 / 256 隐藏维 / 4 注意力头）+ 双 MLP head 同时输出 ŝ 与 n̂，输入特征 512 维（384 维 MiniLM 文本嵌入 + UI 属性 + 结构特征），保持模型轻量可本地部署。</p>
+
+    <p><strong>系统设计二：三元披露策略 K / A / R——抽象化是关键中间动作。</strong>MINIM 不像 prompt-based LLM 过滤器只做 binary Allow/Deny，而是引入第三个动作：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>动作</th><th>触发条件</th><th>输出</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>K (Keep)</strong></td><td>n̂ ≥ τ_nec ∧ ŝ &lt; τ_sens</td><td>完整保留（必要且低风险）</td></tr>
+        <tr><td><strong>A (Abstract)</strong></td><td>n̂ ≥ τ_nec ∧ ŝ ≥ τ_sens</td><td><em>占位符</em>抽象化——保留结构角色，屏蔽敏感值</td></tr>
+        <tr><td><strong>R (Remove)</strong></td><td>n̂ &lt; τ_nec</td><td>移除（任务无关）</td></tr>
+      </tbody>
+    </table>
+
+    <p>部署阈值 τ_nec = 1.0 / τ_sens = 5.0。<strong>消融实验证明 A 动作的关键价值</strong>（Table 4）——把 A 退化为 R（保守 binary）使 TCNP 从 0.9491 降到 0.9050（−4.41pp），TCNP-I 从 0.9931 降到 0.9650（−2.81pp），代价仅 0.0021 TISL 改善。这条 finding 直接对位 6-12 HarnessBridge"<em>trajectory-grounded rejection</em>" / 6-12 Containment Gap"<em>policy gate</em>"——三者共享一个洞察：<em>纯 binary 控制不足，必须有第三档 graded action（rejection / abstraction / approval）</em>。</p>
+
+    <p><strong>系统设计三：CI-aware 加权损失——惩罚最有害的披露。</strong>普通 L1 损失对所有节点平权，但<em>"高敏感 + 低必要"</em>节点的误判（如把 2FA 码标记为 keep）后果远比"<em>低敏感 + 低必要</em>" 节点的误判（如把装饰元素标记为 keep）严重得多。MINIM 的 CI-aware 必要性损失：</p>
+
+    <p style="font-family:monospace; background:#f7f7f5; padding:0.6rem 0.9rem; border-radius:6px; font-size:0.85rem; line-height:1.5;">𝓛_nec = Σᵢ ( 1 + λ · (sᵢ/10) · (1 − nᵢ,ₜ/10) ) · |nᵢ,ₜ − n̂ᵢ,ₜ|</p>
+
+    <p>当 sᵢ 高（敏感）+ nᵢ,ₜ 低（不必要）时，乘法因子接近 1+λ，惩罚加大，迫使模型对"<em>最危险的披露场景</em>" 给出最准确的预测。配合敏感度损失 𝓛_sens（普通 L1）和 总损失 𝓛 = 𝓛_sens + α·𝓛_nec（论文中 λ = α = 1.0），形成端到端可训练目标。这条思想是把 CI 理论里"<em>信息流的合规性取决于角色 × 目的 × 转移</em>" 的 nuance 翻译成可微目标——是 5 月以来对位 SafeHarbor 信息熵驱动节点分裂、SkillJuror 语义受控变体的<em>第三种</em>方法学路径。</p>
+
+    <p><strong>核心实证：Table 1 vs Table 2 的双重碾压。</strong>WebArena 衍生 662 测试集，3 大主指标：TCNP（任务关键节点保留率，越高越好）/ TCNP-I（交互元素保留率，越高越好）/ TISL（任务无关敏感泄露按敏感度加权，越低越好）。</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>方法</th><th>TCNP ↑</th><th>TCNP-I ↑</th><th>TISL ↓</th><th>Keep% ↓</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Full Observation</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>100%</td></tr>
+        <tr><td>Random Budget</td><td>0.2284</td><td>0.2346</td><td>0.1971</td><td>—</td></tr>
+        <tr><td>Sens.-Only（仅敏感度）</td><td>0.0401</td><td>0.0393</td><td>0.3799</td><td>—</td></tr>
+        <tr><td>Nec.-Only（仅必要性）</td><td>0.9445</td><td>0.9730</td><td>0.2032</td><td>—</td></tr>
+        <tr><td>Llama-3.3-70B-Instruct</td><td>0.966</td><td>0.996</td><td>0.312</td><td>34.5%</td></tr>
+        <tr><td>GPT-OSS-20B</td><td>0.963</td><td>0.994</td><td>0.276</td><td>32.7%</td></tr>
+        <tr><td>Qwen3-8B-Instruct</td><td>0.956</td><td>0.989</td><td>0.211</td><td>28.4%</td></tr>
+        <tr><td><strong>MINIM (Ours)</strong></td><td><strong>0.9491</strong></td><td><strong>0.9931</strong></td><td><strong>0.1010</strong></td><td><strong>12.0%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>三个核心 finding：(a) <strong>泄露压低 89.9%</strong>（TISL 0.101 = Full 的 10.1%）；(b) <strong>规模并非银弹</strong>——Llama-3.3-70B 的 TISL（0.312）反而高于 Llama-3-8B（0.206），证明仅靠模型规模无法实施 CI 约束；(c) <strong>节点稀疏性洞察</strong>——现代网页 1100+ HTML 元素中绝大多数是结构容器/装饰，真正必要元素稀疏，因此 12% 保留率合理且最有效。MINIM 的 TISL 是最强 LLM 基线 Llama-3.3-70B 的<em>约 1/3</em>。<strong>安全性验证</strong>：在 2FA/OTP 验证码（s=10）/ 密码提示（s=10）/ Slack 通知（s=8-9）/ 邮件预览（s=7-9）四类注入敏感内容上，<em>>99.9%</em> 被有效抑制——这是当前 prompt-based LLM 过滤器普遍做不到的水平。</p>
+
+    <p><strong>方法学姿态：把 agent safety 从 cloud 推到 edge。</strong>MINIM 与今日方向 #1 <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">HarnessX</a> 在系统姿态上互补——HarnessX 把"<em>能力提升</em>" 推到 harness 层，MINIM 把"<em>安全防护</em>" 推到客户端层；二者共同构成 2026 H1 后期"<em>层次化 agent 系统</em>" 的方法论：cloud model（Anthropic / OpenAI / 等）+ 客户端 trusted local broker（MINIM）+ middleware harness（HarnessX）+ runtime monitor（Containment Gap memory integrity validator）四层栈。这种<em>分层防护</em>思路是过去半年 agent safety 论文（5-21 #2 CUGA / 5-19 #2 Memory Laundering / 5-23 #2 Latent-space Refusal Evasion / 6-11 #2 ELK 不可能定理 / 6-12 #2 Containment Gap）逐渐汇聚出的统一姿态：<strong>不要指望模型本身 honest，必须在系统的每一层都做<em>可验证</em>的约束</strong>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选 41 引用中的关键 11 条，附链接）</div>
+    <div class="ref-item">[1] Nissenbaum (2004) — <em>Privacy as Contextual Integrity</em> · CI 理论奠基<br>
+    <a href="https://www.law.uw.edu/wlr/PrintEdition/issue/2004/3/79WashLRev119.pdf" target="_blank" rel="noopener">Washington Law Review 79: 119–158</a></div>
+    <div class="ref-item">[2] Zhou et al. (2024) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em> · 主数据来源<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">[3] Mireshghallah et al. (2023) — <em>Can LLMs Keep a Secret? Testing Privacy Implications via Contextual Integrity</em><br>
+    <a href="https://arxiv.org/abs/2310.17884" target="_blank" rel="noopener">arxiv.org/abs/2310.17884</a></div>
+    <div class="ref-item">[4] Bagdasarian et al. (2024) — <em>AirGapAgent: Protecting Privacy-Conscious Conversational Agents</em><br>
+    <a href="https://arxiv.org/abs/2405.05175" target="_blank" rel="noopener">arxiv.org/abs/2405.05175</a></div>
+    <div class="ref-item">[5] Zharmagambetov et al. (2025) — <em>AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents</em><br>
+    <a href="https://arxiv.org/abs/2503.09780" target="_blank" rel="noopener">arxiv.org/abs/2503.09780</a></div>
+    <div class="ref-item">[6] Friedl et al. (2026) — <em>The Impossibility of Eliciting Latent Knowledge</em> · 6-11 #1 同源 ELK 不可能定理（DeepMind）<br>
+    <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arxiv.org/abs/2606.12268</a></div>
+    <div class="ref-item">[7] Hossain et al. (2026) — <em>The Containment Gap</em> · 6-12 #2 同源"<em>memory integrity validator</em>" 思想<br>
+    <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arxiv.org/abs/2606.12797</a></div>
+    <div class="ref-item">[8] Cooney et al. (2026) — <em>"Did you lie?"</em> · 6-14 #1 测谎器审计 · MINIM 的检测互补面<br>
+    <a href="https://arxiv.org/abs/2606.12618" target="_blank" rel="noopener">arxiv.org/abs/2606.12618</a></div>
+    <div class="ref-item">[9] Zhan et al. (2025) — <em>Portcullis: A Privacy Gateway for LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2502.05908" target="_blank" rel="noopener">arxiv.org/abs/2502.05908</a></div>
+    <div class="ref-item">[10] Anthropic (2024) — <em>Model Context Protocol (MCP)</em> · agent 工具协议<br>
+    <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">anthropic.com/news/model-context-protocol</a></div>
+    <div class="ref-item">[11] Carlini et al. (2021) — <em>Extracting Training Data from Large Language Models</em> · 训练数据提取攻击经典<br>
+    <a href="https://www.usenix.org/conference/usenixsecurity21/presentation/carlini-extracting" target="_blank" rel="noopener">USENIX Security 2021</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>WebArena 衍生评测床</strong>：5,403 (tree, task) 变体（150 唯一可访问性树 / 27 任务类型 / 3 域：Shopping + Reddit + Gmail）→ 训练 4,741 / 测试 <em>662</em>。</li>
+      <li><strong>89.9% 泄露抑制</strong>：TISL 0.1010 = Full Observation 的 10.1%——任务无关敏感泄露压低近 10 倍。</li>
+      <li><strong>99.31% TCNP-I</strong>：交互元素保留率几乎不损失——agent 可执行性不受影响。</li>
+      <li><strong>>99.9% 抑制</strong>：注入的 2FA / 密码 / Slack 通知 / 邮件预览四类敏感内容（按 s=7-10 分类）几乎完全不被传输。</li>
+      <li><strong>12% 节点保留率</strong>：远低于最强 LLM 基线 Llama-3.3-70B 的 34.5%——说明现代网页结构性元素稀疏、绝大多数对当前任务无关。</li>
+      <li><strong>规模并非银弹</strong>：Llama-3.3-70B 的 TISL（0.312）<em>反而高于</em> Llama-3-8B（0.206）和 Gemma-3N-E4B（0.194）——证明仅靠模型规模无法实施 CI 约束。</li>
+      <li><strong>抽象化 (A) 不可或缺</strong>：消融实验显示去除 A 动作（A→R）使 TCNP 降 4.41pp / TCNP-I 降 2.81pp，仅 +0.0021 TISL 改善——graded action 是关键。</li>
+      <li><strong>任务语义鲁棒性</strong>：Sensitive/Admin 任务上 TCNP 与 TCNP-I 双 100%（K=15.84% + A=9.84%），证明在敏感任务上既未泄露也未拒绝执行。</li>
+      <li><strong>域级表现</strong>：Gmail 域 TCNP 96.61% / TISL 1.88%；Shopping 域 TCNP 93.60% / TISL 0.85%；Reddit 域 TCNP 95.38% / TISL 13.50%（社交内容更难判断必要性）。</li>
+      <li><strong>本地部署可行</strong>：GATv2 仅 3 层 / 256 隐藏维 / 4 注意力头 + 2 个 MLP head——轻量可本地推理，无需云端 LLM 调用。</li>
+      <li><strong>核心论断</strong>：当前 agent 部署中"<em>把完整 UI 状态发到云</em>" 是不可接受的隐私默认；MINIM 提供首个<em>可部署</em>的 CI-grounded 客户端 sanitizer，与 ICML 2026 会议背书。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>MINIM 给你的 KV-cache 毕设最直接启发：<strong>"<em>必要性 + 敏感度</em>" 双分数模型可类比"<em>cache value + cache cost</em>" 双分数模型</strong>。当前 KV-cache 系统层论文绝大多数用<em>单一</em>启发式（如 attention score 决定 keep/evict），但 MINIM 证明<em>单分数不足</em>——必要性与敏感度（或 cache value 与 cache cost）正交，需要分别预测。<strong>毕设方法论建议</strong>：(a) 借鉴<em>双分数 + 三元策略</em>——你的 cache 系统决策不应只是 keep/evict 二元，而应有 keep / compress / evict 三档（compress 对位 MINIM 的 abstract，保留结构但减小占用）；(b) 借鉴 <em>CI-aware 加权损失</em>——你的 cache 训练目标应在"<em>高 value + 低 cost</em>" 节点（最不该 evict 的）误判处加大惩罚；(c) 借鉴 <em>客户端可信代理</em>架构——MINIM 把决策推到 edge，你的 cache 系统也可借鉴"<em>分层决策</em>"思路（local fast cache + cloud verifiable cache）；(d) MINIM 的 GATv2 模型轻量本地部署经验直接对位"<em>cache 控制器轻量推理</em>" 工程问题。<strong>论文写作姿态</strong>：把 MINIM 列为"<em>多目标 + 分层决策 + 轻量本地推理</em>" 的方法学先例。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击方向）</div>
+        <p>MINIM 是 agent skills safety 方向 2026 H1 后期最重要的<em>系统</em>论文之一——它让 CI 理论从"<em>顶会论文中的 desideratum</em>" 第一次变成"<em>可部署的客户端 broker</em>"。与 6-11 #1 ELK 不可能定理（DeepMind 形式化）/ 6-12 #2 Containment Gap（架构层审计）/ 6-14 #1 Did You Lie?（测谎器审计）形成"<em>理论 + 系统 + 检测 + 防御</em>" 四档完整证据矩阵。<strong>关键启发</strong>：(a) <em>分层防护</em>已是共识——cloud model + edge broker + middleware harness + runtime monitor 四层；(b) <em>三元策略 (K/A/R)</em> 是 binary control 的关键升级——这条姿态已在 6-12 HarnessBridge"<em>trajectory-grounded rejection</em>" / 6-12 Containment Gap"<em>policy gate</em>" / MINIM 三处独立印证；(c) <em>"<em>规模并非银弹</em>" 现象</em>需写入 safety 论文标准 caveat——即将更大模型用于 sanitization 不一定更安全；(d) <em>CI-aware 加权损失</em>是把"<em>不对称风险</em>" 写入训练目标的方法学样板，可推广到任意 safety 训练。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>MINIM 与今日方向 #3 <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">WorkBench Revisited</a> 在评测姿态上互补——MINIM 用 TCNP / TCNP-I / TISL 三档指标量化"<em>隐私-效用 tradeoff</em>"；WorkBench 用任务完成率 / 副作用率二档指标量化"<em>capability-safety tradeoff</em>"。两者都把"<em>tradeoff 可量化</em>" 立为 benchmark 设计的第一性原则。<strong>建议</strong>：未来 agent safety benchmark 论文应同时报告 (a) <em>主指标</em>（任务成功率）、(b) <em>副作用指标</em>（敏感泄露 / 副作用率 / off-target loss）、(c) <em>graded action 比例</em>（K / A / R 三档分布）。这三档在 MINIM Table 3（任务语义鲁棒性）和 Table 10（域级表现）已经完整呈现，可直接借鉴为 benchmark 报告范式。这条姿态在 6-09 #3 MAC-Bench"<em>CSR + MG 双指标</em>" / 6-10 #3 PreAct-Bench"<em>Prefix Foresight F1</em>" 之后构成 2026 H2 多指标 benchmark 的统一立场。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Containment Gap (6-12 #2)</strong> · 三大 agentic framework memory integrity 缺失审计 · 与 MINIM"<em>客户端可信代理</em>" 构成"<em>架构 + 客户端</em>" 双防线<br>
+      <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arxiv.org/abs/2606.12797</a></li>
+      <li><strong>Did You Lie? (6-14 #1)</strong> · 测谎器审计 · 与 MINIM"<em>主动防护</em>" 构成"<em>检测 + 防御</em>" 双姿态<br>
+      <a href="https://arxiv.org/abs/2606.12618" target="_blank" rel="noopener">arxiv.org/abs/2606.12618</a></li>
+      <li><strong>The Impossibility of ELK (6-11 #1)</strong> · ELK 不可能定理（DeepMind）· 形式化证据为"<em>必须看内部表征</em>" 提供合法性<br>
+      <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arxiv.org/abs/2606.12268</a></li>
+      <li><strong>Memory Laundering (5-19 #2)</strong> · Sub-threshold Propagation Gap · 上下文压缩中隐私泄露的方法学先驱<br>
+      <a href="https://arxiv.org/abs/2605.16746" target="_blank" rel="noopener">arxiv.org/abs/2605.16746</a></li>
+      <li><strong>SafeHarbor (5-25 #1)</strong> · 分层记忆增强 guardrail（ICML 2026）· 与 MINIM 共同代表 ICML 2026 隐私 / safety 方向标杆<br>
+      <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.13949" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://github.com/yyyyhx/MINIM" target="_blank" rel="noopener">GitHub: yyyyhx/MINIM</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.13949v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.13949" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://icml.cc/Conferences/2026" target="_blank" rel="noopener">ICML 2026</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-15 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.13949 + arxiv.org/html/2606.13949v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">arxiv.org/abs/2606.13949</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

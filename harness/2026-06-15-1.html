@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-15 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 15 日 · Harness Engineering · 把 harness 立成"<em>可演化的铸造厂</em>"</div>
+  <h1>HarnessX：把 agent harness 升级为"<em>可组合 / 可适应 / 可演化</em>"的铸造厂——9 维分类法 + Substitution Algebra 类型化原语 + AEGIS trace-driven 多 agent 演化引擎；ALFWorld / GAIA / WebShop / τ³-Bench / SWE-bench Verified 五基准上平均 +14.5%，最高 +44.0%（ALFWorld + Qwen3.5-9B），并通过共享 replay buffer + Cross-Harness GRPO 实现 harness×model 协同进化（再 +4.7%）</h1>
+  <div class="en-title">HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">HarnessX: Composable, Adaptive, and Evolvable Agent Harness Foundry</a><span class="winner-badge">今日选定</span></td>
+          <td>类型化 harness 原语 + AEGIS trace-driven 多 agent 演化引擎 + Cross-Harness GRPO 协同进化 · 5 基准 / 3 模型族 / 15 配置 / 14 个有提升 · 平均 +14.5% / 最高 +44.0% · 9 维分类法 / 8 hooks / 4 阶段流水线</td>
+          <td>arXiv 2606.14249（Darwin Agent Team · 14 作者）2026-06-12 · CC BY 4.0</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14516" target="_blank" rel="noopener">Every Eval Ever: Unifying Schema and Community Repository</a></td>
+          <td>统一 schema + 社区众包仓库 · 22,235 模型 / 2,273 唯一 benchmark / 31 评估格式</td>
+          <td>arXiv 2606.14516 · 2026-06-12</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14239" target="_blank" rel="noopener">SkillAudit: Ground-Truth-Free Skill Evolution via Paired Trajectory Auditing</a></td>
+          <td>无需 ground-truth 反馈即可演化 agent skills · 8 专业域 89 容器化任务 73.9% 平均奖励</td>
+          <td>arXiv 2606.14239 · 2026-06-12</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13685" target="_blank" rel="noopener">The Coin Flip Judge? Reliability and Bias in LLM-as-a-Judge</a></td>
+          <td>LLM-as-a-Judge 重复运行可靠性测量 · 成对偏好平均 13.6% 翻转 · 显著首位置偏差</td>
+          <td>arXiv 2606.13685 · 2026-06-12</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14119" target="_blank" rel="noopener">FactoryLLM: Safe and Open-Source AI Playground for Smart Factories</a></td>
+          <td>智能工厂故障诊断 RAG · RAGAS + NVIDIA LLM-as-Judge 双重评估</td>
+          <td>arXiv 2606.14119 · 2026-06-12</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new（2026-06-15 提交清单）。<strong>HarnessX 之所以胜出</strong>：它把 6-12 #1 HarnessBridge"<em>harness 可学习</em>"、6-14 #1 ToolSense"<em>harness 可诊断</em>" 两条线进一步合并升级为<strong>"harness 可铸造 / 可演化 / 可与模型协同进化"</strong>——9 维分类法 + Substitution Algebra 给出第一份"<em>类型化 harness 代数</em>"，AEGIS 把演化形式化为符号空间 MDP（与 RL operational mirror），同时通过共享 replay buffer + Cross-Harness GRPO 实现 harness 与模型双天花板同步突破。这是 2026 H1 后期 harness 工程方向继 Life-Harness（5-23 #1）/ Code as Agent Harness（5-25 #1）/ HarnessBridge（6-12 #1）/ ToolSense（6-14 #1）四篇之后<em>姿态最完整</em>的一篇。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry</span></div>
+      <div class="meta-item"><label>中文标题</label><span>HarnessX：可组合、可适应、可演化的智能体运行框架铸造厂</span></div>
+      <div class="meta-item"><label>作者团队</label><span>Darwin Agent Team（14 作者：T. Chen / S. Lu / K. Zhao / W. Meng / H. Teng / T. Li / C. Li / X. Liu / J. Liang / Z. Zhang / Y. Xie / H. Qu / K. Shao / J. Luan，机构待 PDF 致谢页确认）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-12（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.LG</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>性质</label><span>方法论文 + 系统工程 · 把 harness 立为"<em>可演化的铸造厂</em>" 和"<em>类型化代数对象</em>"</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.14249" target="_blank" rel="noopener">arxiv.org/pdf/2606.14249</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.14249v1" target="_blank" rel="noopener">arxiv.org/html/2606.14249v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.14249" target="_blank" rel="noopener">10.48550/arXiv.2606.14249</a></div>
+      <div class="meta-item"><label>GitHub</label><span>论文声明"<em>完整代码将在后续 release 开源</em>"，当前未发布</span></div>
+      <div class="meta-item"><label>评测基准</label><span>ALFWorld / GAIA / WebShop / τ³-Bench / SWE-bench Verified（5 基准 / 3 模型族 / 最多 15 轮演化）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent harness 从"<em>静态手工脚手架</em>" 升级为<strong>"可组合 / 可适应 / 可演化"</strong>的铸造厂——9 维分类法 + Substitution Algebra 类型化原语保证组合安全；<strong>AEGIS trace-driven 多 agent 演化引擎</strong>把演化建模为符号空间与 RL 的 operational mirror，并以 4 阶段流水线（Digester → Planner → Evolver → Critic + 确定性 Gating）防御 reward hacking / catastrophic forgetting / under-exploration 三大病理；5 基准 15 配置上 14 个有提升，平均 <strong>+14.5%</strong>、最高 <strong>+44.0%</strong>（ALFWorld + Qwen3.5-9B），通过共享 replay buffer + <strong>Cross-Harness GRPO</strong> 实现 harness 与模型协同进化（再 <strong>+4.7%</strong>）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>AI agent 的性能严重依赖于运行时 <strong>harness</strong>——包括 prompts、工具、记忆和控制流，这些组件介导了模型如何观察、推理与行动。然而，当今的 harness 仍然主要是手工构造且静态的：每个新模型或新任务都需要专门的 scaffolding，执行过程中产生的丰富轨迹也鲜被系统性地蒸馏回改进环节。</p>
+    <p>我们提出 <strong>HarnessX</strong>，一个面向<em>可组合 / 可适应 / 可演化</em>智能体 harness 的<strong>铸造厂</strong>。HarnessX 通过<em>替换代数（substitution algebra）</em> 组装类型化 harness 原语，借助 <strong>AEGIS</strong>（一个 trace-driven 的多智能体演化引擎，建立在符号适应与强化学习之间的 operational mirror 之上）实现适应性优化，并通过将轨迹同时转化为<em>harness 更新</em>和<em>模型训练信号</em>闭合 harness-model 循环。在 5 个 benchmark（ALFWorld / GAIA / WebShop / τ³-Bench / SWE-bench Verified）上，HarnessX 平均提升 <strong>+14.5%</strong>（最高 +44.0%），且 baseline 越低提升越大。这些结果表明，agent 进步不必只来自模型 scaling——<em>组合并演化运行时接口</em>是与 model scaling 互补、可操作的另一杠杆。完整代码将在未来发布时开源。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（铸造厂范式 / 9 维分类法 / AEGIS / 协同进化 / 三大病理防御）</div>
+
+    <p><strong>立论：harness 不是脚手架，而是<em>第一类研究对象</em>。</strong>过去半年（2026 H1）连续四篇里程碑论文已经把 harness 从"<em>不可见的胶水</em>" 推到聚光灯下：5-23 Life-Harness 用 runtime 接口替代训练；5-25 Code as Agent Harness 把代码立为 harness 基质；6-12 HarnessBridge 把 harness 立为可学习模块；6-14 ToolSense 把 harness 立为审计工具。HarnessX 是这条线的最完整集大成——它把 harness 同时升级为：(a) <strong>类型化代数对象</strong>（可组合）、(b) <strong>trace-driven 演化目标</strong>（可适应）、(c) <strong>训练信号源</strong>（可与模型协同进化）。论文称这是"<em>foundry</em>" 范式——意味着 harness 不再像"<em>编程</em>" 那样手工构造，而像"<em>铸造</em>" 那样按类型契约自动组装与演化。</p>
+
+    <p><strong>系统设计一：9 维分类法 + Substitution Algebra。</strong>HarnessX 把 harness 配置 ℋ = (c₁, ..., c₉) 分解为 9 个正交维度，并定义类型化 harness edit（保持类型契约的代码级修改函数）作为代数操作的基本单元：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>维度</th><th>名称</th><th>典型 harness 元素</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>D1</td><td>Model selection</td><td>角色 → 模型映射、fallback 策略</td></tr>
+        <tr><td>D2 ★</td><td>Context assembly</td><td>history 编辑、prompt 模板、压缩策略（最频繁编辑目标）</td></tr>
+        <tr><td>D3</td><td>Memory management</td><td>长期 / 工作 / episodic memory 接口</td></tr>
+        <tr><td>D4 ★</td><td>Tool ecosystem</td><td>tool registry、tool description、approval flag（最频繁编辑目标）</td></tr>
+        <tr><td>D5</td><td>Execution environment</td><td>sandbox provider、workspace、plugin list</td></tr>
+        <tr><td>D6</td><td>Evaluation and reward</td><td>verifier、reward shaping、smoke test</td></tr>
+        <tr><td>D7</td><td>Control and safety</td><td>policy gate、checkpoint、interrupt 策略</td></tr>
+        <tr><td>D8</td><td>Observability</td><td>tracer、log 注解、指标埋点</td></tr>
+        <tr><td>D9</td><td>Training bridge</td><td>training signal extractor、log-prob cache</td></tr>
+      </tbody>
+    </table>
+
+    <p>每个 hook 点（task_start / step_start / before_model / after_model / before_tool / after_tool / step_end / task_end，共 8 个）映射一组 typed processor，每个 processor 有 5 种结果（pass-through / transform / split / intercept / interrupt）和类级元数据（_singleton_group / _order / _after）。这种"<em>有类型 + 有顺序 + 有依赖</em>"的代数结构让 harness 编辑可以在 build 期检测冲突——这是 6-08 #1 Lean4Agent"<em>harness 形式化</em>"思路的工程化落地。</p>
+
+    <p><strong>系统设计二：AEGIS = harness 演化的 operational mirror。</strong>论文最重要的形式化是定义 (ℋ, ℰ, ℛ, 𝒯) 元组——把 harness 配置 ℋ 视为状态、harness edit ℰ 视为 action、verifier 反馈视为 reward ℛ、trace 视为转移信号 𝒯——从而<strong>把 harness 演化建模为符号空间中的 MDP</strong>，与 RL 形成精确对应。基于这个 mirror，AEGIS 用 4 阶段流水线（由单一 Meta-Agent LLM 驱动）实现演化：</p>
+
+    <ol style="padding-left:1.2rem;font-size:0.91rem;color:#3a3a38;line-height:1.7;">
+      <li style="margin-bottom:0.4rem;"><strong>Digester</strong>：把海量 raw trace（GAIA 单次迭代约 ~10M tokens）压缩为结构化任务级摘要——二元结果、失败类别、涉及组件、证据片段；</li>
+      <li style="margin-bottom:0.4rem;"><strong>Planner</strong>：在 adaptation landscape 上构建结构化探索方向，避免局部 prompt 改写陷阱；</li>
+      <li style="margin-bottom:0.4rem;"><strong>Evolver</strong>：生成候选 harness {ℋ̃ₜᵏ}，附带 change manifest 与 smoke test；</li>
+      <li><strong>Critic + Deterministic Gating</strong>：Critic 检查 manifest 与 trace 证据一致性；4 道确定性 gate（manifest 完整性 / 规范化 / build+smoke / seesaw 回归检查）按序拦截不合格候选。</li>
+    </ol>
+
+    <p><strong>核心洞察：三大病理与对应防御机制。</strong>论文识别 harness 演化的三个 RL-病理类似失效模式：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>病理</th><th>表现</th><th>防御机制</th><th>失败案例（论文实证）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reward hacking</td><td>把答案嵌入 prompt / 利用 verifier 漏洞</td><td>Critic 模块审查 manifest-trace 一致性</td><td>GAIA · Sonnet 4.6 · R10</td></tr>
+        <tr><td>Catastrophic forgetting</td><td>修复 A 任务却悄悄回退 B 任务</td><td>确定性 gating 中的 seesaw 回归检查；variant isolation</td><td>τ³-Bench · Sonnet 4.6 · Telecom · R7</td></tr>
+        <tr><td>Under-exploration</td><td>偏向局部小修改（改 prompt 字眼）而非结构调整</td><td>Planner 构建 adaptation landscape 强制结构化探索</td><td>ALFWorld · Sonnet 4.6 · R4–R7</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心实证：Inverse-scaling + Variant Isolation + Co-Evolution 三大现象。</strong>实验在 5 基准 × 3 模型族（Claude Sonnet 4.6 / GPT-5.4 / Qwen3.5-9B）上进行，最多 15 轮演化。最关键的实证有三：(a) <strong>Inverse-scaling</strong>——baseline 越低提升越大，ALFWorld 上 Qwen3.5-9B 提升 <em>+44.0%</em>，Claude Sonnet 4.6 仅 +11.2%；演化的 harness 弥补了弱模型自我修正能力不足。(b) <strong>Variant Isolation 解锁异质任务集</strong>——GAIA（异质任务）上单 harness 演化停滞，启用 variant-isolation（同时维护至多 K 个变体并按历史成功率路由）后获 <em>+13.6%</em>。(c) <strong>Co-Evolution 增益</strong>——共享 replay buffer + Cross-Harness GRPO（按 task identity 分组而非 action 级，允许不同 harness 版本共存于同一 group；off-policy 训练，模型版本 lag 上界 ⌊C/s⌋ rounds）相对于单纯 harness 演化再叠加 <em>+4.7%</em>。这条 co-evolution 设计是对 6-12 HarnessBridge"<em>harness 与 model unified instruction tuning</em>"的延伸——HarnessBridge 训练单 harness 与 model 联合，HarnessX 则在 RL 阶段同时演化两者，并提出"<em>scaffolding ceiling vs training-signal ceiling 双天花板</em>" 框架。</p>
+
+    <p><strong>方法学姿态：harness 演化与 model 训练共享 RL 形式。</strong>HarnessX 把 6-11 #1 SkillJuror"<em>语义受控变体 + 匹配多试验</em>"的方法学姿态推到全 harness 层级——SkillJuror 把 skill 组织方式立成可测变量，HarnessX 把整个 harness 立成可演化 MDP。论文与 6-08 Lean4Agent"<em>形式化建模</em>" / 6-09 SKILL.nb"<em>选择性形式化</em>" / 5-19 ANNEAL"<em>governed 符号补丁</em>" 共同构成 harness 工程的"<em>形式化—演化—修补</em>"三档梯度。<strong>2026 H1 后期 harness 工程的统一姿态</strong>已经清晰：(1) harness 是<em>类型化代数对象</em>（HarnessX D1-D9）；(2) harness 演化是 <em>RL 同构</em>（HarnessX AEGIS）；(3) harness 与 model 必须<em>协同进化</em>（HarnessX co-evolution）；(4) harness 必须<em>可被审计</em>（ToolSense）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选 50+ 引用中的关键 11 条，附链接）</div>
+    <div class="ref-item">[1] Xu et al. (2026) — <em>Life-Harness: Adapting Runtime Interfaces for Agent Capabilities</em> · 5-23 #1 同源"<em>改 runtime 接口替代训练</em>" 思想<br>
+    <a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arxiv.org/abs/2605.22166</a></div>
+    <div class="ref-item">[2] Wang et al. (2026) — <em>HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness</em> · 6-12 #1 同源"<em>harness 可学习</em>" 思想<br>
+    <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></div>
+    <div class="ref-item">[3] Hathidara et al. (2026) — <em>ToolSense: Diagnostic Framework for Auditing Parametric Tool Knowledge</em> · 6-14 #1 同源"<em>harness 可审计</em>" 思想<br>
+    <a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a></div>
+    <div class="ref-item">[4] Lange et al. (2025) — <em>Darwin Gödel Machine</em> · self-evolving agent 系统起点（Darwin Agent Team 同源命名）<br>
+    <a href="https://arxiv.org/abs/2505.22954" target="_blank" rel="noopener">arxiv.org/abs/2505.22954</a></div>
+    <div class="ref-item">[5] Robeyns et al. (2025) — <em>SICA: Self-Improving Coding Agents</em> · self-improvement 范式先行<br>
+    <a href="https://arxiv.org/abs/2504.15228" target="_blank" rel="noopener">arxiv.org/abs/2504.15228</a></div>
+    <div class="ref-item">[6] Yuksekgonul et al. (2024) — <em>TextGrad: Automatic Differentiation via Text</em> · prompt 优化代表方法<br>
+    <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener">arxiv.org/abs/2406.07496</a></div>
+    <div class="ref-item">[7] Khattab et al. (2023) — <em>DSPy: Compiling Declarative Language Model Calls</em> · 类型化 LM 编程的近邻基线<br>
+    <a href="https://arxiv.org/abs/2310.03714" target="_blank" rel="noopener">arxiv.org/abs/2310.03714</a></div>
+    <div class="ref-item">[8] Hu et al. (2025) — <em>ADAS: Automated Design of Agentic Systems</em> · multi-agent workflow 自动化<br>
+    <a href="https://arxiv.org/abs/2408.08435" target="_blank" rel="noopener">arxiv.org/abs/2408.08435</a></div>
+    <div class="ref-item">[9] Zhang et al. (2025) — <em>AFlow: Automating Agentic Workflow Generation</em> · workflow 优化代表<br>
+    <a href="https://arxiv.org/abs/2410.10762" target="_blank" rel="noopener">arxiv.org/abs/2410.10762</a></div>
+    <div class="ref-item">[10] Shao et al. (2024) — <em>DeepSeekMath / GRPO</em> · Cross-Harness GRPO 直接借鉴的训练算法<br>
+    <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv.org/abs/2402.03300</a></div>
+    <div class="ref-item">[11] Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em> · 主基准之一（异质任务集）<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>5 基准 / 3 模型族 / 15 配置</strong>：ALFWorld / GAIA / WebShop / τ³-Bench / SWE-bench Verified × Claude Sonnet 4.6 / GPT-5.4 / Qwen3.5-9B；最多 15 轮演化；<em>14/15 配置有提升</em>。</li>
+      <li><strong>平均 +14.5% / 最高 +44.0%</strong>：跨 5 基准的总体增益；最高出现在 ALFWorld + Qwen3.5-9B（最弱 agent 收益最大）。</li>
+      <li><strong>Inverse-scaling 模式</strong>：ALFWorld 与 GAIA 上最弱 task agent 收益最大——演化 harness 弥补了弱模型自我修正缺口。</li>
+      <li><strong>Variant Isolation +13.6%</strong>：GAIA 异质任务上单 harness 演化停滞，variant-isolation（最多 K 变体 + 历史成功率路由 + seesaw 按 variant 范围）解锁 +13.6%（15 轮内非衰退）。</li>
+      <li><strong>Co-Evolution +4.7%</strong>：共享 replay buffer（FIFO 容量 C，trajectory 标注 (ℳₖ, ℋₖ)）+ Cross-Harness GRPO（按 task identity 分组）+ off-policy 训练（log-prob 缓存，lag 上界 ⌊C/s⌋ rounds）相对于单 harness 演化再叠加 +4.7%。</li>
+      <li><strong>9 维分类法（D1–D9）</strong>：Model / Context / Memory / Tool / Execution / Evaluation / Safety / Observability / Training Bridge——D2 与 D4 是<em>最频繁编辑目标</em>，与"<em>context engineering + tool engineering 是 agent 核心</em>" 的产业经验印证。</li>
+      <li><strong>8 个 hook points</strong>：task_start / step_start / before_model / after_model / before_tool / after_tool / step_end / task_end——每个 hook 接受类型化 processor 列表，processor 有 5 种结果与 3 类元数据。</li>
+      <li><strong>3 大病理 + 4 道 deterministic gate</strong>：reward hacking / catastrophic forgetting / under-exploration 分别由 Critic / seesaw / Planner 防御；4 道 gate（manifest 完整性 / 规范化 / build+smoke / seesaw）按序拦截。</li>
+      <li><strong>operational mirror 形式化</strong>：(ℋ, ℰ, ℛ, 𝒯) 元组把 harness 演化与 RL 精确对应——是 6-08 Lean4Agent"<em>harness 形式化</em>"之后又一次形式化升级。</li>
+      <li><strong>双天花板观点</strong>：Scaffolding ceiling（仅 harness 演化）+ Training-signal ceiling（仅 model RL）——co-evolution 同时突破两者。</li>
+      <li><strong>资助方与团队</strong>：Darwin Agent Team，14 作者；同名命名暗示与 Darwin Gödel Machine（self-evolving agent）一脉相承。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>HarnessX 给你的 KV-cache 系统层毕设最直接的启发是：<strong>把 cache 系统的"<em>策略空间</em>" 立成 9 维 + 8 hook 的<em>类型化代数对象</em></strong>。当前 KV-cache 论文的策略改进往往是"<em>拍脑袋一个新 heuristic + 评测</em>"——但 HarnessX 的方法学告诉你：<em>策略改进必须有类型契约 + 自动 build 检查 + smoke test</em>，否则不同改进难以叠加。<strong>毕设方法论建议</strong>：(a) 借鉴 9 维分类法——为你的 cache 系统定义"<em>caching 策略的 N 维分类法</em>"（如 admission policy / eviction policy / prefetch policy / compression policy / sharing policy 等正交维度）；(b) 借鉴 substitution algebra——每个策略改进必须保持类型契约（e.g. 不破坏 cache 一致性），用 build-time check 拦截不合格组合；(c) 借鉴 4 阶段 AEGIS 流水线——Digester（trace 摘要）/ Planner（探索方向）/ Evolver（生成候选）/ Critic + Gating（确定性回归检查）这套结构可直接套用到 cache 策略的自动演化；(d) 最重要：借鉴 <strong>seesaw 回归检查</strong>——cache 策略改进经常出现"<em>提升 workload A 但回退 workload B</em>"的 seesaw，HarnessX 的 deterministic gate 设计可直接借鉴。<strong>论文写作姿态</strong>：把 HarnessX 列为"<em>系统层可演化 framework 的方法学先例</em>"——你的 cache 系统应该能用类似 framework 自动演化策略。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>HarnessX 的三大病理（reward hacking / catastrophic forgetting / under-exploration）与今日方向 #2 <a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">MINIM</a> 的"<em>privacy-utility tradeoff</em>" 在方法论上同构——两者都把<strong>"自动优化系统的副作用"</strong>立为可被独立测量的失效模式。HarnessX 用 4 道 gate 防御 reward hacking；MINIM 用 CI-aware 加权损失防御 high-sensitivity + low-necessity 节点的过度披露。<strong>safety 方向的关键启发</strong>：未来 agent skills safety 评测必须分别测量 (a) <em>主指标</em>（任务成功率 / 隐私保留率）；(b) <em>副作用指标</em>（catastrophic forgetting / sensitive leakage / off-target loss）；(c) <em>seesaw 检查</em>（一组任务改进时另一组是否回退）。这三档指标缺一不可。HarnessX co-evolution 的"<em>双天花板</em>"框架对 safety 同样适用：scaffolding ceiling（guardrail 上限）vs training-signal ceiling（aligned model 上限），二者必须协同推进。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>HarnessX 与今日方向 #3 <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">WorkBench Revisited</a> 在 benchmark 设计姿态上形成精神同构——HarnessX 用 5 基准证明"<em>harness 演化跨任务族广泛有效</em>"，WorkBench 重访用 21 模型证明"<em>capability 与 safety 在工作场所 agent 上同向提升而非权衡</em>"。两篇都暗示<strong>"agent 进步不是孤立的能力提升，而是 harness × model × benchmark 三角同步演化"</strong>。<strong>建议</strong>：未来 safety / agent benchmark 论文应同时声明：(a) 评测使用的 harness 配置版本；(b) 是否启用 variant isolation；(c) 是否同时报 baseline / best-harness 两档结果。这条姿态在 6-08 #3 AARRI"<em>LLM × harness 二轴评测</em>" 之后又一次升级。HarnessX 同时暴露 benchmark 设计的一个新维度：<em>变更 harness 后 benchmark 数字是否仍然反映"<em>真实 agent 能力</em>" 还是"<em>harness 工程能力</em>"</em>——这条疑问应被未来 agent benchmark 论文写入"<em>discussion / threats to validity</em>"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarnessBridge (6-12 #1)</strong> · 把 harness 立成可学习模块 · 与 HarnessX 形成"<em>可学习 → 可铸造</em>" 升级线<br>
+      <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></li>
+      <li><strong>ToolSense (6-14 #1)</strong> · harness 可审计 · 与 HarnessX"<em>harness 可铸造</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a></li>
+      <li><strong>Life-Harness (5-23 #1)</strong> · 改 runtime 接口替代训练 · HarnessX co-evolution 的前序证据<br>
+      <a href="https://arxiv.org/abs/2605.22166" target="_blank" rel="noopener">arxiv.org/abs/2605.22166</a></li>
+      <li><strong>Code as Agent Harness (5-25 #1)</strong> · 把代码立为 harness 基质 · HarnessX 的设计哲学先驱<br>
+      <a href="https://arxiv.org/abs/2605.18747" target="_blank" rel="noopener">arxiv.org/abs/2605.18747</a></li>
+      <li><strong>Lean4Agent (6-08 #1)</strong> · harness 形式化建模 · HarnessX operational mirror 的形式化前序<br>
+      <a href="https://arxiv.org/abs/2606.06523" target="_blank" rel="noopener">arxiv.org/abs/2606.06523</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.14249" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.14249v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.14249" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2505.22954" target="_blank" rel="noopener">Darwin Gödel Machine（同源命名）</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-15 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.14249 + arxiv.org/html/2606.14249v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

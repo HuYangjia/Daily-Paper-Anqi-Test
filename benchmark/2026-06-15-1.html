@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-15 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #e1f5ee; color: #0f6e56; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf6ea; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf6ea; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f7e3c0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf6ea; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 15 日 · Safety Benchmark · 把"<em>纵向重测</em>" 立为 agent benchmark 的第一公民</div>
+  <h1>WorkBench Revisited：两年后重测 21 个前沿模型——任务完成率 43% → 88.8%、有害副作用率 26% → 2.5%；Claude Opus 4.8 双双最佳；用同一基准证明<strong>"<em>capability 与 safety 在工作场所 agent 上同向提升而非权衡</em>"</strong>，前沿模型"<em>几乎完全以无害方式失败</em>"；同时披露 56 任务 ground truth 修订（约 14% 任务受影响）+ ReAct 弃用 / 改用 native tool-calling 等基准更新</h1>
+  <div class="en-title">WorkBench Revisited: Workplace Agents Two Years On</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 8.8</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">WorkBench Revisited: Workplace Agents Two Years On</a><span class="winner-badge">今日选定</span></td>
+          <td>WorkBench 纵向重测 · 21 模型 / 57 任务 / 工作场所 agent · 完成率 43→88.8% · 副作用 26→2.5% · capability × safety 同向提升 · 公开 + GitHub 持续维护</td>
+          <td>arXiv 2606.13715（Olly Styles 独著）2026-06-10 · 8 页 / 3 图 · CC BY 4.0 · COLM 2024 原作者</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14571" target="_blank" rel="noopener">StreamMemBench: Streaming Evaluation of Agent Memory</a></td>
+          <td>个人 agent 流式记忆 benchmark · EgoLife 第一视角流 · 每证据锚点两步任务序列 · 证据使用 + 反馈复用</td>
+          <td>arXiv 2606.14571 · 2026-06-13 · G. Liu 等 8 作者</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13815" target="_blank" rel="noopener">Poker Arena: Multi-Axis Profiling of Strategic Reasoning and Memory</a></td>
+          <td>无限注德州扑克锦标赛平台 · 三层记忆架构 · 九轴认知画像 · 不确定性下战略推理</td>
+          <td>arXiv 2606.13815 · 2026-06-13 · P. Singla / S. Garg / V. Singh</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14516" target="_blank" rel="noopener">Every Eval Ever: Unifying Schema and Community Repository</a></td>
+          <td>统一 schema · 22,235 模型 / 2,273 唯一 benchmark / 31 评估格式 · 社区众包仓库</td>
+          <td>arXiv 2606.14516 · 2026-06-12</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14149" target="_blank" rel="noopener">Trust but Verify: Mitigating Medical Hallucinations</a></td>
+          <td>多 agent 医疗安全审计 · 103 临床 MCQ 对抗数据集 · 已撤回药物推荐风险</td>
+          <td>arXiv 2606.14149 · 2026-06-13 · 5 作者</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14119" target="_blank" rel="noopener">FactoryLLM: Safe AI Playground for Smart Factories</a></td>
+          <td>智能工厂故障诊断 RAG · RAGAS + NVIDIA LLM-as-Judge 双重评估</td>
+          <td>arXiv 2606.14119 · 2026-06-12</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-15 提交清单）。<strong>WorkBench Revisited 之所以胜出</strong>：它是当前为数不多的<em>纵向重测</em>论文——用同一基准跨 2024/2026 两年评测 21 模型，得出"<em>capability 与 safety 在工作场所 agent 上同向提升</em>" 的反共识结论，与 6-12 #3 MLUBench"<em>动态化 benchmark</em>" / 6-14 #3 SciAgentArena"<em>失败模式诊断</em>" 形成完整方法学三角；同时论文极其透明地披露 56 任务 ground truth 修订与 ReAct→native tool-calling 工程改进（同模型修订前后差 8pp），是 6-03 #3 Reliability Gap"<em>benchmark 自审能力</em>" 之后又一次方法学反思；论文论断直接挑战传统"<em>capability-safety tradeoff</em>" 担忧，对 agent safety 政策与产品决策都有重大影响。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>WorkBench Revisited: Workplace Agents Two Years On</span></div>
+      <div class="meta-item"><label>中文标题</label><span>WorkBench 重访：两年后的工作场所智能体</span></div>
+      <div class="meta-item"><label>作者</label><span>Olly Styles（独著，邮箱 ollystyles@gmail.com，机构未在 abs 页明列；原 WorkBench 论文 COLM 2024 作者）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-10（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL · cs.MA</span></div>
+      <div class="meta-item"><label>页数 / 图</label><span>8 页 / 3 图</span></div>
+      <div class="meta-item"><label>许可证</label><span>CC BY 4.0</span></div>
+      <div class="meta-item"><label>性质</label><span>纵向重测论文 + benchmark 修订 + 21 模型 leaderboard · 8pp 修订效应（同模型）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arxiv.org/abs/2606.13715</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.13715" target="_blank" rel="noopener">arxiv.org/pdf/2606.13715</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.13715v1" target="_blank" rel="noopener">arxiv.org/html/2606.13715v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.13715" target="_blank" rel="noopener">10.48550/arXiv.2606.13715</a></div>
+      <div class="meta-item"><label>原始 WorkBench</label><a href="https://arxiv.org/abs/2405.00823" target="_blank" rel="noopener">arXiv 2405.00823（COLM 2024）</a></div>
+      <div class="meta-item"><label>GitHub</label><span>"<em>WorkBench has been public on GitHub since 2024</em>"——基准与代码自 2024 公开（仓库 URL 需 PDF 全文确认）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用同一 WorkBench 基准跨 2024 / 2026 两年评测 21 个前沿模型——任务完成率 <strong>43% → 88.8%</strong>，非预期有害副作用率 <strong>26% → 2.5%</strong>；Claude Opus 4.8 双双最佳；得出反共识结论 <strong>"<em>capability 与 safety 在工作场所 agent 上同向提升而非权衡</em>"</strong>——前沿 agent "<em>几乎完全以无害方式失败</em>"；同时透明披露 56 任务（约 14%）ground truth 修订与 ReAct→native tool-calling 工程改进（同模型修订前后差 8pp）；六巨头跨地缘格局：前沿高价区全是西方专有模型，廉价高效区全是中国开源模型，西方廉价梯队（Haiku / GPT-mini/nano）被双面挤压。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>2024 年 3 月，WorkBench 上表现最好的 agent GPT-4 完成了 <strong>43%</strong> 的任务，但在其中 <strong>26%</strong> 的任务中执行了非预期的有害动作（如把邮件发给错误的人）。我们在 2026 年 6 月重新评测该基准，发现迄今最佳 agent <strong>Claude Opus 4.8</strong> 完成 <strong>88.8%</strong>，非预期有害动作率仅 <strong>2.5%</strong>。除了前沿 agent 性能的显著进步，论文指出三大要点：</p>
+    <p>第一，<strong>能力与安全在 WorkBench 上协同提升而非权衡</strong>——完成任务最多的模型造成的非预期损害也最少。第二，尽管多类错误已被彻底消除，前沿模型仍偶发<em>不可逆有害错误</em>（如发邮件到错误地址）。第三，<strong>开源权重模型的崛起</strong>大幅拉低了原本仅专有模型才能达到的性能水准的成本，而前沿模型成本相对稳定。我们发布更新版基准，包含数据与代码质量改进、新模型分数、自 2024 年以来 agent 进展分析。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（纵向重测 / 三大发现 / benchmark 自审 / 跨地缘格局 / 反共识结论）</div>
+
+    <p><strong>立论：纵向重测是被忽视的 benchmark 方法学。</strong>过去半年的 agent benchmark 论文几乎都是"<em>新基准 + 新评测</em>"姿态——5-25 #1 Boiling the Frog 立"<em>多轮持久工作区</em>"、6-08 #3 AARRI 立"<em>研究实习生级</em>" 颗粒度、6-09 #3 MAC-Bench 立"<em>程序合规性</em>"、6-12 #3 MLUBench 立"<em>终身遗忘</em>"、6-14 #3 SciAgentArena 立"<em>失败模式诊断器</em>"。这条主线方法学价值巨大，但同时<em>掩盖</em>了一个重要问题：<strong>当前 agent 进步到底有多快？相比两年前是什么倍数？capability 与 safety 是否真的在权衡？</strong>WorkBench Revisited 用最朴素的"<em>同基准重测</em>" 给出第一份高质量纵向证据。</p>
+
+    <p><strong>核心实证一：21 模型 leaderboard 揭示前沿 agent 已突破 80% 完成率。</strong>论文评测 21 个 2024-2026 年间发布的前沿模型，按完成率从高到低：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>排名</th><th>模型</th><th>完成率 ↑</th><th>副作用率 ↓</th><th>单任务成本</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Claude Opus 4.8</td><td><strong>88.8%</strong></td><td><strong>2.5%</strong></td><td>$0.182</td></tr>
+        <tr><td>2</td><td>GPT-5.5</td><td>87.7%</td><td>3.9%</td><td>$0.206</td></tr>
+        <tr><td>3</td><td>Gemini-3.1-pro</td><td>87.7%</td><td>3.0%</td><td>$0.076</td></tr>
+        <tr><td>4</td><td>Gemini-3.5-flash</td><td>84.2%</td><td>3.0%</td><td>$0.067</td></tr>
+        <tr><td>5</td><td>Claude Sonnet 4.6</td><td>80.7%</td><td>9.7%</td><td>$0.105</td></tr>
+        <tr><td>6</td><td>Kimi-K2.6</td><td>80.6%</td><td>6.8%</td><td>$0.022</td></tr>
+        <tr><td>7</td><td>DeepSeek-V4-pro</td><td>77.8%</td><td>12.8%</td><td>$0.017</td></tr>
+        <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+        <tr><td>15</td><td>Qwen3.5</td><td>63.2%</td><td>21.4%</td><td>$0.003</td></tr>
+        <tr><td>21</td><td>GPT-3.5-turbo</td><td>25.8%</td><td>38.7%</td><td>$0.016</td></tr>
+      </tbody>
+    </table>
+
+    <p>厂商分布揭示<strong>2026 跨地缘格局</strong>：(a) <em>前沿高价区</em>（>$0.07/任务）全是西方专有模型——Anthropic / OpenAI / Google；(b) <em>廉价高效区</em>（<$0.025/任务但完成率 ≥ 60%）全是中国开源权重模型——Kimi / DeepSeek / GLM / Qwen；(c) <em>西方廉价梯队</em>（Haiku 4.5 / GPT-5.4-mini / GPT-5.4-nano）被前沿专有 + 中国开源双面挤压。这条 finding 直接对位 6-08 ELK 不可能定理（DeepMind）/ 6-12 HarnessBridge（UCLA）/ 6-13 SciAgentArena（Yale + Harvard）等学术工作背后的西方研究力量地图。</p>
+
+    <p><strong>核心实证二：capability 与 safety 在工作场所 agent 上同向提升。</strong>这是论文最有价值的反共识结论。传统直觉是"<em>能力越强越危险</em>"——例如 jailbreak 文献长期警告"<em>更强模型更容易被诱导越界</em>"。但 WorkBench 数据显示反向：完成率最高的 Claude Opus 4.8 副作用率最低（2.5%）；GPT-3.5-turbo 完成率仅 25.8% 但副作用率高达 38.7%。论文措辞精炼："<em>the strongest agents now fail almost entirely in harmless ways</em>"（最强 agent 现在几乎完全以无害方式失败）。这条 finding 与 6-12 #2 Containment Gap"<em>架构层 safety 必须治理</em>"、5-21 #2 CUGA"<em>policy-as-code</em>"、6-13 MINIM"<em>客户端可信代理</em>" 互补——三者讲的都是<em>系统层防护</em>，WorkBench 讲的是<em>模型层 capability-safety 协同</em>。两条线交叉得出 2026 H1 后期 agent safety 的新共识：<strong>capability-safety tradeoff 不是必然的，前提是 (a) 模型本身在工作场所类任务上充分对齐 + (b) 系统层叠加结构化治理</strong>。</p>
+
+    <p><strong>核心实证三：错误类型分布的精细刻画。</strong>论文系统分类已消除 / 几乎消除 / 已减少 / 未改善 / 新出现五档错误：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>分类</th><th>错误类型</th><th>消除原因 / 残留情况</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>✅ 完全消除</td><td>未遵循 ReAct 格式 / 未识别可用日历时段 / 更新错误事件</td><td>工具特定训练 + 受限解码（structured outputs）保证 schema 遵从</td></tr>
+        <tr><td>⚠️ 几乎消除（偶有残留）</td><td>发送信息至错误邮件地址</td><td>GPT-5.5 仍有 1 次发到 @example 地址（不可逆错误）</td></tr>
+        <tr><td>🔻 已减少但仍存在</td><td>错误解读检索数据 / 错误使用搜索（5 上限）</td><td>Opus 4.8 仍把"<em>百分比增长</em>" 与"<em>原始值</em>" 比较</td></tr>
+        <tr><td>❌ 未改善</td><td>绘制未来日期数据</td><td>模型坚持以 2023-11-30 为终点产生空白日</td></tr>
+        <tr><td>🆕 新观察到</td><td>过度积极 / 推理失败 / 轻信被截断结果 / 绘制未发生日期</td><td>2026 年新发现的失败模式</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心实证四：benchmark 自审与 56 任务修订。</strong>论文极其透明披露原 WorkBench 的 7 类问题：(a) "<em>过去 N 天</em>" off-by-one 错误（today−N 应为 today−N+1）；(b) prompt 与答案键不匹配（"more than" vs "less than"）；(c) 静默零聚合 bug（idxmin 丢弃零计数）；(d) 会议推迟违反工作时间规则；(e) 邮件正文 \\n 转义不一致（10 任务全部失败）；(f) 工具描述不清晰；(g) 计数查询不可解（search_tasks 上限从 5 提到 200）。<strong>修订效应量化</strong>：56 任务（8%）ground truth 或措辞被改 + 准入规则放宽 ≈ 90-95 任务（约 14%）；同一 GPT-4 在新旧基准上完成率 49% → 57%（+8pp）。论文同时弃用 ReAct 文本解析循环，改用 native tool-calling 结构化输出，温度设 0，上限 20 步推理。这条 benchmark 自审姿态与 6-03 #3 Reliability Gap"<em>污染检测在实战中仅 59.4% 正确</em>" 形成"<em>benchmark 自身可被审计 + 必须被修订</em>" 双姿态——是 2026 H1 后期 benchmark 方法学的统一立场。</p>
+
+    <p><strong>方法学价值：纵向重测应是 benchmark 标准动作。</strong>WorkBench 自 2024 年公开在 GitHub，作者承认"<em>无法排除模型预训练时已'看过'测试数据</em>"，建议未来设立每年刷新的私有保留集。这条 caveat 与 6-09 #3 SciConBench"<em>clean-room evaluation</em>" / 6-12 #3 MLUBench"<em>live benchmark 抗污染</em>" 共同构成 2026 H2 benchmark 防污染方法学的统一姿态。但即便存在污染担忧，纵向重测的方法学价值依然巨大——它把"<em>静态 leaderboard</em>" 升级为"<em>纵向证据流</em>"，是过去六个月 agent 进步速度量化的<em>最权威</em>单一证据。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（论文公开的 6 条 + 推断 5 条相关，附链接）</div>
+    <div class="ref-item">[1] Styles et al. (2024) — <em>WorkBench: A Benchmark Dataset for Agents in a Realistic Workplace Setting</em>（COLM 2024）· 本文前作<br>
+    <a href="https://arxiv.org/abs/2405.00823" target="_blank" rel="noopener">arxiv.org/abs/2405.00823</a></div>
+    <div class="ref-item">[2] Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>（已弃用 baseline）<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[3] Zhou et al. (2024) — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>（ICLR 2024）<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">[4] Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>（22 作者）<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">[5] Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em><br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">[6] Li et al. (2023) — <em>API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs</em><br>
+    <a href="https://arxiv.org/abs/2304.08244" target="_blank" rel="noopener">arxiv.org/abs/2304.08244</a></div>
+    <div class="ref-item">[7] Zarzecki et al. (2026) — <em>The Reliability Gap in Benchmark Auditing</em> · 6-03 #3 同源"<em>benchmark 自审</em>" 姿态<br>
+    <a href="https://arxiv.org/abs/2606.03305" target="_blank" rel="noopener">arxiv.org/abs/2606.03305</a></div>
+    <div class="ref-item">[8] Bisconti et al. (2026) — <em>Boiling the Frog</em> · 5-25 #1 同源"<em>多轮持久工作区</em>" 姿态<br>
+    <a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arxiv.org/abs/2605.22643</a></li></div>
+    <div class="ref-item">[9] J. Wang et al. (2026) — <em>AARR/AARRI-Bench</em> · 6-08 #3 同源"<em>颗粒度</em>" 姿态<br>
+    <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></div>
+    <div class="ref-item">[10] T. Liu et al. (2026) — <em>SciAgentArena</em> · 6-14 #3 同源"<em>失败模式诊断器</em>" 姿态<br>
+    <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">arxiv.org/abs/2606.12736</a></div>
+    <div class="ref-item">[11] Hossain et al. (2026) — <em>The Containment Gap</em> · 6-12 #2 同源"<em>架构层 safety</em>" 互补面<br>
+    <a href="https://arxiv.org/abs/2606.12797" target="_blank" rel="noopener">arxiv.org/abs/2606.12797</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>完成率：43% → 88.8%</strong>（GPT-4 2024-03 vs Claude Opus 4.8 2026-06）——两年翻一倍。</li>
+      <li><strong>副作用率：26% → 2.5%</strong>——降至原来约 1/10，前沿 agent 几乎"<em>无害失败</em>"。</li>
+      <li><strong>同模型修订效应</strong>：GPT-4 在新旧基准上完成率 49% → 57%（+8pp）——证明基准修订前后<em>同模型</em>本身分数会变。</li>
+      <li><strong>21 模型 leaderboard</strong>：6 个模型（Anthropic / OpenAI / Google）突破 80%；Kimi-K2.6 等中国开源模型以 1/10 价格匹敌前沿。</li>
+      <li><strong>跨地缘格局</strong>：前沿高价区（>$0.07）全西方专有；廉价高效区（<$0.025 但 ≥ 60%）全中国开源；西方廉价梯队被双面挤压。</li>
+      <li><strong>56 任务 ground truth 修订</strong>（占 8%）+ 准入规则放宽 ≈ 14% 任务受影响——基准方法论级修订。</li>
+      <li><strong>ReAct → native tool-calling 工程升级</strong>：弃用文本解析循环，改用结构化输出 + 温度 0 + 20 步上限。</li>
+      <li><strong>5 类错误演化</strong>：完全消除（ReAct 格式 / 日历搜索 / 事件更新）/ 几乎消除（错误邮箱）/ 减少（错误解读 / 搜索上限）/ 未改善（绘制未来日期）/ 新出现（过度积极 / 推理失败 / 轻信截断 / 时序错乱）。</li>
+      <li><strong>不可逆错误残留</strong>：GPT-5.5 仍有 1 次邮件发到 @example——前沿模型仍可能造成不可逆有害行动。</li>
+      <li><strong>反共识结论</strong>："<em>capability and safety go together rather than trade off</em>"——直接挑战传统 safety-capability 权衡担忧。</li>
+      <li><strong>开源建议</strong>：作者建议未来设立每年刷新的私有保留集对抗预训练污染。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>WorkBench Revisited 给你的 KV-cache 毕设最直接启发：<strong>"<em>纵向重测</em>" 应是 cache 系统评估的方法学标配</strong>。当前 KV-cache 论文绝大多数是"<em>这个月发表 + 与上个月 SOTA 对比</em>"姿态，缺乏"<em>同 workload + 跨 6 个月 / 1 年的纵向证据</em>"。WorkBench 用"<em>同基准 + 同任务 + 跨两年</em>" 证明 capability 翻倍 + 副作用降 10×，这条姿态对 cache 系统同样关键。<strong>毕设方法论建议</strong>：(a) 设计你的 cache benchmark 时<em>预留纵向重测接口</em>——记录每次重测的 ground truth 修订日志；(b) 借鉴 WorkBench 的 5 类错误分类（完全消除 / 几乎消除 / 减少 / 未改善 / 新出现）作为 cache failure mode 演化报告范式；(c) 借鉴论文对 ReAct 弃用的透明披露——cache benchmark 同样应该详细记录"<em>测试 protocol 升级</em>" 的同模型分数差（WorkBench +8pp）；(d) 借鉴论文跨地缘成本表——你的 cache 系统应同时报告"<em>性能 / 成本</em>" 而非单一指标。<strong>论文写作姿态</strong>：把 WorkBench Revisited 列为"<em>纵向重测 + 自审基准</em>" 方法学先例。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>WorkBench Revisited 与今日方向 #2 <a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">MINIM</a> 在结论上互相支撑——MINIM 用"<em>客户端可信代理</em>" 工程层面证明"<em>safety 可与 utility 兼得</em>"（TCNP-I 99.31% + TISL 0.101 双优），WorkBench Revisited 用纵向重测在<em>模型层面</em>证明"<em>capability-safety 同向提升</em>"。两者合起来构成对"<em>capability-safety tradeoff 不可避免</em>" 共识的双重否证。<strong>关键启发</strong>：(a) <em>capability-safety tradeoff 是错觉</em>——前提是 (i) 模型在 alignment 训练充分 + (ii) 系统层叠加结构化治理；(b) <em>不可逆错误是 safety 的硬底限</em>——即便 Opus 4.8 副作用率 2.5%，发到 @example 仍是不可逆错误，需要前置约束（如 MINIM 的 K/A/R 三元策略 + Containment Gap 的 policy gate）；(c) <em>纵向重测应是 safety 评测标配</em>——同一 jailbreak 攻击在两年间是否仍奏效是关键证据；(d) <em>跨地缘格局</em>意味着 safety 评测必须同时覆盖中国开源模型，单纯评测 GPT/Claude/Gemini 已不够代表性。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击方向）</div>
+        <p>WorkBench Revisited 是 2026 H1 后期 benchmark 方法学最完整的<em>纵向 + 自审</em> 论文之一——它把 6-03 #3 Reliability Gap"<em>污染检测不可靠</em>" 的元层方法学反思推到具体落地："<em>不仅要审计 benchmark，还要修订它，并透明披露修订效应</em>"。<strong>建议</strong>：未来 safety / agent benchmark 论文应建立四档透明度标准：(1) <em>ground truth 修订日志</em>——每次更新明列哪些 task 被改、为什么、影响多少；(2) <em>同模型修订前后差</em>——必须报告基准修订引起的同模型分数差（WorkBench +8pp）；(3) <em>protocol 升级报告</em>——ReAct → native tool-calling 类的工程升级必须独立报告；(4) <em>private hold-out / 年度刷新</em>——对抗预训练污染。这条标准在 6-09 #3 SciConBench"<em>clean-room evaluation</em>" / 6-12 #3 MLUBench"<em>live benchmark</em>" / WorkBench Revisited 三处独立成型，是 2026 H2 benchmark 设计的统一立场。<strong>另一条关键启发</strong>：safety benchmark 不应只测"<em>当前 SOTA 的失败率</em>"，还应测"<em>跨期能力提升的形态</em>"——前沿模型主要在哪些维度变好、哪些维度<em>未改善</em>，是 safety 政策制定的关键证据。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>原始 WorkBench (Styles et al. 2024 COLM)</strong> · 本文前作 · 2024-03 GPT-4 完成 43% 副作用 26%<br>
+      <a href="https://arxiv.org/abs/2405.00823" target="_blank" rel="noopener">arxiv.org/abs/2405.00823</a></li>
+      <li><strong>Reliability Gap (6-03 #3)</strong> · benchmark 污染检测在实战中仅 59.4% 正确 · 与 WorkBench Revisited"<em>benchmark 自审</em>" 同源<br>
+      <a href="https://arxiv.org/abs/2606.03305" target="_blank" rel="noopener">arxiv.org/abs/2606.03305</a></li>
+      <li><strong>Boiling the Frog (5-25 #1)</strong> · 多轮持久工作区 + 增量风险注入 · 与 WorkBench"<em>工作场所</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arxiv.org/abs/2605.22643</a></li>
+      <li><strong>SciAgentArena (6-14 #1)</strong> · 失败模式诊断器 · 与 WorkBench Revisited"<em>5 类错误演化</em>" 同源姿态<br>
+      <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">arxiv.org/abs/2606.12736</a></li>
+      <li><strong>MLUBench (6-12 #3)</strong> · live benchmark 抗污染 · 与 WorkBench"<em>year-on-year refresh</em>" 建议互补<br>
+      <a href="https://arxiv.org/abs/2606.12809" target="_blank" rel="noopener">arxiv.org/abs/2606.12809</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.13715" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.13715v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.13715" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2405.00823" target="_blank" rel="noopener">原始 WorkBench (COLM 2024)</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-15 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.13715 + arxiv.org/html/2606.13715v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arxiv.org/abs/2606.13715</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
