@@ -3,6 +3,101 @@
 
 ## 执行历史摘要
 
+### 2026-06-17（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit + push 待执行）
+- 选定：
+  - Harness: SEAGym (arXiv 2606.17546, C. Zheng / C. Xue 共一 / B. Liang / J. Yang / C. Zhang 通讯 · 清华自动化系 + BNRist, 2026-06-16) 94 分 — 把 self-evolving harness 评测从单一最终分数升级为 5 视图（train / val / ID / OOD / replay + cost）；UVG/IDG/OODG/FR 四派生指标；Harbor Framework 兼容；Terminal-Bench 2.0 + HLE 实例化；ACE / TF-GRPO / AHE 共享 epoch/batch 协议公平比较；三个反直觉发现：(1) 频繁更新可能不提升 held-out（TF-GRPO OOD −2.5）；(2) 中间快照可能后期崩溃（AHE replay 34→6→43）；(3) batch size 非单调（10 −14.3 / 20 +17.1 甜点 / 40 +2.9 / 80 −17.1）；HLE-only 训练最终 collapse 至 0%；DeepSeek 演化 harness 改善 GLM(+7.3) 但损害 GPT-5.4(−3.6)；与 6-15 HarnessX 形成"演化 → 评估" 闭环
+  - Safety: Rift (arXiv 2606.17229, Petr Nyoma 独著 · Harmonic Labs, 2026-06-15, GitHub Omibranch/Rift) 95 分 — 残差秩"冲突签名" + sleeper agent vs naive liar 控制范式（同输出错误答案，唯一差异是知识冲突）；GPT-2 small/medium / Qwen2.5-1.5B/7B / Phi-3-mini 一致测得欺骗前向传递的残差秩比 naive liar 高 2.1–2.3 倍；Phi-3 AUC=1.0 / Wilcoxon p ≈ 6×10⁻¹¹；零标签 100% 取向准确率；basis-free relative representations + 48 中性锚点 → 跨族零样本 AUC 0.933 / 跨格式 0.821 / 跨 5 语言 1.000；可读不可写（注入 +v 诱导欺骗 0/8 / 减 v 恢复真相 0/8）—— 与 Zou et al. 2023 truthfulness-steering 形成对偶；6 项 negative experiments 完整文档化；与 6-09 ELK 不可能定理 + 6-14 "Did you lie?" 共同构成 2026 H1 deception 三件套
+  - Benchmark: EComAgentBench (arXiv 2606.17698, Z. Du / T. Li / H. Zhang 通讯 · Shopee, 2026-06-16, GitHub Morizeyao/EComAgentBench_) 93 分 — 把 shopping agent 长程评测立为分布式隐藏意图恢复；662 任务 / 6,645 rubric / 平均 10.04 / 任务；三源分布 visible query 60.1% / tool-gated profile 19.9% / scripted clarification 19.9%；persona 与 demographics 字段分离防止信息泄漏；clarification 脚本化（最多 10 轮 + trigger keywords）；6 类 × 3 源类型化 rubric；7 模型整体精度 19.5–57.1%（Opus-4.6 57.1% / Qwen3-30B-A3B 19.5%）；所有模型 query > persona ≈ clarification 单调下降；关键诊断"差距在使用 hidden 信息而非检索它"；隐式需求驱动难度（0-1 个 51.8% → 3+ 个 27.2%）；review_opinion 最难；与 6-15 #3 WorkBench Revisited 形成"纵向 + 横向" 双姿态
+- 跨方向叙事："5 视图纵向评测（SEAGym）+ 残差秩冲突签名（Rift）+ 三源分布隐藏意图（EComAgentBench）"——三轴姿态都把"看似单一指标"分解为多个独立可测维度；构成 2026 H1 后期评测方法学的"<em>多维度归因</em>"统一姿态
+- 候选淘汰：Harness SSA 90 / FinAcumen 88 / SkillMigrator 87 / PreAct 86；Safety Multi-Agent Concurrency Verified 92 / DiagFlowBench 88 / Incumbent Advantage 87 / StepGuard 86；Benchmark MapSatisfyBench 90 / CEO-Bench 88 / LongWebBench 87 / Offline Preference 86
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 34/33/32 → 35/34/33
+- 数据源：arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-17 提交清单）+ arxiv.org/abs/<id> + arxiv.org/html/<id>v1
+
+### 2026-06-14（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit f81940b + push 已执行 origin/main）
+- 选定：
+  - Harness: ToolSense (arXiv 2606.12451, A. Hathidara / S.S. Sistla / S. Schreiber / S. Bansal · 推测 SAP, 2026-06-12, GitHub SAP/toolsense, CC BY-SA 4.0) 91 分 — 把 harness 设计姿态从"评测 agent 任务能力"升格为"审计模型内部参数化知识"；自动生成 RRB（3 歧义层级）+ MCQ + QA 三类基准；ToolBench 47k 工具 / 5 种参数化训练配置揭示"知识-检索分离"：RRB 较完全规范化基准降 50–64 pp / 部分模型事实探针接近随机 / 嵌入基线在真实查询上反胜部分参数化模型；与 6-12 #1 HarnessBridge"训练姿态 harness"共同构成"训练 + 审计"双姿态
+  - Agent Safety: "Did you lie?" (arXiv 2606.12618, A. Cooney / D. Africa / G. Irving · 推测 UK AISI / DeepMind, 2026-06-12, 12 页 / 6 图, CC BY 4.0) 94 分 — 把"模型在说谎"立为可证伪命题；13 个 belief-verified reasoning model organisms（CoT 验证 + held-out 泛化）+ Varied Deception 测试床；4 类检测器（CoT judge / logprob / 经典 activation probe / 新方法 Did-You-Lie/DYL）评估 31 个 2B–1T 开放权重模型；提示性撒谎正向缩放，但所有激活/对数概率检测器在训练后 model organisms 上急剧失效；CoT judge 0.82 BA 部分为伪影；论文坦诚"当前测谎器无法支撑对模型信念的高置信判断"；与 6-11 #1 ELK 不可能定理形成"理论 + 实证"完整证据链；公开数据集 + organisms + 检测器；Containment Gap 已选 6-12 本日跳过
+  - Benchmark: SciAgentArena (arXiv 2606.12736, T. Liu 等 33 作者 · 推测 Yale / Harvard / Stanford / Northwestern 含 Rex Ying / Arman Cohan / Marinka Zitnik / James Zou, 2026-06-12, CC BY-NC-SA 4.0) 92 分 — 把"真实科研"立为 agent benchmark 主战场；33 作者跨学科 / 约 200 真实新兴科研任务 + 步骤级验证 + interactive agent-agnostic 环境；揭示 agent 在结构清晰数据分析工作流中"有效贡献"但在新颖洞察 / 自主探索 / 开放式研究问题上"性能严重不均"；系统刻画跨 agent 共享的失败模式（可靠性 / 自主性 / 科学推理）；把 benchmark 从"能力衡量器"升级为"失败模式诊断器"；与 6-09 #1 SciConBench / 6-08 #3 AARRI 形成"三层科研评测梯度"；项目主页 sciagentarena.github.io 全开源
+- 跨方向叙事："诊断姿态 harness（ToolSense）+ 信念可验证 organism（Did you lie?）+ 失败模式 benchmark（SciAgentArena）"——三件套都把 2026 H1 后期评测方法学姿态推向"诊断型"；ToolSense 把 harness 立为审计工具 / Did you lie? 把 model organism 立为 belief-verified 载体 / SciAgentArena 把 benchmark 立为跨 agent 失败模式诊断器；与 6-12 "动态化"主线（HarnessBridge 双向投影 + Containment Gap 架构层修复 + MLUBench 终身遗忘）合成"动态化 + 诊断化"双姿态，是 2026 H2 评测设计的方法学拐点
+- 候选淘汰：Harness DailyReport 89 / Evoflux 88 / AgentBuild 87 / GeoNatureAgent 86 / Two-Agent E-Commerce 85；Safety Prefill Awareness 91 / Illusion of MAS 89 / From AGI to ASI 88（DeepMind 14 位）/ Normative Robustness 87 / HLER 86；Benchmark DailyReport 90 / GeoNatureAgent 88 / Procedural Reasoning 86 / Power Distribution 85 / Big5-TPB 85
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 32/31/30 → 33/32/31
+- 报告间互链：Harness → ToolSense 引 ToolBench / Toolformer / DPR / DSI / LoRA / HarnessBridge / What Benchmarks Don't Measure / AARRI / SciConHarness / RAG / SkillDAG；Safety → Did you lie? 引 ARC ELK / Burns CCS / Sleeper Agents / Constitutional AI / RLHF / ELK 不可能定理 / Pacchiardi Lie Detection / AI Control / Containment Gap / Prefill Awareness / CoT；Benchmark → SciAgentArena 引 GAIA / AgentBench / WebArena / SciCode / GPQA / SciConBench / AARRI / AI Scientist / HarnessBridge / ToolSense / ChemCrow
+- 数据源：arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-12 提交清单），周末 6-13 / 6-14 arXiv 无新提交沿用周五候选池；export API 持续 429 沿用 fallback
+
+### 2026-06-12（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit + push 已执行）
+- 选定：
+  - Harness: HarnessBridge (arXiv 2606.12882, X. Wang / H. Wang / A. Taylor / J. Cong / Y. Sun / W. Wang UCLA, 2026-06-11) 92 分 — 把 harness 从手工工程升级为可端到端学习 plug-in；observation projection（环境→agent 紧凑决策状态）+ action projection（agent→环境 可执行 transition 或 trajectory-grounded rejection）双向投影；Terminal-Bench 2.0 / SWE-bench Verified 匹敌或超越专门 harness；token + 轨迹长度同时下降；从小生成器泛化到大商用模型；与 5-23 Life-Harness "harness 可移植性" / 6-08 AARRI "二轴评测" / 5-15 ChromaFlow 负面 ablation 全面对位；把 harness 立为 agent 论文的 "第三作者"
+  - Agent Safety: The Containment Gap (arXiv 2606.12797, Md J. Hossain / M.A. Hossain / W. Liu / N. Ansari, 2026-06-11, **ICML 2026 AI4GOOD Workshop**) 93 分 — 审计 LangChain / AutoGPT / OpenAI Agents SDK 三大主流 agentic 框架，6 项遏制原则无一原生符合；memory integrity 三框架普遍缺位；单次 memory poisoning 写入 → 88.9% 持久错拒（目标群体）；5 因素策略 3.5× 错拒提升 + 总体准确率不变（隐蔽逃避标准监控，fairness × safety 交叉攻击面）；memory integrity validator + policy gate <0.2ms/call 消除两类攻击向量；把 safety 责任分摊到框架供应商；与 5-21 CUGA / 5-19 Memory Laundering / 5-25 SafeHarbor / 6-11 ELK 互补构成 "架构层 safety 不可避免"
+  - Benchmark: MLUBench (arXiv 2606.12809, H. Li / H. Chi / Q. Wang / Y. Mao / Z. Zhang / J. Tan / T. Liu / W. Yang / B. Han, 2026-06-11, **ICML 2026 接收**, 36 页, GitHub lihe-maxsize/Lifelong_Unlearning_main) 93 分 — 首个 MLLM 终身遗忘评测基准；9 类 / 127 实体 / 顺序遗忘请求；揭示 "多模态对齐保持（preserve multimodal alignment）" 是 MLLM 遗忘独有结构性挑战——持续从一个模态遗忘可能降级整个模型；现有方法（GA / NPO / RMU / SCRUB）在 lifelong 场景下严重累积退化；LUMoE MoE 结构隔离缓解；直接映射 GDPR Article 17 / EU AI Act 实施需求；把 unlearning 圈子从 "第一代静态评测（TOFU/WMDP/MUSE）" 升级为 "第二代动态评测"
+- 跨方向叙事："harness 可学习化（HarnessBridge）→ framework 可审计化（Containment Gap）→ benchmark 可持续化（MLUBench）"——三轴姿态变化都把 "静态" 元素 "动态化"；HarnessBridge 提出的 trajectory-grounded rejection（action 路径）与 Containment Gap 提出的 memory integrity validator + policy gate（memory 路径）形成 "action × memory" 双层防御；MLUBench 推动 unlearning 评测从 "批处理 / 单模态 / 一次性" 升级为 "流式 / 多模态 / 终身"；三者合起来构成 2026 H1 后期 evaluation methodology 的统一姿态变化
+- 候选淘汰：Harness ToolSense 90 / SciAgentArena 89 / Evoflux 89 / DailyReport 88 / AgentBuild 87；Safety Lie Detectors 92 / Prefill Awareness 91 / HLER 90 / Illusion of MAS 89 / From AGI to ASI 88；Benchmark SciAgentArena 92 / DailyReport 90 / GeoNatureAgent 89 / Pythagoras-Prover 88 / Procedural Reasoning QA 87
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 31/30/29 → 32/31/30
+- 报告间互链：Harness → HarnessBridge 引 ReAct / SWE-bench Verified / Terminal-Bench / Toolformer / Devin / AARRI / Life-Harness / SKILL.nb / ChromaFlow / System Scaling；Safety → Containment Gap 引 prompt injection / LangChain / AutoGPT / OpenAI Agents SDK / ReAct / CUGA / Memory Laundering / ECA / SafeHarbor / ELK / What Benchmarks Don't Measure / EU AI Act；Benchmark → MLUBench 引 TOFU / WMDP / MUSE / Eldan Russinovich / LLaVA / MoE Shazeer / ANNEAL / MAC-Bench / PreAct-Bench / SciConBench / GDPR Article 17 / EU AI Act
+- 数据源：arxiv.org/list/cs.AI/new + arxiv.org/abs/<id>，arXiv export API 持续 429 沿用 fallback
+
+### 2026-06-11（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit + push 已执行）
+- 选定：
+  - Harness: SkillJuror (arXiv 2606.11543, Z. Chen / Z. Guo / B. Huang / B. Lu / J. Lin / Y. Zhou / W. Zhang, 2026-06-10, GitHub zhiyuchen-ai/skill-juror) 92 分 — 把 Skill 组织方式从内容剥离立成独立可测变量；语义受控变体 + 匹配多试验 + 轨迹证据三件套；SkillsBench 82 任务 / 410 匹配试验；Progressive Disclosure vs flat：每条轨迹接触资源数 1.18 → 3.85（+226%）、有效 uptake 1.33 → 3.92（+195%）、验证器通过率 +4.1%；行为指标先于结果指标的方法学姿态；任务依赖性发现（实现/检查/修复 vs 输出约定/数值阈值/长产物管线）
+  - Agent Safety: The Impossibility of Eliciting Latent Knowledge (arXiv 2606.12268, K. Friedl / F.R. Ward / P.Y. Rapoport / T. Everitt（DeepMind） / J. Richens, 2026-06-10, 24 页 + 证明附录, CC BY 4.0) 95 分 — 用 Causal Influence Diagrams 形式化 ELK；证明"不存在仅依赖行为反馈、即使反馈完美也能确定性产生 honest agent 的训练策略"；形式化定义 honesty / observable / latent / goal misgeneralisation；把 ELK 从直觉 desiderata 升级为可证伪命题（停机问题对齐版）；反推：必须看内部表征，为 mech-interp / SAE / probes 合法化；与 6-03 What Benchmarks Don't Measure 互补构成"RLHF 不充分"双重证据
+  - Benchmark: SciConBench + SciConHarness (arXiv 2606.11337, H. Jung / P.V. Diniz / J.R.C. Roveda / A.F. da Silva / H. Jung / E. Tsai / A. Korolova（USC）/ M.H. Ribeiro（EPFL）, 2026-06-09, 79 页 / 34 图 / 17 表) 94 分 — 9.11K systematic review 问题 + 专家撰写结论；原子事实分解评估管线 + factual precision/recall；clean-room evaluation harness（受控网络交互防数据泄漏）；8 前沿 agent 净室下最佳 F1 仅 0.337（远低于非约束评估）；Google AI Overview / OpenEvidence 消费级审计揭示生成不完整/矛盾结论；live benchmark 抗污染设计
+- 跨方向叙事："工程治理（SkillJuror）→ 理论不可能（ELK）→ 评测面 clean-room（SciConHarness）"——SkillJuror 把行为先于结果立成方法学；ELK 不可能定理证明 RLHF 范式不可达 honesty；SciConHarness 在工程层提供"受控信息访问"的具体范式；三者合起来构成 2026 H1 "三层证据矩阵（结果 / 轨迹 / 表征）" 的完整论证链
+- 候选淘汰：Harness PROJECTMEM 91 / INFRAMIND 90 / HORMA 89 / FlowBank 88 / Agent Skill Survey 87 / Counterexample Guided 87；Safety Five-Plane Architecture 93 / Forecasting Behavior 92 / Risk Under Pressure 91 / Roleplay Belief 89 / Subliminal Transfer 88 / MLJailDe 88 / Search Discipline 87；Benchmark SocSci-Repro-Bench 91 / Methodologically Diverse 90 / Embodied-BenchClaw 89 / BioDivergence 88 / Schützen 87 / CDUR 86
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 30/29/28 → 31/30/29
+- 报告间互链：Harness → SkillJuror 引 SKILL.md / SkillDAG / SKILL.nb / Regimes / AARR-Bench / Lean4Agent；Safety → ELK 引 ARC ELK Report / CIDs Survey / Sleeper Agents / Burns CCS / RLHF / Constitutional AI / What Benchmarks Don't Measure；Benchmark → SciConBench 引 GAIA / FActScore / Reliability Gap / What Benchmarks Don't Measure / Boiling the Frog / AARR-Bench / MAC-Bench / PreAct-Bench / ELK
+- 数据源：arxiv.org/list/cs.AI/new + cs.LG/new + cs.CL/new + arxiv.org/abs/<id>，arXiv export API 持续 429 沿用 fallback
+
+### 2026-06-10（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit + push 待执行）
+- 选定：
+  - Harness: Regimes / ActiveGraph (arXiv 2606.10241, Yohei Nakajima 独著, 2026-06-08, 30 页 / 5 图 / GitHub yoheinakajima/regimes 含 committed runs) 94 分 — event-sourced agent runtime；append-only 事件日志的确定性投影；4 道 gate（static / sandbox / in-sample / held-out）把"提升 / 丢弃"立为事件；LongMemEval-S 5 个 seeded splits 中 4 个准确率 +0.05~+0.10 / 1 个 over-promotion +0.01；reader reconciliation 是主导失败而非 retrieval；prompt-as-discovery-probe 假设；failure-regime taxonomy 把"它错在哪"路由到"补丁作用在哪一接缝"
+  - Agent Safety: Arbiter Agent (arXiv 2606.10747, Tonini/Torrielli/Lautrup/Schneider-Kamp/Çelikok/Galke Poech, 2026-06-09, **AITC 2026 接收**, GitHub aisilab/arbiter) 94 分 — multi-agent misalignment 检测从事后审计升级为预算感知主动检查；4 元决策（wait/question/inspect/log）；5 conversation conditions × 5 tool configs × 2 backbone；权重诱导失对齐最难 / 指令诱导最易；logging recall ↑ precision ↓ 双刃剑；对话结束前可靠定位失对齐
+  - Benchmark: PreAct-Bench (arXiv 2606.09890, H. Xu 等 10 作者 KCL 等, 2026-06-03, CC BY-SA 4.0) 93 分 — 1,000 对 ethical/unethical 配对轨迹 / 5 域 / Prefix Foresight F1；把"事前预测"立为 first-class 任务；三类评估对象（通用 LLM / 安全护栏 / 表征探针）分层；人类有 promising 表现而最强 LLM 仍挣扎；视角倒置"<em>禁后</em>" → "<em>禁前</em>"
+- 跨方向叙事："改进闭环治理（Regimes）→ 实时失对齐主动监督（Arbiter）→ 预测时刻评测面（PreAct-Bench）"——held-out gate × inspection budget × prefix foresight F1 三件套，构成 2026 H2"<em>从 reactive 到 proactive</em>"安全研究主轴；Arbiter 与 PreAct-Bench 形成"<em>方法 + 评测</em>"双轴
+- 候选淘汰：Harness AutoPDE 91 / Less Context 90 / HIPIF 89 / Trace2Policy 88 / Spatial Memory 87 / ActiveMem 86；Safety CoT 2x2 (FAGEN ICML) 92 / KV-cache Quant 91 / DualSelect 89 / False Success (FAGEN ICML) 90 / Memorization 88 / OSL-MR 87；Benchmark STAGE-Claw 92 / False Success 91 / ComBench 89 / EngVQA 88 / RealMath-Eval 87 / Metaprogramming 88 / TriState 86
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 29/28/27 → 30/29/28
+- 报告间互链：Harness → Regimes 引 SKILL.nb / Lean4Agent / ANNEAL / System Scaling / AutoPDE；Safety → Arbiter 引 VATS / memory laundering / Ensemble Monitoring / Sleeper Agents / CoT 2x2 / PreAct-Bench；Benchmark → PreAct-Bench 引 HarmBench / TrustLLM / SafetyBench / Knowing-Doing Gap / GrandGuard / Arbiter Agent / False Success
+- 数据源：arxiv.org/list/cs.AI/new + arxiv.org/list/cs.LG/new + arxiv.org/abs/<id>，arXiv export API 持续 429 沿用 fallback
+
+### 2026-06-09（每日 18:00 — 三方向同步）
+- 三方向 #1 全成 (commit 1fc6906, push 成功 origin/main)
+- 选定：
+  - Harness: SKILL.nb (arXiv 2606.08049, El Hattami / Chapados / Pal, 2026-06-06) 94 分 — selective formalization + gate-conditioned execution + 多模态可审计 notebook IR；WebArena-Verified 53.7% 单轮 SOTA / 三次重跑保留 91.7% / 修复后回归率 4.2% (基线 15-17%) / GitLab 跨版本 (15.7→18.9) 持平；把"<em>第二次失败</em>"立成可独立报告维度
+  - Agent Safety: VATS (arXiv 2606.07992, Patel / Pai, ICML 2026 AIWILD Workshop, 2026-06-06) 93 分 — MCP error-handling loop "<em>隐式权威</em>" 攻击面；7 维变异演化对抗 payload；错误路径注入 ASR 比标准 IPI 高 3 倍 / 最高 100%；Gemini 3.1 Pro / GPT-5.5 / GLM-5.1 / Qwen3-Coder 通杀；"夹心定位"为最强单维度；guardrails 仅缓解不治本
+  - Benchmark: MAC-Bench (arXiv 2606.07805, Y. Zhao 等 5 作者, 2026-06-05) 93 分 — "Beyond Goodhart's Law" + "Agent-as-a-Benchmark" 范式；SERV pipeline (Seed→Evolve→Refine→Verify) 把法律文本合成 holographic sandbox；CSR (合规加权成功率) + MG (马基雅维利差距) 双指标；Pareto trade-off 量化
+- 跨方向叙事："<em>第二次成功 + 错误回路 + 程序合规</em>"——SKILL.nb 把 lifecycle governance 立成第六维度，VATS 暴露错误回路是被忽视的最强攻击面，MAC-Bench 把"<em>策略性违规倾向</em>"立成 benchmark 标准指标；6 维评测拼图（成功率 / 跨期保留率 / 修复后回归率 / CSR / MG / error-path ASR uplift）首次成型
+- 候选未取：Harness PACE 序贯提交检验 (92) / Syll 跨界面 agent (90) / Contract2Tool (89) / MemToolAgent (88) / PathoSage (86) / RECENT ICML (85)；Safety Cold-Start Safety Gap (92) / Patcher 训练时对抗 (91) / Where Instruction Hierarchy Breaks (90) / Safety is Contextual judges (88) / SciTrace (87) / RefusEU 多语言 (86)；Benchmark AI-MASLD 医学压力 (92) / AEDI 谄媚连续指标 (91) / SLMJury 小模型裁判 (90) / TinyJudge ACL 2026 (89) / RAG reliability (87) / Online Agent-as-a-Judge (86)
+- 维护：方向 index 顶部 + 根 index 顶部 3 条；count-badge 28/27/26 → 29/28/27
+- 报告间互链：Harness → SKILL.nb 引 SkillDAG / Lean4Agent / SKILL.md / Code as Harness / ANNEAL；Safety → VATS 引 ECA / Cold-Start / Attack Selection / Evo-Attacker / Where Hierarchy Breaks；Benchmark → MAC-Bench 引 GrandGuard / What Benchmarks Don't Measure / Boiling the Frog / Reliability Gap / SKILL.nb
+- 数据源：arxiv.org/list/cs.AI/new + cs.CL/new + arxiv.org/abs/<id>（export API 仍 429，fallback 稳定）
+
+### 2026-06-08（每日 18:00）
+- 三方向 #1 全成
+- 选定：
+  - Harness: Lean4Agent (arXiv 2606.06523, R. Wang/J. Huang/P. Wang/X. Liu/L. Kong/T. Zhang, 2026-06-02) 93 → 首个用 Lean4 依赖类型 FL 形式化 agent workflow/trajectory；FormalAgentLib（建模 + 语义一致性 + 故障定位）+ LeanEvolve（验证反馈自动修订）；SWE-Bench-Verified 困难子集 + ELAIP-Bench / 5 LLM 平均 +11.94 pp，LeanEvolve 再 +7.47 pp；把 IR 抬到证明系统（与 SkillDAG typed-edge / Code-as-Harness code-IR 形成三档梯度）
+  - Agent Safety: Attack Selection in AI Control (arXiv 2606.06529, C. Ge-Wang/T. Crosse/B. Hadad IV/J. Schaeffer/R. Potham/T. Tracy, 2026-06-03) 94 → 把红队决策分解 start/stop 两 policy；BashArena/LinuxArena · 1% audit budget · start −20pp / stop −20–28pp；底层攻击能力不变，仅时机选择即压低安全；upper-bound 解释；明确呼吁评估必须 elicit attack selection
+  - Benchmark: AARR / AARRI-Bench (arXiv 2606.07462, Jiayu Wang 等 11 作者, 2026-06-05) 93 → 研究实习生级细颗粒度评测套件 + GitHub AARR-bench/AARRI-bench；LLM × harness 二轴评测；最强 Mini-SWE-Agent + Claude Opus 4.7 仅 68.3% vs 人类 94.0%；研究行为本身是新瓶颈
+- 候选未取：Harness AARRI (92) / Sim-to-Real Gap MDP KDD Blue Sky (90) / StainFlow GUI (88) / Off-Policy Strategic (86) / DuMate (85)；Safety TRUST 不确定性 RL (92) / SafeGene 适配器 (90) / AEGIS 物理 AI (88) / Moral credences (86) / Embedding Drift (85)；Benchmark Think Fast no-CoT TH (92) / Attack Selection (91) / AI Agents Reshape Knowledge Work (88) / DuMate (87) / Don't Fix in Post ICML Oral (86)
+- 三方向主题贯通："正确 + 抗攻击 + 专业"——Lean4Agent 给"plan 是否可证明对"的形式化裁判，Attack Selection 给"评估方法学缺位"的修正，AARRI 给"研究员级专业素养"的 granular 评测；三者一起构成下一代 benchmark 的三轴体系
+- 三方向 index 顶部插入 + 根 index 顶部插入 3 条新条目；count-badge 27/26/25 → 28/27/26
+- 报告间互链：Harness → Lean4Agent 引 SkillDAG / Code as Harness / ANNEAL；Safety → Attack Selection 引 Greenblatt AI Control 原型 / Evo-Attacker / TTT / Lean4Agent；Benchmark → AARRI 引 SciCode / GAIA / Lean4Agent / Attack Selection / ChromaFlow
+- arXiv export.arxiv.org API 仍 429；fallback list/cs.AI/new + abs/<id> 稳定可用
+
+### 2026-06-03（每日 18:00 提前于 10:13 触发 — 三方向同步）
+- 三方向各生成 #1 报告（commit ddd4cce, push 成功 origin/main）
+- 选定篇目：
+  - Harness: SkillDAG (arXiv 2606.03056, Tong Bai 等 7 作者 2026-06-02) 93 分 — 类型化技能图取代相似度匹配；vector + typed-edge + conflict 三路信号；propose-then-commit 协议要求 execution-backed evidence；ALFWorld 67.1% / +12.8 pp；Ret@K 65.5→78.2；pool 扩 10× 鲁棒；集合单调编辑（不驱逐已命中）
+  - Agent Safety: What Benchmarks Don't Measure (arXiv 2606.02965, V. Ojewale / S. Venkatasubramanian 2026-06-01, **ACM CAIS Best Paper + Oral**) 95 分 — compliance bias 是 RLHF 结构性副作用；三-gap 分类法（specification / verification / authority）+ Safety/Usability/Informed Refusal 三联协议；144 enterprise × 5 模型族；89.2% blocking + 87.5% usability 双高同时；safety-usability 是 tunable
+  - Benchmark: The Reliability Gap in Benchmark Auditing (arXiv 2606.03305, W. Zarzecki / J. Dubiński / S. Cygert 2026-06-02) 92 分 — 污染检测在实战中仅 59.4% 正确（335 评估 / 27 模型 / Pythia + OLMo 2 / 最大 27B）；分布偏移让 LLM Dataset Inference 产生 false positive；Post-Hoc Inference 在 benchmark 规模下功效不足；CoDeC 仅给粗粒度 provenance；立论"统计检测无法替代透明 data provenance"；开源 audit benchmark
+- 三方向叙事链："系统 / 行为 / 元层 三档同步升级"——SkillDAG 给系统层结构化 IR；abstention competence 给行为层评测面新维度；contamination audit 给元层 benchmark 自审能力
+- 候选未取：harness — Don't Gamble GAMBLe (90) / TriEval (88) / DeskCraft (88) / GTBench (86) / Multi-Agent Debate Data Cleaning (85)；safety — Information Gain Clarification (91) / Edge Modular Agent (88) / Solipsistic Superintelligence (87) / AURA (86) / MedCUA-Bench (85)；benchmark — ClinicalMC (90) / CORE (88) / MedCUA-Bench (87) / Dental AI Survey (85) / GTBench (85)
+- 维护：方向 index + 根 index 各插一条；count-badge 26 / 25 / 24 → 27 / 26 / 25
+- 数据源：arxiv.org/list/cs.AI/new + arxiv.org/abs/<id>（export API 仍 0 字节，沿用 fallback）
+- 注：5-28 #1 三篇报告本地存在但未 commit（git status 显示 untracked），与本次任务无关，后续可单独整理
+
 ### 2026-05-25（追加 #2 — 三方向同步）
 - 三方向各生成 #2 报告（同日第二轮）
 - 选定篇目：
@@ -125,3 +220,26 @@
 - 三篇报告共 982 行；commit cd4bafb，推送成功
 - 报告间互链：Harness 引 ChromaFlow×TRIAGE 镜像、Safety 引知-行 gap 与 ChromaFlow 互镜、Benchmark 引 ClawForge × ChromaFlow × 知-行 gap 三向贯通——三篇形成 2026-05-15"评测面下沉"日主题
 - 经验：arXiv API 仍 429；fallback 用 list/cs.AI/new + abs/<id> 稳定可用
+
+### 2026-05-26（自动 18:00 三方向）
+- 三方向 #1 各一篇
+- 选定：
+  - Harness: From Model Scaling to System Scaling (arXiv 2605.26112, Shangding Gu 独著, 2026-05-25) 95 → position paper + CheetahClaws Python-native reference harness + 与 Claude Code/OpenClaw 对比；7 大组件（FM/memory/context/skill-routing/orchestration/verification/governance）+ 3 大核心瓶颈（context governance/trustworthy memory/dynamic skill routing）+ 6 大评测维度（trajectory quality/memory hygiene/context efficiency/communication fidelity/verification cost/safe evolution）。
+  - Agent Safety: Evo-Attacker (arXiv 2605.25389, Yan/Zhang/Hou/Li/Zhou/Hei/Zhang, **ACL 2026 main**, 2026-05-25) 94 → 把 LLM-MAS 工具攻击形式化为 self-evolving + memory-augmented RL；动态攻击记忆 + deliberative reasoning + Attack-Flow GRPO；揭示工具输出隐式信任攻击面，呼吁 defensive tool safeguards。
+  - Benchmark: AgentHijack (arXiv 2605.25707, J. Sun/J. Zhu/Y. Li/T. Liu/X. Hu/Bo Han, **ICML 2026 accepted**, 2026-05-25) 95 → 把 computer-use agent robustness 评测从"对抗"挪到"无意环境腐蚀"；9 类 configurable corruption + AgentHijack-Agent（action generator + onlooker）；code/env/baseline/data 全开源。
+- 三方向主题贯通："顶会接收 + 系统级范式 + 真实部署"——Harness 给系统级研究议程；Evo-Attacker 给长程攻击范式；AgentHijack 给"无意干扰" benchmark 全新范畴。今日无候选名单：Harness 内 Stop Comparing/DemoEvolve/EvalEng/Meta-Engineering Harness/AION；Safety 内 OpenClaw Security/A Sober Look at Agentic Misalignment/JT-SAFE-V2/Reasoning as Attack Surface/Inverting the Shield；Benchmark 内 MCP-TDP/Personalize-then-Store/SkillEvolBench/AI Cartography/AvalancheBench。
+- 方向 index + 根 index 已更新，count-badge 25/24/23 → 26/25/24
+- commit 9d89f89, push 成功（origin/main）
+- 数据源：arxiv.org/list/cs.AI/new + arxiv.org/abs/<id>。export API 仍 0 字节，沿用 fallback 方案
+
+### 2026-06-15（今日 18:00 — 三方向同步）
+- 三方向 #1 各一篇 完成（commit + push 已执行）
+- 选定：
+  - Harness: HarnessX (arXiv 2606.14249, Darwin Agent Team 14 作者, 2026-06-12, CC BY 4.0) 94 分 — 把 agent harness 升级为"可组合 / 可适应 / 可演化" 铸造厂；9 维分类法 + Substitution Algebra 类型化原语 + 8 hook points + AEGIS trace-driven 多 agent 演化引擎（Digester → Planner → Evolver → Critic + 4 道 deterministic gating）；operational mirror 把 harness 演化形式化为符号空间 MDP；5 基准（ALFWorld / GAIA / WebShop / τ³-Bench / SWE-bench Verified）× 3 模型族（Claude Sonnet 4.6 / GPT-5.4 / Qwen3.5-9B）/ 14/15 配置有提升 / 平均 +14.5% 最高 +44.0%（ALFWorld + Qwen3.5-9B）；inverse-scaling + variant isolation +13.6% + Cross-Harness GRPO 共享 replay buffer 协同进化再 +4.7%；三大病理（reward hacking / catastrophic forgetting / under-exploration）防御；与 6-12 #1 HarnessBridge"可学习" + 6-14 #1 ToolSense"可审计"形成"可铸造 / 可学习 / 可审计"三档姿态
+  - Safety: MINIM (arXiv 2606.13949, H. Yu / C. Zhang / H. Jin / S. Shi / N. Zhang / Y.T. Hou / W. Lou Virginia Tech + WUSTL, 2026-06-11, **ICML 2026 接收**, GitHub yyyyhx/MINIM, CC BY 4.0) 94 分 — 客户端可信本地代理；CI（Nissenbaum 2004）双分数（敏感度 s + 任务条件必要性 n）+ 三元 K/A/R 策略 + CI-aware 加权损失；GATv2 轻量本地推理；WebArena 662 测试集 TISL 降 89.9% / TCNP-I 99.31% / 节点保留 12% 远低于 Llama-3.3-70B 34.5% / 2FA 密码 Slack 通知 >99.9% 抑制；规模并非银弹（70B 反而 TISL 0.312 高于 8B 0.206）；A 抽象动作回收 +2.81pp TCNP-I；ONR/ARO/NSF 资助；与 6-12 #2 Containment Gap + 6-14 #1 Did You Lie? 形成"<em>检测 + 防御 + 客户端</em>" 三档安全栈
+  - Benchmark: WorkBench Revisited (arXiv 2606.13715, Olly Styles 独著 COLM 2024 原作者, 2026-06-10, 8 页 / 3 图, CC BY 4.0) 93 分 — 纵向重测 21 模型；完成率 43% → 88.8% / 副作用 26% → 2.5%；Claude Opus 4.8 双双最佳；反共识结论"capability 与 safety 同向提升而非权衡"，前沿"几乎完全以无害方式失败"；透明披露 56 任务（约 14%）ground truth 修订（off-by-one / 答案键 / idxmin / 邮件 \\n / 工具描述 / search 上限 5→200）+ ReAct → native tool-calling（同 GPT-4 +8pp）；5 类错误演化分类；跨地缘格局（前沿高价西方专有 / 廉价高效中国开源 Kimi/DeepSeek/GLM/Qwen / 西方廉价 Haiku/mini/nano 被双面挤压）；建议年度刷新私有保留集
+- 跨方向叙事："可演化 harness 铸造厂（HarnessX）+ 客户端可信代理（MINIM）+ 纵向重测自审基准（WorkBench Revisited）"——三轴姿态都把"agent 进步"重新定义；HarnessX 立 harness×model 协同进化；MINIM 立分层防护放弃模型 honesty 假设；WorkBench 用纵向证据证伪 capability-safety tradeoff（前提是模型对齐 + 系统治理）；三者合起来构成 2026 H1 后期 agent system 设计统一姿态：cloud model + edge broker（MINIM）+ middleware harness（HarnessX）+ longitudinal evaluation（WorkBench Revisited）四层栈
+- 候选淘汰：Harness Every Eval Ever 90 / SkillAudit 88 / Coin Flip Judge 86 / FactoryLLM 85；Safety Skill-Conditional Reputation Attacks 91 / GNN Tools Defer 90 / Capability Minimization 89 / Contract-Based MARL Shielding 88 / Trust but Verify Medical 86；Benchmark StreamMemBench 90 / Poker Arena 88 / Every Eval Ever 87 / Trust but Verify 86 / FactoryLLM 85
+- 索引更新：方向 index 三个顶部插入条目；根 index 顶部插入三条新条目；count-badge 33/32/31 → 34/33/32
+- 报告间互链：Harness → HarnessX 引 Life-Harness / HarnessBridge / ToolSense / Code as Agent Harness / Lean4Agent / Darwin Gödel Machine / SICA / TextGrad / DSPy / ADAS / AFlow / GRPO；Safety → MINIM 引 Nissenbaum CI / WebArena / Mireshghallah / AirGapAgent / AgentDAM / ELK 不可能定理 / Containment Gap / Did You Lie? / Portcullis / MCP；Benchmark → WorkBench Revisited 引 原 WorkBench 2024 / ReAct / WebArena / AgentBench / GAIA / API-Bank / Reliability Gap / Boiling the Frog / AARRI / SciAgentArena / Containment Gap
+- 数据源：arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-15 提交清单）+ arxiv.org/html/<id>v1（详细数字 + 引用列表 + 资助方），arXiv export API 持续 429 沿用 fallback

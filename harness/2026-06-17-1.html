@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-17 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-17 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 17 日 · Harness Engineering · 把 self-evolving harness 立成"<em>多视图评测环境</em>"</div>
+  <h1>SEAGym：把 self-evolving LLM agent 的进步评估从"<em>单一最终分数</em>"升级为"<em>训练 / 验证 / ID迁移 / OOD迁移 / 回放</em>"五视图评测环境——首次让 ACE / TF-GRPO / AHE 三种 harness 更新方法在同一 epoch / batch 协议下公平比较，并用 Terminal-Bench 2.0 + HLE 实证揭示频繁更新可能不提升 held-out 性能、有用中间快照可能后期崩溃、source diversity 与 batch size 显著影响 harness 可靠性</h1>
+  <div class="en-title">SEAGym: An Evaluation Environment for Self-Evolving LLM Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-15 至 06-17 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">SEAGym: An Evaluation Environment for Self-Evolving LLM Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>把 self-evolving harness 评测立成 5 视图环境（train / val / ID / OOD / replay + cost）· Terminal-Bench 2.0 + HLE · 5 epoch / batch=20 · 三方法 ACE / TF-GRPO / AHE 公平比较 · 5 关键发现</td>
+          <td>arXiv 2606.17546（清华自动化系 + BNRist · 5 作者）2026-06-16 v1</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17454" target="_blank" rel="noopener">Dissecting Model Behavior Through Agent Trajectories (SSA)</a></td>
+          <td>"intent-execution gap" 概念 · 简单可定制 SSA harness · 138k 轨迹跨 5 模型族行为分析</td>
+          <td>arXiv 2606.17454 · 2026-06-17</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17642" target="_blank" rel="noopener">FinAcumen: Self-Evolving Experience Memory Harness</a></td>
+          <td>金融多模态推理 agent harness · 选择性经验记忆 · 4 金融基准提升</td>
+          <td>arXiv 2606.17642 · 2026-06-17</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17645" target="_blank" rel="noopener">SkillMigrator: Beyond Domains via Transferable Interaction Patterns</a></td>
+          <td>跨站点 web 技能迁移 · 布局结构匹配 · WebArena / Mind2Web 减 8-10% LLM 动作</td>
+          <td>arXiv 2606.17645 · 2026-06-17</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17939" target="_blank" rel="noopener">PreAct: Computer-Using Agents That Get Faster on Repeated Tasks</a></td>
+          <td>首次成功后编译为状态机程序后续重放 · 8.5–13× 加速 · store-time 校验</td>
+          <td>arXiv 2606.17939 · 2026-06-17</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-17 提交清单）。<strong>SEAGym 之所以胜出</strong>：它把 6-15 #1 HarnessX"<em>harness 可铸造</em>" / 6-12 #1 HarnessBridge"<em>harness 可学习</em>" / 6-14 #1 ToolSense"<em>harness 可审计</em>" 三条姿态线再向前推一步——<strong>"harness 演化必须可被多视图评估"</strong>。SEAGym 是 2026 H1 后期 harness 工程的<em>评测方法学闭环</em>：HarnessX 提出可演化 harness，SEAGym 给出该演化是否真的"<em>泛化 / 不忘 / 不增成本</em>"的协议。同时它揭示了三个反直觉发现（频繁更新可能 hurt held-out / 中间快照可能后期 collapse / batch size 非单调），把 harness 演化从"<em>看 final score</em>" 时代正式推入"<em>看 process record</em>" 时代。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SEAGym: An Evaluation Environment for Self-Evolving LLM Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SEAGym：自进化 LLM 智能体的多视图评测环境</span></div>
+      <div class="meta-item"><label>作者团队</label><span>Congjie Zheng¹、Chuanyi Xue¹（共一）/ Bin Liang¹ / Jun Yang¹（通讯）/ Changshui Zhang¹,²（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>¹清华大学自动化系；²北京信息科学与技术国家研究中心（BNRist）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-16（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI</span></div>
+      <div class="meta-item"><label>性质</label><span>评测环境 + 协议论文 · 把 self-evolving harness 进步立为<em>5 视图 + 成本记录</em>的多维评估对象</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">arxiv.org/abs/2606.17546</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.17546" target="_blank" rel="noopener">arxiv.org/pdf/2606.17546</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.17546v1" target="_blank" rel="noopener">arxiv.org/html/2606.17546v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.17546" target="_blank" rel="noopener">10.48550/arXiv.2606.17546</a></div>
+      <div class="meta-item"><label>底层运行器</label><a href="https://github.com/harbor-framework/harbor" target="_blank" rel="noopener">Harbor Framework</a>（容器化任务执行）</div>
+      <div class="meta-item"><label>评测基准</label><span>Terminal-Bench 2.0（执行重）+ HLE（推理重，text-only Math/Physics/CS/AI/Engineering）</span></div>
+      <div class="meta-item"><label>对比方法</label><span>ACE / TF-GRPO / AHE（三种 self-evolving 方法）</span></div>
+      <div class="meta-item"><label>SEAGym 代码</label><span>论文未公开 release（仅复用 Harbor Framework）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 self-evolving LLM agent 的"<em>是否真的在进步</em>"从<strong>"单一最终分数 / 单一连续曲线"</strong>升级为<strong>"训练证据 / 过程评估 / ID 迁移 / OOD 迁移 / 回放保留 + 成本记录"</strong>5 视图评测环境——SEAGym 把任意 Harbor-compatible 静态基准转成动态自进化任务源（含冻结的 update-validation、held-out ID/OOD 视图、replay 诊断、snapshot 时序），首次让 <strong>ACE / TF-GRPO / AHE</strong> 三种代表性方法在同一 epoch / batch 协议下公平比较；Terminal-Bench 2.0 + HLE 实证揭示<strong>三个反直觉发现</strong>：(1) 频繁更新可能不提升 held-out 性能；(2) 有用中间快照可能后期崩溃；(3) batch size 非单调（10/20/40/80 中 20 是甜点，80 反而 −17 个百分点）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>基于 LLM 的 self-evolving agent 主要通过改变 <strong>agent harness</strong>（围绕基础模型的结构化执行层，包括 prompts、memory、tools、middleware、runtime state 与模型-工具交互循环）来获得提升。然而现有评估常将这一过程简化为孤立的任务分数或单一序列曲线，掩盖了一次更新到底是<em>产生可复用的提升、过拟合最近任务、增加成本，还是损害较旧行为</em>。</p>
+    <p>我们提出 <strong>SEAGym</strong>，一个跨 training / validation / test / replay / cost 记录测量 agent harness 更新的评估环境。SEAGym 把 Harbor-compatible 基准转化为带有 train batches、frozen update-validation、held-out ID 与 OOD transfer 视图、replay 诊断以及 snapshot 与 metric 记录的动态自进化任务源。在 Terminal-Bench 2.0 与 HLE 上，我们以共享 epoch/batch 协议比较 ACE、TF-GRPO 与 AHE。结果显示，这些评估视图提供了关于演化过程的<em>互补</em>信号：频繁更新可能无法提升 held-out 性能，有用中间快照可能后期崩溃，source diversity 与 model backend 也会影响 harness 可靠性。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（5 视图评测面 / Harbor 兼容性 / 三方法对比 / 三个反直觉发现）</div>
+
+    <p><strong>立论：self-evolving harness 必须按"<em>过程</em>"而非"<em>终点</em>"评估。</strong>过去半年（2026 H1）连续多篇论文已经把 harness 立为 first-class research object：5-23 Life-Harness 用 runtime 接口替代训练；6-12 HarnessBridge 把 harness 立为可学习模块；6-14 ToolSense 把 harness 立为审计工具；6-15 HarnessX 把 harness 立为<em>可演化的铸造厂</em>。SEAGym 是这条线的<em>评测方法学闭环</em>——它问的是：当我们说一个 harness 在演化中"<em>变好了</em>"，到底变好的是什么？仅看 final task score 既无法区分"<em>真泛化</em>" vs "<em>过拟合最近任务</em>"，也无法发现"<em>提升 A 任务但回退 B 任务</em>"的 seesaw，更看不到"<em>中间快照很好但最终崩溃</em>"的过程级失败。论文给出的回答是<strong>5 视图正交评测面 + 成本记录</strong>。</p>
+
+    <p><strong>系统设计一：5 视图正交评测面（Table 1）。</strong>SEAGym 将基础数据集切分（D_train / D_val / D_test）物化为 5 个评估视图，每个视图测量 self-evolving 过程的不同方面：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>#</th><th>视图名</th><th>池/来源</th><th>衡量内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Update Evidence</strong>（训练证据）</td><td>B_t ⊂ D_train</td><td>哪些轨迹与可见反馈驱动下一次 harness 更新</td></tr>
+        <tr><td>2</td><td><strong>Process Assessment</strong>（过程评估 / Update-Validation）</td><td>V_update-val ⊂ D_val</td><td>冻结的中间快照是否在<em>不</em>把验证用作更新证据下持续提升</td></tr>
+        <tr><td>3</td><td><strong>ID Transfer</strong>（同分布迁移）</td><td>V_ID ⊂ D_test</td><td>更新是否能迁移到来自源分布的未见任务</td></tr>
+        <tr><td>4</td><td><strong>OOD Transfer</strong>（分布外迁移）</td><td>V_OOD ⊂ D_test</td><td>更新是否能迁移到偏移或目标域任务</td></tr>
+        <tr><td>5</td><td><strong>Replay / Retention</strong>（回放/保留）</td><td>V_replay</td><td>更新后的 harness 是否保留或恢复早期行为（衡量遗忘与回归）</td></tr>
+      </tbody>
+    </table>
+
+    <p>另外配套<em>成本记录</em>（token 用量 / 工具调用次数 / wall-clock 时间），与主指标分离呈现。关键派生指标：UVG（Update-Validation Gain）= 当前快照 − 上一/初始快照在 V_update-val 上的性能差；IDG / OODG = 最终快照相对初始快照在 ID / OOD 上的提升；FR（Forgetting Rate）= max(0, Perf(A₀, D_R) − Perf(A_T, D_R))。这套 5 视图把"<em>是否真在进步</em>"分解为<strong>5 个互不可替代的子问题</strong>——任何单一视图都不充分。</p>
+
+    <p><strong>系统设计二：Harbor 兼容性 = 任务执行与评估调度分离。</strong>SEAGym 不重写基准定义，而是<em>复用</em> Harbor Framework（容器化任务执行 + verifier + 并行作业）作为底层运行器。两者职责正交：Harbor 管"<em>任务怎么跑</em>"，SEAGym 管"<em>什么时候跑、怎么记录、怎么验证</em>"。集成新基准 → 写 Harbor task/adapter 模板；集成新方法 → 用 thin wrapper 实现 rollout/update 接口，保留方法的 native update 语义。任意 Harbor-compatible 基准都可被无侵入地转化为动态自进化任务源——这种"<em>评测调度层</em> / <em>任务执行层</em>" 分离是 5-15 #1 ChromaFlow"<em>operational 量与 accuracy 联合报告</em>" / 6-08 #3 AARRI"<em>LLM × harness 二轴评测</em>" / 6-15 #1 HarnessX"<em>9 维分类法</em>" 之后又一次方法学升级。</p>
+
+    <p><strong>系统设计三：ACE / TF-GRPO / AHE 三方法在共享协议下首次公平比较。</strong>论文实例化于 Terminal-Bench 2.0 + HLE：source train 80 任务（Terminal-Bench 2.0 + HLE Math/Physics）/ source validation 35 / source test ID 55 / OOD test 80（HLE CS/AI/Engineering）；5 epoch × batch 20，主对比模型 DeepSeek-V4-Flash。三方法的更新对象与机制差异：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>方法</th><th>更新对象</th><th>UVG（验证）</th><th>IDG（同分布）</th><th>OODG（分布外）</th><th>Rollout token/任务</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>AHE</strong>（Agentic Harness Engineering）</td><td>完整 harness（prompts/tools/middleware/project files）</td><td><strong>+17.1</strong></td><td><strong>+9.1</strong></td><td><strong>+6.3</strong></td><td>1.46M</td></tr>
+        <tr><td><strong>ACE</strong>（Agentic Context Engineering）</td><td>持久 skill/context 库（13 个活跃技能）</td><td>+2.9</td><td>+3.6</td><td>+2.5</td><td>1.93M</td></tr>
+        <tr><td><strong>TF-GRPO</strong>（Training-Free GRPO）</td><td>任务族经验存储 / grouped rollout 证据</td><td>+17.1</td><td>+3.6</td><td><strong>−2.5</strong></td><td>2.33M</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心实证一：AHE 三视图同时为正，TF-GRPO 暴露源分布过拟合。</strong>AHE 是唯一同时在 validation / ID / OOD 三视图都为正的方法（编辑范围最大，主结果最佳但有过程级风险）；TF-GRPO 在源分布表现强（UVG +17.1 与 AHE 持平）但 OOD 反而 −2.5——典型"<em>看似在进步、实则过拟合最近任务</em>" 的失败模式。这种区分能力是任何单一 final score 视图都无法提供的。</p>
+
+    <p><strong>核心实证二：中间快照可能后期 collapse（AHE 训练遗忘案例）。</strong>AHE 最终 agent 解决 43/80 train-replay 任务（初始 34/80），但<strong>第 4 epoch 后回放性能崩溃至 6/80</strong>，最后一个 epoch 才恢复；修复 13 个、遗忘 4 个，净增 9 个任务。如果只看 final score，会错过这个中间灾难性回归——而 SEAGym 的 process assessment + replay 视图能直接看见。</p>
+
+    <p><strong>核心实证三：batch size 非单调（甜点效应）。</strong>同样 AHE 设置下，batch=10 → 验证 −14.3 / ID −14.5；<strong>batch=20 → 验证 +17.1 / ID +9.1（最佳）</strong>；batch=40 → +2.9 / +1.8；batch=80 → 验证 −17.1 / ID −16.4。这种非单调甜点效应在"<em>scaling = 越大越好</em>" 的常识下是反直觉的——SEAGym 把这个发现明示出来。</p>
+
+    <p><strong>核心实证四：Source diversity 与 backend 显著影响可靠性。</strong>HLE-only 训练在最终快照 collapse 至 0%，混合源（Terminal-Bench + HLE）能恢复；DeepSeek-evolved harness 改善 GLM-5.1（+7.3）但损害 GPT-5.4（−3.6）；GPT-5.4 自演化 harness 反而 OOD −7.5——<strong>ID gain 不蕴含 OOD gain</strong>。这条结论与 6-12 HarnessBridge"<em>从小生成器泛化到大商用</em>" / 6-15 HarnessX"<em>cross-backend 协同进化</em>" 形成对偶——前两篇推 harness×model 协同进化，SEAGym 警示协同进化的<em>可迁移性边界</em>。</p>
+
+    <p><strong>方法学姿态：harness 演化与 RL 训练共享评测面。</strong>SEAGym 把持续学习经典框架（adaptation / transfer / retention / forgetting）从参数学习扩展到<em>agent-system learning</em>，与 6-12 HarnessBridge / 6-15 HarnessX 把 harness 演化形式化为符号空间 MDP 形成"<em>形式化 + 评测化</em>"双姿态。<strong>2026 H1 后期 harness 工程的统一姿态</strong>已经清晰：(1) harness 是<em>类型化代数对象</em>（HarnessX D1-D9）；(2) harness 演化是 <em>RL 同构</em>（HarnessX AEGIS）；(3) harness 必须<em>可被审计</em>（ToolSense）；(4) harness 演化必须<em>多视图评测</em>（SEAGym）；(5) harness 与 model 必须<em>协同进化</em>（HarnessX co-evolution）。SEAGym 补齐了这套姿态中"<em>怎么知道演化真的好了</em>" 这一块。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选关键 11 条，附链接）</div>
+    <div class="ref-item">[1] Lin et al. (2026) — <em>AHE: Agentic Harness Engineering</em> · 完整 harness 编辑代表方法（SEAGym 主对比基线之一）<br>
+    <a href="https://arxiv.org/abs/2510.07238" target="_blank" rel="noopener">arxiv.org/abs/2510.07238</a></div>
+    <div class="ref-item">[2] Zhang et al. (2026) — <em>ACE: Agentic Context Engineering</em> · 持久 skill/context 库代表方法（SEAGym 主对比基线之二）<br>
+    <a href="https://arxiv.org/abs/2510.04618" target="_blank" rel="noopener">arxiv.org/abs/2510.04618</a></div>
+    <div class="ref-item">[3] Cai et al. (2025) — <em>TF-GRPO: Training-Free GRPO</em> · grouped rollout 经验存储（SEAGym 主对比基线之三）<br>
+    <a href="https://arxiv.org/abs/2509.13990" target="_blank" rel="noopener">arxiv.org/abs/2509.13990</a></div>
+    <div class="ref-item">[4] Pan et al. (2026) — <em>Natural-language Agent Harnesses</em> · harness 概念与可组合 runtime 综述<br>
+    <a href="https://arxiv.org/abs/2603.06987" target="_blank" rel="noopener">arxiv.org/abs/2603.06987</a></div>
+    <div class="ref-item">[5] Yang et al. (2024) — <em>SWE-agent</em> · agent-computer interface 工程基线<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">[6] Wang et al. (2025) — <em>OpenHands SDK</em> · 可组合 agent runtime 工业实践<br>
+    <a href="https://github.com/All-Hands-AI/OpenHands" target="_blank" rel="noopener">github.com/All-Hands-AI/OpenHands</a></div>
+    <div class="ref-item">[7] Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em> · 异构任务集 benchmark 范式<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">[8] Phan et al. (2025) — <em>HLE: Humanity's Last Exam</em> · 推理重 benchmark（SEAGym 实例化使用）<br>
+    <a href="https://arxiv.org/abs/2501.14249" target="_blank" rel="noopener">arxiv.org/abs/2501.14249</a></div>
+    <div class="ref-item">[9] Kirkpatrick et al. (2017) — <em>EWC: Elastic Weight Consolidation</em> · catastrophic forgetting 经典理论先驱<br>
+    <a href="https://arxiv.org/abs/1612.00796" target="_blank" rel="noopener">arxiv.org/abs/1612.00796</a></div>
+    <div class="ref-item">[10] Jiang et al. (2026) — <em>SEA-Eval: Sequential Task Streams for Agent Evaluation</em> · 自进化评测先行（SEAGym 关键差异化对象）<br>
+    <a href="https://arxiv.org/abs/2602.04567" target="_blank" rel="noopener">arxiv.org/abs/2602.04567</a></div>
+    <div class="ref-item">[11] Zheng et al. (2025) — <em>LifelongAgentBench: Skill-Based Lifelong Learning for Agents</em> · 终身学习 benchmark 先行<br>
+    <a href="https://arxiv.org/abs/2505.11942" target="_blank" rel="noopener">arxiv.org/abs/2505.11942</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>5 视图正交评测面</strong>：Update Evidence / Process Assessment / ID Transfer / OOD Transfer / Replay—Retention，配合 token / 工具调用 / wall-clock 成本记录。</li>
+      <li><strong>派生指标</strong>：UVG（验证增益）/ IDG / OODG / FR（Forgetting Rate = max(0, Perf(A₀,D_R) − Perf(A_T,D_R))）。</li>
+      <li><strong>实例化数据集</strong>：source train 80 / source val 35 / source test ID 55 / OOD test 80（Terminal-Bench 2.0 + HLE）。</li>
+      <li><strong>主协议</strong>：5 epoch × batch 20，主对比 backend DeepSeek-V4-Flash。</li>
+      <li><strong>AHE 三视图同时为正</strong>：UVG +17.1 / IDG +9.1 / OODG +6.3（rollout 1.46M tok/任务）。</li>
+      <li><strong>ACE 稳定但有限</strong>：UVG +2.9 / IDG +3.6 / OODG +2.5（活跃技能 13 个）。</li>
+      <li><strong>TF-GRPO 暴露源分布过拟合</strong>：UVG +17.1（与 AHE 持平）但 OODG <em>−2.5</em>（rollout 2.33M tok 最高）。</li>
+      <li><strong>AHE 中间崩溃</strong>：epoch 4 后 replay 性能 34/80 → <em>6/80</em>（中间灾难性回归），最后 epoch 恢复 43/80。</li>
+      <li><strong>Batch size 非单调</strong>：10 → −14.3 / 20 → +17.1（甜点）/ 40 → +2.9 / 80 → −17.1。</li>
+      <li><strong>Source diversity 关键</strong>：HLE-only 训练最终 collapse 至 0%，混合源恢复。</li>
+      <li><strong>Backend 不对称迁移</strong>：DeepSeek 演化 harness 改善 GLM(+7.3) 但损害 GPT-5.4(−3.6)；ID gain ≠ OOD gain。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>SEAGym 给你的 KV-cache 系统层毕设最直接的启发是：<strong>把 cache 系统的"<em>策略改进</em>" 也立成 5 视图评测对象</strong>。当前 KV-cache 论文常见的失败姿态是"<em>报一个 final hit-rate / latency 数字</em>"——但 SEAGym 的方法论告诉你：<em>cache 策略改进必须分别报告 (a) 训练 workload 上的提升、(b) 验证 workload 上的提升、(c) ID 类似 workload 的迁移、(d) OOD 不同 workload 的迁移、(e) 旧 workload 的回归</em>。<strong>毕设方法论建议</strong>：(1) 借鉴 5 视图——为你的 cache 系统设计 train/val/test_ID/test_OOD/replay 5 视图评测协议；(2) 借鉴 cost record 与主指标分离——hit-rate / latency 单独报，token / memory / energy 成本单独报；(3) 借鉴<em>非单调甜点效应</em> 警示——cache 参数（batch / cache-size / eviction-threshold）也必须做<em>4 档对比</em> 而非线性扫描；(4) 借鉴 backend 不对称迁移——cache 策略在不同 model size 上效果可能反向，必须分别报告。<strong>论文写作姿态</strong>：把 SEAGym 列为"<em>多视图评估范式</em>" 的方法学先例——你的 cache 系统改进必须经得住"<em>过程 + 终点 + 迁移 + 保留 + 成本</em>" 五重审视。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>SEAGym 的 5 视图评测面与今日方向 #2 <a href="https://arxiv.org/abs/2606.17229" target="_blank" rel="noopener">Rift</a>（<em>conflict signature for deception</em>）在方法论上同构——两者都把<strong>"看似 OK 的最终行为"</strong>分解为多个独立可测维度。SEAGym 用 process / ID / OOD / replay 区分"<em>真泛化 vs 过拟合最近任务</em>"；Rift 用 residual rank 区分"<em>真知识缺失 vs 知识冲突</em>"。<strong>safety 方向的关键启发</strong>：未来 agent skills safety 评测必须借鉴 SEAGym 的 5 视图——(a) 训练时 alignment 任务上的拒绝率；(b) 冻结快照的验证集拒绝率（防止训练时漂移）；(c) 同分布 ID transfer（同类风险新样本）；(d) OOD transfer（新风险类别）；(e) replay（早期 alignment 行为是否被 catastrophically 遗忘）。SEAGym 揭示的"<em>中间快照崩溃</em>" 现象在 safety 上对应"<em>training 中 alignment tax 突然飙升</em>" 的隐患——必须有 process record 才能发现。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>SEAGym 与今日方向 #3 <a href="https://arxiv.org/abs/2606.17698" target="_blank" rel="noopener">EComAgentBench</a> 在 benchmark 设计姿态上形成"<em>纵向 + 横向</em>" 双轴——SEAGym 是"<em>纵向</em>"评测（同一基准上跨 epoch / snapshot 评估演化过程），EComAgentBench 是"<em>横向</em>"评测（同一时刻跨 7 模型 × 3 信息源评估隐藏意图恢复）。<strong>统一启发</strong>：未来 safety benchmark 论文应同时具备 (a) 纵向视图（snapshot 时序 / replay 退化）；(b) 横向视图（多模型 / 多 backend / 多基准）；(c) 来源视图（信息可见 / 信息隐藏）。SEAGym 揭示的"<em>frequent updates may fail to improve held-out</em>" 现象与 6-15 #3 WorkBench Revisited"<em>capability 与 safety 同向提升</em>" 的反共识一起，把 benchmark 设计从"<em>单时刻一次评测</em>" 推向"<em>纵向多时刻评测 + 横向多源评测</em>" 时代。SEAGym 提议<em>"任意 Harbor-compatible 基准都可被转化"</em> 这条 plumbing 路径，是 safety benchmark 工程化推广的一个关键 enabler——<em>safety benchmark 也应能直接借此挂载到 SEAGym 框架做纵向追踪</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarnessX (6-15 #1)</strong> · 把 harness 立为<em>可演化的铸造厂</em> · SEAGym 与之形成"<em>演化 → 评估</em>" 闭环<br>
+      <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></li>
+      <li><strong>HarnessBridge (6-12 #1)</strong> · harness 可学习 · SEAGym 揭示 cross-backend 迁移不对称的方法学反例<br>
+      <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></li>
+      <li><strong>ToolSense (6-14 #1)</strong> · harness 可审计 · SEAGym 的"<em>诊断姿态评测</em>" 同源<br>
+      <a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a></li>
+      <li><strong>ChromaFlow (5-15 #1)</strong> · harness 5 操作量 + accuracy 联合报告先驱 · SEAGym 5 视图的精神先行<br>
+      <a href="https://arxiv.org/abs/2605.14102" target="_blank" rel="noopener">arxiv.org/abs/2605.14102</a></li>
+      <li><strong>AARRI-Bench (6-08 #3)</strong> · LLM × harness 二轴评测 · SEAGym 多视图协议的方法学基础<br>
+      <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.17546" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.17546v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.17546" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/harbor-framework/harbor" target="_blank" rel="noopener">Harbor Framework（底层）</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-17 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/list/cs.LG/new + arxiv.org/abs/2606.17546 + arxiv.org/html/2606.17546v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">arxiv.org/abs/2606.17546</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

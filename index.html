@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">34 篇报告</span>
+        <span class="count-badge">35 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">33 篇报告</span>
+        <span class="count-badge">34 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">32 篇报告</span>
+        <span class="count-badge">33 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-06-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">SEAGym：把 self-evolving LLM agent 的进步从"<em>单一最终分数</em>" 升级为"<em>训练 / 验证 / ID / OOD / 回放 + 成本</em>" 5 视图评测环境；Terminal-Bench 2.0 + HLE 实证 ACE / TF-GRPO / AHE 三方法公平对比，揭示频繁更新可能不提升 held-out、中间快照可能后期崩溃、batch size 非单调（甜点 20）#1</div>
+          <div class="paper-sub">C. Zheng / C. Xue（共一）· 清华自动化系 + BNRist · arXiv 2606.17546 2026-06-16 · 复用 Harbor Framework · UVG/IDG/OODG/FR 四派生指标</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-06-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-safety">Agent Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">Rift：用"<em>残差秩冲突签名</em>" 分离欺骗与错误——sleeper agent vs naive liar 控制范式（同输出错误答案，唯一差异是<em>知识冲突</em>），在 5 模型族测得欺骗前向传递的残差秩比 naive liar 高 2.1–2.3 倍；Phi-3 AUC=1.0、零标签 100% 取向准确；跨 5 语言 / 跨族 / 跨格式迁移；签名"<em>可读不可写</em>" #1</div>
+          <div class="paper-sub">Petr Nyoma（独著 · Harmonic Labs）· arXiv 2606.17229 2026-06-15 · GitHub Omibranch/Rift · 13 页 + 6 项 negative experiments · 与 ELK 不可能定理 + "Did you lie?" 形成 deception 三件套</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-06-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">EComAgentBench：把 shopping agent 长程评测立为"<em>分布式隐藏意图恢复</em>" 任务族——662 项基于真实 Amazon 3.7M 商品 / 21.4M 评论的任务，需求分散到 visible query (60.1%) / tool-gated profile / scripted clarification 三源；6 类 × 3 源类型化 rubric 让每条失败可归因；7 模型最强 Opus-4.6 仅 57.1%；揭示<em>使用 vs 检索</em> 真正瓶颈 #1</div>
+          <div class="paper-sub">Z. Du / T. Li / H. Zhang · Shopee · arXiv 2606.17698 2026-06-16 · GitHub Morizeyao/EComAgentBench_ · 100 工具调用 + 10 澄清轮预算 · 6,645 rubric / 平均 10.04 / 任务</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-06-15-1.html">
         <div class="date-badge">

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-17 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #eeedfe; color: #534ab7; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #efc78a; color: #633806; }
+  .link-btn.primary:hover { background: #f4dbb4; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-17 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 17 日 · Safety Benchmark · 把"<em>分布式隐藏意图</em>" 立为 shopping agent 长程评测核心</div>
+  <h1>EComAgentBench：把 shopping agent 长程评测立为"<em>分布式隐藏意图恢复</em>" 任务族——662 项基于真实 Amazon 商品 / 评论的任务，需求被分散到<strong>可见 query / 工具门控 profile / 脚本化 clarification</strong> 三个来源（60.1% / 19.9% / 19.9%）；类型化 + 来源标签的 rubric 系统让每条失败可<em>归因到具体需求与具体来源</em>；7 模型评测最强 Opus-4.6 仅 57.1%、Qwen3-30B-A3B 仅 19.5%；所有模型在隐藏来源（persona / clarification）上的满足率较 query 单调下降——揭示<em>读取 profile vs 使用 hidden 信息</em> 的方法学差距</h1>
+  <div class="en-title">EComAgentBench: Benchmarking Shopping Agents on Long-Horizon Tasks with Distributed Hidden Intent</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.8</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-15 至 06-17 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.17698" target="_blank" rel="noopener">EComAgentBench: Long-Horizon Shopping with Distributed Hidden Intent</a><span class="winner-badge">今日选定</span></td>
+          <td>662 任务 · 8 intent 类 · 6 类 × 3 源 rubric · 真实 Amazon catalog 3.7M 商品 / 21.4M 评论 · 7 模型 19.5–57.1% · query → persona → clarification 单调下降</td>
+          <td>arXiv 2606.17698（Z. Du / T. Li / H. Zhang · Shopee）2026-06-16 · GitHub Morizeyao/EComAgentBench_</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17453" target="_blank" rel="noopener">MapSatisfyBench: Behavior-Grounded Implicit Decision Factors for Map Agents</a></td>
+          <td>地图 agent 5 维满意度评测 · 真实匿名用户数据 · 隐式决策因素恢复</td>
+          <td>arXiv 2606.17453 · 2026-06-17</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17459" target="_blank" rel="noopener">Can LLMs Be CEOs? CEO-Bench Strategic Resource Reallocation</a></td>
+          <td>多 agent CEO 战略再分配 · 4 C-suite 顾问冲突建议 · single-advisor capture 失效模式</td>
+          <td>arXiv 2606.17459 · 2026-06-17</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17727" target="_blank" rel="noopener">LongWebBench: Long-Horizon Webpage Generation Structural and Functional</a></td>
+          <td>490 真实长网页 + 507 交互任务 · 长度 vs 结构保真度负相关</td>
+          <td>arXiv 2606.17727 · 2026-06-17</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17541" target="_blank" rel="noopener">Offline Preference-Based Trajectory Evaluation</a></td>
+          <td>agent 离线评估方法 · 平局比例 75% → 35%</td>
+          <td>arXiv 2606.17541 · 2026-06-17</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 arxiv.org/list/cs.AI/new + cs.LG/new（2026-06-15 至 06-17 提交清单）。<strong>EComAgentBench 之所以胜出</strong>：它<em>第一次</em>把"<em>shopping agent 评测</em>" 从"<em>给一个完整查询、看是否找到正确商品</em>" 升级为"<em>需求被设计性地分散到三个来源、agent 必须主动揭示隐藏意图</em>"——这条姿态变化与 6-15 #2 MINIM 的"<em>客户端 CI 双分数</em>"形成对偶（MINIM 在客户端控制 sensitive 信息泄露 / EComAgentBench 在 benchmark 中考核 agent 主动获取 sensitive 信息的<em>克制度</em>），与 6-12 #2 Containment Gap"<em>memory integrity</em>" 形成对偶（Containment Gap 测 framework 是否被注入 / EComAgentBench 测 agent 是否会在 profile 中读取错误信息）。基于 Shopee 工业团队 + 真实 3.7M 商品 / 21.4M 评论 catalog + 已开源 GitHub + 7 模型严谨评测。它<em>把 agent benchmark 从 "看终点" 推到"看意图过程"</em>，是 2026 H1 后期 benchmark 设计姿态变化的代表作。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>EComAgentBench: Benchmarking Shopping Agents on Long-Horizon Tasks with Distributed Hidden Intent</span></div>
+      <div class="meta-item"><label>中文标题</label><span>EComAgentBench：分布式隐藏意图下购物 agent 的长程任务评测基准</span></div>
+      <div class="meta-item"><label>作者团队</label><span>Zeyao Du（zeyao.du@shopee.com）/ Tong Li（litonglt@shopee.com）/ Haibo Zhang（通讯，peter.wu@shopee.com）</span></div>
+      <div class="meta-item"><label>机构</label><span>Shopee（虾皮电商工业团队）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-16（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL</span></div>
+      <div class="meta-item"><label>性质</label><span>Benchmark 论文 · 把 shopping agent 评测立为<em>分布式隐藏意图恢复 + 类型化来源标记 rubric</em> 双轴</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.17698" target="_blank" rel="noopener">arxiv.org/abs/2606.17698</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.17698" target="_blank" rel="noopener">arxiv.org/pdf/2606.17698</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.17698v1" target="_blank" rel="noopener">arxiv.org/html/2606.17698v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.17698" target="_blank" rel="noopener">10.48550/arXiv.2606.17698</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/Morizeyao/EComAgentBench_" target="_blank" rel="noopener">github.com/Morizeyao/EComAgentBench_</a></div>
+      <div class="meta-item"><label>底层数据</label><span>Amazon Reviews 2023（公开研究数据集，仅指向不重分发；用户 persona 为合成）</span></div>
+      <div class="meta-item"><label>评测模型</label><span>Opus-4.6 / GPT-5.4 / GPT-5 / GPT-5 mini / Kimi K2.6 / MiniMax M2.7 / Qwen3-30B-A3B（7 模型）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把 shopping agent 评测立为<strong>分布式隐藏意图恢复</strong>任务族——662 项基于真实 Amazon 3.7M 商品 / 21.4M 评论的任务，每条任务的需求被精确切分到 <strong>visible query (60.1%)、tool-gated profile (19.9%)、scripted clarification (19.9%)</strong> 三个来源；agent 必须在 <strong>100 次工具调用 + 10 轮澄清</strong>预算内主动揭示隐藏意图、对照属性 + 评论证据验证候选、最终承诺一个商品；<strong>类型化 + 来源标记的 rubric 系统</strong>（6 类 × 3 源）让每条失败精确归因到"<em>哪个需求</em>" 与 "<em>哪个来源</em>"；7 模型评测中最强 Opus-4.6 仅 <strong>57.1%</strong>、Qwen3-30B-A3B 仅 <strong>19.5%</strong>，且<em>所有模型</em>在隐藏来源（persona / clarification）上的 rubric 满足率较 query 来源单调下降——揭示当前 agent 真正的瓶颈在<em>使用</em> 而非<em>检索</em>隐藏信息。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>随着 LLM-based shopping agent 进入生产，现有 benchmark 无法捕获购物者需求<em>到达方式</em>的复杂性：有些<em>隐含</em>地陈述于查询、有些<em>记录</em>在画像中、还有些<em>仅在被对的问题问到时</em>才显露。把全部意图前置呈现、仅按最终选择评分的 benchmark 既无法构造这种长程挑战，也无法解释 agent 漏掉了哪条需求。</p>
+    <p>为弥合这一空缺，我们提出 <strong>EComAgentBench</strong>，一个基于真实 Amazon 商品与评论的 <strong>662 任务</strong>基准。每条任务把这些需求<em>分散</em>到 visible query、tool-gated profile、scripted clarification 三处；agent 必须揭示隐藏意图、对照属性与评论证据验证候选项、并在 <strong>100 次工具调用</strong>内承诺一个商品。此外，<em>类型化、来源标记</em>的 rubric 对每条任务评分，把每个失败归因到具体需求与其来源。构建过程<em>自动但可靠</em>——所有答案在任何文本生成前已固定在代码中，每条样本经过验证。我们对 7 个模型的评估显示：最强模型整体精度仅 <strong>57.1%</strong>，rubric 满足率从可见来源到隐藏来源退化。我们相信 EComAgentBench 将成为把 shopping agent 从单查询搜索推向<em>长程可靠协助</em>的可复现基础。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（三源分布意图 / 类型化来源 rubric / 七模型对比 / 单调退化模式）</div>
+
+    <p><strong>立论：shopping agent 评测必须区分"<em>检索意图</em>" vs "<em>使用意图</em>"。</strong>过去半年（2026 H1）的 agent benchmark 主线把"<em>评测面下沉</em>" 推到深处：5-25 #3 Boiling the Frog 把多轮持久状态立为 first-class；6-09 #3 SciAgentArena 把跨 agent 共享失败模式立为诊断；6-15 #3 WorkBench Revisited 用纵向 21 模型重测证明 capability 与 safety 同向提升。EComAgentBench 是这条线的<em>意图维度</em>新切面——它问的是：当一个真实购物者的需求<em>不</em>全在 query 里，agent 是否还能可靠服务？这条问题在 WebShop / Mind2Web / WebArena / AssistantBench 中被规避（它们把全部意图前置呈现）。EComAgentBench 的<strong>关键设计</strong>是<em>分散意图</em>到三个来源：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>来源</th><th>访问方式</th><th>隐藏程度</th><th>Rubric 数量占比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Visible Query</strong></td><td>直接可读</td><td>部分需求<em>隐含</em>陈述</td><td>60.1%（3,993 条）</td></tr>
+        <tr><td><strong>Tool-Gated Profile</strong></td><td>需调 <code>get_user_profile</code> 工具</td><td>隐藏在用户档案 <code>product_requirements</code> 字段</td><td>19.9%（1,326 条）</td></tr>
+        <tr><td><strong>Scripted Clarification</strong></td><td>需调 <code>ask_user</code> + 触发关键词</td><td>仅在 agent 提对问题时显露</td><td>19.9%（1,326 条）</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>系统设计一：persona 与 demographics 分离防止信息泄漏。</strong>persona 约束作为<em>陈述偏好</em>存储在专用 <code>product_requirements</code> 字段；其他不计分上下文（demographics / lifestyle / shopping_habits）独立存放——保证 persona 必须被<em>查询</em>而非<em>推理</em>。这条设计与 6-15 #2 MINIM 把 sensitive 信息分桶的 CI 思想同构：MINIM 用敏感度分数控制哪些信息<em>被发往云端 LLM</em>；EComAgentBench 用 profile 字段隔离控制哪些信息<em>能被打分使用</em>。两者都把"<em>访问模式</em>"立为评测对象。</p>
+
+    <p><strong>系统设计二：脚本化 clarification 防止用户随机性归因混淆。</strong>每个 clarification slot 包含 slot_id / linked_rubric_ids / hidden_info / trigger_keywords / user_response / default_response，最多 <strong>10 轮</strong>澄清。Clarification 是<em>脚本化而非 LLM 模拟</em>——遗漏 clarification 的责任可<em>明确归因到 agent</em> 而非 user simulator 的随机性。这条设计是 6-08 #3 AARRI 二轴评测之后又一次"<em>把 user simulator 失真度从评测中剔除</em>" 的方法学进步。</p>
+
+    <p><strong>系统设计三：6 类 × 3 源类型化来源标记 rubric。</strong>每条 rubric 同时携带 <em>type</em>（attribute_match / numeric_range / entity_match / negative_attribute / budget_match / review_opinion）与 <em>source</em>（query / persona / clarification）。失败时<em>同时</em>定位"<em>哪条需求未达成 + 该需求来自何处</em>"——这是 WebShop / Mind2Web / WebArena 等先前购物 benchmark 无法做到的。论文构建管道<em>代码先行</em>：rubric 的 id / type / field / expected_value / source 在<em>任何文本生成前</em>已锁定，LLM 仅控制表面表达，无法改变正确性标准。共 6,645 rubric / 平均 10.04 rubric/任务 / 8 类 intent / 10 工具。</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>Rubric 类型</th><th>检查内容</th><th>典型示例</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>attribute_match</td><td>精确属性值</td><td>Color = Black</td></tr>
+        <tr><td>numeric_range</td><td>数值范围</td><td>average_rating ≥ 3.5</td></tr>
+        <tr><td>entity_match</td><td>标题中的实体短语</td><td>标题含 "Wireless Charger"</td></tr>
+        <tr><td>negative_attribute</td><td>排除属性值</td><td>非 waterproof</td></tr>
+        <tr><td>budget_match</td><td>优惠后总价 ≤ 预算</td><td>后券价格匹配</td></tr>
+        <tr><td>review_opinion</td><td>基于评论的观点</td><td>"standing up or lying down"</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心实证一：7 模型整体精度跨度 19.5%–57.1%。</strong>共享配置（temperature=1.0、max_tool_steps=100、最多 10 轮 clarification）下：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>模型</th><th>整体精度</th><th>Rubric 满足率</th><th>完成率</th><th>平均工具调用</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Opus-4.6</strong></td><td><strong>57.1%</strong></td><td>76.6%</td><td>84.6%</td><td>33.9</td></tr>
+        <tr><td>GPT-5.4</td><td>47.0%</td><td><strong>81.0%</strong></td><td>99.4%</td><td>25.1</td></tr>
+        <tr><td>Kimi K2.6</td><td>46.4%</td><td>73.4%</td><td>88.7%</td><td>38.2</td></tr>
+        <tr><td>GPT-5</td><td>39.6%</td><td>76.1%</td><td>97.7%</td><td>24.4</td></tr>
+        <tr><td>MiniMax M2.7</td><td>36.6%</td><td>73.5%</td><td>95.6%</td><td>31.3</td></tr>
+        <tr><td>GPT-5 mini</td><td>31.6%</td><td>72.7%</td><td>100.0%</td><td>15.5</td></tr>
+        <tr><td>Qwen3-30B-A3B</td><td>19.5%</td><td>59.0%</td><td>100.0%</td><td>18.3</td></tr>
+      </tbody>
+    </table>
+
+    <p>有趣的<em>策略分化</em>：Opus-4.6 用最多工具调用（33.9）但完成率最低（84.6%）——"<em>深搜索易耗尽预算</em>"；GPT 系列工具调用少（15.5–25.1）+ 完成率高——"<em>早问早答</em>"；Qwen3 完成率 100% 但精度仅 19.5%——"<em>快速完成但准确性差</em>"。这条策略空间区分能力是<em>简单准确率指标</em> 无法提供的。</p>
+
+    <p><strong>核心实证二：query → persona → clarification 单调退化（关键发现）。</strong>所有 7 模型都呈现<em>来源退化</em>模式：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>模型</th><th>Query 满足率</th><th>Persona 满足率</th><th>Clarification 满足率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Opus-4.6</td><td>80.6%</td><td>72.8%</td><td>68.6%</td></tr>
+        <tr><td>GPT-5.4</td><td><strong>88.1%</strong></td><td>69.8%</td><td>70.9%</td></tr>
+        <tr><td>Kimi K2.6</td><td>79.9%</td><td>63.2%</td><td>64.1%</td></tr>
+        <tr><td>GPT-5</td><td>85.7%</td><td>58.6%</td><td>64.9%</td></tr>
+        <tr><td>MiniMax M2.7</td><td>83.5%</td><td>57.3%</td><td>59.9%</td></tr>
+        <tr><td>GPT-5 mini</td><td>82.1%</td><td>56.6%</td><td>60.2%</td></tr>
+        <tr><td>Qwen3-30B-A3B</td><td>68.8%</td><td>43.1%</td><td>45.4%</td></tr>
+      </tbody>
+    </table>
+
+    <p>失败率从 query 来源（12–31%）→ persona（27–57%）→ clarification（29–55%）大致<em>翻倍</em>。论文在 §6.3 给出<strong>关键诊断</strong>："<em>几乎每个模型都读取了 profile，因此差距在于<strong>使用</strong>隐藏信息而非检索它</em>"——这条结论把 agent 评测从"<em>测能力检索</em>" 推向"<em>测能力使用</em>"，是 2026 H2 后期 benchmark 设计的重要新维度。</p>
+
+    <p><strong>核心实证三：隐式需求驱动难度（非 rubric 数量）。</strong>Table 7：隐式需求 0–1 个 → 平均精度 51.8%；3+ 个 → <strong>27.2%</strong>（几乎减半）。原始 rubric 数量增加并不带来同等难度提升。这把"<em>任务难度</em>" 重新定义为<em>意图分布的隐式程度</em>而非<em>rubric 总数</em>。<em>review_opinion</em> 是最难子技能（满足率 33.7–67.4%）——从非结构化评论中提取与聚合证据是当前 agent 普遍弱点。</p>
+
+    <p><strong>方法学姿态：意图维度 benchmark = WorkBench Revisited 的横向对偶。</strong>EComAgentBench 与 6-15 #3 WorkBench Revisited 形成"<em>纵向 + 横向</em>" 双姿态：WorkBench Revisited 是同一基准跨 21 模型纵向重测；EComAgentBench 是单一时刻跨 7 模型 × 3 信息源横向评测。两者都把<em>"agent 进步"</em> 重新定义——WorkBench 证明 capability 与 safety 同向提升；EComAgentBench 证明能力差距集中在<em>"使用 hidden 信息"</em> 而非 "<em>检索</em>"。<strong>2026 H1 后期 benchmark 设计姿态变化</strong>（与 6-12 MLUBench"<em>动态化</em>" / 6-09 SciConBench"<em>clean-room 评测</em>" / 6-08 AARRI"<em>二轴评测</em>" 一脉相承）：(1) 评测对象从<em>能力</em> → <em>使用</em>；(2) 评测面从<em>单时刻</em> → <em>纵向 + 横向</em>；(3) 评分粒度从<em>整体准确率</em> → <em>类型化 + 来源标记 rubric</em>。EComAgentBench 是这条姿态变化的代表作。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选关键 11 条，附链接）</div>
+    <div class="ref-item">[1] Yao et al. (2022) — <em>WebShop: Web-Based Agent Benchmark</em> · 购物 agent benchmark 起点（EComAgentBench 直接对位）<br>
+    <a href="https://arxiv.org/abs/2207.01206" target="_blank" rel="noopener">arxiv.org/abs/2207.01206</a></div>
+    <div class="ref-item">[2] Deng et al. (2023) — <em>Mind2Web: Towards a Generalist Agent for the Web</em> · 通用 web agent 评测（信息收集理念）<br>
+    <a href="https://arxiv.org/abs/2306.06070" target="_blank" rel="noopener">arxiv.org/abs/2306.06070</a></div>
+    <div class="ref-item">[3] Zhou et al. (2023) — <em>WebArena: A Realistic Web Environment for Autonomous Agents</em> · 长程交互评测先驱<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">[4] Hou et al. (2024) — <em>Amazon Reviews 2023 Dataset</em> · 底层数据集来源<br>
+    <a href="https://arxiv.org/abs/2403.03952" target="_blank" rel="noopener">arxiv.org/abs/2403.03952</a></div>
+    <div class="ref-item">[5] Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em> · agent 范式基础<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[6] Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em> · 多任务 agent benchmark<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">[7] Mialon et al. (2023) — <em>GAIA: A Benchmark for General AI Assistants</em> · 长程任务 + 真实工具评测<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">[8] Yoran et al. (2023) — <em>AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?</em> · 长程评测先行<br>
+    <a href="https://arxiv.org/abs/2407.15711" target="_blank" rel="noopener">arxiv.org/abs/2407.15711</a></div>
+    <div class="ref-item">[9] Min et al. (2023) — <em>FActScore: Fine-Grained Atomic Evaluation</em> · 类型化原子事实评估代表（rubric 系统的方法学先行）<br>
+    <a href="https://arxiv.org/abs/2305.14251" target="_blank" rel="noopener">arxiv.org/abs/2305.14251</a></div>
+    <div class="ref-item">[10] Styles (2024) — <em>WorkBench: A Benchmark Dataset for Agents in a Realistic Workplace Setting</em> · COLM 2024 原作（与 6-15 #3 同源对位）<br>
+    <a href="https://arxiv.org/abs/2405.00823" target="_blank" rel="noopener">arxiv.org/abs/2405.00823</a></div>
+    <div class="ref-item">[11] Styles (2026) — <em>WorkBench Revisited</em> · 6-15 #3 同源 · 纵向 21 模型重测的横向对偶<br>
+    <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arxiv.org/abs/2606.13715</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Catalog 规模</strong>：3,721,595 商品 + 21,351,983 评论（基于 Amazon Reviews 2023）。</li>
+      <li><strong>基准规模</strong>：921 生成样本 → 662 有效任务（通过率 71.9%）；6,645 rubric / 平均 10.04 rubric/任务。</li>
+      <li><strong>三源分布</strong>：visible query 60.1%（3,993）/ tool-gated profile 19.9%（1,326）/ scripted clarification 19.9%（1,326）。</li>
+      <li><strong>8 intent 类</strong>：Product Search 83 / Knowledge Reasoning 106 / Rating Quality 80 / Feature Combination 104 / Negative Constraint 57 / Use-case Scenario 104 / Coupon Budget 33 / Review-driven 95。</li>
+      <li><strong>预算约束</strong>：每 episode 100 工具调用 + 10 澄清轮 + 10 工具集 · 最终必须推荐<em>恰好一个</em>商品。</li>
+      <li><strong>整体精度跨度</strong>：Opus-4.6 57.1%（最强）→ Qwen3-30B-A3B 19.5%（最弱），跨度 37.6 个百分点。</li>
+      <li><strong>策略分化</strong>：Opus-4.6 工具调用最多（33.9）+ 完成率最低（84.6%）；GPT 系列调用少 + 完成率高；Qwen3 完成率 100% 但精度最低。</li>
+      <li><strong>来源退化（关键发现）</strong>：所有 7 模型 query > persona ≈ clarification 单调下降；GPT-5.4 88.1% → 69.8% → 70.9%。</li>
+      <li><strong>诊断结论</strong>："<em>几乎每个模型都读取了 profile，差距在<strong>使用</strong>隐藏信息而非检索它</em>"——agent 真正瓶颈定位。</li>
+      <li><strong>隐式需求驱动难度</strong>：0–1 个隐式需求 51.8% → 3+ 个 <strong>27.2%</strong>（几乎减半）；rubric 数量增加并不带来同等难度。</li>
+      <li><strong>review_opinion 最难</strong>：rubric 满足率 33.7–67.4%——非结构化评论提取是当前 agent 普遍弱点。</li>
+      <li><strong>构建可靠性</strong>：rubric 在任何文本生成前已锁定（id/type/field/expected_value/source），LLM 仅控制表面表达。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>EComAgentBench 给你的 KV-cache 系统层毕设最直接的启发是：<strong>把"<em>工作负载需求</em>" 也立为<em>分布式来源</em></strong>。当前 KV-cache 论文常见的失败姿态是"<em>给一个完整 trace、看 hit-rate</em>"——但真实部署中 cache 系统的"<em>需求</em>" 同样分散在多个来源（应用层 hint / 系统层指标 / 用户层 SLA / 历史 access pattern）。<strong>毕设方法论建议</strong>：(1) 借鉴<em>三源分布</em>——为你的 cache 评测设计 "<em>显式 trace（user query 类比）/ 持久 hint（profile 类比）/ 运行时反馈（clarification 类比）</em>" 三档需求来源；(2) 借鉴<em>类型化 + 来源标记 rubric</em>——cache 系统的失败也应被分类为"<em>哪类失败（cold miss / capacity miss / coherence miss）</em>" + "<em>因何来源信息没用上（应用 hint / 历史 / 实时反馈）</em>"；(3) 借鉴<em>"使用 vs 检索" 区分</em>——很多 cache 论文报告的"<em>读到了 hint 但没用上</em>" 等同于 EComAgentBench 的 persona 退化模式，应当被独立测量；(4) 借鉴 <em>EComAgentBench 强调"<em>意图被分散到多源</em>" 是评测设计选择</em>，把这条姿态写进你的"<em>cache evaluation methodology</em>" 章节。<strong>论文写作姿态</strong>：把 EComAgentBench 列为"<em>分布式来源 + 类型化 rubric</em>" 评测范式的方法学先例——你的 cache 系统改进必须在<em>多来源 + 多类型失败诊断</em> 维度都站得住。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>EComAgentBench 与今日方向 #2 <a href="https://arxiv.org/abs/2606.17229" target="_blank" rel="noopener">Rift</a>"<em>欺骗 vs 错误对照范式</em>" 在评测哲学上同构——两者都把<strong>"看似单一的失败"</strong>分解为多个独立可归因维度。<strong>safety 方向的关键启发</strong>：(1) 未来 agent skills safety 评测必须借鉴<em>三源分布</em>——一条 jailbreak 任务的 trigger 可拆为"<em>visible query trigger / persona trigger / clarification trigger</em>" 三源，分别测量 agent 的拒绝鲁棒性；(2) 借鉴<em>来源退化模式</em>——很多模型在 visible jailbreak 下拒绝率 90%+，但在 persona-embedded jailbreak（"<em>用户档案显示是医生</em>"）或 clarification-embedded jailbreak（"<em>反复追问让用户确认有需求</em>"）上拒绝率会显著退化；这条退化曲线应被立为<em>safety benchmark 标准维度</em>；(3) EComAgentBench 的<em>persona 与 demographics 字段分离</em> 设计可直接套用 agent safety——把"<em>有意泄露的 sensitive 信息</em>" 与"<em>背景信息</em>" 分开存储防止评测污染；(4) 与 6-15 #2 MINIM 形成对偶——MINIM 在客户端控制 agent 不读不必要 sensitive 信息，EComAgentBench 在 benchmark 中考核 agent 是否会从 profile 中<em>误用</em> sensitive 信息——两者是 agent privacy safety 的"<em>防御 + 评测</em>" 双轴。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>EComAgentBench 与今日方向 #1 <a href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">SEAGym</a>"<em>5 视图评测</em>" 形成<strong>"纵向 + 横向"</strong> 双姿态——SEAGym 是纵向（同一基准跨 epoch / snapshot 评测演化过程），EComAgentBench 是横向（同一时刻跨 7 模型 × 3 信息源评测隐藏意图恢复）。<strong>统一启发</strong>：未来 safety benchmark 论文应同时具备 (a) 纵向视图（snapshot 时序 / replay 退化）；(b) 横向视图（多模型 / 多 backend / 多基准）；(c) 来源视图（信息可见 / 信息隐藏）。EComAgentBench 揭示的"<em>差距在使用而非检索</em>" 现象在 safety 上对应"<em>差距在执行 alignment 决策而非记住 alignment 训练</em>"——这条诊断维度应被纳入 safety benchmark 标准。EComAgentBench 把<em>类型化 + 来源标记 rubric</em> 立为<em>失败可归因</em> 的工程基础——这条范式与 6-09 #3 SciConBench"<em>原子事实分解</em>" 一起，把 benchmark 的失败诊断粒度从"<em>整体 ASR / 准确率</em>" 推向"<em>哪条具体需求 + 哪个来源 + 哪类失败</em>" 三维归因。<em>建议</em>：未来 safety benchmark（如 HarmBench / TrustLLM 续集）也应采纳 6 类 × 3 源类型化 rubric——让"<em>这个 agent 拒绝率 60%</em>" 升级为"<em>在 persona-leaked 来源下拒绝 review_opinion 类需求 X 个百分点</em>"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>WorkBench Revisited (6-15 #3)</strong> · 同源纵向重测 · 与 EComAgentBench 形成"<em>纵向 + 横向</em>" 双姿态<br>
+      <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arxiv.org/abs/2606.13715</a></li>
+      <li><strong>SciConBench (6-09 #3)</strong> · clean-room 评测 + 原子事实分解 · EComAgentBench 类型化 rubric 的方法学先行<br>
+      <a href="https://arxiv.org/abs/2606.11337" target="_blank" rel="noopener">arxiv.org/abs/2606.11337</a></li>
+      <li><strong>SciAgentArena (6-14 #3)</strong> · 跨 agent 失败模式诊断 · 与 EComAgentBench"<em>使用 vs 检索</em>" 区分同构<br>
+      <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">arxiv.org/abs/2606.12736</a></li>
+      <li><strong>WebShop (Yao et al. 2022)</strong> · 购物 agent benchmark 起点 · EComAgentBench 直接超越对象<br>
+      <a href="https://arxiv.org/abs/2207.01206" target="_blank" rel="noopener">arxiv.org/abs/2207.01206</a></li>
+      <li><strong>AARRI-Bench (6-08 #3)</strong> · LLM × harness 二轴评测 · EComAgentBench 多模型评测的方法学基础<br>
+      <a href="https://arxiv.org/abs/2606.07462" target="_blank" rel="noopener">arxiv.org/abs/2606.07462</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.17698" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.17698" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.17698v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn primary" href="https://github.com/Morizeyao/EComAgentBench_" target="_blank" rel="noopener">GitHub 代码 + 数据</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.17698" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-17 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.17698 + arxiv.org/html/2606.17698v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.17698" target="_blank" rel="noopener">arxiv.org/abs/2606.17698</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
