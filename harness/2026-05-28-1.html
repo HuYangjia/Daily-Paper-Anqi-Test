@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-28 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-28 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 28 日 · Harness Engineering · 把"agent 运行时"独立成 serving stack 的第三层</div>
+  <h1>A Policy-Driven Runtime Layer for Agentic LLM Serving：在 agent 框架与 serving 引擎之间插入"agent runtime layer"——四原语 observe/score/predict/act + CacheSage 跨会话 KV 预取，命中率 +13~37 pp、TTFT −12%~29%、吞吐 +6%~14%</h1>
+  <div class="en-title">A Policy-Driven Runtime Layer for Agentic LLM Serving</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">A Policy-Driven Runtime Layer for Agentic LLM Serving</a><span class="winner-badge">今日选定</span></td>
+          <td>架构论文 · agent runtime layer · 四原语 · CacheSage 跨会话 KV 预取 · 5 真实 multi-agent workload</td>
+          <td>arXiv 2605.27744（Rui Zhang, Chaeeun Kim, Liting Hu, UC Santa Cruz）2026-05-26</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27784" target="_blank" rel="noopener">Diagnosing Live Within-Policy Instruction Conflicts in LLM Agents (WIRE)</a></td>
+          <td>诊断 harness · PyRule + SAT 规则冲突 · 13,335 试验 · 联合合规率 35.4%</td>
+          <td>arXiv 2605.27784（Lu Yan / Xuan Chen / Xiangyu Zhang，Purdue）2026-05-27</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27789" target="_blank" rel="noopener">A Fixed-Budget, Cluster-Aware Standard for LLM-as-a-Judge Evaluation</a></td>
+          <td>LLM-as-a-judge 测量标准 · multi-hop RAG · cluster-aware inference · 预注册假设</td>
+          <td>arXiv 2605.27789（Camilo Chacón Sartori, José H. García）2026-05-27</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27703" target="_blank" rel="noopener">Hierarchical Prompt-Domain Control for Resource-Constrained Agentic LMs</a></td>
+          <td>分层控制 · 蒸馏 + 在线监督 · 资源受限部署 · agent harness 子层</td>
+          <td>arXiv 2605.27703（Vendrell Gallart / Bent / Grosskopf, LANL）2026-05-27</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27566" target="_blank" rel="noopener">DynaSchedBench：动态调度 harness · "可观测性悖论"</a></td>
+          <td>调度专用 harness · SESC + SSI 实例难度校准 · LLM agent 反成"启发式近似器"</td>
+          <td>arXiv 2605.27566（Shijie Cao, Yuan Yuan, Jing Liu）2026-05-26</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27752" target="_blank" rel="noopener">Asking Is Not Enough: Protocol Sensitivity in LLM Confidence Calibration</a></td>
+          <td>协议敏感性 · 标准化报告清单 · 评测 harness 元方法</td>
+          <td>arXiv 2605.27752（H. Kim, P. Kang）2026-05-27</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>A Policy-Driven Runtime Layer for Agentic LLM Serving</span></div>
+      <div class="meta-item"><label>中文标题</label><span>面向 agentic LLM 服务的策略驱动运行时层</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Rui Zhang（UC Santa Cruz）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Chaeeun Kim, Liting Hu（UC Santa Cruz）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-26（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.DC · LLM serving · multi-agent system</span></div>
+      <div class="meta-item"><label>性质</label><span>架构提案 + 单策略原型验证（CacheSage）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">arxiv.org/abs/2605.27744</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.27744" target="_blank" rel="noopener">arxiv.org/pdf/2605.27744</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.27744v1" target="_blank" rel="noopener">arxiv.org/html/2605.27744v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.27744" target="_blank" rel="noopener">10.48550/arXiv.2605.27744</a></div>
+      <div class="meta-item"><label>核心实验台</label><span>NVIDIA H100 80GB · Llama-3.1-8B-Instruct · vLLM / Continuum 基线</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agentic LLM serving 的"<strong>框架↔引擎接缝</strong>"重写为<em>第三层 runtime</em>——以 <strong>agent identity</strong> 为共享坐标暴露 <code>observe / score / predict / act</code> 四原语，9 类跨层策略统一接入。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多智能体 LLM 系统已成为主流生产工作负载，但底层 serving 栈并非为它们而设计。<strong>上层的 agent 框架</strong>知道 agent 身份、角色、模式和调度结构，却看不见引擎级事件；<strong>下层的 serving 引擎</strong>看到每一条事件，却对 agent 一无所知。许多跨层策略——前缀缓存、批处理形状、推测解码、公平性、工具结果记忆化、安全执行——同时依赖两侧信息，目前只能靠对其中一边打补丁来"<em>临时缝合</em>"。</p>
+    <p>我们主张这条接缝应当通过<strong>架构变更</strong>而非点修复来解决：在框架与引擎之间插入第三层——<em>agent runtime layer</em>，对外暴露四个原语 <code>observe</code>（观察）、<code>score</code>（评分）、<code>predict</code>（预测）、<code>act</code>（行动），任何 agent 感知策略都可以接入，以 <strong>agent identity</strong> 作为共享坐标。我们把 9 种具体策略映射进该层，并对其中"直接服务成本杠杆最大"的一个——跨会话 KV 缓存——做深入验证：实例化为 <strong>CacheSage</strong>，在线学习每个工作负载的 agent 转移矩阵，用于基于"生存概率"的驱逐与"步间预取"。</p>
+    <p>在 5 个真实 multi-agent workload（MMLU / MT-Bench / GAIA / GSM8K + 12-agent 合成链）上，相对未修改的 serving 栈：缓存命中率 +13~37 个百分点，平均 TTFT 降低 12%~29%，吞吐 +6%~14%。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（接缝问题 · 四原语 · 9 策略映射 · CacheSage 单点验证）</div>
+
+    <p><strong>问题背景：</strong>2024-2026 上半年的 LLM serving 栈通常是双层结构——上面是 <em>AutoGen / MetaGPT / SWE-Agent</em> 这类 agent 框架，知道 agent role、tool schema、planner 状态；下面是 <em>vLLM / SGLang / LMCache</em> 这类引擎，知道 KV block、batch shape、prefix。而所有"<em>跨层策略</em>"都被夹在中间：前缀缓存只看 token 哈希、看不见 agent 身份；公平性只看 request 来源、看不见 agent role；安全执行只看 tool schema、看不见请求级 KV 状态。<strong>每加一个策略，就要在两层各打一个补丁，且要同步重写两套 IR</strong>——这是当前 serving 栈在 multi-agent 场景下扩展性最大的瓶颈。</p>
+
+    <p><strong>四原语 IR：</strong>论文把这条接缝形式化为一个独立的中间层，提出统一接口：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>原语</th><th>语义</th><th>典型用法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>observe(event)</code></td><td>引擎事件流入运行时</td><td>block touch、tool call return、agent step start</td></tr>
+        <tr><td><code>score(state)</code></td><td>运行时对块/请求/agent 打分</td><td>survival probability、cache priority、fairness slot</td></tr>
+        <tr><td><code>predict(agent)</code></td><td>运行时预测下一步</td><td>转移矩阵下一个 agent / 下一个 prefix</td></tr>
+        <tr><td><code>act(decision)</code></td><td>把决策回写引擎</td><td>预取 prefix、驱逐块、调整 batch、阻断不安全 tool</td></tr>
+      </tbody>
+    </table>
+
+    <p>这一层<strong>以 agent identity 作为共享坐标</strong>——每个块、每个请求、每个 step 都被打上 <code>(agent_id, role, session_id)</code> 标签，使得"只看 token 哈希就丢失语义"的问题被一次性解决。</p>
+
+    <p><strong>9 类跨层策略统一映射：</strong>论文把当前 serving 文献里散落的 9 类策略——前缀缓存、批处理形状、推测解码、公平性、工具结果记忆化、安全执行、KV 卸载、调度路由、跨 agent 复用——全部重写为四原语调用，证明该 IR 的<em>表达完备性</em>。</p>
+
+    <p><strong>CacheSage 单点深入：</strong>论文不止于框架级讨论，而是挑出"最有直接服务成本杠杆"的一个策略——跨会话 KV 缓存——做完整原型验证。CacheSage 由三个组件构成：</p>
+
+    <ul class="point-list">
+      <li><strong>转移学习器（Transition Learner）</strong>：在线学习每个工作负载的 agent 转移矩阵 <em>P(a<sub>t+1</sub> | a<sub>t</sub>, ctx)</em>，处理"同一 framework 在不同任务源下路由模式不同"——论文实测<em>个别边的转移概率在不同任务源下可变化 27~47 个百分点</em>。</li>
+      <li><strong>生存概率评分器（Survival Probability Scorer）</strong>：把转移矩阵的下游期望命中率，转换为单个 KV block 的"未来仍会被命中"的概率，作为驱逐优先级——比 LRU 直接看时间衰减更精确。</li>
+      <li><strong>工作负载门控的步间预取（Workload-Gated Inter-Step Prefetch）</strong>：在 agent step 切换时主动把"<em>下一个 agent 高概率引用的 prefix</em>"预热回 GPU KV，比被动 prefix cache 提前 1 个 step。</li>
+    </ul>
+
+    <p><strong>CacheSage 的关键观察（论文 §3）：</strong>(i) 跨会话表面（system prompt + tool schema + few-shot）占首轮 prompt 的 34%~52%——这是 KV 卸载方向"<em>常驻热块</em>"假设的实证支撑；(ii) 下一个 agent 可预测性的相对条件熵减少 R ∈ [0.40, 0.48]——意味着 agent 转移并非纯随机，预取有信号；(iii) 同一 framework 在不同任务源（如 MMLU vs MT-Bench）的转移概率<em>大幅漂移</em>——说明"全局静态预取"在 multi-agent 下注定失效，<strong>必须 per-workload 在线学习</strong>。</p>
+
+    <p><strong>开销分析：</strong>论文给出热路径成本——<code>observe</code> ≈ 1 μs/块触摸、BFS scorer 单位数 μs、协调器 24 agent 状态 ≤ 25KB。这意味着该 runtime 层<em>不引入显著调度开销</em>，可在生产负载下直接打开。</p>
+
+    <p><strong>与你毕设最直接的联系：</strong>本文的 CacheSage 与你毕设里"<em>稀疏注意力 KV-cache 卸载 + 双水位线 GPU 热缓存 + CNN/Linear prefetcher</em>"的设计在 IR 层面高度同构——你毕设的 prefetcher 可以直接被解释为 CacheSage 四原语中的 <code>predict</code> 实现，而双水位线则是 <code>score</code> 的具体形式。Q.md 评审里关于"为什么不直接看 latency"的质疑，可以反引这篇论文的"agent identity is the shared coordinate"作为 first principle 答辩弹药——agent 上下文如果不进入 KV 决策，命中率/带宽都是有偏估计。</p>
+  </div>
+
+  <!-- 关键引用与出处 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（前 10 条，附链接）</div>
+    <div class="ref-item">[1] Kwon et al. (2023) — <em>Efficient Memory Management for Large Language Model Serving with PagedAttention</em>·vLLM 原论文，本文 serving 引擎基线<br>
+    <a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener">arxiv.org/abs/2309.06180</a></div>
+    <div class="ref-item">[2] Zheng et al. (2024) — <em>SGLang: Efficient Execution of Structured Language Model Programs</em>·结构化 LM 程序执行<br>
+    <a href="https://arxiv.org/abs/2312.07104" target="_blank" rel="noopener">arxiv.org/abs/2312.07104</a></div>
+    <div class="ref-item">[3] Pan et al. (2026) — <em>KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows</em>·multi-agent 前缀缓存<br>
+    <a href="https://arxiv.org/abs/2502.04692" target="_blank" rel="noopener">arxiv.org/abs/2502.04692</a></div>
+    <div class="ref-item">[4] Li et al. (2025) — <em>Continuum: Efficient and Robust Multi-Turn LLM Agent Scheduling with KV Cache Time-to-Live</em>·本文 baseline 之一<br>
+    <a href="https://arxiv.org/abs/2509.07930" target="_blank" rel="noopener">arxiv.org/abs/2509.07930</a></div>
+    <div class="ref-item">[5] Liu et al. (2025) — <em>LMCache: An Efficient KV Cache Layer for Enterprise-Scale LLM Inference</em>·企业级 KV cache 层<br>
+    <a href="https://arxiv.org/abs/2503.02816" target="_blank" rel="noopener">arxiv.org/abs/2503.02816</a></div>
+    <div class="ref-item">[6] Wu et al. (2024) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversations</em>·上层 agent 框架代表<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">[7] Hong et al. (2024) — <em>MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework</em>·多 agent 协作元编程<br>
+    <a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">arxiv.org/abs/2308.00352</a></div>
+    <div class="ref-item">[8] Yao et al. (2022) — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>·agent loop 范式奠基<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">[9] Bian et al. (2025) — <em>TokenCake: A KV-Cache-Centric Serving Framework for LLM-Based Multi-Agent Applications</em><br>
+    <a href="https://arxiv.org/abs/2502.18138" target="_blank" rel="noopener">arxiv.org/abs/2502.18138</a></div>
+    <div class="ref-item">[10] Abhyankar et al. (2024) — <em>InferCept: Efficient Intercept Support for Augmented Large Language Model Inference</em><br>
+    <a href="https://arxiv.org/abs/2402.01869" target="_blank" rel="noopener">arxiv.org/abs/2402.01869</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>GPU KV cache 命中率 +13~37 个百分点</strong>（vs vLLM）——5 个真实 multi-agent workload 跨工作负载稳定提升，非 cherry-pick。</li>
+      <li><strong>平均 TTFT 降低 12%~29%</strong>——首 token 时延的显著优化对 long-horizon agent 体验最直接。</li>
+      <li><strong>吞吐 +6%~14%</strong>——在 H100 80GB / Llama-3.1-8B 上不需要任何模型修改。</li>
+      <li><strong>跨会话表面 34%~52%</strong>——首轮 prompt 中 system + tool + few-shot 占比过半，是"<em>常驻热块</em>"假设的实证支撑。</li>
+      <li><strong>下一 agent 相对条件熵减少 R ∈ [0.40, 0.48]</strong>——agent 转移并非随机，预取有显著信号。</li>
+      <li><strong>转移概率跨任务源漂移 27~47 pp</strong>——证明"全局静态预取"在 multi-agent 下注定失效，必须 per-workload 在线学习。</li>
+      <li><strong>热路径开销 ≤ 25KB / observe ≈ 1 μs</strong>——该 runtime 层<em>不引入显著调度开销</em>，可在生产环境直接启用。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>这是一个把 <em>"agent harness"</em>从框架层下沉到 <em>serving runtime</em> 的工程范式——和你毕设的"<strong>稀疏注意力 KV-cache 卸载 + 双水位线 GPU 热缓存 + CNN/Linear prefetcher</strong>"在 IR 层面高度同构。CacheSage 三件套（转移学习器 / 生存概率评分器 / 步间预取）正好对应你的（特征提取器 / 双水位线 / prefetcher）。<strong>建议</strong>：在毕设 Discussion 章节直接借用 <code>observe / score / predict / act</code> 四原语术语，把你的设计抽象为"<em>稀疏注意力专用的 agent runtime</em>"——在审稿人视角下可以提升一个抽象层。Q.md 中关于"预取策略与缓存管理数据一致性"的争议，本论文的 §4.2（survival probability scorer 与 prefetch 的双向同步）给出了一个可以直接引用的形式化解。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>论文的 9 策略表里明确有"<em>safe execution</em>"——这意味着 safety guardrail 也可以接入到同一 runtime 层，与 KV 调度共享 agent identity 坐标。结合昨日 #1 SafeHarbor（分层 guardrail）和今日 #2 Agent Skill Ecosystem Threats（恶意 skill 泛滥），可以构想一个"<em>policy-driven safety runtime</em>"：每个 skill 调用先经过 <code>score(safety)</code>，再经过 <code>act(allow/deny/audit)</code>。这给出了"<em>agent runtime 即 safety substrate</em>"的统一架构。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-all">Safety Benchmark</div>
+        <p>论文呼应 5-26 #1 "Scaling the Harness" 的 6 大评测维度——它实际上把"<strong>memory hygiene + context efficiency + verification cost</strong>"三维度具体化为可测量数字（命中率 / TTFT / 吞吐）。<strong>建议</strong>：今日 HARP（multi-agent harm amplification）+ CacheSage 可以拼成一个"<em>性能-安全双维 runtime benchmark</em>"——在同一组 multi-agent workload 下，既测 KV 效率，也测 harm propagation。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>From Model Scaling to System Scaling（5-26 #1）</strong>·把"harness"立成一等研究对象的 position paper · 与本文是姊妹关系<br>
+      <a href="https://arxiv.org/abs/2605.26112" target="_blank" rel="noopener">arxiv.org/abs/2605.26112</a></li>
+      <li><strong>KVFlow（Pan 等 2026）</strong>·multi-agent prefix cache 的早期工作 · 本文比较基线之一<br>
+      <a href="https://arxiv.org/abs/2502.04692" target="_blank" rel="noopener">arxiv.org/abs/2502.04692</a></li>
+      <li><strong>Continuum（Li 等 2025）</strong>·KV cache TTL 调度 · 本文 baseline<br>
+      <a href="https://arxiv.org/abs/2509.07930" target="_blank" rel="noopener">arxiv.org/abs/2509.07930</a></li>
+      <li><strong>LMCache（Liu 等 2025）</strong>·企业级 KV cache 层 · KV 卸载方向参考<br>
+      <a href="https://arxiv.org/abs/2503.02816" target="_blank" rel="noopener">arxiv.org/abs/2503.02816</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.27744" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.27744v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.27744" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-28 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2605.27744 + arxiv.org/html/2605.27744v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.27744" target="_blank" rel="noopener">arxiv.org/abs/2605.27744</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

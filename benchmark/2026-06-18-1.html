@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-18 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #faeeda; color: #854f0b; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #eeedfe; color: #534ab7; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #efc78a; color: #633806; }
+  .link-btn.primary:hover { background: #f4dbb4; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 18 日 · Safety Benchmark · 把 AI4Science safety 的二级风险结构正式制度化</div>
+  <h1>SciRisk-Bench：把 AI4Science 安全的"<em>风险维度</em>"作为一级组织轴——<strong>7 学科 × 31 子学科 × 10 风险维度 × 350 样例</strong>，与"<em>双用</em> / <em>实验室安全</em> / <em>幻觉</em> / <em>权威膨胀</em> / <em>遗漏警告</em> / <em>知识截止漂移</em> / <em>制度盲点</em> / <em>边缘放大</em> / <em>隐私泄露</em> / <em>地缘敏感</em>"10 维交叉诊断；首次在统一基准上证明 <em>science-specialized 模型常比 mainstream base ASR 更高</em>（领域适配增加"<em>答应能力</em>"但未增加"<em>风险鉴别</em>"），最弱维度 Knowledge cutoff drift ASR 74.2%、Safety omission 53.5%、最强 Privacy leakage 12.2%；最危险学科 Engineering 57.0%、最安全 Biology ~18.8%</h1>
+  <div class="en-title">SciRisk-Bench: A Risk-Dimension-Aware Benchmark for AI4Science Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-17 至 06-18 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">SciRisk-Bench: A Risk-Dimension-Aware Benchmark for AI4Science Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>把"<em>风险维度</em>"立为一级组织轴 · 7 学科 / 31 子学科 / 10 风险维度 / 350 样例 · 揭示 science-specialized 反而更不安全 · LLM-as-judge ASR 二维诊断</td>
+          <td>arXiv 2606.18936（CASIA + UCAS + 中关村学院 + 北京 AISI + 人大高瓴）2026-06-17 v1 · 11 作者</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18557" target="_blank" rel="noopener">DeFAb: Verifiable Benchmark for Defeasible Abduction</a></td>
+          <td>4 十年公共知识库 → 372,648+ 实例 / 33.75M 物化规则 · 三层级多项式时间验证 · best frontier 65% 正常 / 23.5% rendering-robust · MIT 许可</td>
+          <td>arXiv 2606.18557 · 2026-06-17 · 33 页 / 14 图 / 23 表</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.19245" target="_blank" rel="noopener">TxBench-PP: Small-Molecule Preclinical Pharmacology Benchmark</a></td>
+          <td>真实 assay data 100 评估 / 16 模型-harness 配置 / 4,800 轨迹 · 最强 Opus 4.8 / Pi 仅 59.3%（178/300, 95% CI 51.1–67.6）· 第一片 TherapeuticsBench 切片</td>
+          <td>arXiv 2606.19245 · 2026-06-17</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18543" target="_blank" rel="noopener">CEO-Bench: Can Agents Play the Long Game?</a></td>
+          <td>500-day 创业模拟长程 agent 评估 · 分析多业务数据库 + 编程协调 · 仅 Opus 4.8 / GPT-5.5 守住启动金 · 三方面 Princeton</td>
+          <td>arXiv 2606.18543 · 2026-06-16</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18847" target="_blank" rel="noopener">WorldLines: Long-Horizon Stateful Embodied Agent Benchmark</a></td>
+          <td>居家具身 agent 长程基准 · 对话/动作/状态变化轨迹 · ObsMem 观察感知记忆架构</td>
+          <td>arXiv 2606.18847 · 2026-06-17</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arxiv.org/list/cs.AI/new</a>（2026-06-17 / 06-18 提交清单）。<strong>SciRisk-Bench 之所以胜出</strong>：在 LLM safety benchmark 已有的"<em>领域覆盖</em>" 与"<em>广义安全类别</em>" 两条主线之外，它<strong>首次把"<em>风险维度</em>"作为一级组织轴</strong>，以 (学科 × 子学科 × 风险维度) 三维方阵进行细粒度诊断——能直接告诉你"<em>哪个学科里哪种类型的风险驱动了不安全行为</em>"。与今日方向 #1 Xcientist"<em>research integrity audit</em>" 形成"<em>研究行为可问责</em> + <em>研究风险可分类</em>"双轴对偶；与今日方向 #2 SRP"<em>反思格式同形性 + MedSafetyWorld 4 类样本</em>" 形成"<em>构造层 + 评测层</em>"完整对接。三大核心反共识发现：(1) <em>science-specialized 模型反而更危险</em>（领域 fluency 增加"<em>答应能力</em>" 但未增加"<em>风险鉴别</em>"）；(2) <em>最危险维度并非显式恶意请求</em>（safety omission / knowledge cutoff drift 这种"<em>隐式失误</em>" ASR 反而最高）；(3) <em>学科内异质性显著</em>（同为工程，E-1 电气/电子 ASR 远高于 E-5 软件/系统）。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SciRisk-Bench: A Risk-Dimension-Aware Benchmark for AI4Science Safety</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SciRisk-Bench：面向 AI4Science 安全的风险维度感知基准</span></div>
+      <div class="meta-item"><label>共一作者</label><span>Linghao Feng、Yinqian Sun（equal contribution）</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Dongqi Liang / Sicheng Shen / Chenfei Yan / Yuxuan Peng / Yilin Zhao / Haibo Tong / Kai Li / FeiFei Zhao（通讯）/ Yi Zeng（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>中国科学院自动化所类脑认知智能实验室；国科大未来技术 / 人工智能 / 人文学院；中关村学院；北京安全 AI 与超级对齐重点实验室；人大高瓴人工智能学院；北京人工智能安全与治理研究院（Beijing-AISI）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-17（v1，UTC 11:20）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI; cs.CY</span></div>
+      <div class="meta-item"><label>规模</label><span>7 学科 × 31 子学科 × 10 风险维度 / <strong>350 样例</strong></span></div>
+      <div class="meta-item"><label>标注</label><span>14 名数据收集者 / 200 元报酬 / 三级来源优先（法规 → 已有数据集改写 → LLM 生成）</span></div>
+      <div class="meta-item"><label>评估范式</label><span>LLM-as-a-judge · 自由文本回答 · 二值（安全/不安全）· 主指标 ASR</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">arxiv.org/abs/2606.18936</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.18936" target="_blank" rel="noopener">arxiv.org/pdf/2606.18936</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.18936v1" target="_blank" rel="noopener">arxiv.org/html/2606.18936v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.18936" target="_blank" rel="noopener">10.48550/arXiv.2606.18936</a></div>
+      <div class="meta-item"><label>通讯邮箱</label><span>fenglinghao2022@ia.ac.cn / yi.zeng@ruc.edu.cn</span></div>
+      <div class="meta-item"><label>许可与代码</label><span>论文未公开 license / GitHub / HuggingFace 链接（评估材料须受限分发）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 AI4Science 安全评测的<strong>"<em>风险维度</em>"</strong>从隐含的次级标签升级为<strong>与"<em>学科</em>" 平行的一级组织轴</strong>——构建 7 学科 × 31 子学科 × <em>10 风险维度</em> × 350 样例的方阵，让评测能<em>同时回答</em>"<em>哪个学科最危险</em>" 与"<em>哪类风险驱动了不安全行为</em>" 两个问题；并在统一基准上首次实证：<strong>science-specialized 模型在大多数风险维度上反而 ASR 更高</strong>，最弱维度 Knowledge cutoff drift 74.2%、最强 Privacy leakage 12.2%；最危险学科 Engineering 57.0%、最安全 Biology ~18.8%；学科内子学科异质性显著（E-1 电气/电子 远高于 E-5 软件/系统）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>大语言模型（LLM）正越来越多地嵌入到 AI for Science（AI4Science）工作流中，从科研问答、文献分析到实验室规划与自主科学发现。这种进展带来对安全基准的迫切需求——基准不仅要评估科研能力，还要评估模型是否能识别并避免高风险科学情境中的风险。现有 AI4Science 安全数据集涵盖了若干学科与任务格式，但<em>底层风险维度仍然欠规范</em>。我们提出 <strong>SciRisk-Bench</strong>，一个从两个互补视角评估 AI4Science 安全的基准：<em>显式风险维度</em> 与<em>科学学科</em>。SciRisk-Bench 覆盖 7 个学科、31 个子学科与 10 个风险维度。在实验部分我们针对主流通用 LLM 与科学专用 LLM，跨风险维度、学科和子学科进行评测，使我们能够细粒度诊断<em>科学模型在哪里仍然不安全</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（10 风险维度 / 31 子学科 / ASR 表 / 三大反共识）</div>
+
+    <p><strong>立论：AI4Science 安全评测必须把"<em>风险维度</em>" 与"<em>学科</em>" 同时作为一级轴。</strong>论文回顾既有 benchmark 谱系：科学能力（SciBench / ScienceQA / GPQA / SciEval / SciKnowEval）→ 领域专用安全（ChemSafetyBench / MedSafetyBench / LabSafetyBench）→ 跨域科学安全（SciSafeEval / WMDP / SOSBench / SafeScientist）→ 通用安全（TruthfulQA / HaluEval / HarmBench / SafetyBench）。共同问题：<em>风险维度</em> 要么<em>欠规范</em>，要么仅作为次级标签。SciRisk-Bench 提出：把 risk-dimension awareness <em>提升到一级</em>，与 discipline 维度<em>正交交叉</em>——这才能"<em>看清不安全行为是从哪个风险类别里冒出来的</em>"。这种姿态升级与今日方向 #1 Xcientist"<em>9 维 audit</em>"（科学问责）和今日方向 #2 SRP"<em>10 类 unsafe 标签</em>"（safety reflection 类别化）共振。</p>
+
+    <p><strong>系统设计一：10 风险维度（Table 1）</strong>——按论文内 ASR 高→低顺序复述：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>#</th><th>风险维度</th><th>含义（精炼）</th><th>样例数</th><th>平均 ASR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Knowledge cutoff drift</strong></td><td>因法规 / 测量 / 分类 / 共识改变而过时的不安全论断</td><td>27</td><td><strong>74.2%</strong>（最弱）</td></tr>
+        <tr><td>2</td><td><strong>Safety omission</strong></td><td>提供技术合理建议但遗漏关键安全约束或警告</td><td>25</td><td><strong>53.5%</strong></td></tr>
+        <tr><td>3</td><td>Laboratory safety</td><td>试剂/设备/流程/容器/应急/危害处理缺失或错误</td><td>26</td><td>较高</td></tr>
+        <tr><td>4</td><td>Hallucinations & misconceptions</td><td>错误或无依据科学论断、误导解释、超证据自信外推</td><td>118</td><td>—</td></tr>
+        <tr><td>5</td><td>Dual-use</td><td>既可有益又可有害（合成/病原体/危险物理系统）</td><td>53</td><td>—</td></tr>
+        <tr><td>6</td><td>Fringe amplification</td><td>用科学语言夸大思辨/伪科学/证据不足论断</td><td>38</td><td>—</td></tr>
+        <tr><td>7</td><td>Regulatory blind spot</td><td>未识别相关法律 / 合规 / 标准限制</td><td>27</td><td>—</td></tr>
+        <tr><td>8</td><td>Authority inflation</td><td>把不确定 / 模型生成输出当作权威指引</td><td>17</td><td>—</td></tr>
+        <tr><td>9</td><td>Privacy leakage</td><td>披露 / 推断敏感个人 / 地理 / 生物医学 / 生态信息</td><td>11</td><td><strong>12.2%</strong>（最强）</td></tr>
+        <tr><td>10</td><td>Geopolitical sensitivity</td><td>可能加剧政治 / 领土 / 资源 / 安全争端的科学-地理信息</td><td>8</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>系统设计二：7 学科 × 31 子学科覆盖</strong>。Astronomy 4（A-1 ~ A-4 含空间探索 / 观测 / 恒星 / 行星/宇宙学）；Biology 5（B-1 ~ B-5 生物信息合成生物 / 分子发育 / 生态进化 / 病原毒理药 / 解剖生理神经）；Chemistry 4（C-1 ~ C-4 分析 / 无机配位 / 有机合成 / 生化）；Geography 5（G-1 ~ G-5 城市经济 / 人文政治 / 气候气象 / 物理地形 / 制图 GIS）；Engineering 5（E-1 ~ E-5 电气电子 / 结构土木 / 机械制造 / 化学过程 / 软件系统）；Mathematics 3（M-1 ~ M-3 纯数学 / 统计概率 / 应用数值）；Physics 5（P-1 ~ P-5 电磁光学 / 量子力学 / 核粒子 / 热力学统计 / 经典力学）。子学科合计 31 ✅；样例 350 ✅。</p>
+
+    <p><strong>核心实证一：学科级 ASR（Figure 5）</strong>——Engineering <strong>57.0%</strong>（最高）/ Chemistry ~50% / Astronomy ~50% / Physics 中等 / Geography 中等 / Mathematics 较低 / Biology <strong>~18.8%</strong>（最低）。三大反直觉子学科级发现（Figure 6）：<em>E-1 电气/电子工程</em> 子学科 ASR 最高；<em>E-5 软件与系统工程</em>显著低于其他工程子学科；<em>C-1 分析化学</em> 在化学中最高；<em>A-1 / A-2 空间探索/观测天文</em> 在天文中最高；<em>G-1 城市经济地理</em> 远高于 <em>G-5 制图 GIS</em>；<em>P-1 / P-2 电磁光学/量子</em> 在物理中最高，<em>P-5 经典力学</em> 最低——揭示<em>学科内异质性远大于学科间差异</em>。</p>
+
+    <p><strong>核心实证二：science-specialized vs mainstream base 模型对比（Figure 4 / Figure 7）</strong>。论文文本未列具体模型名（细节在 Figure 2 热图与 Table 2 / Figure 4 / 7），但定性结论清晰：mainstream base 模型主要不安全维度为 knowledge cutoff drift / safety omission / laboratory safety；<strong>science-specialized 模型在上述维度依然高，并且 dual-use / authority inflation / hallucination / fringe amplification 也升高</strong>，风险轮廓更"<em>宽且均匀</em>"。最大差距学科：数学、物理、化学、生物（science-specialized 显著更差）；唯一例外：Astronomy（base 与 specialized 相当或 base 更高）。<strong>反共识结论</strong>：<em>科学专精化 ≠ 更安全</em>——领域 fluency 增加"<em>答应能力</em>"但未增加"<em>风险鉴别</em>"。这条结论与 5-13 #2 SKILL.md 系列里"<em>skill-fluency 与 skill-safety 解耦</em>" 形成跨场景同源警示。</p>
+
+    <p><strong>核心实证三：最弱类别并非显式恶意请求</strong>。Safety omission（53.5%）/ Knowledge cutoff drift（74.2%）/ Laboratory safety（高）这三类<em>最危险</em> 的维度，本质都是"<em>隐式失误</em>"——不安全行为隐藏在正常的科学协助之中。这与今日方向 #2 SRP 在 MedSafetyWorld 上的发现"<em>不安全行为可由安全数据泛化</em>" 完全同源——两者都说明：<em>safety 评测和 alignment 不能仅以"<em>显式恶意</em>"为靶</em>，必须覆盖"<em>看似良性但隐式不安全</em>"的全谱系。</p>
+
+    <p><strong>方法学姿态：把 safety benchmark 从"<em>总分</em>"推进到"<em>双轴诊断器</em>"。</strong>SciRisk-Bench 的核心方法学贡献是<em>提升 risk dimension 为一级轴</em>——这条路径的下一步自然就是<strong>三轴扩展</strong>（学科 × 子学科 × 风险维度 × 时间快照），把 6-15 #3 WorkBench Revisited"<em>纵向重测</em>" + 6-17 #1 SEAGym"<em>5 视图</em>" + 本论文"<em>风险维度方阵</em>" 合成"<em>科学问责立体评测面</em>"。Limitation 三项：仅文本评估（未覆盖多模态显微图像 / 地理栅格 / 分子结构 / 实验视频）；风险定义为<em>快照</em>（未来需动态更新）；未与领域治理标准更强集成。三项均预示后续 v2 / v3 自然演进路径。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选关键 12 条，附链接）</div>
+    <div class="ref-item">[Wang 2023] Wang et al. — <em>SciBench: Evaluating College-Level Scientific Problem-Solving Abilities</em><br>
+    <a href="https://arxiv.org/abs/2307.10635" target="_blank" rel="noopener">arxiv.org/abs/2307.10635</a></div>
+    <div class="ref-item">[Lu 2022] Lu et al. — <em>ScienceQA: Multimodal Science Question Answering</em><br>
+    <a href="https://arxiv.org/abs/2209.09513" target="_blank" rel="noopener">arxiv.org/abs/2209.09513</a></div>
+    <div class="ref-item">[Rein 2023] Rein et al. — <em>GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark</em><br>
+    <a href="https://arxiv.org/abs/2311.12022" target="_blank" rel="noopener">arxiv.org/abs/2311.12022</a></div>
+    <div class="ref-item">[Sun 2024] Sun et al. — <em>SciEval: Multi-Level Scientific Evaluation</em><br>
+    <a href="https://arxiv.org/abs/2308.13149" target="_blank" rel="noopener">arxiv.org/abs/2308.13149</a></div>
+    <div class="ref-item">[Feng 2024] Feng et al. — <em>SciKnowEval: Multi-Level Scientific Knowledge</em><br>
+    <a href="https://arxiv.org/abs/2406.09098" target="_blank" rel="noopener">arxiv.org/abs/2406.09098</a></div>
+    <div class="ref-item">[Zhao 2024] Zhao et al. — <em>ChemSafetyBench</em> · 化学安全<br>
+    <a href="https://arxiv.org/abs/2411.16736" target="_blank" rel="noopener">arxiv.org/abs/2411.16736</a></div>
+    <div class="ref-item">[Han 2024] Han et al. — <em>MedSafetyBench</em> · 医学安全<br>
+    <a href="https://arxiv.org/abs/2403.03744" target="_blank" rel="noopener">arxiv.org/abs/2403.03744</a></div>
+    <div class="ref-item">[Zhou 2024] Zhou et al. — <em>LabSafetyBench</em> · 实验室安全<br>
+    <a href="https://arxiv.org/abs/2410.14182" target="_blank" rel="noopener">arxiv.org/abs/2410.14182</a></div>
+    <div class="ref-item">[Li 2024] Li et al. — <em>SciSafeEval: Cross-modal/Discipline Science Safety Alignment</em><br>
+    <a href="https://arxiv.org/abs/2410.03769" target="_blank" rel="noopener">arxiv.org/abs/2410.03769</a></div>
+    <div class="ref-item">[Li 2024 WMDP] Li et al. — <em>WMDP: Weapons of Mass Destruction Proxy Knowledge</em><br>
+    <a href="https://arxiv.org/abs/2403.03218" target="_blank" rel="noopener">arxiv.org/abs/2403.03218</a></div>
+    <div class="ref-item">[Jiang 2025] Jiang et al. — <em>SOSBench: Regulatory-Based Science Knowledge Safety</em><br>
+    <a href="https://arxiv.org/abs/2502.13191" target="_blank" rel="noopener">arxiv.org/abs/2502.13191</a></div>
+    <div class="ref-item">[Zhu 2025] Zhu et al. — <em>SafeScientist: Risk-Aware Scientific Discovery Agent</em><br>
+    <a href="https://arxiv.org/abs/2505.23559" target="_blank" rel="noopener">arxiv.org/abs/2505.23559</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>规模</strong>：7 学科 × 31 子学科 × <em>10 风险维度</em> × 350 样例（Mathematics 58 / Chemistry 50 / Biology 50 / Astronomy 50 / Physics 50 / Geography 47 / Engineering 45）。</li>
+      <li><strong>风险维度样例分布</strong>：Hallucinations 118 / Dual-use 53 / Fringe amplification 38 / Knowledge cutoff drift 27 / Regulatory blind spot 27 / Lab safety 26 / Safety omission 25 / Authority inflation 17 / Privacy leakage 11 / Geopolitical sensitivity 8。</li>
+      <li><strong>风险维度 ASR 极值</strong>：Knowledge cutoff drift <em>74.2%</em>（最弱）→ Safety omission <em>53.5%</em>（次弱）→ Privacy leakage <em>12.2%</em>（最强）。</li>
+      <li><strong>学科 ASR</strong>：Engineering <em>57.0%</em>（最高）/ Biology <em>~18.8%</em>（最低）。</li>
+      <li><strong>子学科异质性</strong>：E-1 电气/电子最危险，E-5 软件/系统最安全；C-1 分析化学化学内最高；A-1 / A-2 天文内最高；G-1 远高于 G-5；P-1 / P-2 物理内最高，P-5 最低。</li>
+      <li><strong>science-specialized vs mainstream</strong>：specialized 在 dual-use / authority inflation / hallucination / fringe amplification 升高；最大差距学科 Math / Phys / Chem / Bio；唯一反例 Astronomy。</li>
+      <li><strong>评估范式</strong>：LLM-as-a-judge · 自由文本 · 二值（安全/不安全）· 主指标 ASR · 三粒度（风险维度级 / 学科级 / 子学科级）。</li>
+      <li><strong>数据来源三级优先</strong>：法规 / 行业标准等规范性文件 → 已有 AI4Science 安全数据集改写（不改语义意图与风险标签）→ LLM 生成（仅前两源覆盖不足时使用）。</li>
+      <li><strong>标注</strong>：14 名收集者 / 200 元 / 人 · 字段（goal / discipline / sub-discipline / risk dimension / 来源链接保留）。</li>
+      <li><strong>核心反共识 1</strong>：science-specialized ≠ safer（领域 fluency 增加"<em>答应能力</em>" 但未增加"<em>风险鉴别</em>"）。</li>
+      <li><strong>核心反共识 2</strong>：最危险类别<em>并非</em>显式恶意请求，而是 safety omission / knowledge cutoff drift / laboratory safety 这种"<em>隐式失误</em>"。</li>
+      <li><strong>核心反共识 3</strong>：学科内异质性 &gt; 学科间差异（E-1 / E-5 同为工程，ASR 差距巨大）。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SciRisk-Bench 的"<em>风险维度作为一级轴</em>" 与今日方向 #1 <a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">Xcientist</a>"<em>9 维 audit + Claim Drift 三类</em>" 形成"<em>风险类型化 + 失效类型化</em>"双轴对偶——前者把<em>科研结果的潜在危害</em> 类型化（10 维），后者把<em>科研过程的可问责失效</em> 类型化（语义/实验/机制 3 类）。统一启发：未来 research harness 应同时具备 <em>10 risk-dimension audit</em>（生成的 idea / experiment / claim 是否触发 dual-use / safety omission / knowledge cutoff drift 等任一维度）与 <em>3 类 Claim Drift 检测</em>。对你 KV-cache 毕设的启发是：cache 系统的"<em>风险维度</em>"也应类型化（如：缓存污染 / 侧信道泄露 / 一致性失效 / 性能 misreport / safety-relevant data eviction）——这与 6-17 #1 SEAGym 5 视图正交，可形成"<em>5 视图 × N 风险维度</em>"立体诊断面。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>SciRisk-Bench 揭示的"<em>science-specialized 模型反而更危险</em>" 与"<em>最危险类别是 safety omission / knowledge cutoff drift 等隐式失误</em>"两条结论，对 agent skills safety 有直接警示：<strong>(1) skill-specific fine-tuning 不是 safety 的银弹</strong>——agent 越擅长某 skill，越容易"<em>顺手就做</em>"而忽略 safety；这与今日方向 #2 SRP 主张的"<em>反思必须穿过整个生命周期</em>" 完全同源。<strong>(2) skill safety 评测不能只测显式恶意请求</strong>——必须包含隐式失误维度（agent 调用 tool 时遗漏前置安全检查 / 调用过期 API 给出过时合规建议 / 把不确定输出当作权威建议给用户等）。<strong>(3) skill safety 评测必须区分 skill 内的子能力</strong>——SciRisk-Bench 的"<em>子学科异质性 &gt; 学科间差异</em>" 在 agent 上对应"<em>同一 skill 不同子操作的安全性差距巨大</em>"（如同样是 web-browsing skill，<em>表单填写</em> vs <em>下载文件</em> 的 safety 差异可能远大于 web-browsing 与 coding 之间的差异）。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击毕设）</div>
+        <p>SciRisk-Bench 是 2026 H1 后期 safety benchmark 设计的<strong>方法学样板</strong>：(a) <em>把次级标签升级为一级轴</em>（风险维度从隐含 → 显式平行学科）；(b) <em>正交多维方阵设计</em>（学科 × 子学科 × 风险维度，350 样例就能覆盖 7×31×10=2170 元胞中的关键格点）；(c) <em>三粒度报告</em>（风险维度级 / 学科级 / 子学科级）；(d) <em>跨模型族对比</em>（mainstream vs science-specialized）；(e) <em>三级数据来源优先</em>（法规 → 已有数据集改写 → LLM 生成）。这套方法学的"<em>下一步</em>" 已经清晰：(1) <strong>多模态扩展</strong>（论文明示 limitation）—— 把 risk-dimension benchmark 拓到显微图像 / 地理栅格 / 分子结构 / 实验视频；(2) <strong>纵向化</strong>—— 与 6-15 #3 WorkBench Revisited 同步重测，看模型升级是否在<em>不同风险维度上同向收敛</em>；(3) <strong>动态更新</strong>—— 与法规更新挂钩，做<em>knowledge-cutoff-aware</em> benchmark refresh。SciRisk-Bench 的<em>风险维度 × 学科</em>方阵设计可直接用作你 safety-benchmark 毕设方向的<strong>评测协议模板</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Xcientist (6-18 #1)</strong> · 研究 harness + 9 维 audit + Claim Drift 三类 · 与 SciRisk-Bench 形成"<em>过程问责 + 结果风险</em>" 双轴<br>
+      <a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">arxiv.org/abs/2606.18874</a></li>
+      <li><strong>SRP (6-18 #1)</strong> · 预训练阶段定期反思 + MedSafetyWorld 4 类样本 · 与 SciRisk-Bench 形成"<em>构造层 + 评测层</em>" 完整对接<br>
+      <a href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">arxiv.org/abs/2606.19168</a></li>
+      <li><strong>SciAgentArena (6-14 #1 benchmark)</strong> · 33 作者跨学科真实科研评测 · SciRisk-Bench 风险维度可作为其失败模式分类标签<br>
+      <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">arxiv.org/abs/2606.12736</a></li>
+      <li><strong>WorkBench Revisited (6-15 #1 benchmark)</strong> · 纵向重测 21 模型 · SciRisk-Bench 的下一步是纵向化扩展<br>
+      <a href="https://arxiv.org/abs/2606.13715" target="_blank" rel="noopener">arxiv.org/abs/2606.13715</a></li>
+      <li><strong>SafetyBench (Zhang 2024)</strong> · 通用安全 benchmark · SciRisk-Bench 与之的关键差异是"<em>风险维度作为一级组织轴</em>"<br>
+      <a href="https://arxiv.org/abs/2309.07045" target="_blank" rel="noopener">arxiv.org/abs/2309.07045</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.18936" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.18936v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.18936" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.6rem;">注：论文文本未公开 GitHub / HuggingFace / 项目主页链接（论文 Ethics 声明明示评估材料须受限分发）。具体模型清单、每模型 × 风险维度 ASR 数值表、判官 LLM 型号等细节须查阅原始 PDF（Figure 2 / Figure 4 / Figure 7）。</p>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-18 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.18936 + arxiv.org/html/2606.18936v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">arxiv.org/abs/2606.18936</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

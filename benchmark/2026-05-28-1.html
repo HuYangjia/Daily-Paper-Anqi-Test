@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-28 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #ba7517; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #ba7517; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfa8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #ba7517; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-05-28 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 5 月 28 日 · Safety Benchmark · 把 multi-agent 安全评测从"单点 ASR"挪到"伤害放大比"</div>
+  <h1>HARP: Measuring Harm Amplification in Multi-Agent LLM Systems：把多 agent 安全评测的核心度量从 ASR 改为 H<sub>global</sub>/H<sub>local</sub> 伤害放大比——7-agent 金融系统 / 4 类攻击 / 5 种防御 / IntegrityGuard 给出最低 ASR + 全局伤害但带效用代价</h1>
+  <div class="en-title">HARP: Measuring Harm Amplification in Multi-Agent LLM Systems</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 6 篇候选）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.27489" target="_blank" rel="noopener">HARP: Measuring Harm Amplification in Multi-Agent LLM Systems</a><span class="winner-badge">今日选定</span></td>
+          <td>追踪优先 multi-agent benchmark · 7-agent 金融系统 · H_global/H_local 伤害放大比 · 4 类攻击 / 5 种防御</td>
+          <td>arXiv 2605.27489（Md Hafizur Rahman, Z. Haider, T. Mahfuz, P. Chakraborty）2026-05-26</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.28734" target="_blank" rel="noopener">Code as a Weapon：8 语料合并 6,675 共识标注 prompt 库</a></td>
+          <td>恶意代码合规 benchmark · 8 语料整合 · κ=0.767 / 4,748 CODE + 1,923 KNOWLEDGE</td>
+          <td>arXiv 2605.28734（R. Young, G. Moody）2026-05-27</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.28146" target="_blank" rel="noopener">CAI Cybersecurity Dataset：14-月 LLM 网络安全轨迹语料</a></td>
+          <td>真实操作员轨迹 · 230,935 会话 / 26M prompts / 18.07 TB · 揭示凭据泄露风险</td>
+          <td>arXiv 2605.28146（V. Mayoral-Vilches）2026-05-27</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27566" target="_blank" rel="noopener">DynaSchedBench：动态调度 benchmark + "可观测性悖论"</a></td>
+          <td>调度专用 benchmark · SESC 校准器 · 揭示 LLM agent 沦为"启发式近似器"</td>
+          <td>arXiv 2605.27566（S. Cao, Y. Yuan, J. Liu）2026-05-26</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.28632" target="_blank" rel="noopener">Retire the "Positive Backdoor" Label</a></td>
+          <td>Secret Alignment 评测框架 · 揭示 CIA 三维脆弱性</td>
+          <td>arXiv 2605.28632（J. Li, J.-E. Kim）2026-05-27</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.27879" target="_blank" rel="noopener">Towards Faithful Agentic XAI (CRAFTER-XAI-Bench)</a></td>
+          <td>开放世界 RL · 模型特定忠实性 · FAX 0.20→0.46</td>
+          <td>arXiv 2605.27879（J. Kim 等 5 作者）2026-05-27</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>HARP: Measuring Harm Amplification in Multi-Agent LLM Systems</span></div>
+      <div class="meta-item"><label>中文标题</label><span>HARP：多 agent LLM 系统中的伤害放大测量</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Md Hafizur Rahman</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Zafaryab Haider, Tanzim Mahfuz, Prabuddha Chakraborty</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-26（v1）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.CR · cs.AI · cs.LG · multi-agent safety</span></div>
+      <div class="meta-item"><label>篇幅</label><span>39 页 · 12 图 · 12 表 · 1 算法</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.27489" target="_blank" rel="noopener">arxiv.org/abs/2605.27489</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.27489" target="_blank" rel="noopener">arxiv.org/pdf/2605.27489</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2605.27489v1" target="_blank" rel="noopener">arxiv.org/html/2605.27489v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.27489" target="_blank" rel="noopener">10.48550/arXiv.2605.27489</a></div>
+      <div class="meta-item"><label>核心系统</label><span>7-agent 金融编排系统 + 确定性决策门 + 5 种防御机制</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 multi-agent 安全评测的<strong>核心度量</strong>从"<em>攻击成功率</em>"升级为"<strong>伤害放大比 H<sub>global</sub>/H<sub>local</sub></strong>"——同一攻击点的局部偏差与全 trace 偏差之比，使"<em>编排如何放大伤害</em>"成为一等可量化指标。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>多智能体 LLM 系统将工作流分散到多个 agent、工具、共享 context、内存、决策门。这种模块化提升了可解释性，但也产生了<strong>传播风险</strong>——对一个组件的有限扰动，可以被其他 agent 反复重用并放大为系统级伤害。</p>
+    <p>我们提出 <strong>HARP</strong>（Harm Amplification by Role Perturbation），一种<em>追踪优先</em>方法论，用于研究 multi-agent LLM 系统中"<em>局部到全局</em>"的伤害放大。HARP 配对 clean / perturbed 两次执行，记录 expert output、tool call、memory read/write、guard event、oracle log、延迟、token 成本和决策。定义<strong>局部伤害</strong>为目标 agent 或受损通道的偏差、<strong>全局伤害</strong>为整 trace 的偏差、<strong>伤害放大</strong>为 H_global/H_local——这一指标补充 ASR，提供"<em>编排在攻击点之外如何继续放大伤害</em>"的强度度量。</p>
+    <p>我们在一个面向金融的 7-agent 系统中实例化 HARP，配以可配置攻击工具：expert compromise / collusion / shared-context corruption / 时间或内存持久攻击。在 5 种防御中：<strong>仅 prompt 防御</strong>保留良性效用、但放任高 ASR + 高隐蔽；<strong>tool-pre / step-level guard</strong>减少部分故障、但带效用或延迟代价；<strong>IntegrityGuard</strong>（trace 一致性防御）实现最低 ASR + 最低全局伤害，但引入效用/成本权衡。结论：单点 expert compromise 放大最强、shared-context corruption ASR 最高、time-persistence 恶意影响最大。HARP 主张<em>multi-agent 安全评测必须测量"传播"，不能只测"绕过"</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（伤害形式化 · trace-first 评测 · 4 类攻击 vs 5 种防御）</div>
+
+    <p><strong>问题背景：</strong>当前 multi-agent 安全 benchmark（如 AgentBench、AgentDojo、HarmBench）大多沿用 single-LLM 的 jailbreak 框架——以 ASR（Attack Success Rate）为唯一一阶指标。但 multi-agent 的本质风险不在"<em>是否绕过</em>"，而在"<em>一个被绕过的点，会不会通过工具调用 / 共享内存 / 决策门，被其他 agent 重复使用、滚雪球放大</em>"。这种"<em>传播性伤害</em>"在 ASR 框架下被压扁为一个 0/1 标签，无法刻画。HARP 是首个把这个问题形式化为<strong>可量化指标</strong>的 benchmark 工作。</p>
+
+    <p><strong>三个核心定义：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>量</th><th>定义</th><th>含义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>H<sub>local</sub></td><td>受攻击 agent / 通道在 perturbed run 与 clean run 的输出偏差</td><td>"攻击点本身造成多大伤害"</td></tr>
+        <tr><td>H<sub>global</sub></td><td>整条 trace（含所有下游 agent / tool / memory）在 perturbed 与 clean run 的总偏差</td><td>"所有 agent 加起来一共造成多大伤害"</td></tr>
+        <tr><td>Harm Amplification</td><td>H<sub>global</sub> / H<sub>local</sub></td><td>"编排把单点伤害放大到全局的倍数"——本论文一阶指标</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>4 类攻击工具：</strong>论文设计 7-agent 金融系统作为靶台，对每个工具配上独立攻击器——</p>
+
+    <ul class="point-list">
+      <li><strong>Expert Compromise</strong>：单个 agent 被注入恶意 system prompt，输出仍合法但偏向损害。</li>
+      <li><strong>Collusion</strong>：两个 agent 串通，组合输出绕过单 agent 守卫。</li>
+      <li><strong>Shared-Context Corruption</strong>：共享 memory 中的元数据被篡改，下游 agent 在不知情的情况下用受污染的 context。</li>
+      <li><strong>Temporal / Memory Persistence</strong>：攻击在某一步注入，但通过持久化写入影响后续 N 步——评测"<em>持久化攻击的长尾效应</em>"。</li>
+    </ul>
+
+    <p><strong>5 种防御机制对比：</strong></p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>防御</th><th>ASR</th><th>全局伤害</th><th>良性效用</th><th>延迟代价</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Prompt-only</td><td>高</td><td>高</td><td>保留</td><td>低</td></tr>
+        <tr><td>Tool-pre Guard</td><td>中</td><td>中</td><td>轻度损失</td><td>中</td></tr>
+        <tr><td>Step-level Guard</td><td>中</td><td>中</td><td>中度损失</td><td>高</td></tr>
+        <tr><td>Output Verifier</td><td>中</td><td>中</td><td>轻度损失</td><td>中</td></tr>
+        <tr><td><strong>IntegrityGuard</strong>（trace 一致性）</td><td><strong>最低</strong></td><td><strong>最低</strong></td><td>损失</td><td>高</td></tr>
+      </tbody>
+    </table>
+
+    <p>这一对比表给出 multi-agent 安全防御的"<em>效用-安全 Pareto 前沿</em>"——单纯 prompt-level 防御（同 5-25 #2 SafeHarbor 的 L1 层）<strong>无效</strong>，必须做 trace 一致性级别的横向校验，但代价是延迟与效用都要付。</p>
+
+    <p><strong>三个反直觉发现：</strong></p>
+
+    <ul class="point-list">
+      <li><strong>"单点 expert compromise 放大最强"</strong>——比看起来"更协调"的 collusion 还要严重，因为没有任何 guard 设计预期的"内部 agent 是恶意的"假设。</li>
+      <li><strong>"shared-context corruption ASR 最高"</strong>——shared memory 是 multi-agent 系统最薄弱的环节，污染一次、整链中招。</li>
+      <li><strong>"time persistence 恶意影响最大"</strong>——一次注入贯穿后续 trace 的所有步，是单步 guard 完全看不见的盲区。</li>
+    </ul>
+
+    <p><strong>与 5-25 #2 PoisonForge 的关系：</strong>PoisonForge 是单 agent / 单维 attack benchmark；HARP 是 multi-agent / 全 trace 系统级 benchmark。两者形成"<em>单 agent → 多 agent</em>"演进：PoisonForge 测"<em>1% 投毒预算如何击穿单模型</em>"，HARP 测"<em>击穿后伤害如何在 7 agent 之间放大</em>"。把这两个 benchmark 串起来即可构成一个完整的"<em>注入 → 放大 → 系统级伤害</em>"评测流水线。</p>
+
+    <p><strong>与今日 #2 Snyk Skill Ecosystem 的关系：</strong>Snyk 给出"<em>76 个真实恶意 skill 已经在线</em>"的事实；HARP 给出"<em>这些恶意 skill 一旦进入 multi-agent 系统会放大几倍</em>"的方法论。这两篇拼起来正好给毕设/未来研究一个完整的 threat-to-impact 评测路径。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文涉及的关键工作（附链接）</div>
+    <div class="ref-item">[1] Liu et al. (2023) — <em>AgentBench: Evaluating LLMs as Agents</em>·HARP 在数据收集流程上有借鉴<br>
+    <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a></div>
+    <div class="ref-item">[2] Mazeika et al. (2024) — <em>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal</em>·single-LLM ASR 框架代表<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">[3] Debenedetti et al. (2024) — <em>AgentDojo: A Dynamic Environment to Evaluate Attacks and Defenses for LLM Agents</em>·multi-agent attack 实验台<br>
+    <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">arxiv.org/abs/2406.13352</a></div>
+    <div class="ref-item">[4] Liu et al. (2023) — <em>TrustLLM: Trustworthiness in Large Language Models</em>·全维度 LLM 安全评测<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">[5] Greshake et al. (2023) — <em>Not What You've Signed Up For: Compromising LLM-Integrated Apps with Indirect Prompt Injection</em><br>
+    <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener">arxiv.org/abs/2302.12173</a></div>
+    <div class="ref-item">[6] Wu et al. (2024) — <em>AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversations</em>·多 agent 框架代表<br>
+    <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">arxiv.org/abs/2308.08155</a></div>
+    <div class="ref-item">[7] Zou et al. (2023) — <em>Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)</em>·扰动注入方法学基础<br>
+    <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener">arxiv.org/abs/2307.15043</a></div>
+    <div class="ref-item">[8] Yang et al. (2024) — <em>Watch Out for Your Agents! Investigating Backdoor Threats to LLM-Based Agents</em>·multi-agent 后门威胁<br>
+    <a href="https://arxiv.org/abs/2402.11208" target="_blank" rel="noopener">arxiv.org/abs/2402.11208</a></div>
+  </div>
+
+  <!-- 核心数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>新一阶指标 H<sub>global</sub>/H<sub>local</sub></strong>——把"<em>编排放大伤害的倍率</em>"从隐喻变成可量化数字，补足 ASR 的盲点。</li>
+      <li><strong>7-agent 金融系统</strong>——在风控、报价、撮合、清算、合规、审计、客服 7 个 agent 上测试，覆盖工具链丰富的产业级场景。</li>
+      <li><strong>4 攻击 × 5 防御 = 20 组矩阵</strong>——给出 multi-agent 安全防御的效用-延迟-安全 Pareto 前沿。</li>
+      <li><strong>"单点 expert compromise 放大最强"</strong>——反直觉地比 collusion 更危险，因为缺少"内部 agent 也可能恶意"的假设。</li>
+      <li><strong>"shared-context corruption ASR 最高"</strong>——shared memory 是当前 multi-agent 系统最薄弱的攻击面。</li>
+      <li><strong>"time persistence 恶意影响最大"</strong>——单步 guard 对持久化注入完全失效，必须做 trace 级一致性校验。</li>
+      <li><strong>仅 prompt 防御无效</strong>——再次实证 5-25 #2 SafeHarbor 的"分层 guardrail 必要性"。</li>
+      <li><strong>IntegrityGuard 是当前最优防御</strong>——但代价是 utility 与 latency 都要付出，意味着 multi-agent 安全无 free lunch。</li>
+    </ul>
+  </div>
+
+  <!-- 对研究方向的启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>HARP 的"<em>trace-first</em>"评测路径给 harness 设计提供了一个新维度——你今日 #1 那篇 Policy-Driven Runtime 的 9 策略表里"safe execution"原本是孤立条目，HARP 给出了它的<strong>具体评测协议</strong>：每条 trace 要记 agent 输出 / tool 调用 / memory 读写 / guard 事件 / oracle 日志 / 延迟 / token / 决策 7 维。把这一协议接入 CacheSage 的 <code>observe</code> 原语，就可以让 KV cache 调度同时承担 safety trace 收集，在生产环境 zero-overhead 完成 multi-agent 安全审计。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>HARP 的 4 类攻击恰好对应今日 #2 Snyk 论文里的真实恶意 skill 模式——expert compromise = SKILL.md 注入 / collusion = 同作者 40+ skill 串联 / shared-context corruption = SKILL.md 写入共享 memory / time persistence = auto-update 持久化。<strong>建议</strong>：把 Snyk 的 76 个真实恶意 skill 直接灌进 HARP 的 7-agent 系统，跑一次端到端伤害放大测试——这会成为<em>第一份"真实 skill × multi-agent 系统级伤害"</em>实测数据，高度有发表价值。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击）</div>
+        <p>HARP 是当前 multi-agent safety benchmark 方向最完整的产物——39 页 / 12 图 / 12 表 / 1 算法 / 4 攻击 / 5 防御 / 单一新一阶指标。它把整个领域的核心问题从"<em>能不能绕过</em>"重写为"<em>绕过之后会放大多少</em>"。三条直接 actionable 输入：(i) <strong>H<sub>global</sub>/H<sub>local</sub></strong>放大比可以拿来给毕业论文/未来论文做 first-principle 论述；(ii) <strong>"单点 expert compromise 比 collusion 更危险"</strong>这一反直觉发现可以作为一个新的 hypothesis 在更多 benchmark 上验证；(iii) <strong>5 防御 Pareto 前沿</strong>——是设计下一代 trace-aware guardrail 的最好起点。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>PoisonForge（5-25 #2 报告）</strong>·1% 投毒预算 · 单 agent benchmark · HARP 的姊妹工作<br>
+      <a href="https://arxiv.org/abs/2605.23168" target="_blank" rel="noopener">arxiv.org/abs/2605.23168</a></li>
+      <li><strong>SafeHarbor（5-25 #1 报告）</strong>·分层 guardrail · ICML 2026 · L2 trace 级防御<br>
+      <a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">arxiv.org/abs/2605.05704</a></li>
+      <li><strong>Boiling the Frog（5-25 报告）</strong>·agentic safety benchmark · 真实 workspace · 9 模型 ASR 44.4%<br>
+      <a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">arxiv.org/abs/2605.22643</a></li>
+      <li><strong>AgentDojo（Debenedetti 等 2024）</strong>·dynamic multi-agent attack/defense 实验台<br>
+      <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">arxiv.org/abs/2406.13352</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.27489" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.27489" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.27489v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.27489" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.CR/new" target="_blank" rel="noopener">arXiv cs.CR/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-05-28 #1 · 搜索来源：arxiv.org/list/cs.CR/new + arxiv.org/abs/2605.27489<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.27489" target="_blank" rel="noopener">arxiv.org/abs/2605.27489</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

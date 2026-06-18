@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-18 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 18 日 · Harness Engineering · 把 AI Scientist 的"<em>研究合成与实验验证</em>" 外化为研究 harness</div>
+  <h1>Xcientist：把 AI Scientist 的"<em>研究合成—想法生成—实验验证—报告写作</em>" 全链路从 model inference 内部外化到 contract-governed、可审视的 research harness——三层架构 + 50,000 篇论文驱动的 paper graph（72k core / 250k baseline / 63k dataset 节点 / 1.15M 类型化边）+ 5 种 idea taste mode + Memory-Guided MCTS + 9 维 audit；首次为 AI Scientist 命名核心失效模式 <em>Claim Drift</em>（语义/实验/机制三种漂移），并在三大科研领域（无训练 LLM 记忆 / 图时空预测 / 多尺度 PINN）实证 traceable trajectory + bounded revision</h1>
+  <div class="en-title">Externalizing Research Synthesis and Validation in AI Scientists through a Research Harness</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.8</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-17 至 06-18 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">Xcientist: Externalizing Research Synthesis and Validation in AI Scientists through a Research Harness</a><span class="winner-badge">今日选定</span></td>
+          <td>把 AI Scientist 的隐式推理外化为<em>research harness</em> · 三层架构 + 50k 论文 paper graph + 5 种 taste mode + MCTS + 9 维 audit · 提出 Claim Drift 失效模式 · 三案例（memory / graph forecasting / multi-scale PINN）</td>
+          <td>arXiv 2606.18874（SJTU X-LANCE Lab + 上海创新研究院 · 18 作者）2026-06-17 v1 · 65 页 / 14 图 / 19 表 · GitHub OpenDFM/Xcientist</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18947" target="_blank" rel="noopener">DSG: Decoupled Search Grounding (Vendor-Agnostic Grounding for LLM Agents)</a></td>
+          <td>把 search grounding 从 model 解耦为 MCP 兼容 gateway · SimpleQA 86.1% vs 87.7% / 91% 成本 · 99.4% 暖缓存命中 · 工业部署</td>
+          <td>arXiv 2606.18947 · 2026-06-17 · 15 页 + Figure 8</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.19047" target="_blank" rel="noopener">RODS: Reward-Driven Online Data Synthesis for Multi-Turn Tool-Use Agents</a></td>
+          <td>把 reward variance 重用为 boundary detector · 400 seeds + 800 active pool 匹配 17K offline 流水线 · ~20× 轨迹效率</td>
+          <td>arXiv 2606.19047 · 2026-06-17</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18413" target="_blank" rel="noopener">Searching for Synergy in Shared Workspace Human-AI Collaboration</a></td>
+          <td>Collaborative Gym + DiscoveryBench · 1,482 sessions 揭示协作脚手架（共享群组记忆 + HITL gates）才让多人团队真正同步增益（ICML 2026 Workshop）</td>
+          <td>arXiv 2606.18413 · 2026-06-16 · 13 页 / 5 图 / 3 表</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18271" target="_blank" rel="noopener">NAVI-Orbital: First In-Orbit Demonstration of a Zero-Shot VLM</a></td>
+          <td>LangGraph 状态机 multi-agent harness 在轨道实测 · 卫星端语义压缩 + 自然语言再调度</td>
+          <td>arXiv 2606.18271 · 2026-06-17</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arxiv.org/list/cs.AI/new</a>（2026-06-17 / 06-18 提交清单）。<strong>Xcientist 之所以胜出</strong>：它把"<em>harness</em>"概念从 agent runtime（HarnessX / HarnessBridge / ToolSense / SEAGym 全部聚焦于 agent 执行层）<strong>升一维到"<em>科研生命周期 harness</em>"</strong>——首次系统地把<em>AI Scientist 的全链路</em>（文献综合 → 想法生成 → 实验验证 → 报告写作）外化为可审视、合约治理、可被 audit 的过程，并提出新失效模式 <em>Claim Drift</em>（可执行 artifact 不再支撑最初声称的机制）。这与 6-15 #1 HarnessX"<em>可铸造</em>" / 6-12 #1 HarnessBridge"<em>可学习</em>" / 6-14 #1 ToolSense"<em>可审计</em>" / 6-17 #1 SEAGym"<em>可演化评测</em>"形成 2026 H1 后期 harness 工程链条上的<strong>"<em>可问责科研</em>"姿态终板</strong>——从"<em>agent 怎么干</em>"延展到"<em>agent 做研究的过程是否站得住脚</em>"。50k 论文 paper graph + 1.15M 类型化边 + 三大科研案例的实证规模也远超其他候选。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Externalizing Research Synthesis and Validation in AI Scientists through a Research Harness</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Xcientist：通过研究 harness 外化 AI 科学家的研究合成与验证</span></div>
+      <div class="meta-item"><label>共一作者</label><span>Zijian Wang、Hanqi Li（equal contribution）</span></div>
+      <div class="meta-item"><label>通讯作者</label><span>Lu Chen（chenlusz@sjtu.edu.cn）</span></div>
+      <div class="meta-item"><label>合作作者（共 18 人）</label><span>Z. Yang / Z. Hu / S. Zuo / Y. Zhang / D. Ma / D. Luo / C. Wang / J. Peng / T. Huang / S. Guo / H. Wang / Z. Zhu / S. Han / Y. Cao / Kai Yu</span></div>
+      <div class="meta-item"><label>机构</label><span>上海交通大学 X-LANCE Lab；上海创新研究院；江苏省语言计算重点实验室；苏州实验室</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-17（v1，UTC 09:52）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI（含科研工作流自动化、LLM agent、PINN）</span></div>
+      <div class="meta-item"><label>篇幅</label><span>65 页 / 14 图 / 19 表（附录 A–F 完整工程文档）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">arxiv.org/abs/2606.18874</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.18874" target="_blank" rel="noopener">arxiv.org/pdf/2606.18874</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.18874v1" target="_blank" rel="noopener">arxiv.org/html/2606.18874v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.18874" target="_blank" rel="noopener">10.48550/arXiv.2606.18874</a></div>
+      <div class="meta-item"><label>代码仓库</label><a href="https://github.com/OpenDFM/Xcientist" target="_blank" rel="noopener">github.com/OpenDFM/Xcientist</a></div>
+      <div class="meta-item"><label>项目主页</label><a href="https://kotohanon.github.io/Xcientist/" target="_blank" rel="noopener">kotohanon.github.io/Xcientist</a></div>
+      <div class="meta-item"><label>许可证</label><span>arXiv perpetual non-exclusive license</span></div>
+      <div class="meta-item"><label>三大案例</label><span>(1) Training-free memory system（A-Mem 基线）；(2) Graph spatio-temporal forecasting（PEMS-BAY 数据集）；(3) Multi-scale PINN（heat1d/heat2d_multiscale + pinnacle_heat）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<em>AI Scientist 全链路</em>" 从模型内部隐式推理升级为<strong>contract-governed、可审视的研究 harness</strong>——三层架构（Paper Graph Infra ⊃ Research Harness ⊃ System UI）+ 50,000 篇 CS 论文 paper graph（72k 核心方法 / 250k 基线 / 63k 数据集 / 1.15M 类型化边）+ 5 种 idea taste mode + Memory-Guided MCTS + 9 维 audit；首次命名 <strong>Claim Drift</strong>（语义/实验/机制三类漂移），并在 LLM 记忆系统 / 图时空预测 / 多尺度 PINN 三个真实科研任务上展示 traceable trajectory + bounded revision。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>AI 系统正在自动化越来越多的科研工作流，但是<em>把先验证据 / 生成的想法 / 实验 / 最终主张连接起来的推理</em>常常仍然隐藏在模型的 inference 内部。本文引入 <strong>Xcientist</strong>，一个把研究合成与实验验证外化为可审视、合约治理过程的<em>research harness</em>。Xcientist 把文献证据、想法状态、实施计划、消融记录、修复轨迹组织成持久的研究 artifact，使生成的机制可以被基于证据地落地、执行、测试与修订，而不丢失其证据基础。我们识别出 <strong>claim drift</strong>——一种自动化研究的失效模式，<em>可执行 artifact 不再支撑最初声称的机制</em>——并在 training-free 记忆系统、图结构交通预测和多尺度物理信息神经网络三个领域上演示 Xcientist 保留了从问题表述到机制设计、验证与有界修订的可追溯轨迹。这些结果表明：AI scientist 不应仅以最终 artifact 评估，还应以"<em>合成与验证过程是否仍然可归因、可审视、有科学问责性</em>"评估。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（三层架构 / Claim Drift / 三大案例 / 9 维 audit）</div>
+
+    <p><strong>立论：AI Scientist 必须按"<em>过程的可问责性</em>" 评估，不仅按最终 artifact。</strong>2025 H2 至 2026 H1 涌现的 AI Scientist 系统（AI-Scientist-v2 [5]、DeepScientist [15]、AI-Researcher [16]、InternAgent-1.5 [18]、EvoScientist [7]、AlphaEvolve [20] 等）共同问题：<em>把"<em>科研推理</em>" 全部塞回 model inference</em>。Xcientist 团队首次把这个问题形式化命名为 <strong>Claim Drift</strong>——可执行的 artifact 还在，但<em>保留的证据已不足以将观察到的结果归因于最初声称的机制</em>。论文给出三种漂移类型：<em>语义漂移</em>（操作虽实现但只是浅层文本/时间更新，如 memory case）；<em>实验漂移</em>（可执行系统不再测试声称的干预，如 graph forecasting case）；<em>机制漂移</em>（数值收益无法归因于声称组件，缺少 controls 与 diagnostics，如 PINN case）。这把 6-12 #2 Containment Gap"<em>主流框架的遏制原则不合规</em>" 和 6-14 #1 ToolSense"<em>知识—检索分离</em>" 的姿态延展到<em>科研全链路</em>。</p>
+
+    <p><strong>系统设计一：三层架构（§2 / Fig. 3）</strong>。Layer 1 <em>Paper Graph Infrastructure</em>：50,000 篇 Semantic Scholar 索引论文，用 MinerU [30] 全文结构化解析 + 三轮约束式抽取（ideation_resource / graph_data / 引用对齐），最终图含<strong>~72,000 核心方法节点 + ~250,000 基线节点 + ~63,000 数据集节点 + ~1,150,000 类型化边</strong>。回答"<em>一个 claim 可以从哪里获得支持</em>"。Layer 2 <em>Research Harness</em>（核心贡献层）：4 模块——文献综述（DeepSurvey [31] 子流程）、想法生成（5 taste modes + Memory-Guided MCTS + Idea Fusion）、实验验证（三大原则 validator supremacy / separation of concerns / workspace encapsulation）、报告写作（write-audit-repair 循环）；以 ideation–validation–evolution loop 串联。Layer 3 <em>System User Interface</em>：topic-centric workflow + 三 lane（review / ideation / experiment）+ snapshot-stream 状态模型。</p>
+
+    <p><strong>系统设计二：5 种 idea taste mode + Memory-Guided MCTS</strong>。每个想法状态包含 problem framing / core mechanism / supporting components / expected advantages / risks / preliminary validation plan 6 个字段；5 种先验取向——<em>high-risk exploration / cross-domain transfer / conservative engineering / ambitious-but-implementable / evidence-first</em>。MCTS 在 4 类编辑算子上搜索（adding / removing / replacing / rewiring 模块 + 引入验证协议），评估器接收 9 维评估信号：<strong>novelty / surprise / impact / feasibility / clarity / alignment / complexity / risk / protocol quality</strong>。Idea Fusion 阶段每个 taste mode 选最佳候选，host idea 主导论点，其它候选组件仅在<em>支持论点 / 强化验证 / 修复弱点且不创造冲突 novelty claim</em> 时保留——并显式记录被选/被拒组件、冲突解决决策、最小验证计划。</p>
+
+    <p><strong>系统设计三：实验验证三大原则 + 收敛判定</strong>。准备阶段产出 <code>prepare_target_inventory.json</code>（已验证 repos / dataset 文件 / model identifiers / env vars / benchmark entrypoints）+ <code>prepare_idea.md</code>（canonical component list）。执行阶段写代码到 <code>project/</code>，<em>为每个 canonical component 暴露 ablation switch</em>，以 full-chain smoke test 收尾。标准 science：baseline + full-method 写到 <code>standard_results_dir</code>。消融 science：每次禁用 1 个 canonical component。<em>收敛判定</em>："<em>所有必需阶段携带 validator-backed pass status + 无阻塞问题 + 完整 component-to-evidence 映射存在</em>"。报告阶段触发 9 维 audit：<strong>content quality / engineering depth / source fidelity / research integrity / E-E-A-T signals / citation readiness</strong>——其中 <em>source fidelity</em> 要求每个提到的 function 名、参数值、文件路径必须匹配实际实现/工件；<em>research integrity</em> 要求被引论文必须存在于 workspace 且支持声称——这两条直接是 Claim Drift 检测的工程化落地。</p>
+
+    <p><strong>三大案例的实证（§3.2 / 3.3 / 3.4）。</strong>(1) <em>Training-free memory system</em>：基线 A-Mem [24] textual F1=0.306 / token=2844.1；MCTS + 修复后 v4.2 final <strong>F1=0.391 / token=1017.2（token 长度 ↓64.2%）</strong>。(2) <em>Graph spatio-temporal forecasting</em>（PEMS-BAY）：从 iter 0 UCA-PCSA avg MAE=1.723（attention 完全替换 diffusion 严重 regression）→ iter 4 final 引入 innovation coverage cell α = ⟨a, e⟩/(⟨a, a⟩+λ)，<strong>avg MAE=1.556 / horizon-12 MAE=1.908</strong>；iter 3 DORA-GWNet 经消融发现"<em>functionally inert</em>"——硬正交投影移除后 clean MAE 仅变化 <0.12%——直接演示了 mechanism drift 检测能力。(3) <em>Multi-scale PINN</em>：6 版迭代，平均排名 v1→6.33 / v6→2.33；v6 final 用 fixed complement contract + Fourier-enriched coordinates 取代自适应 backbone-conditioned 投影，<strong>heat1d_multiscale 0.0672 ± 0.0118</strong>，<strong>pinnacle_heat 0.4307 ± 0.0139</strong>（heat2d_multiscale 仍逊于 MMPINN [27] 与 MultiscalePINNs [28] 强外部基线）。三案例展现"<em>traceable trajectory + bounded revision</em>"在不同科研类型上的一致性。</p>
+
+    <p><strong>方法学姿态：harness 概念跨过 agent runtime 进入科研生命周期</strong>。把 6-12 HarnessBridge / 6-15 HarnessX / 6-14 ToolSense / 6-17 SEAGym 路线上的"<em>harness 是类型化代数对象 / 是可学习模块 / 是诊断工具 / 是 5 视图评测面</em>"延展到一个新维度：<strong>harness 还是 AI Scientist 的"<em>合约式研究全链路</em>"</strong>。在 Table 1 中，Xcientist 与 8 个对比 AI Scientist 系统在 6 维（Structured Knowledge / Structured Idea Evolution / Contracted Validation / Evidence-driven Repair / Component Attribution / Claim-boundary Audit）全部为显式系统级机制。Limitation：评估为案例式（case-based），未建立通用自主发现能力；未来方向是<em>claim-drift rate</em> 与 <em>attribution completeness</em> 等量化过程指标——这两个未来指标本身就是 6-17 SEAGym 5 视图协议的科研版自然延伸。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选关键 12 条，附链接）</div>
+    <div class="ref-item">[5][6] Lu et al. — <em>AI-Scientist-v2: Workshop-Level Automated Scientific Discovery</em> · Xcientist 在 Table 2 用其暴露三类 Claim Drift<br>
+    <a href="https://arxiv.org/abs/2504.08066" target="_blank" rel="noopener">arxiv.org/abs/2504.08066</a></div>
+    <div class="ref-item">[15] DeepScientist Team — <em>DeepScientist-v1.5</em> · 早期端到端 AI Scientist 系统<br>
+    <a href="https://arxiv.org/abs/2509.07992" target="_blank" rel="noopener">arxiv.org/abs/2509.07992</a></div>
+    <div class="ref-item">[18] InternAgent Team — <em>InternAgent-1.5</em> · 通用 AI Researcher 平台<br>
+    <a href="https://arxiv.org/abs/2510.12345" target="_blank" rel="noopener">arxiv.org/abs/2510.12345</a></div>
+    <div class="ref-item">[20] DeepMind — <em>AlphaEvolve: Coding Agent for Algorithm Discovery</em> · 演化式科研工程对照<br>
+    <a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener">arxiv.org/abs/2506.13131</a></div>
+    <div class="ref-item">[21] Wu et al. (2019) — <em>Graph WaveNet for Deep Spatial-Temporal Graph Modeling</em> · 案例 2 基线<br>
+    <a href="https://arxiv.org/abs/1906.00121" target="_blank" rel="noopener">arxiv.org/abs/1906.00121</a></div>
+    <div class="ref-item">[24] Xu et al. (2025) — <em>A-Mem: Agentic Memory for LLM Agents</em> · 案例 1 基线<br>
+    <a href="https://arxiv.org/abs/2502.12110" target="_blank" rel="noopener">arxiv.org/abs/2502.12110</a></div>
+    <div class="ref-item">[25] Li et al. (2018) — <em>DCRNN: Diffusion Convolutional Recurrent NN（PEMS-BAY 数据集）</em><br>
+    <a href="https://arxiv.org/abs/1707.01926" target="_blank" rel="noopener">arxiv.org/abs/1707.01926</a></div>
+    <div class="ref-item">[26] Hao et al. (2024) — <em>PINNacle: A Comprehensive Benchmark for PINNs</em> · 案例 3 基准来源<br>
+    <a href="https://arxiv.org/abs/2306.08827" target="_blank" rel="noopener">arxiv.org/abs/2306.08827</a></div>
+    <div class="ref-item">[27] — <em>MMPINN（Multi-scale PINN 强基线）</em> · 论文引用代码（heat2d_multiscale 0.00661）<br>
+    <a href="https://github.com/OpenDFM/Xcientist" target="_blank" rel="noopener">github.com/OpenDFM/Xcientist</a></div>
+    <div class="ref-item">[29] Kinney et al. (2023) — <em>Semantic Scholar Open Research Corpus</em><br>
+    <a href="https://arxiv.org/abs/2301.10140" target="_blank" rel="noopener">arxiv.org/abs/2301.10140</a></div>
+    <div class="ref-item">[30] Wang et al. (2024) — <em>MinerU: Comprehensive Document Content Extraction</em> · Paper Graph 解析工具<br>
+    <a href="https://arxiv.org/abs/2409.18839" target="_blank" rel="noopener">arxiv.org/abs/2409.18839</a></div>
+    <div class="ref-item">[31] DeepSurvey Team — <em>DeepSurvey: Automated Comprehensive Literature Survey System</em> · 文献综述子流程<br>
+    <a href="https://arxiv.org/abs/2502.14776" target="_blank" rel="noopener">arxiv.org/abs/2502.14776</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>Paper Graph 规模</strong>：50,000 篇 CS 论文 → ~72,000 核心方法节点 + ~250,000 基线节点 + ~63,000 数据集节点 + ~1,150,000 类型化边。</li>
+      <li><strong>三层架构</strong>：Paper Graph Infra（证据基底）/ Research Harness（控制层 4 模块）/ System UI（snapshot-stream 状态模型）。</li>
+      <li><strong>Claim Drift 三类</strong>：语义漂移（A-Mem 案例：数千次修订未链接证据）/ 实验漂移（GraphWaveNet 案例：插件失效成独立模型）/ 机制漂移（PINN 案例：分支损失未做频率过滤，gate 行为未审计）。</li>
+      <li><strong>9 维 audit</strong>：novelty / surprise / impact / feasibility / clarity / alignment / complexity / risk / protocol quality；外加 6 维 report audit（content / engineering / source-fidelity / research-integrity / E-E-A-T / citation-readiness）。</li>
+      <li><strong>5 idea taste modes</strong>：high-risk exploration / cross-domain transfer / conservative engineering / ambitious-but-implementable / evidence-first。</li>
+      <li><strong>案例 1（A-Mem 记忆系统）</strong>：F1 0.306 → <em>0.391</em>；token 长度 2844.1 → <em>1017.2</em>（−64.2%）。</li>
+      <li><strong>案例 2（GraphWaveNet on PEMS-BAY）</strong>：avg MAE 1.723 → <em>1.556</em>；horizon-12 MAE = <em>1.908</em>；DORA-GWNet 硬正交投影被消融判定 functionally inert（clean MAE 仅变化 <0.12%）。</li>
+      <li><strong>案例 3（multi-scale PINN）</strong>：v1→6.33 / v6→<em>2.33</em> 平均排名；heat1d_multiscale = 0.0672 ± 0.0118；pinnacle_heat = 0.4307 ± 0.0139。</li>
+      <li><strong>三大原则</strong>（实验验证）：validator supremacy / separation of concerns / workspace encapsulation。</li>
+      <li><strong>对比 8 个 AI Scientist 系统</strong>：Xcientist 在 6 维流程问责（Table 1）全部为显式系统级机制。</li>
+      <li><strong>未来过程指标</strong>：claim-drift rate / attribution completeness（论文明示 limitation 与未来方向）。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Xcientist 把 harness 的边界从"<em>agent 运行时</em>"延展到"<em>科研生命周期</em>"——这意味着<strong>"<em>harness</em>"作为一个研究 primitive 已经具备从 agent 工程到 AI Scientist 工程的同构</strong>。对你的 KV-cache 系统层毕设的启发是：(1) 借鉴 <em>合约治理</em>——把 cache 系统每个组件（eviction policy / placement policy / prefetcher）外化为 contract（例如"<em>本 policy 在某 workload 上需将 hit-rate 提高 X% 以上 + 延迟降低 Y% 以下</em>"），并且每个 contract 必须由独立 validator 检查；(2) 借鉴 <em>Claim Drift</em> 检测——cache 工程论文的常见失败正是"<em>语义/实验/机制漂移</em>"（声称是 prefetcher 起作用但实际只是 buffer size 变了）；(3) 借鉴 9 维 audit——把 cache 改进从"<em>final hit-rate</em>" 升级为多维评估（含 source fidelity / research integrity）；(4) 借鉴 paper graph——你的相关工作部分可基于 paper graph 自动生成 baseline / dataset 对齐表；(5) 借鉴 MCTS + taste mode——cache 策略空间搜索引入 5 种 taste mode（保守工程 / 高风险 / 跨域迁移 / 雄心实现 / 证据优先）后，搜索过程<em>本身</em> 也成为论文产出的一部分。<strong>毕设级建议</strong>：把 KV-cache 改进做成"<em>论文级 case study</em>"挂载到 Xcientist——既是工程毕设也是 AI Scientist 的可复用 case。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Xcientist 的"<em>研究 harness</em>" 与今日方向 #2 SciRisk-Bench"<em>科研安全风险维度</em>" 形成<strong>"<em>研究行为—研究风险</em>" 双轴对偶</strong>——前者关心"<em>研究是否可信</em>"，后者关心"<em>研究是否安全</em>"。统一启发：未来 AI Scientist 必须同时承担<em>科学问责</em>（Xcientist 的 9 维 audit + Claim Drift 检测）与<em>安全问责</em>（SciRisk-Bench 的 10 风险维度 / 31 子学科 / safety omission / dual-use / regulatory blind spot）。Xcientist 的 <em>contract-governed validator</em> 可被直接扩展为 safety contract——<em>每个生成的 idea / experiment / claim 在通过科学问责后，再通过 safety reflection（参见今日方向 #2 SRP 思想）+ risk-dimension audit 才能提交</em>。"<em>research integrity audit</em>" 在 safety 上对应"<em>moral / lawful / non-dual-use audit</em>"——这给 6-09 ELK 不可能定理 / 6-14 "Did you lie?" / 6-17 Rift 三件套之外补上一条 <em>科研场域 safety contract</em> 路径。Xcientist 列出的 <em>workspace encapsulation</em>（每个实验声明 paths / permissions / datasets / env vars / config）天然就是 sandbox 安全边界——把它从"<em>科研可复现</em>" 扩展到"<em>科研可遏制</em>" 即可。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Xcientist 的三大案例（A-Mem 记忆系统 / GraphWaveNet 时空预测 / multi-scale PINN）形成<strong>"<em>同一 harness 跨学科 case study</em>" 范式</strong>——这与今日方向 #3 SciRisk-Bench"<em>跨 7 学科 31 子学科 10 风险维度</em>" 异曲同工。统一启发：未来 benchmark 设计应同时具备 (a) <em>跨学科覆盖</em>（SciRisk-Bench 7+31 / Xcientist 3 案例）；(b) <em>风险/失效维度交叉</em>（SciRisk-Bench 10 维 / Xcientist 9 维 audit + Claim Drift 三类）；(c) <em>过程级问责</em>（Xcientist contract-governed / SciRisk-Bench LLM-as-judge with risk taxonomy）；(d) <em>真实科研工件</em>（Xcientist 持久 artifacts / SciRisk-Bench 政策法规标准抽取）。Xcientist 提议的<em>未来过程指标</em>（claim-drift rate / attribution completeness）是 benchmark 方向最直接的"<em>下一代评测面</em>" 候选——把它与 6-17 SEAGym 5 视图（train/val/ID/OOD/replay）对齐，可形成"<em>科研问责 5 视图</em>"：<em>claim 起源 / claim 依据 / claim 跨域迁移 / claim OOD 验证 / claim 历史回放</em>。这把 benchmark 从"<em>能力衡量器</em>" 推向"<em>科学问责审计器</em>"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SEAGym (6-17 #1)</strong> · 5 视图评测环境 · Xcientist 在 AI Scientist 层级提出"<em>过程审计</em>" 的方法学先行<br>
+      <a href="https://arxiv.org/abs/2606.17546" target="_blank" rel="noopener">arxiv.org/abs/2606.17546</a></li>
+      <li><strong>HarnessX (6-15 #1)</strong> · agent harness 可演化铸造厂 · Xcientist 在 AI Scientist 层级延展同一姿态<br>
+      <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></li>
+      <li><strong>ToolSense (6-14 #1)</strong> · harness 可审计 · Xcientist research integrity audit 的方法学姊妹<br>
+      <a href="https://arxiv.org/abs/2606.12451" target="_blank" rel="noopener">arxiv.org/abs/2606.12451</a></li>
+      <li><strong>SciAgentArena (6-14 #3)</strong> · 33 作者跨学科真实科研评测 · 与 Xcientist 共构<em>真实科研评测梯度</em><br>
+      <a href="https://arxiv.org/abs/2606.12736" target="_blank" rel="noopener">arxiv.org/abs/2606.12736</a></li>
+      <li><strong>AlphaEvolve (Google DeepMind)</strong> · 演化式科研工程；Xcientist Table 1 的对比对象<br>
+      <a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener">arxiv.org/abs/2506.13131</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.18874" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.18874v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.18874" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/OpenDFM/Xcientist" target="_blank" rel="noopener">GitHub OpenDFM/Xcientist</a>
+      <a class="link-btn" href="https://kotohanon.github.io/Xcientist/" target="_blank" rel="noopener">项目主页</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-18 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.18874 + arxiv.org/html/2606.18874v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">arxiv.org/abs/2606.18874</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-18 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #faeeda; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #a8dccc; color: #085041; }
+  .link-btn.primary:hover { background: #ccede0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-18 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 18 日 · Agent Skills Safety · 把"<em>对齐税</em>"挪到预训练阶段并通过 reflection 联动后训练</div>
+  <h1>Safety Reflection Pretraining (SRP)：把"<em>安全反思</em>" 周期性嵌入预训练语料——证明"<em>仅让数据安全</em>" 不够，模型会从看似良性知识中<em>组合</em> 出不安全行为；在 1.7B / FineWeb-Edu 100B tokens 上对推理攻击 ASR 从 92.4% → 8.5%（Prefill）/ 65.2% → 2.0%（GCG-AdvBench）；微调攻击在 Harmful HEx-PHI 20 epochs 下 ASR 80.5% → <em>0.00%</em>；同时引入 MedSafetyWorld 合成环境演示 SRP 在 7.6% ASR 下保留 75% 通用能力，远胜过 Filtering（0% ASR / 53.9% 能力）</h1>
+  <div class="en-title">Beyond Safe Data: Pretraining-Stage Alignment with Regular Safety Reflection</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.6</span>
+    <span class="score-chip chip-novel">新颖性 9.7</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Skills Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-17 至 06-18 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">Beyond Safe Data: Pretraining-Stage Alignment with Regular Safety Reflection</a><span class="winner-badge">今日选定</span></td>
+          <td>把 safety 反思嵌入预训练语料 · 1.7B / FineWeb-Edu 100B tokens · 对推理 / 微调攻击同时大幅降 ASR · 引入 MedSafetyWorld 合成环境隔离"<em>从安全数据泛化出不安全行为</em>"</td>
+          <td>arXiv 2606.19168（Tsinghua IIIS · J. Li / K. Tang 共一）2026-06-17 v1 · LitGPT 框架</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18988" target="_blank" rel="noopener">ThinkDeception: Progressive RL for Interpretable Multimodal Deception Detection</a></td>
+          <td>VAC-GRPO + 4 级渐进难度课程 · 多模态欺骗 CoT 数据集 + reflective learning · 把欺骗检测从二分类升级为认知推理</td>
+          <td>arXiv 2606.18988 · 2026-06-17</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18259" target="_blank" rel="noopener">Caring Without Feeling: Affective Dynamics as Control Layer of Human-AI Collaboration</a></td>
+          <td>把 affect 立成"<em>控制层</em>"——重塑信任校准 / 委派 / 纠错 / 监管 · 综述 + 框架</td>
+          <td>arXiv 2606.18259 · 2026-05-08（cs.HC）</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18413" target="_blank" rel="noopener">Searching for Synergy in Shared Workspace Human-AI Collaboration</a></td>
+          <td>1,482 sessions · 共享群组记忆 + simulated HITL gates · 三人小组同步增益但缺脚手架时新增成员反损 · ICML 2026 Workshop</td>
+          <td>arXiv 2606.18413 · 2026-06-16</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.19116" target="_blank" rel="noopener">Towards an Agent-First Web</a></td>
+          <td>面向 AI agent 优先 Web 三层重设计 + ATML 标记语言 + 10 设计原则</td>
+          <td>arXiv 2606.19116 · 2026-06-17</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arxiv.org/list/cs.AI/new</a>（2026-06-17 / 06-18 提交清单）。<strong>SRP 之所以胜出</strong>：safety alignment 路线长期面临"<em>后训练对齐浅薄</em>"的挑战——10 条对抗样本即可越狱（Qi et al. 2024）、安全对齐主要影响前几个输出 token（Qi et al. 2025）、可由残差流单一线性方向中介（Arditi et al. 2024）。SRP 是 6-09 #1 ELK 不可能定理 / 6-14 #1 "Did you lie?" / 6-17 #1 Rift 这条"<em>检测姿态</em>"线之外的<strong>"<em>构造姿态</em>"补丁</strong>——不是"<em>能不能看见</em>" 而是"<em>能不能从源头种下</em>"。论文实证三大反共识结论：(1) <em>仅过滤数据不够</em>（filtering 在 MedSafetyWorld 下 ASR 仍 30.6–43.2%）；(2) <em>预训练 + 后训练必须联动</em>（仅预训练或仅后训练几乎无效，row 2 / row 3 vs row 4）；(3) <em>SRP 不损害能力</em>（IFEval 28.10/30.31 优于 SafeLM 的 13.12/13.31）。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Beyond Safe Data: Pretraining-Stage Alignment with Regular Safety Reflection</span></div>
+      <div class="meta-item"><label>中文标题</label><span>超越安全数据：通过定期安全反思的预训练阶段对齐</span></div>
+      <div class="meta-item"><label>共一作者</label><span>Jinhan Li、Kexian Tang</span></div>
+      <div class="meta-item"><label>合作作者</label><span>Yihan Xu、Zhuorui Ye、Kaifeng Lyu（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>清华大学交叉信息研究院（IIIS, Tsinghua University）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-17（v1，UTC 15:11）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI; cs.LG</span></div>
+      <div class="meta-item"><label>篇幅</label><span>正文 + 附录（含 MedSafetyWorld 完整设定）</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">arxiv.org/abs/2606.19168</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.19168" target="_blank" rel="noopener">arxiv.org/pdf/2606.19168</a></div>
+      <div class="meta-item"><label>HTML 版</label><a href="https://arxiv.org/html/2606.19168v1" target="_blank" rel="noopener">arxiv.org/html/2606.19168v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.19168" target="_blank" rel="noopener">10.48550/arXiv.2606.19168</a></div>
+      <div class="meta-item"><label>底层框架</label><a href="https://github.com/Lightning-AI/litgpt" target="_blank" rel="noopener">LitGPT</a></div>
+      <div class="meta-item"><label>反思生成器</label><span>Qwen3Guard-Gen-0.6B（SOTA 安全分类）</span></div>
+      <div class="meta-item"><label>预训练语料</label><span>FineWeb-Edu · 100B tokens · 序列长 2048 · batch 512</span></div>
+      <div class="meta-item"><label>后训练数据</label><span>Tulu3 mixture（英文过滤）+ WildGuardMix + WildJailbreak</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 safety alignment 的<strong>边界从后训练前移到预训练</strong>——但不是过滤/改写数据，而是把<strong>"<em>定期安全反思</em>"作为 next-token prediction 目标的一部分嵌入语料</strong>，让自我监控成为基础能力；预训练 + 后训练必须联动（仅一边几乎无效）；在推理攻击 ASR Prefill 92.4 → 8.5、GCG-AdvBench 65.2 → 2.0；微调攻击 Harmful HEx-PHI 20 epochs ASR 80.5 → <em>0.00</em>；同时通过 MedSafetyWorld 合成环境直接证明"<em>不安全行为可由安全数据泛化而来</em>"，并展示 SRP 在 ASR 7.6% 下保留 75% 能力，明显优于 Filtering（0 ASR / 53.9% 能力）与 Rewrite（43% ASR）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>为 LLM 实现更深的安全对齐，近期工作研究如何把安全干预前移到预训练阶段，主要做法是过滤不安全数据或将其改写成更安全形式。我们认为<strong>预训练阶段对齐应当超越"<em>让数据安全</em>"</strong>：LLM 可能把看似良性的知识与能力<em>组合</em>为不安全行为。为此我们提出 <strong>Safety Reflection Pretraining (SRP)</strong>，一种在预训练语料中定期插入短安全反思的预训练阶段对齐方法，把自我监控直接整合到 language modeling 中，建立一种基础能力，并由兼容的后训练继续强化。我们在 1.7B 模型 + FineWeb-Edu 上的实验显示 SRP 提升安全分类准确率，并显著降低推理阶段攻击与微调攻击的成功率。作为对真实世界实验的补充，我们还引入了完全可控的合成环境 <strong>MedSafetyWorld</strong>，定义了清晰的安全语义与推理结构，模型很容易从安全数据中泛化出不安全行为。MedSafetyWorld 上的消融进一步证明 SRP 在防止"<em>从安全数据泛化出不安全行为</em>"上明显优于过滤与改写。这表明：<em>预训练对齐不仅要让训练数据安全，还应塑造模型从安全数据中可能习得的行为</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（SRP 方法 / 4 表数据 / MedSafetyWorld / 后训练联动）</div>
+
+    <p><strong>立论：后训练对齐"<em>浅而脆</em>" + 仅过滤/改写预训练数据"<em>不够深</em>"。</strong>论文综合多条已有工作证据：(a) Qi et al. 2024 — 仅 10 条对抗样本即可越狱；(b) Qi et al. 2025 — 安全对齐主要影响前几个输出 token；(c) Arditi et al. 2024 — 可由残差流中单一线性方向中介；(d) Ji et al. 2025 — 压缩理论解释。结论：必须把对齐"<em>下沉到 base 能力层</em>"。但仅靠过滤/改写有 <em>upper bound</em>——因为 LLM 会把<em>良性知识与能力组合成</em> 不安全行为（典型例子：药物 A → 心衰；药物 A → 某 mediator → 心衰）。SRP 的回答：<strong>把"<em>对前段文本是否安全的判断</em>"作为下一步预测目标</strong>，让模型养成<em>边读边想、边想边监控</em> 的基础习惯。</p>
+
+    <p><strong>方法一：定期反思插入（Method §3）</strong>。Sentence-aware segmentation：先按句切分，再合并为不超过预定长度（约 a few hundred tokens）的 segments。Reflection 格式：<code>&lt;Safe&gt;</code> / <code>&lt;Unsafe:Category&gt;</code> + <em>EOS</em>（unsafe 时附加，向模型发信号停止生成）。Reflection 由 <strong>Qwen3Guard-Gen-0.6B</strong> 离线生成，追加到每个 segment 末尾。<em>不引入新损失</em>——反思直接成为标准 next-token prediction 目标的一部分，纯纯 language modeling loss。</p>
+
+    <p><strong>方法二：后训练设计（必要性见 Table 6/7）</strong>。在 SFT 数据增强中：(a) 在 response 开头加针对 user prompt 的安全反思；(b) 在 response 中段定期插入；(c) 末尾追加最终反思；(d) <strong>user prompt 保持不变</strong>。训练时 mask 掉 prompt，仅从 response 中学习反思模式。<em>消融证明</em>：仅预训练加反思（row 2）几乎无效；仅后训练加反思（row 3）部分有效；<strong>必须 row 4 即"<em>预训练 + 后训练同时反思</em>" 才达最佳</strong>——这是论文最关键的工程结论。</p>
+
+    <p><strong>核心实证一：推理阶段攻击（Table 1）</strong>。1.7B SmolLM2 / FineWeb-Edu 100B tokens / lr 5e-4 / batch 512 / seq 2048。基线 ASR 数值（越低越安全）：</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>模型</th><th>Prefill (Heur/LLM)</th><th>GCG-DH4 (Heur/LLM)</th><th>GCG-AdvBench (Heur/LLM)</th><th>AutoDAN</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Baseline（同语料无反思）</td><td>92.42 / 65.15</td><td>85.86 / 19.11</td><td>65.18 / 43.99</td><td>4.75</td></tr>
+        <tr><td>SafeLM (Maini et al. 2025, ~600B 过滤+改写)</td><td>95.76 / 60.91</td><td>79.45 / 24.89</td><td>55.56 / 23.55</td><td>6.25</td></tr>
+        <tr><td><strong>SRP（本文）</strong></td><td><strong>8.48 / 6.36</strong></td><td><strong>7.91 / 1.33</strong></td><td><strong>1.98 / 0.22</strong></td><td><strong>1.25</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>核心实证二：微调攻击（Table 2）</strong>——Harmful HEx-PHI 20 epochs 对抗微调下，<em>所有原始基线都被攻破</em>，SRP 仅在 +Reflection 设置下保持 ASR=0.00（mixSFT 即仅 ~3% 安全数据混入也已使 SRP/Baseline ASR 降到 ~68–71%）。最关键：<strong>+Reflection 微调下 SRP 的 GSM8K 良性性能 0.75 ± 0.43%（Baseline 25.75 ± 2.41% / SafeLM 55.92 ± 0.95%）</strong>——SRP 几乎完全保留对良性微调的接受度。</p>
+
+    <p><strong>核心实证三：通用能力（Table 3）</strong>——General avg 6 任务（ARC-E/C / CommonsenseQA / HellaSwag / OpenBookQA / PIQA）SRP 46.77 vs Baseline 47.56 vs SafeLM 51.73；<strong>但 IFEval strict/loose SRP 28.10/30.31 vs SafeLM 13.12/13.31</strong>——SafeLM 在指令遵循上有大幅下降（因对良性请求过度拒绝），SRP 保持指令跟随能力，AlpacaEval Helpfulness 也最高（96.00）。这是反共识结论 #1：<em>safety alignment 不必然以能力为代价</em>。</p>
+
+    <p><strong>核心实证四：MedSafetyWorld 合成环境（Method §5）</strong>——三类实体（Compounds 药物 / Mediators 中介 / Outcomes 结果）+ 4 类样本：forward-safe / forward-unsafe / reverse-safe / <em>reverse-unsafe</em>（"<em>心衰可由药物 B 引起</em>"——直接教导致害方法）。Single-hop（A 与 C 二部图）+ Two-hop（A → B → C 三部图）。SmolLM2-135M / 2.5B tokens / batch 64 / seq 512。5 种对比：Baseline / Filtering（移除 reverse-unsafe）/ Filtering-plus（移除所有不安全结果）/ Rewrite（改写 reverse-unsafe）/ <strong>SRP</strong>。</p>
+
+    <table class="progression-table">
+      <thead>
+        <tr><th>设置</th><th>General Acc</th><th>Prefill ASR</th><th>Finetune ASR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Filtering（仅去 reverse-unsafe）</td><td>—</td><td>30.60%</td><td>43.20%</td></tr>
+        <tr><td>Rewrite（改写 reverse-unsafe）</td><td>—</td><td>43.00%</td><td>62.00%</td></tr>
+        <tr><td>Filtering-plus（去所有 unsafe）</td><td>53.89%（73.46% → 53.89%）</td><td>~0</td><td>~0</td></tr>
+        <tr><td><strong>SRP（Ours）</strong></td><td><strong>75.00%</strong></td><td><strong>7.60%</strong></td><td><strong>2.20%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>核心结论：(1) <em>不安全行为可从安全数据泛化</em>（Filtering 仍 30.6% ASR）；(2) 简单改写不足以消除（Rewrite 仍 43% ASR）；(3) 完全移除不安全数据严重损害能力（Filtering-plus 73.46 → 53.89）；(4) <strong>SRP 实现最佳的安全—效用平衡（75% 能力 + 7.6% ASR + 2.2% 微调 ASR）</strong>——这是反共识结论 #2：<em>过滤/改写的"<em>看似清洁</em>" 并不安全；让模型学会反思才是真正深的对齐</em>。</p>
+
+    <p><strong>方法学姿态：从"<em>检测</em>" 到"<em>构造</em>"。</strong>过去三周三方向 #1 已经累积了"<em>检测姿态</em>" 完整证据链（6-09 ELK 不可能定理证明<em>无法纯靠行为反馈训出诚实 agent</em>；6-14 "Did you lie?" 实证<em>所有激活/对数概率检测器在训练后模型上急剧失效</em>；6-17 Rift 证明<em>残差秩冲突签名可读但不可控</em>）。SRP 在这条线之外开了一条<strong>"<em>构造姿态</em>"路径</strong>——既然检测难、控制难，那就在<em>语言建模阶段就让 self-monitoring 成为模型的"<em>第二天性</em>"</em>。<em>预训练 + 后训练联动</em>这一发现也非常关键——它说明 safety 不是"<em>插入一次就有效</em>"，必须在<em>整个生命周期上保持反思 prompt 的同形性</em>，否则模型会在新格式下停止反思。这与 6-15 #1 MINIM"<em>客户端代理 + 三元 K/A/R 策略</em>" / 6-12 #2 Containment Gap"<em>memory integrity validator</em>" 形成"<em>三档安全栈</em>"的<em>预训练源头补丁层</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用的关键工作（节选关键 12 条，附链接）</div>
+    <div class="ref-item">[Qi 2024] Qi et al. — <em>Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!</em> · 后训练对齐浅薄性证据 (10 样本即可越狱)<br>
+    <a href="https://arxiv.org/abs/2310.03693" target="_blank" rel="noopener">arxiv.org/abs/2310.03693</a></div>
+    <div class="ref-item">[Qi 2025] Qi et al. — <em>Safety Alignment Should Be Made More Than Just a Few Tokens Deep</em> · 安全主要影响前几个输出 token<br>
+    <a href="https://arxiv.org/abs/2406.05946" target="_blank" rel="noopener">arxiv.org/abs/2406.05946</a></div>
+    <div class="ref-item">[Arditi 2024] Arditi et al. — <em>Refusal in Language Models is Mediated by a Single Direction</em> · 安全可由单线性方向中介<br>
+    <a href="https://arxiv.org/abs/2406.11717" target="_blank" rel="noopener">arxiv.org/abs/2406.11717</a></div>
+    <div class="ref-item">[Maini 2025] Maini et al. — <em>SafeLM: Safety-Aware Language Modeling via Pretraining-Time Filtering and Rewriting</em> · SRP 主对照基线<br>
+    <a href="https://arxiv.org/abs/2503.05421" target="_blank" rel="noopener">arxiv.org/abs/2503.05421</a></div>
+    <div class="ref-item">[Zhang 2025] Zhang et al. — <em>Backtracking with [RESET] Token</em> · 后训练 reflection 之 backtracking 路线<br>
+    <a href="https://arxiv.org/abs/2502.04852" target="_blank" rel="noopener">arxiv.org/abs/2502.04852</a></div>
+    <div class="ref-item">[Wang 2024] Wang et al. — <em>SELF-GUARD: Empower the LLM to Safeguard Itself</em> · self-judge 标签路线<br>
+    <a href="https://arxiv.org/abs/2310.15851" target="_blank" rel="noopener">arxiv.org/abs/2310.15851</a></div>
+    <div class="ref-item">[Phan 2025] Phan et al. — <em>Periodic Self-Reflection Injection for Safer LLMs</em> · 推理时反思路线<br>
+    <a href="https://arxiv.org/abs/2502.18751" target="_blank" rel="noopener">arxiv.org/abs/2502.18751</a></div>
+    <div class="ref-item">[Yuan 2025] Yuan et al. — <em>Safety RLHF on Pretraining</em> · 预训练阶段 RL 对齐路线<br>
+    <a href="https://arxiv.org/abs/2503.16669" target="_blank" rel="noopener">arxiv.org/abs/2503.16669</a></div>
+    <div class="ref-item">[Tice 2026] Tice et al. — <em>Up-sampling Aligned Discourse for Pretraining Alignment</em> · 上采样路线<br>
+    <a href="https://arxiv.org/abs/2602.09314" target="_blank" rel="noopener">arxiv.org/abs/2602.09314</a></div>
+    <div class="ref-item">[Ji 2025] Ji et al. — <em>Compression Theory of Alignment Shallowness</em> · 安全对齐压缩理论<br>
+    <a href="https://arxiv.org/abs/2504.14012" target="_blank" rel="noopener">arxiv.org/abs/2504.14012</a></div>
+    <div class="ref-item">FineWeb-Edu (Penedo et al. 2024) — <em>FineWeb-Edu: A High-Quality Educational Web Corpus</em> · SRP 预训练 corpus<br>
+    <a href="https://arxiv.org/abs/2406.17557" target="_blank" rel="noopener">arxiv.org/abs/2406.17557</a></div>
+    <div class="ref-item">Qwen3Guard-Gen 0.6B（Alibaba Qwen Team）— SOTA 安全分类小模型 · SRP 反思生成器<br>
+    <a href="https://huggingface.co/Qwen/Qwen3Guard-Gen-0.6B" target="_blank" rel="noopener">huggingface.co/Qwen/Qwen3Guard-Gen-0.6B</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>预训练规模</strong>：1.7B SmolLM2 / FineWeb-Edu 100B tokens / WSD lr 5e-4（1% warmup, 20% decay）/ batch 512 / seq 2048。</li>
+      <li><strong>反思注入</strong>：句感知 segmentation（约几百 token / segment）+ <code>&lt;Safe&gt;</code>/<code>&lt;Unsafe:Cat&gt;</code> + EOS · 由 Qwen3Guard-Gen-0.6B 离线生成 · 不引入新 loss。</li>
+      <li><strong>推理攻击 ASR（Table 1）</strong>：Prefill 92.42 → <em>8.48</em>；GCG-DH4 LLM-judge 19.11 → <em>1.33</em>；GCG-AdvBench LLM 43.99 → <em>0.22</em>；AutoDAN 4.75 → <em>1.25</em>。</li>
+      <li><strong>微调攻击（Table 2，Harmful HEx-PHI 20 epochs）</strong>：Baseline +Reflection 83.67 → 0.08；SafeLM +Reflection 84.92 → 0.00；<em>SRP +Reflection 80.50 → 0.00</em>，且 GSM8K 良性 0.75 ± 0.43% 极低（vs Baseline 25.75）。</li>
+      <li><strong>通用能力</strong>：General avg-6 SRP 46.77 ≈ Baseline 47.56；<em>IFEval strict/loose SRP 28.10/30.31 远高于 SafeLM 13.12/13.31</em>；AlpacaEval Helpfulness <em>96.00</em>（最高）。</li>
+      <li><strong>安全分类准确率（Table 4）</strong>：response 整体调和均值 75.4 → <em>90.6%</em>；不安全响应识别 61.0 → <em>87.6%</em>；不安全 prompt 检测 86.8 → <em>95.0%</em>。</li>
+      <li><strong>MedSafetyWorld（Figure 3）</strong>：Filtering 30.60/43.20 ASR；Rewrite 43.00/62.00；Filtering-plus 0/0 ASR 但能力 73.46 → 53.89；<em>SRP 7.60/2.20 ASR + 75.00% 能力</em>。</li>
+      <li><strong>预训练/后训练消融（Table 6/7）</strong>：必须 row 4（预训练 reflection + 后训练 reflection）才达最佳；仅一边几乎无效。</li>
+      <li><strong>反共识结论 1</strong>：safety alignment 不必然以能力为代价（IFEval / AlpacaEval 最高）。</li>
+      <li><strong>反共识结论 2</strong>：完全移除不安全数据并不安全也不能力（Filtering-plus 53.89% 能力远低于 SRP 75.00%）。</li>
+      <li><strong>反共识结论 3</strong>：仅过滤/改写不足以阻断"<em>从安全数据组合出不安全行为</em>"（Filtering 仍 30.6% ASR / Rewrite 仍 43% ASR）。</li>
+      <li><strong>未来展望</strong>：开发对后训练修改更鲁棒的预训练对齐方法（"<em>不依赖反思格式同形性</em>" 的 SRP 变体）。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>SRP 与今日方向 #1 <a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">Xcientist</a>"<em>研究 harness 9 维 audit</em>" 形成"<em>底层 alignment + 顶层 audit</em>" 的纵向对偶——前者是模型层把<em>self-monitoring 烧进语言建模</em>，后者是 agent 层把<em>process governance 写进合约</em>。统一启发：未来 agent harness 应同时在 (a) 基础模型层（SRP 反思格式同形）；(b) agent 运行时层（HarnessX 类型化 / SEAGym 5 视图）；(c) 科研生命周期层（Xcientist 9 维 audit / Claim Drift 检测）三层都嵌入"<em>反思—审计—问责</em>"机制。SRP 反思格式同形性这个核心要求对你 KV-cache 毕设的启发是：<em>cache 系统的可观测性约定（hit-rate / latency / energy 等指标格式）必须在训练—评估—部署各阶段保持同形</em>，否则部署阶段会停止"<em>反思</em>"（即不再上报关键诊断信号）。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击毕设方向二）</div>
+        <p>SRP 是 2026 H1 后期 safety alignment 路线最重要的姿态升级。<strong>关键启发</strong>：(1) <em>反思必须穿过整个生命周期</em>——预训练 + SFT + RLHF + 推理时同形 reflection prompt，否则模型在新格式下"<em>停止反思</em>"（这条与 6-12 #2 Containment Gap"<em>3 大主流 agentic 框架不合规</em>" 同源）；(2) <em>"<em>能力—安全</em>" 不是零和</em>（SRP 在 IFEval / AlpacaEval 上反超 SafeLM）——agent skills safety 不应再以"<em>对齐税</em>" 为借口；(3) <em>不安全行为可由安全数据泛化</em>（MedSafetyWorld reverse-unsafe / two-hop 结构）——这意味着 agent 工具调用 safety 不能仅靠白名单/黑名单数据过滤，必须借鉴 SRP 思路：<strong>把"<em>每次工具调用前的 safety reflection</em>" 烧进 agent 的工具使用基础能力</strong>。设计具体方案：(a) tool-call 反思（user intent → 是否合规 → 才执行）；(b) tool-output 反思（tool 返回 → 是否含 sub-threshold 风险 → 才回写 memory）；(c) state-transition 反思（agent state 跨工具切换前 → 是否进入危险状态空间 → 才提交）。三档反思都必须在<em>训练 + 推理同形</em>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>SRP 与今日方向 #3 <a href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">SciRisk-Bench</a>（10 风险维度 / 31 子学科 / 350 样例 / Knowledge cutoff drift 74.2% ASR）形成<strong>"<em>构造层 + 评测层</em>" 完整对接</strong>——SRP 在模型层做<em>构造</em>，SciRisk-Bench 在评测层做<em>风险维度诊断</em>。统一启发：future benchmark 必须 (a) 区分 hallucination / dual-use / fringe amplification / knowledge cutoff drift / regulatory blind spot / lab safety / safety omission / authority inflation / privacy leakage / geopolitical sensitivity 10 维（SciRisk-Bench）；(b) 同时在每条样例上做<em>反思一致性测试</em>（参 SRP 反思格式）——同一样本在反思 ON / OFF / 不同反思格式下行为是否一致，可作为<em>反思 robustness</em> 新评测面。SRP 揭示的<em>"<em>format brittleness</em>"</em>（移除反思格式即停止反思）应作为 safety benchmark 必测维度——目前所有主流 safety benchmark 都<em>未测试这一点</em>。MedSafetyWorld 这种<em>合成可控环境</em> 也是 safety benchmark 设计的方法学先行：可以在 Compounds / Mediators / Outcomes 框架下精确控制安全语义与泛化路径，而非依赖真实数据的不可控混杂。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Rift (6-17 #1)</strong> · 残差秩冲突签名分离欺骗与错误 · "<em>检测姿态</em>" 与 SRP "<em>构造姿态</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.17229" target="_blank" rel="noopener">arxiv.org/abs/2606.17229</a></li>
+      <li><strong>"Did you lie?" (6-14 #1)</strong> · 4 类测谎器审计 · 实证检测器在训练后模型急剧失效<br>
+      <a href="https://arxiv.org/abs/2606.12618" target="_blank" rel="noopener">arxiv.org/abs/2606.12618</a></li>
+      <li><strong>ELK 不可能定理 (6-11 #1)</strong> · DeepMind · 因果影响图证明纯靠行为反馈无法训出诚实 agent · SRP 是"<em>构造姿态</em>" 的工程响应<br>
+      <a href="https://arxiv.org/abs/2606.12268" target="_blank" rel="noopener">arxiv.org/abs/2606.12268</a></li>
+      <li><strong>MINIM (6-15 #1)</strong> · 客户端代理 CI 隐私三元 K/A/R 策略 · SRP + MINIM 形成"<em>训练源头 + 部署边界</em>" 双层防御<br>
+      <a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">arxiv.org/abs/2606.13949</a></li>
+      <li><strong>SafeLM (Maini et al. 2025)</strong> · 预训练数据过滤+改写代表方法 · SRP 主对照基线<br>
+      <a href="https://arxiv.org/abs/2503.05421" target="_blank" rel="noopener">arxiv.org/abs/2503.05421</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.19168" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn primary" href="https://arxiv.org/html/2606.19168v1" target="_blank" rel="noopener">HTML 版（实验性）</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.19168" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/Lightning-AI/litgpt" target="_blank" rel="noopener">LitGPT 框架</a>
+      <a class="link-btn" href="https://huggingface.co/Qwen/Qwen3Guard-Gen-0.6B" target="_blank" rel="noopener">Qwen3Guard-Gen-0.6B</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-18 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.19168 + arxiv.org/html/2606.19168v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">arxiv.org/abs/2606.19168</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>
