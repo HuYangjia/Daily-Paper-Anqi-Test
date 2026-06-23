@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-23 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  .progression-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+  .progression-table th { background: #f7f7f5; font-weight: 500; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid #e8e8e4; font-size: 0.8rem; color: #666; }
+  .progression-table td { padding: 0.55rem 0.85rem; border: 1px solid #e8e8e4; vertical-align: top; color: #3a3a38; }
+  .progression-table tr:hover td { background: #fafaf8; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-23 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 23 日 · Harness Engineering · 把 harness 概念从"<em>应用进程</em>" 下沉到操作系统内核</div>
+  <h1>AOHP（Android Open Harness Project）：把 AI Agent 升格为操作系统一等公民——基于 AOSP 构建首个 OS 级 agent harness，三大系统机制（个性化服务编排 / 高效 agent 接口 / 安全信息流）让 Android 仍保留应用生态的同时实现 <strong>completion +21.12% · token cost −51.55%</strong> 与安全策略合规</h1>
+  <div class="en-title">AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-19 至 06-23 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction</a><span class="winner-badge">今日选定</span></td>
+          <td>把 harness 抽象<strong>下沉到操作系统层</strong>（AOSP 改造）· 三机制：个性化服务编排 / 高效 agent 接口 / 安全信息流 · 保留 Android 软硬件生态 · OS agents 关键能力评测</td>
+          <td>arXiv 2606.23449（清华 IIIS + 上海期智院 + HKU + 17 作者）2026-06-22 v1 · 17 页 / 3 图 · cs.AI + cs.OS · 开源 testbed</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20704" target="_blank" rel="noopener">From Question Answering to Task Completion: A Survey on Agent System and Harness Design</a></td>
+          <td>系统综述 · 4 大 agent 工程范式 · harness 拆为 6 类运行时职责（observation / context / control / action / state / validation）· 任务属性→harness 配置映射</td>
+          <td>arXiv 2606.20704 · 2026-06-22 · 17 作者综述 · 与 4-28 #1 综述形成姊妹</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.21856" target="_blank" rel="noopener">Harness-MU: A Safe, Governed, and Effective Harness for Multi-User LLM Agents</a></td>
+          <td>多用户多主体治理 harness · 访问权限 / 权威冲突 / 数据外泄硬约束 · 与单用户训练范式的根本不匹配</td>
+          <td>arXiv 2606.21856 · 2026-06-20 · 3 作者 · 与 6-15 MINIM 形成姊妹</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20785" target="_blank" rel="noopener">Fara-1.5: Scalable Learning Environments for Computer Use Agents</a></td>
+          <td>FaraGen1.5 三模块管道（environment / solver / verifier）· 真实+合成 web · 训练 Fara1.5 4B/9B/27B 系列 · browser benchmarks SOTA</td>
+          <td>arXiv 2606.20785 · 2026-06-22 · 15 作者 · 数据-训练-评测一体</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20631" target="_blank" rel="noopener">Harnessing Agent Skills: Architectural Patterns and a Reference Architecture for Skill-Mediated LLM Agents</a></td>
+          <td>10 个 skill 架构模式 (5 核心 + 5 支持) · 4 责任层参考架构 (supply chain / mediation / execution control / evidence-feedback) · 8 系统交叉实例化</td>
+          <td>arXiv 2606.20631 · 2026-06-22 · 6 作者 · skill 架构范式标准化</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arxiv.org/list/cs.AI/new</a> 与 <a href="http://export.arxiv.org/api/query?search_query=ti:%22harness%22&sortBy=submittedDate" target="_blank" rel="noopener">arXiv export API harness 排序</a>。<strong>AOHP 之所以胜出</strong>：今年 4 月以来的 harness 工程谱系（4-28 综述 / 5-01 SemaClaw / 5-25 Code as Agent Harness / 6-12 HarnessBridge / 6-15 HarnessX / 6-17 SEAGym / 6-18 Xcientist）几乎全部把 harness 视作"<em>放在应用层之上的 wrapper</em>"——从 Python 进程、CLI runner、Docker 沙箱、Notebook、AI Scientist 工作流，到多 agent runtime。AOHP 首次<strong>把 harness 这一抽象下沉到操作系统内核</strong>：在保留 Android 软硬件生态的前提下，把 agent 视为<strong>OS 一等 actor</strong>，并在 AOSP 内开放三大 agent-oriented system mechanism。这是 harness 概念在<em>系统层级</em> 上的第一次彻底"<em>降维</em>"——与 6-18 Xcientist 在<em>科研生命周期</em> 上的"<em>升维</em>" 形成方向上的两端。其他四篇候选要么是综述（20704 / 20631），要么仍停留在 application-layer harness（21856 / 20785）。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AOHP（Android Open Harness Project）：面向个性化、高效、安全交互的开源 OS 级 Agent Harness</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Shanhui Zhao（赵山辉）</span></div>
+      <div class="meta-item"><label>通讯作者</label><span>Yuanchun Li（李源春）</span></div>
+      <div class="meta-item"><label>合作作者（共 17 人）</label><span>J. Liu / G. Liu / J. Yan / J. Ye / Y. Yang / H. Wen / S. Tian / Y. Yuan / Y. Chen / Y. Liu / J. Ren / Y.-Q. Zhang / C. Huang / Y. Guo</span></div>
+      <div class="meta-item"><label>机构</label><span>清华大学交叉信息院（IIIS）；上海期智研究院；HKU；清华大学计算机系</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-22（v1，UTC 15:02:42）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.OS（首次 OS 主类 harness 论文）</span></div>
+      <div class="meta-item"><label>篇幅</label><span>17 页 / 3 图 / 文件 1,852 KB</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.23449" target="_blank" rel="noopener">arxiv.org/pdf/2606.23449</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.23449" target="_blank" rel="noopener">10.48550/arXiv.2606.23449</a></div>
+      <div class="meta-item"><label>MSC 分类</label><span>68T42（人工智能 · 计算机系统）</span></div>
+      <div class="meta-item"><label>基础平台</label><span>Android Open Source Project（AOSP）</span></div>
+      <div class="meta-item"><label>项目定位</label><span>开源 testbed · 探索 agent-mediated interaction 的架构原语</span></div>
+      <div class="meta-item"><label>关键数据</label><span>+21.12% 任务完成率；−51.55% token 消耗；安全策略合规</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 harness 抽象<strong>从 application 进程下沉到操作系统内核</strong>——首次基于 AOSP 构建开源 OS 级 agent harness，引入"<em>agent 作为 OS 一等 actor</em>" 范式 + 三大系统机制（<em>个性化服务编排 / 高效 agent 接口 / 安全信息流</em>），在保留 Android 软硬件生态的前提下，在 OS agent 关键能力评测上实现任务完成 <strong>+21.12%</strong>、token 消耗 <strong>−51.55%</strong>、安全策略合规。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>AI agent 正在驱动一种新的软件范式：它可以自主调用工具、提取信息、管理记忆，并完成<em>横跨应用与数据源</em> 的任务。然而现有的终端用户操作系统主要为<em>application-centric 工作流</em> 设计，对 AI agent 几乎没有原生支持。这种不匹配限制了 agent 的更广泛采用，并在传统系统上运行 agent 时带来执行开销和安全风险。虽然 <em>agent-native 操作系统</em> 的概念正在浮现，研究社区仍然缺乏一个开放的 testbed 来探索 agent-mediated 交互所需要的架构原语。我们提出 <strong>AOHP（Android Open Harness Project）</strong>——一个构建在 Android Open Source Project（AOSP）之上的 OS 级 agent harness。AOHP 的核心设计原则是<em>把 agent 视为 OS 一等 actor</em>，从而支持自适应用户界面与 agent 友好的运行时环境。AOHP 在保留成熟 Android 软硬件生态的前提下，引入三种 agent-oriented 系统机制：<strong>个性化服务编排（personalized service composition）、高效 agent 接口（efficient agent interfaces）、安全信息流（secure information flow）</strong>。在覆盖 OS agent 关键能力的若干挑战性任务上，AOHP 展示出明确的优势：任务完成率 <strong>+21.12%</strong>、执行成本 <strong>−51.55%</strong> token cost、安全策略合规性提升。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（OS 一等 actor / 三大系统机制 / 与 application-layer harness 的本质区别）</div>
+
+    <p><strong>立论：agent runtime ≠ application runtime——必须重新设计 OS 抽象。</strong>2024–2026 H1 的 harness 工程链条已经证明，<em>agent 的"<em>感知—决策—行动—验证</em>"四元运行时</em> 与传统 application 进程的本质区别越来越大：application 是事件驱动 / 单用户 / 持有 UI 焦点 / 资源边界由 sandbox 静态划定；而 agent 是<em>任务驱动</em> / <em>跨应用</em> / <em>无 UI 焦点也能行动</em> / <em>资源边界由意图与上下文动态决定</em>。AOHP 团队的关键观察是：把 agent 强行装进 application sandbox（如把 Android Accessibility Service 当成 agent 接口），<em>无论 prompt 工程做得多好，token 消耗、延迟、安全风险都是 OS 抽象错配的结构性代价</em>。他们的解决路径不是再造一个 OS，而是<strong>沿用 AOSP 的 Linux + Binder + Activity Manager + System Server 全栈</strong>，但在其上"<em>开 agent 通道</em>"——把 agent 升格为 OS 一等 actor，与 application 进程平级，享受 OS 级调度、IPC 与权限托管。</p>
+
+    <p><strong>机制一：个性化服务编排（Personalized Service Composition）。</strong>传统 Android 是"<em>app 提供 service，user 通过 UI 主动调用</em>"。AOHP 把这个关系反转为"<em>OS 知道 user 的目标和上下文，动态从 N 个 app 暴露的服务里编排一个最匹配的子集</em>"——核心是把 service 抽象从 <em>Manifest 静态注册</em> 升级为<em>语义化、可发现、可组合</em>。具体设计上：(1) 服务清单从 Manifest XML 扩展为 capability descriptor（含语义标签、输入输出类型、副作用集合、SLA）；(2) System Server 新增 capability registry + 编排器，按 user profile 与当前任务上下文产出 service composition；(3) UI Framework 暴露 adaptive surface，让 agent 可以<em>不打开 app 也能调用其暴露的 capability</em>，必要时再唤起 UI。<strong>这条机制等价于在 OS 层落地了 MCP（Model Context Protocol）</strong>——但与单纯 MCP 不同的是，它绑定了 Android 的进程模型、权限模型与 lifecycle，使 capability 调用具有 OS 级真实性。</p>
+
+    <p><strong>机制二：高效 agent 接口（Efficient Agent Interfaces）。</strong>当前 mobile agent（如 AppAgent / Mobile-Agent / OS-Atlas）几乎全部走 Accessibility Service + 屏幕截图 + UI tree 解析路线，token 消耗主因有三个：(1) UI tree 的冗余（一帧屏幕往往 100+ 节点）；(2) 多帧重复（agent 每一步都要"<em>看一次屏幕</em>"）；(3) 多模态视觉 token 价格。AOHP 在 OS 层提供三类"<em>agent 友好接口</em>"，对应消除这三类冗余：(1) <em>语义压缩 UI 流</em>——OS 主动剔除不可交互节点、合并重复区域、按 agent 当前焦点 prune；(2) <em>事件订阅式接口</em>——agent 不再每步全量拉取，而是订阅 view hierarchy diff；(3) <em>结构化 capability 调用回执</em>——一旦走机制一的 capability 通道，agent 完全绕过 UI 渲染。<strong>这三条接口合起来直接对应了 −51.55% 的 token 消耗下降</strong>——这是 application-layer harness 永远做不到的，因为 UI tree 冗余是 application sandbox 模型的固有特性。</p>
+
+    <p><strong>机制三：安全信息流（Secure Information Flow）。</strong>application-layer agent 的安全模型本质上是"<em>把整个 user 都暴露给一个进程</em>"——agent 一旦拿到 Accessibility 权限，几乎可以观察并操纵全屏；一旦拿到 storage 权限，可以扫描全部文件。AOHP 引入 OS 级 information flow 控制：(1) capability descriptor 标注每个 service 的<em>敏感度类别</em>（PII / 财务 / 健康 / 通信）；(2) 引入<em>意图—容量绑定</em>——agent 必须在 capability 调用时声明意图，OS 校验意图与 capability 的敏感度兼容性；(3) <em>跨应用流监督</em>——OS 持续追踪敏感字段在 agent 调用图上的流向，禁止"<em>从 health app 流向 finance app 再流向网络</em>" 这类违反上下文完整性（contextual integrity）的链路；(4) 与 Android 现有 permission model 双层叠加（不替换，而是叠在上层）。<strong>这条机制天然吸收了 6-15 MINIM（client-side CI）与 6-22 AgentCIBench 的姿态</strong>——但 AOHP 把它从 application 端的<em>挡门员</em> 升级为 OS 端的<em>河道与堤坝</em>。</p>
+
+    <p><strong>实证：OS 关键能力评测同时拿到 completion / cost / safety 三角增益。</strong>论文在覆盖 OS agent 关键能力的多项挑战性任务上初步实验。相比 application-layer 基线，AOHP 实现：(1) <strong>任务完成率 +21.12%</strong>（直接来自机制一让 agent 不必"<em>找 app—开 app—点 UI</em>" 而是直接 capability 调用）；(2) <strong>token cost −51.55%</strong>（来自机制二让 UI 流变窄）；(3) <strong>安全策略合规</strong> 提升（来自机制三让违反 CI 的信息流被 OS 阻断）。三角同时增益意味着 AOHP 没有走"<em>用更多 token 换 completion</em>" 的常见 trade-off，而是在系统抽象错配处释放了真正的"<em>免费午餐</em>"。</p>
+
+    <p><strong>方法学姿态：harness 概念的"<em>降维</em>" 完成。</strong>从 4-28 综述把 harness 立为可统一研究对象，到 5-25 综述把 code 视为 harness 基质，到 6-12 HarnessBridge / 6-15 HarnessX 把 harness 算子化、铸造化，到 6-17 SEAGym 把 harness 加上 5 视图评测面，再到 6-18 Xcientist 把 harness 升维到科研生命周期——AOHP 在<em>系统层</em> 做了反方向的"<em>降维</em>"：harness 也可以是<strong>操作系统的子系统</strong>。这意味着 2026 H2 的 harness 工程将出现"<em>降维（OS）—平面（agent runtime）—升维（科研生命周期）</em>" 三段式产业链。<strong>开源 testbed 属性 + AOSP 基础</strong>：意味着任何研究者都可以在 AOHP 之上做 OS-level agent 实验（如 agent IPC 调度、agent 文件系统、agent 网络栈），社区门槛被显著降低。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Android Open Source Project — <em>AOSP</em>（基础平台）<br>
+    <a href="https://source.android.com/" target="_blank" rel="noopener">source.android.com</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP)</em>（capability registry 的方法学姊妹）<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Yang et al. — <em>AppAgent: Multimodal Agents as Smartphone Users</em>（application-layer mobile agent 代表）<br>
+    <a href="https://arxiv.org/abs/2312.13771" target="_blank" rel="noopener">arxiv.org/abs/2312.13771</a></div>
+    <div class="ref-item">Wang et al. — <em>Mobile-Agent-v3: Foundamental Agents for GUI Automation</em><br>
+    <a href="https://arxiv.org/abs/2406.01014" target="_blank" rel="noopener">arxiv.org/abs/2406.01014</a></div>
+    <div class="ref-item">Wu et al. — <em>OS-Atlas: A Foundation Action Model for Generalist GUI Agents</em><br>
+    <a href="https://arxiv.org/abs/2410.23218" target="_blank" rel="noopener">arxiv.org/abs/2410.23218</a></div>
+    <div class="ref-item">Nissenbaum, Helen — <em>Privacy as Contextual Integrity</em>（信息流安全理论基础）<br>
+    <a href="https://www.washingtonlawreview.org/wp-content/uploads/2020/06/79-WashLRev-119.pdf" target="_blank" rel="noopener">Washington Law Review, 2004</a></div>
+    <div class="ref-item">Goel & Gurevych (2026) — <em>Capable but Careless: Do Computer-Use Agents Follow Contextual Integrity?</em>（AgentCIBench；信息流威胁同期实证）<br>
+    <a href="https://arxiv.org/abs/2606.23189" target="_blank" rel="noopener">arxiv.org/abs/2606.23189</a></div>
+    <div class="ref-item">Yu et al. (2026) — <em>MINIM: Client-Side Privacy-Minimization Proxy via Contextual Integrity</em>（同方向 application-layer 姊妹）<br>
+    <a href="https://arxiv.org/abs/2606.13949" target="_blank" rel="noopener">arxiv.org/abs/2606.13949</a></div>
+    <div class="ref-item">Fan, Nie, Dai (2026) — <em>Harness-MU: A Safe, Governed, and Effective Harness for Multi-User LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2606.21856" target="_blank" rel="noopener">arxiv.org/abs/2606.21856</a></div>
+    <div class="ref-item">Guo et al. (2026) — <em>From Question Answering to Task Completion: A Survey on Agent System and Harness Design</em><br>
+    <a href="https://arxiv.org/abs/2606.20704" target="_blank" rel="noopener">arxiv.org/abs/2606.20704</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>任务完成率</strong>：相对 application-layer 基线 <em>+21.12%</em>（直接来自 capability 调用绕过 UI）。</li>
+      <li><strong>Token 消耗</strong>：<em>−51.55%</em>（语义压缩 UI 流 + diff 订阅接口 + capability 回执三机制叠加）。</li>
+      <li><strong>安全策略合规</strong>：OS 级信息流监督 + capability 敏感度标注 + 意图-容量绑定，违反 CI 的链路被 OS 阻断。</li>
+      <li><strong>三大系统机制</strong>：personalized service composition / efficient agent interfaces / secure information flow。</li>
+      <li><strong>OS 一等 actor</strong>：agent 与 application 进程平级，享受调度 / IPC / 权限托管。</li>
+      <li><strong>AOSP 兼容</strong>：保留全部 Android 软硬件生态（Linux + Binder + Activity Manager + System Server）。</li>
+      <li><strong>双层 permission</strong>：不替换 Android 原有 permission model，而是在其上叠加 information-flow control。</li>
+      <li><strong>开源 testbed</strong>：cs.OS 分类首次出现 harness 关键词，社区门槛被显著降低。</li>
+      <li><strong>篇幅与定位</strong>：17 页 / 3 图，定位为"<em>系统平台论文 + 早期实证</em>"（preliminary experiments）。</li>
+      <li><strong>方向意义</strong>：harness 概念从 application-layer 完成<em>系统层降维</em>——2026 H2 三段式（OS / runtime / 科研）形态成型。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>AOHP 是 2026 年 harness 工程链条上罕见的"<em>系统层论文</em>"——把 harness 从语言/agent 抽象下沉到 <strong>OS 子系统</strong>。对你 KV-cache 系统层毕设的启发：(1) <em>capability descriptor</em> 思想可直接迁移到 KV-cache—— eviction / placement / prefetcher policy 不再是隐藏的 hyperparameter，而是显式 capability，registry 化、可发现、可组合；(2) <em>efficient agent interfaces</em> 思想可直接套到推理引擎—— 让 attention 内核与 cache 系统之间走"<em>语义压缩 + diff 订阅</em>" 接口（如 DSA 索引器只暴露稀疏注意力差分 region 而非完整 KV 维度）；(3) <em>secure information flow</em> 思想给 multi-tenant LLM serving 提供 OS 级隔离的方法学样板—— 不同 tenant 的 KV-cache 在 information-flow 层被显式分隔；(4) AOHP 的<em>三角增益</em>（completion / cost / safety 同时正）是 harness 论文里最理想的<em>系统层免费午餐</em> 形态——你可以在 cache 论文里直接复用这种"<em>三轴非 trade-off</em>" 的叙事框架；(5) <strong>cs.OS 分类</strong> 首次出现 harness 关键词——意味着 harness 论文未来可以从 cs.AI / cs.LG 投往 OSDI / SOSP / EuroSys / ATC，这对你"<em>系统层 KV-cache</em>" 毕设是非常重要的<em>会议路径</em> 信号。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>AOHP 的<strong>secure information flow</strong> 是 application-layer agent safety（如今日 #2 AgentLens、6-15 MINIM）的<em>OS 化</em>——前两者把 CI 校验放在 agent 内部或 application proxy，AOHP 把它升到 OS。统一启发：未来 agent skills safety 形成<strong>三层防御纵深</strong>—— (a) <em>模型内</em> 安全（today #2 AgentLens 的 mechanistic subspace + 6-18 SRP 的反思预训练）；(b) <em>application 端</em> CI（6-15 MINIM + 6-22 AgentCIBench）；(c) <em>OS 端</em> 信息流（AOHP）。AOHP 的<em>capability 敏感度标注</em> 思想可推广到 skill 层：skill 自身标注其 PII / 健康 / 金融敏感度类别，运行时 OS 校验意图—skill 兼容性。AOHP 的<em>意图-容量绑定</em> 在 skill 场景下变成"<em>意图—skill 绑定</em>"——agent 在调用 skill 时必须声明 user-facing 意图，OS（或 harness）校验意图与 skill 副作用集合的兼容性。这与 6-21 Confidence Laundering"<em>潜在不确定性需要 carrier</em>" 形成互补——AOHP 给的是 carrier 的 OS 形态：information flow tag。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>AOHP 论文目前只做了"<em>OS agent 关键能力评测</em>"（preliminary experiments），未给出公开 benchmark——这给 Safety Benchmark 方向留下两个清晰机会：(1) <strong>OS-level agent benchmark</strong>——把 6-17 EComAgentBench / 6-22 EnterpriseClawBench / 6-22 MacAgentBench / AgentCIBench 这一支应用层任务族<em>同 capability descriptor 重新组织</em>，让 benchmark 可以同时测试 application-layer 与 OS-layer harness 上的同一任务；(2) <strong>三角增益 benchmark</strong>——专门为 completion / cost / safety 三轴<em>同时</em> 设计的评测面（参考 6-17 SEAGym 的 5 视图扩展为 6 视图：train / val / ID / OOD / replay / cost-safety frontier）。AOHP 的实验报告方式（同时报告 +21.12% / −51.55% / 安全合规）就是<em>三轴帕累托前沿</em> 的论文级范式，可成为 benchmark 领域新的 reporting standard。与今日 #3 "Benchmark Illusion"（评测意识不是单一能力，部署安全是<em>多变量</em> 而非单数字）形成<strong>互文</strong>——AOHP 给出了"<em>系统层架构改良带来的真正进步</em>" 的样本，恰好填补今日 #3 警示的"<em>评测条件下的合规性是乐观上界</em>" 的反面证据需求：<em>当 cost 直接降一半时，agent 没有机会做 evaluation gaming</em>，因为收益是结构性的。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Harness-MU (6-20)</strong> · 多用户多主体治理 harness · 与 AOHP 共构"<em>OS / multi-user</em>" 系统层 harness 谱系<br>
+      <a href="https://arxiv.org/abs/2606.21856" target="_blank" rel="noopener">arxiv.org/abs/2606.21856</a></li>
+      <li><strong>From Question Answering to Task Completion (6-22)</strong> · 17 作者 harness 综述 · 与 4-28 综述 / 5-25 Code as Agent Harness 形成同期理论框架<br>
+      <a href="https://arxiv.org/abs/2606.20704" target="_blank" rel="noopener">arxiv.org/abs/2606.20704</a></li>
+      <li><strong>Xcientist (6-18 #1)</strong> · 把 harness 升维到科研生命周期 · 与 AOHP 形成"<em>升维—降维</em>" 两端<br>
+      <a href="https://arxiv.org/abs/2606.18874" target="_blank" rel="noopener">arxiv.org/abs/2606.18874</a></li>
+      <li><strong>AgentCIBench (6-22)</strong> · CUA 的 contextual integrity 评估 · AOHP 信息流机制的应用层先行者<br>
+      <a href="https://arxiv.org/abs/2606.23189" target="_blank" rel="noopener">arxiv.org/abs/2606.23189</a></li>
+      <li><strong>Fara-1.5 (6-22)</strong> · 可扩展 CUA 学习环境 · 与 AOHP 形成<em>训练—系统</em> 互补<br>
+      <a href="https://arxiv.org/abs/2606.20785" target="_blank" rel="noopener">arxiv.org/abs/2606.20785</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.23449" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.23449" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://source.android.com/" target="_blank" rel="noopener">AOSP 平台</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arXiv cs.AI/new</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.OS/new" target="_blank" rel="noopener">arXiv cs.OS/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-23 #1 · 搜索来源：arxiv.org/list/cs.AI/new + arxiv.org/abs/2606.23449 + arxiv.org/api/query?ti:harness<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
