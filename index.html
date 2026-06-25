@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">37 篇报告</span>
+        <span class="count-badge">38 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">36 篇报告</span>
+        <span class="count-badge">37 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">35 篇报告</span>
+        <span class="count-badge">36 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-06-25-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">25</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">Interplay of Harness & Post-Training：把 harness 从"<em>固定工程细节</em>" 升格为<strong>可控训练维度</strong> · 扩展 ALFWorld 同时控制 harness × shift · harness-aware post-training 在 ID/OOD 同时占优 · <strong>极简 harness × 强工具迁移 → 断崖崩塌</strong> · 进入 training-aware 阶段 #1</div>
+          <div class="paper-sub">K. Kim + 5 作者 · POSTECH · arXiv 2606.25447 2026-06-24 · cs.LG + cs.CL · ALFWorld-Shift 双扩展 · 与 OS 降维 / 表征下沉 / 评测升维 共构 4 联拍</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-06-25-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">25</div>
+        </div>
+        <span class="dir-tag tag-safety">Agent Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">SkillSafetyBench：首次把<strong>可复用 skill 自身</strong>立为新型 agent safety 攻击面 · 非用户三位置（guidance / artifact / env file）· <strong>155 × 47 × 6 × 30</strong> 四级分级 · case-specific <em>rule-based verifier</em> 替代 LLM-judge · <em>scaffold-model pairing</em> 决定失败模式 · 与 AgentLens / AOHP / Interplay 共构 4 联拍 #1</div>
+          <div class="paper-sub">C. Jin + 9 作者 · 上海 AI Lab / 北大 / NUS / Rice 等 · arXiv 2605.12015 2026-05-12 v1 / 05-27 v2 · cs.CR 主类 · 1,076 KB · 直击本方向命名核心</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-06-25-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">25</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">Hacker-Fixer Loop：把"<em>奖励黑客</em>"工程化为可加固的一级研究对象 · 5 大 terminal-agent benchmark / <strong>1,968 任务 / 16% (323) hackable</strong> · <em>hacker × fixer × solver</em> 三 agent 闭环 + 跨任务补丁迁移 · KernelBench ASR <strong>62%→0%</strong> · <em>弱 Flash loop 把强 Gemini 3.1 Pro / Claude Opus 4.7 双双从 76%/61% 打到 0%</em> · 释出 <strong>Terminal Wrench</strong>（323 环境 + 3,632 trajectories） #1</div>
+          <div class="paper-sub">Z. Zhong + 5 作者 · CMU 等 · arXiv 2606.08960 2026-06-08 · cs.CR + cs.AI + cs.LG + cs.MA · 与 SkillSafetyBench / Benchmark Illusion / SafetyRepro 共构反思谱系</div>
+        </div>
+        <div class="score-pill">96 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-06-23-1.html">
         <div class="date-badge">

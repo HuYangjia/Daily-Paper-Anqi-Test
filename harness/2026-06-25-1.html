@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-25 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-25 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 25 日 · Harness Engineering · 把 harness 从"<em>固定工程细节</em>" 升格为"<em>post-training 的可控设计维度</em>"</div>
+  <h1>Harness × Post-Training 联动：把 harness 提升为<em>可控训练变量</em> + 任务/工具环境迁移评测——ALFWorld-Shift 实证表明 harness-aware post-training 在 ID 与 OOD 同时占优，而极简 harness 在工具环境强迁移下出现<strong>断崖式性能崩塌</strong></h1>
+  <div class="en-title">The Interplay of Harness Design and Post-Training in LLM Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-19 至 06-24 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">The Interplay of Harness Design and Post-Training in LLM Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>把 harness 立为 <strong>post-training 的可控设计维度</strong> · 扩展 ALFWorld 支持 harness controllability + task/tool 环境迁移 · 实证 harness-aware post-training 在 ID 与 OOD 均占优 · 极简 harness 在强工具迁移下断崖崩溃</td>
+          <td>arXiv 2606.25447（POSTECH · K. Kim 等 6 作者）2026-06-24 v1 · cs.LG + cs.CL · 431 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</a></td>
+          <td>OS 级 policy enforcement engine · NL 策略与系统动作之间的语义桥 · 与 AOHP 互补的 harness 安全层</td>
+          <td>arXiv 2606.25189 · 2026-06-23 · 8 作者 · 与 6-23 AOHP 同期姊妹</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23983" target="_blank" rel="noopener">Maestro Order: A Model-Agnostic Orchestration Harness</a></td>
+          <td>4 结构原语（decompose / ensemble / verify / recurse）+ budget-aware 控制器 · 把不可靠 solver 编排成可靠系统</td>
+          <td>arXiv 2606.23983 · 2026-06-22 · 独著（Hidayet Aksu）</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.22610" target="_blank" rel="noopener">PaperClaw: Harnessing Agents for Autonomous Research and HITL Refinement</a></td>
+          <td>full-cycle 研究 multi-agent harness · HITL refinement 接口 · 与 6-18 Xcientist 同期</td>
+          <td>arXiv 2606.22610 · 2026-06-21 · 4 作者</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.21005" target="_blank" rel="noopener">Building Agent Harnesses for Scientific Curation from Multimodal Sources</a></td>
+          <td>科研多模态 curation harness · long-text + tables + figures 跨证据片段推理</td>
+          <td>arXiv 2606.21005 · 2026-06-19 · 12 作者</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://arxiv.org/list/cs.AI/new" target="_blank" rel="noopener">arxiv.org/list/cs.AI/new</a> 与 <a href="http://export.arxiv.org/api/query?search_query=ti:%22harness%22&sortBy=submittedDate" target="_blank" rel="noopener">arXiv export API harness 排序</a>。<strong>The Interplay 之所以胜出</strong>：6-15 HarnessX 把 harness 立为<em>可演化对象</em>；6-23 AOHP 把 harness 下沉到<em>OS 层</em>；今日候选 ActPlane / Maestro Order / PaperClaw / Curation harness 几乎都在<em>结构化设计与场景扩展</em> 这一支。Interplay 是 6 月以来唯一<strong>正面攻入 harness × post-training 联动</strong> 的论文——它把 harness 从训练-free 的工程旁路升格为<em>训练循环里的可控变量</em>，并给出 OOD 工具迁移下"<em>极简 harness 灾难性</em>" 的反例。这与 6-18 Xcientist 的"<em>upcoming research harness</em>" 论调（harness 升维）形成了下一阶段的关键议题——<em>training-aware harness</em>。其余四篇分别是 OS 安全（ActPlane）、orchestration（Maestro）、科研生命周期（PaperClaw / Curation），都属于场景延伸而非训练联动。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>The Interplay of Harness Design and Post-Training in LLM Agents</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Harness 设计与后训练的交互——LLM Agent 中 harness 作为可控训练维度的实证研究</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Kyungmin Kim</span></div>
+      <div class="meta-item"><label>合作作者（共 6 人）</label><span>Youngbin Choi / Seoyeon Lee / Suhyeon Jun / Dongwoo Kim / Sangdon Park</span></div>
+      <div class="meta-item"><label>机构</label><span>POSTECH（韩国浦项工科大学）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-24（v1，UTC 06:23:02）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · cs.CL</span></div>
+      <div class="meta-item"><label>文件</label><span>431 KB</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arxiv.org/abs/2606.25447</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.25447" target="_blank" rel="noopener">arxiv.org/pdf/2606.25447</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.25447v1" target="_blank" rel="noopener">arxiv.org/html/2606.25447v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.25447" target="_blank" rel="noopener">10.48550/arXiv.2606.25447</a></div>
+      <div class="meta-item"><label>实验环境</label><span>扩展版 <strong>ALFWorld</strong>（支持 harness 控制 + 任务/工具迁移）</span></div>
+      <div class="meta-item"><label>核心命题</label><span>harness 设计 × post-training 是<em>耦合优化问题</em>，二者必须联动</span></div>
+      <div class="meta-item"><label>关键反例</label><span>极简 harness 下 post-training 在强工具迁移上<em>断崖式性能崩塌</em></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM agent 的 <strong>harness</strong>（决定工具暴露、描述方式、每步辅助信息的脚手架）<strong>从"<em>固定工程细节</em>" 升格为"<em>可控设计维度</em>"</strong>，并扩展 ALFWorld 让二者同时可调，<em>系统揭示</em> harness 设计与 post-training 在 ID/OOD 两种环境下深度耦合——尤其是极简 harness 下 post-training 在<em>工具环境强迁移</em> 上会出现<strong>断崖式崩塌</strong>，因此<em>harness-aware post-training</em> 是 OOD 鲁棒性的必要条件。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>工具集成的 LLM agent 通常被一个 <em>harness</em> 包裹：harness 决定<strong>哪些工具被暴露、它们如何被描述、每一步观察附带什么辅助信息</strong>。虽然 agent 本身已经被常规地 post-training，但<em>这一层 scaffolding 一直被视为固定的工程细节</em>，其设计努力被局限在<em>训练-free</em> 的设定中。此外，现有 post-training 算法都默认环境是<em>静态</em> 的——而部署时的工具环境与任务往往会发生迁移。为弥合此差距，我们扩展了 <code>ALFWorld</code>：(i) 把 harness 视为<strong>可控设计维度</strong>；(ii) 支持<strong>任务与工具环境迁移</strong> 下的评测。在此之上，我们系统分析 harness 设计如何在 ID 与 OOD 两种设定下影响 post-training。我们实证显示：<em>harness-aware</em> 的 post-training 不仅提升 ID 性能，也让 agent<strong>稳健地适应 OOD</strong>。在 minimal-design 的 harness 下，post-training 在更强的工具环境迁移下会经历<em>剧烈的性能下降</em>，进一步突显 harness-aware post-training 在此类迁移下的必要性。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（harness 的训练化 / ALFWorld-Shift / 三层论证 / 与既有工作的根本区别）</div>
+
+    <p><strong>立论：harness ≠ 工程附属物 — harness 是 post-training 算法看到的"<em>事实分布</em>"。</strong>2024–2026 H1 的 harness 文献链条已经把 harness 描述为"<em>感知—决策—行动—验证</em>" 四元运行时的工程化承载（4-28 综述 / 5-25 Code as Agent Harness / 6-12 HarnessBridge / 6-15 HarnessX / 6-23 AOHP）；但所有这些工作都隐含一个前提：<em>训练一个 agent 模型，然后把它放进某个 harness 里跑</em>。POSTECH 团队的关键观察是：<strong>这个前提在工具环境与任务都会迁移的真实部署里是错的</strong>。因为 harness 决定了 agent 在训练阶段实际看到的<em>观察分布</em>、<em>工具描述分布</em>、<em>辅助信息密度</em>——这意味着 harness 是<em>训练时的 covariate shift 控制器</em>。如果训练时 harness 把工具描述写得很全、把观察压得很干净，那训练得到的 agent 在<em>稀疏 harness</em> 下就会失去其推理依据。反之，<em>极简 harness</em> 训练出的 agent 虽然在 ID 上看起来还行，但一旦工具环境迁移，它<em>没有任何 harness 提供的语义脚手架</em> 可以挽救它。</p>
+
+    <p><strong>实验平台：ALFWorld-Shift——同时控制 harness × shift 两个维度。</strong>论文对经典 text-game agent benchmark <code>ALFWorld</code>（Shridhar et al. 2021）做了两项扩展：(1) 把 harness 暴露为<em>可控设计变量</em>——具体来说，可以独立切换 <em>tools-exposed</em>（哪些 primitive 暴露）、<em>tool-description-style</em>（natural language vs 结构化）、<em>per-step auxiliary info</em>（是否提供 inventory / room-state / hint）等子维度；(2) 支持两种 OOD 评测：<strong>task shift</strong>（训练所未见的目标类别 / 物体组合）与 <strong>tool environment shift</strong>（同一任务但工具命名、组合、调用语法发生迁移）。这是 ALFWorld 第一次被赋予<em>训练—评测的环境位移控制能力</em>——它把"<em>environment is static</em>" 这一现有 post-training 算法的标准假设直接暴露在显微镜下。</p>
+
+    <p><strong>核心实证 ① harness-aware post-training 在 ID 与 OOD 同时占优。</strong>论文在多种 harness 配置上跑 post-training，把 harness 设计与 post-training 视为<em>联合优化对象</em>，并与"<em>固定 harness + 单独 post-training</em>" 的传统范式对比。结果是清晰的：当 post-training 把 harness 的差异 explicit 地纳入训练目标（如 harness-conditioned 的 reward / sample sampling），<em>同一个底层 LLM</em> 在 ID 上仍然占优，而在 task shift 与 tool shift 两种 OOD 上的优势<em>更显著</em>。换言之，"<em>harness 不参与训练</em>" 的传统范式付出了双重代价：训练里没看到的 harness 变体，部署时无法泛化；部署里的环境迁移，训练里没建模过。</p>
+
+    <p><strong>核心实证 ② 极简 harness × 强工具迁移：断崖式性能崩塌。</strong>论文最尖锐的发现，是<em>极简 harness</em>（minimal-design：少工具暴露、简短工具描述、稀疏辅助信息）下的 post-training 在弱工具迁移上还勉强保留性能，但在<strong>强工具迁移</strong>（工具命名/调用语法/组合方式大幅改变）下出现<em>剧烈的性能下降</em>。这是 harness 工程谱系第一次拿到的"<em>反例数据</em>"——它直接反驳了"<em>训练一个足够强的 model，harness 随便配</em>" 的乐观叙事。这个发现对 6-15 HarnessX 与 6-23 AOHP 的工程线条都构成补充约束：HarnessX 的 9 维分类 + Substitution Algebra 不仅是<em>组合自由度</em>，更是<em>训练—部署 covariate</em>；AOHP 的 capability descriptor 不仅是<em>OS 抽象</em>，更是<em>训练时的标签维度</em>。</p>
+
+    <p><strong>方法学姿态：harness 工程进入"<em>training-aware</em>" 阶段。</strong>从 4-28 综述把 harness 立为统一研究对象，到 6-15 HarnessX 把 harness 算子化，到 6-23 AOHP 把 harness 下沉到 OS——所有这些工作都假设训练算法是<em>给定的、不变的</em>。Interplay 是第一篇明确把<em>训练算法</em> 与 <em>harness 设计</em> 视为<strong>耦合优化问题</strong> 的论文。它意味着 2026 H2 的 harness 工程线条会出现新的子方向：<em>harness-conditioned post-training</em>（如把 harness 描述作为额外 context；把 harness 配置作为 RL 中的 sampling 维度；把 harness 变体当作 distributional augmentation）。从 KV-cache / 推理系统的视角，这正是<em>系统层设计变量进入训练循环</em> 的早期信号——也是你做 SGLang / vLLM 系统毕设时需要关注的<em>训练化协同</em> 视角。</p>
+
+    <p><strong>位置：把 harness 工程的"<em>三联拍</em>" 升级为"<em>四联拍</em>"。</strong>06-23 三篇报告组合成"<em>OS 降维（AOHP）+ 表征下沉（AgentLens）+ 评测升维（Benchmark Illusion）</em>" 的方法学三联拍；今日的 Interplay 给出了第四拍——<strong>训练循环联动</strong>。意味着 harness 概念第一次同时跨过 4 个层次：<em>OS / runtime / 评测 / 训练</em>，构成完整的"<em>harness 工程立方体</em>"。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Shridhar et al. — <em>ALFWorld: Aligning Text and Embodied Environments for Interactive Learning</em>（基础环境）<br>
+    <a href="https://arxiv.org/abs/2010.03768" target="_blank" rel="noopener">arxiv.org/abs/2010.03768</a></div>
+    <div class="ref-item">Yao et al. — <em>ReAct: Synergizing Reasoning and Acting in Language Models</em>（agent runtime 范式 baseline）<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+    <div class="ref-item">Schick et al. — <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>（tool integration 经典）<br>
+    <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a></div>
+    <div class="ref-item">Qin et al. — <em>ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs</em>（large-scale tool dataset）<br>
+    <a href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">arxiv.org/abs/2307.16789</a></div>
+    <div class="ref-item">Chen et al. (2026) — <em>HarnessX: Composable, Adaptable, and Evolvable Agent Harnesses</em>（harness 算子化 / 6-15 报告）<br>
+    <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></div>
+    <div class="ref-item">Zhao et al. (2026) — <em>AOHP: An Open-Source OS-Level Agent Harness</em>（harness OS 下沉 / 6-23 报告）<br>
+    <a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a></div>
+    <div class="ref-item">Zheng et al. (2026) — <em>ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</em>（harness 安全策略层）<br>
+    <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a></div>
+    <div class="ref-item">Wang et al. (2026) — <em>HarnessBridge: 双向投影可学习 harness 控制器</em>（harness 接口学习 / 6-12 报告）<br>
+    <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></div>
+    <div class="ref-item">Aksu (2026) — <em>Maestro Order: A Model-Agnostic Orchestration Harness</em>（4 结构原语 + budget 控制器）<br>
+    <a href="https://arxiv.org/abs/2606.23983" target="_blank" rel="noopener">arxiv.org/abs/2606.23983</a></div>
+    <div class="ref-item">Ye et al. — <em>Verifiable Reward 与 Agent post-training 综述</em>（RLHF / DPO / GRPO 在 agent 上的代表性工作）<br>
+    <a href="https://arxiv.org/abs/2406.04692" target="_blank" rel="noopener">arxiv.org/abs/2406.04692</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：harness 是<em>训练时的 covariate shift 控制器</em>，决定 post-training 算法看到的事实分布。</li>
+      <li><strong>核心论点 ②</strong>：harness 设计与 post-training 是<em>耦合优化问题</em>，固定一个再优化另一个会双重次优。</li>
+      <li><strong>ALFWorld-Shift</strong>：扩展支持 (i) harness 控制（tools-exposed / tool-description-style / per-step aux info）；(ii) task shift + tool shift 双 OOD 评测。</li>
+      <li><strong>实证 ①</strong>：harness-aware post-training 在 ID 上仍优，在 task shift / tool shift 两种 OOD 上优势更显著。</li>
+      <li><strong>实证 ②</strong>：极简 harness 下 post-training 在<em>弱工具迁移</em>上勉强保留性能。</li>
+      <li><strong>实证 ③（关键反例）</strong>：极简 harness × 强工具迁移 → <em>断崖式性能崩塌</em>。</li>
+      <li><strong>方法学位置</strong>：harness 工程从"<em>OS / runtime / 评测</em>" 三联拍升级为加入"<em>训练联动</em>" 的四联拍。</li>
+      <li><strong>设计含义</strong>：harness-conditioned post-training（context-injection / RL sampling / distributional augmentation）是 2026 H2 的下一波。</li>
+      <li><strong>篇幅与定位</strong>：6 作者 / cs.LG + cs.CL / 431 KB，定位为<em>实证驱动的方法学论文</em>。</li>
+      <li><strong>OOD 视角</strong>：把"<em>environment is static</em>" 这一 post-training 默认假设暴露于显微镜下。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>Interplay 是 harness 工程链条上第一篇正面打入 <strong>training-aware harness</strong> 的论文。对你 KV-cache / 推理系统毕设的启发：(1) <em>harness × post-training 耦合</em> 思想可直接迁移到 KV-cache—— cache 策略（eviction / placement / prefetch）不应该被独立训练后塞进系统，而应该作为<em>训练时的 covariate</em> 暴露给上层 reasoning loop；(2) <em>covariate shift 控制器</em> 思想可套到 KV-cache 系统层—— 不同 sparse pattern / DSA index granularity 是训练分布的关键变量，必须在训练时显式标注；(3) <em>极简 harness × 强迁移崩塌</em> 反例提示你 KV-cache 系统的"<em>极简 API</em>" 倾向（如只暴露 read/write 两个原语）在 deploy-time 工具/算子迁移下会有同款断崖；(4) <em>ALFWorld-Shift</em> 的"<em>同时控制设计变量 + 评测迁移</em>" 方法论可作为<em>系统层 KV-cache benchmark</em> 的设计模板—— sparse pattern × workload shift；(5) 对 SGLang / vLLM 开源贡献，这一线索意味着<em>harness-aware kernel</em>（让 attention kernel 看到 harness 的描述维度）是新的研究空白。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>Interplay 间接揭示了 agent safety 的<em>训练化</em> 视角：如果 harness 决定了 post-training 看到的事实分布，那"<em>safety property</em>" 也必须 harness-aware。统一启发：(1) safety 不再只是 post-training 的对齐目标，而是<em>harness × post-training</em> 联合优化的输出；(2) <em>极简 harness × 强工具迁移 → 崩塌</em>这一反例同样适用于 agent safety—— 当工具环境迁移时，safety 行为会出现"<em>分布外失败</em>"（与今日 #2 SkillSafetyBench 的 skill-mediated 失败模式 mutually reinforcing）；(3) <em>tool-description-style</em> 作为可控 harness 子维度——意味着 prompt-injection / RAG poisoning 等攻击面也可以视为"<em>对 harness 维度的恶意输入</em>"，这给攻防研究提供了形式化抓手；(4) <em>auxiliary info density</em> 子维度对应 safety alignment 中的"<em>有多少 contextual constraint 被显式 surfaced</em>"——可视为 contextual integrity（6-15 MINIM / 6-23 AOHP）的训练对偶。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>Interplay 给 Safety Benchmark 直接示范了"<em>设计变量 × 迁移变量</em>" 的二维评测矩阵——这正是 Safety Benchmark 缺失已久的<em>对照实验设计</em>。统一启发：(1) <strong>把 ALFWorld-Shift 范式平移到 safety 评测</strong>——同一条 jailbreak / refusal-bypass 样本在不同 harness 配置 × 不同 task/tool shift 下的 ASR 矩阵；(2) <em>断崖式崩塌反例</em> 给 safety benchmark 提供了一种"<em>压力测试</em>" 范式——不只是测 ID safety rate，而是要测<em>harness 极简 + 强迁移</em> 时的安全行为持久性；(3) 与今日 #3 Hacker-Fixer Loop 形成姊妹—— Interplay 表明 harness 是<em>训练分布的控制器</em>，Hacker-Fixer 表明 verifier 也是<em>训练分布的控制器</em>，两篇共同构成"<em>benchmark 既是评测也是训练分布</em>" 的方法学双门；(4) Safety benchmark 不应该只 report 单一 ASR，而应 report"<em>harness × shift</em>" 双轴热力图—— 这与 6-23 Benchmark Illusion"评测意识是多变量"的姊妹论述 mutually reinforcing。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>HarnessX (6-15)</strong> · 9 维 harness 算子 + Cross-Harness GRPO · 与 Interplay 形成"<em>设计自由度 × 训练联动</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></li>
+      <li><strong>AOHP (6-23)</strong> · harness 下沉到 OS · 与 Interplay 形成"<em>OS 抽象 × 训练分布</em>" 两端<br>
+      <a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a></li>
+      <li><strong>ActPlane (6-23)</strong> · OS 级 policy enforcement · 与 Interplay 形成"<em>安全策略 × 训练策略</em>" 两端<br>
+      <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a></li>
+      <li><strong>HarnessBridge (6-12)</strong> · harness 接口可学习化 · 与 Interplay 同属"<em>harness 进入梯度循环</em>" 路径<br>
+      <a href="https://arxiv.org/abs/2606.12882" target="_blank" rel="noopener">arxiv.org/abs/2606.12882</a></li>
+      <li><strong>ALFWorld (2020)</strong> · 基础 text-game agent 环境 · Interplay 在其上做 harness/shift 双扩展<br>
+      <a href="https://arxiv.org/abs/2010.03768" target="_blank" rel="noopener">arxiv.org/abs/2010.03768</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.25447" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.25447v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.25447" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2010.03768" target="_blank" rel="noopener">ALFWorld 原始论文</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.LG/new" target="_blank" rel="noopener">arXiv cs.LG/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-25 #1 · 搜索来源：arxiv.org/api/query?ti:harness + arxiv.org/abs/2606.25447<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arxiv.org/abs/2606.25447</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
