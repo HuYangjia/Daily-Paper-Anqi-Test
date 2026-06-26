@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-26 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #08503e; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fffaf2; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #08503e; }
+  .link-btn.primary:hover { background: #c9eedf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #e1f5ee; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #9fe1cb; color: #08503e; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-26 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 26 日 · Agent Skills Safety · 用 1k 样本把 4B 模型护栏推过 GPT-5.4</div>
+  <h1>AgentDoG 1.5：<strong>轻量级、可扩展的 agent safety alignment 框架</strong>——更新分类法（含 Codex / OpenClaw 新风险叶子）+ 偏好感知影响函数净化（32,787 → ~1,000 样本）+ 三粒度判别（来源 × 模式 × 危害）+ 有限状态 RL 环境（Docker → FSM，10,000+ 并发，内存峰值 ≤ 2.5 GB）；4B 训练免费上线即可媲美 <strong>GPT-5.4</strong>，细粒度诊断 <strong>55.2 vs 25.8</strong> 反超闭源前沿</h1>
+  <div class="en-title">AgentDoG 1.5: A Lightweight and Scalable Alignment Framework for AI Agent Safety and Security</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 96 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.6</span>
+    <span class="score-chip chip-impact">近期影响力 9.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-04 至 06 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">AgentDoG 1.5: A Lightweight and Scalable Alignment Framework for AI Agent Safety and Security</a><span class="winner-badge">今日选定</span></td>
+          <td>三维分类法（来源 × 模式 × 危害）+ 影响函数净化 + FSM-RL 环境 + 训练免费在线护栏 · 0.8B/2B/4B/8B 四规模 · 4B 反超 GPT-5.4</td>
+          <td>arXiv 2605.29801（上海 AI Lab · 49 作者）2026-05-28 v1 · cs.AI / cs.CL / cs.CR / cs.CV / cs.LG · 44 页 / 40 MB</td>
+          <td class="score-num">96</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">SafeHarbor: Hierarchical Memory-Augmented Guardrail for LLM Agent Safety</a></td>
+          <td>分层记忆增强 guardrail · 训练免费 · ICML 2026 接收</td>
+          <td>arXiv 2605.05704 · 2026-05-07 v2 · cs.CR + cs.AI · ICML 2026</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.22643" target="_blank" rel="noopener">Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</a></td>
+          <td>多轮渐进攻击 benchmark · 与 EU AI Act 接轨 · 办公 / 企业场景</td>
+          <td>arXiv 2605.22643 · 2026-05-21 v2 · cs.CL</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.11882" target="_blank" rel="noopener">On-Policy Self-Evolution via Failure Trajectories for Agentic Safety Alignment</a></td>
+          <td>FATE 框架 · 失败轨迹修复监督 · safety-utility Pareto</td>
+          <td>arXiv 2605.11882 · 2026-05-12 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">Toward a Principled Framework for Agent Safety Measurement</a></td>
+          <td>BOA：搜索 vs 采样测量 · 长尾不安全轨迹挖掘</td>
+          <td>arXiv 2605.01644 · 2026-05-02 · cs.CR</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="http://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22+OR+ti:%22agentic+safety%22+OR+abs:%22agent+skills+safety%22+OR+abs:%22autonomous+agent+alignment%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:agent-safety 时间排序</a>。<strong>AgentDoG 1.5 之所以胜出</strong>：6-23 我们拿到内部表征（AgentLens），6-25 拿到攻击面定义（SkillSafetyBench），今日 AgentDoG 1.5 补齐了第三块拼图——<strong>端到端 alignment 框架 + 在线护栏一体化</strong>。它把"<em>数据净化 / 训练算法 / RL 环境 / 部署护栏</em>" 四件套全部交付且全开源（GitHub + HF），用 ~1,000 高质量样本就让 4B 模型在<em>细粒度诊断</em> 上反超 GPT-5.4（55.2 vs 25.8）。SafeHarbor（#2）是 training-free guardrail，覆盖窄；Boiling the Frog（#3）是 benchmark 视角而非框架；FATE（#4）/ BOA（#5）属于方法论点子但缺工程交付。AgentDoG 1.5 是 H1 末<strong>最完整 + 最规模化 + 最开源</strong> 的 agent safety 论文。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentDoG 1.5: A Lightweight and Scalable Alignment Framework for AI Agent Safety and Security</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentDoG 1.5：面向 AI Agent 安全与防护的<em>轻量级可扩展</em> 对齐框架</span></div>
+      <div class="meta-item"><label>第一作者 / 通讯</label><span>Dongrui Liu / Jing Shao（通讯）</span></div>
+      <div class="meta-item"><label>作者数量</label><span>49 人（上海 AI Lab 主导 · 多机构）</span></div>
+      <div class="meta-item"><label>核心机构</label><span>上海 AI Lab + 北大 + 清华（IIIS）+ 复旦 + 中科大 + Rice + Texas A&amp;M + 上海交大 等</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-28（v1，UTC 11:48:37）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.CL · cs.CR · cs.CV · cs.LG</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>44 页 / 12 图 / 9 表 / 40,698 KB</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">arxiv.org/abs/2605.29801</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.29801" target="_blank" rel="noopener">arxiv.org/pdf/2605.29801</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2605.29801v1" target="_blank" rel="noopener">arxiv.org/html/2605.29801v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.29801" target="_blank" rel="noopener">10.48550/arXiv.2605.29801</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/AI45Lab/AgentDoG" target="_blank" rel="noopener">github.com/AI45Lab/AgentDoG</a></div>
+      <div class="meta-item"><label>HuggingFace</label><a href="https://huggingface.co/collections/AI45Research/agentdog15" target="_blank" rel="noopener">huggingface.co/AI45Research/agentdog15</a></div>
+      <div class="meta-item"><label>模型规模</label><span>0.8B / 2B / 4B / 8B（4-U 统一变体）</span></div>
+      <div class="meta-item"><label>关键反超</label><span>4B 细粒度诊断 <strong>55.2 vs GPT-5.4 25.8</strong></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      用<strong>~1,000 净化样本</strong> 把 0.8B/2B/4B/8B 四种<em>轻量级 LLM</em> 训练成<strong>agent safety 专家护栏</strong>，4B 变体在细粒度风险诊断（来源 × 失败模式 × 现实危害）上以 <strong>55.2 vs GPT-5.4 25.8</strong> 反超闭源前沿；同时给出端到端可复用资产——更新的三维 agent 安全分类法（含 OpenClaw / Codex 新风险叶子）+ 偏好感知<em>影响函数净化</em>（32,787 → 1,000）+ 有限状态 RL 训练环境（Docker → FSM，<strong>内存峰值 ≤ 2.5 GB，10,000+ 并发</strong>）+ 训练免费的在线 guardrail，全部模型与数据集开源。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>现代开放世界 agent（如 OpenClaw）展现出强大的跨环境执行能力，但同时引入了广泛的<em>新型安全风险源</em>。与此同时，前沿 AI 模型大幅<strong>降低了攻击门槛</strong>，让现有 agent 对齐框架在真实部署中显得不足。为应对这些新兴威胁，我们提出一个<strong>轻量、可扩展的 agent 安全对齐框架</strong>。具体地，我们更新 agent 安全分类法，使其涵盖 Codex 与 OpenClaw 执行场景中涌现的风险。我们进一步构建<em>分类法引导的数据引擎 + 影响函数净化</em>，仅用约 1k 样本就训出 AgentDoG 1.5 的轻量版本（0.8B / 2B / 4B / 8B 参数），达到与领先闭源模型（如 <strong>GPT-5.4</strong>）相当的性能。基于 AgentDoG 1.5，我们构建了一个极高效的 agentic 安全 SFT 与 RL 训练环境，让 Docker 级环境的部署开销降低<strong>两个数量级</strong>。最后，我们把 AgentDoG 1.5 部署为<em>训练免费</em> 的在线护栏，做实时安全审核。大量实验表明，AgentDoG 1.5 在多样化、复杂交互的 agent 场景中达到了 state-of-the-art。所有模型与数据集均开源发布。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（三维分类法 / 影响函数净化 / FSM-RL 环境 / 训练免费护栏）</div>
+
+    <p><strong>立论：agent safety 已经进入 OpenClaw / Codex 时代——分类法必须更新。</strong>2024–2025 H1 的 agent safety 链条主要围绕"<em>tool-use safety + prompt injection</em>"。但 2026 H1 真正的攻击面已经从单轮 prompt 拓展到<em>跨会话持久状态污染、技能/插件供应链、依赖项 MCP 入侵、仓库工件注入、破坏性工作区变更</em>——这些都是 OpenClaw（开放世界 agent）与 Codex（代码执行 agent）专属的新攻击面。AgentDoG 1.5 直接更新分类法，保留 1.0 的三维分解（<strong>Risk Source × Failure Mode × Real-world Harm</strong>），但为两类新场景扩展叶子类别——这一点直接对应 6-25 SkillSafetyBench 提出的"<em>非用户三位置攻击面</em>" 分类，但<em>更工程化</em>（5,973 个独特工具与 MCP 服务器，15 来源 × 21 模式 × 11 危害）。</p>
+
+    <p><strong>分类法的三维结构 — 这是 AgentDoG 1.5 全篇的"<em>骨架</em>"。</strong></p>
+    <ul class="point-list">
+      <li><strong>Risk Source（15 种）</strong>：用户指令 / 工具描述 / 环境观察 / 持久状态 / 运行时反馈 / 仓库工件 / agent 自身推理 / ……</li>
+      <li><strong>Failure Mode（21 种）</strong>：错误工具调用 / 越权操作 / 未验证外部信息 / 不安全命令执行 / 未验证的成功声明 / ……</li>
+      <li><strong>Real-world Harm（11 种）</strong>：隐私泄露 / 系统完整性损害 / 财务损失 / 物理-心理-声誉损害 / <em>新增治理级危害</em>（合规、法律、可审计性）</li>
+    </ul>
+    <p>OpenClaw 场景新增叶子：<em>发送者/会话身份模糊、持久内存污染、技能/插件供应链入侵、策略优先级误读、审批绕过、操作范围越权、跨工具攻击链、跨通道路由错误、不安全的无人值守自动化</em>；Codex 场景新增叶子：<em>仓库工件注入、依赖/MCP 供应链入侵、破坏性工作区变更、不安全 shell/script 执行、提示注入（精炼）、损坏的工具反馈、未授权信息泄露（覆盖仓库密钥/环境变量/凭证文件）</em>。</p>
+
+    <p><strong>影响函数净化：把 32,787 样本压到 ~1,000。</strong>这是 AgentDoG 1.5 最关键的方法学创新。给定参考检查点 θ̂，对每条候选样本计算<em>偏好感知影响函数得分</em>：先算目标响应梯度 ĝ<sub>(q,y)</sub> = ∇<sub>θ</sub>ℓ̄(q,y;θ)|<sub>θ=θ̂</sub>，再用模型对正确响应的归一化偏好 π̂<sub>q</sub> = p̄(y<sup>+</sup>|q) / (p̄(y<sup>+</sup>|q) + p̄(y<sup>−</sup>|q)) 作权重，聚合护栏方向 ĝ<sub>guard</sub> = (1/|Q<sub>safe</sub>|) Σ π̂<sub>q</sub>(ĝ<sub>(q,y<sup>+</sup>)</sub> − ĝ<sub>(q,y<sup>−</sup>)</sub>)，最后用 s<sub>π</sub>(z) = ĝ<sub>z</sub><sup>⊤</sup>ĝ<sub>guard</sub> 给每条候选打分。<strong>只保留与护栏方向最对齐的样本</strong>，从而：(a) 训练样本压到 ~1,000，<em>训练成本下降 30+ 倍</em>；(b) 缓解对虚假模式的过拟合（避免"<em>看似拒绝实际是关键词匹配</em>" 的浅层 alignment）。这与 6-23 AgentLens 的"<em>refusal subspace 干预</em>" 思想是同一方向的对偶——一个在<em>数据层</em>用影响函数过滤，一个在<em>表征层</em> 用 subspace 干预。</p>
+
+    <p><strong>训练规模 ① 轨迹级安全判断（Table 2）—— 4B 反超 GPT-5.4。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>模型</th><th>R-Judge Acc</th><th>R-Judge F1</th><th>ATBench Acc</th><th>ATBench F1</th></tr></thead>
+      <tbody>
+        <tr><td>GPT-5.4（闭源前沿）</td><td>93.3</td><td>93.7</td><td>73.7</td><td>76.7</td></tr>
+        <tr><td>Gemini-3.1-Pro</td><td>97.3</td><td>97.4</td><td>75.5</td><td>75.0</td></tr>
+        <tr><td>Qwen3.5-397B-A17B</td><td>85.6</td><td>87.4</td><td>66.8</td><td>67.8</td></tr>
+        <tr class="hl"><td>AgentDoG 1.5-4B</td><td><strong>92.2</strong></td><td><strong>92.7</strong></td><td>72.4</td><td>74.3</td></tr>
+        <tr class="hl"><td>AgentDoG 1.5-4B-U（统一变体）</td><td>90.4</td><td>90.6</td><td><strong>78.4</strong></td><td><strong>77.7</strong></td></tr>
+      </tbody>
+    </table>
+    <p>4B 已经在 R-Judge 上接近 GPT-5.4（92.2 vs 93.3），在 ATBench 上以 4-U 统一变体反超（78.4 vs 73.7）。<strong>这是 agent safety 领域首次在 4B 量级实现 <em>protection-equal-to-frontier</em>。</strong></p>
+
+    <p><strong>训练规模 ② 细粒度风险诊断（Table 3）—— 4B 把 GPT-5.4 拉开 30+ 个百分点。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>模型</th><th>Risk Source</th><th>Failure Mode</th><th>Real-world Harm</th><th>平均</th></tr></thead>
+      <tbody>
+        <tr><td>GPT-5.4</td><td>33.6</td><td>13.5</td><td>30.2</td><td>25.8</td></tr>
+        <tr><td>Gemini-3.1-Pro</td><td>24.8</td><td>12.6</td><td>18.5</td><td>18.6</td></tr>
+        <tr><td>AgentDoG 1.5-0.8B</td><td>65.7</td><td>18.4</td><td>44.9</td><td>43.0</td></tr>
+        <tr><td>AgentDoG 1.5-2B</td><td>68.0</td><td>24.0</td><td>53.8</td><td>48.6</td></tr>
+        <tr><td>AgentDoG 1.5-8B</td><td>72.9</td><td>24.6</td><td>52.5</td><td>50.0</td></tr>
+        <tr class="hl"><td>AgentDoG 1.5-4B</td><td><strong>75.2</strong></td><td><strong>27.5</strong></td><td><strong>62.9</strong></td><td><strong>55.2</strong></td></tr>
+      </tbody>
+    </table>
+    <p><strong>4B vs GPT-5.4：55.2 vs 25.8</strong>——这是 H1 末最戏剧化的小模型反超数据。其中 Failure Mode 维度（27.5 vs 13.5）翻倍，证明细粒度诊断必须靠<em>专业训练</em>，闭源大模型的通用知识在这里反而成了噪声。</p>
+
+    <p><strong>RL 环境：有限状态模拟器替代 Docker。</strong>AgentDoG 1.5 的另一个工程创举是用<em>LLM 生成的有限状态 Python 模拟器</em>替代 Docker 环境：单台 8 核机器支持 <strong>10,000+ 并发 agent 环境</strong>，峰值内存严格 ≤ <strong>2.5 GB</strong>，1,000 并发工具调用下延迟稳定。奖励模型由 AgentDoG 1.5 自身担任外部 judge，R = U（clean）/ S（malicious-query）/ 0.25·U·S + 0.25·S + 0.5·U（env-injection）。算法用 GDPO（Group Reward-Decoupled Normalization PO），<em>把 Docker-RL 的两个数量级开销削掉</em>。这一点对你做 KV-cache / SGLang 系统毕设有<strong>直接借鉴价值</strong>——FSM 简化 RL 环境的思想可平移到 KV-cache 策略搜索的训练环境。</p>
+
+    <p><strong>SFT 应用效果（Table 4 摘要）—— alignment 不掉点。</strong>用 AgentDoG 1.5-Filt 数据微调 Qwen3.5-4B：AgentHarm Harm Score <strong>57.49 → 20.32</strong>（−65%）；Refusal Rate <strong>28.41 → 75.00</strong>（+165%）；AgentSafetyBench SR <strong>34.37 → 53.23</strong>；AgentSecurityBench ASR <strong>90.39 → 23.82</strong>；BFCL 通用能力 <strong>76.04 → 81.12</strong>（不仅没掉，反而 +5）。这是<em>safety-utility Pareto 同时改善</em> 的稀有数据点，证明影响函数净化得到的是<em>真正的安全核心</em>，没有伤害通用能力。</p>
+
+    <p><strong>位置：与 SkillSafetyBench / AgentLens 共构 H1 末"<em>攻击面 × 表征防御 × 训练对齐</em>" 三联拍。</strong>6-23 AgentLens 解决<em>白盒表征防御</em>（subspace 干预，ASR 86 → 13.4 pp）；6-25 SkillSafetyBench 定义<em>新攻击面</em>（skill-mediated）；今日 AgentDoG 1.5 提供<em>端到端 alignment 框架</em>（数据净化 + RL 训练 + 在线护栏）。三篇形成 H1 末 agent safety 的完整工程谱系。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 12 条，附链接）</div>
+    <div class="ref-item">Liu et al. (2026) — <em>AgentDoG 1.0: A Diagnostic Guardrail Framework</em>（本论文前身）<br>
+    <a href="https://arxiv.org/abs/2505.21086" target="_blank" rel="noopener">arxiv.org/abs/2505.21086（参考链接）</a></div>
+    <div class="ref-item">Zhang et al. — <em>AgentSafetyBench</em>（NeurIPS 2024 / SR 评测基准）<br>
+    <a href="https://arxiv.org/abs/2412.14470" target="_blank" rel="noopener">arxiv.org/abs/2412.14470</a></div>
+    <div class="ref-item">Zhang et al. (2025) — <em>AgentSecurityBench</em>（ASR 评测基准）<br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Andriushchenko et al. — <em>AgentHarm: A Benchmark for Measuring Harmfulness of LLM Agents</em><br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Yuan et al. — <em>R-Judge: Benchmarking Safety Risk Awareness for LLM Agents</em>（EMNLP Findings 2024）<br>
+    <a href="https://arxiv.org/abs/2401.10019" target="_blank" rel="noopener">arxiv.org/abs/2401.10019</a></div>
+    <div class="ref-item">Inan et al. — <em>LlamaGuard: LLM-based Input-Output Safeguard</em>（同期 guardrail 工作）<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">Shao et al. — <em>DeepSeekMath / GRPO</em>（RL 算法基础）<br>
+    <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv.org/abs/2402.03300</a></div>
+    <div class="ref-item">Qin et al. — <em>ToolLLM: Mastering 16000+ Real-world APIs</em>（ToolBench 数据集来源）<br>
+    <a href="https://arxiv.org/abs/2307.16789" target="_blank" rel="noopener">arxiv.org/abs/2307.16789</a></div>
+    <div class="ref-item">Tang et al. — <em>ToolAlpaca</em>（工具数据集）<br>
+    <a href="https://arxiv.org/abs/2306.05301" target="_blank" rel="noopener">arxiv.org/abs/2306.05301</a></div>
+    <div class="ref-item">Debenedetti et al. — <em>AgentDojo</em>（同期 agent safety benchmark）<br>
+    <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">arxiv.org/abs/2406.13352</a></div>
+    <div class="ref-item">Patil et al. — <em>BFCL: Berkeley Function-Calling Leaderboard</em>（utility 评测）<br>
+    <a href="https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html" target="_blank" rel="noopener">gorilla.cs.berkeley.edu/blogs/8_bfcl</a></div>
+    <div class="ref-item">Jin et al. (2026) — <em>SkillSafetyBench</em>（6-25 报告 · 攻击面定义姊妹）<br>
+    <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：OpenClaw / Codex 是 agent safety 的"<em>下一代攻击面</em>"——分类法必须更新，旧 prompt-injection 视角已经不够。</li>
+      <li><strong>核心论点 ②</strong>：影响函数净化把 32,787 样本压到 ~1,000，<em>训练成本下降 30+ 倍</em>，缓解虚假模式过拟合。</li>
+      <li><strong>核心论点 ③</strong>：有限状态模拟器替代 Docker，<em>RL 环境开销下降两个数量级</em>，单机 10,000+ 并发，内存 ≤ 2.5 GB。</li>
+      <li><strong>三维分类法</strong>：15 风险源 × 21 失败模式 × 11 现实危害；5,973 独特工具 / MCP 服务器；新增治理级危害类别。</li>
+      <li><strong>轨迹级判断</strong>：4B Acc 92.2（vs GPT-5.4 93.3）；4-U 在 ATBench 上 Acc 78.4 反超 GPT-5.4 73.7。</li>
+      <li><strong>细粒度诊断（关键反超）</strong>：4B 平均 <strong>55.2 vs GPT-5.4 25.8</strong>；Failure Mode 维度 27.5 vs 13.5 翻倍。</li>
+      <li><strong>SFT 应用（Pareto 同改善）</strong>：AgentHarm Harm 57.49 → 20.32；Refusal 28.4 → 75.0；BFCL utility <em>76.0 → 81.1（反升）</em>。</li>
+      <li><strong>AgentSecurityBench ASR</strong>：90.39 → <strong>23.82</strong>（−74%）。</li>
+      <li><strong>规模</strong>：0.8B / 2B / 4B / 8B + 4-U 五个版本全开源（GitHub + HF）。</li>
+      <li><strong>RL 算法</strong>：GDPO（Group Reward-Decoupled Normalization PO）；维度权重 (0.3, 0.4, 0.3)；ε_low=0.2, ε_high=0.28；β=0.001。</li>
+      <li><strong>训练数据</strong>：净化 ~1,000 样本 + 28,705 筛选轨迹 + 50,000 良性工具调用 + RL 15,222 任务 / 16 领域 / 323 工具。</li>
+      <li><strong>篇幅与作者</strong>：44 页 / 12 图 / 9 表 / 49 作者 —— H1 末 agent safety 链条<em>规模最大、最完整</em> 的开源工作。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>AgentDoG 1.5 的"<em>FSM 替代 Docker</em>" 思想直接相关你 KV-cache / SGLang 毕设：(1) <em>训练环境 == 数据生成器 + reward judge</em> 的二元抽象——你做 KV-cache 策略搜索时不需要真的跑 vLLM 全栈，而是可以用 FSM 模拟<em>请求序列 / KV 命中 / cache eviction</em>，几个数量级降低 RL 训练成本；(2) <em>影响函数净化</em> 思想可平移到 KV-cache 训练—— 给 cache 策略每条 trajectory 计算影响函数得分，只保留与<em>系统性能梯度</em> 最对齐的样本；(3) <em>三维分类法（来源 × 模式 × 危害）</em> 是设计 KV-cache benchmark 的极好模板—— 把 KV-cache 失败拆成"<em>触发来源（workload pattern） × 失败模式（eviction-miss / sparse-mismatch / numerical-error） × 业务影响（latency / throughput / quality）</em>"；(4) <em>训练免费在线护栏</em> 思想—— KV-cache 系统也需要<em>训练免费的运行时监控</em>（如不依赖再训练的 sparse pattern detector），这是 SGLang / vLLM 当前明显的缺口；(5) <em>49 作者 / 多机构合作模式</em>—— 是中国 AI Safety 工程化的范本，与今日 NOVA 腾讯工业落地形成"<em>学界基础设施 + 业界部署</em>" 双门。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击本方向）</div>
+        <p>AgentDoG 1.5 是 H1 末 agent safety 链条的<strong>"集大成者"</strong>——它把 6-23 AgentLens / 6-25 SkillSafetyBench 的散点能力<em>系统化、规模化、工程化</em>。统一启发：(1) <em>分类法是基础设施</em>—— 三维分类法（15×21×11）是后续所有评测 / 训练 / 部署的<strong>共享语言</strong>，意味着 agent safety 论文必须先承诺一个分类法 vocabulary；(2) <em>OpenClaw / Codex 新风险叶子</em> 是 2026 H2 的关键研究增长点—— 跨会话身份模糊、持久内存污染、技能/插件供应链、仓库工件注入 等位置，是 jailbreak 之外的<em>结构化攻击面</em>，与 SkillSafetyBench 的 skill-mediated 视角 mutually reinforcing；(3) <em>训练成本下降 30+ 倍</em> 意味着 H2 安全研究的入门门槛大幅降低——本科生可以用 ~1,000 样本和 4B 模型做出可发表的工作；(4) <em>safety-utility Pareto 同时改善</em>（BFCL 76 → 81，Refusal 28 → 75）的反例性数据直接反驳了"<em>safety hurts capability</em>" 的悲观叙事；(5) 与 AgentLens 形成<em>"<em>数据净化（这里）+ 表征干预（那里）</em>"</em> 的方法论双门，研究路线既可以走数据侧也可以走表征侧。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>AgentDoG 1.5 给 Safety Benchmark 提供了三条新原则：(1) <em>benchmark 不应该只测 ASR / SR 单标量，必须三维报告</em>（risk source × failure mode × real-world harm）—— ATBench 三维诊断让小模型反超大模型，正说明<em>聚合标量隐藏了真实能力差异</em>；(2) <em>训练-评测一体化</em>—— FSM 训练环境同时也是 evaluation environment，避免 train/eval 分布偏差；(3) <em>BFCL 通用能力同时上升</em> 提示 safety benchmark 必须配置<em>utility track</em>，否则无法识别"<em>过度保守</em>" 的护栏；(4) 与 6-25 Hacker-Fixer Loop 形成姊妹—— 一个加固 verifier（外部），一个净化数据（内部），共同把 benchmark 从 leaderboard 升级为<em>方法学基础设施</em>；(5) <em>49 作者 / 多机构合作模式</em> 是 H2 大规模 safety benchmark 的标准模板—— 单机构无法覆盖 5,973 工具与 MCP 服务器的多样性。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>SkillSafetyBench (6-25)</strong> · 把可复用 skill 立为 agent safety 新攻击面 · 与 AgentDoG 1.5 形成"<em>攻击面 × alignment 框架</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></li>
+      <li><strong>AgentLens (6-23)</strong> · 多轮 coding agent 白盒 mechanistic subspace 干预 · 与 AgentDoG 1.5 形成"<em>表征防御 × 数据净化</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a></li>
+      <li><strong>SRP (6-18)</strong> · Safety Reflection Pretraining · 与 AgentDoG 1.5 形成"<em>预训练 × 后训练</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.19168" target="_blank" rel="noopener">arxiv.org/abs/2606.19168</a></li>
+      <li><strong>R-Judge (2024)</strong> · 用作 AgentDoG 1.5 评测基准之一 · 安全风险意识评测<br>
+      <a href="https://arxiv.org/abs/2401.10019" target="_blank" rel="noopener">arxiv.org/abs/2401.10019</a></li>
+      <li><strong>AgentSecurityBench (2025)</strong> · ASR 23.82 vs 基线 90.39 的关键评测<br>
+      <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.29801" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.29801v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://github.com/AI45Lab/AgentDoG" target="_blank" rel="noopener">GitHub: AI45Lab/AgentDoG</a>
+      <a class="link-btn" href="https://huggingface.co/collections/AI45Research/agentdog15" target="_blank" rel="noopener">HuggingFace 模型集合</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.29801" target="_blank" rel="noopener">DOI</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-26 #1 · 搜索来源：arxiv.org/api/query?ti:agent-safety + arxiv.org/abs/2605.29801<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">arxiv.org/abs/2605.29801</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

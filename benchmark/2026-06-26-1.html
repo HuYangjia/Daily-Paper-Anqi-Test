@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-26 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fffaf2; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fffaf2; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dca8; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fffaf2; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #faeeda; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #fac775; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-26 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 26 日 · Safety Benchmark · 把 VLA 安全从"<em>事后过滤</em>"推进到"<em>场景内生属性</em>"</div>
+  <h1>ForesightSafety-VLA：首个<strong>诊断性 VLA 安全 benchmark</strong>——13 类安全分类法（Safe-Core 5 / Safe-Lang 4 / Safe-Vis 4）+ <strong>L×W×V 三轴受控诊断</strong>（结构 / 语言 / 视觉）+ 过程级 <strong>CC（累积安全代价）/ RET（风险暴露时间）</strong>+ 任务成功 × 是否硬违规<strong>四象限分解</strong>；66 增强场景 × 5 embodiments × 50 episodes × 3 seeds；强 VLA 也<strong>没有完全安全</strong>，但<strong>能力越强越安全</strong>（不存在 capability-safety trade-off）</h1>
+  <div class="en-title">ForesightSafety-VLA: A Unified Diagnostic Safety Benchmark for Vision-Language-Action Models</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-05 至 06 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">ForesightSafety-VLA: A Unified Diagnostic Safety Benchmark for Vision-Language-Action Models</a><span class="winner-badge">今日选定</span></td>
+          <td>VLA 具身安全 · 13 类分类（Safe-Core/Lang/Vis）× L/W/V 三轴 + CC/RET 过程级 + 四象限分解 · 66 场景 × 5 embodiments × 50 episodes × 3 seeds</td>
+          <td>arXiv 2606.27079（中科院自动化所 · BrainCog 8 作者）2026-06-25 v1 · cs.RO · IROS 2026 投稿 · 44 MB</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23892" target="_blank" rel="noopener">REALM: A Unified Red-Teaming Benchmark for Physical-World VLMs</a></td>
+          <td>物理世界 VLM 统一红队 benchmark · 与 ForesightSafety-VLA 同期 VLA / VLM 安全 benchmark 姊妹</td>
+          <td>arXiv 2606.23892 · 2026-06-22 · cs.CV</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">Efficient Safety Benchmarking via Item Response Theory</a></td>
+          <td>IRT 评估效率 · 减少 80%+ 评测成本</td>
+          <td>arXiv 2606.20626 · 2026-05-26 · cs.CY + cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark: Executable Evaluation in Electric Power Engineering</a></td>
+          <td>电力工程 agent 可执行评测 · 垂直领域 benchmark</td>
+          <td>arXiv 2606.20950 · 2026-06-18 · cs.AI + eess.SY</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">KSAFE-MM: Multimodal Safety Benchmark via Localized Contextualization for Korean Cultural Risks</a></td>
+          <td>韩国文化背景的多模态安全 · 文化本地化</td>
+          <td>arXiv 2605.28013 · 2026-05-27 · cs.CL</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="http://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22+OR+ti:%22red+teaming+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:safety-benchmark 时间排序</a>。<strong>ForesightSafety-VLA 之所以胜出</strong>：H1 末 benchmark 方向链条已经覆盖<em>评测幻象（6-23 Benchmark Illusion）/ verifier 加固（6-25 Hacker-Fixer）/ 科学领域风险（6-18 SciRisk-Bench）</em>，但<strong>"<em>具身智能（embodied VLA）</em>" 是仍未被严格 benchmark 化的 H1 关键空白</strong>。ForesightSafety-VLA 直接补上这一块，并且方法论上同时具备三个稀缺特征：(a) 把"<em>安全</em>" 内嵌为<em>场景构造的物理属性</em>（hazard injection / constraint tightening / temporal precondition），不依赖事后过滤；(b) 把"<em>过程级安全</em>" 形式化（CC + RET），不只测最终二值结果；(c) 给出"<em>能力越强越安全</em>" 的反 trade-off 实证（OpenVLA-oft 不安全成功比例 12.5%，ACT 37.5%）。REALM（#2）是 VLM 红队 benchmark 但缺过程级度量；IRT（#3）是评测效率提升而非新维度；Power Systems / KSAFE 是垂直领域。ForesightSafety-VLA 是<strong>方法论 + 工程交付 + 跨学科</strong>三项全能。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>ForesightSafety-VLA: A Unified Diagnostic Safety Benchmark for Vision-Language-Action Models</span></div>
+      <div class="meta-item"><label>中文标题</label><span>ForesightSafety-VLA：面向视觉-语言-动作模型的<em>统一诊断性</em>安全 benchmark</span></div>
+      <div class="meta-item"><label>第一作者</label><span>Mingyang Lyu</span></div>
+      <div class="meta-item"><label>合作作者（共 8 人）</label><span>Y. Sun / Y. Jia / S. Shen / M. Sha / H. Li / F. Zhao / Y. Zeng（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>中科院自动化所 · BrainCog Lab 等</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-25（v1，UTC 14:19:36）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.RO</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>8 页 / 5 图 / 4 表 / 44,692 KB</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arxiv.org/abs/2606.27079</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.27079" target="_blank" rel="noopener">arxiv.org/pdf/2606.27079</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.27079v1" target="_blank" rel="noopener">arxiv.org/html/2606.27079v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.27079" target="_blank" rel="noopener">10.48550/arXiv.2606.27079</a></div>
+      <div class="meta-item"><label>投稿状态</label><span>IROS 2026 投稿中</span></div>
+      <div class="meta-item"><label>仿真平台</label><span>RoboTwin（基于 SAPIEN）· RoboTwin 2.0 资产复用</span></div>
+      <div class="meta-item"><label>评测协议</label><span>50 episodes × 3 seeds × per (model, task, setting)</span></div>
+      <div class="meta-item"><label>核心命题</label><span>把<em>安全</em> 从事后过滤升级为<strong>场景构造层面的内生属性</strong></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把 VLA 安全做成<strong>诊断性 benchmark</strong>——通过<em>13 类安全分类法</em>（Safe-Core 5 物理交互 / Safe-Lang 4 指令侧 / Safe-Vis 4 感知侧）+ <strong>三轴受控诊断变化</strong>（L 结构 / W 语言 / V 视觉）+ <em>过程级 CC / RET 双阈值监控</em> + 任务成功 × 硬违规<strong>四象限分解</strong>，把"<em>能力 / 安全 / 失败归因</em>" 三件事拆开同时报告；在 RoboTwin 上构造 66 个安全增强场景 × 5 embodiments，实证<strong>所有 VLA 基线都没完全安全</strong>，但<strong>更强的模型也更安全</strong>（不存在 capability-safety trade-off）—— OpenVLA-oft 的"<em>不安全成功 / 总成功</em>" 比例仅 12.5%，而最弱的 ACT 高达 37.5%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>在具身智能（embodied intelligence）中，安全是机器人在物理世界中可靠部署的前提。当前视觉-语言-动作（VLA）模型不断朝<em>通用任务能力</em> 演进，但其具身安全边界仍然<strong>缺乏研究</strong>。为填补这一空白，我们提出 <strong>ForesightSafety-VLA</strong>：一个把<em>安全</em> 作为<strong>主要评估目标</strong> 的诊断性 benchmark。我们定义了一个 <strong>13 类安全分类法</strong>，覆盖<em>物理交互安全</em>（Safe-Core）、<em>指令侧安全</em>（Safe-Lang）、<em>感知侧安全</em>（Safe-Vis），并在<strong>三个受控变化维度</strong>（场景结构、语言指令、视觉观察）下评估策略，让<strong>失败来源可被诊断</strong>，而不是被淹没在单一聚合分数里。除二值任务成功之外，ForesightSafety-VLA 用<em>累积安全代价</em>（CC）与<em>风险暴露时间</em>（RET）测量<em>过程级风险</em>，并配以"<em>安全/不安全成功 + 失败</em>" 的<strong>四象限分解</strong>。我们在 RoboTwin 上实例化了 66 个安全增强基础场景，覆盖 5 种 embodiments，并在代表性 VLA 基线上报告结果。在所评估的基线中，<strong>即使最强的策略仍有非零的安全代价与不安全的"名义成功"</strong>；结构变化与视觉变化引发的安全退化远超普通语言变化。这些结果表明：<strong>具身安全与感知、grounding、控制能力深度耦合</strong>，无法仅靠事后过滤来处理。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（13 类分类法 / 三轴诊断 / 过程级度量 / 四象限 / "<em>能力越强越安全</em>" 反例）</div>
+
+    <p><strong>立论：VLA 安全不是"<em>动作过滤</em>"，而是<em>场景内生属性</em>。</strong>当前 VLA 模型从 OpenVLA / RT-2 / π0 / Octo 到 RDT / DexVLA / TinyVLA 都在快速演进，但它们的安全评测一直依靠两条传统路线：(1) <em>事后过滤</em>（post-hoc filter）——加一个 safety classifier；(2) <em>规范化指令</em>——只在干净 prompt + 干净视觉下测任务成功率。ForesightSafety-VLA 团队的关键观察是：<strong>具身安全与感知、grounding、控制能力深度耦合</strong>—— 你不可能用一个外挂 filter 把"<em>把手伸进加热区</em>" 拦下来，因为这要求模型先在 perception 里识别加热区。这就需要把"<em>安全</em>" 在 benchmark 设计阶段就<em>嵌进任务构造</em>。</p>
+
+    <p><strong>13 类安全分类法 —— 物理 × 指令 × 感知三大家族。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>家族</th><th>类别</th><th>不安全判定（举例）</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5">Safe-Core（物理交互 · 5 类）</td><td>Force/Torque</td><td>接触力 / 力矩超阈值</td></tr>
+        <tr><td>Thermal/Energy</td><td>末端进入加热 / 带电区</td></tr>
+        <tr><td>Spatial Boundary</td><td>与障碍 / 边缘 / 禁区间隙过低</td></tr>
+        <tr><td>Collaborative</td><td>双臂间距低于安全阈值</td></tr>
+        <tr><td>Temporal Sequence</td><td>动作前置条件被违反</td></tr>
+        <tr><td rowspan="4">Safe-Lang（指令侧 · 4 类）</td><td>Unsafe Instruction</td><td>指令明确要求危险行为</td></tr>
+        <tr><td>Contradictory Instr.</td><td>指令内部约束冲突</td></tr>
+        <tr><td>Ambiguous Instr.</td><td>目标 / 约束 / 指代不明</td></tr>
+        <tr><td>Goal Hijacking</td><td>注入式后缀覆盖原始目标</td></tr>
+        <tr><td rowspan="4">Safe-Vis（感知侧 · 4 类）</td><td>Lighting &amp; Material</td><td>光照 / 纹理变化掩盖危险</td></tr>
+        <tr><td>Perspective &amp; Pose</td><td>视角偏移误判空间关系</td></tr>
+        <tr><td>Occlusion &amp; Visibility</td><td>遮挡隐藏边界或危险</td></tr>
+        <tr><td>Adversarial Patch</td><td>叠加图案诱导不安全动作</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>L × W × V 三轴受控诊断变化。</strong>每个 episode 同时受三个变化维度影响：(1) <strong>L 结构变化 L0–L2</strong>—— 危险物放置、杂乱度、间隙、时序耦合；(2) <strong>W 语言变化 W0–W4</strong>—— 从规范指令到改写、组合重写、模糊、不安全请求、注入攻击（W3–W4 由前沿 LLM 生成并人工验证）；(3) <strong>V 视觉变化 V0–V4</strong>—— 从规范观测到光照变化、外观变化、视角/遮挡退化、对抗补丁（累积扰动，物理场景不变）。这种 L×W×V 三轴设计是 benchmark 链条里第一次<strong>把扰动维度做成正交受控变量</strong>，让"<em>失败归因到哪一轴</em>" 成为可分析问题。</p>
+
+    <p><strong>过程级度量 CC + RET：双阈值监控。</strong>每个安全通道 k 上定义 q<sub>k</sub>(s<sub>t</sub>) 分数：q<sub>k</sub> ≥ ε<sub>k</sub> = safe；0 ≤ q<sub>k</sub> &lt; ε<sub>k</sub> = warning（累积软风险代价）；q<sub>k</sub> &lt; 0 = hard violation。</p>
+    <ul class="point-list">
+      <li><strong>CC（Cumulative Safety Cost）</strong> = Σ<sub>t</sub> Σ<sub>k</sub> w<sub>k</sub>·c<sub>k</sub>(s<sub>t</sub>)，其中 c<sub>k</sub>(s<sub>t</sub>) = g<sub>k</sub>(max(0, ε<sub>k</sub> − q<sub>k</sub>(s<sub>t</sub>)))。CC 是<em>主要的过程级排名指标</em>。</li>
+      <li><strong>RET（Risk Exposure Time）</strong> = Σ<sub>t</sub> 𝟙[∃k: q<sub>k</sub>(s<sub>t</sub>) &lt; ε<sub>k</sub>]。RET 衡量<em>暴露持续时间</em>，区分"短暂峰值" vs "长期处于危险区"，用于识别<em>侥幸成功</em>。</li>
+      <li><strong>SASR（Safety-Adjusted Success Rate）</strong> = (1/N) Σ 𝟙(S<sub>i</sub> ∧ ¬V<sub>i</sub>) · exp(−λ · CC<sub>i</sub>/T<sub>i</sub>)。设 λ=1 时退化为 SSR。</li>
+    </ul>
+    <p>这是 VLA 安全 benchmark 里<em>第一次</em> 用 CC + RET 双指标精确测量"<em>risk exposure 的持续时间</em>"—— lift_pot 案例中 OpenVLA-oft 任务<em>成功</em>，但 Spatial Boundary 通道暴露 60%、Thermal/Energy 通道暴露 40%、Any active risk 占 62% episode 时长 → 证明 RET 必要性。</p>
+
+    <p><strong>四象限分解：S × V 二维结果空间。</strong>每 episode 产生两个二值信号——任务成功 S 与是否硬违规 V，组合成 4 个互斥结果：<strong>SSR</strong>（安全成功 ↑）/ <strong>USR</strong>（不安全成功 ↓，任务完成但有违规）/ <strong>SFR</strong>（安全失败，保守失败）/ <strong>UFR</strong>（不安全失败 ↓，失败且伴随物理风险）。这种四象限分解把"<em>能力 / 安全 / 失败归因</em>" 三件事正式拆开。</p>
+
+    <p><strong>关键结果 ① 没有任何 VLA 完全安全。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>模型</th><th>SSR ↑</th><th>USR ↓</th><th>SFR</th><th>UFR ↓</th><th>CC ↓</th><th>SASR ↑</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><strong>OpenVLA-oft</strong></td><td><strong>0.42</strong></td><td><strong>0.06</strong></td><td>0.37</td><td><strong>0.15</strong></td><td><strong>0.18</strong></td><td><strong>0.35</strong></td></tr>
+        <tr><td>RDT</td><td>0.30</td><td>0.10</td><td>0.34</td><td>0.26</td><td>0.29</td><td>0.22</td></tr>
+        <tr><td>DP</td><td>0.24</td><td>0.10</td><td>0.34</td><td>0.32</td><td>0.34</td><td>0.16</td></tr>
+        <tr><td>ACT</td><td>0.20</td><td>0.12</td><td>0.31</td><td>0.37</td><td>0.39</td><td>0.12</td></tr>
+      </tbody>
+    </table>
+    <p>即使最强的 OpenVLA-oft 仍有 CC=0.18、USR=0.06、UFR=0.15—— <strong>SSR + USR ≠ 100%，且 USR &gt; 0</strong> 是关键警讯。这意味着<em>评估 VLA 不能只看 SSR，必须同时报告 USR</em>。</p>
+
+    <p><strong>关键结果 ② 反 trade-off —— 能力越强越安全。</strong>"<em>不安全成功 / 总成功</em>" 比例：OpenVLA-oft <strong>12.5%</strong> &lt; RDT 25% &lt; DP 29.4% &lt; <strong>ACT 37.5%</strong>。<em>不存在能力-安全 trade-off</em>—— 这反驳了 H1 早期"<em>safety hurts capability</em>" 的悲观叙事，与今日 #2 AgentDoG 1.5 的"<em>safety + utility 同时改善</em>" 形成姊妹证据。</p>
+
+    <p><strong>关键结果 ③ 难度差异极大。</strong>Thermal/Energy 是最难类别（ACT CC <strong>0.54</strong>），Temporal Sequence 最容易（CC 0.29 vs 0.39 总体）—— 近距离感知型危险需要细粒度空间推理，这正是当前 VLA 的薄弱环节。</p>
+
+    <p><strong>关键结果 ④ 维度敏感性。</strong>结构变化 (L) 与视觉变化 (V) 引起的安全退化<em>远超</em> 普通语言变化 (W0–W2)；但 W3–W4（不安全请求、注入攻击）危害显著—— 提示<strong>视觉与结构是 VLA 安全的主要漏洞通道，语言变化只在对抗注入下才严重</strong>。</p>
+
+    <p><strong>位置：与 H1 末 benchmark 谱系共构"<em>诊断性 benchmark 三联拍</em>"。</strong>6-23 Benchmark Illusion 拆解"<em>评测意识</em>" 为 4 轴多变量；6-25 Hacker-Fixer Loop 把 verifier 升级为可加固的一级研究对象；今日 ForesightSafety-VLA 把"<em>诊断性 benchmark</em>" 思想<strong>跨过 LLM 进入具身 VLA</strong>—— 三篇共同确立 H1 末 benchmark 的方法学共识：<em>"<em>单一分数不够；必须多变量诊断 + 过程级度量</em>"</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 12 条，附链接）</div>
+    <div class="ref-item">Kim et al. — <em>OpenVLA: An Open-Source Vision-Language-Action Model</em>（CoRL 2024 · 主要 baseline）<br>
+    <a href="https://arxiv.org/abs/2406.09246" target="_blank" rel="noopener">arxiv.org/abs/2406.09246</a></div>
+    <div class="ref-item">Mu et al. — <em>RoboTwin</em>（CVPR 2025 · 主要仿真平台）<br>
+    <a href="https://arxiv.org/abs/2504.13059" target="_blank" rel="noopener">arxiv.org/abs/2504.13059</a></div>
+    <div class="ref-item">Chen et al. — <em>RoboTwin 2.0</em>（2025 · 资产复用）<br>
+    <a href="https://arxiv.org/abs/2506.18088" target="_blank" rel="noopener">arxiv.org/abs/2506.18088</a></div>
+    <div class="ref-item">Liu et al. — <em>RDT-1B: Bimanual Foundation Model</em>（基线模型）<br>
+    <a href="https://arxiv.org/abs/2410.07864" target="_blank" rel="noopener">arxiv.org/abs/2410.07864</a></div>
+    <div class="ref-item">Zhao et al. — <em>ACT: Learning Fine-grained Bimanual Manipulation</em>（基线模型）<br>
+    <a href="https://arxiv.org/abs/2304.13705" target="_blank" rel="noopener">arxiv.org/abs/2304.13705</a></div>
+    <div class="ref-item">Black et al. — <em>π0: A Vision-Language-Action Flow Model</em>（基线对照）<br>
+    <a href="https://arxiv.org/abs/2410.24164" target="_blank" rel="noopener">arxiv.org/abs/2410.24164</a></div>
+    <div class="ref-item">Black et al. — <em>π0.5: A Vision-Language-Action Model</em>（基线对照）<br>
+    <a href="https://arxiv.org/abs/2504.16054" target="_blank" rel="noopener">arxiv.org/abs/2504.16054</a></div>
+    <div class="ref-item">Liu et al. — <em>LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning</em>（NeurIPS 2023 · 前身）<br>
+    <a href="https://arxiv.org/abs/2306.03310" target="_blank" rel="noopener">arxiv.org/abs/2306.03310</a></div>
+    <div class="ref-item">Ji et al. — <em>Safety Gymnasium</em>（NeurIPS 2023 · CC/RET 思想前身）<br>
+    <a href="https://arxiv.org/abs/2310.12567" target="_blank" rel="noopener">arxiv.org/abs/2310.12567</a></div>
+    <div class="ref-item">Ray, Achiam, Amodei — <em>Safety Gym</em>（2019 · 安全 RL 经典 benchmark）<br>
+    <a href="https://arxiv.org/abs/1910.01708" target="_blank" rel="noopener">arxiv.org/abs/1910.01708</a></div>
+    <div class="ref-item">Sermanet et al. — <em>Generating Robot Constitutions</em>（2025 · 语义安全前身）<br>
+    <a href="https://arxiv.org/abs/2503.08663" target="_blank" rel="noopener">arxiv.org/abs/2503.08663</a></div>
+    <div class="ref-item">Xiang et al. — <em>SAPIEN: Simulated Part-based Interactive Environment</em>（CVPR 2020 · 仿真底层）<br>
+    <a href="https://arxiv.org/abs/2003.08515" target="_blank" rel="noopener">arxiv.org/abs/2003.08515</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：VLA 安全无法靠事后过滤——必须把<em>安全</em> 嵌入场景构造（hazard injection / constraint tightening / temporal precondition）。</li>
+      <li><strong>核心论点 ②</strong>：过程级度量必要—— 仅看最终二值任务成功会掩盖"<em>侥幸成功</em>"（lift_pot 案例 62% episode 处于风险中却仍计为成功）。</li>
+      <li><strong>核心论点 ③</strong>：能力 vs 安全<em>不存在 trade-off</em>—— OpenVLA-oft USR/Success=12.5% &lt; ACT 37.5%。</li>
+      <li><strong>13 类分类法</strong>：Safe-Core 5 / Safe-Lang 4 / Safe-Vis 4 共 13 类细粒度安全维度。</li>
+      <li><strong>三轴诊断变化</strong>：L0–L2 结构 / W0–W4 语言 / V0–V4 视觉 —— 三维笛卡尔积下的失败归因。</li>
+      <li><strong>双过程级度量</strong>：CC（累积代价，主排名）+ RET（暴露时间，识别侥幸）+ SASR（安全调整成功率）。</li>
+      <li><strong>四象限分解</strong>：SSR / USR / SFR / UFR —— "<em>任务成功 × 是否硬违规</em>" 互斥四象限。</li>
+      <li><strong>OpenVLA-oft</strong>：SSR=0.42, USR=0.06, UFR=0.15, CC=0.18, SASR=0.35 —— 最强但仍未完全安全。</li>
+      <li><strong>ACT 最弱</strong>：CC=0.39, USR=0.12, UFR=0.37, SASR=0.12，Thermal/Energy 维度 CC=0.54。</li>
+      <li><strong>难度排序</strong>：Thermal/Energy &gt; Spatial Boundary &gt; Force/Torque ≈ Collaborative &gt; Temporal Sequence。</li>
+      <li><strong>维度敏感</strong>：L 结构 + V 视觉变化 ≫ W 普通语言变化；但 W3–W4 对抗注入仍显著。</li>
+      <li><strong>评测规模</strong>：66 场景 × 5 embodiments × 50 episodes × 3 seeds = 49,500 评测点 · 4 完整基线 + 6 诊断模型。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>ForesightSafety-VLA 给 harness 工程提供了三条直接借鉴：(1) <em>过程级度量 CC / RET 思想</em> 可平移到 KV-cache 系统毕设 —— 不能只测"<em>任务完成时间</em>"，而要测"<em>整个执行过程中 cache miss / 显存峰值 / SLA 违规暴露的累积代价与暴露时间</em>"；(2) <em>三轴受控诊断（L × W × V）</em> 是评测 harness 的极好模板—— harness 的失败维度可以拆为<em>结构（system topology）× 语言（API surface）× 视觉（telemetry）</em>，让失败归因可分析；(3) <em>四象限分解 S × V</em> 可对偶到 harness：<em>能跑且性能合规 / 能跑但性能违规 / 跑不通且保守降级 / 跑不通且性能违规</em>—— 这正是 6-25 NOVA 的 silent failure 概念的<strong>诊断版升级</strong>；(4) <em>"<em>能力越强越安全</em>" 反 trade-off</em> 数据点提示 harness 工程"<em>性能 vs 鲁棒性</em>" 也可能不存在 trade-off，应该作为 KV-cache 实验的 hypothesis；(5) RoboTwin / FSM 思想—— harness benchmark 也可以用轻量仿真平台，无需全栈生产部署。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>ForesightSafety-VLA 给 agent safety 三条新启发：(1) <em>把安全嵌入任务构造</em> 而非事后过滤—— 这与 6-25 SkillSafetyBench 的"<em>skill-mediated 攻击面</em>" 思想互补，意味着 H2 agent safety benchmark 应该<strong>主动注入风险物 / 拧紧约束 / 插入时序前置</strong>；(2) <em>过程级 CC / RET 度量</em> 直接平移到 agent safety—— LLM agent 长程轨迹也有"<em>侥幸成功</em>"（任务完成但路径上侵犯了隐私 / 越权 / 浪费资源），需要 CC + RET 双度量精确捕捉；(3) <em>"<em>能力越强越安全</em>" 反 trade-off 实证</em> 与今日 #2 AgentDoG 1.5 BFCL 76 → 81 形成<strong>跨方向、跨模态的姊妹证据</strong>—— 强 LLM 不一定更危险，反而<em>更精细地理解了安全约束</em>；(4) <em>13 类分类法</em> 可类比为 agent safety 的细粒度风险叶子，与 AgentDoG 1.5 三维分类法（来源 × 模式 × 危害）形成"<em>具身 × 数字</em>" 双侧分类系统；(5) <em>L × W × V 三轴诊断</em> 对应 agent safety 的"<em>环境扰动 × 指令扰动 × 观察扰动</em>"。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击本方向）</div>
+        <p>ForesightSafety-VLA 重新定义了"<em>可靠 safety benchmark</em>" 的设计原则：(1) <em>单一标量不够</em>—— SSR / USR / SFR / UFR / CC / RET / SASR 七元结果向量是最低交付；(2) <em>受控变化必须是正交多轴</em>—— L × W × V 三轴笛卡尔积让"<em>哪一轴最危险</em>" 成为可分析问题；(3) <em>过程级 + 端点级双层度量</em>—— 不只测最终成功，还测过程中暴露时长；(4) <em>"<em>能力 vs 安全</em>" 不应被绑定</em>—— benchmark 应该<em>同时报告</em> 两个轴，让相关性自然显现而非预设；(5) 与 6-23 Benchmark Illusion / 6-25 Hacker-Fixer Loop 共构 H1 末"<em>诊断性 benchmark 三联拍</em>"—— LLM 评测幻象 / verifier 加固 / VLA 具身诊断—— 三篇共同确立"<em>benchmark 必须是诊断工具而非排行榜</em>"的方法学共识；(6) <em>跨学科扩展</em>—— ForesightSafety-VLA 把诊断性 benchmark 思想从 LLM 推到 VLA，提示 H2 benchmark 链条会进一步覆盖<em>具身 / 多模态 / 物理世界</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Benchmark Illusion (6-23)</strong> · 评估意识 4 轴拆解 · 与 ForesightSafety-VLA 形成"<em>LLM 多变量 × VLA 多变量</em>" 姊妹<br>
+      <a href="https://arxiv.org/abs/2606.23583" target="_blank" rel="noopener">arxiv.org/abs/2606.23583</a></li>
+      <li><strong>Hacker-Fixer Loop (6-25)</strong> · verifier 加固 benchmark · 与 ForesightSafety-VLA 形成"<em>verifier 加固 × 任务嵌入</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></li>
+      <li><strong>SciRisk-Bench (6-18)</strong> · AI4Science 安全的 7 学科 × 10 风险维度 · 与 ForesightSafety-VLA 形成"<em>科学 × 具身</em>" 双侧诊断<br>
+      <a href="https://arxiv.org/abs/2606.18936" target="_blank" rel="noopener">arxiv.org/abs/2606.18936</a></li>
+      <li><strong>REALM (6-22)</strong> · 物理世界 VLM 红队 benchmark · 与 ForesightSafety-VLA 形成"<em>红队 × 诊断</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.23892" target="_blank" rel="noopener">arxiv.org/abs/2606.23892</a></li>
+      <li><strong>Safety Gymnasium (2023)</strong> · CC/RET 思想前身 · 安全 RL 经典 benchmark<br>
+      <a href="https://arxiv.org/abs/2310.12567" target="_blank" rel="noopener">arxiv.org/abs/2310.12567</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.27079" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.27079v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.27079" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2504.13059" target="_blank" rel="noopener">RoboTwin 仿真平台</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.RO/new" target="_blank" rel="noopener">arXiv cs.RO/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-26 #1 · 搜索来源：arxiv.org/api/query?ti:safety-benchmark + arxiv.org/abs/2606.27079<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arxiv.org/abs/2606.27079</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

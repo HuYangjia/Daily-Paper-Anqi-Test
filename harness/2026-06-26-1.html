@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-26 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-26 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 26 日 · Harness Engineering · 把 harness 从"<em>训练联动</em>" 推进到"<em>验证联动</em>"——工业部署的 verification-aware loop</div>
+  <h1>NOVA：<strong>验证感知（verification-aware）</strong> agent harness——四级验证级联 + 架构梯度（非可微 SGD-like 更新信号）+ L1–L4 任务级控制；首次在<strong>工业广告推荐系统</strong>上把 harness 端到端跑通，L2/L3 有效通过率 <strong>54.5% / 60.0%</strong>，单次 literature-to-production 周期人工时间缩短 <strong>13×</strong>，线上 A/B GMV +1.25/+1.70/+2.02%</h1>
+  <div class="en-title">NOVA: A Verification-Aware Agent Harness for Architecture Evolution in Industrial Recommender Systems</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.6</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-21 至 06-25 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">NOVA: A Verification-Aware Agent Harness for Architecture Evolution in Industrial Recommender Systems</a><span class="winner-badge">今日选定</span></td>
+          <td>verification-aware harness · 架构梯度（非可微 SGD-like）+ 4 级验证级联 + L1–L4 任务级 · 工业广告推荐 · 线上 A/B 验证</td>
+          <td>arXiv 2606.27243（腾讯 18 作者）2026-06-25 v1 · cs.IR + cs.SE · 12 页 / 3 图</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">Code Isn't Memory: A Structural Codebase Index Inside a Coding Agent</a></td>
+          <td>在<strong>固定</strong> coding-agent harness × 固定模型下比较结构化代码库索引 · harness-control 实验范式</td>
+          <td>arXiv 2606.22417 · 2026-06-21 · 3 作者 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">The Hitchhiker's Guide to Agentic AI: From Foundations to Systems</a></td>
+          <td>从 harness 设计 / context management 到生产部署的全栈手册 · 综述定位</td>
+          <td>arXiv 2606.24937 · 2026-06-22 · 独著 Haggai Roitman · cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.19613" target="_blank" rel="noopener">StaminaBench: Stress-Testing Coding Agents over 100 Interaction Turns</a></td>
+          <td>跨 6 种 harness × 7 种 LLM 长程交互"耐力"评测 · harness × model 差距可达 6 倍</td>
+          <td>arXiv 2606.19613 · 2026-06-17 · 多作者 · cs.SE + cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17454" target="_blank" rel="noopener">Dissecting Model Behavior Through Agent Trajectories</a></td>
+          <td>首次形式化 <em>intent-execution gap</em> · 同步发布极简 Simple Strands Agent (SSA) harness</td>
+          <td>arXiv 2606.17454 · 2026-06-16 v1 / 06-17 v2 · cs.AI + cs.LG</td>
+          <td class="score-num">89</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="http://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+ti:%22harness+engineering%22+OR+ti:%22LLM+harness%22+OR+abs:%22agent+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:harness 时间排序</a>。<strong>NOVA 之所以胜出</strong>：harness 工程的 H1 系列我们已经在 6-23 拿到 OS 降维（AOHP）、6-25 拿到训练联动（Interplay），今日 NOVA 直接补齐了第三块拼图——<strong>验证联动</strong>。它把"<em>验证（verifier）</em>" 从 6-25 Hacker-Fixer Loop 的<em>benchmark 加固</em> 视角拉进 <em>harness 自身的内循环</em>：四级验证级联（结构语义 → 本地可执行 → 离线 AUC → 线上 GMV）每一关都既是 gate 也是<em>反馈源</em>，被拒候选的失败模式作为禁止方向回写到下一轮架构梯度。Code Isn't Memory（#2）也走 harness-control 路线，但只在 retrieval 子组件上做实验；Hitchhiker（#3）是综述，缺乏新方法；StaminaBench（#4）/ Dissecting（#5）属于 6-17 / 6-16 旧批次，已在前几天的延伸阅读中提及。NOVA 是<strong>同时具备工程深度（生产 A/B 验证）+ 方法学新贡献（架构梯度 + 验证级联）</strong> 的唯一选择。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>NOVA: A Verification-Aware Agent Harness for Architecture Evolution in Industrial Recommender Systems</span></div>
+      <div class="meta-item"><label>中文标题</label><span>NOVA：面向工业推荐系统架构演化的<em>验证感知</em> Agent Harness</span></div>
+      <div class="meta-item"><label>共同第一作者</label><span>Shaohua Liu / Liang Fang / Yilong Sun / Shudong Huang（通讯）</span></div>
+      <div class="meta-item"><label>作者团队（共 18 人）</label><span>Q. Luo / S. Liu / X. Chen / D. Liu / C. Ma / Z. Chai / H. Wang / S. Quan / C. Cui / Z. Zhu / P. Chen / W. Xu / L. Xiao / H. Gu / J. Jiang</span></div>
+      <div class="meta-item"><label>机构</label><span>Tencent Inc.（腾讯）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-25（v1，UTC 16:30:39）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.IR · cs.SE</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>12 页 / 3 图 / 1,343 KB</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">arxiv.org/abs/2606.27243</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.27243" target="_blank" rel="noopener">arxiv.org/pdf/2606.27243</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.27243v1" target="_blank" rel="noopener">arxiv.org/html/2606.27243v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.27243" target="_blank" rel="noopener">10.48550/arXiv.2606.27243</a></div>
+      <div class="meta-item"><label>底层模型</label><span><strong>Claude Sonnet 4.6</strong>（Anthropic 2026）—— 所有 LLM 方法统一基础模型，确保差异来自 harness</span></div>
+      <div class="meta-item"><label>部署场景</label><span>腾讯<strong>工业广告推荐</strong> · 5% 生产流量 · 请求级随机化 A/B</span></div>
+      <div class="meta-item"><label>核心命题</label><span><em>verification-aware</em> harness 把 verification 同时作为 gate 与<em>梯度信号</em></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent harness 从"<em>能跑通就行</em>" 升级为<strong>"<em>每一步都被验证 + 验证结果回流为梯度</em>"</strong> 的 verification-aware 工程范式——四级验证级联（结构语义门 → 本地可执行门 → 离线 AUC 内循环 → 线上 GMV 外循环）+ <strong>架构梯度</strong>（SGD-like 非可微更新，聚合修改 / 验证诊断 / 度量反馈 / 轨迹记忆）+ L1–L4 任务级控制路由，<strong>在腾讯工业广告推荐生产环境</strong> 跑出 L2/L3 有效通过率 54.5% / 60.0%，单次 literature-to-production 周期人工时间缩短 13×，线上 A/B GMV +1.25 / +1.70 / +2.02%，pCVR bias 同时下降 58.8 / 66.7 / 37.3%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>工业广告推荐模型依靠<em>架构演化</em> 持续改进——RankMixer、TokenMixer-Large、MixFormer 这些升级都说明<em>更好的结构</em> 仍是质量与业务收益的关键来源。但要在生产系统里开发这种升级，<strong>极度依赖专家、难以规模化</strong>。已有的自动化手段都不够：AutoML 只是调超参，而真正有效的收益往往需要在严格约束下做<em>跨模块改动</em>；通用 LLM 编码 agent 只优化"<em>能跑</em>"，但<em>能跑不等于这是一个合法的推荐架构</em>——候选可能在本地测试里看似通过，却在线上造成<em>沉默失败</em>（silent failure）让性能恶化。</p>
+    <p>我们提出 <strong>NOVA</strong>：一个 level-aware 的 agent harness，用于<strong>验证感知</strong> 的架构演化。NOVA 使用 <em>architecture gradient</em>——一个 SGD 启发、<em>非可微</em> 的更新信号，聚合之前的修改、验证诊断、度量反馈与轨迹记忆，引导下一步修改。<strong>verification cascade</strong> 检查结构语义、本地可执行性、离线有效性与线上影响；非法候选被早期拦截，失败模式被记录为<em>禁止方向</em>。L1–L4 任务级控制让自动化匹配任务复杂度与风险，把高风险任务路由到 Copilot 接受人工监督。部署在工业广告系统里，NOVA 在 L2 ScaleUp 与 L3 Literature-to-Production 任务上分别拿到最高 <strong>54.5% / 60.0%</strong> 的有效通过率，相比 coding-agent 基线显著降低 silent failure，单次 literature-to-production 循环的<strong>人工时间缩短 13×</strong> 以上。线上 A/B 中，被选中的 L3 候选在三条 pCVR 目标上分别带来 <strong>+1.25%、+1.70%、+2.02% GMV 提升</strong>，pCVR 偏差同时减少 58.8%、66.7%、37.3%。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（架构梯度 / 验证级联 / L1–L4 / silent failure 反例）</div>
+
+    <p><strong>动机：silent failure 才是工业 harness 的真正敌人。</strong>2024–2026 H1 的 agent harness 论文链条一直在强调"<em>能跑通</em>"——OpenHands、SWE-agent、ReActAgent 都是基于 sandbox runnable 来判定成功。但 NOVA 团队直接指出：在<em>工业广告推荐</em> 这种已经被人类工程师反复打磨过的高敏感系统里，"<em>能跑的代码</em>" 完全可能<em>结构上不是一个合法的推荐架构</em>——它能通过本地 unit test，但在 AUC / GMV / pCVR Bias 上表现塌方，而由于本地测试通过，<em>失败信号被吞掉了</em>。这就是 <strong>silent failure</strong>。已有 coding agent baseline 在 L2 ScaleUp 任务上的 SFR 高达 <em>72.7%</em>（Optuna-TPE）/ 80.0%（OpenHands），意味着<em>过 4 个候选才有一个真正有效</em>。</p>
+
+    <p><strong>架构梯度：非可微的 SGD-like 更新信号。</strong>NOVA 的核心抽象是 <em>architecture gradient</em>——把 harness 的每一次"<em>下一步修改的方向</em>" 形式化为一个聚合函数 g<sub>t</sub> = Grad(e<sub>t−1</sub>, V<sub>t</sub>, ΔJ<sub>t</sub>, H<sub>t</sub>)，四个输入分别是<strong>上一次的修改、验证诊断、离线度量变化、历史轨迹记忆</strong>。这个梯度不是数值梯度，而是 LLM 在 reasoning 中产出的三类结构化信息：(1) <em>weak components</em>—— G/φ/F 中可能瓶颈的部分；(2) <em>modification directions</em>—— 下一步候选修改方向；(3) <em>forbidden directions</em>—— 应避免的失败模式。架构状态 A<sub>t</sub> = (G<sub>t</sub>, φ<sub>t</sub>, F<sub>t</sub>) 包含模型图、结构超参、特征配置；更新规则 A<sub>t+1</sub> = Apply(A<sub>t</sub>, e<sub>t</sub><sup>*</sup>)；离线目标 J<sub>offline</sub> = AUC，线上目标 J<sub>online</sub> = Σ w<sub>i</sub> · m<sub>i</sub>（m<sub>i</sub> ∈ {GMV, Bias}）。<em>这是 harness 工程链条第一次把"<em>下一步该怎么改</em>" 写成数学符号——它把 6-15 HarnessX 的可演化 / 6-25 Interplay 的训练联动推进到<em>形式化的迭代算子</em>。</em></p>
+
+    <p><strong>验证级联：四级 gate 同时是<em>梯度去噪源</em>。</strong>NOVA 的另一个关键设计是<em>四级 verification cascade</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>阶段</th><th>检查内容</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td>1. Structure-semantic gate</td><td>修改逻辑 / shape & dtype / feature-to-token / attention 方向 / mask 语义 / logit 融合</td><td>训练前捕捉<em>可运行但结构错误</em> 的候选</td></tr>
+        <tr><td>2. Local testing gate</td><td>单机可执行性</td><td>离线训练前拦截工程性失败</td></tr>
+        <tr><td>3. Offline inner loop</td><td>AUC（阈值 ΔAUC &gt; 0.001）</td><td>线上部署前评估</td></tr>
+        <tr><td>4. Online outer loop</td><td>GMV / pCVR Bias</td><td>生产环境最终验证</td></tr>
+      </tbody>
+    </table>
+    <p>关键在于：被拒绝的候选其<em>失败模式</em> 不会被丢掉，而是写入轨迹记忆 H，作为<strong>禁止方向</strong> 反馈到下一轮架构梯度——<em>"验证即梯度去噪"</em>。这把 6-25 Hacker-Fixer Loop 的"<em>verifier 加固 benchmark</em>" 视角进一步推进：verifier 不再只是审计员，而是<strong>harness 内循环里的梯度源</strong>。</p>
+
+    <p><strong>L1–L4 任务级控制：把自动化匹配到风险层级。</strong>NOVA 把架构演化任务分为四级：<em>L1 原子结构调优</em>（如 RankMixer 层数 → AutoRun）；<em>L2 约束感知 ScaleUp</em>（联合缩放耦合变量、FLOPs/参数预算 → AutoRun）；<em>L3 文献到生产迁移</em>（把 TokenMixer-Large / AttentionRes / MixFormer / OneTrans 论文模块适配生产模型 → AutoRun 或 Copilot）；<em>L4 开放式创新</em>（基于趋势 / 业务需求 / 历史证据提出新结构 → Copilot）。模式（AutoRun vs Copilot）由 skill-specification 覆盖度决定，而非仅由级别决定——<em>这是 6-23 AOHP 中"<em>OS 级 secure information flow</em>" 思想在<strong>组织层</strong> 的对偶</em>：把"<em>谁有权决定下一步</em>" 抽象成可配置的路由策略。</p>
+
+    <p><strong>关键数据 ① L2 ScaleUp。</strong>NOVA EPR <strong>54.5%</strong>（vs Optuna-TPE 4.7%，OpenHands 6.7%，ReActAgent 12.5%，Human Expert Loop 49.3%）；LPR 99.0%、SFR 45.5%。NOVA 是<em>第一个超越人类专家</em> 的 baseline。</p>
+
+    <p><strong>关键数据 ② L3 Literature-to-Production。</strong>NOVA EPR <strong>60.0%</strong>（vs Human Expert 31.1%，OpenHands 10.2%，ReActAgent 7.1%）；LPR 86.7%、SFR 30.8%。单次周期的<em>人工时间</em> 从 54u 降到 4u（<strong>13.5×</strong>），端到端 wall-clock 从 82u 降到 37u（2.2×）。这是 harness 论文第一次拿出<em>带 wall-clock 数字</em> 的工业证据。</p>
+
+    <p><strong>关键数据 ③ 线上 A/B。</strong>NOVA 选出的 L3 TokenMixer-Large 迁移候选在 3 条 pCVR 目标上：GMV <strong>+1.25 / +1.70 / +2.02%</strong>；pCVR Bias <strong>−58.8 / −66.7 / −37.3%</strong>（双指标同向改善 = 校准与业务收益没有 trade-off）。这是 harness 工程链条第一次<strong>把线上 GMV 写进 abstract</strong>。</p>
+
+    <p><strong>消融实验 — 每个模块都必要。</strong>(a) w/o Paper Reproduction：EPR 60.0 → 33.3%（SFR 30.8 → 63.6%）；(b) w/o Solution Design：60.0 → 18.2%；(c) w/o Multi-Candidate：60.0 → 25.9%；(d) w/o Quality Assessment：60.0 → 21.9%；(e) <em>w/o Architecture-Gradient Feedback：60.0 → 37.5%</em>。最后一行直接证明 <em>architecture gradient 是 NOVA 的"<em>梯度去噪核心</em>"</em>—— 去掉它 EPR 折半。</p>
+
+    <p><strong>位置：把 harness 工程的 "四联拍" 扩成 "五联拍"。</strong>6-23 AOHP 给了 <em>OS 降维</em>，6-23 AgentLens 给了<em>表征下沉</em>，6-23 Benchmark Illusion 给了<em>评测升维</em>，6-25 Interplay 给了<em>训练联动</em>。<strong>NOVA 给的是<em>验证联动</em></strong>—— 把 harness 内循环里的 verifier 从纯 gate 升级为<em>梯度信号源</em>，并第一次在工业 5% 流量 A/B 中证明 harness 工程可以直接带来 +1–2% GMV。这意味着 H2 的 harness 工程线条将进入<strong>"<em>L1–L4 任务级路由 × verification-as-gradient × 跨业务复用</em>"</strong> 的新阶段。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 12 条，附链接）</div>
+    <div class="ref-item">Zhu et al. — <em>RankMixer</em>（推荐架构基础 · CIKM 2025）<br>
+    <a href="https://dl.acm.org/doi/10.1145/3711896.3736857" target="_blank" rel="noopener">CIKM 2025 RankMixer</a></div>
+    <div class="ref-item">Jiang et al. — <em>TokenMixer-Large</em>（NOVA L3 选中的目标论文）<br>
+    <a href="https://arxiv.org/abs/2602.06563" target="_blank" rel="noopener">arxiv.org/abs/2602.06563</a></div>
+    <div class="ref-item">Huang et al. — <em>MixFormer</em>（候选论文模块）<br>
+    <a href="https://arxiv.org/abs/2602.14110" target="_blank" rel="noopener">arxiv.org/abs/2602.14110</a></div>
+    <div class="ref-item">Huang et al. — <em>HyFormer</em>（候选论文模块）<br>
+    <a href="https://arxiv.org/abs/2601.12681" target="_blank" rel="noopener">arxiv.org/abs/2601.12681</a></div>
+    <div class="ref-item">Yuksekgonul et al. — <em>TextGrad</em>（LLM 文本梯度先驱，与 architecture gradient 直接对照）<br>
+    <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener">arxiv.org/abs/2406.07496</a></div>
+    <div class="ref-item">Pryzant et al. — <em>ProTeGi: Prompt Optimization via Textual Gradients</em>（EMNLP 2023）<br>
+    <a href="https://arxiv.org/abs/2305.03495" target="_blank" rel="noopener">arxiv.org/abs/2305.03495</a></div>
+    <div class="ref-item">Wang et al. — <em>OpenHands: An Open Platform for AI Software Developers as Generalist Agents</em>（ICLR 2025 · NOVA baseline）<br>
+    <a href="https://arxiv.org/abs/2407.16741" target="_blank" rel="noopener">arxiv.org/abs/2407.16741</a></div>
+    <div class="ref-item">Yang et al. — <em>SWE-agent</em>（NeurIPS 2024 · coding agent baseline）<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">Akiba et al. — <em>Optuna: TPE</em>（NOVA AutoML baseline · KDD 2019）<br>
+    <a href="https://arxiv.org/abs/1907.10902" target="_blank" rel="noopener">arxiv.org/abs/1907.10902</a></div>
+    <div class="ref-item">Liu et al. — <em>DARTS: Differentiable Architecture Search</em>（ICLR 2019 · 可微 NAS 经典对照）<br>
+    <a href="https://arxiv.org/abs/1806.09055" target="_blank" rel="noopener">arxiv.org/abs/1806.09055</a></div>
+    <div class="ref-item">Pham et al. — <em>ENAS</em>（ICML 2018 · NAS 经典对照）<br>
+    <a href="https://arxiv.org/abs/1802.03268" target="_blank" rel="noopener">arxiv.org/abs/1802.03268</a></div>
+    <div class="ref-item">Wu et al. — <em>AgenticRecTune</em>（2026 · 推荐自演化对照）<br>
+    <a href="https://arxiv.org/abs/2604.26969" target="_blank" rel="noopener">arxiv.org/abs/2604.26969</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>silent failure</em> 是工业 harness 的真正敌人——能跑通 ≠ 合法架构；通用 coding agent 的 SFR 高达 66.7–80%。</li>
+      <li><strong>核心论点 ②</strong>：architecture gradient 把"<em>下一步该怎么改</em>" 形式化为非可微 SGD-like 更新算子 g<sub>t</sub> = Grad(e<sub>t−1</sub>, V<sub>t</sub>, ΔJ<sub>t</sub>, H<sub>t</sub>)。</li>
+      <li><strong>核心论点 ③</strong>：verification 不只是 gate，更是<em>梯度去噪源</em>——失败模式回写轨迹记忆，作为禁止方向反馈下一轮。</li>
+      <li><strong>L2 ScaleUp</strong>：NOVA EPR <strong>54.5%</strong>（vs Human 49.3%，Optuna 4.7%，OpenHands 6.7%）—— 首个超越人类专家的 baseline。</li>
+      <li><strong>L3 Literature-to-Production</strong>：NOVA EPR <strong>60.0%</strong>（vs Human 31.1%，OpenHands 10.2%，ReActAgent 7.1%）。</li>
+      <li><strong>人工时间</strong>：单次 L3 周期 54u → 4u（<strong>13.5×</strong>）；wall-clock 82u → 37u（2.2×）。</li>
+      <li><strong>线上 A/B</strong>：3 条 pCVR 目标 GMV <strong>+1.25 / +1.70 / +2.02%</strong>；Bias <strong>−58.8 / −66.7 / −37.3%</strong>；双指标同向改善。</li>
+      <li><strong>消融</strong>：w/o Architecture-Gradient Feedback → EPR 60 → 37.5%；w/o Solution Design → 18.2%；每模块都必要。</li>
+      <li><strong>统一基础模型</strong>：所有方法均跑 Claude Sonnet 4.6 —— 确保差异来自 harness 而非 model。</li>
+      <li><strong>L1–L4 路由</strong>：把自动化匹配到风险层级，高风险任务路由到 Copilot 接受人工监督——组织层 secure information flow。</li>
+      <li><strong>方法学位置</strong>：harness 工程从 OS / runtime / 评测 / 训练四联拍 → 加入<em>验证联动</em> 升级为五联拍。</li>
+      <li><strong>篇幅与定位</strong>：12 页 / 3 图 / cs.IR + cs.SE / 18 作者全员腾讯 —— 工业落地 + 方法学并重的稀有论文。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>NOVA 是 harness 工程链条里第一篇<strong>把工业 GMV 写进 abstract</strong> 的论文，对你 KV-cache / SGLang 系统毕设的启发极其具体：(1) <em>architecture gradient 思想</em> 可直接迁移到 KV-cache 策略搜索—— eviction policy / placement policy / prefetch heuristic 的下一步修改可以形式化为 g = Grad(prev-config, profile-diagnostics, perf-delta, traj-memory)，从而避开 RL 设计奖励的工程难题；(2) <em>verification cascade 四级</em> 直接对偶 KV-cache 系统的"<em>语义检查（cache 一致性）→ 单机性能 → 端到端 throughput → 在线 SLA</em>" 四级，<strong>每一级失败模式都应该回写为下一轮策略搜索的禁止方向</strong>——这是 SGLang KV-cache 调优论文中明显缺失的方法学；(3) <em>silent failure 概念</em>—— KV-cache 系统也有 silent failure（cache 命中但 sparse pattern 与算子不兼容、显存峰值超过 SLA、attention numerical error 不被 logit 监控捕捉），<strong>"<em>能跑 ≠ 合法 KV-cache 系统</em>"</strong> 是你毕设的天然角度；(4) <em>L1–L4 任务级路由</em>—— KV-cache 系统的 patch / kernel rewrite / kernel new arch / new memory hierarchy 也可以分四级，AutoRun 跑前两级、Copilot 处理后两级；(5) <em>统一基础模型对照</em>—— NOVA 把所有方法都跑在 Claude 4.6 上，意味着你做 KV-cache benchmark 时也应固定 LLM，让差异只来自 cache 系统。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>NOVA 的 <em>verification-as-gradient</em> 思想对 agent safety 有直接启发：(1) safety 不应该只是"<em>refuse / pass</em>" 二值 gate，而应该<strong>把 unsafe trajectory 的失败模式作为"<em>下一轮训练 / 对齐的禁止方向</em>"</strong>——这与今日 #2 AgentDoG 1.5 的 influence-function purification 形成姊妹方法（两种"<em>用失败数据回写训练信号</em>" 的范式）；(2) <em>silent failure</em> 在 safety 里对应"<em>looks-safe but actually unsafe</em>" 模式（如 6-23 AgentLens 的 covert tool-use、6-25 SkillSafetyBench 的 skill-mediated 攻击）—— NOVA 提示我们 safety 也需要<em>四级 verifier cascade</em>（语义安全 → 工具调用合规 → 长程后果 → 真实业务影响）；(3) <em>L1–L4 任务级路由</em>—— 安全任务也应该按风险分级：低风险 AutoRun（refuse-only），高风险 Copilot（HITL）；(4) <em>架构梯度</em> 思想可平移到 <em>safety policy gradient</em>——用 LLM 推理出"<em>下一条 safety rule 应该补在哪里</em>"，把 safety alignment 从纯 RLHF / SFT 推进到带 verifier feedback 的迭代算子。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>NOVA 把 6-25 Hacker-Fixer Loop 的"<em>verifier 加固 benchmark</em>" 视角推进到<em>验证级联</em>——这给 safety benchmark 设计带来三条新原则：(1) <em>从单一 ASR / EPR 升级到多级验证级联结果矩阵</em>——一个候选不只是 pass/fail，而是<em>哪一级失败</em>（语义 / 可执行 / 离线 / 在线），从而能定位失败根因；(2) <em>silent failure rate (SFR)</em> 是 benchmark 设计的关键被忽视指标——它衡量"<em>local pass 但 effective fail</em>" 的占比，远比 ASR 更能反映 benchmark gaming 风险；(3) <em>线上 A/B 作为 outer verifier</em>—— Safety benchmark 应该至少配置一个<em>真实部署度量</em>（不只是 sandbox metric），让 benchmark gaming 在最外层被 silent failure 检测出来；(4) <em>L1–L4 风险分级</em>—— Safety benchmark 也应该按任务风险分级，让评估器知道哪些任务<em>必须由人审计</em>；(5) 与 6-23 Benchmark Illusion 的<em>多变量评测</em> 思想 mutually reinforcing—— NOVA 提供了"<em>多变量 + 多级</em>" 的实证模板。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Interplay (6-25)</strong> · harness × post-training 联动 · 与 NOVA 形成"<em>训练联动 × 验证联动</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arxiv.org/abs/2606.25447</a></li>
+      <li><strong>AOHP (6-23)</strong> · harness 下沉到 OS · 与 NOVA 形成"<em>OS 抽象 × 工业部署</em>" 两端<br>
+      <a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a></li>
+      <li><strong>Hacker-Fixer Loop (6-25 Benchmark)</strong> · verifier 加固 benchmark · 与 NOVA 共构"<em>verifier 既是 gate 也是梯度源</em>" 双门<br>
+      <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></li>
+      <li><strong>HarnessX (6-15)</strong> · 9 维 harness 算子 + Cross-Harness GRPO · 与 NOVA 形成"<em>设计空间 × 工业部署</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a></li>
+      <li><strong>TextGrad (2024)</strong> · LLM 文本梯度先驱 · 与 architecture gradient 直接对照<br>
+      <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener">arxiv.org/abs/2406.07496</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.27243" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.27243v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.27243" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="http://export.arxiv.org/api/query?search_query=ti:%22harness%22&sortBy=submittedDate" target="_blank" rel="noopener">arXiv harness 检索</a>
+      <a class="link-btn" href="https://arxiv.org/list/cs.IR/new" target="_blank" rel="noopener">arXiv cs.IR/new</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-26 #1 · 搜索来源：arxiv.org/api/query?ti:harness + arxiv.org/abs/2606.27243<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">arxiv.org/abs/2606.27243</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>
