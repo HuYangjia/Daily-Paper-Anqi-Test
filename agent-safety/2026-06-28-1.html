@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-28 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #eeedfe; color: #534ab7; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #e8f7f0; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #074d3b; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f0fbf6; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fff8ec; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #9fe1cb; color: #074d3b; }
+  .link-btn.primary:hover { background: #d2eee2; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #e8f7f0; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #e8f7f0; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #9fe1cb; color: #074d3b; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-28 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 28 日 · Agent Skills Safety · 把 agent safety alignment 从"<em>refuse 二值</em>" 推进到<em>4 维 rubric × GRPO 在线优化</em>——首次把"<em>safety</em>" 和"<em>tool 幻觉</em>" 同时降下来，不再二选一</div>
+  <h1>RUBAS：把 agent 安全分解为 <strong>tool-use / argument / response / helpfulness 四维 rubric</strong> + GRPO RL—— Qwen3-8B 平均风险 <strong>52.7% → 15.9%</strong>（−36.8 pp），同时<strong>反向提升</strong> ToolBeHonest 幻觉抗性（33.6 → 61.6）；与今日 #3 REALM 共构 H1 末"<em>多维 rubric 训练 × 多维 red-team 评测</em>" 闭环</h1>
+  <div class="en-title">RUBAS: Rubric-Based Reinforcement Learning for Agent Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.5</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 7.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-02 至 06-21 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">RUBAS: Rubric-Based Reinforcement Learning for Agent Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>4 维 rubric（tool / arg / response / help）× GRPO × Qwen3-8B/14B / GLM-4.7-Flash · safety + utility 同改善</td>
+          <td>arXiv 2606.04051 · 2026-06-02 v1 · 清华 CoAI + 华为诺亚 · 8 作者 · cs.LG + cs.AI + cs.CR</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent</a></td>
+          <td>表征下沉 · 多 turn coding agent · 与 6-23 AgentLens 同名递进版（CMU/UW）</td>
+          <td>arXiv 2606.22673 · 2026-06-21 · cs.AI + cs.CR</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">Hidden in Plain Sight: Benchmarking Agent Safety Against Decomposition Attacks with DECOMPBENCH</a></td>
+          <td>分解攻击 benchmark · 把"<em>有害任务拆成无害子任务</em>" 作为一类攻击面立起</td>
+          <td>arXiv 2606.13994 · 2026-06-12 · CMU + UCSD</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.08531" target="_blank" rel="noopener">VESTA: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents</a></td>
+          <td>自动场景生成 + 安全评估流水线 · BrainCog 系列后续</td>
+          <td>arXiv 2606.08531 · 2026-06-07 · 中科院自动化所 · Y. Zeng 组</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.00611" target="_blank" rel="noopener">TRACE: Trajectory Risk-Aware Compression for Long-Horizon Agent Safety</a></td>
+          <td>长程 agent · 稀疏 / 延迟 / 组合风险信号聚合 · 上下文压缩</td>
+          <td>arXiv 2606.00611 · 2026-05-30 · cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="http://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22+OR+ti:%22agent+skills+safety%22+OR+ti:%22agentic+safety%22+OR+abs:%22LLM+agent+safety%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:agent+safety 时间排序</a>。<strong>RUBAS 之所以胜出</strong>：H1 末 agent safety 已经在 6-23 拿到表征下沉（AgentLens）/ 6-25 拿到 skill 攻击面（SkillSafetyBench）/ 6-26 拿到 alignment 框架（AgentDoG 1.5），今日补齐的是<strong>"<em>训练信号怎么设计</em>"</strong>——而 RUBAS 提出的"<em>4 维 rubric + GRPO</em>" 是<em>第一次在三个主流 backbone（Qwen3-8B / Qwen3-14B / GLM-4.7-Flash MoE）上同时跑通 safety + utility 双改善</em>，与 6-26 AgentDoG 1.5 的影响函数净化形成<em>"<em>训练数据净化 × 训练信号 rubric 化</em>"</em> 姊妹方法。AgentLens 6-21（#2）是同期表征侧硬通货但与 6-23 已写报告同名同主题；DECOMPBENCH（#3）是 benchmark 角度，更适合放到 benchmark 方向；VESTA（#4）属于 BrainCog 系列已部分报告过；TRACE（#5）抓住长程压缩但实验规模较小。RUBAS 直击"<em>训练信号</em>" 这块过去 6 个月最稀缺的拼图。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>RUBAS: Rubric-Based Reinforcement Learning for Agent Safety</span></div>
+      <div class="meta-item"><label>中文标题</label><span>RUBAS：基于 4 维 rubric 的 agent 安全强化学习</span></div>
+      <div class="meta-item"><label>作者（8 人）</label><span>Xian Qi Loye / Qinglin Su / Zhexin Zhang / Shiyao Cui / Qi Zhu / Fei Mi / Hongning Wang / Minlie Huang（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>清华大学 CoAI（DCST）+ 华为诺亚方舟实验室</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-02（v1，UTC 09:02:14）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG + cs.AI + cs.CR</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>2,320 KB · 含完整消融与多 backbone 实验</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">arxiv.org/abs/2606.04051</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.04051" target="_blank" rel="noopener">arxiv.org/pdf/2606.04051</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.04051v1" target="_blank" rel="noopener">arxiv.org/html/2606.04051v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.04051" target="_blank" rel="noopener">10.48550/arXiv.2606.04051</a></div>
+      <div class="meta-item"><label>训练算法</label><span><strong>GRPO</strong>（Group Relative Policy Optimization · Shao 2024）· thinking mode</span></div>
+      <div class="meta-item"><label>backbone</label><span>Qwen3-8B / Qwen3-14B / GLM-4.7-Flash（MoE 30B 总 / 3B 激活）</span></div>
+      <div class="meta-item"><label>核心命题</label><span>把 agent safety 从"<em>refuse 二值</em>" 升级为<em>4 维结构化 rubric × 在线优化</em></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent safety 训练信号从"<em>refuse / not-refuse 二值</em>" 升级为<strong>4 维 rubric 在线优化</strong>——<em>tool-use safety</em> + <em>argument safety</em> + <em>response safety</em> + <em>helpfulness</em>，每维由<em>程序化确定性 scorer</em>（仅 refusal 用 Qwen3Guard）打分，GRPO 在 thinking mode 下端到端优化；Qwen3-8B 平均风险 <strong>52.7% → 15.9%</strong>（−36.8 pp，AgentSecurityBench ASR 91.3 → 47.3）、AgentHarm <strong>52.9 → 0</strong>、InjecAgent <strong>5.5 → 0.1</strong>，同时 ToolBeHonest 幻觉抗性<em>反向提升</em> <strong>33.6 → 61.6</strong>—— 首次在三个主流 backbone 上同时打破"<em>safety vs utility 二选一</em>" 的 Pareto 边界。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM 演化为<em>工具使能 agent</em> 带来了一类新的安全挑战——它们与<em>真实世界执行</em> 相关，而不仅仅是文本生成。已有的对齐方法常常依赖<strong>粗粒度的拒绝信号或静态监督</strong>，使得在多样的 agentic 风险下平衡"<em>安全</em>" 与"<em>有用工具执行</em>" 变得很难。</p>
+    <p>我们提出 <strong>RUBAS</strong>，一个基于 rubric 的<em>强化学习</em> 框架，用于 agent 安全。RUBAS 把 agent 行为分解为四个维度：<em>tool-use safety（工具调用安全）</em>、<em>argument safety（参数安全）</em>、<em>response safety（响应安全）</em>、<em>helpfulness（有用性）</em>。这些结构化 rubric 在完整的 agent 轨迹上提供<strong>细粒度、可解释</strong> 的奖励，让强化学习能<em>同时</em> 优化安全的工具使用和任务完成。在多个 agent 安全基准与多个模型上的大量实验显示：RUBAS<strong>相对标准对齐基线显著提升安全</strong>，<strong>减少了工具基的幻觉</strong>，并保持竞争力的 utility。我们的结果表明：<strong>多维 rubric 奖励是在 safety-critical 的工具使用场景下对齐 LLM agent 的有效训练信号</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（4 维 rubric 设计 / GRPO 端到端 / safety-utility Pareto 打破）</div>
+
+    <p><strong>动机：refuse 二值在 agent 时代直接失效。</strong>过去 6 个月 agent safety 文献链条逐渐暴露一个事实：对话时代有效的"<em>refuse-only</em>" 训练信号在 agent 时代直接坏掉——agent 调用工具时，<em>拒绝</em> 与<em>正确执行</em> 之间存在<em>多维</em> 的安全光谱（该不该调用、参数是否泄密、最终响应是否暴露、是否过度拒绝伤害 utility）。SFT / DPO 的粗粒度对齐信号要么<em>过度拒绝</em>（BFCL 从 83.7 跌到 60.7），要么<em>训练崩塌</em>（GLM-4.7-Flash 上 Rule / GuardModel / DPO 三种方法 BFCL 直接归零）。RUBAS 给出的答案是：<strong>把训练信号<em>结构化分解</em></strong>。</p>
+
+    <p><strong>4 维 rubric 设计：把 agent 行为切成 4 个正交维度。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>维度</th><th>判定内容</th><th>scorer 类型</th></tr></thead>
+      <tbody>
+        <tr><td>Tool-Use Safety</td><td>是否仅在适当时调用工具 / 避开受限工具 / 遵守逻辑顺序</td><td>程序化确定性</td></tr>
+        <tr><td>Argument Safety</td><td>是否避免敏感/私密/越权参数 / 参数落在安全范围</td><td>程序化确定性</td></tr>
+        <tr><td>Response Safety</td><td>最终响应是否禁止禁止信息 / 保持 utility</td><td>Qwen3Guard-Gen-8B（仅此一项 LLM-judge）</td></tr>
+        <tr><td>Helpfulness</td><td>仅对良性合规请求，任务完成度与服务质量</td><td>程序化确定性</td></tr>
+      </tbody>
+    </table>
+    <p>每维 score $r_i = \text{norm}(\sum_j \alpha_{ij} c_{ij} / \sum_j \alpha_{ij}) \in [-1, 1]$，$c_{ij} \in \{0,1\}$。总奖励 $R_{\text{rubric}} = \sum_i w_i r_i / \sum_i w_i$。权重按数据类型固定：<em>Harmful</em>（tool=3, arg=0.5, resp=2.5, help=0）/ <em>Sensitive</em>（2.5/2/1.5/2.5）/ <em>Benign</em>（0.5/0.5/0.5/3）。最终奖励含 completion 与 reasoning 惩罚：$R = R_{\text{rubric}} + R_r$ 若 $R_c=1$，否则 $-0.5$。<em>关键设计</em>：除 refusal-judgment 外，<strong>所有 scorer 是程序化确定性检查</strong>——这避开了 LLM-judge 的<em>reward hacking</em>（6-25 Hacker-Fixer Loop 警告的核心问题）。</p>
+
+    <p><strong>GRPO 端到端在线优化。</strong>RL 算法选 GRPO（Shao 2024 / DeepSeekMath）—— 同一 prompt 采样 $n=8$，组内归一化优势，比 PPO 更省 critic、比 DPO 更适合多轮 trajectory。训练超参：学习率 $8\times 10^{-6}$、BF16 全参数、batch 32、max turns 4、3 epochs。训练集 2,353 条（Harmful 2,000 + Sensitive 235 + Benign 118）。所有模型跑 thinking mode—— 这是 H1 末新成为标配的设置。</p>
+
+    <p><strong>关键数据 ① Qwen3-8B 主表（数值越低越安全）。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>方法</th><th>ASB↓</th><th>Injec↓</th><th>AHarm↓</th><th>ASecBench↓</th><th>Avg.Risk↓</th><th>BFCL↑</th><th>TBH↑</th></tr></thead>
+      <tbody>
+        <tr><td>Base</td><td>61.1</td><td>5.5</td><td>52.9</td><td>91.3</td><td>52.7</td><td>83.7</td><td>33.6</td></tr>
+        <tr><td>+ Rule</td><td>29.4</td><td>2.3</td><td>0.0</td><td>65.0</td><td>24.2</td><td>80.8</td><td>53.5</td></tr>
+        <tr><td>+ GuardModel</td><td>31.8</td><td>2.8</td><td>2.2</td><td>67.0</td><td>26.0</td><td>79.2</td><td>56.3</td></tr>
+        <tr><td>+ DPO</td><td>52.8</td><td>4.0</td><td>6.2</td><td>87.5</td><td>37.6</td><td>60.7</td><td>29.8</td></tr>
+        <tr><td>+ SFT</td><td>43.8</td><td>21.9</td><td>8.1</td><td>82.5</td><td>39.1</td><td>57.6</td><td>17.4</td></tr>
+        <tr class="hl"><td><strong>+ RUBAS</strong></td><td><strong>16.3</strong></td><td><strong>0.1</strong></td><td><strong>0.0</strong></td><td><strong>47.3</strong></td><td><strong>15.9</strong></td><td>79.5</td><td><strong>61.6</strong></td></tr>
+      </tbody>
+    </table>
+    <p>RUBAS 在 4 个 safety 基准上全部最佳（平均风险从 52.7 → 15.9，下降 <strong>36.8 pp</strong>），同时 ToolBeHonest 工具幻觉抗性从 33.6 → 61.6（<strong>+28 pp</strong>），BFCL 从 83.7 仅微降到 79.5（其他方法多在 57–61）。<em>这是 H1 末第一次见到 safety 全面提升 + utility 几乎不掉 + 工具幻觉显著下降"<em>三同向改善</em>"</em>。</p>
+
+    <p><strong>关键数据 ② 跨 backbone 稳定性。</strong>Qwen3-14B：Avg.Risk 54.8 → 24.8（−30 pp），TBH 42.1 → 58.6。GLM-4.7-Flash（MoE）：Avg.Risk 37.1 → 28.2（−8.9 pp），BFCL <em>反向提升</em> 68.4 → 71.0（其他方法在 MoE 上 BFCL 直接归零）。<em>这是 MoE backbone 上首次有 safety 训练方法不崩塌</em>—— 文献链条里 DPO/Rule/GuardModel 在 MoE 上几乎全部退化（标注 † 训练崩塌）。</p>
+
+    <p><strong>关键数据 ③ Pareto 边界打破。</strong>过去 6 个月 safety 文献链条里"<em>safety vs utility 二选一</em>" 是被反复 verified 的现象——SFT 让 BFCL 跌 26 pp，DPO 让 BFCL 跌 23 pp。RUBAS 把这条 Pareto 边界<em>向右上推</em>：safety 提升 36.8 pp + utility 仅降 4.2 pp + tool-honesty 涨 28 pp，三轴同向改善。</p>
+
+    <p><strong>方法学位置：训练信号 rubric 化 × 训练数据净化（与 6-26 AgentDoG 1.5 的姊妹方法）。</strong>把 H1 末 agent safety 链条排开：6-23 AgentLens（<em>表征下沉</em>）/ 6-25 SkillSafetyBench（<em>攻击面新立</em>）/ 6-26 AgentDoG 1.5（<em>训练数据净化 + 在线护栏</em>）/ 今日 RUBAS（<em>训练信号 rubric 化</em>）—— 形成完整的"<em>攻击面 × 表征防御 × 训练数据 × 训练信号 × 在线护栏</em>" 五拍闭环。RUBAS 与 AgentDoG 1.5 的关系尤其关键：<strong>前者管"<em>训练信号怎么造</em>"，后者管"<em>训练数据怎么选</em>"</strong>，可以叠加部署。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 12 条，附链接）</div>
+    <div class="ref-item">Shao et al. — <em>GRPO / DeepSeekMath</em>（核心 RL 算法）<br>
+    <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv.org/abs/2402.03300</a></div>
+    <div class="ref-item">Zhang et al. — <em>Agent-SafetyBench (ASB)</em>（2,000 cases × 10 failure modes · 主测试集）<br>
+    <a href="https://arxiv.org/abs/2412.14470" target="_blank" rel="noopener">arxiv.org/abs/2412.14470</a></div>
+    <div class="ref-item">Zhan et al. — <em>InjecAgent</em>（间接提示注入，1,054 cases）<br>
+    <a href="https://arxiv.org/abs/2403.02691" target="_blank" rel="noopener">arxiv.org/abs/2403.02691</a></div>
+    <div class="ref-item">Andriushchenko et al. — <em>AgentHarm</em>（agent 显式恶意提示）<br>
+    <a href="https://arxiv.org/abs/2410.09024" target="_blank" rel="noopener">arxiv.org/abs/2410.09024</a></div>
+    <div class="ref-item">Zhang et al. — <em>AgentSecurityBench (ASB)</em>（对抗环境 DPI · 主测试集）<br>
+    <a href="https://arxiv.org/abs/2410.02644" target="_blank" rel="noopener">arxiv.org/abs/2410.02644</a></div>
+    <div class="ref-item">Patil et al. — <em>BFCL (Berkeley Function Calling Leaderboard)</em>（2,501 cases · 工具能力主测）<br>
+    <a href="https://gorilla.cs.berkeley.edu/leaderboard.html" target="_blank" rel="noopener">gorilla.cs.berkeley.edu/leaderboard</a></div>
+    <div class="ref-item">Zhang et al. — <em>ToolBeHonest (TBH)</em>（700 样本 7 任务 · 工具幻觉主测）<br>
+    <a href="https://arxiv.org/abs/2406.20015" target="_blank" rel="noopener">arxiv.org/abs/2406.20015</a></div>
+    <div class="ref-item">Sha et al. — <em>Agent Safety Alignment via RL</em>（Rule baseline 来源）<br>
+    <a href="https://arxiv.org/abs/2503.08679" target="_blank" rel="noopener">arxiv.org/abs/2503.08679</a></div>
+    <div class="ref-item">Huang et al. — <em>Reinforcement Learning with Rubric Anchors</em>（rubric-RL 先驱）<br>
+    <a href="https://arxiv.org/abs/2507.17746" target="_blank" rel="noopener">arxiv.org/abs/2507.17746</a></div>
+    <div class="ref-item">Gunjal et al. — <em>Rubrics as Rewards</em>（医学/科学推理 · 同 family 方法）<br>
+    <a href="https://arxiv.org/abs/2507.17746" target="_blank" rel="noopener">arxiv.org/abs/2507.17746</a></div>
+    <div class="ref-item">Rafailov et al. — <em>DPO</em>（baseline 对照）<br>
+    <a href="https://arxiv.org/abs/2305.18290" target="_blank" rel="noopener">arxiv.org/abs/2305.18290</a></div>
+    <div class="ref-item">Zhao et al. — <em>Qwen3Guard</em>（仅 refusal judgment 使用）<br>
+    <a href="https://arxiv.org/abs/2510.14276" target="_blank" rel="noopener">arxiv.org/abs/2510.14276</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：agent safety 训练信号必须从"<em>refuse 二值</em>" 升级为<em>多维 rubric</em>—— 工具调用决定/参数泄密/响应/有用性四轴正交。</li>
+      <li><strong>核心论点 ②</strong>：rubric scorer 应尽可能<em>程序化确定性</em>—— 仅 refusal 判断用 LLM-judge，避免 reward hacking。</li>
+      <li><strong>核心论点 ③</strong>：GRPO 在 thinking mode 下能<em>同时</em> 优化 safety 与 utility——打破"<em>二选一</em>" Pareto 边界。</li>
+      <li><strong>Qwen3-8B 主表</strong>：Avg.Risk <strong>52.7 → 15.9</strong>（−36.8 pp，4 个 safety bench 全部 SOTA）。</li>
+      <li><strong>AgentHarm</strong>：52.9 → 0.0 · <strong>AgentSecurityBench</strong>：91.3 → 47.3 · <strong>InjecAgent</strong>：5.5 → 0.1。</li>
+      <li><strong>ToolBeHonest</strong>：33.6 → <strong>61.6</strong>（+28 pp）—— safety 训练<em>反向</em> 减少工具幻觉。</li>
+      <li><strong>BFCL 几乎不掉</strong>：83.7 → 79.5（其他 baseline 跌到 57–61）。</li>
+      <li><strong>跨 backbone 稳定</strong>：Qwen3-14B Avg.Risk 54.8 → 24.8；GLM-4.7-Flash MoE BFCL <em>反升</em> 68.4 → 71.0。</li>
+      <li><strong>MoE 抗崩塌</strong>：Rule/GuardModel/DPO 在 MoE 上 BFCL 直接归零（标 †）；RUBAS 唯一不崩。</li>
+      <li><strong>训练规模小</strong>：2,353 训练样本（Harmful 2,000 + Sensitive 235 + Benign 118）。</li>
+      <li><strong>4 维权重</strong>：Harmful = (3, 0.5, 2.5, 0)；Sensitive = (2.5, 2, 1.5, 2.5)；Benign = (0.5, 0.5, 0.5, 3)。</li>
+      <li><strong>方法学位置</strong>：与 6-26 AgentDoG 1.5（数据净化）配对 = 训练数据 × 训练信号双轨。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>RUBAS 对 harness 工程链条的启发是<strong>"<em>把 harness 的成功标准也 rubric 化</em>"</strong>：(1) <em>4 维 rubric</em> 思路可直接平移 KV-cache harness——<em>cache 命中率（hit）/ 计算正确性（correctness）/ 内存峰值（memory-safe）/ 延迟达标（latency-helpful）</em> 四维评分，避免单一 throughput 指标掩盖隐性故障；(2) <em>程序化确定性 scorer</em>—— KV-cache 的每一维都可以做成确定性检查（cache 是否一致、numerical 是否对齐、显存是否超 SLA），避免依赖 LLM-judge；(3) <em>GRPO 端到端优化</em>—— 当 KV-cache 配置变得 cross-cutting 时（spec decoding + paged attention + radix tree），可以用 GRPO 把"<em>下一步该改哪个组件</em>" 直接当 multi-arm bandit 优化；(4) <em>权重按 workload 类型固定</em>（Harmful/Sensitive/Benign 不同权重）对偶 KV-cache 的 <em>workload-aware 权重</em>（prefill-heavy / decode-heavy / multi-tenant 不同权重）；(5) 与 6-26 NOVA 的 architecture gradient 形成<em>姊妹方法</em>—— NOVA 提供"<em>下一步改什么</em>" 的离散信号，RUBAS 提供"<em>当前状态打多少分</em>" 的连续信号，二者叠加 = 完整 harness 演化反馈环。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击方向）</div>
+        <p>这篇是 H1 末"<em>训练信号怎么造</em>" 一拍的代表作，与 6-26 AgentDoG 1.5（数据净化）共构姊妹方法：(1) <em>4 维 rubric 设计</em> 可直接被 skill safety 复用——把 SkillSafetyBench 的 6 风险域 × 30 类别折叠成 tool/arg/response/help 四轴，让 skill-mediated 攻击的训练信号<em>有结构</em>；(2) <em>程序化确定性 scorer</em>——这是 skill 安全可复现的关键，"<em>是否调用了不该调的 skill</em>" 是确定性可测的；(3) <em>workload-aware 权重</em>—— Harmful/Sensitive/Benign 权重不同，skill 场景应再加一档 <em>Skill-Compromised</em>（skill 本身被污染但用户无恶意），权重应学 Sensitive 而非 Harmful；(4) <em>GRPO 在 thinking mode</em>—— 让 agent 在 reasoning 中显式给出 4 维 rubric 自评，再用 KL 约束训练；(5) <em>不二选一</em>—— RUBAS 证明 safety + utility + tool-honesty 可以三同向，未来 skill safety 研究应放弃"<em>refusal-rate 是 safety 主指标</em>" 的误区；(6) <em>开源缺失</em>—— RUBAS 没释出代码（只引 AReaL/TRL 训练框架），这是其评分不到 95 的核心扣分项，本方向后续工作需要补足。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>RUBAS 对 safety benchmark 设计的间接启发：(1) <em>多维 rubric 评分</em> 应该<em>同时</em> 成为 benchmark 报告口径—— 当前 benchmark 报 ASR / refusal-rate 但很少同时报 utility / tool-honesty，导致"<em>训练得越安全越笨</em>" 这种 trade-off 被掩盖；(2) <em>程序化 scorer</em> 应该是 benchmark 必备—— LLM-judge 是过去两年 benchmark gaming 的元凶，今日 #3 REALM 已经显示 PromptInject 在 LLM-judge 下虚高；(3) <em>workload type 权重</em>—— Safety benchmark 应该区分 Harmful / Sensitive / Benign 三种 split 分别报数字，而不是把它们混在一个 ASR 里；(4) <em>跨 backbone 稳健性</em>—— Safety benchmark 应该至少在 dense + MoE 双 backbone 上报告，否则一个方法的 MoE-崩塌 漏洞会被掩盖；(5) <em>训练数据规模小</em>（2,353）是 benchmark 设计的 reminder—— Safety 训练集不应该堆量，而应该堆<em>结构化 rubric 标注</em>；(6) 与今日 #3 REALM 的<em>agentic target-generation pipeline</em> 形成"<em>训练侧 rubric 化 × 测试侧场景化</em>" 完整闭环。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AgentDoG 1.5 (6-26)</strong> · 训练数据净化 + 在线护栏 · 与 RUBAS 形成"<em>数据 × 信号</em>" 姊妹方法<br>
+      <a href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">arxiv.org/abs/2605.29801</a></li>
+      <li><strong>SkillSafetyBench (6-25)</strong> · skill 攻击面新立 · 给 RUBAS 提供新的训练数据类型<br>
+      <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></li>
+      <li><strong>GRPO / DeepSeekMath (2024)</strong> · RUBAS 核心算法<br>
+      <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv.org/abs/2402.03300</a></li>
+      <li><strong>Agent-SafetyBench (2024)</strong> · RUBAS 主测试集<br>
+      <a href="https://arxiv.org/abs/2412.14470" target="_blank" rel="noopener">arxiv.org/abs/2412.14470</a></li>
+      <li><strong>Rubrics as Rewards (2025)</strong> · rubric-RL 在医学/科学推理的先驱<br>
+      <a href="https://arxiv.org/abs/2507.17746" target="_blank" rel="noopener">arxiv.org/abs/2507.17746</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.04051" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.04051v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.04051" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/huggingface/trl" target="_blank" rel="noopener">TRL 训练框架</a>
+      <a class="link-btn" href="http://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22&sortBy=submittedDate" target="_blank" rel="noopener">arXiv agent safety 检索</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-28 #1 · 搜索来源：arxiv.org/api/query?ti:agent+safety + arxiv.org/abs/2606.04051 + arxiv.org/html/2606.04051v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">arxiv.org/abs/2606.04051</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

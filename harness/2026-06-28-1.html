@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-28 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-28 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 28 日 · Harness Engineering · 把 harness-control 实验范式做到<em>因果消融级</em>——同模型、同沙盒、同评分器下问"<em>结构化索引到底带来什么</em>"</div>
+  <h1>Code Isn't Memory：在<strong>固定 coding agent harness × 固定模型</strong>下首次因果消融<strong>结构化代码库索引</strong>——Loc acc@5 <strong>44.3% → 84.5%</strong>（+39.6 pp，p&lt;0.0001）/ Resolve <strong>41.9% → 50.4%</strong>（+7.9 pp，p=0.003）/ $/solved <strong>$2.84 → $2.30</strong>，且<em>多文件场景</em> 涨幅最大（91.3% vs 44.9%）</h1>
+  <div class="en-title">Code Isn't Memory: A Structural Codebase Index Inside a Coding Agent</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-14 至 06-25 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">Code Isn't Memory: A Structural Codebase Index Inside a Coding Agent</a><span class="winner-badge">今日选定</span></td>
+          <td>固定 harness × 固定模型 × 3 seed × 三 arms 因果消融 · Vector + Graph + BM25 三索引 · 91 实例（Go/Java/Python）</td>
+          <td>arXiv 2606.22417 · 2026-06-21 v1 · 4 作者 · cs.AI · GitHub TransformerOptimus/supercoder-eval</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.21005" target="_blank" rel="noopener">Building Agent Harnesses for Scientific Curation from Multimodal Sources</a></td>
+          <td>多模态科研 curation harness（长文本 + 表格 + 图）· 多 evidence fragments 推理</td>
+          <td>arXiv 2606.21005 · 2026-06-19 · S. Zhang / Q. Liu / R. Luo · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18363" target="_blank" rel="noopener">Guava: An Effective and Universal Harness for Embodied Manipulation</a></td>
+          <td>具身操作 harness · 把高层推理 + 外部工具与 VLA 解耦 · 与 6-26 ForesightSafety-VLA 配对</td>
+          <td>arXiv 2606.18363 · 2026-06-16 · H. Liu / X. Li / S. Yao · cs.RO + cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.16420" target="_blank" rel="noopener">Transferable Self-Evolving Playbooks for Agentic Security Auditing</a></td>
+          <td>三组件分解（LLM × harness × playbook）+ 自演化 playbook · 安全审计 agent</td>
+          <td>arXiv 2606.16420 · 2026-06-15 · cs.CR + cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.16038" target="_blank" rel="noopener">Open-SWE-Traces: Advancing Dual-Mode Multilingual Distillation</a></td>
+          <td>207k SE agent trajectories · 9 语言 · harness-aware 蒸馏数据集</td>
+          <td>arXiv 2606.16038 · 2026-06-14 · NVIDIA / cs.SE</td>
+          <td class="score-num">89</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="http://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+ti:%22harness+engineering%22+OR+ti:%22LLM+harness%22+OR+abs:%22agent+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:harness 时间排序</a>。<strong>Code Isn't Memory 之所以胜出</strong>：6-26 NOVA 把工业 GMV 写进 abstract，是<em>结果导向</em> 的工程证据；今日这篇则是<em>方法导向</em> 的因果消融——它把"<em>harness 是否需要结构化检索</em>" 这个长期被部署 vendor 默认默认（"我们当然要 index"/"grep 就够了") 的问题<strong>第一次做成可重复的统计假设检验</strong>：同一 Claude Opus 4.7、同一沙盒、同一 leak-audited 评分器，<em>仅</em> 在工具 schema 中加/去 codebase_search + codebase_graph 两个工具，n=80 配对样本 Resolve 涨 7.9 pp（p=0.003），Loc acc@5 涨 39.6 pp（p&lt;0.0001），$/solved 不升反降。这把 6-25 Interplay（harness × post-training）/ 6-26 NOVA（验证联动）三联拍补上第三块——<strong>harness-control 实验范式 (harness ablation as causal experiment)</strong>。其它候选要么是新 harness 设计（Guava / Playbooks），要么是数据集（Open-SWE-Traces），均缺少这个范式价值。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Code Isn't Memory: A Structural Codebase Index Inside a Coding Agent</span></div>
+      <div class="meta-item"><label>中文标题</label><span>代码不是记忆：Coding Agent 内部的<em>结构化代码库索引</em> 因果消融研究</span></div>
+      <div class="meta-item"><label>作者（4 人）</label><span>Ishaan Bhola / Adithyan Krishnan / Sravanth Kurmala / Mukunda NS</span></div>
+      <div class="meta-item"><label>机构</label><span>TransformerOptimus（SuperCoder 团队 · 工业 coding agent vendor）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-21（v1，UTC 10:10:51）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>96 KB（PDF）· 因果实验报告型</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">arxiv.org/abs/2606.22417</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.22417" target="_blank" rel="noopener">arxiv.org/pdf/2606.22417</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.22417v1" target="_blank" rel="noopener">arxiv.org/html/2606.22417v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.22417" target="_blank" rel="noopener">10.48550/arXiv.2606.22417</a></div>
+      <div class="meta-item"><label>底层模型</label><span><strong>Claude Opus 4.7</strong>（Anthropic · 三 arms 共用）</span></div>
+      <div class="meta-item"><label>基准</label><span>SWE-PolyBench Verified + SWE-bench Pro · 91 实例 · Go/Java/Python</span></div>
+      <div class="meta-item"><label>代码 / 数据</label><a href="https://github.com/TransformerOptimus/supercoder-eval" target="_blank" rel="noopener">github.com/TransformerOptimus/supercoder-eval</a></div>
+      <div class="meta-item"><label>核心命题</label><span>把 harness ablation 做成<em>因果实验</em>——同一模型、同一沙盒、唯一变量是工具 schema</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<em>结构化索引 vs agentic grep</em>" 这个被 coding-agent vendor 默认默认的问题<strong>做成可重复的因果消融</strong>——在同一 Claude Opus 4.7、同一沙盒、同一 leak-audited 评分器下，仅在工具 schema 中加/去 <em>codebase_search</em> 与 <em>codebase_graph</em> 两个工具，Loc acc@5 <strong>44.3% → 84.5%</strong>（+39.6 pp，p&lt;0.0001）、Resolve <strong>41.9% → 50.4%</strong>（+7.9 pp，p=0.003）、$/solved <strong>$2.84 → $2.30</strong>，且收益<em>集中在 3+ 文件改动</em>（91.3% vs 44.9% 定位率），为 harness 工程提供首个<strong>harness-control 实验范式</strong> 的开源模板（per-cell 数据库 + leak-audit 脚本全部释出）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Coding agent 现在把 LLM 与<em>工作仓库上的检索</em> 交织在一起，而<strong>检索的具体实现方式在已部署的各种 harness 之间差异巨大</strong>。在一个固定的 coding-agent harness、固定的模型上，给它加一个<em>结构化代码库索引</em> 到底会不会改变成本或 resolve 率？我们跑了三个 arm（含索引的 harness、同一 harness 不含索引、以及一个 agentic-grep 对照 harness），在 SWE-PolyBench Verified 和 SWE-bench Pro 上，全程固定 Claude Opus 4.7，跨三个 seed，每个任务在<em>泄漏审计过的 per-task sandbox</em> 中运行。</p>
+    <p><strong>同 harness 内的消融</strong> 产生了一个很大的定位率提升和一个具有统计显著性的 resolve 率提升，单 cell 没有成本惩罚，每个解决方案的成本反而更低。<strong>跨 harness 对照</strong> 显示，相对于 agentic-grep baseline，索引在 resolve 与定位上没有退步，仍然没有成本惩罚。我们释出了 per-cell 排除账本、leak-audit 脚本、定位提取器和结果数据库。<strong>结构化代码库索引的部署问题因此不再是"是否太贵以至于跑不起"</strong>（跨 seed，索引方案的 $/solved 都比 agentic-grep 更低），<strong>而是工作负载是否包含<em>多文件改动</em>——结构化排序在这种场景下才会真正回本</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（三 arms 因果消融 / 三索引设计 / 多文件回本曲线）</div>
+
+    <p><strong>动机：检索差异被 vendor 默默吞掉，缺一个因果对照。</strong>2024–2026 H1 的 coding agent 路线分歧严重：Cursor / Cline / Aider 走 PageRank-ed repo map；Cody / SuperCoder 走 AST + 嵌入 + 图三索引；OpenHands / OpenCode / Aider+ 走"<em>grep 就够了</em>"。Sen et al. (NeurIPS 2024) "Is grep all you need?" 在 agentic loop 内对比 grep 与 dense retrieval 后倾向 grep，但其设定是<em>非代码</em>。在代码场景，<strong>结构化索引的工程成本不低</strong>（AST 解析 + 嵌入 + 图构建 + 增量更新），如果对 resolve 与成本都没增益，那 vendor 投入索引基建就只是"<em>看上去专业</em>"。这篇论文正面回答这个问题。</p>
+
+    <p><strong>实验设计：harness-control 的因果消融范式。</strong>三个 arm，<em>仅工具 schema 不同</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>Arm</th><th>组成</th><th>对照角色</th></tr></thead>
+      <tbody>
+        <tr><td>SC-ON</td><td>SuperCoder harness + <code>codebase_search</code> + <code>codebase_graph</code></td><td>含索引的<em>实验组</em></td></tr>
+        <tr><td>SC-OFF</td><td>SuperCoder harness 去掉<em>仅</em> 上述两个工具，其余完全相同</td><td>同 harness 内<em>因果对照组</em></td></tr>
+        <tr><td>OpenCode</td><td>独立开源 harness · ripgrep + read + glob + bash · 无任何结构化检索</td><td>跨 harness 的<em>agentic-grep 基线</em></td></tr>
+      </tbody>
+    </table>
+    <p>统一变量：<em>模型固定 Claude Opus 4.7</em>、<em>同一沙盒</em>、<em>同一 leak-audited 评分器</em>、<em>3 seed</em>、<em>pass@1</em>。基准：SWE-PolyBench Verified（多语言）+ SWE-bench Pro（长上下文 Python），共 <strong>91 实例</strong>（Go 34 + Java 20 + Python 37）。配对样本：SC-ON vs SC-OFF n=80；SC-ON vs OpenCode n=78；三方交集 n=75。<em>这是 coding-agent harness 论文里第一次把"<em>同 harness 因果消融</em>" 与"<em>跨 harness 对照</em>" 写进同一篇文章。</em></p>
+
+    <p><strong>关键数据 ① 同 harness 因果消融（Resolve / 定位 / 成本）。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>指标</th><th>SC-ON</th><th>SC-OFF</th><th>OpenCode</th><th>显著性（ON vs OFF）</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Resolve %</td><td>50.4</td><td>41.9</td><td>45.3</td><td>+7.9 pp · p=0.003</td></tr>
+        <tr class="hl"><td>Loc acc@5（View B）</td><td>84.5</td><td>44.3</td><td>75.3</td><td>+39.6 pp · p&lt;0.0001</td></tr>
+        <tr><td>Recall@5</td><td>0.611</td><td>0.330</td><td>0.601</td><td>+0.281 · p&lt;0.0001</td></tr>
+        <tr><td>$/solved</td><td>$2.30</td><td>$2.84</td><td>$2.92</td><td>−$0.54（更便宜）</td></tr>
+        <tr><td>$/cell mean</td><td>$1.15</td><td>$1.19</td><td>$1.32</td><td>−$0.118 · p=0.73（不显著）</td></tr>
+        <tr><td>Turns</td><td>28.3</td><td>36.2</td><td>36.0</td><td>−8.3 · p&lt;0.0001</td></tr>
+        <tr><td>Tokens (k)</td><td>10.1</td><td>11.1</td><td>14.0</td><td>−1.6k · p=0.027</td></tr>
+      </tbody>
+    </table>
+    <p>注意：<em>单 cell 成本差异统计不显著（p=0.73）</em>—— <strong>$/solved 的优势完全来自更高的解决率，而非更低的单次成本</strong>。这把"<em>结构化索引贵</em>" 的直觉证伪：索引带来的 turns/tokens 节省抵消了 embedding 成本。</p>
+
+    <p><strong>关键数据 ② 多文件改动是回本曲线的拐点。</strong>按 gold-file 数量分桶：</p>
+    <table class="data-table">
+      <thead><tr><th>gold-file 数量</th><th>SC-ON Resolve %</th><th>SC-OFF Resolve %</th><th>Loc 差距</th></tr></thead>
+      <tbody>
+        <tr><td>1 文件</td><td>52.7</td><td>41.3</td><td>+11.4 pp</td></tr>
+        <tr><td>2 文件</td><td>55.6</td><td>51.0</td><td>+4.6 pp</td></tr>
+        <tr class="hl"><td><strong>3+ 文件</strong></td><td><strong>42.0</strong></td><td>36.2</td><td><strong>+46.4 pp（定位）/ 91.3 vs 44.9</strong></td></tr>
+      </tbody>
+    </table>
+    <p>这是 harness 工程链条第一次给出<em>"<em>索引收益与改动跨度成正相关</em>"</em> 的定量曲线。结论：<strong>部署索引的决策不再是"是否太贵"，而是"工作负载里有多少 multi-file change"</strong>。</p>
+
+    <p><strong>三索引设计：Vector + Graph + BM25 三轨并行。</strong>(1) Tree-sitter 解析每个文件 → AST；(2) 提取器遍历 AST 收集 definitions / identifiers / references / call edges；(3) 代码 chunk 嵌入为向量；(4) <em>三索引并行填充</em>：Vector index（语义召回）、Graph index（call 边可达性）、Lexical BM25 index（精确符号召回）。增量更新通过 <em>Merkle-tree diff</em>：编辑只让受影响 chunks 失效重索引，而非整个仓库。Agent 拿到两个工具：<code>codebase_search(query, strategy={vector|lexical|graph|hybrid})</code> 与 <code>codebase_graph(symbol, direction)</code>—— 后者按符号遍历 call graph 返回 callers/callees。<em>这是 harness 工程里第一次把"<em>检索策略</em>" 作为 agent 的<em>显式参数</em> 暴露</em>，而非藏在 vendor 黑盒里。</p>
+
+    <p><strong>方法学位置：harness-control 实验范式三联拍。</strong>把 6-25 Interplay（harness × post-training）/ 6-26 NOVA（verification 联动）/ 今日 Code Isn't Memory（因果消融）连起来，刚好补齐 H1 末 harness 工程的三个抽象层级：训练侧（如何让 harness 与 post-training 联动）+ 验证侧（如何让 verifier 既是 gate 也是梯度）+ <strong>实验方法学侧（如何科学评估一个 harness 组件）</strong>。前两篇给"<em>怎么做</em>"，这篇给"<em>怎么测</em>"——这是 vendor 文化（"我们就该有 index"）与学界文化（"先做 ablation"）之间长期缺失的桥梁。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 12 条，附链接）</div>
+    <div class="ref-item">Yang et al. — <em>SWE-agent</em>（NeurIPS 2024 · agent-computer-interface 框架 · 因其参与 SWE-bench 构建被排除作对照）<br>
+    <a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener">arxiv.org/abs/2405.15793</a></div>
+    <div class="ref-item">Wang et al. — <em>OpenHands / OpenDevin</em>（ICLR 2025 · 多 agent 协调平台）<br>
+    <a href="https://arxiv.org/abs/2407.16741" target="_blank" rel="noopener">arxiv.org/abs/2407.16741</a></div>
+    <div class="ref-item">Sen et al. — <em>"Is grep all you need?"</em>（agentic loop 内 grep vs dense retrieval 对比 · 最近最直接的先验工作）<br>
+    <a href="https://arxiv.org/abs/2502.09000" target="_blank" rel="noopener">arxiv.org/abs/2502.09000</a></div>
+    <div class="ref-item">Zhang et al. — <em>AutoCodeRover</em>（ISSTA 2024 · AST 感知搜索 + 谱故障定位）<br>
+    <a href="https://arxiv.org/abs/2404.05427" target="_blank" rel="noopener">arxiv.org/abs/2404.05427</a></div>
+    <div class="ref-item">Chen et al. — <em>LocAgent</em>（图引导的代码定位 agent · 提供文件级 acc@k）<br>
+    <a href="https://arxiv.org/abs/2503.09089" target="_blank" rel="noopener">arxiv.org/abs/2503.09089</a></div>
+    <div class="ref-item">Ouyang et al. — <em>RepoGraph</em>（将仓库代码图插入 SWE-agent）<br>
+    <a href="https://arxiv.org/abs/2410.14684" target="_blank" rel="noopener">arxiv.org/abs/2410.14684</a></div>
+    <div class="ref-item">Tao et al. — <em>Code Graph Model (CGM)</em>（图与 LLM attention 集成）<br>
+    <a href="https://arxiv.org/abs/2506.05485" target="_blank" rel="noopener">arxiv.org/abs/2506.05485</a></div>
+    <div class="ref-item">Xia et al. — <em>Agentless</em>（非 agent 的三阶段定位与修复）<br>
+    <a href="https://arxiv.org/abs/2407.01489" target="_blank" rel="noopener">arxiv.org/abs/2407.01489</a></div>
+    <div class="ref-item">Jimenez et al. — <em>SWE-bench</em>（ICLR 2024 · 基础基准）<br>
+    <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a></div>
+    <div class="ref-item">Rashid et al. — <em>SWE-PolyBench</em>（多语言扩展 · 本研究采用）<br>
+    <a href="https://arxiv.org/abs/2504.08703" target="_blank" rel="noopener">arxiv.org/abs/2504.08703</a></div>
+    <div class="ref-item">Deng et al. — <em>SWE-bench Pro</em>（长上下文 Python · 本研究采用）<br>
+    <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">arxiv.org/abs/2509.16941</a></div>
+    <div class="ref-item">Yao et al. — <em>ReAct</em>（ICLR 2023 · 推理-行动 loop · 三 arms 共用 backbone 范式）<br>
+    <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：harness 组件研究应该<em>做成因果实验</em>—— 同模型 × 同沙盒 × 同评分器 × 仅工具 schema 不同。</li>
+      <li><strong>核心论点 ②</strong>：结构化代码库索引 ≠ "<em>memory</em>"—— 它是<em>外置的、可被 leak-audit 验证的</em> 检索基建，不被 vendor 黑盒化。</li>
+      <li><strong>核心论点 ③</strong>：索引收益<em>集中在 multi-file change</em>—— 决策因子从"<em>太贵</em>" 转向"<em>工作负载分布</em>"。</li>
+      <li><strong>Resolve（pass@1）</strong>：SC-ON <strong>50.4%</strong> > OpenCode 45.3% > SC-OFF 41.9%（n=80 配对 p=0.003）。</li>
+      <li><strong>Loc acc@5</strong>：SC-ON <strong>84.5%</strong> >> SC-OFF 44.3%（+39.6 pp，p&lt;0.0001）—— 定位是结构化检索最强项。</li>
+      <li><strong>3+ 文件子集</strong>：定位 91.3% vs 44.9%—— 多文件改动是索引回本的拐点。</li>
+      <li><strong>$/solved</strong>：$2.30 < $2.84 < $2.92—— 索引非但不贵，反而 <em>cheaper-per-solve</em>。</li>
+      <li><strong>$/cell 不显著</strong>：p=0.73—— 优势来自更高 resolve，不是更低单次成本。</li>
+      <li><strong>Turns 减少 8.3</strong>（p&lt;0.0001）—— 索引帮 agent 少绕弯。</li>
+      <li><strong>三索引</strong>：Vector（语义）+ Graph（call 边）+ BM25（符号精确）+ Merkle-tree diff 增量更新。</li>
+      <li><strong>跨 harness 对照</strong>：SC-ON 略优于 OpenCode（resolve / acc@5 方向一致 p=0.087/0.080）—— 索引不会让 agent 退步到 agentic-grep 之下。</li>
+      <li><strong>开源</strong>：per-cell 排除账本 + leak-audit 脚本 + 定位提取器 + 结果数据库全部释出。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>这篇是<strong>"<em>如何科学评估一个 harness 组件</em>"</strong> 的开源模板，对你 KV-cache / SGLang 毕设的启发极具操作性：(1) <em>因果消融范式</em>——把每个 KV-cache 组件（eviction / placement / prefetch / sparse pattern）当 <code>codebase_search</code> 一样处理：固定模型、固定 workload、固定评分器，<em>仅</em> 切换该组件开/关，做配对 Wilcoxon 检验；(2) <em>leak-audit 思想</em>—— KV-cache benchmark 的 hidden leakage 是"<em>跨 request 的 cache 残留</em>"，应该写出 per-task sandbox 隔离脚本并 release；(3) <em>per-cell ledger</em>—— 把每个 (task, seed, config) 三元组的成本/延迟/吞吐写入数据库，而非只 report aggregate；(4) <em>multi-file 拐点</em> 对偶 KV-cache 的<em>multi-request 拐点</em>—— 长上下文/多 turn/multi-tenant 才是 cache 设计回本的场景，benchmark 应该按 request 跨度分桶；(5) <em>三索引并行</em>（Vector + Graph + BM25）对偶 KV-cache 的<em>三策略并行</em>（LRU + Semantic + Prefetch hint）—— 不要把任何一种 cache 策略作为"<em>正确答案</em>"，让 agent 在 runtime 显式选择 strategy 参数；(6) <em>3 seed × paired Wilcoxon</em>—— 这是你做毕设实验时强烈推荐采用的统计方法，比单一 mean 更能 defend。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>这篇对 agent safety 研究有方法学层面启发：(1) <em>同 harness 因果消融</em> 是评估 safety 干预效果的<strong>正确实验范式</strong>—— 当前 safety alignment 工作（如今日 #2 RUBAS）常把"<em>训练数据 + 训练方法 + 评测 backbone</em>" 三件事混在一起，应学习这篇做<em>仅切换单一干预</em> 的 ablation；(2) <em>per-cell ledger</em> 对偶 safety 的 <em>per-trajectory ledger</em>—— ASR 平均数会掩盖少数高危轨迹，应释出每条轨迹的 safety violation 标签；(3) <em>multi-file 收益曲线</em> 对偶 safety 的<em>multi-turn 收益曲线</em>—— 6-25 SkillSafetyBench 已指出多 turn 才暴露 skill-mediated 攻击，今日这篇提供了"<em>按 horizon 分桶报告</em>" 的可视化模板；(4) <em>leak-audit 脚本</em> 对偶 safety 的<em>prompt-leakage audit</em>—— 应释出"<em>测试集是否在训练集出现过</em>" 的脚本，让 safety 评测可复现；(5) <em>结构化索引 vs grep</em> 对偶 safety 的<em>外置 guardrail vs 内嵌 alignment</em>—— 同 backbone 下到底外挂 Llama-Guard 还是 RLHF 重训，应该做 same-experiment-design 的对比，而非各报各 ASR。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>这篇为 safety benchmark 设计提供了一套<strong>"<em>实验方法学最小模板</em>"</strong>：(1) <em>固定 backbone</em>—— Safety benchmark 应该至少 report 1 个 fixed-model 的全量 ablation，否则跨 paper 的 ASR 数字无法比较；(2) <em>per-cell ledger</em>—— 释出每个 (task, seed, defense) 三元组的原始结果，否则后续 paper 无法做 meta-analysis；(3) <em>leak-audit 脚本</em>—— Safety benchmark 的最大 confounder 是 prompt-leakage，应必备此脚本；(4) <em>3 seed × paired Wilcoxon</em>—— Safety benchmark 不应只 report 一个 mean ASR，应给出配对置信区间；(5) <em>"<em>$/solved</em>" 思想</em> 平移到 safety 即 <em>"<em>$/blocked</em>"</em>—— 防御方法的真实成本应按"<em>每成功拦截一次攻击的成本</em>" 报告；(6) <em>multi-file 分桶</em> 对偶 safety 的<em>multi-turn 分桶 + multi-tool 分桶</em>—— 评测应按 horizon 与 tool diversity 切分；(7) 与 6-26 ForesightSafety-VLA 的"<em>L × W × V 三轴诊断</em>" 形成跨方向的同构框架：harness control 是<em>方法学层面</em>，VLA L×W×V 是<em>语义层面</em>，两者都把单一 ASR/Success 数字分解成<em>多维诊断矩阵</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>NOVA (6-26)</strong> · 验证联动 + 工业 A/B · 与今日因果消融形成"<em>怎么做 × 怎么测</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">arxiv.org/abs/2606.27243</a></li>
+      <li><strong>Interplay (6-25)</strong> · harness × post-training 联动 · 与今日补齐 harness 工程三联拍<br>
+      <a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arxiv.org/abs/2606.25447</a></li>
+      <li><strong>Sen et al. — Is grep all you need? (2025)</strong> · 本研究最直接的先验工作<br>
+      <a href="https://arxiv.org/abs/2502.09000" target="_blank" rel="noopener">arxiv.org/abs/2502.09000</a></li>
+      <li><strong>RepoGraph (2024)</strong> · 将仓库代码图插入 SWE-agent<br>
+      <a href="https://arxiv.org/abs/2410.14684" target="_blank" rel="noopener">arxiv.org/abs/2410.14684</a></li>
+      <li><strong>StaminaBench (6-17)</strong> · 跨 6 harness × 7 LLM 长程交互 · 与今日补齐 harness-control 双视角<br>
+      <a href="https://arxiv.org/abs/2606.19613" target="_blank" rel="noopener">arxiv.org/abs/2606.19613</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.22417" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.22417v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.22417" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://github.com/TransformerOptimus/supercoder-eval" target="_blank" rel="noopener">GitHub supercoder-eval</a>
+      <a class="link-btn" href="http://export.arxiv.org/api/query?search_query=ti:%22harness%22&sortBy=submittedDate" target="_blank" rel="noopener">arXiv harness 检索</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-28 #1 · 搜索来源：arxiv.org/api/query?ti:harness + arxiv.org/abs/2606.22417 + arxiv.org/html/2606.22417v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">arxiv.org/abs/2606.22417</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

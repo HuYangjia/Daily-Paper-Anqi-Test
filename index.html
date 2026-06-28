@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">39 篇报告</span>
+        <span class="count-badge">40 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">38 篇报告</span>
+        <span class="count-badge">39 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">37 篇报告</span>
+        <span class="count-badge">38 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-06-28-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">28</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">Code Isn't Memory：在<strong>固定 coding agent harness × 固定模型</strong> 下首次<em>因果消融</em>结构化代码库索引——三 arms（SC-ON / SC-OFF / OpenCode）× 91 实例 × 3 seed · Loc acc@5 <strong>44.3 → 84.5%</strong>（+39.6 pp · p&lt;0.0001）/ Resolve <strong>41.9 → 50.4%</strong>（+7.9 pp · p=0.003）/ $/solved <strong>$2.84 → $2.30</strong> · 多文件场景定位 <strong>91.3% vs 44.9%</strong>——harness-control 实验范式开源模板 #1</div>
+          <div class="paper-sub">I. Bhola / A. Krishnan / S. Kurmala / M. NS · TransformerOptimus · arXiv 2606.22417 2026-06-21 · cs.AI · Claude Opus 4.7 统一模型 · GitHub TransformerOptimus/supercoder-eval</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-06-28-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">28</div>
+        </div>
+        <span class="dir-tag tag-safety">Agent Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">RUBAS：把 agent safety 训练信号从"<em>refuse 二值</em>" 升级为<strong>4 维 rubric × GRPO 在线优化</strong>（tool-use / arg / response / help）· 程序化确定性 scorer · Qwen3-8B 平均风险 <strong>52.7 → 15.9</strong>（−36.8 pp）+ AgentHarm <strong>52.9 → 0</strong> + ASB ASR <strong>91.3 → 47.3</strong> · ToolBeHonest 幻觉抗性<em>反升</em> <strong>33.6 → 61.6</strong> · MoE 上唯一不崩塌——H1 末"safety vs utility 二选一" Pareto 边界首次被打破 #1</div>
+          <div class="paper-sub">X. Q. Loye / Q. Su / Z. Zhang + 5 作者 · 清华 CoAI + 华为诺亚 · arXiv 2606.04051 2026-06-02 · cs.LG · 与 6-26 AgentDoG 1.5 形成"训练数据 × 训练信号" 姊妹方法</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-06-28-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">28</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">REALM：<strong>物理世界 VLM 首个统一红队基准</strong>——12 攻击 × 3 防御 × 13 VLM × 7 物理域 · 832 → 9,984 对抗样本 / 129,792 评测点 · <em>agentic target-generation pipeline</em> 让异质攻击对齐共享场景特定目标 · PromptInject 平均 ASR <strong>64.8%</strong> · AnyAttack 1 秒/张 49.9% 逼近 300 步 FOA 48.1% · Qwen3.5 9B→122B ASR 不变（<em>scale ≠ robustness</em>）· BlueSuffix vs FigStep 0 防御——单一预处理无法跨范式泛化 #1</div>
+          <div class="paper-sub">Y. Zhao / Q. Lou / M. Zheng · University of Central Florida · arXiv 2606.23892 2026-06-22 · cs.CV · 20 页 / 5 图 · GitHub UCF-ML-Research/REALM · 与 6-26 ForesightSafety-VLA 共构具身智能感知-行动双侧统一</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-06-26-1.html">
         <div class="date-badge">
