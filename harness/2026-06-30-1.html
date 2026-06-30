@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-30 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-06-30 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 6 月 30 日 · Harness Engineering · 把 harness 范式从<em>"软件包裹 LLM"</em> 推进到<em>"策略治理 × 确定性引擎并存"</em>—— BPM 工业界给学界送来的新参考架构</div>
+  <h1>Process Harness：用<strong>策略治理 agentic 层</strong>包裹<em>确定性 BPMN 工作流引擎</em>—— 不替换底层引擎、不重写遗留工作流，<strong>Task / Decision / Flow 三类智能体 × FRAME 策略集 × 7 种 hook 原语</strong>，在 IBM CUGA FLO 贷款审批案例中演示"<em>信用分网关 + 监管 ID 覆盖</em>" 双源治理与可独立审计</h1>
+  <div class="en-title">A Process Harness for Uplifting Legacy Workflows to Agentic BPM: Design and Realization in CUGA FLO</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 8.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-22 至 06-27 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">A Process Harness for Uplifting Legacy Workflows to Agentic BPM (CUGA FLO)</a><span class="winner-badge">今日选定</span></td>
+          <td>BPM 工业界 harness 新参考架构 · 策略治理 agent 层 × 确定性引擎并存 · TaskAgent / DecisionAgent / FlowAgent 三类 + 7 hook 原语</td>
+          <td>arXiv 2606.27188 · 2026-06-25 v1 · IBM SIL · 24 页 / 5 图 · cs.AI</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.26494" target="_blank" rel="noopener">Clinical Harness for Governable Medical AI Skill Ecosystems</a></td>
+          <td>临床 AI 技能生态 runtime governance harness · 注册 / 编排 / 守护 / 监控四能力</td>
+          <td>arXiv 2606.26494 · 2026-06-25 · T. Xu / L. Bao / Y. Wang · cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</a></td>
+          <td>OS 级 agent harness 策略可编程执行平面 · 跨 Linux/Windows · 与 6-22 AOHP 同构</td>
+          <td>arXiv 2606.25189 · 2026-06-23 · Y. Zheng / T. Wu / Q. Fu + 4 作者 · cs.OS + cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23983" target="_blank" rel="noopener">Maestro Order: A Model-Agnostic Orchestration Harness</a></td>
+          <td>模型无关的编排 harness · 对抗"单 forward 即答" 的幻觉问题</td>
+          <td>arXiv 2606.23983 · 2026-06-22 · H. Aksu · Google · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">The Hitchhiker's Guide to Agentic AI: From Foundations to Systems</a></td>
+          <td>Agentic AI 系统工程综述书 · 完整 stack 实践指南</td>
+          <td>arXiv 2606.24937 · 2026-06-22 · H. Roitman · IBM · cs.AI</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22harness%22+OR+ti:%22evaluation+harness%22+OR+abs:%22agent+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:harness 时间排序</a>。<strong>Process Harness 之所以胜出</strong>：(1) 6-22 至 6-28 这周 harness 工程关键词中第一篇正面回应"<em>遗留软件世界（BPM）如何 onboard agentic</em>" 的工程论文——这是 H1 末 H2 初最迫切的产业话题；(2) 它把"<em>harness</em>" 这个词从"<em>LLM 评测脚手架</em>" 扩展到"<em>策略治理层 + 既有 deterministic 引擎并存</em>"，引入了一个完全独立于 NOVA / Code Isn't Memory 的<em>新 harness 拓扑</em>——传统 harness 假设 agent 是<em>新建</em> 系统，CUGA FLO 假设 agent 是<em>嫁接</em> 在已有 BPMN 引擎上的<em>policy-governed 层</em>；(3) 提供完整 TDF 形式化（Pm/Ps/Ph 三元组 + FRAME 策略集合 + 三类 agent 数学定义 + 7 hook 原语 + 双层治理 access control φ）——这是 H1 末 harness 论文最干净的形式化之一；(4) 实现已 open source（CUGA project · GitHub cuga-project/cuga-agent · MCP 桥接）；(5) 贷款审批案例的<em>"信用分网关 + 监管 ID hook 覆盖"</em> 双源治理巧妙地把"<em>大政策框架 × 个案监管覆盖</em>" 这个真实 BPM 难题用 LLM-native 方式表达出来，且<strong>两源策略可独立审计</strong>—— 这是 6-28 ActPlane / AOHP 那种 OS 级 harness 无法触及的 BPM 层抽象。其它候选要么是同类 OS/clinical 治理（重叠）、要么是综述（不够 sharp）。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>A Process Harness for Uplifting Legacy Workflows to Agentic BPM: Design and Realization in CUGA FLO</span></div>
+      <div class="meta-item"><label>中文标题</label><span>流程线束（Process Harness）：将遗留工作流提升至 Agentic BPM 的设计——CUGA FLO 中的实现</span></div>
+      <div class="meta-item"><label>作者（2 人）</label><span>Fabiana Fournier（IBM SIL / University of Haifa） · Lior Limonad（IBM SIL / University of Haifa · 通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>IBM SIL（Israel）+ University of Haifa 信息系统系 / 计算机与信息科学学院</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-25（v1，UTC 15:50:42）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI</span></div>
+      <div class="meta-item"><label>篇幅 / 文件</label><span>24 页 / 5 图 · 33 KB（PDF）· 设计 + 案例研究型</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.27188" target="_blank" rel="noopener">arxiv.org/pdf/2606.27188</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.27188v1" target="_blank" rel="noopener">arxiv.org/html/2606.27188v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.27188" target="_blank" rel="noopener">10.48550/arXiv.2606.27188</a></div>
+      <div class="meta-item"><label>关键词</label><span>AI agents · Agentic BPM · framed autonomy · BPM · process-aware systems · policy-aware agents</span></div>
+      <div class="meta-item"><label>代码 / 实现</label><a href="https://github.com/cuga-project/cuga-agent" target="_blank" rel="noopener">github.com/cuga-project/cuga-agent</a></div>
+      <div class="meta-item"><label>CUGA FLO 子目录</label><a href="https://github.com/cuga-project/cuga-agent/tree/cugaflo/src/cuga/backend/cuga_graph/nodes/cuga_flow" target="_blank" rel="noopener">cuga-agent/cugaflo branch</a></div>
+      <div class="meta-item"><label>底层协议</label><span>Model Context Protocol（MCP）· FastMCP server · LangGraph StateGraph</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      提出<strong>"流程线束（Process Harness）"</strong>—— 一种把<em>策略治理的 LLM agentic 层</em> 包裹在<em>既有 deterministic BPMN 工作流引擎</em> 周围、<strong>不替换引擎</strong> 的 Agentic BPM 参考架构：通过 <em>Task-Decision-Flow (TDF)</em> 模型将 LLM 推理分解为 <strong>TaskAgent（任务执行）/ DecisionAgent（网关路由）/ FlowAgent（流程级 hook 干预）</strong> 三类受策略治理 agent；引入 <strong>FRAME</strong> 显式策略集合 + <em>双层治理 access control φ</em> 把"<em>策略</em>" 与"<em>权限</em>" 分开；定义 <strong>7 种 hook 原语</strong>（continue / skip_node / skip_to / swap_nodes / terminate / remove_node / add_node）；并在 IBM CUGA FLO 贷款审批案例中演示"<em>信用分网关 0.6/0.75 双阈值</em>" 与"<em>申请人 ID 4321 监管 hook 覆盖</em>" 双源治理且可<strong>独立审计</strong> —— 这是 H1 末 harness 工程的<em>第三种拓扑</em>：既不是"<em>LLM 围绕评测脚手架</em>"（lm-eval-harness 类）、也不是"<em>LLM 围绕工具 schema</em>"（NOVA / Code Isn't Memory 类），而是"<em>agentic 层围绕 deterministic 引擎</em>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>我们提出<strong>流程线束（process harness）</strong>—— 一种把遗留工作流提升至<em>Agentic 业务流程管理（Agentic BPM）</em> 而<strong>无需替换底层工作流引擎</strong> 的新机制。流程线束在<em>确定性工作流引擎</em> 周围放置一个<strong>策略治理的 agentic 层</strong>，在指定的控制点上拦截，贡献推理、适应与监督能力；与此同时，引擎保留对流程的<em>结构性权威</em>。为了严格定义流程线束，我们开发了 <strong>Task-Decision-Flow (TDF) 模型</strong>，规定了它的数据 schema 与执行语义。TDF 将 LLM 推理分解为三种受策略治理的智能体类型：<em>TaskAgent</em> 负责知识密集型任务执行、<em>DecisionAgent</em> 负责单案例网关路由、<em>FlowAgent</em> 通过原则化 hook 机制治理运行时流程适应。每个智能体在显式策略下推理，该策略来自流程的 <strong>FRAME</strong>（治理系统中所有 LLM 调用的聚合策略集）。随后我们提出 <strong>CUGA FLO</strong> 作为 TDF 模型的设计与实现，并在一个<em>贷款审批工作流</em> 上演示——该案例完整调用了所有三类智能体与<em>hook 驱动的监管覆盖</em>。流程线束独特地协调了：<em>命令式需求</em>（通过 deterministic 工作流执行实现结构合规）与<em>规范性需求</em>（通过策略框定的 agentic 自治在指定控制点实现）。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（TDF 形式化 / FRAME 策略 / 7 hook 原语 / 贷款审批案例）</div>
+
+    <p><strong>动机：BPM 工业界 vs Agentic 学界之间的拓扑断层。</strong>2024–2026 的 agent 浪潮主要诞生于"<em>LLM 从零搭建系统</em>" 的语境（OpenHands / SWE-agent / Cursor / SuperCoder 都是<em>新建</em> coding agent）。但工业界事实上存在大量 <strong>BPMN 引擎</strong>（Camunda / Flowable / IBM Business Automation Workflow / SAP Signavio）已经在跑年龄超过 10 年的<em>关键业务流程</em>：贷款审批、保险理赔、合规审查、订单履约。这些系统的"<em>结构性权威</em>"（哪些节点必须执行、哪些前后关系不可破坏、哪些数据必须落表）是合规和审计的根基，<em>不能</em>被 LLM "<em>一次性重写</em>"。把 agentic 能力 onboard 进这类系统的真正难题是：<strong>如何让 LLM 在保留 deterministic 引擎的前提下加入推理、适应与监督</strong>？这是这篇 IBM SIL 论文的出发点。</p>
+
+    <p><strong>方法：TDF 三元组 + 三类 Agent 形式化。</strong>形式上，流程模型 <em>Pm = (V, E)</em> 由起止节点、任务节点 <em>T</em>、分裂网关 <em>G_split</em>、合并网关 <em>G_join</em> 构成。流程知识则是三元组 <strong>P = (Pm, Ps, Ph)</strong>—— 模型 + 状态（pending/active/hold/completed/halted）+ 历史。TDF 流程线束 <strong>TDF_P = (TAs, DAs, FAs)</strong> 分别由三类智能体集合组成：</p>
+    <table class="data-table">
+      <thead><tr><th>智能体</th><th>形式定义</th><th>作用边界</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TaskAgent</strong></td><td>a = (t, C_T, P, Ts, λ)</td><td>把目标转化为输出，<em>禁止</em> 做批准/拒绝类决策</td></tr>
+        <tr><td><strong>DecisionAgent</strong></td><td>d = (g, C_D, P, Ts ∪ {cond_eval}, λ)</td><td>网关路由 ——<em>强制</em> 先评估条件、再选边</td></tr>
+        <tr><td><strong>FlowAgent</strong></td><td>f = (H, Is, φ, C_F(h_k), P, Ts, μ, λ)</td><td>流程级 hook 干预 —— 跨节点重定向、跳过、添加</td></tr>
+      </tbody>
+    </table>
+    <p>每个智能体内嵌一个 <em>LLM 智能体核 λ = (M, Ts, sense, reason, act)</em>。三类 agent 都在<em>显式人类可读策略</em> 下推理，所有策略汇成系统级 <strong>FRAME</strong>：</p>
+    <p style="text-align:center;font-style:italic;color:#534ab7;font-size:0.95rem;">F = {C_T(t_i)}_i ∪ {C_D(d_j)}_j ∪ {C_F(h_k)}_k</p>
+    <p><em>没有任何 LLM 调用发生在策略边界之外。</em> 双层治理通过<strong>访问控制函数 φ: Is → {permitted, prohibited}</strong> 实现 —— 这一函数与 hook 策略<em>独立</em>，使"<em>这条 hook 的策略说什么</em>"与"<em>系统允许它实际做什么</em>" 解耦，便于<em>权限管理与策略修改可<u>独立</u>滚动</em>。</p>
+
+    <p><strong>7 种 Hook 原语：FlowAgent 的全部干预语义。</strong></p>
+    <table class="data-table">
+      <thead><tr><th>操作</th><th>结构效果</th><th>语义</th></tr></thead>
+      <tbody>
+        <tr><td><code>continue</code></td><td>无</td><td>按正常边继续</td></tr>
+        <tr><td><code>skip_node</code></td><td>跳过下一节点</td><td>节点记录为已跳过</td></tr>
+        <tr><td class="hl"><strong><code>skip_to</code></strong></td><td>跳转至任意命名任务节点</td><td>绕过中间节点（监管覆盖用此原语）</td></tr>
+        <tr><td><code>swap_nodes</code></td><td>交换两个节点</td><td>重定向 node_a ↔ node_b</td></tr>
+        <tr><td><code>terminate</code></td><td>强制停止流程</td><td>关闭流程实例</td></tr>
+        <tr><td><code>remove_node</code></td><td>从拓扑移除节点</td><td>引擎重连前驱与后继</td></tr>
+        <tr><td><code>add_node</code></td><td>插入新任务节点</td><td>引擎在当前目标前接入</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>CUGA FLO 系统架构与 MCP 桥接。</strong>核心组件包括：<em>CugaAgent</em>（执行原语 / 中央枢纽）、<em>CugaSupervisor</em>（高复杂度任务编排层）、<em>MCPFlowBridge</em>（FastMCP server / 推理层与执行层唯一通道）、<em>WorkflowEngine</em>（抽象接口；当前实现为 LangGraphWorkflowEngine，把 BPMN 拓扑编译为 LangGraph StateGraph）。<em>MCP 工具注册</em>：FlowAgent 注册 <code>execute_task / route_gateway / evaluate_hook / get_static_config</code>；引擎注册 <code>run_process</code>。运行时分两阶段：<strong>Build 阶段</strong> 引擎通过 <code>get_static_config</code> 取静态配置编译执行图；<strong>Execute 阶段</strong> 每个控制点一次往返调用，传递 <em>ControlPointFlowKnowledge</em>。<em>部署结构</em>：<code>config/&lt;process&gt;.bpmn + &lt;app&gt;_config.yaml + supervisor_&lt;app&gt;.yaml</code> 与 <code>policies/task-*.md / decision-*.md / hook-*.md</code> 文件分离 —— 策略是<em>可独立 review 的 markdown 文件</em>，这是 LLM-native BPM 治理的关键产物形式。</p>
+
+    <p><strong>贷款审批案例：双源治理 + 可独立审计的执行轨迹。</strong>四阶段 BPMN：<em>信用评估 → 审批路由网关 → 贷款/拒绝处理 → 合并</em>。FRAME 包含 4 类策略：</p>
+    <ul class="point-list">
+      <li><strong>Task Policy（信用检查）</strong>：产出归一化 credit_score ∈ [0,1]，评分权重 = 还款历史 35% / 债务收入比 30% / 历史长度 15% / 信用组合 10% / 近期查询 10%；<em>明确禁止</em> task agent 做批准/拒绝决定。</li>
+      <li><strong>Decision Policy（信用网关）</strong>：主路由 credit_score &gt; 0.6 → 批准；<em>覆盖规则</em> loan_amount &gt; 50,000 时阈值升至 0.75。</li>
+      <li><strong>Hook Policy（监管覆盖）</strong>：申请人 ID = 4321 受监管限制 → 触发 <code>skip_to</code> 至拒绝处理节点，并写入 rejection_reason = "regulatory_policy_restriction"、policy_override_active = true。</li>
+      <li><strong>Task Policies（结果处理）</strong>：贷款处理者 / 拒绝处理者策略 —— 拒绝处理者按 hook 来源走"<em>监管路径</em>"，<em>不引用信用分</em>。</li>
+    </ul>
+    <p>两条执行轨迹清晰展示<em>双源治理</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>轨迹</th><th>申请人</th><th>credit_score</th><th>路径</th><th>结果</th></tr></thead>
+      <tbody>
+        <tr><td>正常</td><td>ID 23</td><td>0.6625</td><td>TaskAgent → DecisionAgent (0.6625 &gt; 0.6 = TRUE) → Hook continue → TaskAgent 批准</td><td>loan_granted=true</td></tr>
+        <tr class="hl"><td><strong>监管阻断</strong></td><td>ID 4321</td><td>0.82</td><td>TaskAgent → DecisionAgent (TRUE) → <strong>Hook skip_to</strong> → TaskAgent 拒绝处理（监管路径）</td><td>rejection_reason = regulatory_policy_restriction</td></tr>
+      </tbody>
+    </table>
+    <p><strong>关键洞察</strong>：DecisionAgent 按信用分（0.82 &gt; 0.6）正确路由 → 批准；但 Hook 根据完全不同的标准（申请人 ID 黑名单）覆盖结果边 → 拒绝。<em>两套策略由独立的 FRAME 子集治理，可独立审计</em> —— 这正是 BPM 合规要求的核心：<em>"<u>谁覆盖了谁、为何覆盖、是否合规</u>"</em> 可被分别追问。</p>
+
+    <p><strong>方法学位置：H1 末 harness 第三拓扑。</strong>把 6-25 Interplay（harness × post-training 联动）/ 6-26 NOVA（验证联动 / 工业 GMV）/ 6-28 Code Isn't Memory（harness 因果消融）/ 今日 Process Harness（<em>策略治理层 × deterministic 引擎并存</em>）连起来，恰好把 H1 末 harness 工程从"<em>新建系统</em>" 视角推进到"<em>遗留系统嫁接</em>" 视角 —— 这是 H1 末最后一周 harness 谱系的<em>第四节拍</em>。它对 H2 的暗示：<strong>越来越多的 harness 论文会从"<em>纯 agent</em>" 转向"<em>agent × 既有 deterministic 子系统并存</em>"</strong>，因为这是工业落地的真实形态。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Camunda — 工业级 BPMN 工作流引擎 · 本文对照的<em>deterministic 引擎代表</em><br>
+    <a href="https://camunda.com/" target="_blank" rel="noopener">camunda.com</a></div>
+    <div class="ref-item">Flowable — 开源 Java BPMN 引擎<br>
+    <a href="https://www.flowable.com/" target="_blank" rel="noopener">flowable.com</a></div>
+    <div class="ref-item">IBM Business Automation Workflow — IBM 自家的传统 BPM 平台 · 本文方法的实际嫁接对象<br>
+    <a href="https://www.ibm.com/products/business-automation-workflow" target="_blank" rel="noopener">ibm.com/products/business-automation-workflow</a></div>
+    <div class="ref-item">SAP Signavio Process Governance — SAP 的 BPM 治理产品 · 本文比较的商业范式<br>
+    <a href="https://www.signavio.com/products/process-governance/" target="_blank" rel="noopener">signavio.com/products/process-governance</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP)</em> · CUGA FLO 用作推理-执行解耦的桥接协议<br>
+    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">LangGraph — 把图结构编译为可执行 StateGraph · LangGraphWorkflowEngine 的依赖<br>
+    <a href="https://langchain-ai.github.io/langgraph/" target="_blank" rel="noopener">langchain-ai.github.io/langgraph</a></div>
+    <div class="ref-item">BPMN 2.0 specification — 业务流程建模与标记法 OMG 标准<br>
+    <a href="https://www.omg.org/spec/BPMN/2.0/" target="_blank" rel="noopener">omg.org/spec/BPMN/2.0</a></div>
+    <div class="ref-item">Roitman, H. — <em>The Hitchhiker's Guide to Agentic AI</em>（2026-06-22 同期对照综述 · 同为 IBM 出品）<br>
+    <a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">arxiv.org/abs/2606.24937</a></div>
+    <div class="ref-item">Aksu, H. — <em>Maestro Order: A Model-Agnostic Orchestration Harness</em>（同期同关键词 · Google 出品 · 视为模型无关编排层 baseline）<br>
+    <a href="https://arxiv.org/abs/2606.23983" target="_blank" rel="noopener">arxiv.org/abs/2606.23983</a></div>
+    <div class="ref-item">Xu et al. — <em>Clinical Harness for Governable Medical AI Skill Ecosystems</em>（同期同关键词 · 临床版 governance harness · 类似 CUGA FLO 的医学嫁接）<br>
+    <a href="https://arxiv.org/abs/2606.26494" target="_blank" rel="noopener">arxiv.org/abs/2606.26494</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：harness 工程的<em>第三种拓扑</em> 不是"<em>新建 agent</em>"，而是"<em>agentic 层环绕 deterministic 引擎</em>"—— 这是工业落地的真正形态。</li>
+      <li><strong>核心论点 ②</strong>：用<em>显式人类可读 markdown 策略</em> 文件作为 FRAME 的载体 —— 策略与代码<em>分离</em>，可独立 review、独立修改、独立审计。</li>
+      <li><strong>核心论点 ③</strong>：双层治理 —— FRAME（语义/能力边界）与 access control φ（权限/执行边界）<em>解耦</em>，使"<em>策略变更</em>" 与"<em>权限变更</em>" 可独立滚动。</li>
+      <li><strong>三类 agent</strong>：TaskAgent（执行 / 禁批准拒绝）/ DecisionAgent（路由 / 强制先评估条件）/ FlowAgent（hook 干预）—— <em>责任分离</em>。</li>
+      <li><strong>7 种 hook 原语</strong>：continue / skip_node / skip_to / swap_nodes / terminate / remove_node / add_node —— 完整覆盖结构性流程变更。</li>
+      <li><strong>FRAME 形式</strong>：F = ∪ C_T(t_i) ∪ C_D(d_j) ∪ C_F(h_k) —— 所有 LLM 调用都在 FRAME 边界内。</li>
+      <li><strong>双层治理</strong>：access control φ: Is → {permitted, prohibited} 与 hook 策略<em>独立</em>，便于权限审计。</li>
+      <li><strong>贷款案例双源</strong>：信用分网关（0.6 / 0.75 双阈值） + 申请人 ID 4321 监管 hook 覆盖 —— 两源策略由独立 FRAME 子集治理。</li>
+      <li><strong>MCP 桥接</strong>：推理层（LLM）与执行层（WorkflowEngine）通过 FastMCP server 唯一通道交互 —— 解耦清晰可观测。</li>
+      <li><strong>实现产物</strong>：CUGA FLO 在 cuga-project/cuga-agent 仓库 cugaflo 分支已开源，且与 MCP 标准兼容。</li>
+      <li><strong>命令式 vs 规范式协调</strong>：deterministic 引擎实现"<em>结构合规</em>"（命令式），agentic 层在控制点上实现"<em>策略框定的自治</em>"（规范式）—— 两者并存而非互斥。</li>
+      <li><strong>已知局限</strong>：(1) 中间事件 hook 尚未实现；(2) add/remove_node 仅作用于未执行节点；(3) 每 hook 调用 LLM 带来延迟（论文建议缓存 + 轻量预过滤）；(4) FRAME 策略冲突的自动一致性检查仍开放。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>本文对 KV-cache / SGLang 毕设的启发<em>角度完全不同</em>于 6-28 Code Isn't Memory：(1) <em>"<u>嫁接式 harness</u>" 的拓扑思想</em>—— 把 KV-cache 治理层视为<strong>"<u>agentic 治理层环绕 deterministic 推理引擎</u>"</strong>，而非"<em>重写整个 inference runtime</em>"。SGLang / vLLM / TGI 已经是 deterministic 引擎，你的工作不应"<em>覆盖</em>" 它，而应在 KV slot allocation、eviction、prefetch 决策点上放<strong>policy-governed agentic hook</strong>；(2) <em>双层治理（FRAME + access control φ）</em> 平移到 KV-cache 即<em>策略层（"<u>该不该 evict 这条 KV</u>"）vs 权限层（"<u>本 tenant 是否被允许触发 cross-tenant prefetch</u>"）</em> 解耦；(3) <em>策略以 markdown 文件落地</em>，可被 SRE 独立 review—— 这对工业部署的 cache 管理意义重大；(4) <em>7 hook 原语</em> 对偶 KV-cache 的<em>调度原语集</em>（continue / evict / prefetch / pin / migrate / split / merge）—— 应该枚举出干净的原语集，而非临时 if-else；(5) <em>MCP-style 桥接</em> 暗示 cache 治理层与 inference runtime 应通过<em>显式协议</em>（如 cache_control_v1）交互，便于可观测与多 runtime 兼容；(6) <em>策略冲突自动一致性检查</em> 是开放问题 —— 你的毕设可在此空白处补 KV-cache 策略冲突的形式化方法（如何证明两条 eviction 策略不会让某条 KV 永远不可达）；(7) <em>Build / Execute 两阶段</em> 对偶 KV-cache 的<em>编译期（schedule plan）/ 运行期（动态调度）</em> 分离 —— 静态 plan 通过 get_static_config 一次拉取，运行期只做控制点调用，能显著降低治理层开销。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>策略治理 layer 显式化</em> —— 与 6-30 #2（Action Alignment / least privilege）形成强烈互文：Action Alignment 主张安全应在<em>模型外的 action boundary</em> 强制，CUGA FLO 给出了"<em>action boundary 上的 policy-governed layer</em>" 的具体实现形式（FRAME + 7 hook 原语 + access control φ），这是 Action Alignment 理论的<em>工程模板</em>；(2) <em>三类 agent 责任分离</em>（TaskAgent / DecisionAgent / FlowAgent）对偶 agent safety 的<em>三类风险面</em>（任务执行风险 / 路由决策风险 / 流程篡改风险）—— 给 skill safety 的责任划分提供了<em>结构对应</em>；(3) <em>双源治理可独立审计</em>（信用分 + 监管 ID）暗示 agent safety 的<em>规则 vs 模型</em> 应是<em>互补</em> 而非互斥：策略型 hook 处理"<em>明确不可做的事</em>"，模型型推理处理"<em>需要权衡的事</em>"；(4) <em>markdown 策略文件</em> 对偶 safety 的<em>"<u>policy-as-code</u>"</em> —— 安全规则应以可独立 review 的人类可读形式存在，而非埋在 prompt 里；(5) <em>策略冲突自动一致性检查</em> 直接对应 agent safety 中<em>"<u>helpfulness vs safety</u>"</em> Pareto 优化的形式化（6-28 RUBAS 用 GRPO 隐式优化，本文暗示需要<em>显式</em> 形式化方法）；(6) <em>FlowAgent 的 skip_to / terminate 原语</em> 是 safety guardrail 的<em>正确 abstraction</em>：当检测到危险动作，guardrail 不是改写动作，而是<em>跳转到</em> 拒绝处理节点（写明 rejection_reason）—— 这与 6-30 #2 Action Alignment 的"<em>action boundary 上的 reference monitor</em>" 严格同构。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>"嫁接式系统"</em> 的 benchmark 缺口 —— 现有 agent benchmark（OSWorld / AgentBench / SWE-bench）几乎都假设 agent 是<em>新建</em> 系统，缺少"<em>agent × 既有 deterministic 引擎并存</em>" 的评测场景；CUGA FLO 暗示需要<em>"<u>Agentic BPM Bench</u>"</em>（既有 BPMN 引擎 + agentic hook 干预 + 监管覆盖正确性 + 策略可审计性 四维评测），可作为你 H2 毕设另一备选；(2) <em>策略可审计性指标化</em> —— 现行 benchmark 几乎没有"<em>策略变更可追溯</em>" 这个维度，本文给出了具体形式：每条策略 = markdown 文件 + 修改历史 + 独立 review；(3) <em>双源治理 ground-truth</em> —— 贷款案例展示了"<em>两条独立规则的并存与覆盖优先级</em>"，这是 benchmark 设计可借鉴的<em>叠层 ground-truth 范式</em>（不是单一正确答案，而是"<em>策略 A 通过 + 策略 B 覆盖</em>" 的可验证轨迹）；(4) <em>case study 的形式重要性</em> —— 与 6-30 #3 OSWorld 2.0 的 108 任务相比，本文用<em>一个</em> 贷款案例就完整演示了三类 agent 与 7 hook 原语，说明 BPM 评测可走<em>"<u>少而精的标志案例</u>"</em> 路线（医疗、金融、供应链各 1–3 个标志案例）而非"<em>大量 OSWorld 风格任务</em>"；(5) <em>命令式 vs 规范式协调</em> 这一区分给 benchmark 设计提供了新维度：评测应分别报告"<em>结构合规率</em>"（命令式：是否完成 BPMN 必经节点）与"<em>策略合规率</em>"（规范式：是否落在 FRAME 内）；(6) <em>MCP 桥接显式化</em> 暗示 benchmark 应直接 audit MCP traffic（推理-执行通道的全部消息），而非只 audit final state —— 这与 6-30 #3 OSWorld 2.0 的"<em>side-effect / bypass</em>" 风险维度形成<em>"<u>嫁接 BPM × 通用 computer-use</u>"</em> 双拼。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>The Hitchhiker's Guide to Agentic AI (6-22)</strong> · IBM 出品 agentic 系统综述书 · 与本文构成同期工程实践指南<br>
+      <a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">arxiv.org/abs/2606.24937</a></li>
+      <li><strong>Clinical Harness for Governable Medical AI Skill Ecosystems (6-25)</strong> · 临床版 governance harness · 同关键词不同领域嫁接<br>
+      <a href="https://arxiv.org/abs/2606.26494" target="_blank" rel="noopener">arxiv.org/abs/2606.26494</a></li>
+      <li><strong>ActPlane (6-23)</strong> · OS 级 agent harness 策略可编程执行平面 · 与 CUGA FLO 形成"<em>OS 层 vs BPM 层</em>" 双视角<br>
+      <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a></li>
+      <li><strong>Code Isn't Memory (6-21)</strong> · harness 因果消融范式 · 与本文构成"<em>方法学层 vs 工业拓扑层</em>" 互补<br>
+      <a href="https://arxiv.org/abs/2606.22417" target="_blank" rel="noopener">arxiv.org/abs/2606.22417</a></li>
+      <li><strong>NOVA (6-25)</strong> · 验证感知 agent harness + 工业 GMV · 与本文形成"<em>工业广告 vs 工业 BPM</em>" 双拼<br>
+      <a href="https://arxiv.org/abs/2606.27243" target="_blank" rel="noopener">arxiv.org/abs/2606.27243</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.27188" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.27188v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.27188" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://github.com/cuga-project/cuga-agent" target="_blank" rel="noopener">GitHub cuga-agent</a>
+      <a class="link-btn" href="https://github.com/cuga-project/cuga-agent/tree/cugaflo/src/cuga/backend/cuga_graph/nodes/cuga_flow" target="_blank" rel="noopener">cugaflo branch</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP 协议</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-06-30 #1 · 搜索来源：arxiv.org/api/query?ti:harness + arxiv.org/abs/2606.27188 + arxiv.org/html/2606.27188v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

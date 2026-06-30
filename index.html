@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">40 篇报告</span>
+        <span class="count-badge">41 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">39 篇报告</span>
+        <span class="count-badge">40 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">38 篇报告</span>
+        <span class="count-badge">39 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-06-30-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">30</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">Process Harness：用<strong>策略治理 agentic 层</strong>包裹<em>确定性 BPMN 工作流引擎</em>—— harness 工程第三种拓扑"<em>agentic 层环绕 deterministic 引擎</em>"。<strong>TDF 形式化</strong>：TaskAgent / DecisionAgent / FlowAgent 三类 × FRAME 显式策略集 × 双层治理 access control φ × <strong>7 hook 原语</strong>；CUGA FLO 贷款审批案例<em>"信用分网关 + 申请人 ID 监管 hook 覆盖"</em> 双源治理可独立审计 · MCP 桥接推理-执行 #1</div>
+          <div class="paper-sub">F. Fournier / L. Limonad · IBM SIL + University of Haifa · arXiv 2606.27188 2026-06-25 · cs.AI · 24 页 / 5 图 · GitHub cuga-project/cuga-agent</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-06-30-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">30</div>
+        </div>
+        <span class="dir-tag tag-safety">Agent Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">Agent Safety Is Action Alignment：把 agent safety 与 content safety 拆为<strong>不同范畴</strong>——agentic harm 在 <em>auth(a) 与用户授予 A 的关系</em> 中，refusal 学不到。三证据链：defense 模型良性首步失败 <strong>47–77% vs 基线 3%</strong> · 工具调用最小权限率 <strong>&lt; 15%</strong> · 账户删除嵌入式借口 <strong>78% 执行</strong>。形式化 S*(a) = C ∧ R ∧ B（R 被丢弃）；三转变：<strong>least privilege + 模型外 reference monitor + relational 评估</strong>—— "<em>外置派</em>"第一篇 sharp 立场宣言 #1</div>
+          <div class="paper-sub">S. Li / Y. Zhao · USC · arXiv 2606.28739 2026-06-27 · cs.AI · 142 KB · position paper · 7 开放问题 = H2 路线图</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-06-30-1.html">
+        <div class="date-badge">
+          <div class="month">Jun</div>
+          <div class="day">30</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">OSWorld 2.0：把 computer-use agent 评测从分钟级推到<strong>1.6 小时中位 / 318 工具调用</strong>—— 108 长程任务 / 31 自托管 Web 服务 · <strong>10 项挑战现象多标签</strong>（cross-source 42.6% / visual-spatial 41.7% / implicit-state 39.8%）· 27 评分检查点 · 独立 <strong>safety 审计</strong> 暴露 <em>14% 隐藏状态提取 + 33% UI 绕过</em> · Claude Opus 4.8 仅 <strong>20.6% binary</strong> · 修正阶段 &lt; 7% 预算 · 极长 (&gt; 163 min) 所有模型 binary = 0 · OSWorld 1.0 79–83% 跌至<em>低一个数量级</em> #1</div>
+          <div class="paper-sub">M. Yuan + 35 作者（T. Yu 通讯）· XLang Lab @ HKU / Tsinghua / CMU / Anthropic 等 · arXiv 2606.29537 2026-06-28 · cs.AI · 68 页 / 42 图 / 24 MB · 官网 osworld-v2.xlang.ai</div>
+        </div>
+        <div class="score-pill">96 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-06-28-1.html">
         <div class="date-badge">
