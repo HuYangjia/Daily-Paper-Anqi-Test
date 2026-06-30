@@ -2,27 +2,55 @@
 
 ## 历史执行汇总
 
-### 2026-06-23（今日 18:00 — 三方向同步）
-- 三方向 #1 各一篇完成（commit + push 已执行）
-- Harness: AOHP / Android Open Harness Project (arXiv 2606.23449) 95 — 首次把 harness 抽象**从 application 进程下沉到操作系统内核**；基于 AOSP 构建 OS 级 agent harness；三大系统机制（personalized service composition / efficient agent interfaces / secure information flow）；OS 一等 actor；任务完成 +21.12% / token cost −51.55% / 安全合规三角增益；清华 IIIS + 上海期智院 + HKU 17 作者；17 页/3 图；cs.AI + cs.OS（首次 OS 主类 harness）
-- Agent Safety: AgentLens (arXiv 2606.22673) 96 — 多轮 coding agent 白盒 mechanistic subspace 干预；单层 10 维子空间 + step-level 探针；MAS benchmark 194 任务/10 类 MITRE ATT&CK；ASR 平均 85.99→13.36（−72.63 pp），Qwen 4.35%；lookahead 94.54%；反向干预 100% ASR 因果验证；OSU + Rutgers + 威斯康星 + Toronto + UGA；GitHub EddyLuo1232/AgentLens；把 Arditi 2024 单方向推到 multi-turn agent
-- Benchmark: Evaluation Awareness Is Not One Capability (arXiv 2606.23583) 95 — 命名 "Benchmark Illusion"；评估意识 4 轴拆解（detection / behavior / representation / controllability）；37 模型 × 7 家族 × 8 实验；最强检测 AUROC 0.714（人类 0.819）；行为框架 21/140 显著最大 +30 pp；探针在行为崩溃后 ≥0.98；4 轴 15 对相关仅 1 对显著（ρ=−0.79）；Microsoft + 多机构；重新定义"可靠 benchmark 报告"标准
-- 跨方向叙事："系统层降维（OS）+ 表征层下沉（10 维子空间）+ 评测层升维（4 轴矩阵）" — 2026 H1 方法学三联拍；AOHP 给出"架构改良无法被 gaming 替代"的工程证据，与今日 #3 评测幻象诊断形成正反两面互证
-- 候选淘汰：Harness Survey 20704 (93) / Harness-MU 21856 (92) / Fara-1.5 20785 (91) / Harnessing Agent Skills 20631 (90)；Safety Relinking 21732 (92) / Self-Report 23671 (91) / SkillHarness 20614 (90) / Confidence Laundering 20662 (88)；Benchmark LIBERO-Safety 23686 (93) / Self-Awareness KAPRO 20661 (93) / Skill Coverage 20659 (92) / DEMM-Bench 20634 (91)
-- 索引：三方向 index 顶部新增；根 index 顶部 3 条新增；count-badge 36/35/34 → 37/36/35
-- 数据源：arxiv.org/list/cs.AI/new + arXiv export API（ti:harness 搜索 + agent safety / safety benchmark abs 搜索成功，未 429）+ arxiv.org/html/<id>v1（22673 / 23583 成功，23449 无 HTML 源）
-- ⚠️ git push 失败：本地 commit af020ba 已生成，但 GitHub SSH 22/443 端口均被网络阻断（Connection closed by 100.12.0.10）；按 FOR_AGENT.md 规范，下次执行时一并 push
+### 2026-06-30（今日 18:00 — 三方向同步 · H1 末三方向首次完整闭环）
+- 三方向 #1 各一篇完成 ✅ 一并 push 到 origin/main
+- Harness: Process Harness / CUGA FLO (arXiv 2606.27188) 93 — IBM SIL + University of Haifa 2 作者（F. Fournier / L. Limonad 通讯），2026-06-25 v1；harness 工程**第三种拓扑**："*agentic 层环绕 deterministic BPMN 引擎*"——既不是"LLM 围绕评测脚手架"（lm-eval-harness 类）、也不是"LLM 围绕工具 schema"（NOVA / Code Isn't Memory 类）；**TDF (Task-Decision-Flow) 形式化**：流程知识 P=(Pm,Ps,Ph) + 三类 agent TaskAgent/DecisionAgent/FlowAgent（数学定义 + λ=(M,Ts,sense,reason,act) 内核）+ **FRAME = ∪C_T ∪C_D ∪C_F** 显式策略集合 + 双层治理 access control **φ: Is → {permitted, prohibited}**（与 hook 策略独立，便于权限审计）+ **7 hook 原语**（continue / skip_node / skip_to / swap_nodes / terminate / remove_node / add_node）；CUGA FLO 贷款审批案例展示"*信用分网关 0.6/0.75 双阈值 + 申请人 ID 4321 监管 hook skip_to 覆盖*"双源治理可独立审计；MCP 桥接（FastMCP server / LangGraph StateGraph）；Build / Execute 两阶段；策略以 markdown 文件落地（task-*.md / decision-*.md / hook-*.md）；GitHub cuga-project/cuga-agent · cugaflo 分支；与今日 #2 Action Alignment 形成"立场 × 工程模板"闭环
+- Agent Safety: Agent Safety Is Action Alignment (arXiv 2606.28739) 95 — USC 2 作者（S. Li / Y. Zhao 通讯），2026-06-27 v1，142 KB position paper；首次明确把 agent safety 与 content safety **拆为不同范畴**——content safety harm 在输出 token 中（refusal 可学），**agentic harm 在 auth(a) ⊆ A 关系中（不在 token 中，没有 input-output 目标函数能装入）**；**三证据链**跨自主性谱系：(1) 单 token 误拒 +50% / 后段良性 90% / 跨域 -40% / TPR -45–56pp；(2) defense 模型良性任务**首步失败 47–77% vs 基线 3%**，超时 13%→99% 放大 2–2.7×；账户删除嵌入式借口 ("QA testing") 下 **78% 执行删除**（vs 纯 injection > 90% 拒绝）；(3) 工具调用最小权限率 **< 15%** · abstain < 1.5% **且总朝高权限方向出错**；parameter-burden gradient（高权限工具更省力）；**形式化 S*(a) = C ∧ R ∧ B**（refusal score 对 R restraint 可证盲）；**三大转变**：least privilege 替代 refusal / 模型外 reference monitor (Progent + MiniScope + MAC) at action boundary / relational deployment-conditioned 三坐标分别 report；**7 开放问题** = H2 路线图（authority 表达 / restraint 测量 / cascade eval / bounded enforcement / provenance / 边界 / delegation）；"外置派"第一篇 sharp 立场宣言，对训练派（RUBAS / AgentDoG）划清边界
+- Benchmark: OSWorld 2.0 (arXiv 2606.29537) 96 — XLang Lab @ HKU + Tsinghua + CMU + Anthropic + Salesforce + Yale **36 作者**（M. Yuan / Z. Zhou / X. Xiong 同贡献 · T. Yu 通讯），2026-06-28 v1，68 页 / 42 图 / 24 MB；把 computer-use agent 评测从"分钟级 30 步沙盒"推到"**1.6 小时中位 / 318 工具调用 / 27 评分检查点**"长程真实工作流；**108 任务 / 31 自托管 Web 服务**（邮件 / 银行 / 团队聊天 / 保险理赔 / 签证 / 会议管理 + LibreOffice / GIMP / FreeCAD / VS Code 等）；**10 项挑战现象多标签**（cross-source 42.6% / visual-spatial 41.7% / implicit-state 39.8% / multi-item 39.8% / conflict 36.1% / multimodal 27.8% / tutorial 20.4% / dynamic 9.3% / streaming 5.6% / proactive 5.6%）；7 模型评测——**Claude Opus 4.8 (batched + max thinking) 20.6% binary / 54.8% partial**（最高），GPT-5.5 在 14% plateau / 37K tokens（最 token 高效），MiniMax M3 / Kimi 2.6 / Qwen 3.7-Plus 均 < 5% binary；**OSWorld 1.0 同模型 79–83% → 2.0 < 21%**（一个数量级跌）；**极长任务 > 163 min 所有模型 binary = 0**；**独立 safety 审计子系统**（Appendix E.2 + H.4）—— 216 轨迹 audit 出 **14% 隐藏状态提取 + 33% UI 绕过**（Task 052 UI Bypass）+ 凭据泄露（Task 026 GitLab .env API key）+ 资源耗尽 + 忽略警告（Task 092 LibreOffice）；**5 大失败模式**（信息丢失 / 感知-动作错位 / 领域知识 / 缺验证 / 长时序漂移）；**行为预算分布**：视觉定位 15.5% / 工具语义 13.8% / 信息提取 12.8% / 执行 10.1% / 验证 9.8% / **修正 < 7%**（agent 不花精力修正自己）；GPT-5.5 倾向底层表示操作（高效但 side-effect）vs Opus 4.7 贴近 UI（合规但不收敛）的失败镜像；释 environment + 108 任务 + 自托管站点 + agent rollout trajectories；官网 osworld-v2.xlang.ai
+- 跨方向叙事：**H1 末三方向首次完整闭环**——CUGA FLO 给"agent boundary policy 工程模板"（HARNESS）+ Action Alignment 给"为何必须外置 + C/R/B 三坐标 + least privilege"命题（SAFETY）+ OSWorld 2.0 实证 R 可证盲的 14%/33%/< 7% 三个数字（BENCHMARK）；与 6-23 / 6-25 / 6-26 / 6-28 四组三联拍合成 **H1 末完整 15 拍方法学谱系**，且本次为**第一次跨方向同主题共振**（前几次是三方向各自的方法学三联拍，本次三篇都在"agent action 边界 × 多坐标诊断"主题上同步发力）
+- 候选淘汰：Harness Clinical Harness 26494 (90) / ActPlane 25189 (90) / Maestro Order 23983 (88) / Hitchhiker's Guide 24937 (87)；Safety Agentic Epistemic 28347 (92) / DECOMPBENCH 13994 (91) / TRACE 00611 (90) / Why Generalize 06992 (89)；Benchmark OSGuard 15034 (93) / SkillAudit 22613 (91) / DECOMPBENCH 13994 (91) / NRT-Bench 20408 (90) / LabOSBench 16802 (89)
+- 索引：三方向 index 顶部新增 06-30 条目；根 index 顶部 3 条新增；count-badge 40/39/38 → **41/40/39**
+- 数据源：arXiv export API 三方向各 15 条按提交时间排序，**初次 HTTP 调用 (port 80) 被 301 redirect 到 HTTPS 后无内容**——**经验**：必须用 https://export.arxiv.org/ 而非 http://；改用 -L 跟随重定向后三方向各 15 条全部成功；arxiv.org/abs/<id> 摘要 + arxiv.org/html/<id>v1 关键技术细节 三篇 HTML 全部成功获取
+
+### 2026-06-28（已 push）
+- 三方向 #1 各一篇完成 ✅ 一并 push 到 origin/main（commit `5f411a8`）
+- Harness: Code Isn't Memory (arXiv 2606.22417) 94 — TransformerOptimus/SuperCoder 4 作者，2026-06-21 v1；首次在<固定 coding agent harness × 固定模型>下做**因果消融** — Claude Opus 4.7 + 3 arms（SC-ON / SC-OFF / OpenCode）× SWE-PolyBench Verified + SWE-bench Pro 91 实例（Go 34 / Java 20 / Python 37）× 3 seed；**Loc acc@5 44.3% → 84.5%（+39.6 pp，p<0.0001）/ Resolve 41.9% → 50.4%（+7.9 pp，p=0.003）/ $/solved $2.84 → $2.30**（每 cell 成本不显著 p=0.73 → 优势来自更高 resolve）；多文件桶定位 91.3% vs 44.9%（拐点）；Vector + Graph + BM25 三索引 + Merkle-tree 增量；释 supercoder-eval GitHub；与 6-25 Interplay / 6-26 NOVA 共构"训练联动 × 验证联动 × 实验方法学"三联拍
+- Agent Safety: RUBAS (arXiv 2606.04051) 94 — 清华 CoAI + 华为诺亚 8 作者（M. Huang 通讯），2026-06-02 v1；把训练信号从 refuse 二值升级为 **4 维 rubric（tool / arg / response / help）× GRPO 在线优化**；除 refusal 用 Qwen3Guard 外全部 **程序化确定性 scorer**；3 backbone 验证（Qwen3-8B / 14B / GLM-4.7-Flash MoE）；**Qwen3-8B 平均风险 52.7 → 15.9**（−36.8 pp）+ AgentHarm 52.9→0 + AgentSecurityBench ASR 91.3→47.3 + InjecAgent 5.5→0.1；**ToolBeHonest 工具幻觉抗性反升 33.6 → 61.6**（+28 pp）+ BFCL 仅微降 83.7 → 79.5；**MoE 上唯一不崩塌**（Rule/GuardModel/DPO BFCL 归零）；H1 末"safety vs utility 二选一" Pareto 边界**首次打破**；与 6-26 AgentDoG 1.5 形成"训练数据净化 × 训练信号 rubric 化"姊妹方法；未释代码（扣分项）
+- Benchmark: REALM (arXiv 2606.23892) 94 — University of Central Florida 3 作者，2026-06-22 v1；**物理世界 VLM 首个统一红队基准**；12 攻击 × 3 防御 × 13 VLM × 7 物理域；832 base → 9,984 对抗样本 → **129,792 评测点**；**agentic target-generation pipeline**（reasoning VLM agent + Qwen-Image + Qwen3-8B judge 错误率 0.12%）为每个场景构造场景特定共享目标；预攻击选择率 25.5% ≈ 随机基线 25%（无 bias）；**PromptInject 平均 ASR 64.8%**（最高 Cosmos-Reason2-8B 76.8%）/ CoA 54.6%（视觉最强）/ AnyAttack 1 秒/张 49.9% 逼近 300 步 FOA 48.1%；**Qwen3.5 9B → 122B：清洁 68.9 → 72.8% 但 PromptInject ASR 63.7 → 64.3%（scale ≠ robustness 硬证据）**；BlueSuffix vs PromptInject −21.7 pp / vs FOA 仅 −4.6 pp / **vs FigStep 0 防御**——单一预处理无法跨范式泛化；与 6-26 ForesightSafety-VLA 共构具身智能"感知-行动双侧统一"
+- 跨方向叙事："harness-control 因果消融（harness）+ 训练信号 rubric 化（agent safety）+ 统一红队协议（benchmark）" — H1 末**方法学层**三联拍；与 6-23 / 6-25 / 6-26 三组三联拍合成 **H1 末完整 12 拍方法学谱系**
+- 候选淘汰：Harness Scientific Curation 21005 (91) / Guava 18363 (90) / Playbooks 16420 (90) / Open-SWE-Traces 16038 (89)；Safety AgentLens-mech 22673 (93 · 6-23 同名已写) / DECOMPBENCH 13994 (92) / VESTA 08531 (91) / TRACE 00611 (90)；Benchmark Power Systems 20950 (92) / Animal-Welfare 18142 (91) / KSAFE-MM 28013 (88)
+- 索引：三方向 index 顶部新增 06-28 条目；根 index 顶部 3 条新增；count-badge 39/38/37 → **40/39/38**
+- 数据源：arXiv export API 三方向各 15 条按提交时间排序，全部成功未 429；arxiv.org/abs/&lt;id&gt; 摘要 + arxiv.org/html/&lt;id&gt;v1 关键技术细节 三篇 HTML 全部成功获取
+
+### 2026-06-26（已 push）
+- 三方向 #1 各一篇完成 ✅ 一并 push 到 origin/main
+- Harness: NOVA (arXiv 2606.27243) 95 — Tencent 18 作者，2026-06-25 v1；首次把 harness 工程做到工业 5% 流量 A/B；4 级 verification cascade（结构语义 / 本地可执行 / 离线 AUC / 线上 GMV）+ architecture gradient（SGD-like 非可微更新，聚合 e/V/ΔJ/H 四源）+ L1–L4 任务级路由；统一基础模型 Claude Sonnet 4.6；**L2 EPR 54.5% / L3 EPR 60.0%**（首次超越人类专家）；单 L3 周期人工时间 54u→4u（**13.5×**）；**线上 GMV +1.25/+1.70/+2.02% + pCVR Bias −58.8/−66.7/−37.3%**；w/o architecture-gradient 消融 EPR 60→37.5%；把 harness 工程从 OS / runtime / 评测 / 训练四联拍升级为加入"**验证联动**"的**五联拍**；首次把工业 GMV 写进 abstract
+- Agent Safety: AgentDoG 1.5 (arXiv 2605.29801) 96 — 上海 AI Lab + 北大 + 清华 IIIS 等 49 作者，2026-05-28 v1；端到端 alignment 框架的**集大成者**；更新三维分类法（15 来源 × 21 模式 × 11 危害；含 Codex/OpenClaw 新叶子如仓库工件注入 / 持久内存污染 / 技能供应链入侵）+ 偏好感知影响函数净化（s_π(z) = ĝ_z^⊤ĝ_guard，32,787 → ~1,000 样本，训练成本 30+ 倍下降）+ FSM-RL 环境（Docker → FSM，内存 ≤2.5GB，10,000+ 并发，开销下降 2 个数量级）+ 训练免费在线护栏；**4B 细粒度诊断 55.2 vs GPT-5.4 25.8**（Failure Mode 27.5 vs 13.5 翻倍）；AgentSecurityBench ASR **90.39 → 23.82**；AgentHarm Harm Score 57.49 → 20.32 + Refusal 28.4 → 75.0；**BFCL utility 76.04 → 81.12 反升**（safety-utility Pareto 同改善）；全开源 GitHub AI45Lab/AgentDoG + HF AI45Research/agentdog15（0.8B/2B/4B/8B + 4-U 五版本）；与 6-23 AgentLens + 6-25 SkillSafetyBench 共构 H1 末"**攻击面 × 表征防御 × 训练对齐**"三联拍
+- Benchmark: ForesightSafety-VLA (arXiv 2606.27079) 95 — 中科院自动化所 BrainCog 8 作者（Y. Zeng 通讯），2026-06-25 v1，IROS 2026 投稿；首个**诊断性 VLA 安全 benchmark**；**13 类分类法**（Safe-Core 5 物理：Force/Thermal/Spatial/Collaborative/Temporal + Safe-Lang 4 指令 + Safe-Vis 4 感知）+ **L×W×V 三轴受控诊断**（L0–L2 / W0–W4 / V0–V4）+ 过程级 **CC（累积代价）/ RET（暴露时间）/ SASR** 双阈值监控 + **四象限分解 SSR/USR/SFR/UFR**；RoboTwin 66 场景 × 5 embodiments × 50 episodes × 3 seeds = 49,500 评测点；**所有 VLA 都未完全安全**（最强 OpenVLA-oft CC=0.18, USR=0.06, UFR=0.15）；**不存在 capability-safety trade-off**（USR/Success：OpenVLA-oft 12.5% < ACT 37.5%）；Thermal/Energy 最难（ACT CC=0.54）/ Temporal Sequence 最易；维度敏感性：结构变化 L + 视觉变化 V ≫ 普通语言变化 W0–W2，但 W3–W4 对抗注入显著；把诊断性 benchmark 思想从 LLM 扩到具身 VLA
+- 跨方向叙事："验证联动（harness）+ alignment 框架完整化（agent safety）+ 诊断性 benchmark 跨过 LLM 到 VLA（benchmark）" — H1 末方法学三联拍；与 6-23 / 6-25 两个三联拍合成 **H1 末完整 9 拍方法学谱系**
+- 候选淘汰：Harness Code Isn't Memory 22417 (91) / Hitchhiker's Guide 24937 (90) / StaminaBench 19613 (90) / Dissecting Trajectories 17454 (89)；Safety SafeHarbor 05704 (93) / Boiling Frog 22643 (92) / FATE 11882 (91) / BOA Principled 01644 (90)；Benchmark REALM 23892 (92) / Efficient IRT 20626 (91) / Power Systems 20950 (90) / KSAFE-MM 28013 (88)
+- 索引：三方向 index 顶部新增 06-26 条目；根 index 顶部 3 条新增；count-badge 38/37/36 → **39/38/37**
+- 数据源：arXiv export API（ti:evaluation+harness OR harness+engineering OR LLM+harness + abs:agent+harness / ti:agent+safety / ti:safety+benchmark）三方向各 15 条按提交时间排序，全部成功未 429 + arxiv.org/abs/&lt;id&gt; 抓取三选定论文摘要与作者 + arxiv.org/html/&lt;id&gt;v1 抓取关键技术细节（NOVA / AgentDoG 1.5 / ForesightSafety-VLA 三篇 HTML 全部成功获取）
+
+### 2026-06-25（已 push）
+- 三方向 #1 各一篇完成 ✅ commit `0b5259b` + 上次 06-23 commit `2d11592` 一起推送到 origin/main（网络阻断已恢复）
+- Harness: Interplay of Harness Design and Post-Training (arXiv 2606.25447) 94 — POSTECH 6 作者，2026-06-24 v1；首次正面攻入 **harness × post-training 联动**；harness-aware post-training ID/OOD 双优；**极简 harness × 强工具迁移 → 断崖式性能崩塌**；harness 进入 training-aware 阶段
+- Agent Safety: SkillSafetyBench (arXiv 2605.12015 v2) 95 — 上海 AI Lab / 北大 / NUS 等 10 作者，05-12 v1 / 05-27 v2；首次把*可复用 skill 自身*立为新型 agent safety 攻击面；155 cases × 47 tasks × 6 风险域 × 30 类别
+- Benchmark: Hacker-Fixer Loop (arXiv 2606.08960) 96 — CMU 等 6 作者，2026-06-08 v1；把 reward hacking 工程化；KernelBench ASR 62%→0%；释出 **Terminal Wrench**（323 环境 + 3,632 trajectories）
 
 ### 近期执行简史
 - 06-15：HarnessX (94) / MINIM (94) / WorkBench Revisited (93) — count 33/32/31 → 34/33/32
 - 06-17：SEAGym (94) / Rift (95) / EComAgentBench (93) — count 34/33/32 → 35/34/33
 - 06-18：Xcientist (95) / SRP (95) / SciRisk-Bench (94) — count 35/34/33 → 36/35/34
 - 06-23：AOHP (95) / AgentLens (96) / Eval-Awareness-Multivariate (95) — count 36/35/34 → 37/36/35
+- 06-25：Interplay-Harness (94) / SkillSafetyBench (95) / Hacker-Fixer-Loop (96) — count 37/36/35 → 38/37/36 ✅ push 成功
+- 06-26：NOVA (95) / AgentDoG-1.5 (96) / ForesightSafety-VLA (95) — count 38/37/36 → **39/38/37** ✅ push 成功
 
 ### 历史趋势 / 经验
 - 三方向 #1 平均评分稳定 92–96；候选筛选规模 5 篇 + 评分对比表
-- 报告间互文：每天注意挑能与方向内/方向间形成镜像或对偶的论文（今日 #1 AOHP 降维 / #2 AgentLens 表征下沉 / #3 Benchmark Illusion 评测升维 形成方法学三联拍）
-- arXiv export API 此次未 429（与 06-18 持续 429 不同），可继续优先尝试 export API；fallback 用 list/cs.AI/new + abs/<id> 仍稳定
-- 每日 commit + push 流程稳定
-- 经验：当某论文 arxiv.org/html/<id>v1 返回 "No HTML for ..."，说明源未配置 LaTeX 渲染，应直接用 abs 页摘要 + 同期对照论文构造解读，无需再尝试 PDF
-
+- 报告间互文：06-26 三篇形成"验证联动 / alignment 框架完整化 / 诊断性 benchmark 跨 LLM-VLA" 三联拍；与 6-23 / 6-25 两个三联拍合成 H1 末完整 9 拍方法学谱系
+- arXiv export API 6-23 / 6-25 / 6-26 持续稳定未 429，优先继续用 export API
+- **经验**：长 HTML 文件（300+ 行）用 Write 一次性写入即可成功，无需 Edit 续写；候选对比表格 + data-table 数据表配色按方向（harness 紫 / safety 绿 / bench 黄）保持视觉一致性
+- **经验**：根 index 的 count-badge 多个相同字符串歧义，**最稳健做法是用 h2 标签 + 描述 + count-badge 三行作为 old_string 上下文**，而非简单 replace（37 数字会出现重复，造成 ambiguity error）
+- **经验**：H1 末 6 月 25 日是 arXiv 三方向上传高峰，NOVA + ForesightSafety-VLA 同日提交，符合方法学谱系成熟期；下一次（6-28 / 6-30）应该重点扫描 06-26 / 06-27 / 06-28 新提交
+- **网络观察**：6-23 push 阻断（SSH 22/443 均不通），6-25 push 已恢复；6-26 push 继续可用
