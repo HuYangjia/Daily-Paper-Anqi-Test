@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-01 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-01 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 1 日 · Harness Engineering · 把 harness 工程从<em>"通用 LLM 脚手架"</em> 推向<strong>领域专属 skill 生态</strong>—— H2 首日给出<em>"CLI + Hub + 本地 harness"</em> 完整三段闭环参考</div>
+  <h1>Buildrix：面向<strong>建筑工程</strong>领域的<em>开放 agentic AI skill 平台</em>—— <strong>Python CLI + 云端 Hub + 本地 agent harness</strong>三件套，用<em>self-contained skill 包 + human-verified golden test cases</em> 把"<em>孤立 PoC 演示</em>"升级为<u>可复现、可分享、可评测</u>的社区生态</h1>
+  <div class="en-title">Buildrix: An Open Platform for Sharing and Benchmarking Agentic AI Skills in Building Engineering</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-16 至 06-25 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">Buildrix: Open Platform for Sharing and Benchmarking Agentic AI Skills</a><span class="winner-badge">今日选定</span></td>
+          <td>领域专属 skill 生态平台 · CLI + Hub + 本地 harness 三件套 · 建筑工程为切入</td>
+          <td>arXiv 2606.25139 · 2026-06-23 · Z. Jiang / B. Dong · Syracuse · eess.SY + cs.AI</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">The Hitchhiker's Guide to Agentic AI: From Foundations to Systems</a></td>
+          <td>agent 全栈参考书 · harness 设计单独成章</td>
+          <td>arXiv 2606.24937 · 2026-06-22 · H. Roitman · cs.AI · 综述式教科书</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction</a></td>
+          <td>OS 级 agent harness · Android 上的完成率 +21.12% / token −51.55%</td>
+          <td>arXiv 2606.23449 · 2026-06-22 · S. Zhao + 15 作者 · 清华 · cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.21005" target="_blank" rel="noopener">Building Agent Harnesses for Scientific Curation from Multimodal Sources</a></td>
+          <td>Beaver · 科学文献 curation harness · GRAS 81.0 vs 前沿 +23 pp</td>
+          <td>arXiv 2606.21005 · 2026-06-19 · S. Zhang + 12 作者 · Microsoft · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.19613" target="_blank" rel="noopener">StaminaBench: Stress-Testing Coding Agents over 100 Interaction Turns</a></td>
+          <td>coding agent 耐久力 benchmark · 6 harness × 7 LLM × 20 场景 × 100 轮</td>
+          <td>arXiv 2606.19613 · 2026-06-17 · V. Sobal + 4 作者 · Amazon · cs.SE</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+ti:%22harness+engineering%22+OR+ti:%22LLM+harness%22+OR+abs:%22agent+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:evaluation harness / abs:agent harness 时间排序</a>。<strong>Buildrix 胜出</strong>：(1) 这是 H2 首日<em>第一次</em> 明确把"<em>agentic AI skill 生态</em>" 作为一个<em>平台工程问题</em> 立起来 —— 不只是研究单个 harness，而是把 <strong>"skill 包定义 · skill 分享 · skill 执行 · skill 评测"</strong> 完整闭环做成社区平台，与 6-25 SkillSafetyBench / 6-28 Buildrix-Skills 概念直接对齐；(2) <em>三段闭环</em>（CLI + Hub + 本地 harness）在方法学上给<em>领域专属 agent 生态</em> 一个可复用参考架构 —— <strong>golden test case 的"<em>专家验证 → 晋升机制</em>"</strong> 特别值得毕设借鉴；(3) 开源：GitHub Bugs-Owner/buildrix + buildrixhub.onrender.com Hub 在线；(4) <em>建筑工程</em> 是<em>非-coding / 非-web-browsing</em> 领域，把 agent harness 应用范围从软件工程外拓到<em>工程领域垂直生态</em>；(5) 与 6-30 CUGA FLO（BPM 治理 harness）/ 6-28 Code Isn't Memory（coding harness 因果消融）/ 6-25 Interplay（harness × post-training）串成<em>H1 末 - H2 首</em>"<u>领域 agent 生态平台化</u>" 主题延伸。AOHP 90 分次选，但方向更偏 OS 级基础设施，不像 Buildrix 直接解答"<em>如何做领域 skill 生态</em>" 这个正面问题。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Buildrix: An Open Platform for Sharing and Benchmarking Agentic AI Skills in Building Engineering</span></div>
+      <div class="meta-item"><label>中文标题</label><span>Buildrix：面向建筑工程的<em>开放 agentic AI skill 分享与评测平台</em></span></div>
+      <div class="meta-item"><label>作者（2 人）</label><span>Zixin Jiang（第一作者）· Bing Dong（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>Syracuse University · Mechanical &amp; Aerospace Engineering</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-23 v1（UTC 20:08:47）</span></div>
+      <div class="meta-item"><label>领域</label><span>eess.SY · cs.AI · Building Engineering / HVAC 工程</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">arxiv.org/abs/2606.25139</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.25139" target="_blank" rel="noopener">arxiv.org/pdf/2606.25139</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.25139v1" target="_blank" rel="noopener">arxiv.org/html/2606.25139v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.25139" target="_blank" rel="noopener">10.48550/arXiv.2606.25139</a></div>
+      <div class="meta-item"><label>GitHub</label><a href="https://github.com/Bugs-Owner/buildrix" target="_blank" rel="noopener">github.com/Bugs-Owner/buildrix</a></div>
+      <div class="meta-item"><label>Hub 在线</label><a href="https://buildrixhub.onrender.com/" target="_blank" rel="noopener">buildrixhub.onrender.com</a></div>
+      <div class="meta-item"><label>三组件</label><span>Python CLI（skill dev + publish + install）· Web Hub（challenge + skill + test case + review）· 本地 agent harness（skill discovery + toolchain provisioning + progressive context loading + multi-step workflow）</span></div>
+      <div class="meta-item"><label>核心概念</label><span>self-contained skill package（instructions + scripts + deps + resources）· golden test case（domain expert 验证 → 晋升）· domain toolchain provisioning · progressive context loading</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      给<em>领域专属</em>（building engineering）agentic AI skill 生态提出<strong>"<em>CLI + Hub + 本地 harness</em>" 三段闭环</strong>参考架构 —— 把当前 agentic AI"<em>孤立 PoC 演示 + 无可复用能力 + 无标准 benchmark</em>" 的散兵状态，升级为<em>可发布 / 可分享 / 可安装 / 可执行 / 可评测</em> 的社区平台；每个 skill 是自包含包（instructions + scripts + deps + resources），quantitative test case 经<em>领域专家</em> 验证后<u>晋升</u>为 <strong>golden test case</strong>，为可复现 benchmark 提供 ground truth。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Agentic AI 为自动化复杂的建筑工程工作流提供了巨大潜力。然而，大多数现有应用仍是<em>孤立的 PoC 演示</em>，缺乏可复用领域能力、经人类验证的评估案例、以及标准化 benchmark 基础设施。本文提出 <strong>Buildrix</strong>，一个开放的、社区驱动的平台，用于开发、分享、执行和评测<em>面向建筑工程的 agentic AI skill</em>。Buildrix 集成三个组件：<strong>(1) Python 命令行包</strong>，用于开发、验证、发布、安装和管理 skill 与测试用例；<strong>(2) 基于 Web 的 Hub</strong>，用于组织开放挑战、可复用 skill、测试用例、评审与 benchmark 结果；<strong>(3) 本地 agent harness</strong>，支持 skill discovery、外部 toolchain provisioning、progressive context loading 和多步工作流执行。Buildrix 中的 skill 组织为<em>标准化、自包含</em> 的包，包含任务指令、可执行脚本、依赖以及支撑资源。定量测试用例可由领域专家验证并晋升为<strong>golden test case</strong>，用于可复现的 benchmark 评测。Buildrix 为可复用能力开发、透明评测和社区驱动的建筑工程 agentic AI 演进提供了开放基础。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 三组件设计 / skill 包契约 / golden test 晋升机制 / 与 harness 工程谱系的关系）</div>
+
+    <p><strong>问题背景。</strong>建筑工程行业里 agentic AI 应用有两个结构性痛点：<em>(a) 演示分散不成生态</em> —— 每篇论文都造自己的 PoC，能力无法跨项目复用；<em>(b) 评测靠自证</em> —— 没有社区级 golden test，任何"<em>新方法比 baseline 强</em>" 的 claim 都难以验证。作者主张：<strong>agentic AI 的下一步不是造更多单点 agent，而是给单点 agent 造"<em>可分享的领域生态</em>"</strong>。这个诊断和 6-25 SkillSafetyBench（把 skill 立为独立攻击面）、6-26 AgentDoG 1.5（skill 供应链入侵新叶子）、6-28 Anthropic Agent Skills 概念呼应 —— skill 层的<em>可编程性 / 可复用性 / 可验证性</em> 是 H2 agent 生态的核心。</p>
+
+    <p><strong>三组件设计。</strong>Buildrix 用一个非常干净的三段架构解决上述问题：</p>
+    <table class="data-table">
+      <thead><tr><th>组件</th><th>形态</th><th>核心职责</th><th>解决痛点</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CLI · Python 包</strong></td><td>命令行工具 <code>buildrix</code></td><td>开发 / 验证 / 发布 / 安装 / 管理 skill + test case</td><td>skill 开发和分发工具缺失</td></tr>
+        <tr class="hl"><td><strong>Hub · Web 平台</strong></td><td><a href="https://buildrixhub.onrender.com/" target="_blank" rel="noopener">buildrixhub.onrender.com</a></td><td>组织 open challenges + reusable skills + test cases + reviews + benchmark leaderboard</td><td>缺少中央索引和评审场所</td></tr>
+        <tr><td><strong>本地 agent harness</strong></td><td>runtime scaffolding</td><td>skill discovery + external toolchain provisioning + progressive context loading + multi-step workflow execution</td><td>缺少统一的 skill-aware 运行时</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>skill 包契约（self-contained package）。</strong>每个 Buildrix skill 是一个<em>标准化、自包含</em> 的目录，遵循固定结构：</p>
+    <ul class="point-list">
+      <li><strong>任务指令</strong>（instructions.md）—— 用自然语言描述该 skill 处理什么类型任务、输入输出契约、边界条件</li>
+      <li><strong>可执行脚本</strong>（scripts/）—— skill 的核心逻辑，可以是 Python 脚本、shell 脚本、或对外部工具的封装</li>
+      <li><strong>依赖清单</strong>（deps/）—— 运行时需要的第三方库、外部工具链、系统环境</li>
+      <li><strong>支撑资源</strong>（resources/）—— skill 依赖的静态数据、模板、领域知识文件</li>
+    </ul>
+    <p>这个契约的关键设计：<em>skill 是<u>可版本化</u> 的原子对象</em>，可以像 pip 包一样发布、安装、版本管理，避免了当前 agent 场景下"<em>脚本散在 GitHub 上，装完不知怎么用</em>" 的困境。</p>
+
+    <p><strong>Golden Test Case 晋升机制。</strong>这是全文最有方法论意义的设计。<em>Quantitative test cases</em> 首先由 skill 作者提交，然后经过<strong>领域专家</strong>（不是 skill 作者本人）审核 —— 一旦被 verify，就<em>晋升</em>为该开放挑战的 <strong>golden test case</strong>，用于该 skill 及其后续变体的可复现 benchmark 评测。这个机制解决了 agent benchmark 一个根本悖论：<em>如何在没有权威 ground truth 的领域建立可信 benchmark</em>？—— 通过<em>社区专家验证</em> 而非模型自评或作者自证。golden test case 一旦建立，就成为<em>该挑战问题的公共 ground truth</em>，任何后续方法都必须通过它。</p>
+
+    <p><strong>本地 harness 的四项能力。</strong>本地 agent harness 承担 skill-aware 运行时角色，提供四项 baseline agent 通常不具备的能力：<em>(1) skill discovery</em> —— agent 可以根据当前任务描述在本地已安装的 skill 库里检索匹配 skill；<em>(2) external toolchain provisioning</em> —— 自动安装 skill 声明的外部工具依赖（如 EnergyPlus、OpenStudio 等建筑工程专用软件）；<em>(3) progressive context loading</em> —— 不把 skill 的所有信息一次性塞进 context，而是分阶段按需加载 instructions / scripts / resources，为长上下文任务留出预算；<em>(4) multi-step workflow execution</em> —— 允许 skill 之间组合成多步 pipeline，agent 只需描述目标，harness 负责编排。</p>
+
+    <p><strong>与 harness 工程谱系的位置。</strong>本文在 H1 末到 H2 首的 harness 工程主线上占据一个特定位置：</p>
+    <table class="data-table">
+      <thead><tr><th>时间 / 论文</th><th>harness 拓扑</th><th>核心命题</th></tr></thead>
+      <tbody>
+        <tr><td>6-25 Interplay of Harness Design and Post-Training</td><td>harness × post-training 联动</td><td>harness-aware post-training ID/OOD 双优</td></tr>
+        <tr><td>6-26 NOVA</td><td>验证-联动 harness</td><td>4 级 verification cascade + architecture gradient</td></tr>
+        <tr><td>6-28 Code Isn't Memory</td><td>harness 内部因果消融</td><td>结构化 index arm 大 Loc 增益 · 无 cost penalty</td></tr>
+        <tr><td>6-30 CUGA FLO</td><td>agentic 层环绕 deterministic 引擎 · 第三种拓扑</td><td>TDF + FRAME + 7 hook · 双源治理</td></tr>
+        <tr class="hl"><td><strong>7-01 Buildrix</strong></td><td><em>领域 skill 生态平台</em> · 第四种拓扑</td><td><strong>CLI + Hub + 本地 harness + golden test case 晋升</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Buildrix 把 harness 工程从"<em>单点 harness 设计</em>" 拓展到"<em>领域 harness 生态</em>"，是一个<strong>范围扩展</strong> 而非拓扑替换。它与 6-30 CUGA FLO 的关系是<em>互补</em>：CUGA FLO 讲"<em>如何在一个 harness 内治理 agent 与 deterministic 引擎</em>"，Buildrix 讲"<em>如何让 harness 与领域社区共同演进</em>"。</p>
+
+    <p><strong>建筑工程作为切入领域的理性。</strong>建筑工程有几个 agentic AI 生态非常需要的属性：<em>(1) 工作流强结构化</em>（HVAC 模拟、EnergyPlus 输入生成、能耗审计等本身是结构化流程）；<em>(2) 有明确的可验证结果</em>（模拟数值、能耗数值可以定量比较）；<em>(3) 现有工具链成熟</em>（EnergyPlus / OpenStudio / IES-VE 等）适合 skill 封装；<em>(4) 领域专家群体明确</em>，可以承担 golden test 验证的角色。这个"<em>结构化 + 可验证 + 有成熟工具 + 有领域专家</em>" 的四要素组合，可能是<em>其他垂直行业采纳 Buildrix 模式的判断准则</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Anthropic — <em>Agent Skills / Skill-first agent design</em>（Buildrix 的直接概念灵感 · skill 作为独立可分享对象）<br>
+    <a href="https://www.anthropic.com/news/skills" target="_blank" rel="noopener">anthropic.com/news/skills</a></div>
+    <div class="ref-item">Buildrix Hub · 在线 skill 中央索引<br>
+    <a href="https://buildrixhub.onrender.com/" target="_blank" rel="noopener">buildrixhub.onrender.com</a></div>
+    <div class="ref-item">Buildrix GitHub · CLI + 本地 harness 源码<br>
+    <a href="https://github.com/Bugs-Owner/buildrix" target="_blank" rel="noopener">github.com/Bugs-Owner/buildrix</a></div>
+    <div class="ref-item">Awesome Agent Skills（社区列表 · 与 Buildrix Hub 呼应）<br>
+    <a href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener">github.com/VoltAgent/awesome-agent-skills</a></div>
+    <div class="ref-item">Google — <em>Introducing Gemini CLI, Open-Source AI Agent</em>（CLI-as-agent 竞品）<br>
+    <a href="https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/" target="_blank" rel="noopener">blog.google/…/introducing-gemini-cli-open-source-ai-agent</a></div>
+    <div class="ref-item">Significant-Gravitas AutoGPT（无 skill 生态的对照）<br>
+    <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">github.com/Significant-Gravitas/AutoGPT</a></div>
+    <div class="ref-item">Nous Research — Hermes Agent（agent-first 平台对照）<br>
+    <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">hermes-agent.nousresearch.com</a></div>
+    <div class="ref-item">6-30 CUGA FLO · 与 Buildrix 互补的<em>单点 harness 内治理</em> 参考<br>
+    <a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></div>
+    <div class="ref-item">6-25 Interplay of Harness Design and Post-Training · harness × post-training<br>
+    <a href="https://arxiv.org/abs/2606.25447" target="_blank" rel="noopener">arxiv.org/abs/2606.25447</a></div>
+    <div class="ref-item">6-25 SkillSafetyBench · skill 作为独立攻击面（本文的 safety 侧对照）<br>
+    <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：agentic AI 的下一步是<em>为单点 agent 造可分享的领域生态</em>，而不是造更多单点 agent。</li>
+      <li><strong>核心论点 ②</strong>：skill 应是<em>可版本化的原子对象</em> —— 像 pip 包一样发布、安装、依赖管理。</li>
+      <li><strong>核心论点 ③</strong>：<em>Golden test case 晋升机制</em> 是解决"<em>无权威 ground truth 领域如何建 benchmark</em>" 的最佳可行方案。</li>
+      <li><strong>三组件契约</strong>：<em>CLI</em>（开发 + 分发 + 安装）+ <em>Hub</em>（组织 + 评审 + leaderboard）+ <em>本地 harness</em>（skill discovery + toolchain provisioning + progressive context loading + workflow execution）。</li>
+      <li><strong>skill 包结构</strong>：instructions.md + scripts/ + deps/ + resources/ —— 完全 self-contained，跨项目可 install。</li>
+      <li><strong>harness 四能力</strong>：skill discovery / toolchain provisioning / progressive context loading / multi-step workflow execution —— baseline agent 通常不具备的组合。</li>
+      <li><strong>Progressive context loading</strong>：不把 skill 全部信息一次性塞进 context，而是<em>按阶段按需加载</em>，为长上下文任务留出预算。</li>
+      <li><strong>建筑工程作为切入领域</strong>：工作流强结构化 + 可定量验证 + 有成熟工具链（EnergyPlus / OpenStudio）+ 有领域专家群体 —— 四要素判断准则。</li>
+      <li><strong>与 6-30 CUGA FLO 互补</strong>：CUGA FLO 解决"<em>单 harness 内治理</em>"，Buildrix 解决"<em>harness 与领域社区共同演进</em>"。</li>
+      <li><strong>与 Anthropic Agent Skills 概念对齐</strong>：把"<em>skill 作为独立可分享对象</em>" 从产品概念推进到<em>可运行的开源平台</em>。</li>
+      <li><strong>开源</strong>：GitHub Bugs-Owner/buildrix + buildrixhub.onrender.com Hub 在线可访问，社区可即时贡献。</li>
+      <li><strong>Harness 工程第四种拓扑</strong>：跟随 6-26 NOVA（验证-联动）/ 6-30 CUGA FLO（策略治理）/ 6-28 Code Isn't Memory（因果消融），Buildrix 定义"<em>领域 skill 生态平台</em>" 拓扑。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>(1) <em>把 KV-cache 治理从"<u>单点 harness 内的策略</u>" 提升到"<u>skill-aware harness 层</u>"</em> —— 你的毕设可以借鉴 Buildrix 的三段契约：<strong>KV-cache skill 定义（哪种任务用哪种 cache 策略，作为可分享 skill 包）+ KV-cache Hub（把 cache policy 作为社区可分享对象）+ 本地 skill-aware harness</strong>；(2) <em>progressive context loading 直接对应 KV-cache 场景</em> —— 别把整个 skill 一次性 prefill，按<em>指令 → 脚本 → 依赖 → 资源</em> 分阶段加载可显著降低 prefill cost；(3) <em>golden test case 晋升机制</em> 给 KV-cache 评测提供参考 —— 你毕设需要的可复现 benchmark 是不是可以按"<em>作者提交 quantitative case → cache 专家验证 → 晋升 golden case</em>" 的路径建立？(4) <em>self-contained skill 包契约</em> 对 KV-cache 策略非常适用：<code>kv-strategy.md（策略语义）+ scripts/prefill.py（执行）+ deps/（依赖）+ resources/（模板 prompt）</code>；(5) <em>domain toolchain provisioning</em> 直接对应 SGLang 场景 —— harness 自动安装依赖（transformer 版本 / cuda 版本 / SGLang 版本）；(6) 与 6-30 CUGA FLO 的<em>7 hook 原语</em> 组合：Buildrix 提供"<em>skill 生态</em>"层，CUGA FLO 提供"<em>skill 内策略治理</em>"层 —— 双层组合是你毕设最有说服力的架构叙事；(7) <em>Buildrix 的四种能力</em>（skill discovery / toolchain provisioning / progressive context loading / multi-step workflow）都可以在 SGLang 上对偶实现，形成"<em>KV-cache 层 skill-aware harness</em>" 的完整功能矩阵。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>skill 作为原子分发单元</em> 直接连到 6-25 SkillSafetyBench 的攻击面命题 —— <strong>Buildrix Hub 就是 skill 供应链</strong>，一个 malicious skill 一旦通过晋升机制成为 golden，就会污染整个 leaderboard，因此 Hub 层的 skill audit 机制（Buildrix 目前依赖"<em>专家验证</em>"）是安全设计的核心；(2) <em>Progressive context loading 有安全副作用</em> —— skill 分阶段加载意味着 agent 在决定使用 skill 时<em>只看到部分描述</em>，恶意 skill 可以把 harmful 逻辑放在 late-stage 加载的 resources 里躲避早期审核；(3) <em>self-contained 包本身是攻击面</em> —— scripts 目录允许任意可执行文件，deps 允许 pip install 外部包 —— 这是 6-26 AgentDoG 1.5 "<em>Codex/OpenClaw 仓库工件注入</em>" 新叶子的直接对应；(4) <em>domain expert 验证是防线但不是保证</em> —— 建筑工程专家可以判断 skill 输出是否符合建筑规范，但不一定能审计 script 内的隐蔽后门；后续需要<em>自动化 skill audit</em>（静态分析 + 沙箱执行 + 数据流追踪）作为专家验证的补充；(5) 与 6-30 Action Alignment 的 <em>least privilege</em> 呼应：每个 Buildrix skill 应显式声明<em>它需要的最小权限集</em>（可访问哪些文件、哪些外部工具、哪些网络地址），harness 在执行时对比"<em>skill 声明的权限</em>" 与"<em>用户授予该 harness 的权限 A</em>"，超出即拒绝。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>Golden test case 晋升机制</em> 是 safety benchmark 建设的<strong>关键方法学参考</strong> —— H1 大量 safety benchmark（DECOMPBENCH / TRACE / AgentSecurityBench）都是<em>作者自证</em>，缺少专家验证晋升的中间层，Buildrix 的三阶（作者提 → 专家 verify → 晋升 golden）是可迁移的；(2) <em>领域四要素判断准则</em>（工作流结构化 + 可定量验证 + 成熟工具 + 领域专家群体）可以用来判断"<em>下一步该做什么领域的 safety benchmark</em>"：满足这四要素的领域最适合建立可复现 benchmark；(3) <em>Buildrix Hub 是 skill-facing agent benchmark 的天然基础设施</em> —— 已有 skill 包 + 已有 golden test，把 skill 加上恶意变体或 red-team 版本就可以生成 skill-safety benchmark；(4) <em>progressive context loading 场景的 safety 是空白</em> —— 当前 agent safety benchmark 假设 agent 一次性拿到全部 skill 信息，但真实 harness（如 Buildrix）分阶段加载，attacker 可以针对<em>不同加载阶段</em> 构造攻击，这是 H2 一个可立项方向；(5) <em>toolchain provisioning safety</em> —— Buildrix 允许自动安装依赖（pip install），这与 6-26 AgentDoG 1.5 的<em>skill 供应链入侵</em> 直接同构，可以针对"<em>依赖劫持</em>" 构造 benchmark 场景；(6) 与 6-30 OSWorld 2.0 组合：OSWorld 2.0 给"<em>长程真实工作流</em>" benchmark，Buildrix 给"<em>skill 生态</em>" benchmark，两者组合覆盖<em>能力 × 生态</em> 两个维度。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Hitchhiker's Guide to Agentic AI (6-22)</strong> · agent 全栈参考书 · harness 设计单独成章<br>
+      <a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener">arxiv.org/abs/2606.24937</a></li>
+      <li><strong>AOHP (6-22)</strong> · Android 上 OS-level agent harness · 完成率 +21.12% / token −51.55%<br>
+      <a href="https://arxiv.org/abs/2606.23449" target="_blank" rel="noopener">arxiv.org/abs/2606.23449</a></li>
+      <li><strong>Beaver (6-19)</strong> · 科学文献 curation agent harness · GRAS 81.0<br>
+      <a href="https://arxiv.org/abs/2606.21005" target="_blank" rel="noopener">arxiv.org/abs/2606.21005</a></li>
+      <li><strong>StaminaBench (6-17)</strong> · coding agent 耐久力 · 6 harness × 7 LLM × 100 轮<br>
+      <a href="https://arxiv.org/abs/2606.19613" target="_blank" rel="noopener">arxiv.org/abs/2606.19613</a></li>
+      <li><strong>CUGA FLO (6-25)</strong> · 6-30 已报告 · 单点 harness 内治理参考架构<br>
+      <a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.25139" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.25139v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.25139" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://github.com/Bugs-Owner/buildrix" target="_blank" rel="noopener">GitHub Bugs-Owner/buildrix</a>
+      <a class="link-btn primary" href="https://buildrixhub.onrender.com/" target="_blank" rel="noopener">Buildrix Hub 在线</a>
+      <a class="link-btn" href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener">Awesome Agent Skills</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-01 #1 · 搜索来源：arxiv.org/api/query?ti:evaluation+harness OR abs:agent+harness + arxiv.org/abs/2606.25139 + arxiv.org/html/2606.25139v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">arxiv.org/abs/2606.25139</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

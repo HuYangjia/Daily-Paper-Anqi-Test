@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-01 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fef7eb; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f0f9f4; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fef7eb; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #ecd2a3; color: #633806; }
+  .link-btn.primary:hover { background: #fdf3df; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fef7eb; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fef7eb; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #ecd2a3; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fdf3df; font-weight: 500; color: #633806; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-01 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 1 日 · Safety Benchmark · 把机器人 safety 评测从<em>"任务成功率"</em> 推进到<strong>Damage-Aware 双维度评估</strong>—— H2 首日刚出炉的家用机器人 physical safety benchmark 参考架构</div>
+  <h1>OOPSIEVERSE：Damage-Aware Simulation 的<em>统一物理伤害</em> 家用机器人 safety benchmark —— <strong>DAMAGESIM</strong> 把接触力 / 温度变化 / 液体交互<u>转换</u>为<em>机械 / 热 / 流体</em> 三类<em>物理接地</em>伤害；跨 OmniGibson (Nvidia Omniverse) + RoboCasa (MuJoCo) <strong>双物理后端</strong>；把 "<em>task success</em>" 与 "<em>safe execution</em>" 首次<u>显式分离</u> —— 释放<em>demonstration 收集 · 策略学习 · VLA benchmark · sim-to-real</em> 四大 use case</h1>
+  <div class="en-title">OopsieVerse: A Safety Benchmark with Damage-Aware Simulation for Robot Manipulation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-01 至 06-30 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">OopsieVerse: A Safety Benchmark with Damage-Aware Simulation</a><span class="winner-badge">今日选定</span></td>
+          <td>家用机器人 physical safety benchmark · Damage-aware simulation · 双物理后端 · 4 use case</td>
+          <td>arXiv 2606.31993 · 2026-06-30 · A. Balaji + 5 作者 · UT Austin Robin Lab · cs.RO</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">ForesightSafety-VLA: Unified Diagnostic Safety Benchmark for VLA</a> <em>（6-26 已报告）</em></td>
+          <td>VLA safety 诊断 benchmark · 13 类分类法 · L×W×V 三轴</td>
+          <td>arXiv 2606.27079 · 2026-06-25 · M. Lyu + 7 作者 · 中科院 BrainCog · cs.RO</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">Your AI Travel Agent Would Book You a Bullfight (TAC)</a></td>
+          <td>agentic benchmark · 隐性动物福利 · 12 场景 × 4 类别 × 7 前沿模型</td>
+          <td>arXiv 2606.18142 · 2026-06-16 · J. Brazilek + 5 作者 · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">STAGE-Claw: Automated State-based Agent Benchmarking</a></td>
+          <td>state-based personal-computing agent benchmark · 40 场景 × 11 模型 · state-correctness scoring</td>
+          <td>arXiv 2606.10394 · 2026-06-09 · S. Liang + 10 作者 · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark</a></td>
+          <td>电力工程 agent · executable evaluator · feasibility flag + violations</td>
+          <td>arXiv 2606.20950 · 2026-06-18 · S. Trashchenkov · cs.AI</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:safety benchmark / agent benchmark / alignment benchmark 时间排序</a>。<strong>OopsieVerse 胜出</strong>：(1) H2 首日刚出炉的<em>最新</em> physical safety benchmark（2026-06-30 提交）—— 时效性最强；(2) <strong>DAMAGESIM 是核心创新</strong> —— 把 physical safety 从"<em>任务完成度</em>" 显式分离为"<em>damage 独立信号</em>"，通用于 mechanical / thermal / fluid 三大 damage 家族；(3) <em>跨双物理后端</em>（OmniGibson / Nvidia Omniverse + RoboCasa / MuJoCo）—— 证明 simulator-agnostic 设计，避免绑定单一物理引擎；(4) <em>4 大 use case 完整覆盖</em>：demonstration 收集（damage feedback 引导）· imitation / RL 策略学习（damage-conditioned）· VLA benchmark（对现代前沿 VLA policy 系统性测试）· sim-to-real（把安全性传递到真实机器人）—— 从<em>数据 → 训练 → 评测 → 部署</em> 全链条；(5) <em>与 6-26 ForesightSafety-VLA 互补</em>：ForesightSafety-VLA 给 13 类<em>分类法</em>（Safe-Core / Safe-Lang / Safe-Vis），OopsieVerse 给<em>物理接地 damage 信号</em>—— 前者是<em>诊断维度</em>，后者是<em>底层度量</em>，两者叠加可以构造更强的物理安全评估栈；(6) 开源：UT Austin Robin Lab 有系统 code + 数据集 release 传统 · 官网 <a href="https://robin-lab.cs.utexas.edu/oopsieverse/" target="_blank" rel="noopener">robin-lab.cs.utexas.edu/oopsieverse</a> 已上线；(7) 与 6-30 OSWorld 2.0（长程 computer-use safety audit）+ 6-26 ForesightSafety-VLA（诊断性 VLA safety benchmark）串成<em>H1 末 - H2 首"<u>物理 × 数字</u>" 安全评测双谱系</em>。其它候选是 agentic behavior benchmark 或专业领域 benchmark，缺少 physical safety 的 grounded metric 层。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>OopsieVerse: A Safety Benchmark with Damage-Aware Simulation for Robot Manipulation</span></div>
+      <div class="meta-item"><label>中文标题</label><span>OopsieVerse：面向机器人操作的<em>Damage-Aware Simulation</em> Safety Benchmark</span></div>
+      <div class="meta-item"><label>作者（6 人）</label><span>Arnav Balaji · Arpit Bahety · Sriniket Ambatipudi · Daniel Lam · Junhong Xu · Roberto Martín-Martín（通讯）</span></div>
+      <div class="meta-item"><label>机构</label><span>UT Austin Robin Lab（Roberto Martín-Martín 组）· 具身智能 / 家用机器人研究组</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-30 v1（UTC 17:30:05）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.RO · cs.AI · cs.LG</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">arxiv.org/abs/2606.31993</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.31993" target="_blank" rel="noopener">arxiv.org/pdf/2606.31993</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.31993v1" target="_blank" rel="noopener">arxiv.org/html/2606.31993v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.31993" target="_blank" rel="noopener">10.48550/arXiv.2606.31993</a></div>
+      <div class="meta-item"><label>项目官网</label><a href="https://robin-lab.cs.utexas.edu/oopsieverse/" target="_blank" rel="noopener">robin-lab.cs.utexas.edu/oopsieverse</a></div>
+      <div class="meta-item"><label>核心组件</label><span>DAMAGESIM（simulator-agnostic damage detection & quantification）· 家用任务套件（distinguishing task completion vs safe execution）</span></div>
+      <div class="meta-item"><label>物理后端</label><span>OmniGibson (Nvidia Omniverse) · RoboCasa (MuJoCo) · 15 tasks in RoboCasa</span></div>
+      <div class="meta-item"><label>Damage 家族</label><span>Mechanical（接触力）· Thermal（温度变化）· Fluid（液体交互）· 可扩展到 electrical / chemical</span></div>
+      <div class="meta-item"><label>4 大 Use Case</label><span>(1) demonstration 收集（real-time damage feedback）· (2) damage-conditioned imitation / RL 策略学习 · (3) VLA baseline benchmark · (4) sim-to-real safety 传递</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      针对家用机器人 physical safety 缺失<em>通用 damage 量化机制</em> 的痛点，提出<strong>DAMAGESIM</strong> —— 一个 simulator-agnostic 框架，把 <em>contact forces / temperature changes / liquid interactions</em> <u>统一转换</u>为<em>机械 / 热 / 流体</em> 三大类<u>物理接地</u>伤害信号，并在<strong>OmniGibson (Nvidia Omniverse) + RoboCasa (MuJoCo)</strong> 双物理后端上实例化；配套家用任务套件<em>显式分离 task completion 与 safe execution</em>；释放<strong>4 大 use case</strong> —— (1) demonstration 收集实时 damage 反馈 · (2) damage-conditioned imitation / RL 策略学习 · (3) 现代前沿 VLA baseline 系统性 physical safety benchmark · (4) sim-to-real safety 迁移 —— <em>把 safety 从任务成功率的副产品变为独立可评测维度</em>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>尽管机器人操作能力快速进步，<em>物理安全</em>仍是部署家用机器人的重大障碍：如果机器人损坏自身或周围环境，任务成功<u>不够</u>。仿真提供了对成本高昂且危险的真实世界训练和评测的<em>无伤害替代方案</em>，然而现有仿真器缺乏<em>通用机制</em>来<u>检测、量化、表示</u> 伤害。为填补这一空白，我们提出 <strong>OopsieVerse</strong>，一个用于<em>damage-aware</em> 家用操作的统一仿真框架与 benchmark。OopsieVerse 把<strong>伤害</strong>作为<em>显式的、物理接地的、任务无关</em>信号，将<em>接触力、温度变化、液体交互</em> 等来源转换为对应的<em>机械、热或流体</em> 伤害。OopsieVerse 包含两个核心组件：<strong>(1) DAMAGESIM</strong>，一个 simulator-agnostic 框架用于导航和操作中的伤害检测与量化；<strong>(2) 一组家用任务</strong>，评估常见伤害模式，并<em>区分任务完成与安全执行</em>。我们通过在两种物理后端（Nvidia Omniverse 的 OmniGibson · MuJoCo 的 RoboCasa）中实例化 DAMAGESIM 展示了框架的通用性。我们进一步通过多种 use case 展示 OopsieVerse 的价值：<strong>(1)</strong> 通过实时 damage 反馈引导更安全的 demonstration 收集；<strong>(2)</strong> 通过 damage-conditioned imitation learning 和 reinforcement learning 学习更安全的 manipulation policy；<strong>(3)</strong> 对最前沿 VLA policy 的安全性做 benchmark；<strong>(4)</strong> 改善 sim-to-real 迁移策略在真实世界的安全性。这些结果共同凸显 OopsieVerse 作为可扩展、系统化研究安全机器人操作的<em>开源基础</em> 的潜力。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题诊断 / DAMAGESIM 三大 damage 家族 / 双物理后端设计 / 4 use case / 与 VLA safety 谱系的关系）</div>
+
+    <p><strong>问题诊断：家用机器人 physical safety 的空白。</strong>作者指出机器人操作研究长期把<em>成功率</em> 作为主要指标，而<u>忽略</u>了：机器人可能<em>完成任务但同时损坏自身或周围物体</em>。这个空白在家用场景尤其严重 —— 家里有<em>易碎品（陶瓷、玻璃）· 热源（灶台、烤箱）· 液体（水杯、油罐）· 电器（插座、电线）</em>，每个都是 physical safety 的独立维度。当前仿真器（Isaac Sim / MuJoCo / PyBullet）都能<em>模拟碰撞</em>，但没有<em>把碰撞后果作为独立 signal</em> —— 结果 policy 学到"<em>任务完成</em>" 但不学"<em>安全完成</em>"。</p>
+
+    <p><strong>DAMAGESIM 的三大 Damage 家族。</strong>这是全文核心技术贡献。DAMAGESIM 把散落的物理量<em>统一映射</em> 到伤害轴：</p>
+    <table class="data-table">
+      <thead><tr><th>Damage 家族</th><th>物理源</th><th>物理量转换</th><th>典型家用场景</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mechanical</strong>（机械）</td><td>contact forces</td><td>接触力 / 冲量 / 应力 → 结构变形或断裂</td><td>陶瓷杯撞台面、木门重击</td></tr>
+        <tr class="hl"><td><strong>Thermal</strong>（热）</td><td>temperature changes</td><td>温度 / 温度梯度 / 曝露时间 → 灼伤 / 熔化 / 燃烧</td><td>触碰灶台、抓热锅、放塑料到烤箱</td></tr>
+        <tr><td><strong>Fluid</strong>（流体）</td><td>liquid interactions</td><td>液体接触 / 浸没 / 溢出面积 → 短路 / 腐蚀 / 变形</td><td>水杯打翻到电器、油溢出</td></tr>
+      </tbody>
+    </table>
+    <p>三大家族的关键设计：<em>物理接地</em>（每个 damage 值都对应真实物理量）+ <em>任务无关</em>（不与任何具体任务成功率耦合）+ <em>simulator-agnostic</em>（同一个 damage 定义可以在不同物理引擎上实现）。这个抽象层是 OopsieVerse 与既往 "<em>硬编码 collision penalty</em>" 方法的本质区别。</p>
+
+    <p><strong>双物理后端实例化。</strong>论文在两个物理后端上实例化 DAMAGESIM，证明 simulator-agnostic 属性：</p>
+    <ul class="point-list">
+      <li><strong>OmniGibson</strong>（Nvidia Omniverse）—— 高保真渲染 + PhysX 物理引擎 · 适合 RGB / RGB-D 视觉输入的 VLA policy 评测</li>
+      <li><strong>RoboCasa</strong>（MuJoCo）—— 快速物理仿真 · 15 个 tasks · 适合 RL 训练与快速迭代（RoboCasa 是 MuJoCo 生态里家用机器人任务集）</li>
+    </ul>
+    <p>两个后端都能承载<em>相同</em>的 damage 定义 —— 只是底层物理量的来源不同。这个设计避免了<em>benchmark 与单一 simulator 绑定</em> 的常见困境。</p>
+
+    <p><strong>任务套件设计：显式分离 task completion 与 safe execution。</strong>OopsieVerse 家用任务不使用"<em>成功 / 失败</em>" 二元指标，而是每个任务都<u>同时</u> 报告：</p>
+    <ol style="padding-left:1.5rem;font-size:0.93rem;">
+      <li><strong>Task completion</strong>：任务目标是否达成（拿到杯子？完成炒菜？）</li>
+      <li><strong>Safe execution</strong>：过程中 damage 累积量（机械 / 热 / 流体 三条独立轴）</li>
+    </ol>
+    <p>结果四象限：<em>(a) safe success</em>（理想）· <em>(b) unsafe success</em>（完成任务但造成损坏）· <em>(c) safe failure</em>（没完成任务但没伤害）· <em>(d) unsafe failure</em>（既没完成又造成损坏 · 最差）。这四象限与 6-26 ForesightSafety-VLA 的<em>SSR / USR / SFR / UFR</em> 直接同构，两者可以联合报告。</p>
+
+    <p><strong>4 大 Use Case 完整覆盖。</strong>论文并不满足于只做 benchmark —— 而是展示同一个 damage 信号可以驱动<em>agent 全生命周期</em>：</p>
+    <p><strong>Use Case ① · Demonstration 收集</strong>：真实机器人 demo 收集非常昂贵，且 human demonstrator 可能在不知不觉中制造<em>不安全</em> demo。DAMAGESIM 在虚拟环境中<em>实时反馈</em>：demonstrator 用 VR 控制机器人时，可视化"<em>你刚才这次抓杯子已产生 3.2 单位机械 damage</em>"，引导 demonstrator 生成更安全的 demo。</p>
+    <p><strong>Use Case ② · Damage-Conditioned Policy 学习</strong>：把 damage 信号<em>条件化</em> 到 policy 训练：<em>imitation learning</em> 中把 damage 作为 filter（拒绝高 damage 的 demo），或作为额外 conditioning input；<em>RL</em> 中把 negative damage 作为 auxiliary reward 甚至 constraint（如 CMDP）。</p>
+    <p><strong>Use Case ③ · VLA baseline benchmark</strong>：对前沿 VLA policy（如 OpenVLA / OpenVLA-oft / RDT / π₀ 等）做<em>系统性 physical safety benchmark</em>。这与 6-26 ForesightSafety-VLA 直接互补：ForesightSafety-VLA 给<em>分类法</em>，OopsieVerse 给<em>底层 damage 量化</em>。可以想象一个"<em>ForesightSafety-VLA × OopsieVerse 组合基准</em>"覆盖<em>13 类失效 × 3 damage 家族</em> = 完整的物理 safety 评测矩阵。</p>
+    <p><strong>Use Case ④ · Sim-to-Real Safety Transfer</strong>：仿真中学到的 damage-aware policy 迁移到真实机器人时能否<em>保持安全性</em>？这是 sim-to-real 领域一个长期空白 —— 之前的 sim-to-real 只关注<em>能力迁移</em>（成功率），OopsieVerse 首次把<em>safety 迁移</em> 作为独立指标。</p>
+
+    <p><strong>与 VLA safety 谱系的位置。</strong>OopsieVerse 在 H1 末 - H2 首的<em>具身智能 physical safety 评测</em> 主线上占据一个特定位置：</p>
+    <table class="data-table">
+      <thead><tr><th>时间 / 论文</th><th>层级</th><th>核心贡献</th></tr></thead>
+      <tbody>
+        <tr><td>6-26 ForesightSafety-VLA</td><td>诊断维度</td><td>13 类分类法（Safe-Core / Safe-Lang / Safe-Vis）· L×W×V 三轴</td></tr>
+        <tr class="hl"><td><strong>7-01 OopsieVerse</strong></td><td><em>底层度量</em></td><td><strong>DAMAGESIM 通用 damage 信号 · 双物理后端 · 4 use case</strong></td></tr>
+      </tbody>
+    </table>
+    <p>两者互补：ForesightSafety-VLA 说"<em>要看哪些维度</em>"，OopsieVerse 说"<em>怎么在每个维度上量化</em>"。组合起来构成 H2 具身智能 safety 评测的<strong>完整栈</strong>。这与 6-30 OSWorld 2.0（数字世界 computer-use safety）形成<em>"<u>物理 × 数字</u>" 安全评测双谱系</em>。</p>
+
+    <p><strong>方法学意义。</strong>OopsieVerse 也让我们看到 safety benchmark 建设的一个通用范式：<em>不要在任务成功率上做修补，而是引入独立的、物理接地的、任务无关的 safety 信号</em>。这个范式可以推广到 non-physical safety 场景：例如 web-agent 场景下，把"<em>不可逆操作数量 / 副作用范围 / 数据泄露量</em>" 作为独立信号（类比 mechanical / thermal / fluid）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Robin Lab 官网项目页 · OopsieVerse 代码 + 数据集 + 可视化 demos<br>
+    <a href="https://robin-lab.cs.utexas.edu/oopsieverse/" target="_blank" rel="noopener">robin-lab.cs.utexas.edu/oopsieverse</a></div>
+    <div class="ref-item">Li et al. (2023) — <em>OmniGibson: A Simulation Environment for Robot Learning</em>（Nvidia Omniverse · OopsieVerse 后端 ①）<br>
+    <a href="https://behavior.stanford.edu/omnigibson/" target="_blank" rel="noopener">behavior.stanford.edu/omnigibson</a></div>
+    <div class="ref-item">Nasiriany et al. (2024) — <em>RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots</em>（MuJoCo · OopsieVerse 后端 ②）<br>
+    <a href="https://robocasa.ai/" target="_blank" rel="noopener">robocasa.ai</a></div>
+    <div class="ref-item">Todorov et al. (2012) — <em>MuJoCo: A Physics Engine for Model-Based Control</em>（后端物理引擎）<br>
+    <a href="https://ieeexplore.ieee.org/document/6386109" target="_blank" rel="noopener">ieeexplore.ieee.org/document/6386109</a></div>
+    <div class="ref-item">Kim et al. (2024) — <em>OpenVLA: An Open-Source Vision-Language-Action Model</em>（OopsieVerse 评测的 VLA baseline 之一）<br>
+    <a href="https://openvla.github.io/" target="_blank" rel="noopener">openvla.github.io</a></div>
+    <div class="ref-item">Lyu et al. (2026-06-25) — <em>ForesightSafety-VLA</em>（诊断分类法 · 与 OopsieVerse 互补 · 6-26 已报告）<br>
+    <a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arxiv.org/abs/2606.27079</a></div>
+    <div class="ref-item">Yuan et al. (2026-06-28) — <em>OSWorld 2.0</em>（数字世界长程 computer-use safety benchmark · 6-30 已报告）<br>
+    <a href="https://arxiv.org/abs/2606.29537" target="_blank" rel="noopener">arxiv.org/abs/2606.29537</a></div>
+    <div class="ref-item">Achiam et al. (2017) — <em>Constrained Policy Optimization (CPO)</em>（damage-conditioned RL 的 CMDP 理论基础）<br>
+    <a href="https://arxiv.org/abs/1705.10528" target="_blank" rel="noopener">arxiv.org/abs/1705.10528</a></div>
+    <div class="ref-item">Brohan et al. (2023) — <em>RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control</em>（VLA 前身）<br>
+    <a href="https://robotics-transformer2.github.io/" target="_blank" rel="noopener">robotics-transformer2.github.io</a></div>
+    <div class="ref-item">Chi et al. (2023) — <em>Diffusion Policy</em>（sim-to-real safety 迁移主要基线）<br>
+    <a href="https://diffusion-policy.cs.columbia.edu/" target="_blank" rel="noopener">diffusion-policy.cs.columbia.edu</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：家用机器人 physical safety 不能作为<em>任务成功率的副产品</em>，必须作为<em>独立可量化维度</em>。</li>
+      <li><strong>核心论点 ②</strong>：<strong>DAMAGESIM</strong> 提供<em>物理接地 / 任务无关 / simulator-agnostic</em> 的 damage 抽象层 —— 三属性缺一不可。</li>
+      <li><strong>核心论点 ③</strong>：safety 信号可以驱动<em>agent 全生命周期</em>—— demonstration / 训练 / 评测 / 部署四阶段。</li>
+      <li><strong>三大 damage 家族</strong>：Mechanical（接触力）· Thermal（温度变化）· Fluid（液体交互）—— 每个都对应真实物理量。</li>
+      <li><strong>双物理后端</strong>：OmniGibson (Nvidia Omniverse) · RoboCasa (MuJoCo) —— 15 tasks in RoboCasa · 证明 simulator-agnostic。</li>
+      <li><strong>四象限分解</strong>：safe success / unsafe success / safe failure / unsafe failure —— 显式区分 task completion 与 safe execution。</li>
+      <li><strong>Use Case ①</strong>：demonstration 收集 · 实时 damage 反馈引导 human demonstrator 生成更安全 demo。</li>
+      <li><strong>Use Case ②</strong>：damage-conditioned imitation / RL · damage 作为 filter / conditioning input / auxiliary reward / CMDP constraint。</li>
+      <li><strong>Use Case ③</strong>：现代前沿 VLA policy 的系统性 physical safety benchmark · 与 6-26 ForesightSafety-VLA 互补。</li>
+      <li><strong>Use Case ④</strong>：sim-to-real safety 迁移 · 首次把 safety 迁移作为独立指标（之前 sim-to-real 只关注能力迁移）。</li>
+      <li><strong>方法学范式</strong>：不要在任务成功率上做修补，而是<em>引入独立的、物理接地的、任务无关的 safety 信号</em>—— 可推广到非物理场景。</li>
+      <li><strong>H2 首日双谱系</strong>：OopsieVerse（物理世界）+ OSWorld 2.0（数字世界）+ ForesightSafety-VLA（诊断维度）构成完整具身智能 safety 评测栈。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>DAMAGESIM 的抽象层设计思路可迁移到 KV-cache harness</em> —— 你毕设可以借鉴：定义 <strong>KV-cache "<em>物理接地 · 任务无关 · engine-agnostic</em>" 的伤害轴</strong>，例如"<em>无效 prefill token 数</em>"、"<em>被驱逐但下轮又需要的 slot 数</em>"、"<em>hit-miss 熵</em>" —— 这些是 SGLang 内部结构量，任务无关，可跨不同 workload 通用；(2) <em>simulator-agnostic 属性</em> 直接对应你毕设的<em>engine-agnostic</em> 目标 —— 同一套 KV-cache 治理策略在 SGLang / vLLM / TRT-LLM 上都应能实现，就像 DAMAGESIM 在 OmniGibson / RoboCasa 上都能实现；(3) <em>四象限分解</em>：<em>fast success（快且对）· slow success（对但慢）· fast failure（错且快）· slow failure（错且慢）</em> —— 用来重新审视 harness 的评估指标，避免<em>只看吞吐率不看错误传播</em>；(4) <em>4 use case 全生命周期</em>：你的 harness 也应该覆盖<em>训练时（KV-cache aware 训练）+ 部署时（在线策略）+ 评测时（可复现 benchmark）+ 上下游联动（与推理 backend 集成）</em>；(5) 与 6-30 CUGA FLO 的 7 hook 原语组合：hook 是 harness 内的<em>控制原语</em>，DAMAGESIM 抽象层是<em>度量原语</em>—— 两者组合成"<em>可测量 × 可控制</em>" 的完整 harness 治理栈；(6) <em>物理接地信号 → 网络接地信号</em> —— 在 KV-cache 场景，物理接地对应<em>硬件资源接地</em>（HBM bandwidth / GPU utilization / KV memory footprint），你可以定义<em>"资源伤害"</em> 作为独立信号，与 latency / throughput 并列。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>DAMAGESIM 的抽象层思路直接迁移到 skill safety</em> —— 定义"<em>skill 伤害</em>"轴：<em>不可逆操作数（对应 mechanical）· 权限升级数（对应 thermal）· 数据泄露量（对应 fluid）</em>—— 每个都是 skill 执行过程的<em>独立可量化副作用</em>；(2) 与 6-30 Action Alignment "<em>C/R/B 三坐标</em>" + 6-27 Epistemic Property "<em>teachability</em>" + 本文"<em>damage 三家族</em>" 组合成 skill safety 的<em>多层度量矩阵</em>；(3) <em>四象限对应 skill 执行</em>：safe task-completion / unsafe task-completion / safe task-failure / unsafe task-failure —— 特别是<em>unsafe task-completion</em>（"<em>agent 完成了任务但制造了副作用</em>"）在当前 skill safety benchmark 中长期被<em>低估</em>；(4) <em>damage-conditioned skill 训练</em>：把 damage 信号加入 skill 学习作为 auxiliary reward 或 CMDP constraint —— 直接对应 6-28 RUBAS 的"<em>rubric-based reward</em>"，但把 rubric 从<em>专家标注 4 维</em> 提升到<em>物理接地 3 家族 damage</em>；(5) <em>skill 生命周期 4 use case</em>：对应 6-25 SkillSafetyBench 缺失的部分 —— demonstration 收集时的 skill 使用示范 · 训练时的 damage-conditioned SFT · 评测时的 physical benchmark · 部署时的 sim-to-real skill 迁移；(6) 与 6-30 Action Alignment 的<em>parameter-burden gradient</em> 组合：Action Alignment 说"<em>最省力路径 = 最大权限路径</em>"，本文说"<em>最省力路径也可能 = 最多 damage 路径</em>" —— 两者共同暴露 skill selection 的<em>结构性偏差</em>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（核心方向）</div>
+        <p>直接为 safety benchmark 建设提供<strong>范式级参考</strong>：(1) <em>可通用的三属性 damage 抽象</em>（物理接地 · 任务无关 · engine-agnostic）是<em>任何领域 safety benchmark</em> 的普适设计原则 —— 后续 benchmark 应问自己"<em>我的 safety 信号是否具备这三个属性？</em>"；(2) <em>simulator-agnostic 双后端实例化</em> 应成为 benchmark 建设的<u>基本要求</u>，避免"<em>benchmark 结果绑定单一实现</em>" 的循环论证；(3) <em>4 use case 覆盖全生命周期</em> 是判断 benchmark 完整性的标准 —— 不要停留在 "<em>只评测 policy</em>"，而是把 benchmark 变成<em>数据 → 训练 → 评测 → 部署</em> 的基础设施；(4) <em>四象限分解</em>（safe success / unsafe success / safe failure / unsafe failure）是 6-26 ForesightSafety-VLA<em>SSR/USR/SFR/UFR</em> 的一致设计 —— 这个分解正在成为 safety benchmark 的<em>de facto</em> 标准，未来的 safety benchmark 都应报告这四象限；(5) 与 6-30 OSWorld 2.0（数字世界 long-horizon safety audit）+ 6-26 ForesightSafety-VLA（VLA 诊断分类法）三者构成<em>具身智能 safety 评测三联拍</em> —— 覆盖"<em>物理伤害 × 分类法 × 长程数字工作流</em>" 三个维度；(6) <em>物理伤害范式可迁移到非物理场景</em>：web agent 的"<em>操作副作用</em>"、finance agent 的"<em>信息不对称伤害</em>"、legal agent 的"<em>误建议损失</em>" —— 都可以套用"<em>独立信号 / 任务无关 / 平台无关</em>"三属性框架；(7) <em>与 7-01 Epistemic Property 的联动</em>：teachability 层测量"<em>agent 是否可教</em>"，OopsieVerse 层测量"<em>agent 是否伤害环境</em>"—— 两者构成 H2 safety benchmark 的<strong>认知 × 物理双维度</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>ForesightSafety-VLA (6-25)</strong> · 6-26 已报告 · VLA safety 诊断分类法 · 与 OopsieVerse 互补<br>
+      <a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arxiv.org/abs/2606.27079</a></li>
+      <li><strong>OSWorld 2.0 (6-28)</strong> · 6-30 已报告 · 数字世界 long-horizon computer-use safety audit<br>
+      <a href="https://arxiv.org/abs/2606.29537" target="_blank" rel="noopener">arxiv.org/abs/2606.29537</a></li>
+      <li><strong>Your AI Travel Agent Would Book You a Bullfight (6-16)</strong> · agentic 动物福利 benchmark · 隐性 safety 空白<br>
+      <a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">arxiv.org/abs/2606.18142</a></li>
+      <li><strong>Power Systems Agent Benchmark (6-18)</strong> · 电力工程 executable evaluator · feasibility flag<br>
+      <a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">arxiv.org/abs/2606.20950</a></li>
+      <li><strong>STAGE-Claw (6-09)</strong> · state-based personal-computing agent benchmark · state-correctness scoring<br>
+      <a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">arxiv.org/abs/2606.10394</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.31993" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.31993v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.31993" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn primary" href="https://robin-lab.cs.utexas.edu/oopsieverse/" target="_blank" rel="noopener">项目官网 Robin Lab</a>
+      <a class="link-btn" href="https://behavior.stanford.edu/omnigibson/" target="_blank" rel="noopener">OmniGibson</a>
+      <a class="link-btn" href="https://robocasa.ai/" target="_blank" rel="noopener">RoboCasa</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-01 #1 · 搜索来源：arxiv.org/api/query?ti:safety+benchmark + arxiv.org/abs/2606.31993 + arxiv.org/html/2606.31993v1<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">arxiv.org/abs/2606.31993</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>
