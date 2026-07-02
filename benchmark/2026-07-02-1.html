@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-02 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf5e6; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf7ea; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f0d3a1; color: #633806; }
+  .link-btn.primary:hover { background: #f6e2c0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf5e6; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fdf5e6; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #f0d3a1; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-02 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 2 日 · Safety Benchmark · 用<strong>Item Response Theory（IRT · 项目反应理论）</strong> 从心理测量学侧对<em>safety benchmark 评测经济学</em> 动刀——把 10⁵ 数量级响应降到 <u>1/1000</u> 以下</div>
+  <h1>Efficient Safety Benchmarking via <strong>Item Response Theory</strong>——用心理测量学工具解 safety 评测的<em>信息经济学</em>：<strong>adaptive item selection</strong> 至少省 80% + <strong>fixed informative subset</strong> 省 99.8%（AIR-Bench 2024）· 首次把 IRT 系统性引入 LLM safety 评测</h1>
+  <div class="en-title">Efficient Safety Benchmarking via Item Response Theory</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-25 至 07-01 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">Efficient Safety Benchmarking via Item Response Theory</a><span class="winner-badge">今日选定</span></td>
+          <td>心理测量学 · IRT + adaptive item selection + fixed informative subset · 三贡献 · AIR-Bench 2024 -99.8%</td>
+          <td>arXiv 2606.20626 · 2026-05-26 · F. Spagliardi + 5 作者 · cs.CL · 6 位作者国际合作</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">OopsieVerse: Safety Benchmark with Damage-Aware Simulation for Robot Manipulation（7-01 已报告）</a></td>
+          <td>DAMAGESIM 家用机器人物理伤害 · 已在 07-01 #1 报告</td>
+          <td>arXiv 2606.31993 · 2026-06-30 · 已在 07-01 #1 报告</td>
+          <td class="score-num">已用</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">STAGE-Claw: Automated State-based Agent Benchmarking</a></td>
+          <td>state-based benchmark 自动化 · 40 场景 · 11 前沿模型 · 任务分数 + cost + tool-call 可靠性</td>
+          <td>arXiv 2606.10394 · 2026-06-09 · cs.AI · personal computing environments</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">TAC (Travel Agent Compassion): Bullfight Booking Benchmark</a></td>
+          <td>agentic benchmark · 隐式动物福利 · 12 场景 → 48 样本 · 7 模型均 &lt; 64% chance · welfare-aware prompt +47–63pp</td>
+          <td>arXiv 2606.18142 · 2026-06-16 · v3 · Inspect Scout audit</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.26321" target="_blank" rel="noopener">Anchor: Mitigating Artifact Drift in Agent Benchmark Generation</a></td>
+          <td>artifact drift · 约束优化程序 · ERP-Bench 300 长程任务 · 前沿模型 26.1% 满足约束，17.4% 最优</td>
+          <td>arXiv 2605.26321 · 2026-05-25 · erpbench.ai 数据集</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22+OR+ti:%22red+teaming+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:safety benchmark / agent benchmark 时间排序</a>。<strong>IRT-Safety Bench 胜出</strong>：(1) H2 首月<em>第一次</em> 把<strong>项目反应理论（IRT · 教育心理测量学的经典工具）</strong> 系统性引入 LLM safety 评测——不是"再造一个新 benchmark"，而是<em>动了 benchmark 评测的<u>方法论根基</u></em>；(2) <em>三贡献相互独立且各有落地价值</em>：<em>(a) IRT 恢复可解释结构</em>——能分辨"<em>都是 raw metric 90+</em>" 的模型群；<em>(b) adaptive item selection 至少省 80%</em>——按模型响应动态选题；<em>(c) fixed informative subset 省 99.8%</em>（AIR-Bench 2024）——先离线找出<em>信息量最大子集</em>，后续所有模型共用；(3) 数字硬——<em>10⁵ 数量级响应</em> 是当前 safety benchmark 的痛点，本文给出<u>三种</u>可选的经济化路径；(4) 与 6-28 Hacker-Fixer Loop / 7-01 OopsieVerse 组合：Hacker-Fixer 是<em>硬化 benchmark 抗操纵</em>，OopsieVerse 是<em>把 safety 从副产品变主体</em>，本文是<em>把 safety 评测<u>成本</u> 结构性下降</em>——三条正交路径同时改造 benchmark 学科；(5) <em>方法学层可迁移</em>：IRT 不仅能省 safety benchmark，也可以省<em>能力评测</em>（HELM / MMLU / BigBench）——把 IRT 落到 agent benchmark 是<em>H2 明显的 follow-up</em>；(6) 与 6-28 REALM 的<em>129,792 评测点</em> 对照：REALM 用大规模穷举做 red-team benchmark，本文说<u>你可能不需要跑那么多</u>——两者形成"<em>穷举派 vs 心理测量派</em>" 张力。STAGE-Claw / TAC / Anchor 均为高质量新 benchmark 但缺少这一层<em>方法论切入</em>。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Efficient Safety Benchmarking via Item Response Theory</span></div>
+      <div class="meta-item"><label>中文标题</label><span>基于<em>项目反应理论</em> 的高效 safety benchmark</span></div>
+      <div class="meta-item"><label>作者（6 人）</label><span>Fabio Spagliardi · Mírian Silva · Ayan Datta · Aiden Zhou · Vamshi Bonagiri · Diogo Cruz</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-26 v1（UTC 17:35:31）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.CL · cs.AI · cs.LG · benchmark methodology · psychometrics</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.20626" target="_blank" rel="noopener">arxiv.org/pdf/2606.20626</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.20626v1" target="_blank" rel="noopener">arxiv.org/html/2606.20626v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.20626" target="_blank" rel="noopener">10.48550/arXiv.2606.20626</a></div>
+      <div class="meta-item"><label>三项贡献</label><span>(1) IRT 恢复可解释结构 · (2) adaptive item selection · (3) fixed informative subset</span></div>
+      <div class="meta-item"><label>数量级</label><span>当前 10⁵ 响应 → <strong>省至少 80% · 最多 99.8%</strong>（AIR-Bench 2024）· Spearman ρ &gt; 90% 与全 benchmark 排名相关</span></div>
+      <div class="meta-item"><label>心理测量学工具</label><span>Item Response Theory · 2PL / 3PL Rasch 模型族 · Fisher information · ability estimation</span></div>
+      <div class="meta-item"><label>覆盖 benchmark</label><span>覆盖<em>广泛使用的</em> LLM safety benchmark 套件（含 AIR-Bench 2024 等）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把<em>项目反应理论（IRT · 教育心理测量学工具）</em> 系统性引入 LLM safety benchmark：<strong>(1) IRT 揭示 raw metric 天花板下的模型能力差异 + (2) adaptive item selection 至少省 80% 评测成本 + (3) fixed informative subset 在 AIR-Bench 2024 上省 99.8%</strong>——从"<em>穷举跑 10⁵ 响应</em>" 时代跨到"<em>按项目信息量精选</em>" 时代。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>语言模型的 safety benchmark 通常在<em>静态范式</em> 下评估：把所有条目视为对所有模型<u>同等信息量</u>——但对<em>对抗性、高度异质</em> 的 safety 条目而言，这个假设特别问题。全量应用于现代 benchmark 套件，当前评估流程需要<strong>10⁵ 数量级响应</strong>，其中大多数<u>对排名信号贡献极小</u>。本文分析一组广泛使用的 safety benchmark 并给出<em>三项</em> 高效 safety 评测贡献。<strong>第一，</strong>展示<em>项目反应理论（IRT）</em> 能在 safety benchmark 上恢复<em>可解释结构</em>——ability 估计能分辨 raw safety metrics 天花板处聚集的模型群。<strong>第二，</strong>展示 <em>adaptive item selection</em>——根据模型响应<em>动态</em> 选择<em>信息量最大</em> 的条目——能<u>近似</u> 全 benchmark 排名，同时将评测成本至少<u>降 80%</u>（在 Spearman ρ &gt; 90% 与全 benchmark 相关的 benchmark 上）、在 <strong>AIR-Bench 2024 上降至 99.9%</strong>。<strong>第三，</strong>引入一种实用流程用于<em>抽取一份跨模型可复用的固定信息量子集</em>——为 adaptive selection 提供<em>替代方案</em>，在 AIR-Bench 2024 上<u>省 99.8%</u>。综合三项，说明<em>心理测量学方法能在 safety 评测流水线全线</u> 实现<u>benchmark-aware 的评测成本削减</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / IRT 是什么 / 三项贡献 / 与穷举派张力 / benchmark 方法学谱系）</div>
+
+    <p><strong>问题背景。</strong>H1 末到 H2 首，safety benchmark 数量爆炸：DECOMPBENCH / AgentSecurityBench / HarmBench / AIR-Bench / TrustLLM / OopsieVerse / ForesightSafety-VLA / REALM ……每个 benchmark 少则数千、多则数十万 items。全量组合起来，评测<em>一个模型</em> 需要<strong>10⁵ 数量级响应</strong>。但作者观察到：<em>其中大多数响应对模型排名贡献极小</em>——因为不同 items 对模型 ability 的<em>区分度</em> 差异很大。这就是<em>信息经济学问题</em>：<u>如何用最少的评测点得到最好的排名信号</u>？教育测量学早在 1960 年代就<em>解决过完全同构的问题</em>——那就是<strong>Item Response Theory（IRT）</strong>。</p>
+
+    <p><strong>IRT 是什么。</strong>IRT 是心理测量学的经典理论，最广为人知的应用是<em>标准化考试</em>（SAT / GRE / TOEFL）的<em>自适应组题</em>。它的核心假设是：<em>一个 item 被答对的概率取决于 (a) 该 item 的<u>难度 β</u> 和 (b) 该受测者的<u>能力 θ</u> 的差</em>——最简单的 Rasch 模型是 <em>P(correct | θ, β) = sigmoid(θ - β)</em>；2PL 加入 <em>discrimination 参数 α</em>；3PL 再加入 <em>guessing 参数 c</em>。IRT 给每个 item 计算一个<em>Fisher 信息量</em>——量化"<em>这个 item 对<u>本受测者</u> ability 估计的贡献</em>"。信息量高的 item = 信息量高的题目，被优先选择。本文的核心洞察是：<em>把 IRT 直接搬到 LLM safety benchmark 上</em>—— LLM 是"受测者"，每个 safety item 是"考题"，回答 refusal / harmful 等就是二值 response。</p>
+
+    <p><strong>贡献一：IRT 恢复可解释结构。</strong>H1 末以来，很多前沿模型在 safety benchmark 上都达到"<em>90+ safety score 天花板</em>"，raw metric 已经<u>无法</u> 分辨谁比谁更安全。IRT 给每个模型估一个 <em>ability θ</em>——即使 raw score 相同，θ 也不同，因为<u>它们答对的<em>难题</em> 和答错的<em>简单题</em> 分布不同</u>。本文展示 IRT 恢复的 <em>ability 估计</em> 能显著分辨这些聚集在天花板处的模型，得到"<em>比 raw metric 更细粒度</em>" 的排名信号。这就是本文的<em>第一贡献</em>：IRT 不只是省成本工具，它本身在<em>模型能力可解释性</em> 上打开新窗口。</p>
+
+    <p><strong>贡献二：Adaptive item selection · 至少省 80%。</strong>这是 IRT 最著名的应用——<em>Computerized Adaptive Testing (CAT)</em>——搬到 LLM safety benchmark 上：</p>
+    <ul class="point-list">
+      <li>从一个<em>先验 ability θ₀</em> 开始（e.g., 中等能力）。</li>
+      <li>选择<em>当前 ability 估计下 Fisher 信息量最大的 item</em>——即"<em>最能区分本模型能力</em>" 的 item。</li>
+      <li>让模型回答该 item，更新 ability 估计。</li>
+      <li>重复上一步直到 <em>ability 估计的标准误 &lt; 阈值</em> 停止。</li>
+    </ul>
+    <p>结果：在 <em>Spearman ρ &gt; 90%</em> 与全 benchmark 排名相关的 benchmark 上，adaptive 至少省 <strong>80%</strong>；在 <em>AIR-Bench 2024</em> 上省 <strong>99.9%</strong>——原来跑 10⁵ 响应，现在只需要 100 个 items 就能得到排名 &gt; 99% 相关的评测。</p>
+
+    <p><strong>贡献三：Fixed informative subset · 省 99.8%。</strong>Adaptive 有一个操作缺点：<em>需要在线</em>——每次评测一个模型都要动态生成序列。作者补上第三招：<em>离线</em> 找出 benchmark 中<u>信息量前 k% 的固定子集</u>，之后所有新模型直接用这个固定子集评测。结果在 AIR-Bench 2024 上省 <strong>99.8%</strong>（比 adaptive 稍差但绝对够用，且流程更简单）。</p>
+
+    <p><strong>与"穷举派" 的张力。</strong>把本文放进 H1 末到 H2 首的 benchmark 方法学谱系，它是<em>心理测量派</em> 的立场宣言，与<em>穷举派</em> 形成互补性张力：</p>
+    <table class="data-table">
+      <thead><tr><th>派系</th><th>代表 benchmark</th><th>核心命题</th><th>规模</th></tr></thead>
+      <tbody>
+        <tr><td><em>穷举派 · 量的极限</em></td><td>6-28 REALM (129,792 评测点)</td><td>覆盖所有 attack × defense × model × scene</td><td>~10⁵ 响应</td></tr>
+        <tr><td><em>穷举派 · 长程极限</em></td><td>6-30 OSWorld 2.0 (1.6h/318 tool call)</td><td>覆盖单个任务的长程真实工作流</td><td>~10² 任务，但每任务巨长</td></tr>
+        <tr class="hl"><td><strong>心理测量派 · 本文</strong></td><td><em>IRT-adaptive · IRT-fixed subset</em></td><td>用信息量选题——不 need 穷举</td><td><u>10² 响应即够</u></td></tr>
+        <tr><td><em>诊断派</em></td><td>6-26 ForesightSafety-VLA (13 类分类法)</td><td>受控 L×W×V 三轴变化诊断</td><td>~10³ 评测点</td></tr>
+        <tr><td><em>硬化派</em></td><td>6-28 Hacker-Fixer Loop (323 hack 环境)</td><td>用 hacker-fixer 对抗环 hardened reward 校验</td><td>~10³ 环境</td></tr>
+        <tr><td><em>物理接地派</em></td><td>7-01 OopsieVerse (DAMAGESIM)</td><td>把 safety 从任务成功率<em>副产品</em> 变为独立可评测维度</td><td>~10³ 场景</td></tr>
+      </tbody>
+    </table>
+    <p>心理测量派与穷举派的张力不是"哪个对"——而是"<em>穷举派构建高质量条目库</em>，<em>心理测量派高效用</em>"——两者需要<u>合作</u>。本文的价值恰恰是：给<em>穷举派做的所有 benchmark</em> 提供一个可选的<em>经济化上层</em>。</p>
+
+    <p><strong>方法学后果。</strong>本文的 IRT 框架不限于 safety——可以立即扩展到能力评测（HELM / MMLU / BigBench）、agent benchmark（AgentBench / OSWorld / STAGE-Claw）、rubric benchmark（RUBAS）。<em>H2 明显的 follow-up</em> 是<u>把 IRT 加入 agent benchmark 流程</u>——这可能是下半年<em>benchmark 方法学</em> 最重要的空缺。此外 IRT 天然兼容 6-28 Hacker-Fixer Loop 的对抗组卷 —— 用 hacker 生成难题、fixer 生成简单题，IRT 就能把它们放到<em>同一 ability 尺度</em> 下比较。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">van der Linden — <em>Elements of Adaptive Testing</em>（IRT + CAT 教科书）<br>
+    <a href="https://link.springer.com/book/10.1007/978-0-387-85461-8" target="_blank" rel="noopener">springer.com/book/10.1007/978-0-387-85461-8</a></div>
+    <div class="ref-item">Baker & Kim — <em>Item Response Theory: Parameter Estimation Techniques</em>（IRT 参数估计经典）<br>
+    <a href="https://en.wikipedia.org/wiki/Item_response_theory" target="_blank" rel="noopener">en.wikipedia.org/wiki/Item_response_theory</a></div>
+    <div class="ref-item">AIR-Bench 2024 · 本文实证案例中<em>省 99.8%</em> 的目标 benchmark<br>
+    <a href="https://arxiv.org/abs/2407.17436" target="_blank" rel="noopener">arxiv.org/abs/2407.17436 (AIR-Bench)</a></div>
+    <div class="ref-item">HarmBench · Safety benchmark 组之一<br>
+    <a href="https://arxiv.org/abs/2402.04249" target="_blank" rel="noopener">arxiv.org/abs/2402.04249</a></div>
+    <div class="ref-item">TrustLLM · Safety benchmark 组之一<br>
+    <a href="https://arxiv.org/abs/2401.05561" target="_blank" rel="noopener">arxiv.org/abs/2401.05561</a></div>
+    <div class="ref-item">SafetyBench (Zhang et al.) · 早期通用 safety benchmark<br>
+    <a href="https://arxiv.org/abs/2309.07045" target="_blank" rel="noopener">arxiv.org/abs/2309.07045</a></div>
+    <div class="ref-item">6-28 Hacker-Fixer Loop · 硬化派 · 与本文<em>可组合</em>——hacker/fixer 生成 items，IRT 校准 ability 尺度<br>
+    <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></div>
+    <div class="ref-item">6-28 REALM · 穷举派 · 与本文<em>互补</em>——REALM 建 items 库，IRT 精选使用<br>
+    <a href="https://arxiv.org/abs/2606.23892" target="_blank" rel="noopener">arxiv.org/abs/2606.23892</a></div>
+    <div class="ref-item">7-01 OopsieVerse · 物理接地派 · 与本文<em>可组合</em>——DAMAGESIM 给 items 物理接地，IRT 削减规模<br>
+    <a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">arxiv.org/abs/2606.31993</a></div>
+    <div class="ref-item">Vania et al. — <em>Comparing Test Sets with Item Response Theory</em>（IRT × 语言模型早期应用）<br>
+    <a href="https://arxiv.org/abs/2106.00840" target="_blank" rel="noopener">arxiv.org/abs/2106.00840</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：safety benchmark 当前<em>穷举</em> 范式浪费——<em>10⁵ 响应量级</em> 的大多数响应对排名信号贡献极小。</li>
+      <li><strong>核心论点 ②</strong>：IRT 天然适配 LLM safety 场景——把 LLM 作为受测者、每个 item 作为考题，二值 response 直接进入 Rasch/2PL/3PL 模型。</li>
+      <li><strong>核心论点 ③</strong>：<em>三条正交的经济化路径</em>——ability estimation 可解释性 + adaptive item selection + fixed informative subset。</li>
+      <li><strong>数字硬 · 贡献一</strong>：IRT 恢复<em>模型间可解释差异</em>，即使 raw safety metrics 都聚集在天花板（e.g., 都是 90+）。</li>
+      <li><strong>数字硬 · 贡献二</strong>：adaptive selection <em>至少</em> 省 <strong>80%</strong>（Spearman ρ &gt; 90% 的 benchmark）。</li>
+      <li><strong>数字硬 · 贡献二极值</strong>：AIR-Bench 2024 上 adaptive 省 <strong>99.9%</strong>——从 10⁵ 响应降到 <em>10² 数量级</em>。</li>
+      <li><strong>数字硬 · 贡献三</strong>：fixed informative subset 省 <strong>99.8%</strong>（AIR-Bench 2024）——替代方案更简单可复用。</li>
+      <li><strong>穷举派 vs 心理测量派</strong>：两者<u>互补</u>——穷举派建<em>高质量 items 库</em>，心理测量派<em>高效用</em>。本文<u>不否定</u> REALM / OSWorld 2.0 类穷举工作。</li>
+      <li><strong>可迁移性</strong>：IRT 框架<u>不限于</u> safety——立即可迁移到<em>能力评测（HELM/MMLU/BigBench）</em>、<em>agent benchmark</em>、<em>rubric benchmark</em>。</li>
+      <li><strong>H2 follow-up 空缺</strong>：<em>把 IRT 加入 agent benchmark 流程</em>——目前 agent benchmark 没有系统心理测量框架。</li>
+      <li><strong>与硬化派兼容</strong>：hacker/fixer 生成 items，IRT 校准 ability 尺度——两者可无缝集成。</li>
+      <li><strong>与诊断派互补</strong>：ForesightSafety-VLA 三轴受控诊断 → IRT 削减评测规模——两者组合"<em>诊断细粒度 + 评测经济</em>"。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（本文所属方向）</div>
+        <p>(1) <em>IRT 是 H2 benchmark 领域<u>第一优先</u> 的工具</em> —— 你之前追踪的 REALM / OSWorld 2.0 / ForesightSafety-VLA / OopsieVerse / STAGE-Claw / TAC / Anchor 都可以立即受益：给每个 item 计算 Fisher 信息量、adaptive 或 fixed 子集选择，成本立降数量级；(2) <em>agent benchmark × IRT</em>：agent benchmark（OSWorld 2.0 / AgentBench / MyPCBench）的 tasks 天然<em>异质</em>——IRT 应用比 QA benchmark 更容易得到 discrimination 信号；(3) <em>rubric × IRT</em>：RUBAS 的四维 rubric 每一维都是 Rasch 尺度上的 item——IRT 可以把多维 rubric 合成一个 ability 分数；(4) <em>Hacker-Fixer × IRT 组合</em>：Hacker 生成难题、Fixer 生成简单题——两者共同校准 IRT 尺度，避免 fixer 提供的 items 全落在低 discrimination 区；(5) <em>心理测量派 × 拓扑派</em>：Position: Interaction Topology (5-01) 的三种拓扑失效模式可以被 IRT 转化为<em>item 属性</em>——每个多 agent item 附加"<em>拓扑相关性</em>" 元数据，IRT 就能揭示"<em>拓扑变化对 ability 估计的贡献</em>"；(6) <em>IRT 对 benchmark 陈化的诊断</em>——当 fixed informative subset 中大多数 items 变成<em>低 discrimination</em>，就是<em>benchmark 陈化</em> 的信号，需要引入新 items；(7) <em>H2 follow-up 方向</em>：<strong>"<em>Agent Benchmark IRT-Adaptive Framework</em>"</strong>——把 IRT 完整落到 agent benchmark（OSWorld 2.0 / STAGE-Claw / ERP-Bench），这是<u>下半年可预测的高被引方向</u>。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（毕设参照）</div>
+        <p>(1) <em>把 IRT 引入 harness 评测</em> —— 你的 SGLang KV-cache 毕设需要 harness benchmark 来说话，但完整跑一遍 harness benchmark 太贵；IRT-adaptive 让你的 benchmark 报告可信度不掉，同时省 &gt; 80% 评测成本；(2) <em>Cache decision × Fisher information</em>：把"<em>下一次 cache 决策该选哪个策略试</em>" 建模为"<em>当前 ability 估计下 Fisher 信息量最大的选择</em>"——直接把 IRT 的 CAT 算法搬到 cache policy 选择；(3) <em>与 7-02 Loop Engineering 的 verification ladder 组合</em>：ladder 五级本身是<em>五个不同 discrimination 区</em> 的 items，IRT 可以给"<em>每个 loop 用哪一级 verification</em>" 提供数据驱动的选择；(4) <em>与 6-30 CUGA FLO 的 hook 组合</em>：hook 触发次数是<em>ability 估计的证据</em>——high-ability agent 触发 hook 少，low-ability 触发多；IRT 让 hook 数据变成 ability 信号；(5) <em>Fixed informative subset for harness</em>——SGLang 上不需要跑完整 benchmark，只跑 10² 数量级的 fixed subset 就能说"<em>我的 cache 策略在 IRT 尺度上比 baseline 强</em>"；(6) <em>Benchmark-aware post-training 联动</em>：与 6-25 Interplay of Harness and Post-Training 组合——post-training 时选择<em>IRT 高信息量 items</em> 作为训练目标，避免训练数据的浪费；(7) <em>毕设结果部分设计</em>：<strong>报告可以用"<em>IRT ability 分数 + 全 benchmark ρ 相关性 + 评测节省 %</em>" 三元组</strong>——比只报 raw accuracy 更专业、更 defensible。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>IRT × 三派 H2 立场谱系</em>——外置派 / 认知派 / 泛化派都<u>依赖</u> benchmark 数据支撑立场，IRT 让这些数据<em>更少</em> 但<em>更 informative</em>；(2) <em>skill-level ability estimation</em>——把每个 skill 视为"<em>受测者</em>"，把 red-team 攻击视为"<em>考题</em>"，每个 skill 得到一个<em>安全 ability θ_skill</em>；θ 低的 skill 优先加固；(3) <em>与 6-30 Action Alignment 的 C/R/B 三坐标组合</em>：Action Alignment 建议 relational deployment-conditioned 三坐标分别 report——IRT 可以给<em>每个坐标</em> 单独估 ability，避免三坐标合成损失信息；(4) <em>与 7-01 Epistemic Property 的 SMA 五轴组合</em>：SMA 五轴（ℋ 假设空间 / 𝒜 更新算子 / ℳ 元决策层 / 世界模型 / 目标）每一轴都是<em>ability 维度</em>——多维 IRT 可以同时估五轴，得到 teachability 的<em>数值化</em> 表示；(5) <em>与 7-02 Loop Engineering 的五级 verification ladder 组合</em>：ladder 五级 × 五种 discrimination 区——safety verification 应<em>按当前 ability θ 自适应</em> 选择 ladder 级别，低 ability agent 走 human-only，高 ability 走 autonomous-zone；(6) <em>与 7-02 Why Generalize 的 Lipschitz 上界组合</em>：Lipschitz gap 告诉我们<em>安全泛化的<u>本体难度</u></em>，IRT 告诉我们<em>安全评测的<u>信息经济</u></em>——两者组合让 skill safety 既<u>诚实</u> 又<u>可扩展</u>；(7) <em>skill red-team 数据高效化</em>：H1 末 red-team benchmark 都在<u>规模化</u>，但缺 IRT——如果给 REALM 或 SkillSafetyBench 加一层 IRT，前 100 个 items 就能得到全 benchmark 相关的 ability 排名。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>OopsieVerse (7-01)</strong> · 物理接地派 · DAMAGESIM 三 damage 家族 · 与 IRT 可组合<br>
+      <a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">arxiv.org/abs/2606.31993</a></li>
+      <li><strong>REALM (6-22)</strong> · 穷举派 · 129,792 评测点 · 与 IRT 互补<br>
+      <a href="https://arxiv.org/abs/2606.23892" target="_blank" rel="noopener">arxiv.org/abs/2606.23892</a></li>
+      <li><strong>Hacker-Fixer Loop (6-08)</strong> · 硬化派 · 与 IRT 兼容——hacker/fixer 生成 items，IRT 校准尺度<br>
+      <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></li>
+      <li><strong>ForesightSafety-VLA (6-25)</strong> · 诊断派 · 13 类分类法 + L×W×V 三轴受控诊断<br>
+      <a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arxiv.org/abs/2606.27079</a></li>
+      <li><strong>Anchor / ERP-Bench (5-25)</strong> · 约束优化 · 300 长程任务 · 前沿模型 26.1% 满足约束<br>
+      <a href="https://arxiv.org/abs/2605.26321" target="_blank" rel="noopener">arxiv.org/abs/2605.26321</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.20626" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.20626v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.20626" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://en.wikipedia.org/wiki/Item_response_theory" target="_blank" rel="noopener">IRT · 项目反应理论</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2407.17436" target="_blank" rel="noopener">AIR-Bench 2024</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-02 #1 · 搜索来源：arxiv.org/api/query?ti:safety+benchmark OR agent+benchmark + arxiv.org/abs/2606.20626<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

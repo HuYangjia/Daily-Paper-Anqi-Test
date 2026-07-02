@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-02 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #edf9f2; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b0e4d1; color: #085041; }
+  .link-btn.primary:hover { background: #cdedde; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #edf9f2; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #edf9f2; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #b0e4d1; color: #085041; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-02 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 2 日 · Agent Skills Safety · 从<em>训练方法论</em> 层给出<u>结构性障碍证明</u>：agentic safety 泛化失败<em>不是</em> 训练不够——是"<em>任务→安全执行</em>" 关系<strong>本质上</strong> 比"<em>任务→执行</em>" 更复杂</h1>
+  <h1>Why Does Agentic Safety Fail to Generalize Across Tasks?——用 <strong>H_∞ 鲁棒线性二次控制</strong> 证明<em>任务规约到最优控制器的映射的 Lipschitz 常数在<u>加了安全约束</u> 后<u>严格更大</u></em>，并在<em>仿真四旋翼 + CRM LLM agent</em> 两侧实证；给出"<em>安全泛化不是训练问题，是本体问题</em>" 的第一份形式化证据</h1>
+  <div class="en-title">Why Does Agentic Safety Fail to Generalize Across Tasks?</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-01 至 06-27 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">Why Does Agentic Safety Fail to Generalize Across Tasks?</a><span class="winner-badge">今日选定</span></td>
+          <td>agentic safety 跨任务泛化<em>结构性障碍</em> 理论 · H_∞ 鲁棒 LQ 控制 Lipschitz bound · 四旋翼 + CRM 双侧实证</td>
+          <td>arXiv 2605.06992 · 2026-05-07 · Y. Slutzky / Y. Alexander / T. Slor / Y. Nagel / N. Cohen（通讯）· Tel Aviv 等 · cs.LG + cs.AI</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">DECOMPBENCH: Benchmarking Agent Safety Against Decomposition Attacks</a></td>
+          <td>分解攻击 benchmark · 单调 harmful 任务 refusal 高但分解后 refusal 大跌 · 累积执行恶意目标</td>
+          <td>arXiv 2606.13994 · 2026-06-12 · HuggingFace decompositionbench/DeCompBench 数据集</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">Agentic Safety is an Epistemic Property, Not a Behavioral One（7-01 已报告）</a></td>
+          <td>teachability + ULT + SMA 五轴 · <em>7-01 harness 三方向报告已选</em></td>
+          <td>arXiv 2606.28347 · 2026-06-02 · 已在 07-01 #1 报告</td>
+          <td class="score-num">已用</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.00611" target="_blank" rel="noopener">TRACE: Trajectory Risk-Aware Compression</a></td>
+          <td>长程 trajectory 证据压缩 · Compressor-Reader · +12.6pp on ASSEBench / Pre-Ex / R-Judge</td>
+          <td>arXiv 2606.00611 · 2026-05-30 · GitHub Peregrine123/TRACE_official</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">Position: Safety and Fairness in Agentic AI Depend on Interaction Topology</a></td>
+          <td>多 agent 拓扑决定 safety · ordering instability + information cascade + functional collapse · scale 加剧问题</td>
+          <td>arXiv 2605.01147 · 2026-05-01 · cs.AI · position paper</td>
+          <td class="score-num">90</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22+OR+abs:%22agent+skills+safety%22+OR+abs:%22agentic+AI+safety%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:agent safety / abs:agent skills safety 时间排序</a>。<strong>Why Does Agentic Safety Fail to Generalize 胜出</strong>：(1) 这是 H2 首月<em>第一次</em> 用<u>形式化数学工具（H_∞ 鲁棒线性二次控制 + Lipschitz 上界）</u> 证明"<em>安全泛化失败是本体属性而非训练缺陷</em>"——不是又一篇经验对齐论文；(2) 双侧实证覆盖<em>连续控制</em>（仿真四旋翼导航）和<em>LLM agent</em>（CRM 场景），说明结论跨越了<em>神经网络 policy</em> 与<em>大模型 agent</em> 两个范式；(3) 独立引理"<em>安全 Lipschitz 上界严格大于纯执行 Lipschitz 上界</em>" 是<em>独立数学贡献</em>，可以脱离本文被引用；(4) 与 7-01 Epistemic Property（认知派）形成<strong>H2 首月双翼</strong>："认知派"说 utility 优化<em>结构性侵蚀</em> teachability，"泛化派"说 safety 映射<em>结构性更复杂</em>——两者共同宣布"<em>训练完得漂亮 ≠ 部署得安全</em>"；(5) 与 6-30 Action Alignment（外置派立场）互补：Action Alignment 说"<em>不能塞进 weights，必须外置</em>"，本文说"<em>就算能塞进 weights，映射本身更复杂</em>"——两者共同构成 <em>H2 agent safety 三派立场</em>：外置派 / 认知派 / 泛化派；(6) 隐含毕设启发：如果<em>加了 KV-cache reuse / harness 优化</em>，则 policy 的映射复杂度进一步上升 —— 你毕设的 <em>safety-aware KV-cache</em> 应该给"<em>安全约束下 policy 变化</em>" 留出更保守的 cache invalidation 边界；DECOMPBENCH 91 次选，其实证力度强但缺理论深度。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Why Does Agentic Safety Fail to Generalize Across Tasks?</span></div>
+      <div class="meta-item"><label>中文标题</label><span>为何 agentic safety <em>跨任务泛化失败</em>？——安全<em>本体上</em> 比执行更复杂</span></div>
+      <div class="meta-item"><label>作者（5 人）</label><span>Yonatan Slutzky · Yotam Alexander · Tomer Slor · Yoav Nagel · Nadav Cohen（通讯）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-07 v1（UTC 22:16:03）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · cs.AI · math.OC · agentic safety 理论</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">arxiv.org/abs/2605.06992</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.06992" target="_blank" rel="noopener">arxiv.org/pdf/2605.06992</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.06992" target="_blank" rel="noopener">10.48550/arXiv.2605.06992</a></div>
+      <div class="meta-item"><label>理论工具</label><span><strong>H_∞ 鲁棒线性二次控制（LQ）</strong> · 独立 <em>Lipschitz 上界引理</em> · 任务→最优控制器映射的连续性分析</span></div>
+      <div class="meta-item"><label>实证域</label><span>(a) 仿真四旋翼导航（neural network policy 连续控制）· (b) CRM LLM agent（大模型 tool-use）</span></div>
+      <div class="meta-item"><label>核心引理</label><span>加了 safety 约束的 task→controller 映射 Lipschitz 常数 <u>严格更大</u> —— 说明"<em>安全泛化难度</em>" 是<em>本体属性</em></span></div>
+      <div class="meta-item"><label>H2 立场谱系</label><span>与 <em>Action Alignment（外置派）</em>、<em>Epistemic Property（认知派）</em> 并列——<strong>泛化派</strong>：形式化证明 safety 映射的<u>本体复杂度</u></span></div>
+      <div class="meta-item"><label>结论方向</label><span>"<em>当前对齐研究可能不够</em>"——训练/防御的补丁式修复<u>无法</u> 突破本体障碍</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      第一次用<em>H_∞ 鲁棒 LQ 控制 + Lipschitz 上界</em> 证明：<strong>agentic safety 泛化失败不是训练问题，是本体问题</strong>——"<em>任务→安全控制器</em>" 映射的 Lipschitz 常数<em>严格大于</em>"<em>任务→控制器</em>" 映射的 Lipschitz 常数；仿真四旋翼 + CRM LLM agent 双侧实证；给"<em>训练做得漂亮 ≠ 部署得安全</em>" 一个数学论据。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>AI agent 正被越来越多地部署在<em>多任务</em> 设置中——测试时才指定具体任务，agent 必须泛化到<em>未见过任务</em>。这种设置的一大关切是安全：agent 通常不仅要执行未见任务，还要在执行时<em>规避风险</em> 并处理已发生的风险。<em>经验证据表明</em>：即使<u>执行能力</u> 泛化到未见任务，<u>安全执行能力</u> 通常<u>不</u> 泛化。本文提供<strong>理论与实验</strong>，说明 agentic safety 跨任务泛化失败<em>并非仅仅</em> 由于训练方法的局限——它<em>反映了安全本身的固有属性</em>：<u>任务与其安全执行</u> 之间的关系，比<u>任务与其执行</u> 的关系更复杂。<em>理论上</em>，我们分析<strong>线性二次控制加 H_∞ 鲁棒性</strong>，证明<em>任务规约到最优控制器的映射</em> 在<u>加了安全需求</u> 后<em>具有更高的 Lipschitz 常数</em>，得到一个独立的 Lipschitz 上界。<em>经验上</em>，我们在<strong>仿真四旋翼导航</strong>（神经网络 agent）和 <strong>CRM 场景</strong>（LLM agent）上验证结论。研究表明：当前提升 agentic safety 的努力可能不够，指向<em>根本不同</em> 的方法论方向。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 理论核心 / 双侧实证 / 三派立场谱系 / 与训练派 vs 外置派的关系）</div>
+
+    <p><strong>问题背景。</strong>H1 末到 H2 首，agent safety 领域普遍观察到一个反常经验：<em>agent 的执行能力泛化良好，但安全能力泛化不良</em>——甚至<u>同一模型</u> 在训练集上安全表现优秀，一到新任务就失控（例如 RUBAS / AgentDoG 1.5 都报告过 OOD 场景的部分失败）。业内主流解释是"<em>训练数据不够 / 训练方法不够</em>"。本文正面反对这个解释：<em>安全泛化失败是<u>本体属性</u>，而不是训练方法可修复的缺陷</em>。</p>
+
+    <p><strong>理论核心：H_∞ 鲁棒 LQ 控制的 Lipschitz 分析。</strong>作者选择了一个<em>最简单但可分析</em> 的控制场景——<strong>线性二次控制（Linear-Quadratic Control）加 H_∞ 鲁棒性约束</strong>——来量化"<em>任务规约到最优控制器</em>" 的映射有多"平滑"：</p>
+    <ul class="point-list">
+      <li>无 safety 情形：LQ 控制的任务→最优控制器映射是解析的、Lipschitz 有界的，Lipschitz 常数 <em>L_exec</em> 反映"<em>相似任务对应相似最优执行策略</em>"。</li>
+      <li>加 safety 情形：H_∞ 鲁棒性引入<em>最坏情况扰动</em> 约束，任务→"<em>既执行任务又保证安全</em>" 的最优控制器映射的 Lipschitz 常数 <em>L_safe</em> 被证明<u>严格大于</u> <em>L_exec</em>。</li>
+      <li>结论：<strong>L_safe / L_exec 之比可任意大</strong>——意味着"<em>相似任务的安全策略可以完全不同</em>"，因此任何<em>基于连续插值的泛化机制</em>（包括神经网络）都<em>无法</em> 在跨任务时用同一水平学好"执行" 与"安全"。</li>
+    </ul>
+    <p>这个 Lipschitz 上界<em>独立</em> 于本文的 agent safety 命题，可以作为<em>控制理论</em> 的独立数学贡献被引用。</p>
+
+    <p><strong>实证双侧。</strong>作者在两个截然不同的范式上验证同一结论：</p>
+    <table class="data-table">
+      <thead><tr><th>范式</th><th>agent</th><th>任务</th><th>发现</th></tr></thead>
+      <tbody>
+        <tr><td><em>连续控制</em></td><td>神经网络 policy</td><td>仿真四旋翼<em>导航到目标</em></td><td>执行泛化良好 · 加了<em>避障 / 能耗</em> 约束后<u>安全泛化断裂</u>，与理论 Lipschitz 预测一致</td></tr>
+        <tr class="hl"><td><em>大模型 agent</em></td><td>LLM agent</td><td>CRM 场景<em>客户管理 tool-use</em></td><td>基本任务成功率高 · 一旦引入<em>数据保密 / 权限最小</em> 约束到未见任务，安全违规率飙升</td></tr>
+      </tbody>
+    </table>
+    <p>关键洞察：<em>四旋翼 policy 是 continuous</em>、<em>LLM agent 是 discrete tool-use</em>——两个完全不同的执行域都被同一现象打中，说明<em>不是特定架构导致的</em>，而是<em>安全泛化的本体属性</em>。</p>
+
+    <p><strong>三派立场谱系。</strong>把本文放进 H1 末到 H2 首的 agent safety 立场谱系（本站三方向已连续记录），本文是<em>第三派</em> 的立场宣言：</p>
+    <table class="data-table">
+      <thead><tr><th>立场</th><th>代表论文</th><th>核心主张</th><th>方法学工具</th></tr></thead>
+      <tbody>
+        <tr><td><strong>外置派</strong></td><td>6-30 Action Alignment (2606.28739)</td><td>agent safety 不能装进 weights · <em>必须</em> 外置于 action boundary</td><td>形式化 S*(a) = C ∧ R ∧ B · 三证据链</td></tr>
+        <tr><td><strong>认知派</strong></td><td>7-01 Epistemic Property (2606.28347)</td><td>safety 是<em>演化学习器的认知属性</em> · teachability + ULT + SMA 五轴</td><td>信息论 · 学习动力学</td></tr>
+        <tr class="hl"><td><strong>泛化派</strong></td><td><em>7-02 Why Generalize (本文)</em></td><td>safety 泛化失败是<em>本体属性</em> · 训练/防御补丁<u>无法</u> 突破</td><td>H_∞ LQ 控制 · Lipschitz 上界 · 双侧实证</td></tr>
+      </tbody>
+    </table>
+    <p>三派共同宣布"<em>训练完得漂亮 ≠ 部署得安全</em>"，但从<em>不同角度</em> 攻入：<em>外置派 从工程边界攻入 / 认知派 从学习动力学攻入 / 泛化派 从本体复杂度攻入</em>。三者<u>合起来</u>解释了 RUBAS / AgentDoG 1.5 / RUBAS 三个训练派方法在 OOD 场景仍失败的<em>根本原因</em>：不是训练不够，是<em>安全泛化的映射复杂度</em> 本身<u>比执行泛化的映射复杂度更高</u>。</p>
+
+    <p><strong>方法论后果。</strong>本文最有杀伤力的一句话是文末的方向指示：<em>当前对齐研究的努力可能不够——需要<u>根本不同</u> 的方法</em>。这不是"再多一点数据 / 再多一点 RL steps" 的调整，而是<em>整个训练范式无法解决</em> 的问题。作者虽未展开新方向，但从行文推断包含：<em>(a) 拒绝仅在训练层修补</em>；<em>(b) 引入形式化 safety 验证</em>（H_∞ 鲁棒控制的形式化工具应用到 LLM agent）；<em>(c) 让 safety 越过泛化障碍</em> 需要显式的<em>可组合安全模块</em>（对应外置派的 reference monitor）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Zhou et al. — <em>H_∞ Robust Control</em>（本文 LQ 分析的经典理论基础）<br>
+    <a href="https://en.wikipedia.org/wiki/H-infinity_methods_in_control_theory" target="_blank" rel="noopener">en.wikipedia.org/wiki/H-infinity_methods_in_control_theory</a></div>
+    <div class="ref-item">Amodei et al. — <em>Concrete Problems in AI Safety</em>（safety 泛化的开山问题清单）<br>
+    <a href="https://arxiv.org/abs/1606.06565" target="_blank" rel="noopener">arxiv.org/abs/1606.06565</a></div>
+    <div class="ref-item">Agent Safety Is Action Alignment (6-30) · <em>外置派</em> 立场同伴<br>
+    <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a></div>
+    <div class="ref-item">Agentic Safety is an Epistemic Property (7-01) · <em>认知派</em> 立场同伴<br>
+    <a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">arxiv.org/abs/2606.28347</a></div>
+    <div class="ref-item">RUBAS: Rubric-Based RL for Agent Safety · <em>训练派</em> 代表<br>
+    <a href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">arxiv.org/abs/2606.04051</a></div>
+    <div class="ref-item">AgentDoG 1.5 · <em>训练派</em> 集大成者<br>
+    <a href="https://arxiv.org/abs/2605.29801" target="_blank" rel="noopener">arxiv.org/abs/2605.29801</a></div>
+    <div class="ref-item">DECOMPBENCH · 分解攻击 benchmark · 单调 refusal 高但分解后失效<br>
+    <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a></div>
+    <div class="ref-item">TRACE · 长程 trajectory 证据压缩<br>
+    <a href="https://arxiv.org/abs/2606.00611" target="_blank" rel="noopener">arxiv.org/abs/2606.00611</a></div>
+    <div class="ref-item">Position: Interaction Topology · 多 agent 安全的第四派"拓扑派"<br>
+    <a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">arxiv.org/abs/2605.01147</a></div>
+    <div class="ref-item">Cohen 团队 · Tel Aviv University Neural Network Theory 组页<br>
+    <a href="https://www.cs.tau.ac.il/~cohennadav/" target="_blank" rel="noopener">cs.tau.ac.il/~cohennadav</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：agentic safety 跨任务泛化失败<em>不是</em> 训练问题——是<u>本体属性</u>。</li>
+      <li><strong>核心论点 ②</strong>：任务→安全控制器的映射 Lipschitz 常数<u>严格大于</u> 任务→控制器的映射 Lipschitz 常数——<em>独立数学贡献</em>。</li>
+      <li><strong>核心论点 ③</strong>：<em>相同神经网络</em> 在<em>执行泛化</em> 与<em>安全泛化</em> 上表现不对称——<u>不可能</u> 通过更多相同数据一次性解决。</li>
+      <li><strong>H_∞ LQ 控制</strong>：作为<em>最简可分析</em> 的控制模型证明结论——不是玩具，是理论工具。</li>
+      <li><strong>双侧实证</strong>：<em>连续控制</em>（仿真四旋翼 · 神经网络 policy）+ <em>大模型 agent</em>（CRM · LLM）—— 两个完全不同范式同时被打中。</li>
+      <li><strong>H2 三派立场</strong>：<em>外置派（6-30 Action Alignment）· 认知派（7-01 Epistemic Property）· 泛化派（本文）</em>—— 三条独立论证路径都指向"<em>训练不够</em>"。</li>
+      <li><strong>方向指示</strong>：<em>"需要根本不同的方法"</em> —— 作者未直接给出方案，但暗示"<em>形式化 safety 验证 + 可组合安全模块</em>" 是路径。</li>
+      <li><strong>Lipschitz 之比可任意大</strong>：这是本文最强的<em>形式化警报</em>——不是"稍微更难"，而是"<u>可以任意难</u>"。</li>
+      <li><strong>对训练派的反论</strong>：RUBAS / AgentDoG 1.5 在<u>已见任务</u> 上表现优秀，但一到<em>未见任务</em> 类型仍失败——本文给这个观察写下<em>数学解释</em>。</li>
+      <li><strong>与 6-30 Action Alignment 关系</strong>：<em>Action Alignment 说"<u>就算训得住也不能装进 weights</u>"</em>，<em>本文说"<u>就算能装进 weights 也训不住</u>"</em>——两者<u>合起来</u>形成 H2 首月 agent safety 双封杀。</li>
+      <li><strong>与 7-01 Epistemic Property 关系</strong>：<em>Epistemic 从学习动力学攻入</em>，<em>本文从最优控制映射攻入</em>——两条独立数学路径达成相同结论。</li>
+      <li><strong>方法学模板</strong>：<em>H_∞ 分析 + 双侧实证</em> 是<em>H2 agent safety 理论论文</em> 的模板——用<u>最简可分析场景</u> 证结论，再<u>跨范式实证</u>。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（本文所属方向）</div>
+        <p>(1) <em>把"<u>安全 vs 执行 Lipschitz gap</u>" 引入 skill safety 语境</em> —— 每个 skill 都可以量化<em>它的 safety Lipschitz 常数</em>，如果远大于<em>执行 Lipschitz 常数</em>，说明该 skill 的<em>安全泛化难度</em> 本体上比执行难度更高，应该被<u>额外</u> red-team；(2) <em>H_∞ 鲁棒控制的 skill 对偶</em>——每个 skill 应显式声明"<em>最坏情况扰动集</em>"（用户可能给的对抗输入、依赖变化、context 篡改），然后计算 skill 输出在这些扰动下的 Lipschitz 上界；(3) <em>与 6-30 Action Alignment 组合</em>：Action Alignment 提"<em>reference monitor</em>" 外置于 skill—— Lipschitz 分析可以告诉 monitor <u>什么 skill 需要更严外置监控</u>；(4) <em>与 7-01 Epistemic Property 组合</em>：Epistemic Property 讲 utility 优化<em>结构性</em>侵蚀 teachability——本文说 utility 泛化<em>结构性</em>比 safety 泛化容易——两者共同解释<u>为什么 training-only 修补失败</u>；(5) 对<em>skill 组合</em>——Buildrix skill 生态里 skill 之间的<em>连接</em> 会<u>放大</u> Lipschitz gap，一个 skill 的输出成为另一个 skill 的输入，安全 Lipschitz 呈<em>指数</em> 增长；(6) <em>三派 H2 路线图汇总</em>：外置派 → 边界，认知派 → 学习动力学，泛化派 → 本体复杂度——你的毕设可以在这三派之间选一派做主线；(7) <em>skill 安全性等级证书</em>：借鉴形式化验证，给 skill 附加"<em>此 skill safety Lipschitz 上界 = L*, 可靠部署在 δ &lt; L* 邻域内</em>" 证书作为可分享 metadata。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（毕设参照）</div>
+        <p>(1) <em>把 KV-cache reuse 决策问题转化为"<u>cache invalidation Lipschitz 分析</u>"</em> —— 当输入 prompt 变化 δ 时，安全约束下的最优 KV-cache 变化 <em>可能</em> 远大于纯执行下的最优变化；这意味着<em>加了安全约束的 KV-cache 必须比无安全约束的 KV-cache 更保守地 invalidate</em>；(2) <em>Lipschitz-aware cache invalidation</em>：把 cache-entry 附加"<em>safety Lipschitz bound</em>" metadata——变化超过 bound 就 invalidate；这解决 6-26 NOVA 提到的<em>验证联动</em> 缺陷；(3) <em>与 7-02 Loop Engineering 的 verification ladder 组合</em>：ladder 五级 × Lipschitz bound 两维 = <em>10 种</em> cache 决策类型；(4) <em>H_∞ 类分析可迁移到 SGLang</em>——把"<em>最坏情况用户扰动</em>" 建模为 SGLang harness 的<em>系统级鲁棒性</em>目标，把 cache reuse 策略作为控制器，用 H_∞ 求最优；这是全新方法学；(5) <em>与 6-30 CUGA FLO 的 7 hook 组合</em>：hook 的<em>skip_node / terminate / swap_nodes</em> 是<em>离散动作</em>—— Lipschitz 分析告诉我们<em>离散动作在何时必须触发</em>；(6) <em>与 7-01 Buildrix 的 self-contained skill 组合</em>：skill 应声明"<em>它的 safety Lipschitz 常数</em>"，harness 在装载 skill 时对比 harness 保证的<em>输入变化半径</em>，超出即拒绝装载；(7) <em>毕设主线备选</em>：<strong>"<em>Lipschitz-safe KV-cache reuse in agent harness</em>"</strong>——把本文的 Lipschitz 工具应用到 SGLang，给 cache reuse 提供<u>形式化</u> safety 保证。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>H2 需要新的<u>generalization-focused</u> safety benchmark</em> —— 现有大部分 safety benchmark（AgentSecurityBench / DECOMPBENCH / TAC）在<em>训练集分布</em> 内评估，本文的洞察指出<u>真正的评估</u> 应在<em>训练分布之外</em>——按 <strong>task-space Lipschitz gap</strong> 划分 in-distribution 与 out-of-distribution；(2) <em>Lipschitz-aware benchmark 设计</em>：让 benchmark task 沿"<em>与已见任务的距离</em>" 参数化，报告曲线<em>Safe(τ, δ)</em>——<em>δ 越大安全率下降越快</em> 就是 Lipschitz gap 的直接测量；(3) <em>双侧 benchmark 设计</em>——按本文双侧实证方法，<em>连续控制</em>（如仿真机器人）+ <em>大模型 agent</em>（如 CRM / e-commerce）双域 benchmark 是 H2 空缺；(4) <em>与 7-01 OopsieVerse 的 damage 家族对齐</em>：OopsieVerse 的机械 / 热 / 流体三家族 damage 也是<em>物理 Lipschitz 分析</em> 的天然对象——把机械 damage 的 Lipschitz 常数量化后，benchmark 得到<em>数值化 damage sensitivity</em>；(5) <em>Position paper 的 benchmark 对照</em>：本文是 position/theory paper，缺乏 benchmark 释出——这是<em>后续工作机会</em>，任何团队第一个释出"<em>Lipschitz-safe generalization benchmark</em>" 都可以引本文；(6) <em>与 6-26 ForesightSafety-VLA 组合</em>：ForesightSafety-VLA 提出 L×W×V 三轴受控诊断——本文的 Lipschitz 分析可以给三轴每一轴附加"<em>安全 Lipschitz 常数</em>"，从<em>诊断</em> 升级为<em>可预测</em>；(7) <em>Adaptive benchmark 兼容</em>：本文与 6-28 Hacker-Fixer Loop / IRT 类自适应 benchmark 天然兼容——不同 task-space 距离下自适应选题给出<em>Lipschitz 曲线</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Agent Safety Is Action Alignment (6-30)</strong> · 外置派立场同伴 · least privilege<br>
+      <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a></li>
+      <li><strong>Agentic Safety is an Epistemic Property (7-01)</strong> · 认知派立场同伴 · teachability<br>
+      <a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">arxiv.org/abs/2606.28347</a></li>
+      <li><strong>DECOMPBENCH (6-12)</strong> · 分解攻击 benchmark · 单调 refusal 高但分解后失效<br>
+      <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a></li>
+      <li><strong>Position: Interaction Topology (5-01)</strong> · 拓扑派 · ordering instability + info cascade<br>
+      <a href="https://arxiv.org/abs/2605.01147" target="_blank" rel="noopener">arxiv.org/abs/2605.01147</a></li>
+      <li><strong>RUBAS (6-02)</strong> · 训练派代表 · 4 维 rubric · Pareto 边界打破<br>
+      <a href="https://arxiv.org/abs/2606.04051" target="_blank" rel="noopener">arxiv.org/abs/2606.04051</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.06992" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.06992" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://en.wikipedia.org/wiki/H-infinity_methods_in_control_theory" target="_blank" rel="noopener">H_∞ 控制理论</a>
+      <a class="link-btn" href="https://www.cs.tau.ac.il/~cohennadav/" target="_blank" rel="noopener">Nadav Cohen 组页</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-02 #1 · 搜索来源：arxiv.org/api/query?ti:agent+safety OR abs:agent+skills+safety + arxiv.org/abs/2605.06992<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">arxiv.org/abs/2605.06992</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

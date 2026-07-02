@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-02 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-02 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 2 日 · Harness Engineering · 把 harness 工程再上一层——从"<em>harness</em>" 提升到"<strong>loop specification</strong>"，让人递交<em>可复用、有验证阶梯、有终止状态</em> 的循环规格给 harness 执行</div>
+  <h1>Stop Hand-Holding Your Coding Agent：<strong>Loop Engineering</strong> 作为 <em>prompt → context → harness → loop</em> 的<u>第四层</u>——用 <strong>trigger + goal + verification + stopping rule + memory</strong> 五元组把"<em>被外部规格驱动</em>"的循环<u>形式化</u>为可复用工件，<em>五级 verification ladder + 命名终止状态</em>成为社区标准</h1>
+  <div class="en-title">Stop Hand-Holding Your Coding Agent: Engineering the Loops that Replace Step-by-Step Prompting</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.5</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.2</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-16 至 07-01 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">Stop Hand-Holding Your Coding Agent: Engineering the Loops that Replace Step-by-Step Prompting</a><span class="winner-badge">今日选定</span></td>
+          <td>Loop engineering · harness 之上的<em>第四层</em> · 五元组 loop specification + 五级 verification ladder + 命名终止状态</td>
+          <td>arXiv 2607.00038 · 2026-06-28 · S. Macedo · 独立作者 · cs.AI · Loop Library 50 loops 公开语料</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.01152" target="_blank" rel="noopener">AGC-Bench: Measuring Artificial General Creativity</a></td>
+          <td>agentic harness + HELM-standardization · 3,101 论文筛选 · 78 数据集 · AGC-Judge 校准 LLM-as-judge · c 因子解释 81.5% 方差</td>
+          <td>arXiv 2607.01152 · 2026-07-01 · cs.AI · 大规模 harness-conversion 工作</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.00053" target="_blank" rel="noopener">SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks</a></td>
+          <td>value-based temporal router · 读 partial trajectory 决策升降级 · Bayes-optimality 定理 · 多 LLM 轨迹数据集释出</td>
+          <td>arXiv 2607.00053 · 2026-06-30 · cs.AI · agentic harness 内部路由</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.16748" target="_blank" rel="noopener">MyPCBench: Personally Intelligent Computer-Use Agents</a></td>
+          <td>184 personal-context 任务 · 17 web app + 完整 desktop stack · Claude Opus 4.6 只 55.4%</td>
+          <td>arXiv 2606.16748 · 2026-06-15 · cs.AI · mypcbench.com</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17454" target="_blank" rel="noopener">Dissecting Model Behavior through Agent Trajectories (SSA)</a></td>
+          <td>intent-execution gap 形式化 · Simple Strands Agent · 138k 轨迹分析 · pass@1 无差别下的行为分歧</td>
+          <td>arXiv 2606.17454 · 2026-06-16 · cs.AI · v2</td>
+          <td class="score-num">89</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+ti:%22harness+engineering%22+OR+ti:%22LLM+harness%22+OR+abs:%22agent+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:evaluation harness / abs:agent harness 时间排序</a>。<strong>Loop Engineering 胜出</strong>：(1) 这是 H2 首周<em>第一次</em> 把"<em>loop specification</em>" 作为独立的<em>discipline</em> 立起来 —— 明确把它与"<em>普通编程 loop</em>" 和"<em>harness 内部 perceive-act-observe 循环</em>" 拆开，给"<em>prompt → context → harness → loop</em>" 四层演进图钉上第四颗钉子；(2) 提出<em>五元组契约（trigger + goal + verification + stopping rule + memory）</em>+ <em>五级 verification ladder</em> + <em>命名终止状态</em>——这三个概念都可以直接工程化落地，且立刻解释了 Buildrix、CUGA FLO、NOVA 三类前沿 harness 的<em>循环层</em> 都在做什么；(3) 释出 <strong>Loop Library</strong>（公开 50 个真实 loops 的语料）—— 目前 agent 社区第一份"<em>手工编码 loops</em>" 数据集；(4) 数据洞察硬：<em>70% loops verify in autonomous zone / 74% loops 命名 terminal states，但 automated triggering + durable memory 显著欠发达</em>——这直接指出<em>下半年 loop engineering 的两个短板</em>；(5) 与 6-30 CUGA FLO（策略治理层）/ 7-01 Buildrix（skill 生态层）串成"<em>skill → policy → loop</em>" 完整栈；对毕设方向"<em>KV-cache × harness</em>" 有很强的方法学参照——loop-level 缓存决策比 harness-level 更细粒度。AGC-Bench 综合分次高 91，但其 harness 更多作为工具而非核心命题。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Stop Hand-Holding Your Coding Agent: Engineering the Loops that Replace Step-by-Step Prompting</span></div>
+      <div class="meta-item"><label>中文标题</label><span>停止手把手带你的编码 agent：用<em>循环工程</em> 替代<em>逐步 prompt</em></span></div>
+      <div class="meta-item"><label>作者</label><span>Sandeco Macedo（独立作者）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-28 v1（UTC 18:30:46）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · cs.SE · agent engineering methodology</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">arxiv.org/abs/2607.00038</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2607.00038" target="_blank" rel="noopener">arxiv.org/pdf/2607.00038</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2607.00038v1" target="_blank" rel="noopener">arxiv.org/html/2607.00038v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2607.00038" target="_blank" rel="noopener">10.48550/arXiv.2607.00038</a></div>
+      <div class="meta-item"><label>层级定位</label><span><em>prompt → context → harness → loop</em>（第四层）</span></div>
+      <div class="meta-item"><label>五元组契约</label><span><strong>trigger + goal + verification + stopping rule + memory</strong>（loop specification 完整定义）</span></div>
+      <div class="meta-item"><label>Loop Library</label><span>50 个手工编码的真实生产 loops（论文附带公开语料）</span></div>
+      <div class="meta-item"><label>Verification Ladder</label><span>5 级：从 human-only → cheap-checks → strong-verifier → autonomous-zone → self-consistent</span></div>
+      <div class="meta-item"><label>典型 harness</label><span>Claude Code · Codex · 其它可承载 loop 的 CLI-agent harness</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      给"<em>agent 循环 / loop engineering</em>" 独立立学科：把 <strong>loop specification</strong> 定义为<em>trigger + goal + verification + stopping rule + memory</em> 五元组、写下五级 verification ladder + 命名终止状态、手工编码 50 个真实 loops 作为语料、给出四类设计原则与反模式——把"<em>逐步 prompt</em>" 时代替换为"<em>递交可复用 loop specification 给 harness 自主执行</em>" 时代。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>2026 年中期，一句口号重新组织了从业者谈论 coding agents 的方式：<em>停止 prompt 你的 agent，开始设计 prompt 它的 loop</em>。本文把这个 claim 严肃对待并给出仔细处理。我们把这个新实践的对象称为 <strong>loop specification</strong>：一个<em>有界、可复用的工件</em>，由 <em>trigger（触发器）、goal（目标）、verification step（验证步骤）、stopping rule（停止规则）、memory（记忆）</em> 构成，由人类交付给 agent harness（如 Claude Code 或 Codex），让 agent 自主追求目标——<u>替代</u> 逐步 prompt。我们把这个<em>外部 loop specification</em> 与两件事拆开：<em>(a) 普通编程 loop</em>；<em>(b) harness 已经作为 plumbing 提供的<u>内部</u> perceive-act-observe 循环</em>。我们把 loop engineering 定位为 <em>prompt → context → harness → loop</em> 演进图上的<strong>新一层</strong>；并反对"loop 替代 prompt" 的强口号——loop 与 prompt 是<em>不同工具</em> 且各有用途。我们贡献四点：<em>(1) 学科的定义与范围</em>；<em>(2) 围绕 trigger / goal type / 五级 verification ladder / architecture / 命名 terminal states 组织的 loop specifications 的解剖与分类学</em>；<em>(3) Loop Library 语料</em>——五十个真实 loops 的公开语料，手工编码；<em>(4) 基于自我修正、reward hacking、model-as-judge fragility 文献的设计原则与反模式</em>。语料显示：<em>70% loops 在 ladder 的 autonomous zone 中 verify · 74% 命名 terminal states，但自动化 triggering 与 durable memory 相对欠发达</em>。文末讨论必须尊重的限制：<em>verification 负担、comprehension debt、cognitive surrender 风险</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / loop 与已有概念的边界 / 五元组契约 / 分类学 / Loop Library 数据洞察）</div>
+
+    <p><strong>问题背景。</strong>2026 年中期起，"<em>stop prompting your agent, start designing the loop that prompts it</em>" 这句口号在开发者社区扩散，但它的<em>技术对象</em> 一直没有被形式化——"loop" 到底指<em>什么</em>？是普通编程 loop 吗？是 agent harness 内部的 perceive-act-observe 循环吗？还是别的东西？本文的贡献首先是<strong>拆掉概念混淆</strong>：明确把<em>外部人类递交给 harness 的 loop specification</em> 从"编程 loop"和"harness 内部循环 plumbing" 中区分出来。前者是<em>规格</em>，后者是<em>实现</em>；前者由人类工程师撰写，后者由 harness 厂商内置。</p>
+
+    <p><strong>层级演进图。</strong>作者把 agent 工程的历史演进画成四层图：</p>
+    <table class="data-table">
+      <thead><tr><th>层级</th><th>对象</th><th>撰写方</th><th>典型时期</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><em>prompt</em>（一次性指令）</td><td>用户</td><td>ChatGPT 时代早期</td></tr>
+        <tr><td>2</td><td><em>context</em>（RAG / 外部知识 / 长上下文）</td><td>用户 + 工程</td><td>2023-2024</td></tr>
+        <tr><td>3</td><td><em>harness</em>（Claude Code / Codex / SGLang / agent 脚手架）</td><td>厂商</td><td>2024-2026</td></tr>
+        <tr class="hl"><td><strong>4</strong></td><td><em>loop specification</em>（trigger + goal + verification + stopping + memory）</td><td>用户工程师</td><td>2026 中至今</td></tr>
+      </tbody>
+    </table>
+    <p>核心命题是：<em>loop engineering 不淘汰 prompt engineering</em>——loop 与 prompt 是<em>不同工具</em>：prompt 用于"<em>一次性内容生产</em>"，loop 用于"<em>自主目标追求</em>"。作者特别反对社区中强版的"loop 淘汰 prompt" 论。</p>
+
+    <p><strong>五元组契约。</strong>本文最有工程学价值的一段是把 loop specification <em>形式化</em> 为一个<em>有界、可复用的工件</em>，由五个组件组成：</p>
+    <ul class="point-list">
+      <li><strong>trigger（触发器）</strong>：何时启动这个 loop？—— 可以是手动、定时、事件驱动、条件驱动。语料显示<em>自动化 triggering 显著欠发达</em>——大多数 loops 目前还是手动或简单事件触发。</li>
+      <li><strong>goal（目标）</strong>：这个 loop 要达成什么？—— 分类为多种 goal type（fact production / state achievement / continuous monitoring / iterative refinement 等）。</li>
+      <li><strong>verification step（验证步骤）</strong>：如何知道<em>已经达成</em>？—— 这是全文最重要的组件（见下 verification ladder）。</li>
+      <li><strong>stopping rule（停止规则）</strong>：什么条件下必须终止？—— 与命名 terminal states 联动（success / failure / timeout / budget-exceeded / manual-abort 等命名状态）。</li>
+      <li><strong>memory（记忆）</strong>：跨迭代 / 跨 session 保留什么？—— 语料显示<em>durable memory 相对欠发达</em>，多数 loops 靠 harness 提供的临时 context，缺少显式跨会话的 memory 契约。</li>
+    </ul>
+
+    <p><strong>五级 Verification Ladder。</strong>本文的<em>另一个方法学核心</em> 是把 loop 的验证组织为<em>五级阶梯</em>——从最弱到最强：<em>(1) human-only</em>（每次迭代由人验证）→ <em>(2) cheap-checks</em>（语法、格式、shape 校验）→ <em>(3) strong-verifier</em>（外部程序如编译器、单元测试）→ <em>(4) autonomous-zone</em>（loop 自身可执行 model-as-judge 或形式化验证并<em>自主前进</em>）→ <em>(5) self-consistent</em>（多样本自洽 + cross-verification）。<strong>语料 70% loops 已进入 autonomous-zone</strong>——说明社区实践确实已经把验证做到了"loop 可以自主前进不用人干预"的水平；这个数字也反证了"<em>loop engineering 是真实的实践</em>"，不是纯理论。</p>
+
+    <p><strong>命名 Terminal States。</strong>74% loops 命名了终止状态——这是从"<em>循环无边界地跑到超时</em>" 时代升级到"<em>每个 loop 有语义化 stop code</em>" 时代的标志。命名 terminal states 有三个好处：<em>(a) 可审计</em>（stop code 就是审计追溯的起点）；<em>(b) 可组合</em>（外层 loop 可根据内层的 terminal state 分派不同分支）；<em>(c) 可对齐</em>（用户对"完成" 的期望被明确写下）。</p>
+
+    <p><strong>与前几层 harness 谱系的关系。</strong>Loop 工程不是替代 harness，而是<em>在 harness 之上</em> 加一个"<em>可复用的自主目标追求单元</em>" 层。它与 6-30 CUGA FLO / 7-01 Buildrix 的关系是<em>正交的</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>论文</th><th>层级</th><th>核心对象</th></tr></thead>
+      <tbody>
+        <tr><td>6-25 Interplay</td><td>harness × post-training</td><td>训练-harness 联动</td></tr>
+        <tr><td>6-26 NOVA</td><td>harness 内 verification</td><td>4 级 verification cascade</td></tr>
+        <tr><td>6-28 Code Isn't Memory</td><td>harness 内 index</td><td>结构化 index 因果消融</td></tr>
+        <tr><td>6-30 CUGA FLO</td><td>harness 策略层</td><td>TDF + FRAME + 7 hook</td></tr>
+        <tr><td>7-01 Buildrix</td><td>harness × 领域生态</td><td>skill 生态平台</td></tr>
+        <tr class="hl"><td><strong>7-02 Loop Engineering</strong></td><td><em>harness 之上第四层</em></td><td><strong>loop specification 五元组</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>三条限制警告。</strong>作者不做 loop 万能论。文末警告三条<em>实践必须尊重的限制</em>：<em>(a) verification burden</em>——loop 每 iteration 都要 verify，验证成本可能压死 loop 本身；<em>(b) comprehension debt</em>——loop 越自主，人类越难理解它到底跑到了哪一步；<em>(c) cognitive surrender</em>——把太多决策外包给 loop 后，人类失去<em>关键判断能力</em>。这三条构成了 loop engineering 学科的<em>伦理边界</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Anthropic — <em>Claude Code</em>（本文明确点名的 harness 目标之一）<br>
+    <a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">anthropic.com/claude-code</a></div>
+    <div class="ref-item">OpenAI — <em>Codex CLI</em>（本文明确点名的 harness 目标之一）<br>
+    <a href="https://github.com/openai/codex" target="_blank" rel="noopener">github.com/openai/codex</a></div>
+    <div class="ref-item">Amodei et al. — <em>Model-as-Judge Fragility</em>（本文引用作为设计反模式论据）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">arxiv.org/abs/2306.05685 (LLM-as-Judge)</a></div>
+    <div class="ref-item">Skalse et al. — <em>Reward Hacking Formalization</em>（本文引用作为 loop 验证薄弱时的失败模式）<br>
+    <a href="https://arxiv.org/abs/2209.13085" target="_blank" rel="noopener">arxiv.org/abs/2209.13085</a></div>
+    <div class="ref-item">Self-Refine / Self-Correction 文献综述<br>
+    <a href="https://arxiv.org/abs/2308.03188" target="_blank" rel="noopener">arxiv.org/abs/2308.03188</a></div>
+    <div class="ref-item">Buildrix (7-01) · 同期 harness-社区生态平台，与 loop 层正交<br>
+    <a href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">arxiv.org/abs/2606.25139</a></div>
+    <div class="ref-item">CUGA FLO (6-30) · 同期 harness 策略治理层，与 loop 层正交<br>
+    <a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></div>
+    <div class="ref-item">Dissecting Model Behavior through Trajectories (6-16) · SSA 是 loop 层的<em>trajectory 分析</em> 对照<br>
+    <a href="https://arxiv.org/abs/2606.17454" target="_blank" rel="noopener">arxiv.org/abs/2606.17454</a></div>
+    <div class="ref-item">SWE-Router (6-30) · agentic loop 内的<em>partial-trajectory routing</em> 对照<br>
+    <a href="https://arxiv.org/abs/2607.00053" target="_blank" rel="noopener">arxiv.org/abs/2607.00053</a></div>
+    <div class="ref-item">Cognitive Surrender · Nicholas Carr <em>The Shallows</em>（长期讨论 automation 对认知能力的侵蚀）<br>
+    <a href="https://en.wikipedia.org/wiki/The_Shallows_(book)" target="_blank" rel="noopener">en.wikipedia.org/wiki/The_Shallows_(book)</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>loop specification</em> 是"<em>trigger + goal + verification + stopping rule + memory</em>" 五元组——<u>首次形式化</u>。</li>
+      <li><strong>核心论点 ②</strong>：loop engineering 是 <em>prompt → context → harness → loop</em> <strong>第四层</strong>，<u>不淘汰</u> 前三层。</li>
+      <li><strong>核心论点 ③</strong>：loop 与两件事必须严格区分——<em>普通编程 loop</em>、<em>harness 内部 perceive-act-observe plumbing</em>。</li>
+      <li><strong>五级 Verification Ladder</strong>：<em>human-only → cheap-checks → strong-verifier → autonomous-zone → self-consistent</em>。</li>
+      <li><strong>Loop Library 数据 · 70%</strong>：现有生产 loops 已在 ladder 的 autonomous-zone 层 verify —— <em>社区实践成熟</em>。</li>
+      <li><strong>Loop Library 数据 · 74%</strong>：现有 loops 已命名 terminal states —— stop code 已成为社区共识。</li>
+      <li><strong>Loop Library 数据 · 短板</strong>：<em>automated triggering</em> 与 <em>durable memory</em> 显著欠发达——H2 两个可立项方向。</li>
+      <li><strong>四大贡献</strong>：<em>学科定义 · 分类学 · Loop Library 语料（50 loops）· 设计原则与反模式</em>。</li>
+      <li><strong>三条伦理边界</strong>：<em>verification burden · comprehension debt · cognitive surrender</em> —— loop 万能论的反论。</li>
+      <li><strong>典型 harness</strong>：本文明确点名 Claude Code 与 Codex 为 loop specification 的执行目标 —— 说明 loop 层与 harness 层的<em>接口</em> 已在实践中存在。</li>
+      <li><strong>与 prompt 关系</strong>：prompt 用于"<em>一次性内容生产</em>"，loop 用于"<em>自主目标追求</em>"—— 两者<u>不互斥</u>。</li>
+      <li><strong>Loop Library 是 loop 层的<em>Awesome Agents 时刻</em></strong>：<u>第一次</u> 有"手工编码的 loops 公开语料</u>"，供 H2 loop 分类学研究复用。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设）</div>
+        <p>(1) <strong>把 KV-cache 决策从"<em>harness 静态策略</em>" 升级为"<em>loop specification 的 memory 组件</em>"</strong> —— 你的毕设不必把 cache 策略埋在 harness 里，而是让每个 loop 显式声明"<em>它需要什么 memory 契约</em>"（长期 KV / 短期 activation / 无状态），loop-runtime 据此决定 cache 策略；(2) <em>五级 verification ladder</em> 可以直接映射为"<em>KV-cache 有效性验证</em>" 的五级：<em>hash 一致（cheap）→ prefix embedding 相似（strong）→ downstream task pass（autonomous）→ multi-sample consistent（self-consistent）</em>——为 cache reuse 建立<em>分级信任</em> 机制；(3) <em>命名 terminal states</em> 对应 KV-cache 的<em>命名 eviction 事件</em>——"budget-exceeded / dependency-invalidated / manual-flush / stale" 四类命名状态可以让 cache 决策<em>可审计</em>；(4) <em>automated triggering 欠发达</em> 恰是 cache prefetching 的机会窗口——如果 loop 声明了<em>下一步会触发什么 skill</em>，cache-manager 可以<u>预取</u> 该 skill 的 KV；(5) <em>durable memory 欠发达</em> 对应 <em>跨 session KV persistence</em>——你毕设可以做"<em>把 loop 的 memory 契约翻译为 KV-cache 持久化策略</em>" 的编译器；(6) 与 6-30 CUGA FLO 的 7 hook 组合：CUGA FLO 的 hook 是"<em>harness 内策略</em>"，loop specification 是"<em>harness 外规格</em>"——你的毕设可以把 KV-cache 决策做成"<em>loop-declared, hook-enforced, harness-executed</em>" 三层架构；(7) <em>verification burden</em> 直接对应<em>cache verification 开销</em>——如果每次 cache hit 都要重跑全 pipeline verify，reuse 收益就被吃掉；因此需要"<em>基于 ladder 分级</em>" 的分层 cache verification 而不是全走 autonomous-zone；(8) 与 7-01 Buildrix 的 self-contained skill 组合：<em>skill 包 = self-contained 内容</em>，<em>loop specification = self-contained 意图</em>，两者共同定义 SGLang 侧的<em>可移植性契约</em>。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>loop-level attack surface 是 H2 未被探索的空白</em> —— 目前 agent safety 讨论集中在 skill / tool / prompt 层，但 loop specification 本身可以被<em>污染</em>：<em>malicious trigger</em>（假事件触发敏感 loop）/ <em>malicious stopping rule</em>（永不停机的 loop 消耗资源）/ <em>malicious memory</em>（跨 session 沉淀 exfiltrated 数据）；(2) <em>五级 verification ladder</em> 直接映射为 safety verification 的<em>分级信任</em> 决策：low-risk goals 可以停在 cheap-checks，high-risk goals（e.g. 涉及金融、删除、外发）必须走 self-consistent；(3) <em>命名 terminal states</em> 天然对应 safety incident 报告——每种命名 stop code 对应一个<em>可追溯的 safety 事件类型</em>；(4) <em>cognitive surrender 警告</em> 是 agent alignment 中<em>长期人类监督衰退</em> 命题在 loop 层的显式表述——与 7-01 的 Epistemic Property / Teachability 概念（"<em>保留 corrective leverage</em>"）方向一致；(5) <em>automated triggering 欠发达</em> 在 safety 侧是<em>好事</em>——一旦大规模自动触发普及，attacker 可以通过"<em>制造事件</em>" 远程激活敏感 loop（例如伪造 CI 失败触发部署 loop）；因此本文给<em>trigger authentication</em> 立了立项理由；(6) 与 6-30 Action Alignment 的 <em>least privilege</em> 呼应：每个 loop specification 应声明"<em>它需要的最小 authority 集</em>"，harness 在启动 loop 时对比"<em>loop 声明的权限</em>" 与"<em>用户授予该 harness 的权限 A</em>"，超出即拒绝；(7) <em>Loop Library 语料</em> 直接可以做<em>loop-level red-team benchmark</em>——把 50 个 loops 每个都拿出来做恶意变体，是现成的 H2 evaluation 起点。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>Loop-level agent benchmark 是空白</em> —— 现有 agent benchmark（OSWorld / AgentBench / TAC / STAGE-Claw）都用"<em>一次性任务 + 步数上限</em>" 评测，缺少"<em>agent 面对<u>递交给它的 loop specification</u> 时的可靠性</em>" 评测维度；本文的<em>Loop Library</em>（50 loops）就是<em>loop-level benchmark</em> 的天然起点；(2) <em>五级 verification ladder</em> 可以作为 benchmark 中<em>验证信任级别</em> 的量化维度——同一个任务在不同 ladder 级别下的通过率差异揭示模型的<em>验证成熟度</em>；(3) <em>命名 terminal states</em> 可以作为 benchmark 的<em>结果分类维度</em>——不再是二元 pass/fail，而是五类 stop code 的分布（success / failure / timeout / budget-exceeded / manual-abort）；(4) <em>verification burden 量化</em> 是 benchmark 应报告的<em>关键 economics 数据</em>——每次通过所需的验证 tokens / verification calls / wall-clock，这是现有 benchmark（OSWorld 2.0 之外）普遍不报的维度；(5) <em>automated triggering + durable memory 欠发达</em> 恰是<em>benchmark 建设的机会窗口</em>——直接构建针对这两个维度的 benchmark（如"<em>trigger-race conditions</em>"、"<em>cross-session memory-consistency</em>"），H2 应该会有多篇 follow-up；(6) 与 6-28 REALM / 6-26 ForesightSafety-VLA 组合：REALM 覆盖"<em>感知层 red team</em>"，本论文覆盖"<em>loop 层 red team</em>"——两者组合成"<em>感知 × 循环</em>" 双侧统一的 benchmark 矩阵；(7) <em>Loop Library 手工编码</em> 也给 benchmark 建设立范：<em>50 loops · 每一条都<u>手工编码</u></em>——比 LLM 生成 case 更有可信度，与 7-01 Buildrix 的<em>golden test case 晋升机制</em> 呼应；(8) <em>cognitive surrender</em> 长期人类监督衰退可以成为 benchmark 的<em>过程指标</em>——比如"<em>agent 连续跑 100 iterations 后人类干预率</em>"作为长期 safety 指标。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Buildrix (7-01)</strong> · harness-社区生态平台 · 与 loop 层<em>正交</em> —— skill × loop 双规格<br>
+      <a href="https://arxiv.org/abs/2606.25139" target="_blank" rel="noopener">arxiv.org/abs/2606.25139</a></li>
+      <li><strong>CUGA FLO (6-30)</strong> · harness 策略治理层 · 7 hook 原语 · 与 loop 层<em>正交</em><br>
+      <a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></li>
+      <li><strong>SWE-Router (6-30)</strong> · agentic 多轮 harness 内 partial-trajectory routing · Bayes-optimality 定理<br>
+      <a href="https://arxiv.org/abs/2607.00053" target="_blank" rel="noopener">arxiv.org/abs/2607.00053</a></li>
+      <li><strong>Dissecting Model Behavior through Trajectories (6-16)</strong> · SSA · 138k trajectories 分析<br>
+      <a href="https://arxiv.org/abs/2606.17454" target="_blank" rel="noopener">arxiv.org/abs/2606.17454</a></li>
+      <li><strong>AGC-Bench (7-01)</strong> · agentic harness 转换 78 数据集为 HELM-standardized benchmark<br>
+      <a href="https://arxiv.org/abs/2607.01152" target="_blank" rel="noopener">arxiv.org/abs/2607.01152</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2607.00038" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.00038v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.00038" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+      <a class="link-btn" href="https://github.com/openai/codex" target="_blank" rel="noopener">Codex CLI</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-02 #1 · 搜索来源：arxiv.org/api/query?ti:evaluation+harness OR abs:agent+harness + arxiv.org/abs/2607.00038<br>
+  论文出处：<a href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">arxiv.org/abs/2607.00038</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

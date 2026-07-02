@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">42 篇报告</span>
+        <span class="count-badge">43 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">41 篇报告</span>
+        <span class="count-badge">42 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">40 篇报告</span>
+        <span class="count-badge">41 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-02-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">02</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">Stop Hand-Holding Your Coding Agent：把 harness 工程再上一层——<strong>Loop Engineering</strong> 作为 <em>prompt → context → harness → loop</em> <u>第四层</u>。<strong>Loop Specification 五元组</strong>（trigger + goal + verification + stopping rule + memory）+ <strong>五级 Verification Ladder</strong> + <strong>命名 Terminal States</strong>；释出 Loop Library 50 loops 手工编码语料——<em>70% 已在 autonomous-zone verify / 74% 命名 stop code / automated triggering + durable memory 欠发达</em>。三条边界：verification burden / comprehension debt / cognitive surrender #1</div>
+          <div class="paper-sub">S. Macedo（独立作者）· arXiv 2607.00038 2026-06-28 · cs.AI + cs.SE · Claude Code + Codex 是目标 harness</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-02-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">02</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">Why Does Agentic Safety Fail to Generalize Across Tasks?——用 <strong>H_∞ 鲁棒 LQ 控制 + Lipschitz 上界</strong> 证明<em>任务→安全控制器映射 Lipschitz 常数<u>严格大于</u> 任务→控制器映射</em>，比值可<em>任意大</em>；<strong>仿真四旋翼（NN policy）+ CRM（LLM agent）</strong> 双侧实证——两个截然不同范式被<u>同一现象</u>打中。奠定 <strong>H2 首月 agent safety 三派立场</strong>：外置派（Action Alignment）· 认知派（Epistemic Property）· <em>泛化派（本文）</em>；"<em>训练/防御补丁无法突破本体障碍</em>" #1</div>
+          <div class="paper-sub">Y. Slutzky / N. Cohen（通讯）等 5 人 · Tel Aviv University · arXiv 2605.06992 2026-05-07 · cs.LG · 独立 Lipschitz 上界引理</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-02-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">02</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">Efficient Safety Benchmarking via <strong>Item Response Theory (IRT)</strong>——把心理测量学工具系统性引入 LLM safety 评测。三条正交贡献：<em>(1) IRT ability</em> 分辨天花板处聚集模型；<em>(2) Adaptive selection</em> 至少省 <strong>80%</strong>（AIR-Bench 2024 上 <strong>99.9%</strong>）；<em>(3) Fixed informative subset</em> 省 <strong>99.8%</strong>——离线选<em>信息量前 k%</em> items 供所有模型复用。<em>穷举派（REALM）× 心理测量派（本文）</em> 互补 · 可迁移到 agent benchmark / HELM / MMLU #1</div>
+          <div class="paper-sub">F. Spagliardi / D. Cruz 等 6 人 · arXiv 2606.20626 2026-05-26 · cs.CL · benchmark 方法学切入 · H2 明显 follow-up：agent benchmark IRT-adaptive framework</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-01-1.html">
         <div class="date-badge">
