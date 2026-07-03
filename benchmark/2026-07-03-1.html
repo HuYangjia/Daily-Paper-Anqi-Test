@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-03 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8ec; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fff8ec; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5dfa5; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8ec; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #faeeda; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #fac775; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #633806; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 3 日 · Safety Benchmark · 把 agent benchmark 的构造过程从"<em>自然语言 → 工具序列</em>" <u>反转</u> 为"<em>工具序列 → 自然语言</em>"——用<em>Adaptive Contrastive n-gram + 聚类抽样 + 迭代难度演化</em> 三连击自动生成<em>高覆盖 + 高难度</em> 任务</div>
+  <h1>A Matter of TASTE：<strong>Task Synthesis from Tool Sequence Evolution</strong>——把 agent benchmark 建构<u>反转</u> 起来，用 <em>ACE n-gram</em> 采样合法工具序列 → 聚类选代表 → 实例化 → 难度演化；构造 τc-Bench 令<em>near-saturation 模型（Gemini-3-Flash 0.82-0.94）暴跌到 0.28-0.61</em>，工具组合覆盖翻倍</h1>
+  <div class="en-title">A Matter of TASTE: Improving Coverage and Difficulty of Agent Benchmarks</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.5</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety / Agent Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-25 至 06-30 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">A Matter of TASTE: Improving Coverage and Difficulty of Agent Benchmarks</a><span class="winner-badge">今日选定</span></td>
+          <td>Benchmark <em>反转构造派</em> · ACE n-gram 采样工具序列 · 聚类选代表 · 迭代难度演化 · τc-Bench 让 Gemini-3-Flash 从 0.82-0.94 掉到 0.28-0.61 · 工具组合翻倍</td>
+          <td>arXiv 2605.28556 · 2026-05-27 v1 → 06-02 v2 · Keren 等 6 人 · Technion + IBM Research · cs.AI</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">Hacker-Fixer Loop for Agent Benchmarks</a></td>
+          <td>Hardening agent benchmarks · adversarial verifiers · 1968 任务 5 benchmark · 16% hackable · 无需 per-task 手工</td>
+          <td>arXiv 2606.08960 · 2026-06-08 · Zhong 等 · CMU · cs.AI · 6-25 已收</td>
+          <td class="score-num">96</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">STAGE-Claw: Automated State-based Agent Benchmarking</a></td>
+          <td>状态基元 personal-computing 环境 · 自动化生成 realistic 场景 · 摆脱 sandboxed artifacts</td>
+          <td>arXiv 2606.10394 · 2026-06-09 · Liang 等 · Meituan · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03657" target="_blank" rel="noopener">NovelAPIBench: Diagnosing Knowledge Gaps in Tool Use</a></td>
+          <td>Novel API acquisition benchmark · 全自动动态 benchmark · 摆脱静态 pass/fail</td>
+          <td>arXiv 2606.03657 · 2026-06-02 · Liu 等 · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.26321" target="_blank" rel="noopener">Anchor: Mitigating Artifact Drift in Agent Benchmark Generation</a></td>
+          <td>Artifact drift · 环境 / 任务 / oracle / verifier 一致性 · long-horizon business tasks</td>
+          <td>arXiv 2605.26321 · 2026-05-25 · Ivanov 等 · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:safety/agent/alignment benchmark 时间排序</a>。<strong>TASTE 胜出</strong>：注意 Hacker-Fixer Loop 综合分 96 <u>已于 6-25 收录</u>（当日 benchmark 方向 #1），且它属"<em>hardening 已有 benchmark</em>"，而 TASTE 属"<em>构造范式反转</em>"——层次更基础，与 7-02 IRT-Safety（心理测量派）+ 7-03 BOA（搜索派）+ 7-03 Necessary but Not Sufficient（评委派）形成<u>2026 H2 benchmark 方法学四联拍</u>：<em>IRT（物品侧信息经济学）· BOA（搜索侧覆盖率）· Grader-Repro（评委侧稳定性）· TASTE（构造侧反转）</em>；(1) 论文核心命题清晰：<em>"标准做法（先写自然语言场景 → 映射工具序列）只捕捉 agent 真实工具使用模式的<u>狭窄子集</u>"</em>——首次<u>指认</u>这个 methodological bias；(2) 反转构造：TASTE = <strong>T</strong>ask <strong>S</strong>ynthesis from <strong>T</strong>ool Sequence <strong>E</strong>volution，工具序列在前，任务描述在后；(3) 方法学三件套：<em>Adaptive Contrastive n-gram model</em>（在 LLM-judged validity 信号上训练，学习"哪些工具组合是合法的"）+ <em>聚类选代表</em>（从工具序列池中选<u>覆盖广</u>的代表）+ <em>迭代难度演化</em>（在实例化后逐轮加难度）；(4) 数据震撼：τc-Bench 上 <em>Gemini-3-Flash 从 0.82-0.94 骤降到 0.28-0.61</em>—— <u>44-53 pp 下降</u>，同时<em>unique tool combinations 翻倍</em>；(5) 明确论断：<em>"high scores on existing benchmarks often reflect saturation rather than robust task-solving ability"</em>——本文提供<em>反饱和</em> 工具，H2 所有 near-saturated benchmark 应用它续命；(6) 11 组 agent / user LLM pairs 广泛评测——不是单模型 corner case；(7) Technion + IBM Research 6 位作者 · Roi Reichart（NLP 顶级 lab）背书——venue quality 高。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>A Matter of TASTE: Improving Coverage and Difficulty of Agent Benchmarks</span></div>
+      <div class="meta-item"><label>中文标题</label><span>关乎 TASTE：改进 agent benchmark 的<em>覆盖度</em> 与<em>难度</em></span></div>
+      <div class="meta-item"><label>TASTE 展开</label><span><strong>T</strong>ask <strong>S</strong>ynthesis from <strong>T</strong>ool Sequence <strong>E</strong>volution</span></div>
+      <div class="meta-item"><label>作者</label><span>Tomer Keren, Nitay Calderon, Asaf Yehudai, Yotam Perlitz, Michal Shmueli-Scheuer, Roi Reichart</span></div>
+      <div class="meta-item"><label>机构</label><span>Technion (Israel Institute of Technology) + IBM Research</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-27 v1 · 2026-06-02 v2（623 KB）</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.AI · Artificial Intelligence · agent benchmark construction methodology</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.28556" target="_blank" rel="noopener">arxiv.org/pdf/2605.28556</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.28556" target="_blank" rel="noopener">10.48550/arXiv.2605.28556</a></div>
+      <div class="meta-item"><label>产出 benchmark</label><span><strong>τc-Bench</strong>（τ²-Bench 三领域的<em>挑战性扩展</em>）</span></div>
+      <div class="meta-item"><label>核心震撼数据</label><span>Gemini-3-Flash 从 <em>0.82-0.94</em> 骤降到 <em>0.28-0.61</em> · 独特工具组合数 <em>×2</em></span></div>
+      <div class="meta-item"><label>方法学三件套</label><span><em>Adaptive Contrastive n-gram</em> · <em>聚类选代表</em> · <em>迭代难度演化</em></span></div>
+      <div class="meta-item"><label>评测规模</label><span>11 组 <em>agent / user LLM pairs</em></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 agent benchmark 的构造过程<em>反转</em>：<strong>先合成合法工具序列（ACE n-gram），再聚类选代表，再实例化为任务，最后迭代难度演化</strong>——由此得到的 τc-Bench <u>让 near-saturated 模型骤降 44-53 pp</u>、工具组合覆盖翻倍，实证"<em>现有 benchmark 的高分反映的往往是饱和而非真实鲁棒能力</em>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>随着 agent 能力的进步，现有 benchmark（如 <em>τ²-Bench</em>）正在<u>快速饱和</u>。然而构造新的 benchmark 任务仍然<em>复杂、昂贵、劳动密集</em>；更棘手的是——<em>标准做法（先用自然语言写场景，再映射为工具序列）只能捕捉 agent 真实使用的<u>狭窄子集</u></em>。本文通过<u>反转任务构造过程</u> 来解决这些问题。</p>
+    <p>我们提出 <strong>TASTE：Task Synthesis from Tool Sequence Evolution</strong>——一种<em>自动方法</em>，生成<u>更难</u> 且<u>覆盖度更广</u> 的任务。TASTE 使用一个 <em>Adaptive Contrastive n-gram 模型</em>——在 LLM-judged validity 信号上训练，从而能<em>采样合法的工具序列</em>，覆盖广大的工具组合空间。TASTE 随后<u>通过聚类</u> 从池中选取<em>代表性序列</em>，把它们实例化为完整的 benchmark 任务，并通过<em>迭代难度演化</em> 精修任务。</p>
+    <p>用 TASTE，我们构造 <strong>τc-Bench</strong>——τ²-Bench 三领域的<em>挑战性扩展</em>。评测 <em>11 组 agent/user LLM pairs</em>，发现<u>那些几乎饱和 τ²-Bench 的模型</u> 在我们的任务上性能<u>严重下降</u>——例如 <em>Gemini-3-Flash 从 0.82-0.94 降到 0.28-0.61</em>。除了提高难度，我们生成的任务<em>把 agent 必须执行的独特工具组合数量<u>翻倍以上</u></em>。我们的结果表明：<em>在现有 benchmark 上取得的高分，往往反映的是<u>饱和</u> 而不是<u>robust 任务求解能力</u></em>。TASTE 通过<em>自动化难题、高覆盖 benchmark 的生成</em>，实现了对<u>未来 agents 的连续、可扩展评测</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 反转构造 / ACE n-gram / 聚类抽样 / 难度演化 / τc-Bench 实证 / 四联拍立场）</div>
+
+    <p><strong>问题背景。</strong>agent benchmark 领域正面临<em>三重危机</em>：<em>(1) 饱和危机</em>——τ²-Bench / GAIA / WebArena / SWE-bench 上顶尖模型已到 0.85-0.95；<em>(2) 构造危机</em>——手工写 benchmark task 复杂昂贵；<em>(3) 覆盖偏差危机</em>——传统"<em>自然语言场景 → 工具序列</em>" 流程<u>只覆盖 agent 真实工具使用的一小部分</u>，因为人类作者<em>不会</em> 想到所有工具组合（多 tool 联合、异常 tool 顺序、稀有 tool 参数化）。本文的洞见：<u>反转它</u>——如果<em>先合成合法工具序列</em>，再把它翻译成任务描述，就能覆盖到人类想不到的组合。</p>
+
+    <p><strong>反转构造 pipeline。</strong>TASTE 的完整流程是<em>四步走</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>步骤</th><th>动作</th><th>技术</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>训练一个能采样合法工具序列的模型</td><td><strong>Adaptive Contrastive n-gram (ACE)</strong>——在 LLM-judged validity 信号上训练</td></tr>
+        <tr><td>2</td><td>从 ACE 采样海量合法工具序列</td><td>覆盖<em>大范围工具组合空间</em></td></tr>
+        <tr><td>3</td><td>从池中选<u>代表性</u> 工具序列</td><td>聚类抽样（vector similarity clustering）</td></tr>
+        <tr><td>4</td><td>把序列<u>实例化</u> 为完整任务 + 迭代难度演化</td><td>LLM synthesizer + iterative difficulty evolution</td></tr>
+        <tr class="hl"><td><strong>结果</strong></td><td><strong>τc-Bench</strong>：τ²-Bench 三领域的挑战性扩展</td><td>Gemini-3-Flash <em>0.82-0.94 → 0.28-0.61</em></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Adaptive Contrastive n-gram（ACE）——方法学核心。</strong>ACE 是一个<em>n-gram 语言模型</em>，但训练目标不是"下一个 token"，而是"下一个 tool"。它<em>对比</em> 学习：给定当前工具序列前缀，哪些下一个工具是<em>合法后继</em>（能被 LLM judge 认可为合法组合）、哪些不合法。<em>"Adaptive"</em> 指模型可根据 validity 信号自适应调整—— <u>不需要</u>大量标注数据，只需要一个能给 validity 判断的 LLM judge。ACE 的优点是<em>可采样</em>——不像 GAN / VAE 生成质量不可控，n-gram 天然支持温度采样、限制长度、条件采样。</p>
+
+    <p><strong>聚类选代表——覆盖 vs 精选的关键。</strong>ACE 可以采样海量合法序列，但直接把它们全部实例化为任务会造成两个问题：<em>(a) 冗余</em>——很多序列在语义上等价；<em>(b) 不平衡</em>——常见组合被过度采样，稀有组合被淹没。TASTE 用<em>聚类</em>（对工具序列做 embedding + k-means）从池中选<em>代表性</em> 序列——保证<u>覆盖广</u> 且<u>去冗余</u>。这一步是 τc-Bench <em>独特工具组合数翻倍</em> 的关键。</p>
+
+    <p><strong>迭代难度演化。</strong>选出代表序列后，用 LLM synthesizer 把它们实例化为完整的自然语言任务（含 user goal / 上下文 / 约束）。然后进入<em>难度演化循环</em>：让当前 SOTA agent 试解，成功的任务在下一轮被<em>加难度</em>（增加约束、引入干扰工具、改成 multi-hop、隐藏关键信息等），失败的任务保留。经过若干轮演化，最终得到<em>near-adversarial</em> 但仍<em>solvable</em> 的任务集。这条与 6-08 Hacker-Fixer Loop（对抗性 verifier hardening）在思路上相通——都用<em>对抗式循环</em> 提升 benchmark 质量，但作用位置不同：<em>Hacker-Fixer 硬化 verifier</em>，<em>TASTE 硬化 task 本身</em>。</p>
+
+    <p><strong>τc-Bench 实证数据震撼。</strong>作者在 τ²-Bench 的三个领域（travel / retail / airline）上应用 TASTE，得到 τc-Bench。评测 <em>11 组 agent/user LLM pairs</em>——包括 Gemini-3-Flash、Claude 系列、GPT 系列、开源模型。核心结果：</p>
+    <ul class="point-list">
+      <li><em>Gemini-3-Flash</em>：τ²-Bench 上 <strong>0.82-0.94</strong> → τc-Bench 上 <strong>0.28-0.61</strong>（<u>下降 44-53 pp</u>）</li>
+      <li>其它 near-saturation 模型：<em>普遍出现<u>严重下降</u></em>——说明<u>饱和不是真实鲁棒</u></li>
+      <li>独特工具组合数：<em>×2 以上</em>——覆盖度实质突破</li>
+    </ul>
+    <p>这三条数据合起来给出<em>强命题</em>：<u>near-saturated 模型的高分是构造 bias 的产物，不是 robust 能力的证据</u>。</p>
+
+    <p><strong>2026 H2 benchmark 方法学四联拍立场。</strong>把 TASTE 放进 H2 benchmark 方法学谱系：</p>
+    <table class="data-table">
+      <thead><tr><th>立场</th><th>代表工作</th><th>核心命题</th><th>切面</th></tr></thead>
+      <tbody>
+        <tr><td>心理测量派</td><td>7-02 IRT-Safety (2606.20626)</td><td>Item Response Theory 精选<em>信息量</em> 前 k% items</td><td>物品侧</td></tr>
+        <tr><td>搜索派</td><td>7-03 BOA (2605.01644)</td><td>Safety 应<em>预算内搜索</em> 而非抽样</td><td>搜索侧</td></tr>
+        <tr><td>评委派</td><td>7-03 Necessary but Not Sufficient (2606.26185)</td><td>Grader 本身<em>不可复现</em>——温度=0 必要非充分</td><td>评委侧</td></tr>
+        <tr class="hl"><td><strong>反转构造派（本文）</strong></td><td>7-03 TASTE (2605.28556)</td><td>Benchmark 构造应<em>从工具序列</em> 反推任务描述</td><td>构造侧</td></tr>
+      </tbody>
+    </table>
+    <p>四派构成 H2 benchmark reliability 的<em>四维审计架构</em>：<em>物品侧信息量（IRT）· 搜索侧覆盖率（BOA）· 评委侧稳定性（Grader-Repro）· 构造侧代表性（TASTE）</em>——2026 H2 高质量 agent benchmark 应<u>在四个维度同时立起</u>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">τ²-Bench — <em>基线 benchmark, 已被本文继承为 τc-Bench 母体</em><br>
+    <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a></div>
+    <div class="ref-item">Zhong et al. — <em>Hardening Agent Benchmarks with Adversarial Hacker-Fixer Loops</em>（<u>verifier 硬化派</u>）<br>
+    <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></div>
+    <div class="ref-item">Spagliardi et al. — <em>Efficient Safety Benchmarking via Item Response Theory</em>（<u>心理测量派</u>）<br>
+    <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></div>
+    <div class="ref-item">Lin / Suri / Oprea / Tan — <em>Toward a Principled Framework for Agent Safety Measurement (BOA)</em>（<u>搜索派</u>）<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+    <div class="ref-item">Tamba — <em>Necessary but Not Sufficient</em>（<u>评委派</u>）<br>
+    <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+    <div class="ref-item">Liang et al. — <em>STAGE-Claw: Automated State-based Agent Benchmarking</em>（自动生成 realistic 场景）<br>
+    <a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">arxiv.org/abs/2606.10394</a></div>
+    <div class="ref-item">Liu et al. — <em>NovelAPIBench: Dynamic Benchmark for Novel API Acquisition</em><br>
+    <a href="https://arxiv.org/abs/2606.03657" target="_blank" rel="noopener">arxiv.org/abs/2606.03657</a></div>
+    <div class="ref-item">Ivanov &amp; Rana — <em>Anchor: Mitigating Artifact Drift in Agent Benchmark Generation</em><br>
+    <a href="https://arxiv.org/abs/2605.26321" target="_blank" rel="noopener">arxiv.org/abs/2605.26321</a></div>
+    <div class="ref-item">Reichart Lab (Technion) — <em>NLP research group homepage</em><br>
+    <a href="https://roireichart.com/" target="_blank" rel="noopener">roireichart.com</a></div>
+    <div class="ref-item">GAIA benchmark — <em>General AI Assistants benchmark</em>（对照饱和 benchmark 之一）<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>Benchmark 构造应<u>反转</u></em>—— tool sequence 在前，natural language task 在后。</li>
+      <li><strong>核心论点 ②</strong>：<em>标准构造法只覆盖 agent 真实工具使用的<u>狭窄子集</u></em>——首次指认。</li>
+      <li><strong>核心论点 ③</strong>：<em>Near-saturation 模型的高分反映<u>饱和</u>，不是<u>robust 求解能力</u></em>。</li>
+      <li><strong>方法学三件套</strong>：<em>Adaptive Contrastive n-gram · 聚类选代表 · 迭代难度演化</em>。</li>
+      <li><strong>震撼数据 · Gemini-3-Flash</strong>：τ²-Bench <em>0.82-0.94</em> → τc-Bench <em>0.28-0.61</em>（<u>44-53 pp 下降</u>）。</li>
+      <li><strong>覆盖度突破</strong>：τc-Bench 独特工具组合数 <em>×2 以上</em>——非仅"更难"，而且<em>更广</em>。</li>
+      <li><strong>产出</strong>：<strong>τc-Bench</strong> —— τ²-Bench 三领域（travel / retail / airline）的挑战性扩展。</li>
+      <li><strong>评测规模</strong>：<em>11 组 agent/user LLM pairs</em> —— 覆盖 Gemini / Claude / GPT / 开源。</li>
+      <li><strong>方法学地位</strong>：与 IRT-Safety + BOA + Necessary but Not Sufficient 组成 <em>H2 benchmark 方法学<u>四联拍</u></em>：<em>物品 · 搜索 · 评委 · 构造</em>。</li>
+      <li><strong>可复用性</strong>：TASTE 可迁移到任何 <em>工具使用型 benchmark</em>（GAIA / OSWorld / AgentBench 等）。</li>
+      <li><strong>反饱和工具</strong>：所有 near-saturated agent benchmark 都可以用 TASTE <em>再生成一次续命版</em>。</li>
+      <li><strong>与 Hacker-Fixer Loop 互补</strong>：<em>Hacker-Fixer 硬化 verifier · TASTE 硬化 task</em>——共同攻击<em>benchmark 老化</em>。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>把"任务合成"提升为 harness 一等公民</em>——现在的 harness 主要负责<em>运行任务</em>，未来 harness 应内置"<em>任务合成子系统</em>"（TASTE 风格），让 harness 具备<em>自我扩充测试集</em> 能力，避免 benchmark 老化拖垮 harness 有效性；(2) <em>ACE n-gram 是极好的<u>轻量、可采样、可控</u> 生成模型</em>——你的毕设 KR1 (ProofFlow Kernel Agent) 也可以借鉴：把 GPU kernel design 的<em>合法内核 IR 序列</em> 用 ACE n-gram 学习，Agent 输出从"直接生成 kernel" 变为"<em>ACE 采样合法 IR 前缀 → LLM 补足细节</em>"——搜索空间显著受限而可靠性提升；(3) <em>迭代难度演化 pipeline 可以复用为 harness 的"<u>自演化 stress test</u>"</em>——harness 每周自动生成一批更难任务，检验最新模型的边界；(4) 与 7-02 Loop Engineering 联动：TASTE 生成的任务可以自然对应"<em>loop specification</em>"（每个 τc-Bench 任务 = 一份 loop spec），loop library 从<u>手工编码</u> 升级为<u>自动合成</u>；(5) 你可以做 <em>KV-cache-aware TASTE</em>：让 ACE 采样偏向生成"<em>能显著测试 KV-cache reuse 边界</em>" 的工具序列——比如刻意生成含<em>共享长 prefix 但 branch out</em> 的多轮任务，构造你毕设方法的"<em>压力测试集</em>"；(6) TASTE 对 <em>benchmark 老化</em> 的诊断 —— 与 5-13 The Evaluation Differential / 6-22 Evaluation Awareness 组合，harness 的<em>寿命管理</em> 成为独立研究子方向。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>TASTE 直接可用于生成 skill safety benchmark</em>——让 ACE n-gram 采样"<em>合法但危险</em>" 的工具序列（例如 <code>read_file → base64 → send_email</code> = exfiltration 模式），比人手写 red-team 场景覆盖更广；(2) 与 6-12 DECOMPBENCH（Decomposition Attacks）天然联动——decomposition 攻击的成功依赖于"<em>把有害任务拆解为子任务序列</em>"，这正是 TASTE 反向能采样的对象：<em>TASTE-adversarial</em> 采样 decomposition-style 序列，DECOMPBENCH 从"手工场景"升级为"自动合成"；(3) 与 7-03 BOA（搜索派）联动：BOA 讲<em>搜索轨迹空间</em>，TASTE 讲<em>合成任务空间</em>——两者结合形成"<em>合成任务 → 搜索轨迹 → 评估安全</em>" 完整 pipeline；(4) <em>迭代难度演化</em> 可以做为<em>agent safety 的"<u>攻击强度演化</u>"</em>——每一轮找到 agent 防御不了的<em>近边界</em> 攻击，下一轮加难；(5) <em>反饱和</em> 是 skill safety benchmark 的<em>紧迫需求</em>——SkillSafetyBench / SafetyBench 上现代模型已到 0.9+，需要 TASTE 风格再生成；(6) 立即可用：<em>ACE 训练需要 LLM validity judge</em>——把它换成 <em>safety judge</em>（判"该工具序列是否安全"），就能得到 <em>Safety-ACE</em>，专门采样边缘 unsafe 序列。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（本方向直击）</div>
+        <p>(1) <em>2026 H2 benchmark 方法学<strong>四联拍</strong>诞生</em>——继 7-02 IRT-Safety（心理测量派 · 物品侧）· 7-03 BOA（搜索派 · 搜索侧）· 7-03 Necessary but Not Sufficient（评委派 · 评委侧）之后，<strong>反转构造派（本文 · 构造侧）</strong>补足最后一维；(2) <em>四联拍 = benchmark reliability 四维审计架构</em>：<em>物品信息量 × 评委稳定性 × 搜索覆盖率 × 构造代表性</em>——H2 高质量 benchmark 应<em>四轴同时立起</em>；(3) <em>反饱和工具</em>：所有 near-saturated agent benchmark（τ²-Bench / GAIA / OSWorld / WebArena / SWE-bench）都可以用 TASTE <u>再生成一次</u>——预计 H2 出现"XX-c-Bench"（挑战性扩展）系列命名规范；(4) <em>Benchmark 老化 → 生命周期管理</em> 成为独立研究——TASTE 提供工具，NIST / UK AISI / Japan AISI 可能<em>规范化 benchmark 老化审计</em>；(5) <em>四联拍与 Hacker-Fixer Loop 的关系</em>：<em>四联拍关心 benchmark 的<u>构造与测量</u>，Hacker-Fixer 关心 benchmark 的<u>硬化</u></em>——两者独立可组合；(6) <em>Agent safety benchmark 首选立项</em>：<em>Safety-TASTE</em>（用 safety judge 训练 ACE，采样边缘 unsafe 序列） × <em>BOA search</em>（预算内探测长尾） × <em>IRT scoring</em>（信息量精选） × <em>Grader disagreement audit</em>（评委稳定性报告）——H2 可发的 SOTA agent safety benchmark 模板；(7) 与 6-25 Interplay-Harness / 6-08 Hacker-Fixer / 6-16 SEAGym 组合，agent benchmark 生态从"<em>数据集时代</em>" 进入"<em>方法学时代</em>"——benchmark 论文的核心贡献不再是"发布 N 条 task"，而是"发布<em>如何持续生成 N 条 task 的<u>方法学</u></em>"；(8) 中长期看，四联拍会催生<em>benchmark meta-standards</em>——就像 CVE / CWE / CVSS 标准化了漏洞报告，四联拍可能标准化 agent benchmark 报告字段。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Efficient Safety Benchmarking via IRT (7-02)</strong> · 心理测量派 · <em>物品侧信息经济学</em><br>
+      <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></li>
+      <li><strong>Toward a Principled Framework for Agent Safety Measurement (7-03 agent-safety 报告)</strong> · 搜索派 · <em>搜索侧覆盖率</em><br>
+      <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></li>
+      <li><strong>Necessary but Not Sufficient (7-03 harness 报告)</strong> · 评委派 · <em>评委侧稳定性</em><br>
+      <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></li>
+      <li><strong>Hacker-Fixer Loop (6-08)</strong> · 对抗性 verifier 硬化 · <em>与 TASTE 正交互补</em><br>
+      <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></li>
+      <li><strong>DECOMPBENCH (6-12)</strong> · Decomposition Attacks · <u>TASTE 直接可增强</u><br>
+      <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.28556" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.28556" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://roireichart.com/" target="_blank" rel="noopener">Reichart Lab</a>
+      <a class="link-btn" href="https://research.ibm.com/" target="_blank" rel="noopener">IBM Research</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-03 #1 · 搜索来源：arxiv.org/api/query?ti:safety/agent/alignment benchmark + arxiv.org/abs/2605.28556<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

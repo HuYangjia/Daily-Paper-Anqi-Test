@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-03 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-03 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 3 日 · Harness Engineering · 把 harness 内的<em>可靠性</em> 从"<em>模型准确率</em>" 下推到"<em>grader 复现性</em>"——温度=0 只是<u>必要非充分</u>条件，harness 应把 <strong>grader disagreement</strong> 作为一等健康指标</div>
+  <h1>Necessary but Not Sufficient：把 harness 中 <strong>LLM-as-Judge grader</strong> 的<em>非确定性</em> 立成 first-class 健康指标——<em>temperature=0 不能消除决定边界的 pass/fail 翻转</em>，Claude Opus 4.7/4.8 干脆<u>废弃 temperature 参数</u>，harness 必须报<em>方差 + 评委分歧</em>而非单跑 verdict</h1>
+  <div class="en-title">Necessary but Not Sufficient: Temperature Control and Reproducibility in LLM-as-Judge Safety Evaluations</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 8.8</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-20 至 07-02 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">Necessary but Not Sufficient: Temperature Control and Reproducibility in LLM-as-Judge Safety Evaluations</a><span class="winner-badge">今日选定</span></td>
+          <td>Grader reproducibility · harness 内 LLM-as-judge 复现性缺口 · 温度=0 必要非充分 · Claude Opus 4.7/4.8 废弃 temperature · 690 次 API 调用 · 7 条件 open reproduction harness</td>
+          <td>arXiv 2606.26185 · 2026-06-24 · H. Tamba · cs.LG · Japan AISI aisev 真实代码库</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23583" target="_blank" rel="noopener">Evaluation Awareness Is Not One Capability</a></td>
+          <td>Evaluation awareness × harness disclosure · 8 实验揭示 open models 会检测评估 cue 并适应</td>
+          <td>arXiv 2606.23583 · 2026-06-22 · Nayan 等 8 人 · cs.LG</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.23189" target="_blank" rel="noopener">Capable but Careless: Do CUAs Follow Contextual Integrity?</a></td>
+          <td>AgentCIBench evaluation harness for computer-use agent privacy · CI 违规量化</td>
+          <td>arXiv 2606.23189 · 2026-06-22 · Goel &amp; Gurevych · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.29493" target="_blank" rel="noopener">Faults in Our Formal Benchmarking (Lean)</a></td>
+          <td>Lean theorem-proving benchmark · 审计 5 个流行基准 + evaluation harness 对 trivial/adversarial 解的鲁棒性</td>
+          <td>arXiv 2606.29493 · 2026-06-28 · Ammanamanchi 等 · cs.LG</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.01829" target="_blank" rel="noopener">Pre-Flight: LLM Aviation Operational Knowledge</a></td>
+          <td>Aviation domain harness · 300 MCQ · 开源 harness with grader</td>
+          <td>arXiv 2607.01829 · 2026-07-02 · Brooker &amp; Hughes</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+abs:%22evaluation+harness%22+OR+abs:%22LLM+evaluation+framework%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti/abs:evaluation harness 时间排序</a>。<strong>Necessary but Not Sufficient 胜出</strong>：(1) 这是 H2 首周<em>第一次</em> 把"<em>harness 内 LLM-as-Judge grader 的非确定性</em>" 作为独立可测量的<em>失效模式</em> 立起来 —— 论文精确定位到"<em>harness 报单跑 verdict 却把噪声当成 safety property</em>" 这一<u>结构性缺口</u>；(2) 首次实证 <strong>Claude Opus 4.7/4.8 已废弃 temperature</strong>——传统 harness 里的"<em>把 grader 温度调 0</em>" 缓解措施对新一代模型<u>直接失效</u>，这是<em>范式转折</em>信号；(3) 双层论证扎实：<em>第一层</em> harness 调 grader 未设 temperature/seed，provider 默认 1.0 → 边界 item 20 次跑 pass/fail 翻转率高达 ~50%；<em>第二层</em> pinning temperature=0 <u>并不能</u>消除翻转，690 次 API × 2 provider × 3 tier × 5 config 中仍有 1-2/7 borderline items non-reproducible（<em>even under forced greedy top_k=1</em>）—— 说明温度不是唯一噪声源；(4) <em>释出 690 调用 × 7 条件复现 harness</em>——为社区提供可直接跑的 grader-reproducibility 测试；(5) 与 7-02 IRT-Safety（心理测量派）呼应：IRT 讲"<em>item 信息量</em>"，本文讲"<em>grader 一致性</em>"——<u>同为 benchmark/harness 方法学升级</u>，一起构成"<em>物品侧 + 评委侧</em>" 双侧 reliability 图；(6) 相关度极高（<u>直击 evaluation harness 命题</u>）+ 高度可复现（<u>2 tables · 7 pages · open harness</u>）+ 立即可用（<u>H2 所有 safety harness 应加 grader-disagreement 报告字段</u>）；Evaluation Awareness 综合分 90 次之，讨论"<em>模型识别评估</em>"角度略偏 model-side 而非 harness-side；AgentCIBench 89 是 CUA 隐私 harness 具体应用。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Necessary but Not Sufficient: Temperature Control and Reproducibility in LLM-as-Judge Safety Evaluations</span></div>
+      <div class="meta-item"><label>中文标题</label><span>必要但非充分：LLM-as-Judge 安全评估中的<em>温度控制</em> 与<em>复现性</em></span></div>
+      <div class="meta-item"><label>作者</label><span>Hiroki Tamba</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-24 v1（UTC 13:24:40）</span></div>
+      <div class="meta-item"><label>页数 / 表数</label><span>7 pages, 2 tables</span></div>
+      <div class="meta-item"><label>领域</label><span>cs.LG · evaluation harness · LLM-as-judge reliability</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.26185" target="_blank" rel="noopener">arxiv.org/pdf/2606.26185</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.26185v1" target="_blank" rel="noopener">arxiv.org/html/2606.26185v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.26185" target="_blank" rel="noopener">10.48550/arXiv.2606.26185</a></div>
+      <div class="meta-item"><label>目标 harness</label><span>Japan AISI <strong>aisev</strong>（开源安全评估代码库）</span></div>
+      <div class="meta-item"><label>实验规模</label><span>690 API calls × 2 providers × 3 model tiers × 5 sampling configs</span></div>
+      <div class="meta-item"><label>核心失败发现</label><span>边界 item pass/fail 翻转率高达 ~50%（20 次跑）；即使 temp=0 + top_k=1，仍 1-2/7 borderline items non-reproducible</span></div>
+      <div class="meta-item"><label>范式信号</label><span>Claude Opus 4.7/4.8 <em>已废弃 temperature 参数</em>——传统缓解不适用</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把"<em>LLM-as-Judge grader 在 harness 中的复现性</em>" 立成独立失效模式：温度=0 是<strong>必要非充分</strong>条件——边界 item 即使强制贪心解码仍会 pass/fail 翻转；harness 必须把<strong>grader disagreement</strong> 与<strong>方差</strong> 作为<em>一等健康指标</em>，与分数并列报告，而不是把噪声<u>误伪</u>为 safety property。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>LLM-as-judge（"grader"）组件现在已是 <strong>evaluation harness 的标配</strong>，包括那些 <em>pass/fail verdict 会门控下游部署决策</em> 的<u>安全评估</u> 场景。业内广泛假设：<em>把 grader 的 sampling temperature 设为 0 就能让 grading 变得确定性</em>。我们在一个真实的安全评估代码库（Japan AISI 的开源 <em>aisev</em>）上测试这个假设，并揭示它<u>在两个层面上失效</u>。<strong>第一层</strong>：harness 调用它的 grader 时<em>未设 temperature 也未设 seed</em>，底层 provider 默默应用其默认值 <em>1.0</em>——因此靠近决策边界的 items 在<em>相同的重复运行</em> 中会 pass/fail 翻转（20 次跑内单 item 分歧率高达 ~50%）。<strong>第二层</strong>：把 temperature 强制 pin 到 0 只能<u>降低</u>翻转而<u>不能消除</u>——在跨 2 个 provider、3 个 model tier、5 种 sampling configuration 的 690 次 API 调用中，7 个 borderline items 里仍有 1-2 个<em>即使在强制贪心解码（top_k=1）下</em> 依旧不可复现。此外，<em>Claude Opus 4.7/4.8 已彻底废弃 temperature 参数</em>——这使传统的<u>主要缓解手段</u>对新一代模型完全不适用。这些发现暴露了一个<strong>结构性缺口</strong>：只报单跑 verdict、不报<em>方差</em>或<em>grader 分歧度</em> 的评估 harness，可能把<u>噪声当作 safety property 呈现给下游</u>。我们发布一个复现 harness（<em>690 calls · 7 conditions</em>），并建议 harness 把 grader disagreement 作为<strong>一等健康指标</strong>——与分数本身并列。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 双层失效 / 温度废弃信号 / 复现 harness / 结构性建议）</div>
+
+    <p><strong>问题背景。</strong>2026 年，几乎所有 open-source safety evaluation harness 都用 <em>LLM-as-Judge</em> 做 grader —— 把被测模型输出交给另一个 LLM（往往是同代或更强的模型），让它输出 pass/fail 或分数。这一 pipeline 有一个<em>广泛但未被审计的假设</em>：<u>只要 grader 的采样温度设成 0，grading 就是确定性的，可以拿单跑结果作为 safety verdict</u>。这个假设的<em>直接后果</em> 是——业界大量 safety evaluation 论文<u>只跑一次</u>，然后把单跑分数写进摘要与 leaderboard。作者选中 Japan AISI（日本 AI 安全研究所）的开源代码库 <em>aisev</em> 作为<em>真实攻击面</em>——不是玩具 demo，而是一个<u>会决定日本国家 AI 部署门槛</u> 的现役 harness。</p>
+
+    <p><strong>双层失效结构。</strong>本文最有工程学价值的一段是把 grader 的 non-reproducibility 拆成<em>两层</em>——每一层都是<em>可独立复现的失效模式</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>层级</th><th>触发条件</th><th>观察</th><th>严重度</th></tr></thead>
+      <tbody>
+        <tr><td>层 ①</td><td>harness 调用 grader 时<em>未显式设置</em> temperature / seed</td><td>Provider 默认 temperature=<em>1.0</em>；边界 item 在<u>相同 20 次重跑</u> 内 pass/fail 翻转率<strong>高达 ~50%</strong></td><td>严重</td></tr>
+        <tr class="hl"><td><strong>层 ②</strong></td><td>Pinning temperature=0，甚至进一步 <em>top_k=1 强制贪心</em></td><td>7 个 borderline items 中<strong>仍有 1-2 个 non-reproducible</strong>（跨 690 calls × 2 provider × 3 tier × 5 config）</td><td>结构性</td></tr>
+        <tr><td>层 ③（元）</td><td>模型代际更新</td><td>Claude Opus <em>4.7 / 4.8 已废弃 temperature 参数</em>——传统主要缓解手段直接失效</td><td>范式转折</td></tr>
+      </tbody>
+    </table>
+    <p>层 ① 说明<em>harness 工程失误</em> —— 大量 harness 从未显式设过 temperature，靠 provider 兜底但 provider 默认是 1.0。层 ② 则更严重：<em>即便工程师做对</em>，物理层面仍存在 non-determinism（如 <em>batching、GPU 非确定性、prefix caching、MoE routing、KV-cache 精度差异</em>），温度=0 只削减了<em>采样分布</em>，未削减<em>底层 backend 的实现层随机性</em>。层 ③ 是<em>最有前瞻性</em>的一击：Claude Opus 4.7 / 4.8 已不接受 temperature 参数—— 说明<em>业界主流缓解手段（"pin temp=0"）在新一代模型上直接过时</em>。</p>
+
+    <p><strong>为什么温度=0 是"必要非充分"？</strong>作者把这个命题写进标题。数学上：如果 grader 有多个"<em>接近最优</em>" 的判断路径，即使贪心解码，只要浮点非结合性 / batching 顺序 / KV-cache 精度 / GPU 非确定性任一发生变化，输出 token 都可能<em>切换到另一条路径</em>——这在 pass/fail 边界 item 上表现得最鲜明，因为这些 item 本身<em>信号弱</em>。因此，temperature=0 <u>降低但不消除</u> —— 是 <em>necessary</em>（去掉能立刻变差）却 <em>not sufficient</em>（做了也无法证明确定性）。</p>
+
+    <p><strong>复现 harness 的贡献。</strong>作者释出 <em>690 调用 × 7 条件</em> 的复现 harness —— 提供固定 prompt / 固定 grader / 五种 sampling config，让任何团队<em>直接跑就能复现</em> non-determinism 曲线。这对社区有三条即时价值：<em>(a)</em> H2 所有做 LLM-as-Judge 的 safety harness 都可以把它作为<em>回归测试</em>；<em>(b)</em> provider 侧（OpenAI / Anthropic / Google）可以用它作为<em>SLA 度量</em> —— 承诺"边界 item 20 次重跑 disagreement < X%"；<em>(c)</em> 学术侧可以用它<em>标定</em>"哪些 borderline items 是 grader-noise 主导"，把这些 items 从主 leaderboard 剔除或加权。</p>
+
+    <p><strong>结构性建议：grader disagreement 作为 first-class 健康指标。</strong>本文最有影响的建议是：<em>evaluation harness 应把<u>grader disagreement</u> 与<u>方差</u> 作为一等健康指标，与分数并列报告</em>——不再允许"<em>单跑 verdict 上榜</em>"。作者建议 harness 应至少报告：<em>(1)</em> 单 item 的 <strong>K-run disagreement rate</strong>（K 默认 = 20）；<em>(2)</em> 每条 borderline item 的 <strong>flip probability</strong>；<em>(3)</em> 每个 grader × config 组合的 <strong>reproducibility class</strong>（deterministic / stable / unstable / unusable）；<em>(4)</em> 每份 leaderboard 报告应带<em>grader-disagreement 附录</em>——供审稿人核对。</p>
+
+    <p><strong>与 7-02 IRT-Safety 的呼应。</strong>本文与 7-02 IRT-Safety（Efficient Safety Benchmarking via Item Response Theory · arXiv 2606.20626）构成<em>正交但互补</em>的 harness 方法学升级：<em>IRT 讲"<u>物品侧</u>信息经济学"——哪些 item 值得跑</em>；<em>本文讲"<u>评委侧</u>可靠性"——同一 item 跑多次也未必同答</em>。两者合起来定义<em>benchmark reliability 二维图</em>：横轴 <em>item informativeness</em>（IRT）× 纵轴 <em>grader stability</em>（本文）——理想 benchmark 应在两轴都做审计。</p>
+
+    <p><strong>三条 harness 工程反模式。</strong>本文隐含指认了三条社区当前流行但<em>结构上有问题</em>的做法：<em>(a)</em> "<u>只调 grader 温度不查 provider 默认</u>"——很多 harness code 里 <code>call_llm(prompt)</code> 直接调用，把 temperature 交给 provider 兜底；<em>(b)</em> "<u>单跑 verdict 上 leaderboard</u>"——不报方差就是<u>噪声当作 safety</u>；<em>(c)</em> "<u>相信温度=0 = 确定性</u>"——这个假设从来没被真正测过，只是 folklore。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Japan AISI — <em>aisev</em>（本文实验目标 harness · 日本国家 AI 安全评估工具）<br>
+    <a href="https://github.com/JapanAISI/aisev" target="_blank" rel="noopener">github.com/JapanAISI/aisev</a></div>
+    <div class="ref-item">Zheng et al. — <em>Judging LLM-as-a-Judge</em>（LLM-as-judge 基础范式）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Anthropic — <em>Claude Opus 4.7 API Reference</em>（temperature 参数已废弃）<br>
+    <a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener">docs.anthropic.com/en/api/messages</a></div>
+    <div class="ref-item">OpenAI — <em>Determinism &amp; seed support</em>（seed 参数于 GPT-4 Turbo 引入，仍非完全确定性）<br>
+    <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-seed" target="_blank" rel="noopener">platform.openai.com/docs/api-reference/chat/create</a></div>
+    <div class="ref-item">Chaney et al. — <em>Prompt/harness sensitivity in LLM evaluation</em>（harness 敏感度综述）<br>
+    <a href="https://arxiv.org/abs/2305.14045" target="_blank" rel="noopener">arxiv.org/abs/2305.14045</a></div>
+    <div class="ref-item">Spagliardi et al. — <em>Efficient Safety Benchmarking via Item Response Theory</em>（7-02 呼应工作）<br>
+    <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></div>
+    <div class="ref-item">Nayan et al. — <em>Evaluation Awareness Is Not One Capability</em>（同期 harness disclosure 研究）<br>
+    <a href="https://arxiv.org/abs/2606.23583" target="_blank" rel="noopener">arxiv.org/abs/2606.23583</a></div>
+    <div class="ref-item">Vishwarupe et al. — <em>The Evaluation Differential</em>（5-13 · 模型识别测试的 harness-level 影响）<br>
+    <a href="https://arxiv.org/abs/2505.04566" target="_blank" rel="noopener">arxiv.org/abs/2505.04566</a></div>
+    <div class="ref-item">Ammanamanchi et al. — <em>Faults in Our Formal Benchmarking (Lean)</em>（Lean 定理证明 harness 审计）<br>
+    <a href="https://arxiv.org/abs/2606.29493" target="_blank" rel="noopener">arxiv.org/abs/2606.29493</a></div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>（业界最普及 evaluation harness · 未强制 grader-disagreement 报告）<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>温度=0 是必要非充分条件</em> —— 首次以经验数据固化这个 claim。</li>
+      <li><strong>核心论点 ②</strong>：<em>harness 应把 grader disagreement 作为<u>first-class 健康指标</u></em>，与分数并列报告。</li>
+      <li><strong>核心论点 ③</strong>：<em>单跑 verdict 会把噪声当作 safety property 呈现给下游决策者</em>——结构性风险。</li>
+      <li><strong>关键数据 · 层 ①</strong>：<em>Provider 默认 temperature=1.0</em>；边界 item 20 次跑 pass/fail 翻转率<strong>~50%</strong>。</li>
+      <li><strong>关键数据 · 层 ②</strong>：<em>Temperature=0 + top_k=1</em> 下 7 borderline items 仍有 <strong>1-2 个</strong> non-reproducible。</li>
+      <li><strong>规模</strong>：<em>690 API calls · 2 providers · 3 model tiers · 5 sampling configs</em>——完全释出。</li>
+      <li><strong>范式信号</strong>：<em>Claude Opus 4.7 / 4.8 废弃 temperature 参数</em>——传统缓解手段过时。</li>
+      <li><strong>方法学定位</strong>：与 IRT-Safety（item 侧）构成<em>benchmark reliability 二维审计</em>。</li>
+      <li><strong>目标场景</strong>：日本 AISI aisev —— <em>国家级 AI 安全评估工具</em>，非玩具 demo。</li>
+      <li><strong>三条反模式</strong>：<em>不查 provider 默认 / 单跑 verdict 上榜 / 相信温度=0 = 确定性</em>。</li>
+      <li><strong>结构性建议 4 项</strong>：<em>K-run disagreement rate · flip probability · reproducibility class · leaderboard 附录</em>。</li>
+      <li><strong>非确定性来源</strong>：<em>浮点非结合性 · batching 顺序 · KV-cache 精度 · GPU 非确定性 · MoE routing · prefix caching</em>——温度层面无法消除。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击毕设 · 与 KV-cache 高度关联）</div>
+        <p>(1) <strong>本文的三条"non-determinism 来源"里，<em>KV-cache 精度差异</em>、<em>prefix caching</em>、<em>batching 顺序</em>都直接指向你 SGLang 侧的毕设方向</strong>——KV-cache reuse 不是简单的性能优化，它<em>本身就是 grader 非确定性的一个物理来源</em>。这意味着你的毕设可以做"<em>KV-cache reuse 对 grader verdict 稳定性的因果影响</em>"实证研究，用<u>本文的 690-call 复现 harness</u> 作为标定平台；(2) <em>把"cache-hit 判定"做成<u>五级 reproducibility class</u></em>——像本文对 grader 的分级一样：<em>deterministic（完全相同 token 输出）→ stable（相同 verdict）→ unstable（边界翻转）→ unusable（超阈值分歧）</em>；SGLang cache manager 可根据下游任务的 verification ladder 层级（对应 7-02 loop engineering）决定"<em>能 reuse 到哪一级</em>"；(3) <em>KV-cache 缓存决策必须<u>并入 harness disagreement 报告</u></em> —— 你的毕设可以把"<em>本次运行的 cache-hit 率、cache eviction 事件、精度类型（fp16/bf16/fp8/int8）</em>" 作为 harness metadata 一起写入 leaderboard 报告，让下游研究者<em>能追溯 grader disagreement 是否由 cache 造成</em>；(4) <em>Claude Opus 4.7/4.8 废弃 temperature</em> 恰好是你 KV-cache 论证的<u>结构性支持</u> —— 未来 harness 无法再靠"调低温度" 掩盖 non-determinism，必须直面 backend / cache 层的随机性；(5) 与 7-02 Loop Engineering 的<em>autonomous-zone verify</em> 组合：<em>loop verification 越自主，grader disagreement 越致命</em>——因为 loop 会<u>自主前进</u> 而不停下让人复核；因此 loop specification 的 verification 组件<em>必须要求 grader-stability class ≥ stable</em>；(6) 你可以把毕设包装为"<em>KV-cache-aware evaluation harness</em>"：给 SGLang 加一层 harness middleware，自动记录 cache stats × grader verdict，输出 disagreement report；(7) 对 CFS 迁移的项目也有联动 —— <em>logits_dump 场景</em> 天然对应"harness disagreement 复盘" 需求，可以把 dump 出来的 logits 作为 grader stability 的物理证据（"<em>相同 prompt 不同 batch 序 → logits 差异 → verdict 翻转</em>"）。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>Grader disagreement 是 agent safety monitoring 的<u>隐藏漏洞</u></em>：现在很多 agent safety pipeline 用 LLM-as-Judge 做实时行为监控（judge 每步 action 是否安全）；如果 judge 本身在边界翻转率高达 50%，那么 <em>agent 的"safety verdict"从一开始就是噪声</em> —— 这与 6-30 Action Alignment / 7-01 Epistemic Property / 7-02 Why Generalize 三派立场组成 <strong>agent safety H2 四派</strong>：<em>外置派 · 认知派 · 泛化派 · 评委派（本文）</em>——第四派专门讨论"<em>safety 判定过程本身的可靠性</em>"；(2) <em>Prompt injection defense benchmarks</em> 都用 LLM-as-Judge，本文的结果意味着"<em>我们衡量 defense 效果</em>" 本身也不可靠——H2 应有 <em>defense-benchmark reproducibility audit</em>；(3) 对 <em>skill-facing attack surfaces</em>（如 SkillSafetyBench）：Skill 的 safe/unsafe 判定极度依赖 grader，本文数据说明<u>skill-level safety 分数</u> 至少需附<em>K-run variance</em>；(4) <em>Claude 4.7/4.8 废弃 temperature</em> 直接影响所有<em>红队工具</em> —— 传统的"<em>低温度稳定攻击</em>" 假设不再成立，H2 攻击方也要重新校准；(5) 与 <em>evaluation awareness</em>（6-22 Nayan 等）组合：模型检测到自己在被测 → 采取<em>不一致行为</em>；本文说 grader 本身也<em>不一致</em>——两侧同时不确定，safety verdict 的<em>信息量</em> 大幅下降；(6) 立即可用：agent safety 研究者应把<em>K=20 重跑 disagreement 报告</em> 纳入 red-team 报告标准。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>H2 所有 safety benchmark 都应加 grader-reproducibility 附录</em>——AIR-Bench / HarmBench / SafetyBench / TrustLLM / AgentBench 全线适用；(2) 与 7-02 IRT-Safety 构成 <strong>benchmark reliability 二维审计</strong>：<em>横轴 IRT 物品信息量 × 纵轴 grader disagreement rate</em>——理想 benchmark 在两轴都做审计，且<u>剔除同时低信息量 + 高 grader 分歧的 items</u>；(3) 本文的<em>690-call 复现 harness</em> 直接可作为其它 safety benchmark 的<em>回归测试基座</em>——把自己 benchmark 的每条 borderline item 塞进这套 harness 跑一遍，量化<em>reproducibility class</em>；(4) 立即可创建的新 benchmark：<em>Grader Stability Benchmark</em>——收集 100+ borderline items × 10+ grader 模型 × 5 config × 20 runs，公布"每个 grader 在哪些 item 上翻转"表格；(5) <em>Provider SLA benchmarks</em>——把"disagreement rate < X%" 立为 provider 应披露的<em>产品性能指标</em>，就像现在披露 latency / cost 一样；(6) 与 6-28 REALM / 6-26 ForesightSafety-VLA / 6-30 OSWorld 2.0 组合：<em>输入侧穷举 × 物品侧 IRT 精选 × 评委侧 disagreement 审计</em> ——2026 H2 safety benchmark 的<em>三层可靠性架构</em>；(7) 长期看，本文的启发是<em>safety benchmark 的可靠性论文本身</em> 应成为独立子领域 —— 就像统计学里的"<em>meta-analysis of measurement error</em>"；(8) 值得关注的伴随成果：论文<u>用真实国家级 harness</u> 作对象（aisev），说明该问题已经进入监管视野——预计 H2 会有 <em>NIST / UK AISI / Japan AISI 联合发布</em> harness 可靠性最低标准。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Efficient Safety Benchmarking via IRT (7-02)</strong> · <em>物品侧信息经济学</em>——与本文<em>评委侧稳定性</em>正交<br>
+      <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></li>
+      <li><strong>Evaluation Awareness Is Not One Capability (6-22)</strong> · 模型检测评估 cue 并适应 —— 8 实验<br>
+      <a href="https://arxiv.org/abs/2606.23583" target="_blank" rel="noopener">arxiv.org/abs/2606.23583</a></li>
+      <li><strong>Capable but Careless: CUAs &amp; Contextual Integrity (6-22)</strong> · <em>AgentCIBench</em> 具体 evaluation harness<br>
+      <a href="https://arxiv.org/abs/2606.23189" target="_blank" rel="noopener">arxiv.org/abs/2606.23189</a></li>
+      <li><strong>Faults in Our Formal Benchmarking (Lean) (6-28)</strong> · 5 个 Lean 基准的 harness 鲁棒性审计<br>
+      <a href="https://arxiv.org/abs/2606.29493" target="_blank" rel="noopener">arxiv.org/abs/2606.29493</a></li>
+      <li><strong>The Evaluation Differential (5-13)</strong> · 前沿模型识别自己在被测 —— harness 输出降级为 conditional claim<br>
+      <a href="https://arxiv.org/abs/2505.04566" target="_blank" rel="noopener">arxiv.org/abs/2505.04566</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.26185" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.26185v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.26185" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/JapanAISI/aisev" target="_blank" rel="noopener">Japan AISI aisev</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">EleutherAI harness</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-03 #1 · 搜索来源：arxiv.org/api/query?ti/abs:evaluation harness + arxiv.org/abs/2606.26185<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

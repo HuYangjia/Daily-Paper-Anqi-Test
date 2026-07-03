@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">43 篇报告</span>
+        <span class="count-badge">44 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">42 篇报告</span>
+        <span class="count-badge">43 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">41 篇报告</span>
+        <span class="count-badge">42 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-03-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">03</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">Necessary but Not Sufficient：把 harness 内 <strong>LLM-as-Judge grader</strong> 的<em>非确定性</em> 立成 first-class 健康指标——<u>温度=0 必要非充分</u>。Japan AISI aisev 实证：<em>harness 未显式设 temp → provider 默认 1.0 → 边界 item 20 次跑翻转率 ~50%</em>；<em>强制 temp=0 + top_k=1 → 690 次调用中 1-2/7 borderline items 仍 non-reproducible</em>；<strong>Claude Opus 4.7/4.8 已废弃 temperature 参数</strong> —— 传统缓解手段过时；非确定性来源含 KV-cache 精度 / batching / MoE routing / prefix caching #1</div>
+          <div class="paper-sub">H. Tamba（独立作者）· arXiv 2606.26185 2026-06-24 · cs.LG · 7 pages / 2 tables · 690-call 开源复现 harness</div>
+        </div>
+        <div class="score-pill">92 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-03-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">03</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">Toward a Principled Framework for Agent Safety Measurement (BOA)：H2 <strong>第五派立场"搜索派 / 测量派"</strong> 诞生 —— agent safety <em>should be measured by search, not sampling</em>。<strong>六元 deployment 配置</strong>（model / decoder / prompt / environment / judger / <em>likelihood budget</em>）× <strong>双层搜索</strong>（单 LLM round + agent-env 交互树）× <strong>三件套加速</strong>（batched decoding + prefix caching + chunked tree expansion）× <strong>三重复用</strong>（model / defense / attack ranking 同一 scale）；H2 首月五派立场完成：<em>外置派 · 认知派 · 泛化派 · 评委派 · 搜索派</em> #1</div>
+          <div class="paper-sub">S. Lin / A. Suri / A. Oprea / C. Tan · Northeastern University · arXiv 2605.01644 2026-05-02 · cs.CR · 三件套加速与你毕设 SGLang KV-cache 优化<u>完美对齐</u></div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-03-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">03</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">A Matter of TASTE（Task Synthesis from Tool Sequence Evolution）：把 agent benchmark 构造过程<u>反转</u> —— <em>先合成合法工具序列 → 聚类选代表 → 实例化 → 迭代难度演化</em>；<strong>Adaptive Contrastive n-gram (ACE)</strong> + 聚类抽样 + 难度演化三件套；产出 τc-Bench 让 <em>Gemini-3-Flash 从 0.82-0.94 骤降到 0.28-0.61</em>（44-53 pp）· <em>独特工具组合数 ×2 以上</em>；论断 <em>"high scores 反映饱和而非 robust 能力"</em>；<strong>2026 H2 benchmark 方法学<u>四联拍</u></strong> 闭合：物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· <em>构造（TASTE）</em> #1</div>
+          <div class="paper-sub">T. Keren / R. Reichart 等 6 人 · Technion + IBM Research · arXiv 2605.28556 2026-05-27 v1 → 06-02 v2 · cs.AI · 11 组 agent/user LLM pairs</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-02-1.html">
         <div class="date-badge">

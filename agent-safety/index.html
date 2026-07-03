@@ -46,6 +46,20 @@
   <p class="section-title">归档报告（最新在前）</p>
   <ul class="paper-list">
     <li>
+      <a class="paper-item" href="2026-07-03-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">03</div>
+        </div>
+        <span class="num-badge">#1</span>
+        <div class="paper-meta">
+          <div class="paper-title">Toward a Principled Framework for Agent Safety Measurement (BOA)：H2 <strong>第五派立场"搜索派 / 测量派"</strong> 诞生 —— agent safety <em>应该被<u>搜索</u> 测量，而不是<u>抽样</u> 测量</em>。BOA 在 <strong>六元 deployment 配置</strong>（model / decoder / prompt / environment / judger / <em>likelihood budget</em>）下、<em>预算内</em> 搜索轨迹空间，输出 safety score = <em>agent 保持安全的概率</em>；<strong>双层搜索</strong>（单 LLM round 内部 + agent-environment 交互树）× <strong>工程加速三件套</strong>（batched decoding/judging + prefix caching + chunked tree expansion）× <strong>三重复用</strong>（model / defense / attack ranking 同一 scale）；发现贪心/抽样评估<u>会错过</u>的 unsafe trajectories；H2 首月五派立场完成：<em>外置派 · 认知派 · 泛化派 · 评委派 · 搜索派</em></div>
+          <div class="paper-sub">S. Lin / A. Suri / A. Oprea / C. Tan · Northeastern University AI Security Lab · arXiv 2605.01644 2026-05-02 · cs.CR · 与 7-03 harness 评委派（Necessary but Not Sufficient · 温度=0 必要非充分）<em>正交互补</em>——共同拆掉"agent safety 单跑评估" 深层假设；工程加速三件套与你毕设 SGLang KV-cache 优化<u>完美对齐</u></div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
       <a class="paper-item" href="2026-07-02-1.html">
         <div class="date-badge">
           <div class="month">Jul</div>

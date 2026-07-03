@@ -45,6 +45,20 @@
   <p class="section-title">归档报告（最新在前）</p>
   <ul class="paper-list">
     <li>
+      <a class="paper-item" href="2026-07-03-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">03</div>
+        </div>
+        <span class="num-badge">#1</span>
+        <div class="paper-meta">
+          <div class="paper-title">Necessary but Not Sufficient：把 harness 内 <strong>LLM-as-Judge grader</strong> 的<em>非确定性</em> 立成 first-class 健康指标——<u>温度=0 必要非充分</u>。Japan AISI aisev 实证双层失效：<em>(1) harness 未设 temperature/seed → provider 默认 1.0 → 边界 item 20 次跑翻转率 ~50%</em>；<em>(2) 强制 temp=0 + top_k=1 → 690 次调用中仍 1-2/7 borderline items non-reproducible</em>。<strong>Claude Opus 4.7/4.8 已废弃 temperature 参数</strong>——传统缓解手段过时；<em>非确定性来源包括 KV-cache 精度 / batching 顺序 / MoE routing / prefix caching</em> —— 与你毕设 SGLang KV-cache 方向<u>直接相关</u>；建议 harness 报告 <em>K-run disagreement · flip probability · reproducibility class · leaderboard 附录</em></div>
+          <div class="paper-sub">H. Tamba（独立作者）· arXiv 2606.26185 2026-06-24 · cs.LG · 7 pages / 2 tables · 690 API calls × 2 providers × 3 tiers × 5 configs 开源复现 harness · 与 7-02 IRT-Safety 组"<em>物品侧 × 评委侧</em>" benchmark reliability 二维审计</div>
+        </div>
+        <div class="score-pill">92 分</div>
+      </a>
+    </li>
+    <li>
       <a class="paper-item" href="2026-07-02-1.html">
         <div class="date-badge">
           <div class="month">Jul</div>
