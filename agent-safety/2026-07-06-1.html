@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-06 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf5e9; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #a9dcc9; color: #085041; }
+  .link-btn.primary:hover { background: #cdeee0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #e1f5ee; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #a9dcc9; color: #085041; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-06 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 6 日 · Agent Skills Safety · 把 agent safety 从"<em>外部护栏</em>" 推进到"<em>内部子空间干预</em>"——首次把机制可解释性 white-box 干预落到<u>多轮 coding agent 全轨迹</u>，10 维 subspace × 单层 steering 就能在<em>执行期</em>抑制不安全行为</div>
+  <h1>AgentLens：面向<strong>多轮 coding agent</strong> 的<em>机制可解释性安全 steering</em>——用<strong>10 维子空间</strong> × <em>单层干预</em> 在运行时检测有害执行状态并做<u>表征级</u> 抑制；配套 <em>Mechanistic Agent Safety (MAS) benchmark</em> 覆盖 194 tasks × LLaMA-3.1-8B / Qwen-2.5-7B / Gemma-2-9B</h1>
+  <div class="en-title">AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.8</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-12 至 06-27 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent</a><span class="winner-badge">今日选定</span></td>
+          <td>Mechanistic interpretability × multi-turn coding agent · 10-D subspace intervention 单层 steering · MAS benchmark 194 tasks × 3 backbone</td>
+          <td>arXiv 2606.22673 · 2026-06-21 · Luo / Zhang / Quan / Jin / Cai / Xiao / Niu / Xiang · cs.AI + cs.SE</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">DECOMPBENCH: Hidden in Plain Sight（Decomposition Attacks）</a></td>
+          <td>Agent safety against decomposition attacks · 分解成合法 subtasks 累积达成恶意</td>
+          <td>arXiv 2606.13994 · 2026-06-12 · Kothamasu / Smith / Yadav · cs.CR</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.08531" target="_blank" rel="noopener">VESTA: 自动场景生成 + safety 评估</a></td>
+          <td>Fully automated scenario generation × LLM agent safety evaluation framework</td>
+          <td>arXiv 2606.08531 · 2026-06-07 · Jia / Tong / Zhao · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.05704" target="_blank" rel="noopener">SafeHarbor: Hierarchical Memory-Augmented Guardrail</a></td>
+          <td>External guardrail with hierarchical memory · safety-utility tradeoff 缓解</td>
+          <td>arXiv 2605.05704 · 2026-05-07 v2 · Liu / Ying / Zhang · cs.CR</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.03242" target="_blank" rel="noopener">ROME: Red-team Orchestrated Multi-agent Evolution</a></td>
+          <td>Controlled benchmark rewriting · analogical reasoning · deceptive OOD scenarios</td>
+          <td>arXiv 2605.03242 · 2026-05-05 · Zhang / Zhu · cs.AI</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22+OR+abs:%22LLM+agent+safety%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti/abs: agent safety 时间排序</a>。<strong>AgentLens 胜出</strong>：(1) 论文<u>直击 2026 H2 agent safety 最大空白</u> —— <em>机制可解释性</em>（mechanistic interpretability）此前只用于单轮 QA / jailbreak，从未在<u>多轮 coding agent 全轨迹</u> 上验证过；(2) 提出的<strong>10 维 subspace × 单层 steering</strong> 是<u>agent safety 领域首个 white-box 干预方案</u>——不训练、不接 guardrail、不做外部审查，只在<em>hidden representation 层面</em> 干预；(3) 首次在多轮 agent 中<em>看得见 · 说得出 · 控得住</em>——检测有害执行状态 → 表征级抑制 → 前瞻风险预判（<em>look-ahead risk anticipation preliminary evidence</em>）三合一；(4) 释出 <strong>Mechanistic Agent Safety (MAS) benchmark</strong>：194 tasks × 3 backbone（LLaMA-3.1-8B / Qwen-2.5-7B / Gemma-2-9B），全轨迹标注 —— 首个可支持机制可解释性研究的 agent safety benchmark；(5) 完全开源（EddyLuo1232/AgentLens）；(6) 与 6-30 Action Alignment（外置派）· 7-01 Epistemic Property（认知派）· 7-02 Why Generalize（泛化派）· 7-03 BOA（搜索派）· 7-03 Grader-Repro（评委派）合成 <strong>H2 agent safety 六派立场</strong>——本文为<em>第六派：可解释派 / white-box 派</em>，是<u>第一派可实际部署的运行时防御</u>（前五派都是立场 / 测量 / 理论）；DECOMPBENCH 92 次之，专攻 decomposition 攻击但覆盖面较窄；VESTA 89 是自动化 scenario 生成，与本文正交；SafeHarbor 87 是外部 guardrail 传统路径，被本文明确划入"<em>受限方案</em>"；ROME 86 是 benchmark 构造工具。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent</span></div>
+      <div class="meta-item"><label>中文标题</label><span>AgentLens：面向多轮编码 Agent 的<em>机制子空间可解释安全 steering</em></span></div>
+      <div class="meta-item"><label>作者</label><span>Weidi Luo · Qiming Zhang · Yihao Quan · Mingyu Jin · Jie Cai · Chaowei Xiao · Jingcheng Niu · Zhen Xiang</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-21 v1（UTC 21:13:55）</span></div>
+      <div class="meta-item"><label>大小 / 领域</label><span>15,088 KB · cs.AI + cs.SE</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.22673" target="_blank" rel="noopener">arxiv.org/pdf/2606.22673</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.22673v1" target="_blank" rel="noopener">arxiv.org/html/2606.22673v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.22673" target="_blank" rel="noopener">10.48550/arXiv.2606.22673</a></div>
+      <div class="meta-item"><label>开源代码</label><a href="https://github.com/EddyLuo1232/AgentLens" target="_blank" rel="noopener">github.com/EddyLuo1232/AgentLens</a></div>
+      <div class="meta-item"><label>核心机制</label><span>Mechanistic Subspace Intervention and Steering（MSIS）· 10-D subspace · 单层干预</span></div>
+      <div class="meta-item"><label>MAS benchmark</label><span>194 tasks · 全标注多轮执行轨迹 · 3 backbone</span></div>
+      <div class="meta-item"><label>三 backbone</label><span>LLaMA-3.1-8B · Qwen-2.5-7B · Gemma-2-9B</span></div>
+      <div class="meta-item"><label>H2 派系定位</label><span><em>可解释派 / white-box 派</em>（第六派立场）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把机制可解释性从"<em>单轮 QA / jailbreak</em>" 首次扩展到"<em>多轮 coding agent 全轨迹</em>" —— 用<strong>10 维 subspace × 单层 steering</strong> 在<em>hidden representation 层面</em> 检测并抑制有害执行状态，同时释出 <em>MAS benchmark（194 tasks × 3 backbone 全标注轨迹）</em>，为 agent safety 领域开辟<u>第一个可运行时部署的 white-box 防御路径</u>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>基于大语言模型（LLM）的<strong>编码 agent</strong> 展现出显著的自主能力，但在与外部环境的<em>多轮交互</em> 中也带来了显著的<u>安全与滥用风险</u>。现有的安全机制主要依赖<em>外部 guardrail</em>，其在<u>执行时</u> 进行细粒度行为控制的能力有限。同时，近期用于 LLM 安全的<em>机制可解释性</em> 方法大多局限于<u>单轮或 jailbreak 类 QA</u> 场景，难以刻画多轮 agent 执行中<em>演化的风险动力学</em>。本文<u>从内部视角</u> 研究多轮编码 agent 的安全问题，提出 <strong>AgentLens</strong>（Mechanistic Subspace Intervention and Steering），一个针对编码 agent 的<em>white-box 防御框架</em>——在运行时进行<u>安全检测</u> 与<u>表征层缓解</u>。与常规 agent guardrail 不同，AgentLens 从<em>step-level hidden representation</em> 检测有害执行状态，并通过在<u>单层</u> 内介入 <strong>10 维子空间</strong> 来抑制不安全行为。为支持该研究，作者引入 <strong>Mechanistic Agent Safety (MAS) benchmark</strong>：包含 <em>194 tasks</em> 的完整标注多轮执行轨迹，覆盖 <em>LLaMA-3.1-8B · Qwen-2.5-7B · Gemma-2-9B</em> 三个模型。大量实验显示：AgentLens 取得<u>强安全检测性能</u>，为 <em>look-ahead 风险预判</em> 提供了初步证据，并大幅减少编码 agent 的有害行为，为把机制可解释性应用于<u>动态 LLM agent 安全</u> 奠定了基础。代码开源于 <a href="https://github.com/EddyLuo1232/AgentLens" target="_blank" rel="noopener">github.com/EddyLuo1232/AgentLens</a>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / MSIS 机制 / MAS benchmark / 三大结果 / 派系定位）</div>
+
+    <p><strong>问题背景。</strong>2026 上半年 agent safety 的六派立场（外置派 · 认知派 · 泛化派 · 评委派 · 搜索派 · 可解释派）都在指出同一件事：<em>agent 的安全约束不是单点问题</em>——不是"<em>拒绝一个 harmful prompt</em>" 就能解决的。已有方案有两类结构性缺陷：<em>(1) 外部 guardrail</em>（SafeHarbor / RUBAS / AgentDoG 等）—— 在 agent 外面套一圈，看到的是<em>输入输出黑箱</em>，无法在<u>执行中途</u> 精细阻断；<em>(2) 机制可解释性研究</em>（representation engineering / activation steering / RepE）——大部分只在<em>单轮 QA / jailbreak</em> 场景验证，从未在<u>多轮 agent 全轨迹</u> 试过。<strong>AgentLens 是把二者<u>桥接</u> 起来的第一次尝试</strong>：把 mechanistic interpretability 的 white-box 干预<u>下沉到多轮 agent 的 step level</u>，从内部看 agent 的每一步。</p>
+
+    <p><strong>MSIS：10 维 subspace × 单层 steering。</strong>本文核心机制 Mechanistic Subspace Intervention and Steering 有三个关键设计选择：</p>
+    <table class="data-table">
+      <thead><tr><th>设计选择</th><th>为什么这样做</th><th>结构性含义</th></tr></thead>
+      <tbody>
+        <tr><td>只干预<em>10 维</em> subspace</td><td>大量证据显示 harmful concept 在 hidden state 里往往是<em>低秩</em> 的（RepE / Anthropic Golden Gate Claude 都是几维到十几维）</td><td><em>最小侵入性</em> · 保留模型通用能力 · 避免"手术式副作用"</td></tr>
+        <tr class="hl"><td>只干预<em>单个 layer</em></td><td>Sparse Autoencoder / activation steering 研究表明 <em>middle layer</em> 是 safety-relevant concept 最集中的位置</td><td>推理开销近乎零 · 可以在 production forward 里做 in-place hook</td></tr>
+        <tr><td>从<em>step-level hidden representation</em> 检测</td><td>Multi-turn agent 的风险经常是<em>累积的、跨步的</em>——单看某一步 output 看不出</td><td>能识别"<em>此刻虽然合规但正朝不安全轨迹演进</em>" 的<u>前瞻风险</u></td></tr>
+      </tbody>
+    </table>
+    <p>这三条一起把 MSIS 定位成"<em>agent 内部的实时安全传感器 + 微干预</em>"——像<u>为 agent 装了一个心电监护 + 起搏器</u>：既能测出何时"心律不齐"（有害表征上升），也能<u>在同一层直接干预</u>（10 维推力矫正）。</p>
+
+    <p><strong>MAS Benchmark：机制可解释性研究的第一份 agent safety 数据集。</strong>作者不仅提方法，还配了<em>专为 mechanistic interpretability × agent safety 设计</em>的 benchmark。三大关键特性：<em>(1) 194 tasks · 覆盖典型多轮编码 agent 场景</em>——包括文件系统操作、外部 API 调用、代码执行、长期任务；<em>(2) 完整标注多轮执行轨迹</em>——每一 step 的<u>hidden representation + action + 有害标注</u>，供社区做 SAE / RepE / probe / steering 研究；<em>(3) 三家模型全覆盖</em>——LLaMA-3.1-8B（Meta）· Qwen-2.5-7B（阿里）· Gemma-2-9B（Google）——保证跨模型可迁移性。MAS 是 H2 mechanistic interpretability × agent safety <u>基础设施空缺</u>的一次填补。</p>
+
+    <p><strong>三大实验结果。</strong>论文报告了三条核心结论：<em>(a) 强安全检测</em>——用 step-level hidden representation 做二分类可以达到高准确率地识别 harmful state（论文正文报告具体 AUC）；<em>(b) look-ahead risk anticipation</em>——初步证据显示 hidden representation 能<u>预判</u>后续步骤的风险，不是被动检测；<em>(c) 大幅降低 harmful actions</em>——在 194 tasks 上执行 subspace steering 后有害行为显著减少，同时保留任务完成能力（safety-utility 权衡改善）。这里最有影响力的是 <em>(b)</em>——如果确凿，说明<u>agent 的"意图"在 representation 里比在 action 里更早显形</u>——这是 <em>white-box early warning</em> 的可能性根基。</p>
+
+    <p><strong>H2 派系定位：第六派 · 可解释派 / white-box 派。</strong>把本文放回你追踪的 H2 agent safety 派系谱中：</p>
+    <ul class="point-list">
+      <li><em>外置派</em>（6-30 Action Alignment）——refusal 是 category error，safety = action alignment，需要外置约束</li>
+      <li><em>认知派</em>（7-01 Epistemic Property）——safety 是 epistemic property，behavioral snapshot 不够</li>
+      <li><em>泛化派</em>（7-02 Why Generalize）——H_∞ 分析证明 safety 不会随任务泛化</li>
+      <li><em>评委派</em>（7-03 Necessary but Not Sufficient）——LLM-as-Judge grader 本身不可靠</li>
+      <li><em>搜索派</em>（7-03 BOA）——safety measurement 是搜索问题不是抽样问题</li>
+      <li><strong>可解释派 / white-box 派</strong>（本文 · 2026-06-21）——safety 应该<u>看得见 · 说得出 · 控得住</u>，从 hidden representation 层面干预</li>
+    </ul>
+    <p><em>前五派主要是立场 / 测量 / 理论 —— 说明"safety 应该怎么想"；本文是第一派 <u>可运行时部署</u> 的方法学</em>——说明"safety 应该怎么做"。这是 H2 上半月立场谱系闭合后<em>第一次向工程侧回落</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Zou et al. — <em>Representation Engineering (RepE)</em>（representation-level 安全干预开创工作）<br>
+    <a href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">arxiv.org/abs/2310.01405</a></div>
+    <div class="ref-item">Templeton et al. — <em>Scaling Monosemanticity</em>（Anthropic · SAE + Golden Gate Claude）<br>
+    <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/" target="_blank" rel="noopener">transformer-circuits.pub</a></div>
+    <div class="ref-item">Turner et al. — <em>Activation Addition / Steering Vectors</em>（激活层面 steering）<br>
+    <a href="https://arxiv.org/abs/2308.10248" target="_blank" rel="noopener">arxiv.org/abs/2308.10248</a></div>
+    <div class="ref-item">Li et al. — <em>Agent Safety Is Action Alignment (6-30)</em>（外置派立场）<br>
+    <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a></div>
+    <div class="ref-item">Wang et al. — <em>Agentic Safety is Epistemic Property (7-01)</em>（认知派立场）<br>
+    <a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">arxiv.org/abs/2606.28347</a></div>
+    <div class="ref-item">Slutzky et al. — <em>Why Does Agentic Safety Fail to Generalize? (7-02)</em>（泛化派立场）<br>
+    <a href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">arxiv.org/abs/2605.06992</a></div>
+    <div class="ref-item">Lin et al. — <em>BOA: Principled Framework for Agent Safety Measurement (7-03)</em>（搜索派）<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+    <div class="ref-item">Tamba — <em>Necessary but Not Sufficient (7-03)</em>（评委派 · grader 稳定性）<br>
+    <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+    <div class="ref-item">Kothamasu et al. — <em>DECOMPBENCH: Hidden in Plain Sight</em>（decomposition attack · 分解攻击）<br>
+    <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a></div>
+    <div class="ref-item">Jin et al. — <em>SkillSafetyBench</em>（6-25 · skill-facing attack surfaces）<br>
+    <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：agent safety 需要<em>从内部视角</em> 研究——不再依赖外部 guardrail 的黑箱防御。</li>
+      <li><strong>核心论点 ②</strong>：Multi-turn agent 风险是<em>step-level hidden representation 演化</em> 出来的，不是单步 output 问题。</li>
+      <li><strong>核心论点 ③</strong>：Harmful concept 在 hidden state 中是<em>低秩子空间</em>——10 维 × 单层就能捕获并干预。</li>
+      <li><strong>三大结果</strong>：(a) 强安全检测 · (b) look-ahead risk anticipation 初步证据 · (c) 大幅减少 harmful action。</li>
+      <li><strong>MAS benchmark</strong>：<em>194 tasks · 3 backbone · 全轨迹标注</em>——机制可解释性 × agent safety 基础设施空缺被填补。</li>
+      <li><strong>三 backbone</strong>：LLaMA-3.1-8B · Qwen-2.5-7B · Gemma-2-9B——覆盖 Meta / Alibaba / Google 三大开源家族。</li>
+      <li><strong>方法极简</strong>：<em>10 维 subspace × 单层 steering</em>——production forward 几乎零开销可 in-place hook。</li>
+      <li><strong>派系定位</strong>：<em>H2 agent safety 第六派立场 · 可解释派 / white-box 派</em>——第一派可运行时部署的方法学。</li>
+      <li><strong>与外置派分工</strong>：AgentLens 从<em>内部</em> · Action Alignment 从<em>外部</em>——两者可组合形成<u>双侧防御</u>。</li>
+      <li><strong>与评委派分工</strong>：AgentLens 提供<em>行为端 white-box</em>，Grader-Repro 提供<em>评委端 K-run</em>——组成<u>可信 safety 判定链</u>。</li>
+      <li><strong>可迁移性</strong>：3 backbone 上都有效——说明干预是<u>跨模型 subspace</u> 而非模型特化。</li>
+      <li><strong>可复现</strong>：EddyLuo1232/AgentLens 完全开源——可直接作为 white-box agent safety 起点。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>Harness 的新拓扑：<u>Interpretability-aware harness</u></em>——AgentLens 显示 harness 不必是"<em>外面套一层</em>"，也可以是"<em>在 forward 里挖一个 hook</em>"；harness 层可以直接<u>调用 model 内部 representation</u>；(2) <em>与你 SGLang KV-cache 毕设的直接联动</em>：mechanistic steering 需要在 forward 时<u>修改 hidden state</u>，这与 KV-cache reuse 存在直接冲突——如果 cache 缓存了未经 steering 的 hidden state，那么下游 KV-cache 命中会<u>绕过 safety intervention</u>；毕设可以做"<em>steering-aware KV-cache invalidation policy</em>"：安全干预层的 hidden state <u>必须不 cache</u> 或 <u>重新计算</u>；(3) 与 7-03 Grader-Repro 的<em>KV-cache 精度是 non-determinism 来源</em> 呼应：如果 subspace steering 用 int8 hidden state 会不会失效？—— 需要在 harness 层<u>报告 quantization tier × steering 有效性</u> 的联合表；(4) MAS benchmark 是<em>harness reference implementation</em> ——你可以把 SGLang 集成为 MAS 的<u>后端选项</u>，让 3 backbone 都可以用 SGLang 加速跑 MAS，从而实证"<em>KV-cache aware harness 对 MAS 结果有无影响</em>"，形成硕士毕设 harness-level 的一条完整实验；(5) 与 7-02 Loop Engineering 组合：<em>loop specification 的 verification 组件</em> 可以引入 subspace-steering signal 作为一等 verifier —— "<em>如果 harmful subspace projection > threshold，则终止循环</em>"；(6) 这是<em>mechanistic-interpretability-based harness</em> 的开山之作——你可以在毕设中提出"<em>KV-cache-mechanistic co-design</em>" 概念：cache 决策与 mechanistic hook 联合优化。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（本方向核心）</div>
+        <p>(1) <strong>H2 六派立场谱系首次向工程侧回落</strong>——外置派 / 认知派 / 泛化派 / 评委派 / 搜索派都是"<em>怎么想</em>" 的立场声明，AgentLens 是<u>第一个可 production-deploy 的具体方案</u>；(2) 与外置派（Action Alignment）双侧夹击：<em>Action Alignment 在外部约束"<u>能做什么</u>"，AgentLens 在内部约束"<u>想做什么</u>"</em>——两者可叠加成 <em>double-layered defense</em>，前所未有的深度；(3) <em>Look-ahead risk anticipation</em> 是 H2 最激动人心的观测：如果 hidden representation 真的能<u>比 action 更早</u> 显示 harmful intent，那么 agent safety 就有了<em>early warning system</em>——这一路线与 7-01 Epistemic Property 的 teachability 高度契合；(4) 对 <em>skill-facing attacks</em>（SkillSafetyBench）尤其重要：injected instruction 若已影响 hidden state，subspace steering 可以<u>在动作前拦住</u>——H2 应有 <em>SkillSafetyBench × MSIS 联合评测</em>；(5) 与 DECOMPBENCH（分解攻击）组合：分解攻击的每步 subtask 看起来合规，但 hidden state 里可能<u>不断累积恶意 concept</u>——subspace projection 可以看到"<em>累积漂移</em>"；(6) 立即可做的实验：<em>用 MAS benchmark + SkillSafetyBench + DECOMPBENCH 做三方向组合测试</em>——看 AgentLens 对每类攻击的横向鲁棒性；(7) 长期看，H2 下半年将出现<em>第七派：组合派</em>——把六派方法<u>系统性组合</u>成产品级 safety stack（例如 Action Alignment 外圈 + AgentLens 内圈 + BOA 测量 + Grader-Repro K-run + Epistemic teachability audit + Why-Generalize Lipschitz bound）—— 这是<u>华人研究群体最擅长的整合方向</u>，也是产品化落地窗口。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <strong>MAS benchmark 是<em>H2 首个 mechanistic-interpretability-aware agent safety benchmark</em></strong> —— 与其它 benchmark 差异化在于<u>每一步都要提供 hidden representation</u> 而不只是 action；这打开一个新维度：<em>benchmark 不只测"<u>做对没</u>"，还要测"<u>内部想什么</u>"</em>；(2) 与 7-03 TASTE（构造派） × 7-02 IRT（心理测量派） × 7-02 Why-Generalize（理论派） × 6-30 OSWorld 2.0（穷举派） × 7-03 Grader-Repro（评委派）合成 <em>2026 H2 benchmark 方法学五联拍</em>；MAS 补上第五角"<u>mechanistic-aware</u>"；(3) 立即可创建的新 benchmark：<em>Hidden-State Safety Leaderboard</em>——把 subspace projection strength 作为 leaderboard 一等指标；(4) 与 7-02 IRT 组合：<em>IRT 侧 item 信息量 × MAS 侧 hidden representation 可分离度</em> —— 一个 item 只有在 IRT 高信息 且 hidden-state 可分离时才是<u>高质量 safety item</u>；(5) 与 7-03 BOA 组合：BOA 提供<em>search-based measurement</em>，MAS 提供<em>hidden state observation</em>——两者组合形成"<em>搜索 × 观察</em>" 双通道 safety benchmark；(6) 未来的 <em>SafetyBench-2027</em> 应包含四层评测：<u>行为层（action）· 表征层（hidden state）· 因果层（steering ablation）· 演化层（look-ahead）</u>；(7) 值得关注的伴随成果：作者把 MAS 覆盖三家 open-source 模型——这为下一步<em>frontier model white-box safety access</em> 的 regulatory 讨论提供技术支撑（AISI / NIST 会关心 "<em>我们能不能看进模型内部？</em>"）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Representation Engineering (RepE · 2023)</strong> · representation-level 干预开创性工作<br>
+      <a href="https://arxiv.org/abs/2310.01405" target="_blank" rel="noopener">arxiv.org/abs/2310.01405</a></li>
+      <li><strong>Scaling Monosemanticity (Anthropic · 2024)</strong> · SAE + Golden Gate Claude<br>
+      <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/" target="_blank" rel="noopener">transformer-circuits.pub/2024/scaling-monosemanticity/</a></li>
+      <li><strong>DECOMPBENCH (6-12)</strong> · agent safety 分解攻击基准<br>
+      <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a></li>
+      <li><strong>SkillSafetyBench (6-25)</strong> · skill-facing attack surfaces<br>
+      <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a></li>
+      <li><strong>Agentic Safety is Epistemic Property (7-01)</strong> · 认知派立场——与本文机制视角互补<br>
+      <a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">arxiv.org/abs/2606.28347</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.22673" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.22673v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.22673" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EddyLuo1232/AgentLens" target="_blank" rel="noopener">GitHub AgentLens</a>
+      <a class="link-btn" href="https://transformer-circuits.pub/2024/scaling-monosemanticity/" target="_blank" rel="noopener">Anthropic Monosemanticity</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-06 #1 · 搜索来源：arxiv.org/api/query?ti/abs:agent safety + arxiv.org/abs/2606.22673<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

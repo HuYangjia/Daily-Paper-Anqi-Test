@@ -45,6 +45,20 @@
   <p class="section-title">归档报告（最新在前）</p>
   <ul class="paper-list">
     <li>
+      <a class="paper-item" href="2026-07-06-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">06</div>
+        </div>
+        <span class="num-badge">#1</span>
+        <div class="paper-meta">
+          <div class="paper-title">ReContext：<strong>Recursive Evidence Replay as LLM Harness for Long-Context Reasoning</strong> —— 把 harness 概念<u>下推到 inference 时刻</u>；三步流水线：<em>模型内部相关性打分 → query-conditioned evidence pool → replay 到完整 context 前面</em>；无训练 · 无外部 memory · 无 context 剪枝。首次给长上下文推理提供 <strong>associative memory 理论类比</strong>：<em>context ↔ memory store · question ↔ retrieval cue · attention ↔ cue-trace association · replay ↔ trace reactivation</em>；<em>128K × 8 数据集 × Qwen3-4B / 8B / Llama3-8B 三 backbone</em> 全部拿到平均排名第一 —— 说明为 harness 层贡献而非模型特化；与 6-30 CUGA FLO + 7-02 Loop Engineering + 7-03 Grader-Repro 合成 <strong>H2 harness 工程四拓扑</strong>（context / 策略 / 循环 / 评委）</div>
+          <div class="paper-sub">Y. Zhao / R. Qiu / T. Wei + 6 人 · UIUC + Virginia Tech · arXiv 2607.02509 2026-07-02 · cs.AI · GitHub Yanjun-Zhao/ReContext · fixed-model harness ablation 范式延续 6-25 SuperCoder</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
+    <li>
       <a class="paper-item" href="2026-07-03-1.html">
         <div class="date-badge">
           <div class="month">Jul</div>

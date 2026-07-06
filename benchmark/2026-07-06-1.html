@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-06 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf5e9; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fdf5e9; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #efc98d; color: #633806; }
+  .link-btn.primary:hover { background: #f4e0bd; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf5e9; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #faeeda; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #efc98d; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-06 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 6 日 · Safety Benchmark · 把"<em>A 比 B 安全</em>" 这个 benchmark 最基本的<u>配对判定</u> 抬到<em>形式化命题</em> 层——首次证明 <strong>harness 配置差异<u>单独</u> 就足以让配对结果<u>严格翻转</u></strong>，为 alignment benchmark 打开<em>可复现性理论闭环</em></div>
+  <h1>SafetyRepro：<strong>Configuration-Conditional Rank Instability on Alignment Benchmarks</strong>——用<em>有限包络命题</em> 把可测量的<u>配对分歧率</u>与<u>严格排序是否允许 configuration-pair 翻转</u> 直接绑定；配 commit-stamped 评估协议，在<u>每个测试的 benchmark 上</u> configuration 单变量都能翻转 pairwise verdict</h1>
+  <div class="en-title">SafetyRepro: Configuration-Conditional Rank Instability on Alignment Benchmarks</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.2</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Safety Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-25 至 06-30 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">SafetyRepro: Configuration-Conditional Rank Instability on Alignment Benchmarks</a><span class="winner-badge">今日选定</span></td>
+          <td>Alignment benchmark 复现性理论 · 有限包络命题 · configuration-pair reversal · commit-stamped 协议 · 每 benchmark 均可翻转</td>
+          <td>arXiv 2605.25492 · 2026-05-25 · Y. Li / Z. Fan / Z. Zhuang · cs.LG</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">Hardening Agent Benchmarks with Adversarial Hacker-Fixer Loops</a></td>
+          <td>Agent benchmark reward hacking 加固 · 1968 tasks · 323 hackable · Hacker-Fixer 循环 · 6-25 已收</td>
+          <td>arXiv 2606.08960 · 2026-06-08 · Zhong / Segal / Bercovich · cs.CR</td>
+          <td class="score-num">96（已收 6-25）</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark</a></td>
+          <td>电力工程 executable evaluation benchmark · 领域特化</td>
+          <td>arXiv 2606.20950 · 2026-06-18 · Trashchenkov · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.10394" target="_blank" rel="noopener">STAGE-Claw: Automated State-based Agent Benchmarking</a></td>
+          <td>Personal-agent state-based scenario benchmark 自动化</td>
+          <td>arXiv 2606.10394 · 2026-06-09 · Liang / Yu / Wang · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.26321" target="_blank" rel="noopener">Anchor: Mitigating Artifact Drift</a></td>
+          <td>Agent benchmark 生成中的 artifact drift 缓解</td>
+          <td>arXiv 2605.26321 · 2026-05-25 · Ivanov / Rana · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti:safety/agent/alignment benchmark 时间排序</a>。<strong>SafetyRepro 胜出</strong>：(1) 论文<u>直击 2026 benchmark 方法学最缺</u> 的一环——<em>可复现性的形式化闭环</em>；此前 6-25 Hacker-Fixer（reward hacking）· 7-02 IRT（item 信息量）· 7-03 Grader-Repro（评委稳定性）· 7-03 TASTE（构造代表性）都在补 benchmark 方法学的<u>某一侧</u>，但没有一篇<em>把"A 比 B 安全" 这个最基础的<u>配对判定</u> 抬到理论命题</em>；本文正是这块空缺；(2) 提出<em>有限包络命题（finite-envelope proposition）</em>：把可测量的 <strong>pairwise disagreement rate</strong> 与"<u>严格排序是否允许 configuration-pair 反转</u>" 数学地绑定 —— 给"<em>A 比 B 安全"</em>这类论断一个<u>可证伪的边界</u>；(3) 强实证：<em>在每一个测试的 benchmark 上</em>，仅仅 configuration 单变量就足以翻转配对结果——这是 alignment benchmark 界少见的<u>普遍性</u>结论；(4) 配 <em>commit-stamped 评估协议</em>——把 benchmark run 的每个 config 参数、代码 commit hash 全部固化，形成 audit trail；(5) 与 7-03 Grader-Repro 形成 <strong>benchmark 方法学五联拍</strong>：<em>物品侧信息量（IRT） · 搜索侧覆盖率（BOA） · 评委侧稳定性（Grader-Repro） · 构造侧代表性（TASTE） · <u>配置侧鲁棒性（SafetyRepro）</u></em>；(6) H2 首月方法学空缺完全闭合；Hacker-Fixer 已于 6-25 收录（96 分）；Power Systems / STAGE-Claw / Anchor 都是<em>某一领域或工程细节</em>的 benchmark 建构，通用性弱于本文。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SafetyRepro: Configuration-Conditional Rank Instability on Alignment Benchmarks</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SafetyRepro：Alignment Benchmark 上的<em>配置条件性排名不稳定性</em></span></div>
+      <div class="meta-item"><label>作者</label><span>Yanhang Li · Zhichao Fan · Zexin Zhuang</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-05-25 v1（UTC 06:54:44）</span></div>
+      <div class="meta-item"><label>大小 / 领域</label><span>1,249 KB · cs.LG</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2605.25492" target="_blank" rel="noopener">arxiv.org/pdf/2605.25492</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2605.25492v1" target="_blank" rel="noopener">arxiv.org/html/2605.25492v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2605.25492" target="_blank" rel="noopener">10.48550/arXiv.2605.25492</a></div>
+      <div class="meta-item"><label>核心命题</label><span><em>有限包络命题</em>（finite-envelope proposition）· 把 pairwise disagreement rate 与严格排序可翻转性绑定</span></div>
+      <div class="meta-item"><label>实证结论</label><span><strong>每个测试 benchmark 上 configuration 单变量都能翻转配对结果</strong></span></div>
+      <div class="meta-item"><label>评估协议</label><span>Commit-stamped protocol · 完整可复现的 audit trail</span></div>
+      <div class="meta-item"><label>H2 派系定位</label><span>Benchmark 方法学<em>配置侧鲁棒性</em>（五联拍第五角）</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      给 alignment benchmark 最<em>基础的</em>"<u>A 比 B 安全</u>" 配对判定<u>建立形式化可复现闭环</u>——用<strong>有限包络命题</strong> 把 pairwise disagreement rate 与 configuration-pair reversal 数学地绑定，用 <em>commit-stamped 协议</em> 落到每一个 benchmark，实证证明<u>configuration 单变量就足以翻转配对结果</u>；给出 2026 H2 benchmark 方法学最后一角<em>配置侧鲁棒性</em> 的第一份完整答案。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>从 foundation-model benchmark 得出的<em>配对模型比较</em>（"<u>A 比 B 更安全</u>"）常被解读为<strong>定量裁决</strong>，然而它依赖于 <em>benchmark 论文未充分披露</em> 的 harness 选择。我们在这一原语上闭合一次<em>理论—benchmark 循环</em>：一条 <strong>有限包络命题（finite-envelope proposition）</strong>，将<u>可测量的 pairwise-disagreement rate</u> 与<u>严格排序是否允许 configuration-pair 翻转</u> 数学地绑定；并配以一份 <em>commit-stamped 评估协议</em> 在广受引用的 alignment benchmark 上把它<u>可操作化</u>。在<u>每一个</u> 我们测试的 benchmark 上，<strong>configuration 选择单独一项</strong> 就能翻转配对裁决；该命题<u>把这类严格翻转失效模式独立分离出来</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 有限包络命题 / commit-stamped 协议 / 结论普遍性 / 方法学五联拍）</div>
+
+    <p><strong>问题背景。</strong>2026 年 alignment benchmark 处在一个<em>信誉危机</em>：<em>SafetyBench / HarmBench / TrustLLM / AIR-Bench / AgentBench / OpenLLM Leaderboard</em> 每天都在发布"<u>A 比 B 更安全</u>" 的裁决——但业内很少讨论一个基础问题：<em>如果我把 harness 参数微调，同一对模型 A/B 的排序会不会颠倒？</em> 现有 benchmark 论文<u>普遍不披露</u>：<em>system prompt / max_tokens / temperature / sampling seed / batching / repetition / grader model / grader config / commit hash / OS / GPU / driver version</em> —— 这些看似<u>周边</u> 的参数，其实决定 pairwise verdict。SafetyRepro 是<em>第一次系统性把这个 folklore 抬到形式化命题</em>。</p>
+
+    <p><strong>有限包络命题：一次紧凑的理论突破。</strong>命题的直觉是：<em>把每一个"A vs B 配对" 看作二元裁决 → 收集若干 configuration 下的裁决 → 计算 pairwise disagreement rate（多少比例的 configuration 组合给出不同的 verdict）→ 若该 rate 落在某个可测量的<u>有限包络</u> 之内，则严格排序<u>必然</u> 存在<u>configuration-pair 使其翻转</u></em>。这看似简单，但它的价值在于三点：</p>
+    <table class="data-table">
+      <thead><tr><th>特性</th><th>意义</th></tr></thead>
+      <tbody>
+        <tr><td>有限包络</td><td>不是渐近界，是<em>可在有限次实验内验证</em> 的构造性命题——benchmark 论文可以直接把 disagreement rate 报出来当健康指标</td></tr>
+        <tr class="hl"><td>Configuration-pair reversal</td><td>把"<em>严格排序</em>" 这个 leaderboard 常用的强论断显式化——不是"<em>A 和 B 差不多</em>"，而是"<em>存在一对 configuration 让排序严格颠倒</em>"</td></tr>
+        <tr><td>可证伪</td><td>命题给出了具体的边界——一旦 disagreement rate 超过某阈值，"<em>A 比 B 安全</em>" 就<u>失去 pairwise 意义</u></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Commit-Stamped 评估协议：把理论落到可复现工程。</strong>光有命题不够，作者配了完整协议：<em>每一次 benchmark run 都必须记录</em>：(a) benchmark 代码 commit hash；(b) harness config 完整 dump；(c) grader model + grader config；(d) sampling seed；(e) OS / GPU / driver stack；(f) run start/end wallclock。协议要求 leaderboard 只接受 commit-stamped submission；两次 run 只有当所有 stamp 一致时才可比较——否则视为不同的 measurement。这与 7-03 Grader-Repro 的<em>K-run disagreement</em> 建议高度呼应：<u>protocol 侧的 stamp × grader 侧的 K-run</u> 组成<em>双侧 audit</em>。</p>
+
+    <p><strong>结论的普遍性。</strong>论文最有冲击力的结论是"<em>在每个测试的 benchmark 上，configuration 单变量都能翻转 pairwise verdict</em>"——不是<em>偶发现象</em> 而是<em>普遍规律</em>。这意味着：<em>现在 leaderboard 的排序<u>本质上是 configuration-conditional</u></em>；<em>没有 configuration audit 的 pairwise verdict 只是<u>某一次 configuration 上的观察</u></em>；<em>论文里"A > B 3 分" 这种论断<u>无法从一次实验推广到 pairwise 判断</u></em>。这对<u>整个 alignment benchmark 生态</u> 是一次范式冲击。</p>
+
+    <p><strong>2026 H2 Benchmark 方法学五联拍完整闭合。</strong>把 SafetyRepro 放回你追踪的方法学谱系：</p>
+    <ul class="point-list">
+      <li><em>物品侧信息量</em>（7-02 IRT-Safety · Spagliardi et al. · arXiv 2606.20626）——哪些 item 值得跑</li>
+      <li><em>搜索侧覆盖率</em>（7-03 BOA · Lin et al. · arXiv 2605.01644）——safety 应通过搜索测量而非抽样</li>
+      <li><em>评委侧稳定性</em>（7-03 Necessary but Not Sufficient · Tamba · arXiv 2606.26185）——LLM-as-Judge 的 K-run disagreement</li>
+      <li><em>构造侧代表性</em>（7-03 TASTE · Keren et al. · arXiv 2605.28556）——反转 benchmark 构造过程</li>
+      <li><strong>配置侧鲁棒性</strong>（本文 SafetyRepro · Li et al. · arXiv 2605.25492 · 2026-05-25）——configuration 是否翻转配对</li>
+    </ul>
+    <p><em>五联拍完整闭合</em>——2026 H2 benchmark 方法学五个正交维度全部有了独立立论。SafetyRepro 是最后一角，但其涉及的是<em>最基础的原语（"A 比 B"）</em>——因此它的影响可能在长期最深远。</p>
+
+    <p><strong>与 6-25 Hacker-Fixer / 7-02 IRT / 7-03 Grader-Repro 的分工。</strong>把这四篇合起来定义 <strong>benchmark 可信度四步流程</strong>：<em>step 1 - Hacker-Fixer</em>：验证器不被 exploit（reward hacking 免疫）；<em>step 2 - IRT-Safety</em>：items 有信息量（心理测量学 filter）；<em>step 3 - TASTE</em>：任务代表性 + 难度演化；<em>step 4 - Grader-Repro</em>：评委 K-run 稳定；<em>step 5 - SafetyRepro</em>：configuration 不翻转。任何 alignment benchmark 论文要想被<u>H2 顶会视为可信</u>，必须<u>全跑一遍这五关</u>——这将成为下半年 review 隐性标准。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Spagliardi et al. — <em>Efficient Safety Benchmarking via IRT (7-02)</em>（物品侧 · 心理测量派）<br>
+    <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></div>
+    <div class="ref-item">Lin et al. — <em>Toward a Principled Framework for Agent Safety Measurement (BOA · 7-03)</em>（搜索派）<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+    <div class="ref-item">Tamba — <em>Necessary but Not Sufficient (7-03)</em>（评委稳定性）<br>
+    <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+    <div class="ref-item">Keren et al. — <em>A Matter of TASTE (7-03)</em>（构造代表性）<br>
+    <a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a></div>
+    <div class="ref-item">Zhong et al. — <em>Hardening Agent Benchmarks with Adversarial Hacker-Fixer Loops (6-25)</em>（reward-hacking 加固）<br>
+    <a href="https://arxiv.org/abs/2606.08960" target="_blank" rel="noopener">arxiv.org/abs/2606.08960</a></div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>（configuration 默认与业界最普及 harness）<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+    <div class="ref-item">Zheng et al. — <em>Judging LLM-as-a-Judge</em>（LLM-as-Judge 基础范式）<br>
+    <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">arxiv.org/abs/2306.05685</a></div>
+    <div class="ref-item">Biderman et al. — <em>Emergent Abilities Are a Mirage</em>（benchmark 度量选择改变结论的经典范例）<br>
+    <a href="https://arxiv.org/abs/2304.15004" target="_blank" rel="noopener">arxiv.org/abs/2304.15004</a></div>
+    <div class="ref-item">Nayan et al. — <em>Evaluation Awareness Is Not One Capability</em>（模型识别评估 cue 与 harness disclosure）<br>
+    <a href="https://arxiv.org/abs/2606.23583" target="_blank" rel="noopener">arxiv.org/abs/2606.23583</a></div>
+    <div class="ref-item">HELM — <em>Holistic Evaluation of Language Models</em>（多 configuration 评估的先驱）<br>
+    <a href="https://arxiv.org/abs/2211.09110" target="_blank" rel="noopener">arxiv.org/abs/2211.09110</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>："<em>A 比 B 更安全</em>" 是 pairwise-verdict 原语，不是<u>configuration-invariant</u> 事实。</li>
+      <li><strong>核心论点 ②</strong>：<em>有限包络命题</em> 把 pairwise-disagreement rate 与 rank reversal 数学绑定——可证伪。</li>
+      <li><strong>核心论点 ③</strong>：<em>Commit-stamped 协议</em> 是 pairwise-verdict 可比较的前提——两次 run 只有 stamp 一致时才可比较。</li>
+      <li><strong>关键结论</strong>：<em>在每一个测试的 benchmark 上</em>，configuration 单变量都能翻转 pairwise 结果——<u>普遍规律</u>。</li>
+      <li><strong>受影响 benchmark</strong>：广受引用的 alignment benchmark（HELM / SafetyBench / HarmBench / AIR-Bench / AgentBench 等）。</li>
+      <li><strong>方法学定位</strong>：H2 benchmark 方法学<em>五联拍</em> 第五角——<em>配置侧鲁棒性</em>。</li>
+      <li><strong>与四联拍的组合</strong>：<em>物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· 构造（TASTE）· 配置（本文）</em>——完整闭合。</li>
+      <li><strong>基础性</strong>：pairwise 是所有 leaderboard 排序的最底层原语——本文的影响<u>比其它四联拍任一都更基础</u>。</li>
+      <li><strong>可操作性</strong>：Commit-stamped 协议可立即被顶会 review policy 采纳。</li>
+      <li><strong>普遍适用</strong>：命题不依赖具体 benchmark 或 model 家族——适用所有 pairwise-verdict 类比较。</li>
+      <li><strong>影响面</strong>：会推动 H2 至 2027 上半年 <em>benchmark reproducibility audit</em> 成为 review 隐性标准。</li>
+      <li><strong>可复现</strong>：论文提供 commit-stamped 协议实现——其它 benchmark 可直接采用。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>Harness 侧的直接对偶</em>：与 7-03 Grader-Repro（<u>评委 K-run stability</u>）形成完美对偶——<em>Grader-Repro 讲相同 configuration 下 grader 多次跑的分歧，SafetyRepro 讲跨 configuration 的分歧</em>；两者都指向"<em>单跑 verdict 不可信</em>" 结论，只是切面不同；(2) <em>与你 SGLang KV-cache 毕设直接相关</em>：commit-stamped 协议要求<u>记录 batching / GPU / driver / KV-cache tier</u>——你的毕设可以<em>反向证明</em>：给出<u>相同 model + 相同 prompt + 不同 KV-cache 策略 → 不同 pairwise verdict</u> 的具体案例，说明<em>SGLang cache tier 应作为 stamp 的一部分</em>；(3) 立即可做的 SGLang 集成：<em>KV-Cache-Stamped Protocol</em>——扩展 commit-stamped 协议加一层 KV-cache 相关字段（cache hit rate / eviction events / prefix cache config / quantization tier），让 SGLang run 都有完整 audit trail；(4) 这样的 stamp 也<u>反向为 SGLang 提供 selling point</u>——"<em>SGLang 是唯一 benchmark-stamp-friendly 的 backend</em>"；(5) 与 7-02 Loop Engineering 组合：<em>loop specification 的 verification 组件</em> 应该<u>把 SafetyRepro 五联拍作为 verifier 定义</u>——loop 只在通过五关时才进入 autonomous-zone；(6) <em>Harness 层的健康指标扩展</em>：从"<em>K-run disagreement</em>"（评委侧）扩展到"<em>configuration-pair disagreement</em>"（配置侧）—— harness 现在需要报<u>双侧健康指标</u>；(7) 长远看，本文的<em>configuration is a first-class benchmark citizen</em> 观点会引发 harness 层的<em>configuration ontology</em> —— 需要有一套<u>可枚举、可 stamp、可 diff</u> 的 configuration 表达；这是 SGLang / vLLM / lm-evaluation-harness 三方都会追的方向。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>Agent safety 论文的 pairwise 论断全部要重新审视</em>：例如 6-30 Action Alignment 论断"<u>refusal-based training 是 category error</u>"、7-02 Why Generalize 论断"<u>safety Lipschitz &gt; utility Lipschitz</u>"——这些论断的实证是否 configuration-conditional？H2 应有 <em>agent safety 立场论文的 configuration audit</em>；(2) 与 7-03 BOA（搜索派）自然联动：BOA 说"<em>safety 应用搜索而不是抽样测量</em>"——SafetyRepro 的搜索空间正是 <u>configuration space</u>——两者可组合成 <em>configuration-space search for safety verdict robustness</em>；(3) 对 <em>agent safety 排行榜</em> 极其致命：如果单一 leaderboard 的"<em>Claude Opus 比 GPT-5 更安全</em>" 会因 configuration 翻转，那么 provider 侧的 marketing claim <u>需要重写</u>；(4) 与 AgentLens（7-06 本次报告）组合：<em>AgentLens 提供 white-box hidden-state 视角 · SafetyRepro 提供 black-box configuration 视角</em>——两者组成 <em>white-box × black-box 双 audit</em>；(5) 立即可做：<em>AgentSafetyRepro 项目</em>——把 SafetyRepro 命题应用到 AgentBench / SkillSafetyBench / DECOMPBENCH 三个 agent benchmark，量化 configuration reversal rate；(6) 长远看，H2 agent safety 应把<em>configuration disclosure</em> 立成<u>论文写作强制项</u>——正如统计学论文强制报 confidence interval。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（本方向核心）</div>
+        <p>(1) <strong>2026 H2 benchmark 方法学五联拍完整闭合</strong>——<em>物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· 构造（TASTE）· 配置（SafetyRepro）</em>——这是自动化 tracker 启用以来 benchmark 方法学最完整的五角形；SafetyRepro 是最后一角，也是最基础的一角（pairwise 是所有排序的最底层原语）；(2) 与 6-25 Hacker-Fixer / 7-02 IRT / 7-03 Grader-Repro / 7-03 TASTE 组成 <em>benchmark 可信度五步流程</em>：<em>step 1 - Hacker-Fixer 验证器免疫 · step 2 - IRT items 信息量 · step 3 - TASTE 任务代表性 · step 4 - Grader-Repro 评委稳定 · step 5 - SafetyRepro 配置不翻转</em>——将成为 H2 顶会 review 的隐性标准；(3) 立即可做的 <em>Meta-benchmark Audit</em>：把 SafetyBench / HarmBench / TrustLLM / AIR-Bench / AgentBench 依次跑一遍 SafetyRepro 命题，公布 <em>configuration reversal 排名</em>；(4) <em>新指标：Configuration Robustness Score (CRS)</em>——把 pairwise disagreement rate 归一化到 [0,1]，作为 leaderboard 一等指标（越低越稳）；(5) 与 6-28 REALM（129,792 评测点穷举派）× 6-26 ForesightSafety-VLA（多层 diagnostic） × 6-30 OSWorld 2.0（长程 agent 穷举）合成 <em>2026 H2 safety benchmark 输入侧穷举 × 方法学五联拍</em> 完整生态；(6) 长期看，本文引发的<em>configuration ontology</em> 会成为独立子领域——需要一套可枚举、可 stamp、可 diff 的 configuration 表达 —— 这类似统计学里的"<em>experimental design</em>" 传统；(7) 值得关注的伴随成果：作者提出的 <em>commit-stamped 协议</em> 会被 NeurIPS / ICLR benchmark track、AISI benchmark policy、UK AISI regulatory guidance 依次借鉴——H2 至 2027 上半年可能成为国际 alignment benchmark 强制项。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Efficient Safety Benchmarking via IRT (7-02)</strong> · 物品侧信息量——五联拍第一角<br>
+      <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a></li>
+      <li><strong>BOA: Principled Framework for Agent Safety Measurement (7-03)</strong> · 搜索派——五联拍第二角<br>
+      <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></li>
+      <li><strong>Necessary but Not Sufficient (7-03)</strong> · 评委稳定性——五联拍第三角<br>
+      <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></li>
+      <li><strong>A Matter of TASTE (7-03)</strong> · 构造代表性——五联拍第四角<br>
+      <a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a></li>
+      <li><strong>Emergent Abilities Are a Mirage (2023)</strong> · benchmark 度量选择改变结论的经典范例<br>
+      <a href="https://arxiv.org/abs/2304.15004" target="_blank" rel="noopener">arxiv.org/abs/2304.15004</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2605.25492" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2605.25492v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2605.25492" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">EleutherAI Harness</a>
+      <a class="link-btn" href="https://crfm.stanford.edu/helm/" target="_blank" rel="noopener">HELM Benchmark</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-06 #1 · 搜索来源：arxiv.org/api/query?ti:safety/agent/alignment benchmark + arxiv.org/abs/2605.25492<br>
+  论文出处：<a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

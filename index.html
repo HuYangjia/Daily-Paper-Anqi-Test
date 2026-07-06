@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">44 篇报告</span>
+        <span class="count-badge">45 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">43 篇报告</span>
+        <span class="count-badge">44 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">42 篇报告</span>
+        <span class="count-badge">43 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-06-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">06</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title">ReContext：<strong>Recursive Evidence Replay as LLM Harness for Long-Context Reasoning</strong> —— 把 harness 概念<u>下推到 inference 时刻</u>；三步流水线（<em>模型内部相关性打分 → query-conditioned evidence pool → replay 到完整 context 前面</em>）；无训练 · 无外部 memory · 无 context 剪枝。首次给长上下文推理提供 <em>associative memory 理论类比</em>（context ↔ memory store · question ↔ retrieval cue · attention ↔ cue-trace association · replay ↔ trace reactivation）；128K × 8 数据集 × Qwen3-4B / 8B / Llama3-8B 三 backbone 全部平均排名第一 #1</div>
+          <div class="paper-sub">Y. Zhao / R. Qiu / T. Wei + 6 人 · UIUC + Virginia Tech · arXiv 2607.02509 2026-07-02 · cs.AI · GitHub Yanjun-Zhao/ReContext</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-06-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">06</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title">AgentLens：把机制可解释性从"<em>单轮 QA / jailbreak</em>" 首次扩展到"<strong>多轮 coding agent 全轨迹</strong>" —— 用 <strong>10 维 subspace × 单层 steering</strong> 在 hidden representation 层面运行时检测并抑制有害执行状态；配套 <em>MAS benchmark</em>（194 tasks × LLaMA-3.1-8B / Qwen-2.5-7B / Gemma-2-9B 全轨迹标注）。三大结果：<em>强检测 · look-ahead 风险预判初步证据 · 大幅降低 harmful action</em>；<strong>H2 agent safety 第六派 · 可解释派 / white-box 派</strong> 诞生 —— 六派中<u>第一派可运行时部署</u> 的方法学 #1</div>
+          <div class="paper-sub">W. Luo / Q. Zhang / Y. Quan + 5 人 · arXiv 2606.22673 2026-06-21 · cs.AI + cs.SE · GitHub EddyLuo1232/AgentLens</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-06-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">06</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title">SafetyRepro：<strong>Configuration-Conditional Rank Instability on Alignment Benchmarks</strong> —— 把 alignment benchmark 最基础的<u>"A 比 B 安全" 配对判定</u> 首次抬到形式化命题。<strong>有限包络命题</strong>把 pairwise disagreement rate 与 configuration-pair 反转数学绑定 + <strong>commit-stamped 评估协议</strong>；<em>在每一个测试的 benchmark 上</em> configuration 单变量就能翻转 pairwise 结果；<strong>2026 H2 benchmark 方法学五联拍完整闭合</strong>：<em>物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· 构造（TASTE）· 配置（本文）</em> #1</div>
+          <div class="paper-sub">Y. Li / Z. Fan / Z. Zhuang · arXiv 2605.25492 2026-05-25 · cs.LG · 与 7-02 IRT + 7-03 BOA / Grader-Repro / TASTE 合成 H2 五联拍</div>
+        </div>
+        <div class="score-pill">92 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-03-1.html">
         <div class="date-badge">
