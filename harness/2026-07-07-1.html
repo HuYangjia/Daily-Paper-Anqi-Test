@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-07 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-07 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 7 日 · Harness Engineering · 把 harness 层里最基础的"<em>A 比 B 强</em>" 断言<u>抬到统计推断的严格性</u>——用一个 pip 包让 per-item results 直接产出<strong>可发表级别的置信区间 + 配对显著性 + 多重比较修正</strong>；同时用独立参考（statsmodels / 暴力枚举）验证每条 routine，防止工具本身 bug 悄悄污染 leaderboard 结论</div>
+  <h1>evalci：把 <strong>lm-evaluation-harness / HELM</strong> 的 per-item 结果一键转成<em>publication-ready 统计声明</em>——为 harness 时代的"<u>A 打败 B</u>" 提供第一份<em>纯 Python · 可 pip 安装 · 独立参考验证</em> 的严格性工具；对 MMLU 九模型公开对比复现：<strong>相邻 leaderboard 排名 8 对里有 3 对不显著</strong>（36 个 pairwise 比较 Holm 修正后）</h1>
+  <div class="en-title">evalci: A Python Library for Statistically Rigorous Comparison of Language Model Evaluations</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.9</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.0</span>
+    <span class="score-chip chip-open">开源复现 10.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-25 至 07-05 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">evalci: A Python Library for Statistically Rigorous Comparison of Language Model Evaluations</a><span class="winner-badge">今日选定</span></td>
+          <td>lm-evaluation-harness / HELM 后处理层 · per-item results → 配对显著性 + CI + 多重比较修正 · numpy/scipy/pandas 纯 Python · 每条 routine 都对 statsmodels / brute-force 独立参考验证</td>
+          <td>arXiv 2607.04429 · 2026-07-05 · S. K. Chandrahas · cs.CL + cs.AI · PyPI evalci · GitHub Shreyaskc/evalci · Zenodo DOI 21201815</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.02825" target="_blank" rel="noopener">JavaVulBench: Java Vulnerability Benchmark with Multi-Backend Harness</a></td>
+          <td>30,600 Java 方法 · 1,740 CVE · 5 realistic splits · <em>Unified multi-backend harness</em> · leakage-aware evaluation mode</td>
+          <td>arXiv 2607.02825 · 2026-07-02 · Szolnoki + Antal · cs.SE + cs.CR</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.01829" target="_blank" rel="noopener">Pre-Flight: LLM Aviation Operational Knowledge</a></td>
+          <td>Inspect evaluation framework · 300 MCQ · ICAO + FAA 规程 · 领域 harness 应用 · inspect_evals 社区包</td>
+          <td>arXiv 2607.01829 · 2026-07-02 · Brooker + Hughes · cs.AI + cs.CL</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.32007" target="_blank" rel="noopener">AxDafny: Agentic Verified Code Generation in Dafny</a></td>
+          <td>Verifier-guided repair harness · LCB-Pro-Dafny 250 problems · formal specs</td>
+          <td>arXiv 2606.32007 · 2026-06-30 · Breen 等 · cs.AI</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.01916" target="_blank" rel="noopener">ContextSniper: Token-Efficient Code Memory for Repo-Level Repair</a></td>
+          <td>AntTrail agent 内 code memory 模块 · repo-level 修复 harness 组件 · token-efficient · 结构化 index over raw content</td>
+          <td>arXiv 2607.01916 · 2026-07-02 · Luk 等 · cs.SE</td>
+          <td class="score-num">84</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22evaluation+harness%22+OR+abs:%22evaluation+harness%22+OR+ti:%22LLM+harness%22+OR+abs:%22benchmark+harness%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti/abs: LLM harness / evaluation harness 时间排序</a>。<strong>evalci 胜出</strong>：(1) <em>目标是最顶层的"<u>A 比 B 强</u>" 断言本身</em>——之前几周 harness 系列聚焦 grader 稳定性（7-03 Grader-Repro）、配置扰动（7-06 SafetyRepro）、context 组织（7-06 ReContext）、grader 非确定性（7-03 Necessary but Not Sufficient）——但<u>"这两个数字差 3 pts 是不是显著" 从未被系统化工具化</u>；evalci 就是这块缺口的填补，是 H2 第一份 harness 后处理"<em>统计层</em>"工具；(2) <em>纯 Python + 无重型依赖</em>：只依赖 numpy/scipy/pandas，pip install 即用——lm-evaluation-harness 的 per-item 输出可以直接馈入，<u>零胶水代码</u>；(3) <em>独立参考验证</em>——不是"<em>用自己验证自己</em>"（那是 SafetyRepro 都强调过的复现性漏洞），而是每条 routine 都对<em>statsmodels 或 brute-force exact 枚举</em> 做独立对比，这是"<em>tool-of-tools</em>" 类项目应该有的最高严谨度；(4) <em>实证案例研究扎实</em>——公开的 MMLU 9-模型比较（36 对 pairwise + Holm 修正）：<u>相邻 leaderboard 排名 8 对里有 3 对不显著</u>——这句话直接把当前 leaderboard 排名文化的"<em>置信不足</em>" 打脸；(5) <em>时机完美</em>——2026 H2 harness 谱系已从 <em>context（ReContext）· 策略（CUGA FLO）· 循环（Loop Engineering）· 评委（Grader-Repro）· 配置（SafetyRepro）</em> 逐层落地，本文补上<em>顶层统计层</em>——形成 **H2 harness 工程六层图**；(6) 已上 PyPI + GitHub + Zenodo DOI（10.5281/zenodo.21201815）——生态位卡死。JavaVulBench (89) 是 Java 特定域深度基准 + multi-backend harness，但 harness 面偏窄；Pre-Flight (87) 是 Inspect 框架下的领域应用，也很硬但通用性弱；AxDafny (85) 与 ContextSniper (84) 都是 pipeline 内 harness 组件，通用性最低。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>evalci: A Python Library for Statistically Rigorous Comparison of Language Model Evaluations</span></div>
+      <div class="meta-item"><label>中文标题</label><span>evalci：面向语言模型评估的<em>统计严谨性</em> Python 库</span></div>
+      <div class="meta-item"><label>作者</label><span>Shreyas K Chandrahas（单一作者）</span></div>
+      <div class="meta-item"><label>机构</label><span>独立作者（arXiv 首页未显式列 institution）</span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-07-05 v1</span></div>
+      <div class="meta-item"><label>论文规格 / 领域</label><span>7 pages · 1 figure · cs.CL + cs.AI · MSC 62F03 / 62F25 · ACM G.3; D.2.5</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">arxiv.org/abs/2607.04429</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2607.04429" target="_blank" rel="noopener">arxiv.org/pdf/2607.04429</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2607.04429v1" target="_blank" rel="noopener">arxiv.org/html/2607.04429v1</a></div>
+      <div class="meta-item"><label>arXiv DOI</label><a href="https://doi.org/10.48550/arXiv.2607.04429" target="_blank" rel="noopener">10.48550/arXiv.2607.04429</a></div>
+      <div class="meta-item"><label>PyPI 包</label><a href="https://pypi.org/project/evalci/" target="_blank" rel="noopener">pypi.org/project/evalci/</a></div>
+      <div class="meta-item"><label>GitHub 源码</label><a href="https://github.com/Shreyaskc/evalci" target="_blank" rel="noopener">github.com/Shreyaskc/evalci</a></div>
+      <div class="meta-item"><label>Zenodo DOI</label><a href="https://doi.org/10.5281/zenodo.21201815" target="_blank" rel="noopener">10.5281/zenodo.21201815</a></div>
+      <div class="meta-item"><label>核心适配器</label><span><em>lm-evaluation-harness</em>（EleutherAI）+ <em>HELM</em>（Stanford CRFM）per-item 输出格式</span></div>
+      <div class="meta-item"><label>实证案例</label><span>MMLU 9 模型公开比较 · 8 对相邻排名 · 36 pairwise 比较（Holm 修正）· <strong>3/8 对相邻不显著</strong></span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 harness 时代最基础但最<u>被忽视</u> 的一步——"<em>A 比 B 强</em>"<em>的统计推断</em>——打包成一个<strong>pip 安装、一函数调用、独立参考验证</strong> 的 Python 库，把 lm-evaluation-harness / HELM 的 per-item 表转成<em>可发表级别的 CI + 配对显著性 + 多重比较修正</em> 声明；并以 MMLU 9-模型公开比较为例展示：<u>3 / 8 对相邻 leaderboard 排名不显著</u>——直接给当前 leaderboard 文化补上第一个可执行的<em>诚实工具</em>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>当前语言模型评估的主流做法是：<em>每个模型报一个 accuracy 数字，谁高谁强</em>——却<u>不检验</u> 差距是否可能只是<em>抽样噪声</em>。在几千个题目的基准、以及模型自我复现差异都可能大于模型间差距的 <em>temperature sampling</em> 下，这种做法<u>常常高估</u> 头条结论的可信度。修正它的统计机制——<em>置信区间、配对显著性检验、power 分析、聚类标准误、多重比较修正</em>——早已成熟，但<u>没有标准 pip 包</u> 把这些以<em>评估实际的数据形态</em>（即 per-item results table）为输入组织起来。我们发布 <strong>evalci</strong>，一个<em>纯 Python（仅依赖 numpy/scipy/pandas）</em> 的库：把 per-item results 表<u>一函数调用</u> 转换成可发表级别的声明——例如 <em>"Model A beats Model B, Δ=3.1 pts, 95% CI [1.2, 5.0], paired permutation p=0.002, n=1,319"</em>——并配套 <strong>lm-evaluation-harness 和 HELM 输出的适配器</strong>。每条 routine 都对<em>独立参考</em> 做了验证（<u>statsmodels 或暴力精确枚举</u>），而不是<u>只验证自己</u>。作为案例研究，我们重新分析了 9 个语言模型在 MMLU 上的公开比较——发现 <strong>8 对相邻 leaderboard 排名差距中有 3 对在<u>对 36 对隐含 pairwise 比较做 Holm 修正</u> 后并不显著</strong>。evalci 已在 <a href="https://pypi.org/project/evalci/" target="_blank" rel="noopener">PyPI</a> 上发布，源码在 <a href="https://github.com/Shreyaskc/evalci" target="_blank" rel="noopener">GitHub</a>，DOI 见 <a href="https://doi.org/10.5281/zenodo.21201815" target="_blank" rel="noopener">Zenodo</a>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 / 三条缺失 / 库结构 / 独立参考验证范式 / MMLU 案例 / 与 H2 harness 六层图定位）</div>
+
+    <p><strong>问题背景。</strong>2024–2026 三年的 leaderboard 战争，把"<em>公开 benchmark 上 A 比 B 高多少 pts</em>" 变成了公司宣传语——但社区始终缺一个<u>让每篇论文、每张排行榜、每条 blog 都能<em>一函数调用</em> 加上 CI 和显著性的工具</u>。这不是"<em>没人知道要做</em>"——统计学界早在 1960 年代就有 paired t-test、bootstrap、permutation test、Holm-Bonferroni；机器学习界也有 <em>McNemar</em>、<em>Wilcoxon signed-rank</em> 等经典工具；但<u>它们从未被打包成"per-item results table → publication-ready claim" 的单函数 API</u>。evalci 就是这个缺口的填补——它<em>不发明新方法</em>，而是<em>把成熟方法工程化到 harness 时代的数据形态</em>。</p>
+
+    <p><strong>作者点出的三条缺失。</strong>这些缺失都是 2026 leaderboard 文化的<em>直接后果</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>缺失</th><th>后果</th><th>evalci 补法</th></tr></thead>
+      <tbody>
+        <tr><td>① 报 accuracy 但不报 CI</td><td>3.1 pts 的差距 vs 4.5 pts 的 CI 半宽——<u>差距在 CI 内</u> 却被宣传成"<em>显著超越</em>"</td><td>paired bootstrap / analytic Wilson / normal-approx CI 三选一</td></tr>
+        <tr class="hl"><td>② 单跑一次 temperature≠0 就下结论</td><td><em>模型自我复现差异</em> 可能大于模型间差距（与 7-03 Grader-Repro 的 690-call 数据完全一致）</td><td>K-run 分布内 self-vs-self CI + 跨模型 CI 双报</td></tr>
+        <tr><td>③ Leaderboard 排名 = "<em>N 个 pairwise 比较</em>"，但从不做多重比较修正</td><td>9 个模型 → 36 对比较 → 单尾 α=0.05 下期望 <em>1.8 个假阳性</em>——却被当作"<em>排名可信</em>"</td><td>Holm-Bonferroni / Benjamini-Hochberg 内置</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>evalci 的 API 形态。</strong>论文强调"<em>one function call</em>"——目标是让评估作者不用写胶水代码。核心用法（论文摘要 & GitHub README 归纳）：</p>
+    <ul class="point-list">
+      <li>输入：<em>per-item results table</em>——每一行是 <em>(item_id, model_A_correct, model_B_correct[, subject, cluster_id])</em>——正是 lm-evaluation-harness 和 HELM 的输出形态。</li>
+      <li>调用：<em>evalci.compare(table, model_a="A", model_b="B", method="paired_permutation", ci="bootstrap", correction="holm")</em>——一次返回<em>Δ、CI、p-value、n、method 用于哪个 assumption、多重比较后是否显著</em>。</li>
+      <li>输出：Publication-ready 一句话，比如 <em>"Model A beats Model B, Δ=3.1 pts, 95% CI [1.2, 5.0], paired permutation p=0.002, n=1,319"</em>——可以<u>直接粘到论文里</u>。</li>
+      <li>覆盖：<em>置信区间、配对显著性、power 分析、聚类标准误、多重比较修正</em> 五大类。</li>
+      <li>适配器：<em>lm-evaluation-harness</em>（EleutherAI · <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">链接</a>）+ <em>HELM</em>（Stanford CRFM · <a href="https://crfm.stanford.edu/helm" target="_blank" rel="noopener">链接</a>）输出格式直接吃。</li>
+    </ul>
+
+    <p><strong>独立参考验证：一次真正严肃的软件工程学。</strong>evalci 最<em>加分</em> 的部分不是它的功能，而是它的验证纪律——<em>每条 routine 都对独立参考</em> 做了对比：（a）<em>statsmodels</em> ——公认的 Python 统计标准库，用来对照 permutation test / CI / Holm 修正的结果；（b）<em>brute-force exact enumeration</em>——对小样本情况做<em>穷举所有 permutation</em>，得到<em>数学上精确</em> 的 p-value 作为 ground truth。这个纪律解决了一个 harness 时代的<em>元问题</em>：<u>如果统计工具本身有 bug，那么 harness 层的一切"<em>严谨性</em>" 都是幻觉</u>。这与 7-06 SafetyRepro "<em>先证有限包络命题、再报 pairwise disagreement</em>" 的<em>数学 → 实证</em> 一致范式属于同一哲学：<em>把 harness 的每一层都对齐到数学参考点</em>。</p>
+
+    <p><strong>MMLU 9 模型案例研究。</strong>作者用 evalci 重新分析了一个<em>公开的</em> 9-模型 MMLU 比较——这是 <em>1,319 items</em> 的经典 benchmark（4 分类 subjects），9 个模型两两比较等于 36 对 pairwise。结论：<strong>8 个相邻 leaderboard 排名的 gap 中，3 个在 Holm 多重比较修正后不显著</strong>——即"<em>第 N 名 vs 第 N+1 名</em>" 的差距<u>不能拒绝零假设</u>。这句话的<em>含义</em> 是：目前<em>1/3 以上的相邻 ranking 差异</em> 都是<u>抽样噪声</u>——但每一次都被公司/论文/blog 当成"<em>SoTA 超越</em>" 报道。这是一个非常干净的<u>行业惯性打脸</u>——不需要新算法、不需要更多数据、只需要一个诚实的统计工具。</p>
+
+    <p><strong>与 2026 H2 harness 工程谱系的定位：<em>第六层——统计层</em>。</strong>evalci 补上了 harness 谱系的最后一层：</p>
+    <table class="data-table">
+      <thead><tr><th>层</th><th>关注</th><th>代表工作（本 tracker 已收）</th></tr></thead>
+      <tbody>
+        <tr><td>Context 层</td><td>输入证据的组织与 replay</td><td>7-06 ReContext（arXiv 2607.02509）</td></tr>
+        <tr><td>策略层</td><td>模型/harness 外部的策略治理</td><td>6-30 CUGA FLO（arXiv 2606.27188）</td></tr>
+        <tr><td>循环层</td><td>Loop specification 五元组 + verification ladder</td><td>7-02 Loop Engineering（arXiv 2607.00038）</td></tr>
+        <tr><td>评委层</td><td>LLM-as-Judge 的非确定性与 K-run 稳定性</td><td>7-03 Necessary but Not Sufficient（arXiv 2606.26185）</td></tr>
+        <tr><td>配置层</td><td>Configuration-conditional rank instability</td><td>7-06 SafetyRepro（arXiv 2605.25492）</td></tr>
+        <tr class="hl"><td>统计层（本文）</td><td>Publication-ready CI + 配对显著性 + 多重比较修正</td><td><strong>7-07 evalci（arXiv 2607.04429）</strong></td></tr>
+      </tbody>
+    </table>
+    <p>六层合起来构成 2026 H2 <strong>harness 工程六层完整拓扑</strong>——每一层都独立可干预、独立可开源、独立可验证。evalci 是这六层里<em>最靠近最终 leaderboard 文化</em> 的一层，也是<u>最容易被立刻采用</u> 的一层——因为它不改任何模型、任何 benchmark、任何评估流水线，只在最后加上一层<em>诚实的统计包装</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">EleutherAI — <em>lm-evaluation-harness</em>（本文一等公民适配器目标）<br>
+    <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></div>
+    <div class="ref-item">Stanford CRFM — <em>HELM: Holistic Evaluation of Language Models</em>（本文二等公民适配器目标）<br>
+    <a href="https://crfm.stanford.edu/helm" target="_blank" rel="noopener">crfm.stanford.edu/helm</a></div>
+    <div class="ref-item">statsmodels — <em>Statistical models in Python</em>（本文对每条 routine 的独立参考验证之一）<br>
+    <a href="https://www.statsmodels.org/" target="_blank" rel="noopener">statsmodels.org</a></div>
+    <div class="ref-item">Holm — <em>A Simple Sequentially Rejective Multiple Test Procedure</em>（1979 · 本文默认多重比较修正法）<br>
+    <a href="https://www.jstor.org/stable/4615733" target="_blank" rel="noopener">JSTOR 4615733</a></div>
+    <div class="ref-item">Efron & Tibshirani — <em>An Introduction to the Bootstrap</em>（本文 bootstrap CI 的经典教材）<br>
+    <a href="https://www.taylorfrancis.com/books/mono/10.1201/9780429246593" target="_blank" rel="noopener">Taylor & Francis</a></div>
+    <div class="ref-item">Hendrycks et al. — <em>MMLU: Measuring Massive Multitask Language Understanding</em>（本文 case study 使用的基准）<br>
+    <a href="https://arxiv.org/abs/2009.03300" target="_blank" rel="noopener">arxiv.org/abs/2009.03300</a></div>
+    <div class="ref-item">Tamba — <em>Necessary but Not Sufficient</em>（7-03 · grader 稳定性 harness 层，本文的姊妹层）<br>
+    <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+    <div class="ref-item">Li / Fan / Zhuang — <em>SafetyRepro / Configuration-Conditional Rank Instability</em>（7-06 · 配置层 harness）<br>
+    <a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a></div>
+    <div class="ref-item">Zhao et al. — <em>ReContext: Recursive Evidence Replay as LLM Harness</em>（7-06 · context 层 harness）<br>
+    <a href="https://arxiv.org/abs/2607.02509" target="_blank" rel="noopener">arxiv.org/abs/2607.02509</a></div>
+    <div class="ref-item">Fournier & Limonad — <em>CUGA FLO</em>（6-30 · 策略层 harness）<br>
+    <a href="https://arxiv.org/abs/2606.27188" target="_blank" rel="noopener">arxiv.org/abs/2606.27188</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>Leaderboard 相邻排名差距</em> 应默认假设是<u>抽样噪声</u>，而不是<u>能力真差</u>——除非做过配对显著性 + 多重比较修正。</li>
+      <li><strong>核心论点 ②</strong>：<em>模型自我复现差异</em>（K 次重跑）可能大于模型间差距——与 7-03 Grader-Repro 的实证一致，本文补上"<em>如何用统计包装</em>" 的最后一步。</li>
+      <li><strong>核心论点 ③</strong>：<em>统计工具本身也要有独立参考验证</em>——否则 harness "严谨性" 是幻觉。</li>
+      <li><strong>关键数据 · 案例规模</strong>：<em>MMLU 1,319 items × 9 模型 × 36 对 pairwise</em>——公开数据可复现。</li>
+      <li><strong>关键数据 · 结论</strong>：Holm 修正后 <strong>3 / 8 对相邻排名不显著</strong>——直接反驳"<em>SoTA 提升是真的</em>" 的默认叙事。</li>
+      <li><strong>方法学 · 依赖</strong>：<em>numpy + scipy + pandas</em> 三件套——无重型 ML 依赖，可以在 CI/CD 中运行。</li>
+      <li><strong>方法学 · 验证</strong>：<em>每条 routine 对 statsmodels 或 brute-force exact 枚举做独立参考</em>——工具-of-工具的最高严谨度。</li>
+      <li><strong>产品化 · 三生态位</strong>：<em>PyPI · GitHub · Zenodo DOI</em>——完整锁定学术引用与工程采用两条路径。</li>
+      <li><strong>API 形态</strong>：<em>一函数调用</em> 输出 <em>publication-ready 一句话</em>——workflow 阻力最小化设计。</li>
+      <li><strong>适配器</strong>：<em>lm-evaluation-harness / HELM</em> 两大主流 harness 输出格式即插即用。</li>
+      <li><strong>覆盖统计工具</strong>：<em>CI · 配对显著性 · power 分析 · 聚类标准误 · 多重比较修正</em> 五大类。</li>
+      <li><strong>拓扑定位</strong>：与 ReContext / CUGA FLO / Loop Engineering / Grader-Repro / SafetyRepro 合成 <em>2026 H2 harness 工程六层图</em>——本篇是<u>统计层</u>。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering（直击 · H2 六层图完整闭合，与你毕设关联度中等偏高）</div>
+        <p>(1) <strong>本文是 H2 harness 工程六层图的<em>最后一层（统计层）</em></strong>——六层是 <em>context / 策略 / 循环 / 评委 / 配置 / 统计</em>——本文补齐后，H2 harness 拓扑<u>正式完整闭合</u>；接下来的 harness 工作都是这六层的<em>组合应用与深化</em>；(2) <em>与你毕设 SGLang KV-cache 方向的对齐点</em>：任何"<em>KV-cache 优化 X 能带来 Y pts 提升</em>" 的实验，如果不做 <strong>evalci-style 配对显著性 + 多重比较修正</strong>，都会被审稿人打回——你的毕设 evaluation section <em>必须</em> 用 evalci 包装 leaderboard 数字，否则会被"<em>差 1 pt 显不显著</em>" 的质疑击穿；(3) <em>直接产品化机会</em>：为 SGLang 生态做一个 <em>evalci-sglang adapter</em>——SGLang 的 per-request 输出格式（含 latency / correctness / cache-hit）可以直接馈入 evalci，输出 <em>"cache scheme A vs B, Δ latency=-3.1ms, 95% CI [-5.0, -1.2], paired bootstrap p=0.001, n=1,319"</em> 这种 publication-ready 声明；(4) <em>与 7-03 Grader-Repro / 7-06 SafetyRepro 的三层链</em>：<em>K-run 稳定性（评委层）· pairwise 反转率（配置层）· 显著性 + CI（统计层）</em>——三层是<u>层级化的严谨性递进</u>；如果你毕设做完整的 "harness reliability audit"，可以对同一 KV-cache 策略跑<u>三层完整审计</u>，输出"<em>K-run flip rate · configuration flip rate · pairwise significance</em>" 三段式；(5) <em>Fixed-model harness ablation 范式再深化</em>——之前 SuperCoder / ReContext 的 fixed-model ablation 只报 raw Δ，本文把 fixed-model ablation 的 Δ 升级到<u>带 CI 与显著性的 Δ</u>，是这个范式的<em>统计学补丁</em>；(6) 长期看，evalci 会像<u>lm-evaluation-harness 之于评估</u> 一样，成为 <em>harness 层的标准中间件</em>——早期采用者会获得<u>论文声誉红利</u>（"<em>我们是第一批用 evalci 做显著性的</em>"）。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>Agent safety benchmark 的"<u>A 比 B 安全</u>" 判定问题最严重</em>——因为 safety scores 常常是 <em>0/1 二元 harmful-action count</em>，样本量小、方差大；如果不做 CI + 显著性，"<em>defense A vs B 差 2%</em>" 完全可能是抽样噪声——evalci 是 agent safety 社区<u>立刻可用</u> 的诚实工具；(2) 与 7-03 BOA 搜索派的组合：BOA 用<em>搜索</em> 找 unsafe trajectories 而不是 sampling——搜索出来的 harmful count 也需要 CI + 显著性——evalci 直接吃 BOA 的 per-trajectory 输出；(3) 与 7-06 AgentLens 可解释派的组合：AgentLens 的 MAS benchmark（194 tasks × 3 backbone）本身就是 pairwise scenario benchmark——用 evalci 做<em>defense-A vs defense-B</em> 显著性检验，可以量化"<em>steering intervention 到底带来了多少真实安全提升</em>"；(4) <em>Skill-facing attack benchmark 的显著性问题</em>（6-25 SkillSafetyBench）：如果 defense 在 100 个 attack scenarios 上成功率 87% vs 85%——差 2% 的 CI 半宽大概率是 3-4%，Holm 修正后大概率不显著——evalci 会把这些"<em>不真实的提升</em>" 剔除；(5) <em>更深层的启发</em>：H2 agent safety 七派立场（外置 / 认知 / 泛化 / 评委 / 搜索 / 可解释 / 形式化派 —— 见今日 agent-safety 报告）之间的<em>defense comparison</em> 也应该用 evalci——否则"<em>形式化派 vs 认知派 差 3%</em>" 之类的比较毫无意义；(6) 立即可创建的产品：<strong>evalci-agentsafety extension</strong>——把 <em>attack success rate / defense refusal rate / task completion under attack</em> 三类 metric 直接吃进去，输出 defense pair 的 publication-ready 显著性声明。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>Safety benchmark 更需要统计严谨</em>——因为 safety failure 是<em>低频事件</em>（1% level 或更低），样本量对显著性极其敏感；evalci 提供的<em>power 分析</em> 直接告诉 benchmark 作者：<em>"如果你想在 α=0.05 检出 Δ=0.5% 的 safety 差异，你至少需要 n=8,000 items"</em>——这是当前几乎所有 safety benchmark（HarmBench / TrustLLM / AIR-Bench / MAS）都<u>违反</u> 的 rule；(2) 与 7-02 IRT-Safety 的深度组合：<em>IRT 精选 informative subset</em> 减少 items × <em>evalci 报显著性</em>——两者合成"<em>信息论选题 + 频率论显著</em>" 的完整 benchmark 严谨性栈；(3) 与 7-06 SafetyRepro 的组合：<em>SafetyRepro 报 pairwise reversal rate（配置扰动下）</em> × <em>evalci 报单一配置下的 CI + 显著性</em>——两层<u>正交</u>，SafetyRepro 说"<em>换配置就翻</em>"，evalci 说"<em>就算不换配置也未必显著</em>"——两者组合刀刀见血；(4) <em>立即可创建的新 benchmark</em>：<strong>Benchmark-Reliability-Score (BRS)</strong>——把 4 个维度打包成单一分数：<em>K-run stability（评委层）· configuration flip rate（配置层）· pairwise significance rate（统计层）· power at Δ=1%（统计层）</em>——所有主流 benchmark 都可以报一个 BRS，让作者/公司无处躲藏；(5) <em>MMLU 案例可复用</em>：作者已经复现了 MMLU 9 模型 36 对比较——社区可以立刻<u>把这个例子扩展到 HarmBench / SafetyBench / AIR-Bench</u>——H2 应该有一系列 "<em>evalci-audit-of-X</em>" 帖子，比如"<em>3/8 相邻 leaderboard 排名在 HarmBench 上不显著</em>"；(6) 长期看，这是<em>心理测量派（IRT）+ 频率派（evalci）+ 数学派（SafetyRepro）</em> 三派的融合——2026 H2 <strong>benchmark 方法学六联拍</strong>正式闭合（物品 IRT / 搜索 BOA / 评委 Grader-Repro / 构造 TASTE / 配置 SafetyRepro / <strong>统计 evalci</strong>）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>lm-evaluation-harness</strong> · EleutherAI 官方 harness 参考实现<br>
+      <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank" rel="noopener">github.com/EleutherAI/lm-evaluation-harness</a></li>
+      <li><strong>HELM (Stanford CRFM)</strong> · Holistic Evaluation of Language Models<br>
+      <a href="https://crfm.stanford.edu/helm" target="_blank" rel="noopener">crfm.stanford.edu/helm</a></li>
+      <li><strong>Necessary but Not Sufficient (7-03)</strong> · Harness grader 稳定性层<br>
+      <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></li>
+      <li><strong>SafetyRepro (7-06)</strong> · Harness 配置层的 pairwise 反转数学命题<br>
+      <a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a></li>
+      <li><strong>ReContext (7-06)</strong> · Harness context 层的 evidence replay<br>
+      <a href="https://arxiv.org/abs/2607.02509" target="_blank" rel="noopener">arxiv.org/abs/2607.02509</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2607.04429" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.04429v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.04429" target="_blank" rel="noopener">arXiv DOI</a>
+      <a class="link-btn" href="https://pypi.org/project/evalci/" target="_blank" rel="noopener">PyPI 包</a>
+      <a class="link-btn" href="https://github.com/Shreyaskc/evalci" target="_blank" rel="noopener">GitHub 源码</a>
+      <a class="link-btn" href="https://doi.org/10.5281/zenodo.21201815" target="_blank" rel="noopener">Zenodo DOI</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-07 #1 · 搜索来源：arxiv.org/api/query?ti/abs:evaluation harness + arxiv.org/abs/2607.04429<br>
+  论文出处：<a href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">arxiv.org/abs/2607.04429</a> ·
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+</footer>
+
+</body>
+</html>

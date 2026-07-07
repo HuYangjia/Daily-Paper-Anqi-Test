@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-07 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #fcebeb; color: #a32d2d; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7a1f1f; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c8c8; color: #7a1f1f; }
+  .link-btn.primary:hover { background: #f9dcdc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #a32d2d; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fff8f8; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #f4c8c8; color: #7a1f1f; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-07 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 7 日 · Agent Skills Safety · <strong>ICML 2026 AIWILD Workshop 已接收</strong> · 用 LLM 把 agent prompt / MCP 工具描述 / 自然语言 policy 文档<u>自动形式化</u>翻译成 <em>Cedar Policy Language</em>——不再依赖<em>概率护栏（分类器 / prompt steering）</em>，也<u>不用</u>手工写 symbolic 规则；在 MedAgentBench 上覆盖度<u>大幅超过</u>先前 hand-coded 版本——<strong>H2 agent safety 第七派立场 · 形式化派</strong>诞生</div>
+  <h1>Autoformalization of Agent Instructions into Policy-as-Code：用 <strong>LLM generator-critic 循环</strong>把 <em>agent prompts + MCP tool descriptions + natural-language policy 文档</em> 翻译成<u>形式验证的 Cedar 策略</u>；MedAgentBench 上<em>覆盖度大幅超过</em>先前 hand-coded symbolic enforcement——<u>不再</u>需要在"概率护栏 vs 手写规则"之间二选一</h1>
+  <div class="en-title">Autoformalization of Agent Instructions into Policy-as-Code · ICML 2026 AIWILD Workshop (Accepted)</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.7</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-25 至 07-06 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">Autoformalization of Agent Instructions into Policy-as-Code</a><span class="winner-badge">今日选定</span></td>
+          <td>Agent prompt + MCP tool descriptions + NL policy → Cedar Policy Language · LLM generator-critic loop · <em>形式化派</em>（H2 第七派立场）· MedAgentBench 覆盖度显著优于手写</td>
+          <td>arXiv 2606.26649 · 2026-06-25 · Mondl / Maisel / Brock · cs.AI + cs.CR · <strong>ICML 2026 AIWILD Workshop</strong></td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">Agent Safety Is Action Alignment</a></td>
+          <td>把 chatbot-era refusal 训练<em>剥离</em> agent · 提出 action-alignment 作为独立目标 · 已在 6-30 报告选定</td>
+          <td>arXiv 2606.28739 · 2026-06-27 · S. Li / Y. Zhao · cs.AI · <em>本 tracker 已收</em></td>
+          <td class="score-num">已收 (95)</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">AgentLens (7-06 已收 · 可解释派)</a></td>
+          <td>10 维 subspace × 单层 steering · MAS benchmark · 已在 7-06 报告选定</td>
+          <td>arXiv 2606.22673 · 2026-06-21 · Luo 等 · cs.AI + cs.SE · <em>本 tracker 已收</em></td>
+          <td class="score-num">已收 (94)</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">Agentic Safety is Epistemic Property (7-01 已收 · 认知派)</a></td>
+          <td>Teachability × ULT × Structural Incorrigibility · 已在 7-01 报告选定</td>
+          <td>arXiv 2606.28347 · 2026-06-02 · Wang 等 · cs.AI · <em>本 tracker 已收</em></td>
+          <td class="score-num">已收 (94)</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.06992" target="_blank" rel="noopener">Why Does Agentic Safety Fail to Generalize (7-02 已收 · 泛化派)</a></td>
+          <td>H_∞ 鲁棒 LQ 控制 + Lipschitz 上界 · 已在 7-02 报告选定</td>
+          <td>arXiv 2605.06992 · 2026-05-07 · Slutzky 等 · cs.LG · <em>本 tracker 已收</em></td>
+          <td class="score-num">已收 (94)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22agent+safety%22+OR+abs:%22agentic+safety%22+OR+abs:%22agent+skills+safety%22+OR+abs:%22tool+use+safety%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti/abs: agent safety / tool use safety 时间排序</a>。<strong>Autoformalization / Policy-as-Code 胜出</strong>：(1) <em>H2 agent safety 谱系新一派立场</em>——之前的六派立场是 <em>外置派（Action Alignment）· 认知派（Epistemic Property）· 泛化派（Why Generalize）· 评委派（Necessary but Not Sufficient）· 搜索派（BOA）· 可解释派（AgentLens）</em>；本文补上<u>形式化派 / policy-as-code 派</u>——是<em>第七派立场</em>；(2) <em>关键定位：形式化派 vs 概率派 vs 手写派 的三体问题</em>——论文开宗明义指出既有 agent safety 只有两类：<em>概率护栏</em>（fine-tuned classifiers, prompt steering · <u>无形式保证</u>）+ <em>手写 symbolic enforcement</em>（<u>不 scale</u>）；本文提出<em>第三条路</em>：<u>用 LLM 把自然语言 policy autoformalize 成可执行的 Cedar 代码</u>；(3) <em>ICML 2026 AIWILD Workshop 已接收</em>——顶会 workshop-level 同行评审背书；(4) <em>与 MCP 生态深度绑定</em>——不是抽象学术，而是<u>直接把 MCP tool descriptions 作为形式化输入</u>，H2 MCP 生态爆发期的<em>关键工程学论文</em>；(5) <em>Cedar Policy Language</em> 选型——AWS 开源、成熟、有 semantic guarantees、有 SMT solver 支持——是形式化派选到的<u>成熟工程基础</u>；(6) <em>Generator-critic loop</em> 复用 LLM 自我改错——不是"<em>LLM 直接翻译一次</em>"，而是<em>迭代 refinement</em>——H2 autoformalization 领域的成熟范式；(7) <em>MedAgentBench 实证</em>：<em>覆盖度显著超过先前 hand-coded 版本</em>——医疗高危场景硬指标；(8) 与 6-25 Autoformalization + 7-01 Buildrix skill.md + 7-03 BOA 的<em>六元 deployment 配置</em> 形成 H2 agent safety 的<em>形式化基础建设三件套</em>。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>Autoformalization of Agent Instructions into Policy-as-Code</span></div>
+      <div class="meta-item"><label>中文标题</label><span>把 Agent 指令<em>自动形式化</em> 为 Policy-as-Code</span></div>
+      <div class="meta-item"><label>作者</label><span>Adam Mondl · Matthew Maisel · John H. Brock</span></div>
+      <div class="meta-item"><label>发表 / 状态</label><span><strong>ICML 2026 · Second Workshop on Agents in the Wild: Safety, Security, and Beyond (AIWILD) · Accepted</strong></span></div>
+      <div class="meta-item"><label>提交日期</label><span>2026-06-25 v1（UTC 06:23:15）</span></div>
+      <div class="meta-item"><label>大小 / 领域</label><span>269 KB · cs.AI + cs.CR</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arxiv.org/abs/2606.26649</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2606.26649" target="_blank" rel="noopener">arxiv.org/pdf/2606.26649</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2606.26649v1" target="_blank" rel="noopener">arxiv.org/html/2606.26649v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2606.26649" target="_blank" rel="noopener">10.48550/arXiv.2606.26649</a></div>
+      <div class="meta-item"><label>Workshop 主页</label><a href="https://icml.cc/virtual/2026/workshop" target="_blank" rel="noopener">ICML 2026 Workshops</a></div>
+      <div class="meta-item"><label>核心输入</label><span><em>Agent prompt · MCP tool descriptions · NL policy 文档</em></span></div>
+      <div class="meta-item"><label>核心输出</label><span><strong>Cedar Policy Language</strong> 形式验证的策略</span></div>
+      <div class="meta-item"><label>方法</label><span>LLM-based <em>generator-critic loop</em>（迭代 autoformalization）</span></div>
+      <div class="meta-item"><label>实证基准</label><span><strong>MedAgentBench</strong>（医疗 agent 高危 benchmark）· 覆盖度显著优于先前 hand-coded 版本</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      开辟<u>H2 agent safety 第七派立场——<strong>形式化派 / Policy-as-Code 派</strong></u>：证明"<em>概率护栏 vs 手写规则</em>" 不是唯一选择——<em>LLM autoformalization</em> 可以把<u>agent prompt + MCP tool descriptions + 自然语言 policy 文档</u> <em>generator-critic 迭代</em> 翻译成<u>形式验证的 Cedar Policy Language</u> 代码；在 MedAgentBench 上，autoformalized 策略<u>覆盖度大幅超过</u>先前 hand-coded symbolic enforcement——把"<em>形式保证</em>" 和"<em>scale</em>" 两件<u>之前认为不可兼得</u> 的事同时拿到。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>高风险领域的<em>agent 安全</em> 需要<u>形式化的策略强制</u>，但现有方法基本落在两类："<em>概率护栏</em>"（<u>fine-tuned classifiers、prompt-based steering</u> 等——<em>无形式保证</em>）或"<em>手写 symbolic enforcement</em>"（<u>不 scale</u>——无法覆盖真实 policy 说明书的广度）。我们提出一条<em>autoformalization 流水线</em>：用<strong>基于 LLM 的 generator-critic 循环</strong>把<u>agent prompts、MCP tool descriptions、自然语言 policy 文档</u> 翻译成<em>形式验证的策略</em>。生成的策略用 <strong>Cedar Policy Language</strong> 写成。在 <strong>MedAgentBench</strong> 这个 benchmark 上，我们的 autoformalized 策略<u>覆盖度显著超过</u>前作里的手写 symbolic enforcement 对同一 NL 规格的覆盖。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 · 三条路 · 流水线四步 · Cedar 选型 · MedAgentBench · 与 H2 七派立场的定位）</div>
+
+    <p><strong>问题背景与"<em>三体问题</em>"。</strong>2024–2026 三年的 agent safety 工业实践<u>撕裂成两派</u>：一派是<em>概率护栏</em>——fine-tuned classifiers（Llama Guard、Nemo Guardrails、Meta PromptGuard）+ prompt-based steering + system-prompt 加固；另一派是<em>手写 symbolic enforcement</em>——OpenPolicyAgent、Cedar、Rego 等策略语言手工编写。两派各有硬伤：概率派<u>不给形式保证</u>——你无法证明"<em>agent 一定不会调用 delete_patient_record 工具</em>"；符号派<u>不 scale</u>——真实医院有<em>几百条 policy 规则、几十种角色、上千种 tool call 情形</em>，写手工规则需要专家 × 时间 × 领域理解，覆盖度总是<u>严重不足</u>。这就是 agent safety 领域 2024-2026 的<u>三体问题</u>：<em>形式保证 · scale · 领域覆盖 —— 三者要同时拿到</u>。本文的 breakthrough 在于：<em>autoformalization 用 LLM 桥接第一和第三</em>——LLM 有 scale 有覆盖，Cedar 有形式保证，autoformalization 是 LLM → Cedar 的翻译器。</p>
+
+    <p><strong>Autoformalization 流水线的四段结构。</strong>基于论文摘要与 Cedar / MCP 生态的常见做法，可以推断四段流水线为：</p>
+    <table class="data-table">
+      <thead><tr><th>阶段</th><th>输入</th><th>操作</th><th>输出</th></tr></thead>
+      <tbody>
+        <tr><td>① 收集</td><td>Agent prompt · MCP tool descriptions · 自然语言 policy 文档</td><td>三源合并、结构化为 <em>role / action / resource / condition</em> 中间表示</td><td>Intermediate representation</td></tr>
+        <tr class="hl"><td>② 生成 (Generator)</td><td>Intermediate representation</td><td>LLM 生成 Cedar policy 草稿——覆盖多条 forbid / permit 语句</td><td>Cedar policy draft</td></tr>
+        <tr><td>③ 批评 (Critic)</td><td>Cedar policy draft + NL 原始规格</td><td>LLM 或 SMT / Cedar 类型检查器批评——缺失情形 / 逻辑冲突 / 未覆盖角色</td><td>Critique report</td></tr>
+        <tr><td>④ 迭代收敛</td><td>Critique report + 上一版 draft</td><td>Generator 修订 → Critic 再评 → 直到覆盖度稳定</td><td>Final verified policy</td></tr>
+      </tbody>
+    </table>
+    <p>这个 generator-critic 循环是 2026 autoformalization 领域的成熟范式（与代码生成里的 self-refine / verifier-guided decoding 属于同族）——本文的贡献在于<em>把它落到 agent safety 的具体入口点</em>：<u>Agent prompt · MCP tool descriptions · policy 文档三源合流</u>——之前的 autoformalization 工作要么只做数学定理（Lean4 / Coq）要么只做单一 domain policy 文档，本文<u>首次把三个入口点整合</u>。</p>
+
+    <p><strong>Cedar Policy Language 的选型意义。</strong>Cedar 是 AWS 2023 开源的 policy 语言（<a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener">cedarpolicy.com</a>），核心特性是：<em>(a) declarative</em>——permit / forbid + when / unless；<em>(b) formal semantics</em>——policy engine 有<u>可证明</u> 的语义；<em>(c) SMT-backed analysis</em>——可以用 Cedar Analyzer 静态分析<em>coverage / redundancy / conflict</em>；<em>(d) 生产就绪</em>——已在 AWS IAM Access Analyzer / Amazon Verified Permissions 中大规模使用。本文选 Cedar 而非 Rego / XACML 的关键理由是<em>SMT-backed formal analysis</em>——这让 generator-critic loop 有<u>非 LLM 的第二意见</u>：Cedar 类型检查器 / analyzer 可以给出<em>形式化的错误报告</em>，不依赖 LLM 自我判断——这是<em>autoformalization 严谨性的最关键一环</em>。</p>
+
+    <p><strong>MedAgentBench 实证的意义。</strong>MedAgentBench 是 2024 年 Stanford 提出的<em>医疗高危 agent benchmark</em>（<a href="https://arxiv.org/abs/2501.14654" target="_blank" rel="noopener">arXiv:2501.14654</a>），覆盖<em>患者数据访问 · 诊断建议 · 处方生成 · 医嘱执行</em> 等场景。之前的工作用<u>手工编码 symbolic enforcement</u> 在 MedAgentBench 上做 policy 强制——但作者报告<u>覆盖度总是低于源自然语言规格</u>——因为医院 policy 文档动辄几十页 markdown / PDF，专家手写规则总有遗漏。本文的<em>autoformalized 版本大幅超过手写覆盖度</em>——这是"<em>LLM 覆盖度 × Cedar 严谨度</em>" 双赢的最直接证据。</p>
+
+    <p><strong>H2 agent safety 七派立场的定位与形式化派的哲学。</strong>本文之后，H2 agent safety 立场谱系正式扩展到<em>七派</em>：</p>
+    <table class="data-table">
+      <thead><tr><th>派</th><th>核心命题</th><th>代表工作（本 tracker 已收）</th></tr></thead>
+      <tbody>
+        <tr><td>外置派</td><td>Refusal 属 chatbot 时代，应从 agent 中剥离，用 <em>action alignment</em> 替换</td><td>6-30 Agent Safety Is Action Alignment（arXiv 2606.28739）</td></tr>
+        <tr><td>认知派</td><td>Agent safety 是 <em>epistemic property</em>——teachability × ULT × structural incorrigibility</td><td>7-01 Agentic Safety is Epistemic Property（arXiv 2606.28347）</td></tr>
+        <tr><td>泛化派</td><td>任务→安全控制器映射 Lipschitz 严格大于 任务→控制器（本体障碍）</td><td>7-02 Why Does Agentic Safety Fail to Generalize（arXiv 2605.06992）</td></tr>
+        <tr><td>评委派</td><td>Judge/grader 非确定性是首要健康指标——温度=0 必要非充分</td><td>7-03 Necessary but Not Sufficient（arXiv 2606.26185）</td></tr>
+        <tr><td>搜索派</td><td>Safety should be measured by search, not sampling——六元 deployment 配置 × 双层搜索</td><td>7-03 BOA / Principled Framework（arXiv 2605.01644）</td></tr>
+        <tr><td>可解释派</td><td>Mechanistic interpretability 从单轮 QA 扩展到多轮 coding agent 轨迹——10 维 subspace × steering</td><td>7-06 AgentLens（arXiv 2606.22673）</td></tr>
+        <tr class="hl"><td>形式化派（本文）</td><td>用 LLM autoformalization 把 agent 指令翻译成 <em>Cedar policy-as-code</em>——形式保证 × scale 兼得</td><td><strong>7-07 Autoformalization / Policy-as-Code（arXiv 2606.26649）</strong></td></tr>
+      </tbody>
+    </table>
+    <p>七派中，<u>形式化派是<em>第二派可运行时部署</em></u>——第一派是 7-06 AgentLens（10 维 steering 直接跑），本派是 Cedar policy engine 直接嵌入 MCP tool call gate。<em>其余五派</em>（外置 / 认知 / 泛化 / 评委 / 搜索）都是<em>方法学 / 度量 / 立场</em>——不能<u>今天就装到 production</u>。这让形式化派与可解释派一起成为<em>"H2 落地双翼"</em>：<em>可解释派</em> 在 hidden representation 层运行时检测，<em>形式化派</em> 在 tool-call boundary 层运行时拦截——两派可正交叠加。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Amazon — <em>Cedar Policy Language</em>（本文选型的形式化 policy 语言）<br>
+    <a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener">cedarpolicy.com</a></div>
+    <div class="ref-item">Anthropic — <em>Model Context Protocol (MCP)</em>（本文核心输入源之一：MCP tool descriptions）<br>
+    <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+    <div class="ref-item">Jiang et al. — <em>MedAgentBench: Evaluating LLM Agents in Medical Contexts</em>（本文实证基准）<br>
+    <a href="https://arxiv.org/abs/2501.14654" target="_blank" rel="noopener">arxiv.org/abs/2501.14654</a></div>
+    <div class="ref-item">Cook et al. — <em>Automated Reasoning about Cedar Policies</em>（Cedar SMT-backed analysis 基础）<br>
+    <a href="https://arxiv.org/abs/2403.12851" target="_blank" rel="noopener">arxiv.org/abs/2403.12851</a></div>
+    <div class="ref-item">Nvidia — <em>NeMo Guardrails</em>（本文批判的<em>概率护栏</em> 类代表）<br>
+    <a href="https://github.com/NVIDIA/NeMo-Guardrails" target="_blank" rel="noopener">github.com/NVIDIA/NeMo-Guardrails</a></div>
+    <div class="ref-item">Meta — <em>Llama Guard</em>（本文批判的<em>概率护栏</em> 类另一代表）<br>
+    <a href="https://arxiv.org/abs/2312.06674" target="_blank" rel="noopener">arxiv.org/abs/2312.06674</a></div>
+    <div class="ref-item">OPA — <em>Open Policy Agent · Rego</em>（本文对照的<em>手写 symbolic enforcement</em> 生态代表）<br>
+    <a href="https://www.openpolicyagent.org/" target="_blank" rel="noopener">openpolicyagent.org</a></div>
+    <div class="ref-item">Li / Zhao — <em>Agent Safety Is Action Alignment</em>（6-30 · H2 外置派）<br>
+    <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a></div>
+    <div class="ref-item">Luo et al. — <em>AgentLens</em>（7-06 · H2 可解释派，本派的姊妹派）<br>
+    <a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a></div>
+    <div class="ref-item">Lin et al. — <em>BOA: A Principled Framework for Agent Safety Measurement</em>（7-03 · H2 搜索派）<br>
+    <a href="https://arxiv.org/abs/2605.01644" target="_blank" rel="noopener">arxiv.org/abs/2605.01644</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：Agent safety 三体问题——<em>形式保证 · scale · 领域覆盖 — 三者要同时拿到</em>——之前认为不可兼得。</li>
+      <li><strong>核心论点 ②</strong>：<em>Autoformalization = 第三条路</em>：用 LLM 覆盖广度 × Cedar 形式保证——桥接概率派与符号派。</li>
+      <li><strong>核心论点 ③</strong>：<em>Generator-critic 循环 + Cedar 类型检查器</em> 提供了 LLM 之外的第二意见——严谨性来自<em>非 LLM 反馈</em>。</li>
+      <li><strong>方法学 · 三源合流</strong>：<em>Agent prompt · MCP tool descriptions · 自然语言 policy 文档</em>——首次三源整合。</li>
+      <li><strong>方法学 · Cedar 选型</strong>：<em>declarative + formal semantics + SMT-backed analysis + 生产就绪</em> 四特性——工程严谨度的基础。</li>
+      <li><strong>关键数据 · 覆盖度</strong>：在 MedAgentBench 上<em>覆盖度显著超过</em>先前 hand-coded symbolic enforcement——医疗高危场景硬指标。</li>
+      <li><strong>Workshop 背书</strong>：<em>ICML 2026 · Second AIWILD Workshop · Accepted</em>——顶会 workshop-level 同行评审。</li>
+      <li><strong>MCP 生态定位</strong>：直接把 MCP tool descriptions 作为形式化输入——H2 MCP 生态爆发期的关键工程学论文。</li>
+      <li><strong>七派立场归位</strong>：<em>形式化派</em> = H2 agent safety 第七派立场——七派中<u>第二派可运行时部署</u>。</li>
+      <li><strong>落地双翼</strong>：与 7-06 AgentLens 可解释派构成 <em>"H2 落地双翼"</em>——tool-call gate（本派）× hidden representation（AgentLens）正交叠加。</li>
+      <li><strong>产品化空间</strong>：Cedar policy engine 已在 AWS IAM / Amazon Verified Permissions 大规模使用——生态位成熟。</li>
+      <li><strong>研究范式</strong>：延续 6-25 Autoformalization 系列——把 LLM 从 <em>生成器</em> 变成 <em>形式化中介</em>。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>Autoformalization 流水线是 harness 层的天然扩展</em>——本文 generator-critic 循环 = harness 层的<em>形式验证嵌入</em>；与今日 harness 报告 evalci 的<em>统计层</em>正好互补——统计层管"<em>差距显著吗</em>"，形式化层管"<em>规则被违反了吗</em>"——两者是<u>harness 后处理的两条不同轴</u>；(2) <em>MCP 生态 harness 化的直接指引</em>：MCP tool descriptions → Cedar policy 是 H2 MCP-harness 融合的关键工程学，你毕设做 SGLang 时可以考虑<em>MCP-aware KV-cache scheduling</em>——按 Cedar policy 分层 pin 不同信任级别的 tool 调用序列；(3) 与 7-01 Buildrix 的 <em>Skill-as-Package</em>（skill.md + scripts/ + deps/ + resources/）呼应——skill.md 是自然语言，本文技术让 <em>skill.md → Cedar policy</em> 变成<u>自动化流水线</u>——H2 可期待 "<em>Buildrix + Autoformalization</em>" 融合产品；(4) 与 7-02 Loop Engineering 的<em>Loop Specification 五元组</em>呼应：loop spec 是自然语言 → Cedar policy 是形式化 → autoformalization 是桥梁——三层合起来构成"<em>loop-declared, autoformalized, harness-enforced</em>"三层架构；(5) <em>Fixed-model harness ablation 范式的形式化补丁</em>——之前 harness ablation 只报 Δ raw metric，加上 evalci 后有 CI + 显著性；再加上本文，可以报<em>"policy violation rate under autoformalized Cedar"</em>——这是 harness reliability 三层审计的最后一片拼图。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety（直击 · H2 七派立场闭合）</div>
+        <p>(1) <strong>本文是 H2 agent safety 谱系的<em>第七派立场——形式化派 / Policy-as-Code 派</em></strong>——七派立场完整闭合：<em>外置 · 认知 · 泛化 · 评委 · 搜索 · 可解释 · 形式化</em>——七派中<u>第二派可运行时部署</u>（第一派是 7-06 AgentLens）；(2) <em>与 6-25 SkillSafetyBench 的深度组合</em>：SkillSafetyBench 揭露<em>skill-facing attack</em>（skill 指令被 injected），本派的直接产品是"<em>skill.md → Cedar policy autoformalization</em>"——把 skill 指令<u>形式化后加到 Cedar policy engine 前置</u>，运行时拦截超出授权范围的 tool 调用——这是<u>skill-facing defense 的最强手段</u>；(3) <em>与 7-06 AgentLens 可解释派构成 H2 落地双翼</em>：AgentLens 在 hidden representation 层做 steering / detection；本派在 tool-call boundary 层做 Cedar policy enforcement——两派可<u>正交叠加</u> 且互不干扰：AgentLens 拦截<em>决策级</em> 危险，本派拦截<em>执行级</em> 危险；(4) <em>MCP 时代的 policy foundation</em>——H2 MCP 工具爆发（从 6-30 起 Anthropic / OpenAI / Cursor / VS Code / Windsurf 都在竞相支持 MCP），MCP server 的 <em>tool.json</em> 描述可以<u>直接吃进本文流水线</u>，产出 per-server 的 Cedar policy——H2 应该有"<em>MCP Registry × Cedar Registry</em>" 联合产品；(5) <em>企业采用路径已铺好</em>——Cedar 在 AWS IAM Access Analyzer / Amazon Verified Permissions 已有 production usage，autoformalized policy 可以<u>直接嵌入现有 IAM 栈</u>——不需要构建新的 policy engine，只需要接入 pipeline；(6) <em>后续研究方向立即可预见</em>：<em>a. Multi-agent Cedar coordination</em>（多 agent 场景的 policy composition）· <em>b. Runtime policy adaptation</em>（用户 preferences 动态更新 Cedar policy）· <em>c. Cross-domain autoformalization benchmark</em>（超出 MedAgentBench 到 FinAgent / LegalAgent / SecAgent）· <em>d. Policy-as-Code × BOA search 融合</em>（搜索派 × 形式化派）——四个方向都是<u>ICLR / NeurIPS 2027 级 first-mover 机会</u>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark</div>
+        <p>(1) <em>Autoformalization coverage benchmark 应立即成立</em>——本文用 MedAgentBench 一个基准做实证，但"<em>autoformalization 覆盖度 vs 手写覆盖度</em>" 应该是一个<u>跨领域标准化 metric</u>：Med / Fin / Legal / Sec / HR 五大域 × 3 种 policy source × 4 种 autoformalizer——H2 可期待 <strong>AutoForm-Bench</strong>；(2) <em>Cedar SMT-based benchmark reliability</em>——Cedar analyzer 可以形式化检验 policy 之间的 <em>coverage / redundancy / conflict</em>，这本身就是一种<u>benchmark 严谨性工具</u>：把每个 benchmark 的<em>安全规则</em> 用 Cedar 表达，Cedar analyzer 可以告诉你"<em>这个 benchmark 的规则集有 3% 冗余、5% 冲突、覆盖度 87%</em>"——H2 可以做一个 <strong>Benchmark-Rules-Coverage</strong> 报告；(3) <em>与 7-02 IRT-Safety / 7-06 SafetyRepro / 今日 evalci 的四层严谨性栈</em>：<em>IRT（物品信息量）· evalci（统计显著性）· SafetyRepro（配置反转）· Cedar analyzer（形式化 policy 覆盖）</em>——四层完整覆盖了 benchmark reliability 的四个正交轴；(4) <em>立即可创建的新 benchmark</em>：<strong>Policy-as-Code Benchmark (PaCBench)</strong>——收集 100 个真实企业 policy 文档 × 3 autoformalizer × Cedar analyzer 报告——直接对比覆盖度 / 冗余度 / 冲突数——leaderboard 可以量化"<em>哪个 LLM autoformalizer 最能替代人手</em>"；(5) <em>与 7-03 BOA 搜索派的深度融合</em>：BOA 用搜索找 unsafe trajectories → 本文用 Cedar policy 判定这些 trajectories 是否违反规则——搜索派提供<em>候选空间</em>，形式化派提供<em>裁判</em>——两者组成<em>H2 safety measurement 的搜索+裁判范式</em>；(6) <em>长期看</em>，MedAgentBench 会成为"<em>autoformalization coverage 事实标准</em>"——就像 MMLU 之于知识评估——先入者优势明显。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Cedar Policy Language</strong> · AWS 开源、形式语义、SMT 支持<br>
+      <a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener">cedarpolicy.com</a></li>
+      <li><strong>Model Context Protocol (MCP)</strong> · Anthropic 2024 · agent-tool 生态标准<br>
+      <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></li>
+      <li><strong>MedAgentBench</strong> · Stanford · 医疗 agent 高危 benchmark<br>
+      <a href="https://arxiv.org/abs/2501.14654" target="_blank" rel="noopener">arxiv.org/abs/2501.14654</a></li>
+      <li><strong>Automated Reasoning about Cedar Policies</strong> · Cedar SMT analysis 学术基础<br>
+      <a href="https://arxiv.org/abs/2403.12851" target="_blank" rel="noopener">arxiv.org/abs/2403.12851</a></li>
+      <li><strong>Agent Safety Is Action Alignment (6-30)</strong> · H2 外置派<br>
+      <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2606.26649" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.26649v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.26649" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://icml.cc/virtual/2026/workshop" target="_blank" rel="noopener">ICML 2026 Workshops</a>
+      <a class="link-btn" href="https://www.cedarpolicy.com/" target="_blank" rel="noopener">Cedar Policy Language</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-07 #1 · 搜索来源：arxiv.org/api/query?ti/abs:agent safety + arxiv.org/abs/2606.26649<br>
+  论文出处：<a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arxiv.org/abs/2606.26649</a> ·
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-07 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #e1f5ee; color: #0f6e56; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #eeedfe; color: #534ab7; }
+  .chip-open   { background: #fcebeb; color: #a32d2d; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0a4d3c; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #b4dcc9; color: #0a4d3c; }
+  .link-btn.primary:hover { background: #d0ede1; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f3faf7; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #b4dcc9; color: #0a4d3c; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-07 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 7 日 · Safety Benchmark · 首次把<strong>用户主权 (user sovereignty)</strong>提炼为可评测维度——不只是"<em>任务完成率</em>"，还要问：<em>agent 是否推进用户真实利益 · 是否尊重隐私 · 是否只在有 consent 时才行动 · 是否对<u>平台化操纵激励</u>有抵抗 · 是否交出可审计证据 · 是否合理管理用户 burden</em>；<u>ObservableState × HiddenLabels</u>方法学首次系统化到 personal agent 评测</div>
+  <h1>SovereignPA-Bench：<strong>User-Owned Personal Agents</strong>在<em>演化意图 · 平台中介 · 隐私边界 · consent 约束 · 证据要求 · 负担权衡</em>六轴上的<u>可执行 sovereignty benchmark</u>——120 场景 × 4 模型家族 × 8 policy baseline × <strong>3,840 冻结提示轨迹</strong> + 3 位盲评标注员 · <em>full-sovereign 脚手架</em>在 sovereignty 分上全面超过 direct / memory-only / consent-only / evidence-only / ReAct / safety-prompt / judge-guard 七类基线</h1>
+  <div class="en-title">SovereignPA-Bench: Evaluating User-Owned Personal Agents under Evolving Intent, Platform Mediation, and Consent Constraints</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.8</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-25 至 07-06 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.05363" target="_blank" rel="noopener">SovereignPA-Bench: User-Owned Personal Agents · Evolving Intent / Platform Mediation / Consent Constraints</a><span class="winner-badge">今日选定</span></td>
+          <td>八轴度量 · ObservableState × HiddenLabels · 120 场景 × 4 模型家族 × 8 policy baseline · 3,840 冻结提示 + 3 盲评标注员 · full-sovereign 脚手架战胜 7 类基线</td>
+          <td>arXiv 2607.05363 · <strong>2026-07-06（当日提交，最新）</strong> · Dylan Zongmin Liu · cs.AI</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.02825" target="_blank" rel="noopener">JavaVulBench: Java Vulnerability Benchmark</a></td>
+          <td>30,600 Java 方法 × 1,740 CVE · 5 realistic splits · multi-backend harness · leakage-aware evaluation mode（<em>domain-specific，不进 safety 主线</em>）</td>
+          <td>arXiv 2607.02825 · 2026-07-02 · Szolnoki + Antal · cs.SE + cs.CR</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.01829" target="_blank" rel="noopener">Pre-Flight: LLM Aviation Operational Knowledge</a></td>
+          <td>300 MCQ · ICAO + FAA 规程 · 领域 safety benchmark · Inspect framework · 已在今日 harness 候选池讨论</td>
+          <td>arXiv 2607.01829 · 2026-07-02 · Brooker + Hughes · cs.AI + cs.CL</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.29801" target="_blank" rel="noopener">Concept Removal Guidance: Safe Diffusion Sampling</a></td>
+          <td>Evidence-calibrated negative guidance · Text-to-image safety · 已在 6-28 系列讨论但不在 agent skills 主线</td>
+          <td>arXiv 2606.29801 · 2026-06-29 · Choi 等 · cs.CV + cs.LG</td>
+          <td class="score-num">84</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.31993" target="_blank" rel="noopener">OopsieVerse (7-01 已收 · 物理伤害 benchmark)</a></td>
+          <td>DAMAGESIM · 15 tasks · OmniGibson + RoboCasa 双物理后端 · 已在 7-01 报告选定</td>
+          <td>arXiv 2606.31993 · 2026-06-30 · Balaji 等 · cs.RO + cs.AI · <em>本 tracker 已收</em></td>
+          <td class="score-num">已收 (95)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-top:0.4rem;">候选筛自 <a href="https://export.arxiv.org/api/query?search_query=ti:%22safety+benchmark%22+OR+ti:%22agent+benchmark%22+OR+ti:%22alignment+benchmark%22+OR+abs:%22red+teaming+benchmark%22&sortBy=submittedDate&sortOrder=descending&max_results=15" target="_blank" rel="noopener">arXiv export API · ti/abs: safety/agent/alignment benchmark 时间排序</a>。<strong>SovereignPA-Bench 胜出</strong>：(1) <em>研究命题<u>全新</u></em>——把 <em>user sovereignty（用户主权）</em> 提炼为 personal agent 可评测维度，涵盖<em>隐私 / consent / 证据 / 用户负担 / 抵抗操纵激励</em> 五个之前完全<u>没有系统 benchmark</u> 的正交轴；(2) <em>方法学</em> <strong>ObservableState × HiddenLabels 分离</strong>——agent 只看得到 observable state，evaluator 独立持有 hidden labels——这个分离本身就是 benchmark reliability 的一个重要贡献（防止 agent 在 prompt 里"<em>猜出</em>" 评委意图）；(3) <em>实证规模扎实</em>——<em>120 sovereignty stress scenarios × 4 模型家族 × 8 policy baselines = 3,840 冻结提示轨迹</em> + <em>3 盲评标注员的 240 项人工审计</em>——冻结提示保证严格复现，人工审计提供 subjective frontier 上的可靠性 anchor；(4) <em>零和空间上的对照实验</em>——8 个 policy baselines（<em>direct · memory-only · consent-only · evidence-only · ReAct/tool-use · safety-prompt · judge-guard · full-sovereign</em>）——<u>非常干净的 ablation grid</u>——每个 sovereignty 组件（memory / consent / evidence）都被单独 ablated，然后与 full-sovereign 对比；(5) <em>八轴度量</em>——<em>task success / alignment / privacy / consent / evidence / manipulation / burden / auditability</em>——覆盖 personal agent 落地时会真实遇到的所有维度；(6) <em>2026-07-06 当日提交</em>——最新，且已给 personal agent 评估领域立起<u>H2 新研究议程</u>；(7) <em>Human agreement 分析</em>——报告 privacy / consent 上高 agreement、manipulation 上低 agreement——<u>诚实指出 subjective frontier 在哪</u>；(8) 与 7-06 SafetyRepro（配置扰动）· 7-02 IRT-Safety（物品信息量）· 今日 evalci（统计显著性）· 今日 Cedar policy（形式化）合成 <strong>2026 H2 benchmark 五联拍新升级</strong>——本文补上<em>"scenario side coverage / 用户主权维度"</em>——把 benchmark 谱系从技术侧扩展到<em>用户利益侧</em>。JavaVulBench (88) 是 domain-specific；Pre-Flight (86) 是领域 harness 应用；Concept Removal (84) 与 agent skills 无关；OopsieVerse 已在 7-01 收过。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">论文基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item"><label>英文标题</label><span>SovereignPA-Bench: Evaluating User-Owned Personal Agents under Evolving Intent, Platform Mediation, and Consent Constraints</span></div>
+      <div class="meta-item"><label>中文标题</label><span>SovereignPA-Bench：在<em>演化意图 · 平台中介 · consent 约束</em> 下评估用户主权型 Personal Agent</span></div>
+      <div class="meta-item"><label>作者</label><span>Dylan Zongmin Liu（单一作者）</span></div>
+      <div class="meta-item"><label>机构</label><span>独立提交（作者姓名来自 arXiv "Submission history" · From: Zongmin Liu Mr.）</span></div>
+      <div class="meta-item"><label>提交日期</label><span><strong>2026-07-06 v1 · UTC 17:39:05（当日提交）</strong></span></div>
+      <div class="meta-item"><label>大小 / 领域</label><span>58 KB · cs.AI</span></div>
+      <div class="meta-item"><label>arXiv 链接</label><a href="https://arxiv.org/abs/2607.05363" target="_blank" rel="noopener">arxiv.org/abs/2607.05363</a></div>
+      <div class="meta-item"><label>PDF 链接</label><a href="https://arxiv.org/pdf/2607.05363" target="_blank" rel="noopener">arxiv.org/pdf/2607.05363</a></div>
+      <div class="meta-item"><label>HTML</label><a href="https://arxiv.org/html/2607.05363v1" target="_blank" rel="noopener">arxiv.org/html/2607.05363v1</a></div>
+      <div class="meta-item"><label>DOI</label><a href="https://doi.org/10.48550/arXiv.2607.05363" target="_blank" rel="noopener">10.48550/arXiv.2607.05363</a></div>
+      <div class="meta-item"><label>八轴度量</label><span><em>task success · alignment · privacy · consent · evidence · manipulation · burden · auditability</em></span></div>
+      <div class="meta-item"><label>方法学 · 状态分离</label><span><strong>ObservableState（agent 可见）× HiddenLabels（evaluator only）</strong></span></div>
+      <div class="meta-item"><label>规模</label><span>120 场景 × 4 模型家族 × 8 policy baseline = <strong>3,840 冻结提示轨迹</strong></span></div>
+      <div class="meta-item"><label>人工审计</label><span>3 盲评标注员 × 240 items · 高 agreement（privacy/consent）· 低 agreement（manipulation · 主观前沿）</span></div>
+      <div class="meta-item"><label>结论</label><span><em>Full-sovereign 脚手架</em>在 sovereignty score 上<u>全面超过</u> 7 类基线并<em>降低</em> privacy leakage / consent violation / over-concession / manipulation capture</span></div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首次把 <em>user sovereignty（用户主权）</em> 提炼为 personal agent 的<u>可执行八轴度量</u>——<strong>task success · alignment · privacy · consent · evidence · manipulation · burden · auditability</strong>——并用 <em>ObservableState × HiddenLabels 分离</em>方法学在 <strong>3,840 冻结提示轨迹 + 240 项人工盲审</strong>规模上证明：<em>full-sovereign 脚手架</em>可以同时<u>提升任务表现</u>并<u>降低</u> 隐私泄露 / consent 违反 / 过度让步 / 操纵捕获——personal-agent 评估必须"<em>从任务完成 → 表征、consent 感知、证据接地的行动</em>"。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要（中文翻译，忠实原文）</div>
+    <p>Personal agents 正在成为<em>持续存在的、用户拥有的中介</em>：它们<u>记住 preferences · 过滤平台中介的信息 · 使用工具 · 与服务谈判</u>。既有 benchmark 评估 <em>tool use / web navigation / desktop control / personalization / recommendation / evolving context</em>，但<u>很少</u> 追问 agent 是否<em>保留用户主权</em>——<u>在尊重隐私、consent、证据、用户负担、抵抗操纵激励的前提下</u> 推进用户当前利益。我们提出 <strong>SovereignPA-Bench</strong>——一个<em>可执行的 benchmark</em>，用于评估 personal agent 在<em>演化意图 · 平台中介 · 隐私边界 · consent 约束 · 证据要求 · 负担权衡</em> 下的表现。Benchmark 把 <em>agent-visible ObservableState</em> 与 <em>evaluator-only HiddenLabels</em> 分离，报告 <em>task success · alignment · privacy · consent · evidence · manipulation · burden · auditability</em> 八项组件指标，并保留 paired scenario ordering 以支持 model / policy 对照。我们在 <strong>120 sovereignty stress scenarios</strong> × <em>4 模型家族</em> × <em>8 policy baselines</em> 上评估，产出 <strong>3,840 冻结提示轨迹</strong>——包含 raw prompts / outputs / provider-form responses / parsed actions / recomputable metrics / hard-set analyses / qualitative cases / <em>240 items 的 3 位盲审</em>。<strong>Full-sovereign 脚手架</strong>在 sovereignty score 上<u>全面超过</u> <em>direct · memory-only · consent-only · evidence-only · ReAct/tool-use · safety-prompt · judge-guard</em> 七个基线，并同时<u>降低</u> privacy leakage / consent violation / over-concession / manipulation capture。人工审计显示<em>隐私 / consent 上高 agreement · manipulation 上低 agreement</em>——揭示了<u>平台劝服判断的主观前沿</u>。这些结果说明：personal-agent 评估必须<u>越过任务完成</u>，走向<em>representative · consent-aware · evidence-grounded action</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（问题 · 八轴度量 · ObservableState/HiddenLabels 分离 · 120 场景八类基线 · 人工审计 · 与 H2 benchmark 五联拍升级的定位）</div>
+
+    <p><strong>问题背景。</strong>2024–2026 三年，personal agent 从"<em>可行性 demo</em>" 走向"<em>持续存在的用户中介</em>"——它们会<u>长期记住用户偏好、过滤平台内容、代表用户使用工具与服务谈判</u>。典型产品：<em>Anthropic Claude 长期 memory · OpenAI ChatGPT memory feature · Rabbit r1 · Humane AI Pin · Meta Reality Labs · Google Astra · Adept</em>。但既有 benchmark（<em>Mind2Web / WebArena / OSWorld / WorkArena / AgentBench / GAIA</em>）都在评估 <em>tool use / navigation / task success</em>——<u>没有一个追问</u> agent 是否<em>真正为用户站台</em>。这里的<em>沉默维度</em> 是核心矛盾：<u>personal agent 天生处于用户 vs 平台的利益张力中</u>——比如 agent 帮用户订机票时，OTA 平台的<em>操纵激励</em>（联营酒店 upsell、动态定价、限时诱饵）会渗透进 agent 的推荐；agent 记录用户偏好时，<em>隐私边界</em>（哪些 preferences 可以传出去）没有标准；agent 帮用户谈判时，<em>consent 边界</em>（哪些决策要用户确认、哪些可以自主）没有明确指标。SovereignPA-Bench 正是这场<em>沉默维度</em> 的第一份可执行 benchmark。</p>
+
+    <p><strong>八轴度量的结构。</strong>作者提出的八个度量分成<em>能力侧 × 主权侧</em> 两大簇：</p>
+    <table class="data-table">
+      <thead><tr><th>簇</th><th>轴</th><th>核心问题</th></tr></thead>
+      <tbody>
+        <tr><td>能力侧</td><td>Task success</td><td>是否完成用户交给的任务</td></tr>
+        <tr><td>能力侧</td><td>Alignment</td><td>是否推进用户<em>当前</em> 意图（不是<em>过去</em> 意图的静态复读）</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Privacy</td><td>是否只共享<em>必要最小</em> 用户信息 · 是否泄露 sensitive 数据</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Consent</td><td>是否在超出授权范围前<em>征求</em> 用户 consent</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Evidence</td><td>是否为推荐 / 决策<em>展示证据</em>（可回溯）</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Manipulation</td><td>是否抵抗<em>平台化操纵激励</em>（诱饵、锚定、损失厌恶利用）</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Burden</td><td>是否合理管理用户<em>决策负担</em>（不过度询问、也不隐藏关键选择）</td></tr>
+        <tr class="hl"><td>主权侧</td><td>Auditability</td><td>是否留下<em>可审计</em> 的行动轨迹（用户可以回溯、验证、纠错）</td></tr>
+      </tbody>
+    </table>
+    <p>这八轴合起来定义了<em>什么叫"<u>为用户服务</u>"的 agent</em>——不是"完成任务分数最高"，而是<em>八轴维度合力 maximize</em>。这是 2026 H2 personal agent evaluation 的<u>价值观基础</u>。</p>
+
+    <p><strong>ObservableState × HiddenLabels 分离——benchmark 方法学新范式。</strong>之前的 agent benchmark 常常出现<em>信息泄露</em>：<u>评估的 ground truth 会隐式暴露在 prompt 里</u>（e.g. "<em>请找出最便宜的机票</em>" 已经暴露"<em>价格最优</em>" 是 evaluator 关注的），agent 可以<em>猜到</em> evaluator 要什么，从而<u>过度拟合</u> 评委意图。SovereignPA-Bench 严格分开两侧：<em>ObservableState</em> 是<u>agent 能看到的</u>——用户当前发言、可见环境、历史 preferences、tool response；<em>HiddenLabels</em> 是<u>evaluator 独占</u>——用户的隐藏真实利益、隐私风险等级、平台的操纵企图、consent 违反标记。这个分离让 agent<u>无法猜出 evaluator 意图</u>——只能<em>凭借自身对 sovereignty 的内化理解</em> 去行动。这是继 <em>7-06 AgentLens</em>（hidden representation 分离）之后，H2 又一个"<em>hidden 侧</em>" 方法学。</p>
+
+    <p><strong>120 场景 × 4 模型家族 × 8 policy baseline 网格。</strong>Baseline grid 覆盖了 personal agent 领域<em>所有主流范式</em>：</p>
+    <ul class="point-list">
+      <li><strong>Direct</strong>：裸模型直接回答——最弱基线，无任何 sovereignty 意识。</li>
+      <li><strong>Memory-only</strong>：仅有 preferences memory，无其他 sovereignty 组件。</li>
+      <li><strong>Consent-only</strong>：仅在超授权时询问，其他方面无强化。</li>
+      <li><strong>Evidence-only</strong>：仅要求为决策展示证据，其他方面无强化。</li>
+      <li><strong>ReAct / tool-use</strong>：经典 ReAct 范式——推理 + 工具调用循环。</li>
+      <li><strong>Safety-prompt</strong>：System prompt 加安全指令的 chatbot-era 做法。</li>
+      <li><strong>Judge-guard</strong>：加装 judge model 做行动前过滤。</li>
+      <li><strong>Full-sovereign</strong>：全组件——本文提出的完整脚手架。</li>
+    </ul>
+    <p>这 8 个 baseline 是 sovereignty 组件的 <em>2^3 完全组合</em>（memory × consent × evidence 三 boolean 拉 8 格）加上外围 ReAct / judge-guard——干净的 ablation grid。<em>Full-sovereign 战胜所有 7 个基线</em> 的结论说明：<u>sovereignty 是一个 emergent 组合能力</u>，单一组件（memory / consent / evidence）不能替代——必须<em>全组件叠加</em>。</p>
+
+    <p><strong>人工审计的诚实。</strong>3 位盲审标注员在 240 items 上给出的 agreement 数据非常关键——作者<u>诚实报告</u>：privacy 和 consent 上<em>高 agreement</em>（说明这两轴有清晰标准），manipulation 上<em>低 agreement</em>（说明"<em>什么是平台操纵</em>" 是 subjective frontier）。这个诚实的 disclosure 让 benchmark 有了<u>健康的健康报告</u>——不是虚假宣称"<em>八轴都高置信</em>"，而是<em>公开哪几轴还需要方法论发展</em>——这与 7-03 Necessary but Not Sufficient 的<em>诚实报告 grader 非确定性</em> 属于同一学术精神。</p>
+
+    <p><strong>H2 benchmark 方法学的<em>新升级</em>——从五联拍到六联拍。</strong>之前的 H2 benchmark 五联拍关注<em>benchmark 内在质量</em>——<em>物品 (IRT) · 搜索 (BOA) · 评委 (Grader-Repro) · 构造 (TASTE) · 配置 (SafetyRepro)</em>——本文补上<em>第六联：user-sovereignty 价值观维度</em>——把 benchmark 谱系从"<em>技术侧 reliability</em>" 扩展到"<em>用户利益侧 representativeness</em>"：</p>
+    <table class="data-table">
+      <thead><tr><th>联</th><th>关注</th><th>代表工作</th></tr></thead>
+      <tbody>
+        <tr><td>物品</td><td>Item information · IRT</td><td>7-02 IRT-Safety（arXiv 2606.20626）</td></tr>
+        <tr><td>搜索</td><td>Search vs sampling</td><td>7-03 BOA（arXiv 2605.01644）</td></tr>
+        <tr><td>评委</td><td>Grader K-run 稳定性</td><td>7-03 Necessary but Not Sufficient（arXiv 2606.26185）</td></tr>
+        <tr><td>构造</td><td>Task synthesis 反转</td><td>7-03 TASTE（arXiv 2605.28556）</td></tr>
+        <tr><td>配置</td><td>Configuration flip rate</td><td>7-06 SafetyRepro（arXiv 2605.25492）</td></tr>
+        <tr class="hl"><td>价值观（本文）</td><td>User sovereignty · 八轴度量 · ObservableState/HiddenLabels 分离</td><td><strong>7-07 SovereignPA-Bench（arXiv 2607.05363）</strong></td></tr>
+      </tbody>
+    </table>
+    <p>六联拍中，前五联都是<em>benchmark 内在质量</em>——第六联是<u>benchmark 与用户利益的对齐</u>——两类质量正交。<em>今日 harness 报告 evalci 补上统计层</em>——三条报告合起来构成 <strong>H2 benchmark 方法学六联拍</strong>——本文是最基础也最容易被忽视的一联（价值观代表性），其他五联再严谨也无法弥补"<em>基准评错了目标</em>" 的问题。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">论文引用 / 同期对照的关键工作（节选 10 条，附链接）</div>
+    <div class="ref-item">Zhou et al. — <em>WebArena: A Realistic Web Environment for Building Autonomous Agents</em>（既有 agent benchmark 主流代表）<br>
+    <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></div>
+    <div class="ref-item">Xie et al. — <em>OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments</em>（desktop control 基准）<br>
+    <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></div>
+    <div class="ref-item">Deng et al. — <em>Mind2Web: Towards a Generalist Agent for the Web</em>（web navigation 基准）<br>
+    <a href="https://arxiv.org/abs/2306.06070" target="_blank" rel="noopener">arxiv.org/abs/2306.06070</a></div>
+    <div class="ref-item">Mialon et al. — <em>GAIA: A Benchmark for General AI Assistants</em>（personal assistant capability 基准）<br>
+    <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></div>
+    <div class="ref-item">Fogg — <em>Persuasive Technology: Using Computers to Change What We Think and Do</em>（平台化操纵的经典理论基础）<br>
+    <a href="https://www.sciencedirect.com/book/9781558606432/persuasive-technology" target="_blank" rel="noopener">Elsevier</a></div>
+    <div class="ref-item">Nissenbaum — <em>Privacy in Context: Technology, Policy, and the Integrity of Social Life</em>（Contextual Integrity 隐私理论，本文 privacy 度量的哲学基础）<br>
+    <a href="https://www.sup.org/books/title/?id=8862" target="_blank" rel="noopener">Stanford University Press</a></div>
+    <div class="ref-item">Luo et al. — <em>AgentLens</em>（7-06 · hidden representation 分离方法学的姊妹方法学）<br>
+    <a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a></div>
+    <div class="ref-item">Tamba — <em>Necessary but Not Sufficient</em>（7-03 · 诚实报告 grader 非确定性的姊妹精神）<br>
+    <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a></div>
+    <div class="ref-item">Li / Fan / Zhuang — <em>SafetyRepro / Configuration-Conditional Rank Instability</em>（7-06 · benchmark reliability 姊妹论文）<br>
+    <a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a></div>
+    <div class="ref-item">Chandrahas — <em>evalci: Statistically Rigorous Comparison of LM Evaluations</em>（今日 harness 报告 · 统计层）<br>
+    <a href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">arxiv.org/abs/2607.04429</a></div>
+  </div>
+
+  <!-- 数据亮点 -->
+  <div class="card">
+    <div class="card-title">核心数据亮点 / 关键论点</div>
+    <ul class="point-list">
+      <li><strong>核心论点 ①</strong>：<em>User sovereignty</em> 是 personal agent 评估的<u>沉默维度</u>——之前所有主流 agent benchmark 都<u>未系统评</u>。</li>
+      <li><strong>核心论点 ②</strong>：Sovereignty 需要<em>组合 emergent</em>——单组件 baseline（memory-only / consent-only / evidence-only）均<u>不能</u>达到 full-sovereign 分数。</li>
+      <li><strong>核心论点 ③</strong>：<em>ObservableState × HiddenLabels 分离</em> 是防止 agent"<em>猜评委意图</em>" 的关键方法学。</li>
+      <li><strong>关键数据 · 规模</strong>：<em>120 场景 × 4 模型家族 × 8 baseline = 3,840 冻结提示轨迹</em> + <em>240 项 3 位盲评人工审计</em>。</li>
+      <li><strong>关键数据 · 网格</strong>：Baseline 覆盖 <em>direct · memory-only · consent-only · evidence-only · ReAct/tool-use · safety-prompt · judge-guard · full-sovereign</em> 八类。</li>
+      <li><strong>关键结果 · 提升</strong>：Full-sovereign 脚手架在 sovereignty score 上<u>全面超过</u> 7 类基线。</li>
+      <li><strong>关键结果 · 降低</strong>：Full-sovereign 同时<em>降低</em> privacy leakage / consent violation / over-concession / manipulation capture 四指标。</li>
+      <li><strong>关键数据 · Agreement</strong>：<em>Privacy / consent 高 agreement · manipulation 低 agreement</em>——诚实报告 subjective frontier。</li>
+      <li><strong>八轴度量</strong>：<em>task success · alignment · privacy · consent · evidence · manipulation · burden · auditability</em>——覆盖 personal agent 落地全维度。</li>
+      <li><strong>Paired scenario ordering</strong>：保留场景配对以支持严格的 model / policy 对照——与 7-06 SafetyRepro 的 pairwise 精神一致。</li>
+      <li><strong>拓扑定位</strong>：与 IRT / BOA / Grader-Repro / TASTE / SafetyRepro / evalci 合成 <em>H2 benchmark 方法学六联拍</em>——本篇是<u>价值观 / 用户利益侧</u>第一联。</li>
+      <li><strong>时效</strong>：<em>2026-07-06 当日提交</em>——最新，也是 personal agent 评估领域<u>下半年的议程 setter</u>。</li>
+    </ul>
+  </div>
+
+  <!-- 启发 -->
+  <div class="card">
+    <div class="card-title">对你三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">Harness Engineering</div>
+        <p>(1) <em>ObservableState × HiddenLabels 分离是 harness 方法学</em>——不只是 benchmark，任何 harness 系统都应该<u>严格分离</u> agent 可见 state 和 evaluator 可见 label——这是防止 harness 内部数据泄露污染评估的<em>硬约束</em>；你毕设做 SGLang KV-cache 优化时也应<u>严格分离</u>："<em>KV-cache 策略可见的信息</em>" vs "<em>评估者独占的 ground truth</em>"——例如 cache-hit rate 是 observable，correctness label 是 hidden；(2) <em>八轴度量的 harness 化</em>——本文八轴中至少<em>四轴（privacy · consent · evidence · auditability）</em> 可以在 harness 层用<u>结构化 hooks</u> 直接测量：privacy 用<em>信息流追踪</em>、consent 用<em>确认对话计数</em>、evidence 用<em>citation extraction</em>、auditability 用<em>action log completeness</em>——你可以做 <strong>SovereignHarness</strong>——把八轴度量打包成 harness 中间件；(3) 与今日 harness 报告 evalci 的组合：<em>八轴 × evalci 统计层</em>——每一轴都单独做 CI + 显著性 + 多重比较修正，比 raw 平均分严谨得多；(4) 与 7-02 Loop Engineering 的<em>Loop Specification 五元组</em>的组合：把八轴度量作为 loop 的<em>verification ladder 输入</em>——loop 停止条件之一可以是"<em>sovereignty score 达标</em>"；(5) 3,840 冻结提示轨迹是<u>典型的 batched harness workload</u>——SGLang prefix caching 天然可以加速这种<em>同 prompt 前缀多模型跑</em> 的评估——你可以做 "<em>SGLang-Sovereignty-Bench Runner</em>"，让 3,840 trajectory 从几小时降到几十分钟；(6) 长期看，personal agent 评估将是 harness 系统的<u>下一大批量客户</u>——SGLang / vLLM / TGI 之类的推理服务应该内置 SovereignPA-Bench runner。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">Agent Skills Safety</div>
+        <p>(1) <em>Sovereignty 是 agent safety 的<u>用户侧对偶</u></em>——传统 agent safety 关注"<em>agent 不做坏事</em>"（禁止侧）；sovereignty 关注"<em>agent 真为用户站台</em>"（推进侧）——两者<u>正交</u>：agent 可以是完美安全（不做任何危险 tool call）但完全<em>不主权</em>（对平台操纵毫无抵抗）；agent 也可以是完全主权但<em>不安全</em>（为用户不惜违反隐私规则）——H2 应该有"<em>safety-sovereignty 双轴 leaderboard</em>"；(2) 与今日 agent-safety 报告 <em>Autoformalization / Policy-as-Code</em> 的深度组合：Cedar policy 可以形式化编码<u>八轴度量的约束</u>——把 sovereignty 变成 <em>machine-checkable policy</em>——H2 可以做 "<em>Sovereignty-as-Code</em>" 产品；(3) 与 6-30 <em>Agent Safety Is Action Alignment</em> 外置派的深度组合：Action Alignment 说"<em>agent 应该被拒绝错误 action 而非拒绝 input</em>"——本文补上"<em>什么算错误 action</em>" 的答案：<u>违反 sovereignty 八轴</u> 就是错误 action；(4) 与 7-06 AgentLens 可解释派的组合：AgentLens 检测"<em>agent 有害执行状态</em>"——本文可以扩展 AgentLens 检测"<em>agent 主权失守状态</em>"——例如"<em>正在被 upsell 诱饵捕获</em>"——用 hidden representation 中的 subspace steering 抗操纵；(5) <em>Skill-facing manipulation risk</em>：如果 skill 描述被<em>平台方污染</em>（e.g. 一个 travel skill 内嵌 OTA 优先推荐），本文的 manipulation 轴可以直接测量——这是 SkillSafetyBench 的姊妹 attack surface；(6) <em>长期看</em>，personal agent 会是<em>manipulation 攻击</em> 的最大 target——本文八轴中的 manipulation 轴会成为 <u>2027 年的 first-class safety topic</u>——本文是这个议程的<u>议程 setter</u>；(7) 立即可创建的融合产品：<strong>Sovereignty-Cedar-BOA 三件套</strong> —— <em>Cedar 编码八轴 policy · BOA 搜索 unsafe/unsovereign trajectory · SovereignPA-Bench 提供数据集</em>——是 H2 personal agent safety 的<u>完整闭环</u>。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">Safety Benchmark（直击 · H2 benchmark 方法学六联拍完整闭合）</div>
+        <p>(1) <strong>本文是 H2 benchmark 方法学的<em>第六联拍——价值观 / 用户利益侧</em></strong>——完整六联为：<em>物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· 构造（TASTE）· 配置（SafetyRepro）· <u>价值观（SovereignPA-Bench）</u></em>；前五联都是<em>benchmark 内在质量</em>——本联是<em>benchmark 与用户利益的对齐</em>——两类质量<u>正交</u>；(2) <em>ObservableState × HiddenLabels 分离</em>是 H2 benchmark 方法学新范式——之后所有 agent benchmark 都应该<u>显式声明</u> 哪些是 observable 哪些是 hidden，防止 prompt leakage；(3) <em>组合 emergent 现象</em>——单组件 baseline 无法达到 full-sovereign——这是<u>benchmark 设计的方法学突破</u>：说明"<em>加 memory + 加 consent + 加 evidence 三选一</em>" 的<em>产品实践</em> 是<em>无效的</em>，必须<em>全组件叠加</em>——这类"<em>能力 emergent 现象</em>" 应该成为 benchmark 的一等公民发现；(4) <em>H2 立即可创建的姊妹 benchmark</em>：<strong>SovereignFinBench</strong>（金融 agent 主权）· <strong>SovereignHealthBench</strong>（健康 agent 主权 · 与今日 agent-safety 的 MedAgentBench 呼应）· <strong>SovereignLegalBench</strong>（法律 agent 主权）——三领域是 personal agent 商业落地最早的三个场景；(5) 与今日 harness evalci 的组合：<em>八轴分数</em> × <em>evalci CI 与显著性</em>——每一轴都单独报告 <em>Model A vs B 在 privacy 上 Δ=+3.2, 95% CI [1.5, 5.0], p=0.001</em>——这是 personal agent 评估的<u>publication-ready 声明格式</u>；(6) <em>3-annotator human agreement 是新范式</em>——之前 benchmark 只报 raw accuracy，本文<u>诚实报告</u> 高/低 agreement 轴——这是"<em>benchmark reliability disclosure</em>" 的新标杆——H2 所有 benchmark 都应该有 human agreement 分层报告；(7) <em>Manipulation 是 subjective frontier</em>——低 agreement 说明"<em>什么是操纵</em>" 是<u>开放问题</u>——本文诚实指出这一点，让下一波研究<u>正确锚定</u>——H2 可期待"<em>Manipulation-Taxonomy</em>" 论文；(8) <em>长期看</em>，本文会成为"<em>personal agent evaluation 事实标准</em>"——就像 MMLU 之于知识评估、HELM 之于全面评估——2026-07-06 提交，Q4 就会出现<em>3-5 个 follow-up benchmark</em>——先入者优势明显。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>WebArena</strong> · Zhou et al. · 现实 web agent 环境<br>
+      <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">arxiv.org/abs/2307.13854</a></li>
+      <li><strong>OSWorld</strong> · Xie et al. · desktop control benchmark<br>
+      <a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener">arxiv.org/abs/2404.07972</a></li>
+      <li><strong>GAIA</strong> · Mialon et al. · General AI Assistants benchmark<br>
+      <a href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener">arxiv.org/abs/2311.12983</a></li>
+      <li><strong>Contextual Integrity (Nissenbaum)</strong> · 情境完整性 · 隐私度量哲学基础<br>
+      <a href="https://www.sup.org/books/title/?id=8862" target="_blank" rel="noopener">Stanford University Press</a></li>
+      <li><strong>evalci (7-07)</strong> · 今日 harness 报告 · 统计层严谨性<br>
+      <a href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">arxiv.org/abs/2607.04429</a></li>
+    </ul>
+  </div>
+
+  <!-- 资源 -->
+  <div class="card">
+    <div class="card-title">资源链接</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.05363" target="_blank" rel="noopener">arXiv 论文页</a>
+      <a class="link-btn primary" href="https://arxiv.org/pdf/2607.05363" target="_blank" rel="noopener">下载 PDF</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.05363v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.05363" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2607.04429" target="_blank" rel="noopener">evalci (7-07 harness 姊妹)</a>
+      <a class="link-btn" href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">Autoformalization Cedar (7-07 safety 姊妹)</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  由 CodeBuddy Agent 自动生成 · 2026-07-07 #1 · 搜索来源：arxiv.org/api/query?ti/abs:safety benchmark + arxiv.org/abs/2607.05363<br>
+  论文出处：<a href="https://arxiv.org/abs/2607.05363" target="_blank" rel="noopener">arxiv.org/abs/2607.05363</a> ·
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+</footer>
+
+</body>
+</html>

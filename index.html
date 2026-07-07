@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">45 篇报告</span>
+        <span class="count-badge">46 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">44 篇报告</span>
+        <span class="count-badge">45 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">43 篇报告</span>
+        <span class="count-badge">44 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-07-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">07</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>evalci: Statistically Rigorous Comparison of Language Model Evaluations</strong> —— 把 harness 时代最基础但最<u>被忽视</u> 的一步"<em>A 比 B 强</em>" 打包成 pip 库；把 <em>lm-evaluation-harness / HELM</em> 的 per-item table 一键转成 <em>Δ + 95% CI + paired permutation p + n</em>；每条 routine 对 <em>statsmodels / brute-force exact</em> 独立参考验证；MMLU 9 模型公开比较 <strong>Holm 修正后 3/8 对相邻 leaderboard 排名不显著</strong>；<em>2026 H2 harness 工程六层图完整闭合</em>：context/策略/循环/评委/配置/<u>统计（本文）</u> #1</div>
+          <div class="paper-sub">S. K. Chandrahas · arXiv 2607.04429 2026-07-05 · cs.CL + cs.AI · PyPI evalci · GitHub Shreyaskc/evalci · Zenodo 10.5281/zenodo.21201815</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-07-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">07</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Autoformalization of Agent Instructions into Policy-as-Code</strong>（<em>ICML 2026 AIWILD Workshop</em>）—— 开辟 <strong>H2 agent safety 第七派立场 · 形式化派 / Policy-as-Code 派</strong>；用 <em>LLM generator-critic loop</em> 把 <u>agent prompts + MCP tool descriptions + 自然语言 policy 文档</u> 翻译成<em>形式验证的 Cedar Policy Language</em>；MedAgentBench 上<u>覆盖度显著超过</u>先前 hand-coded symbolic enforcement；<strong>H2 七派立场闭合</strong>：外置 · 认知 · 泛化 · 评委 · 搜索 · 可解释 · <u>形式化</u>；与 7-06 AgentLens 组 "H2 落地双翼"（tool-call gate × hidden representation） #1</div>
+          <div class="paper-sub">A. Mondl / M. Maisel / J. H. Brock · arXiv 2606.26649 2026-06-25 · cs.AI + cs.CR · Cedar Policy Language + MCP + NL 三源合流</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-07-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">07</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>SovereignPA-Bench: Evaluating User-Owned Personal Agents under Evolving Intent, Platform Mediation, and Consent Constraints</strong> —— 首次把 <em>user sovereignty</em> 提炼为 personal agent 的<u>可执行八轴度量</u>（<em>task success · alignment · privacy · consent · evidence · manipulation · burden · auditability</em>）；<strong>ObservableState × HiddenLabels 分离</strong> benchmark 方法学新范式；<em>120 场景 × 4 模型家族 × 8 policy baseline = 3,840 冻结提示轨迹</em> + 3 位盲评 240 items 人工审计；full-sovereign 全面超过 7 类基线；<strong>H2 benchmark 方法学六联拍完整闭合</strong>：物品/搜索/评委/构造/配置/<u>价值观（本文）</u> #1</div>
+          <div class="paper-sub">Dylan Zongmin Liu · arXiv 2607.05363 <strong>2026-07-06 当日提交</strong> · cs.AI · 高 agreement (privacy/consent) 低 agreement (manipulation) 主观前沿诚实报告</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-06-1.html">
         <div class="date-badge">
