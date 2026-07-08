@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-08 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8f8; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #7a1e1e; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #f4c4c4; color: #7a1e1e; }
+  .link-btn.primary:hover { background: #fadada; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8f8; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fcebeb; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #f4c4c4; color: #7a1e1e; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fff8f8; font-weight: 500; color: #7a1e1e; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 8 日 · Agent Safety · 首次证明"<u>失败在第 1 轮就可预测</u>" —— 从 LLM agent 的<em>隐藏残差流</em> 拿单 token 训一个 <strong>逻辑回归 probe</strong>，配<em>分布无关 Clopper–Pearson 下置信界 + 每轮 recall budget 联合搜索</em>，在 TextCraft 上以 <strong>90% recall 目标</strong>节省 <em>Qwen-2.5-7B 47.1% ± 10.3%</em>、<em>Llama-3.2-3B 37.2% ± 8.8%</em> 的推理算力；纯行为 scorer 只省一半 —— <u>hidden states 已经编码了行为所揭示的一切</u></div>
+  <h1>Doomed from the Start：<strong>LLM Agent 失败在第 1 轮就可从残差流预测</strong>——用<em>Recall-Controlled Probe Cascade</em> 提前中止 doomed-to-fail episode；<u>90% target 下推理算力节省 47.1%（Qwen-7B）· 37.2%（Llama-3B）· 1.6-1.7× 最优单闸策略</u>；对失败的<em>可认证 recall 上限 0.974</em> —— 一并告诉你数据能背书什么承诺；<strong>H2 agent safety 第八派立场诞生：早期终止派 / 预算派</strong>—— 八派为 <em>外置 · 认知 · 泛化 · 评委 · 搜索 · 可解释 · 形式化 · 终止</em></h1>
+  <div class="en-title">Doomed from the Start: Early Abort of LLM Agent Episodes via a Recall-Controlled Probe Cascade</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 9.6</span>
+    <span class="score-chip chip-novel">新颖性 9.8</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-05 至 07-07 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.06503" target="_blank" rel="noopener">Doomed from the Start: Early Abort of LLM Agent Episodes via a Recall-Controlled Probe Cascade</a><span class="winner-badge">今日选定</span></td>
+          <td>hidden-state probe cascade · Clopper–Pearson 分布无关下置信界 · per-round recall budget 联合搜索 · Rule of Three sample complexity · TextCraft Qwen-7B / Llama-3B</td>
+          <td>arXiv 2607.06503 · <strong>2026-07-07 当日提交</strong> · K. Ruan / Z. Huang / Z. Zhou + 3 · cs.AI · 10 pages / 9 figures / 2 tables · Code 将开源</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06000" target="_blank" rel="noopener">Context-to-Execution Integrity (CXI) for LLM Agents</a></td>
+          <td>execution-boundary 系统 · protected sink fields + payloads + invocation event 独立授权检查 · attacker-writable context 隔离</td>
+          <td>arXiv 2607.06000 · 2026-07-07 · I. Santos-Grueiro · cs.CR · 类 CFI 硬约束</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06273" target="_blank" rel="noopener">AgentTether: Graph-Guided Diagnosis and Runtime Intervention for Reliable LLM Agent Operation</a></td>
+          <td>轨迹图诊断 + 运行时干预 · state propagation 分析 · 生产 agent reliability</td>
+          <td>arXiv 2607.06273 · 2026-07-07 · C. Zhao / S. Zhang / W. Gu · cs.SE</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.05029" target="_blank" rel="noopener">Your Agent's Memories Are Not Its Own: Forged Reasoning Attacks on LLM Agent Memory and Defenses</a></td>
+          <td>persistent memory 新攻击面 · Forged Reasoning Attack · memory-based agent 防御</td>
+          <td>arXiv 2607.05029 · 2026-07-06 · N. Karamchandani / P. Nagasubramaniam / S. Zhu · cs.CR + cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.05297" target="_blank" rel="noopener">MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution</a></td>
+          <td>meta-skill 两时间尺度演化 · 递归自我改进 · skill safety 边界</td>
+          <td>arXiv 2607.05297 · 2026-07-06 · Z. Wang / M. Yan / J. Bi · cs.AI</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Doomed from the Start: Early Abort of LLM Agent Episodes via a Recall-Controlled Probe Cascade</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>一开始就注定失败：用 Recall 受控的探针级联提前中止 LLM Agent 事件</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Kai Ruan · Zihe Huang · Ziqi Zhou · Qianshan Wei · Xuan Wang · Hao Sun（6 人）</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · <strong>2026-07-07 v1</strong>（当日提交）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.06503" target="_blank" rel="noopener">arxiv.org/abs/2607.06503</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.06503" target="_blank" rel="noopener">arxiv.org/pdf/2607.06503</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.06503v1" target="_blank" rel="noopener">arxiv.org/html/2607.06503v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.06503" target="_blank" rel="noopener">10.48550/arXiv.2607.06503</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>10 pages · 9 figures · 2 tables · 40 KB</span>
+      </div>
+      <div class="meta-item">
+        <label>开源资源</label>
+        <span>论文声明代码将开源（"Code will be released soon"）</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>95（相关 10.0 / 来源 8.6 / 影响力 9.6 / 新颖 9.8 / 开源 8.0）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      LLM agent 的失败在<u>第 1 轮</u>就可从残差流预测 —— 用 <em>recall-controlled probe cascade</em> 节省 <strong>47%</strong> 推理算力，并附<u>可认证 recall 上限</u>。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>LLM agent 在解多步任务时经常锁定到<em>注定失败</em> 的轨迹上，但仍会在失败可观察前<u>消耗大量推理算力</u>。我们表明<strong>失败在早期就可从 agent 的内部表征预测</strong>：在隐藏激活上做的<em>每轮独立轻量 probe</em>，早在<u>第一次交互轮</u> 就能预示最终 episode 失败——而只读 agent 可观察行为的 scorer 此时几乎与随机猜测无异。我们把这个信号转化为一个可用的<strong>中止级联</strong>：每轮一个分布无关的<em>校准闸门</em>，通过联合搜索每轮 recall 预算，使得<u>最终成功的 episode 以用户指定的全局速率通过所有闸门</u>——这个 episode 级保证才是部署真正关心的，因为 false-abort 风险会沿闸门累积。在 TextCraft 上，跨两个 agent 模型的级联在<strong>90% 到 97% 的每一个 recall target</strong> 都达标；在 90% target 下，节省推理算力 <em>47.1% ± 10.3%（Qwen-2.5-7B）</em> 和 <em>37.2% ± 8.8%（Llama-3.2-3B）</em>，是最优单闸策略的 <strong>1.6–1.7 倍</strong>。用同样 pipeline 但只读行为的对照级联只省下大约一半，且在 probe 上叠加行为特征无任何进一步收益——<u>隐藏状态已经编码了行为所揭示的一切</u>。最后，我们刻画了认证高 recall target 的<em>样本复杂度</em>，告诉实践者<u>他们的数据能——以及能证明不能——背书哪些 recall 承诺</u>。代码将开源。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（500 字）</div>
+    <p><strong>解决了什么问题</strong>：Claude Opus / Qwen / Llama 等 agent 在 TextCraft、SWE-bench、WebShop 这类多步任务中，<u>大量 episode 从第 1 轮就已注定失败</u>——但代理会继续消耗几十 K token 推理才让失败变得可观察。这不仅浪费算力，更是<em>agentic safety 的浪费型风险面</em>：越多失败 episode 消耗越多算力，越难在真正 unsafe 状态发生前介入。<u>行为 scorer 在第 1-2 轮几乎与随机猜测无异</u>（AUC 差异 0.12-0.21），也无法作为早停信号。</p>
+    <p><strong>核心方法</strong>：三件套。（1）<strong>Probe 侧</strong>：每轮独立训一个 <em>逻辑回归 probe</em>（L2 正则 C=1），输入是 agent LLM 在<u>动作 token 最后位置</u>的残差流（Llama-3.2-3B 第 14 层 / Qwen-2.5-7B 第 20 层，per-layer AUC sweep 选出），用 <em>task-grouped k-fold cross-fitting</em> 保证每个 episode 由未见 task 的 probe 打分。（2）<strong>Cascade 侧</strong>：每轮 gate 用<u>分布无关 Clopper–Pearson 精确二项下置信界</u>（不是普通 conformal quantile），选<u>最小</u>满足 p̲(τ_r) ≥ t_r 的阈值——附录实验显示在 target 0.95 下 quantile 版本会违反 recall（0.933 < 0.95），Clopper–Pearson 达 0.972（保守但从不违反）。6 个 gate × 每个 6 档 budget = 6⁶ = 46,656 组合，在 validation split 联合搜索使全局 recall ≥ ρ*（默认 δ=0.02 安全 margin）。（3）<strong>Sample complexity 侧</strong>：Rule of Three 界给出 n_pos ≥ ln(α)/ln(ρ*)，本文数据规模下<u>可认证 recall 上限约 0.974</u>——0.98 和 0.99 target 即便"不中止任何 episode 的 no-op 策略"也无法认证，认证变体直接 abstain 并给出零节省。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。（i）与 <em>7-06 AgentLens（可解释派 hidden representation steering）</em> 同源但目标不同——AgentLens <u>抑制</u>有害执行，本文<u>中止</u>整个 doomed episode。（ii）与 <em>7-03 BOA（搜索派）</em> 互补——BOA 用工程加速<u>找到</u> unsafe trajectory，本文用工程加速<u>杀掉</u> doomed trajectory。（iii）与 <em>6-30 Action Alignment · 7-01 Epistemic Property · 7-07 Cedar Policy</em> 完全正交——那些派系关心"该不该做"，本文关心"<u>何时应该停</u>"。<strong>H2 agent safety 第八派立场诞生：早期终止派 / 预算派</strong>——八派为 <em>外置 · 认知 · 泛化 · 评委 · 搜索 · 可解释 · 形式化 · <u>终止</u></em>。</p>
+    <p><strong>关键工程决策</strong>：Clopper–Pearson 而非 conformal quantile · logistic 而非 MLP probe · 每轮独立而非序列建模 · sample complexity 显式认证边界——每一处都<u>选保守但可保证</u> 而非"看起来更强但可能违反 recall"，这是 recall-controlled safety 领域的方法学示范。</p>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">实验结果亮点</div>
+    <p><strong>1. TextCraft 全 recall target 的算力节省</strong>（Cascade · mean ± SE across seeds）：</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Recall Target</th><th>Qwen-2.5-7B（成功率 74.8%）</th><th>Llama-3.2-3B（成功率 63.0%）</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>0.90</td><td><strong>47.1% ± 10.3%</strong></td><td><strong>37.2% ± 8.8%</strong></td></tr>
+        <tr><td>0.92</td><td>44.0% ± 8.9%</td><td>31.7% ± 8.1%</td></tr>
+        <tr><td>0.95</td><td>32.0% ± 12.2%</td><td>19.9% ± 9.2%</td></tr>
+        <tr><td>0.97</td><td>18.2% ± 12.5%</td><td>9.3% ± 7.7%</td></tr>
+      </tbody>
+    </table>
+    <p><strong>2. Cascade vs 最优单闸</strong>：在 90% target 下 <u>1.6–1.7 倍提升</u>；surface single-gate → surface cascade 提升 <strong>3.6×</strong>，probe single-gate → probe cascade 提升 1.9×——cascade 结构对弱 scorer 的放大更明显。</p>
+    <p><strong>3. Probe vs 行为 scorer</strong>（target 0.95 固定 pipeline，只换 scorer）：</p>
+    <ul class="point-list">
+      <li>Qwen: probe 32.0% 节省 · surface 17.0% —— <strong>hidden state 让节省几乎翻倍</strong></li>
+      <li>Stacking (Probe + 行为特征) 与 probe 单独持平（噪声内）—— <u>hidden states 已编码行为揭示的一切</u>，反之则不成立</li>
+      <li>Probe 相对 surface 在第 1-2 轮有 <strong>0.12–0.21 AUC 绝对优势</strong>；behavior 信号要到第 3-4 轮才成熟——此时已有 1/3+ episodes 结束</li>
+    </ul>
+    <p><strong>4. Sample complexity 认证</strong>：n_pos = 113/115 支持 recall ≤ 0.974；0.98 target 需 1.3× 数据；0.99 target 需 2.6× 数据——认证变体在 0.98/0.99 直接 abstain（零节省），<u>诚实告知"这个承诺你的数据背书不了"</u>。</p>
+    <p><strong>5. 典型最优 budget 向量</strong>（Llama, target 0.90）：<em>(0.95, 0.85, 0.85, 1.0, 1.0, 1.0)</em>——<u>在早期 gate（recall 便宜、剩余算力多）激进消耗预算，在末期 gate 关闭</u>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与出处</div>
+    <div class="ref-item"><strong>Afzal et al. 2025</strong> · Knowing before saying: LLM representations encode information about chain-of-thought success before completion · Findings of ACL —— 表明 LLM 内部状态在 CoT 生成完成前就编码成功信息，本文方法学的最直接支撑</div>
+    <div class="ref-item"><strong>Aggarwal et al. 2023</strong> · Let's sample step by step: adaptive-consistency for efficient reasoning and coding with LLMs · EMNLP —— 自适应 self-consistency，答案一致时提前停止采样，可视为"输出层"版本的 early abort</div>
+    <div class="ref-item"><strong>Alain &amp; Bengio 2016</strong> · Understanding intermediate layers using linear classifier probes · <a href="https://arxiv.org/abs/1610.01644" target="_blank" rel="noopener">arxiv.org/abs/1610.01644</a> —— 线性 probe 方法学奠基工作</div>
+    <div class="ref-item"><strong>Xi et al. 2024 · AgentGym / Prasad et al. 2024 · TextCraft</strong> —— 本文核心实验环境</div>
+    <div class="ref-item"><strong>Vovk et al. / Angelopoulos &amp; Bates · Conformal Prediction</strong> · <a href="https://arxiv.org/abs/2107.07511" target="_blank" rel="noopener">arxiv.org/abs/2107.07511</a> —— 本文<u>显式选择 Clopper–Pearson 而非 conformal quantile</u> 的方法学参照</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p><strong>H2 首月 8 派立场完全闭合</strong>：<em>外置（6-30 Action Alignment）· 认知（7-01 Epistemic）· 泛化（7-02 Why Generalize）· 评委（7-03 Necessary but Not Sufficient）· 搜索（7-03 BOA）· 可解释（7-06 AgentLens）· 形式化（7-07 Cedar）· 终止（本文）</em>。本篇是<u>第三派可运行时部署</u>（前两派为 7-06 AgentLens hidden representation + 7-07 Cedar Policy runtime enforcement）；且是<u>唯一一派把"经济学 / 算力预算"作为 first-class 安全变量</u>——把"unsafe episode 是浪费型风险"变成可量化的中止决策。跨谱系融合方向：（1）与 <em>7-06 AgentLens</em> 组"<u>hidden-state 双翼</u>"——一个 abort（本文）、一个 steering（AgentLens），共用残差流基础设施；（2）与 <em>7-07 Cedar Policy</em> 组"硬约束 + 软预算"——Cedar 定义 <em>什么不能做</em>，本文定义 <em>什么时候应该停</em>；（3）与 <em>7-03 BOA</em> 组"搜索 + 终止"——BOA 找不安全轨迹、本文杀 doomed 轨迹，工程加速三件套（batched decoding / prefix caching / chunked tree expansion）可复用。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>本文 probe cascade 是<em>harness 的中止层</em>——与今日 harness 方向的 <em>Harness MDP / Learned Harness</em>（2607.05458）互为对偶：那篇学"<u>什么时候做什么动作</u>"，本文学"<u>什么时候应该完全停下</u>"。两者叠加自然：AW controller 输出"submit"动作时先经过 probe cascade 校验——一个 harness-level early-abort gate。对 <em>Loop Engineering</em>（7-02）：本文为 Loop Library 提供了新的 <u>terminal state 触发器</u> 类型——"probe-signaled doomed"；对 <em>ReContext</em>（7-06）：evidence pool 组装前先跑 probe，doomed episode 直接不做 replay 也可省算力。对 <em>evalci</em>（7-07 · 统计层）：per-round recall guarantee 提供了 harness 报告新维度——不只报最终 rubric，还报"<u>本 harness 在 X% recall 下省 Y% 算力</u>"。工程侧：<u>与你毕设 SGLang KV-cache 优化完美对齐</u>——doomed episode 早停释放的 KV-cache 可以立刻回收给下一个待处理请求，是 KV-cache scheduler 的一个自然 hook。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p>本文为 agent benchmark 引入 <u>两个新的核心指标</u>：（1）<strong>成功率 × 算力节省 曲线</strong>（不同 recall target 下的 pareto frontier）——比 TextCraft/AgentBench 只报最终成功率信息量大得多；（2）<strong>可认证 recall 上限</strong>——把"你的 benchmark 数据能背书什么样的部署承诺"做成第一等公民，与 <em>7-07 SovereignPA-Bench</em> 主张的 <em>evidence + auditability</em> 精神一致；与 <em>7-06 SafetyRepro</em> 主张的 <em>configuration-conditional rank instability</em> 互补——前者说"pairwise 判定不稳"，本文说"承诺认证要显式声明数据范围"；与 <em>7-02 IRT</em>（心理测量派）互补——IRT 精选高信息量 items，本文用少量成功 episodes 认证 recall 上限，两者都在<u>做"少样本、多信息"</u> 的评估经济学。<em>H2 benchmark 方法学七联</em>雏形：物品 · 搜索 · 评委 · 构造 · 配置 · 价值观 · <u>承诺认证（本文启发）</u>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>AgentLens: Mechanistic Interpretability for Coding Agents</strong>（7-06 已收）—— <a href="https://arxiv.org/abs/2606.22673" target="_blank" rel="noopener">arxiv.org/abs/2606.22673</a>：hidden representation 双翼另一翼，<u>抑制</u>有害执行 vs 本文<u>中止</u>整个 episode。</li>
+      <li><strong>Autoformalization of Agent Instructions into Policy-as-Code (Cedar)</strong>（7-07 已收）—— <a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arxiv.org/abs/2606.26649</a>：形式化派硬约束 vs 本文经济学软预算。</li>
+      <li><strong>Context-to-Execution Integrity (CXI) for LLM Agents</strong>（今日次选）—— <a href="https://arxiv.org/abs/2607.06000" target="_blank" rel="noopener">arxiv.org/abs/2607.06000</a>：执行边界系统，protected sink 授权隔离——与本文并列的"运行时可部署"新方案。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.06503" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.06503" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.06503v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.06503" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">代码尚未开源（论文声明"Code will be released soon"）。作者机构未明示（arXiv email hash 未透露），推测为国内高校/研究机构（作者名字符合中文拼音）。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

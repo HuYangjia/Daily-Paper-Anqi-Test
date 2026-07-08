@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">46 篇报告</span>
+        <span class="count-badge">47 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">45 篇报告</span>
+        <span class="count-badge">46 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">44 篇报告</span>
+        <span class="count-badge">45 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-08-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">08</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Learning to Control LLM Agent Harnesses with Offline RL</strong> —— 把 harness 从"<em>固定基础设施</em>" 抬到"<u>可学习控制层</u>"—— 首次形式化 <strong>Harness MDP</strong>（七结构化动作） + <em>advantage-weighted regression</em> + 冻结 LLM 执行器 · 只训 64 单元 MLP 控制器；<em>τ-bench retail +18.2 pp · DB-Bench +13.2 pp · coding +10.0 pp</em>；<em>Harness Maturity Score</em> 分离过程质量与最终质量——<strong>CheckBeforeSubmit 从 1 次到 113 次</strong>；<em>H2 harness 工程七层图完整闭合</em>：context/策略/循环/评委/配置/统计/<u>学习派（本文）</u> #1</div>
+          <div class="paper-sub">H. Yi / X. Song · arXiv 2607.05458 2026-07-05 · cs.LG + cs.AI · 17 pages · 与姊妹篇 2607.04528 belief divergence 同日提交</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-08-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">08</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Doomed from the Start: Early Abort of LLM Agent Episodes via a Recall-Controlled Probe Cascade</strong> —— 首次证明"<u>失败在第 1 轮就可从残差流预测</u>"；轻量 logistic probe + <em>Clopper–Pearson 分布无关下置信界</em> + 每轮 recall budget 联合搜索；TextCraft 上 <strong>90% recall target 节省 Qwen-7B 47.1% · Llama-3B 37.2% 推理算力</strong>；比最优单闸 1.6-1.7×；behavior scorer 只省一半——<u>hidden states 已编码行为揭示的一切</u>；Rule of Three 认证 recall 上限 <em>0.974</em>。<strong>H2 agent safety 第八派立场：早期终止派 / 预算派</strong>——八派完整（外置/认知/泛化/评委/搜索/可解释/形式化/终止） #1</div>
+          <div class="paper-sub">K. Ruan / Z. Huang / Z. Zhou + 3 人 · arXiv 2607.06503 <strong>2026-07-07 当日提交</strong> · cs.AI · 10 pages / 9 figures</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-08-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">08</div>
+        </div>
+        <span class="dir-tag tag-bench">Benchmark</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents</strong> —— 首个把<u>多语言性</u> 作为 first-class 变量的长程 agent benchmark · <em>67 tasks × 5 domain</em>（commerce / knowledge / legal / localization / manufacturing）· <strong>Hybrid framework 三合一评估</strong>：<em>structural × executable × LLM-semantic</em>；SOTA agent 在多语工作流下显著衰减 · 多语言性<em>沿推理与执行步骤产生 compounding effects</em>（合成型漂移而非独立衰减）。<em>H2 benchmark 方法学第七联：多语言联</em>——七联为 <em>物品/搜索/评委/构造/配置/价值观/多语言</em>。作者线索：BJTU + 腾讯微信 AI 联合 #1</div>
+          <div class="paper-sub">H. Li / Y. Liu / Z. Zhang + 5 人 · arXiv 2607.06008 <strong>2026-07-07 当日提交</strong> · cs.AI + cs.CL · 15 pages / 6 figures</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-07-1.html">
         <div class="date-badge">

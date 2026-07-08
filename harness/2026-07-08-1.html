@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-08 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 8 日 · Harness Engineering · 把 harness 从"固定基础设施"抬到"<u>可学习控制层</u>"—— 首次把 <em>agent 执行 harness</em> 形式化为 <strong>Harness MDP</strong>，用 <em>advantage-weighted regression + 冻结 LLM 执行器</em> 训练一个只有 64 hidden units 的 MLP 控制器；六大受控域 + 两个公开 benchmark 适配器上 <strong>τ-bench retail +18.2 pp · AgentBench DB-Bench +13.2 pp · Coding +10.0 pp</strong>；同时提出 <em>Harness Maturity Score (HMS)</em> 把过程质量与最终质量分离，用 <u>有限缓冲区理论</u> 解释为什么"过程改善普遍、最终增益局部化"</div>
+  <h1>Harness MDP：<strong>把 LLM Agent Harness 变成可学习的控制层</strong> —— 冻结 LLM 执行器，用 <em>offline RL + advantage-weighted regression</em> 训练轻量 MLP 控制器在 <em>observe / retrieve / call-tool / draft / check / revise / submit</em> 七结构化动作中做选择；<u>过程质量 (HMS) × 最终质量 (G) 分离</u> 揭示 <strong>CheckBeforeSubmit 从 1080 episodes 中 1 次跳升到 113 次</strong>；<em>2026 H2 harness 工程七层图</em>：context · 策略 · 循环 · 评委 · 配置 · 统计 · <u>学习派（本文）</u></h1>
+  <div class="en-title">Learning to Control LLM Agent Harnesses with Offline Reinforcement Learning</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 7.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-01 至 07-07 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">Learning to Control LLM Agent Harnesses with Offline Reinforcement Learning</a><span class="winner-badge">今日选定</span></td>
+          <td>Harness MDP 形式化 · 七结构化动作 · advantage-weighted regression · Harness Maturity Score · 6 域 × 100 tasks + τ-bench retail + DB-Bench + coding 三重公开基准 · 消融 vs BC / Forced CHECK</td>
+          <td>arXiv 2607.05458 · 2026-07-05 · H. Yi / X. Song · cs.LG + cs.AI · 17 pages / 7 figures · Code 未开源</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.04528" target="_blank" rel="noopener">Measuring Harness-Induced Belief Divergence in Multi-Step LLM Agents</a></td>
+          <td>同作者姊妹篇 · harness 如何改变 agent 多步"信念"轨迹 · outcome 相同但内部信念不同的 harness 对比</td>
+          <td>arXiv 2607.04528 · 2026-07-05 · H. Yi / X. Song · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.03935" target="_blank" rel="noopener">Harness-Aware Self-Evolving (HASE): Co-Evolving Model Weights, Harness, and Task Solutions</a></td>
+          <td>agentic RL 联合演化 model weight + harness 组件 + task solution · 与本文 offline RL + 冻结 LLM 形成"<em>联合演化 vs 冻结控制</em>" 对比</td>
+          <td>arXiv 2607.03935 · 2026-07-04 · H. Luo / Y. Huang / S. Luo · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06341" target="_blank" rel="noopener">Harnessing Code Agents for Automatic Software Verification</a></td>
+          <td>Coq 交互证明领域 · agent-based proof search harness · 领域专属 harness 案例（cs.FL）</td>
+          <td>arXiv 2607.06341 · 2026-07-07 · S. Kan / S. Kan / S. Ertel · cs.FL + cs.AI + cs.SE</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.02598" target="_blank" rel="noopener">Evaluating Agentic Harness Systems for Autonomous Computational Pathology</a></td>
+          <td>病理学领域 harness 评估 · 目标 vs 工作流 vs 证据边界 · 医学领域适配</td>
+          <td>arXiv 2607.02598 · 2026-07-01 · J. Lin / Z. Chen / Q. Zheng · cs.CV</td>
+          <td class="score-num">84</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Learning to Control LLM Agent Harnesses with Offline Reinforcement Learning</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>用离线强化学习控制 LLM Agent Harness</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Haiwen Yi · Xinyuan Song（同作者双子星 · 同日 22:11 UTC 提交本文 · 同日 22:22 UTC 提交姊妹篇 belief divergence）</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-07-05 v1</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arxiv.org/abs/2607.05458</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.05458" target="_blank" rel="noopener">arxiv.org/pdf/2607.05458</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.05458v1" target="_blank" rel="noopener">arxiv.org/html/2607.05458v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.05458" target="_blank" rel="noopener">10.48550/arXiv.2607.05458</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.LG (主) · cs.AI</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>17 pages · 7 figures · 1,093 KB</span>
+      </div>
+      <div class="meta-item">
+        <label>开源资源</label>
+        <span>论文声明代码将随后释出（截至 07-08 未见 GitHub / PyPI）</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>94（相关 10.0 / 来源 8.4 / 影响力 9.2 / 新颖 9.6 / 开源 7.5）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 LLM agent 的 harness 从"<em>固定基础设施</em>"抬到"<u>可学习控制层</u>"—— Harness MDP + advantage-weighted regression + 冻结 LLM 执行器。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>LLM agent 通常通过修改 prompt、模型或手写工作流来改进，而围绕模型的执行 harness 被视作固定基础设施。<strong>我们主张 harness 本身就是一个可学习的控制层。</strong> 我们把 harness 运行形式化为一个<em>有限视界的 Harness MDP</em>：一个轻量控制器选择结构化执行动作，而 LLM 执行器保持冻结。控制器<u>用只有终端任务-rubric 奖励的离线 rollout</u>，通过 advantage-weighted regression 训练。我们还把最终任务质量与一个 post-hoc 的 <em>Harness Maturity Score</em> 分离——后者衡量 harness 是否遵循可靠的执行模式，而不只是最终答案是否正确。这一分离带来了 harness 学习的<u>有限缓冲区视角</u>：最终质量增益需要 offline buffer 中的高回报支持，而过程行为只要与 advantage-weighted actions 对齐就能发生迁移。在<strong>六个受控域和两个公开 benchmark 适配器</strong> 上，学习到的控制器一致改进了验证行为，并选择性地改进最终任务质量，最大增益出现在 <em>adapted τ-bench retail、adapted AgentBench DB-Bench 和使用校准结构验证器的 coding</em>。相对 behavior cloning 和 Forced CHECK 的消融表明，增益既不能被"模仿"、也不能被"简单加检查"解释。这些结果表明<u>harness 控制是冻结 LLM agent 的一个可学习层</u>，同时也说明 offline support 会限制何时"更好的过程控制"能真正翻译成"更好的最终答案"。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（500 字）</div>
+    <p><strong>解决了什么问题</strong>：Claude Code / Codex / lm-evaluation-harness 时代，社区讨论 harness engineering（6-30 CUGA FLO · 7-02 Loop Engineering · 7-06 ReContext）时都<u>手工设计固定执行结构</u>——本文首次把这个假设推翻：<em>harness 结构本身可以学</em>。它不是模型、也不是 prompt，而是一层<u>独立于 LLM 参数的控制层</u>。</p>
+    <p><strong>核心方法</strong>：三件套。（1）<strong>Harness MDP 形式化</strong>：状态 = 轨迹进度 + draft 状态 + rubric 覆盖率 + 错误计数 + 剩余预算 + 上一动作；动作 = <em>observe · retrieve · call-tool · draft · check · revise · submit</em> 七个（共享跨域接口，无效动作由域适配器 mask）；奖励 = 只有终端 rubric 得分。（2）<strong>Advantage-Weighted Regression (AW)</strong>：从 base + exploratory rollouts 中收集 offline buffer，用 exp(A/β) 加权最大化 log π_θ(a|s)；控制器仅为一个 <u>64 隐藏单元的单层 MLP</u>，Adam lr=10⁻³，β=0.2，权重裁剪 [0.1, 10.0]，batch 256，20 epochs，3 seeds。（3）<strong>Harness Maturity Score (HMS)</strong>：7 个过程事件的归一化加权（CheckBeforeSubmit、EvidenceBeforeClaim、TestBeforeSubmit、RevisionAfterFailure、ValidToolUse、StopWhenSufficient、−EarlySubmit），仅用于评估、不作训练奖励。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。（i）区别于 <em>6-30 CUGA FLO（手工 policy）· 7-02 Loop Engineering（手工 loop spec）· 7-06 ReContext（training-free 推理时管理）</em>——本文提供 harness 工程<u>第七层：学习派</u>。（ii）区别于 6-25 Interplay-Harness、7-04 HASE 这类<u>联合演化模型权重</u> 的方法——本文冻结 LLM，只训练 harness 控制器，工程侧最省资源、也最容易叠加到现有 harness。（iii）区别于 forced-structure 干预方式（在每步强制插入 CHECK）——AW 是<u>状态依赖控制</u>，能学会"什么时候该 check、什么时候该跳"，在 5/8 设置同时打败 BC 和 FC 两条基线。</p>
+    <p><strong>H2 首月 harness 谱系闭合更新</strong>：<u>七层图</u>形成——<em>context（7-06 ReContext）· 策略（6-30 CUGA FLO）· 循环（7-02 Loop Engineering）· 评委（7-03 Grader-Repro）· 配置（7-06 SafetyRepro）· 统计（7-07 evalci）· 学习派（本文）</em>——本篇为最后一层、也是最"结构性"的一层：<u>把整个 harness 变成可优化对象</u>。</p>
+  </div>
+
+  <!-- 六域 100 任务分布 -->
+  <div class="card">
+    <div class="card-title">六大受控域 · 100 任务/域（80 训练 + 20 评估 · 20 easy / 60 standard / 20 hard）</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>域</th><th>评估维度</th><th>难度层特点</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Knowledge-work</strong></td><td>答案正确性 · 证据支持 · rubric 覆盖 · 格式</td><td>hard 任务额外含<em>来源冲突</em>标准</td></tr>
+        <tr><td><strong>Coding</strong></td><td>单元测试 · 可解析性 · 安全约束 · 成本合规</td><td><u>唯一完全客观的验证器</u></td></tr>
+        <tr><td><strong>Research (QA)</strong></td><td>答案正确性 · 证据支持 · 引用格式 · 输出格式</td><td>易饱和 → EarlySubmit 惩罚生效</td></tr>
+        <tr><td><strong>Multi-tool</strong></td><td>答案 · 工具调用有效性 · 结构格式</td><td>状态依赖工具组合</td></tr>
+        <tr><td><strong>Long-memory</strong></td><td>答案 · 来源会话匹配 · 格式</td><td>跨会话检索</td></tr>
+        <tr><td><strong>Planning</strong></td><td>约束满足 · 标准覆盖 · 计划格式</td><td>组合搜索</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>公开 benchmark 适配器</strong>：<em>τ-bench retail</em>（16 训练 + 20 held-out）· <em>AgentBench DB-Bench</em>（16 训练 + 20 held-out）—— 均已按 Harness MDP 接口重新包装（<u>注意：适配器分数并非官方 benchmark 分数</u>，是论文自定义 rubric 下的评分）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Advantage-Weighted Regression (AWR)</strong> · Peng et al. 2019 · <a href="https://arxiv.org/abs/1910.00177" target="_blank" rel="noopener">arxiv.org/abs/1910.00177</a> —— 本文 AW 训练目标的算法原型：无需 critic 网络、纯监督形式的 offline policy improvement。</div>
+    <div class="ref-item"><strong>Implicit Behavior Cloning</strong> · Florence et al. 2021 · <a href="https://arxiv.org/abs/2109.00137" target="_blank" rel="noopener">arxiv.org/abs/2109.00137</a> —— BC 消融基线思想来源。</div>
+    <div class="ref-item"><strong>τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains</strong> · Yao et al. 2024 · <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a> —— 本文最重要的公开 benchmark 适配对象之一。</div>
+    <div class="ref-item"><strong>AgentBench: Evaluating LLMs as Agents</strong> · Liu et al. 2023 · <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a> —— DB-Bench 出处，本文另一个适配基准。</div>
+    <div class="ref-item"><strong>Reflexion / Voyager / ReAct 等 harness 生态</strong>：本文将其视作"<em>hand-designed harness</em>" 的代表，与"<u>learned harness</u>"（本文）形成方法学对比。</div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">实验结果亮点</div>
+    <p><strong>1. 三大公开设置的最终质量提升</strong>（相对 base harness）：</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>设置</th><th>Base G</th><th>AW G</th><th>Δ (95% CI)</th><th>CheckBeforeSubmit</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>τ-bench retail (adapted)</td><td>0.337</td><td>0.519</td><td><strong>+18.2 pp</strong> [+15.1, +21.3]</td><td>17.2%</td></tr>
+        <tr class="hl"><td>AgentBench DB-Bench (adapted)</td><td>0.415</td><td>0.547</td><td><strong>+13.2 pp</strong> [+10.2, +16.2]</td><td>16.7%</td></tr>
+        <tr class="hl"><td>Coding (calibrated verifier)</td><td>0.712</td><td>0.812</td><td><strong>+10.0 pp</strong> [+5.9, +14.6]</td><td>17.8%</td></tr>
+      </tbody>
+    </table>
+    <p><strong>2. 过程行为跃迁</strong>：<em>Base 中 1080 episodes 只出现 1 次 CheckBeforeSubmit → AW 中 1080 episodes 出现 113 次</em>（<u>113 倍跃迁</u>）；6 域中 5 域 HMS 提升（research 因 EarlySubmit 从 0% → 25% 抵消收益）。</p>
+    <p><strong>3. 消融击败两条 baseline</strong>：AW 在<u>全部 8 个设置</u>都优于 behavior cloning；在 5/8 设置<u>同时</u>优于 BC 和 Forced CHECK（forced-insert 检查）——说明增益既<em>不是模仿</em>、也<em>不是机械加检查</em>，而是<u>状态依赖控制</u>。coding 上 BC lift = −8.3 pp，AW lift = +10.0 pp，ΔΔ_{AW−BC} 高达 <strong>+18.3 pp</strong>。</p>
+    <p><strong>4. 有限缓冲区理论</strong>：作者证明<u>最终质量增益上界 σ_B = G*_B − Ḡ_B</u>（buffer slack），只有当 offline buffer 存在高回报支持时才能达成——这解释了为什么 6 个受控域中"过程改善普遍、最终增益局部化"在 3 个高回报支持的设置上（coding · τ-bench retail · DB-Bench）。</p>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><strong>H2 harness 工程七层图完整闭合</strong>：<em>context（7-06 ReContext）· 策略（6-30 CUGA FLO）· 循环（7-02 Loop Engineering）· 评委（7-03 Grader-Repro）· 配置（7-06 SafetyRepro）· 统计（7-07 evalci）· <u>学习派（本文）</u></em>。学习派是<u>元层</u>——把前六层的手工设计升级为可优化对象。本篇 + 同作者姊妹篇 (2607.04528 belief divergence) 共同奠定 <em>Yi/Song 学派</em>：<u>harness 是可测量、可学习、可优化的中间对象</u>。工程可复用点：（1）七结构化动作 API 可以直接叠加到 lm-evaluation-harness / OpenAI evals 的执行层；（2）AW 用 offline buffer 训 64 unit MLP，工程成本极低，可作为"<em>免费加装的执行策略优化器</em>"；（3）HMS 分离过程质量与最终质量，直接对应 harness 报告新指标。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>Harness MDP 视角<u>给 agent safety 提供新的干预点</u>——不改模型、不改 prompt、只改<em>执行结构</em>就能显著提升 CheckBeforeSubmit / EvidenceBeforeClaim 等 <u>safety-relevant 过程行为</u>。这与 <em>6-30 Action Alignment（外置派）· 7-06 AgentLens（可解释派）· 7-07 Cedar Policy（形式化派）</em> 形成第八条正交路径：<strong>"harness 学习派 safety"</strong>——把 safety 作为 rubric 的一部分放入终端奖励，用 AW 训练一个"<em>safety-aware harness controller</em>"，即可运行时部署且不动模型参数。同时对 <em>7-07 Cedar 形式化派</em>的补充：Cedar 提供 <u>硬约束</u>，本文 AW 提供 <u>软性状态依赖偏好</u>，二者叠加是自然工程路线。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p>本文对 benchmark 方法学有<u>两条深刻启发</u>：（1）<strong>"benchmark 分数是 harness 依赖的"</strong>——同一个 LLM 在同一个 τ-bench 上换 harness 就能 +18.2 pp，与 <em>7-06 SafetyRepro（configuration 单变量翻转 pairwise 结论）</em> 形成互证。leaderboard 应<u>显式标注 harness 配置</u>，否则数字不可比。（2）<strong>"过程质量与最终质量应分离报告"</strong>——HMS 是可迁移到任何 agent benchmark 的正交维度。<em>H2 benchmark 方法学七联拍</em>初步显现：物品（IRT）· 搜索（BOA）· 评委（Grader-Repro）· 构造（TASTE）· 配置（SafetyRepro）· 价值观（SovereignPA-Bench）· <u>过程（HMS/本文）</u>——本文可视为 benchmark 方法学的第七联开端。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Measuring Harness-Induced Belief Divergence in Multi-Step LLM Agents</strong>（同作者姊妹篇，同日提交）—— <a href="https://arxiv.org/abs/2607.04528" target="_blank" rel="noopener">arxiv.org/abs/2607.04528</a>：为什么 harness 值得学？因为不同 harness 会诱导 agent 出现<u>outcome 相同但内部信念不同</u> 的轨迹。</li>
+      <li><strong>Harness-Aware Self-Evolving (HASE)</strong> —— <a href="https://arxiv.org/abs/2607.03935" target="_blank" rel="noopener">arxiv.org/abs/2607.03935</a>：与本文互为对偶——<em>联合演化</em>模型权重、harness 与解，vs 本文<em>冻结 LLM + 只学 harness</em>。工程侧对比：前者更贵、后者更轻。</li>
+      <li><strong>Stop Hand-Holding Your Coding Agent: Loop Engineering</strong>（7-02 已收）—— <a href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">arxiv.org/abs/2607.00038</a>：Loop Engineering 是<em>手工 loop spec</em>，本文可视为"<u>learned loop spec</u>"——本文的 7 动作 policy 可以自动导出 Loop Library 里的最优 loop 模式。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.05458" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.05458v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.05458" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">代码尚未开源（论文声明"Code will be released"）。作者机构未明示（arXiv 页面 email hash + 主题分类 cs.LG，推测独立/工业界研究者）。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

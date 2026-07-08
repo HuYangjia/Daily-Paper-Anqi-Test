@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-08 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fdf7ec; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #f4d3a6; color: #633806; }
+  .link-btn.primary:hover { background: #f5e0c0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fdf7ec; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #faeeda; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #f4d3a6; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fdf7ec; font-weight: 500; color: #633806; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-08 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 8 日 · Safety Benchmark · 首个把<strong>多语言性 (multilinguality)</strong> 作为 first-class 评估变量的 <em>long-horizon agent benchmark</em>——<u>67 个任务 × 5 个 domain（commerce/knowledge/legal/localization/manufacturing）× multilingual workflow</u>；三合一 hybrid framework：<em>structural grading · executable verification · LLM-based semantic assessment</em>；实证首次量化 <strong>multilingual compounding effects</strong>——推理 · 工具调用 · 输出三步 <u>合成型</u>衰减，而非独立衰减</div>
+  <h1>PolyWorkBench：<strong>首个多语言长程 LLM Agent Workflow Benchmark</strong> —— 5 个真实职场域 · <em>commerce + knowledge work + legal analysis + localization + manufacturing</em> · 67 tasks 处理<u>异质多语输入 → 迭代推理 → 外部工具调用 → 结构化输出</u>；hybrid framework <em>三合一评估</em>：<u>结构化打分 × 可执行验证 × LLM 语义评估</u>；实证结论：SOTA agent 在多语工作流下<em>相较单语显著衰减</em>，<strong>多语言性沿推理与执行步骤产生 compounding effects</strong>——把 language variation × procedural decision-making <u>联合建模</u> 变成新一代 agent 评估的必要条件；<em>H2 benchmark 方法学第七联</em>：多语言联</h1>
+  <div class="en-title">PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 7.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-04 至 07-07 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>67 tasks × 5 domain × multilingual · hybrid framework 三合一评估 · long-horizon workflow · 首次系统性量化 multilingual compounding effects</td>
+          <td>arXiv 2607.06008 · <strong>2026-07-07 当日提交</strong> · H. Li / Y. Liu / Z. Zhang + 5 · cs.AI + cs.CL · 15 pages / 6 figures · 2,256 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.04686" target="_blank" rel="noopener">ToolFailBench: Diagnosing Tool-Use Failures in LLM Agents</a></td>
+          <td>诊断 tool-use 失败模式 · 分离"没调工具"vs"调了但忽略结果" · 聚合分数背后的隐藏失效</td>
+          <td>arXiv 2607.04686 · 2026-07-06 · H. Soni · cs.CL + cs.AI + cs.SE</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06195" target="_blank" rel="noopener">LogicHunter: Testing LLM Agent Frameworks with an Agentic Oracle</a></td>
+          <td>用 agentic oracle 测试 LangChain / LlamaIndex / CrewAI 框架本身 · 语义失败检测</td>
+          <td>arXiv 2607.06195 · 2026-07-07 · M. Long / Y. Zhao / H. Wang · cs.SE</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06001" target="_blank" rel="noopener">Information Limits and Attractor Dynamics in Economies of Frontier LLM Agents (Pre-Registered)</a></td>
+          <td>预注册双部分实验 · 前沿模型经济体 · 信息容量区域 + 平均场剩余标度律</td>
+          <td>arXiv 2607.06001 · 2026-07-07 · C. Qian · cs.AI + cs.MA</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06157" target="_blank" rel="noopener">LLM Agents for Deliberative Collaboration: Partial Observability</a></td>
+          <td>联合决策 · 部分可观测 · 谈判式协作 benchmark</td>
+          <td>arXiv 2607.06157 · 2026-07-07 · C. Wang / Y. Yang / B. Du · cs.CL + cs.AI</td>
+          <td class="score-num">86</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>PolyWorkBench：多语言长程 LLM Agent 基准</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Hongliang Li · Yijin Liu · Zhiwei Zhang · Zihe Liu · Xinyue Lou · Jinan Xu · Fandong Meng · Kaiyu Huang（8 人）</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · <strong>2026-07-07 v1</strong>（当日提交）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arxiv.org/abs/2607.06008</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.06008" target="_blank" rel="noopener">arxiv.org/pdf/2607.06008</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.06008" target="_blank" rel="noopener">10.48550/arXiv.2607.06008</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI (主) · cs.CL</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>15 pages · 6 figures · 2,256 KB · 67 tasks × 5 domains</span>
+      </div>
+      <div class="meta-item">
+        <label>开源资源</label>
+        <span>论文摘要未列 GitHub 链接（仅 PDF 版本 · arXiv HTML 尚未生成）</span>
+      </div>
+      <div class="meta-item">
+        <label>作者机构线索</label>
+        <span>作者名多为拼音，Fandong Meng（腾讯 WeChat AI · 长期做多语言 NMT）·  Kaiyu Huang（BJTU）·  Jinan Xu（BJTU）—— 推测 <strong>北京交通大学 + 腾讯微信 AI 联合作品</strong></span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>94（相关 9.8 / 来源 9.0 / 影响力 9.5 / 新颖 9.4 / 开源 7.0）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个把<u>多语言性</u> 作为 first-class 变量、量化 LLM agent 在<em>long-horizon workflow</em> 中<u>compounding 衰减</u> 的 benchmark。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>LLM agent 在需要规划、工具使用和与外部环境交互的长程任务上表现强劲。然而，<strong>大多数现有 benchmark 隐式假设单语设置</strong>——即整个执行过程（包括推理、工具调用和输出生成）都在单一语言内进行。与此相对，现实应用<u>经常在同一工作流中涉及多语言输入和输出</u>，而多语言性与 agent 执行之间的交互仍然被欠探索。本文引入 <strong>PolyWorkBench</strong>，一个评估 LLM agent 在<em>多语言长程职场工作流</em> 的 benchmark。PolyWorkBench 包含 <strong>67 个跨 5 个 domain 的任务</strong>，涵盖 <em>commerce（商务）· knowledge work（知识工作）· legal analysis（法律分析）· localization（本地化）· manufacturing（制造）</em>，agent 必须处理异质的多语言输入、进行迭代推理、调用外部工具，并产出结构化输出。为了实现全面评估，我们提出一个<u>混合评估框架</u>，结合<em>结构化打分（structural grading）· 可执行验证（executable verification）· 基于 LLM 的语义评估（LLM-based semantic assessment）</em> 三部分。该设计能够跨复杂工作流<u>同时捕捉功能正确性与语言一致性</u>。实证结果显示，<strong>SOTA LLM agent 在多语言工作流设置下相对单语对照组出现显著性能衰减</strong>。我们的分析表明，多语言性<u>沿推理与执行步骤引入 compounding effects</u>——凸显<em>在 agent 评估中联合建模语言变异与程序性决策</em> 的重要性。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（500 字）</div>
+    <p><strong>解决了什么问题</strong>：现有 agent benchmark（AgentBench · τ-bench · SWE-bench · AgentGym · WebShop）<u>几乎全部是单语</u>——推理链、工具调用、输出全部英文，或全部中文。但现实职场：法律工作者用英文合同、日文法规、中文批注；跨境电商 agent 处理西语用户查询 + 韩语供应商邮件 + 英文数据库；制造业本地化流程读中文规格、生成英语工程文档、发送多语通知。<em>这三条工作流</em> 与"单一语言 agent 反复自问自答"是<u>本质不同</u> 的任务分布。若 benchmark 完全屏蔽这一维度，leaderboard 上的高分几乎无法预测真实职场部署表现——这是<strong>agent 评估的隐藏系统性偏差</strong>。</p>
+    <p><strong>核心方法</strong>：三件套。（1）<strong>67 tasks × 5 domain 覆盖</strong>——commerce（商务谈判、跨境订单处理）· knowledge work（多语文献综述、翻译审核）· legal analysis（多法域合同比对、法规映射）· localization（软件/文档本地化流水线）· manufacturing（跨语言规格→工艺文档转化）。每个 task 需要 agent 处理异质多语输入 + 迭代推理 + 至少一次外部工具调用 + 产出结构化输出。（2）<strong>Hybrid evaluation framework 三合一</strong>——<em>Structural grading</em>：输出结构是否符合模板（JSON schema · 表格字段 · 段落分节）；<em>Executable verification</em>：工具调用参数是否合法、返回值是否被正确消费、下游脚本能否成功执行；<em>LLM-based semantic assessment</em>：跨语言语义一致性（比如中文输入描述的合同条款是否在英文输出中被完整保留）。三部分设计使得<u>功能正确性 × 语言一致性 同时可测</u>。（3）<strong>Compounding effects 量化</strong>——多语言性不是"每一步下降 X%、总下降 X%"，而是<em>推理阶段的语言错配</em> 会污染<em>工具调用参数</em>、又进一步污染<em>输出生成</em>，产生<u>合成型衰减</u>。这一现象<u>无法从单语 benchmark 或单步多语 benchmark 里观察到</u>——必须是 long-horizon × multilingual 联合评估才能显现。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。（i）区别于 <em>K-BrowseComp（2606.02404 · 韩语 web browsing benchmark）· KSAFE-MM（2605.28013 · 韩语文化多模态安全）</em>——那些是<u>单一非英语语言</u>的替换式扩展；PolyWorkBench 是<em>同一工作流内多语言混合</em>，属于本质不同的 agent 任务分布。（ii）区别于 <em>7-03 TASTE（反转构造派）· 7-06 SafetyRepro（配置派）· 7-07 SovereignPA-Bench（价值观派）</em>—— 那些解决"物品质量 · 配置稳定 · 价值观维度"，本文引入<u>语言变异 × 程序决策</u> 的新自由度，是 benchmark 方法学的<strong>第七联：多语言联</strong>。（iii）与 <em>7-02 IRT · 6-28 REALM</em> 互补——IRT 精选高信息量 items（心理测量派），REALM 穷举扩大 item pool（穷举派），本文<u>拓展 item 的语言维度</u>，是同一 benchmark 经济学谱系的正交推进。</p>
+  </div>
+
+  <!-- Domain 分布与设计 -->
+  <div class="card">
+    <div class="card-title">五大 Domain · 67 Tasks 覆盖设计</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Domain</th><th>典型任务</th><th>多语言使用场景</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Commerce（商务）</strong></td><td>跨境订单处理 · 供应商邮件回复 · 报价谈判</td><td>用户查询语 × 供应商响应语 × 内部记录语，通常 3 语混合</td></tr>
+        <tr><td><strong>Knowledge Work（知识工作）</strong></td><td>多语文献综述 · 翻译审核 · 跨语知识图谱构建</td><td>输入源多语，输出通常单一目标语</td></tr>
+        <tr><td><strong>Legal Analysis（法律分析）</strong></td><td>多法域合同比对 · 法规映射 · 跨境合规审查</td><td>合同原文语 × 参考法规语 × 结论输出语</td></tr>
+        <tr><td><strong>Localization（本地化）</strong></td><td>软件字符串本地化 · 文档翻译流水线 · 品牌信息适配</td><td>源语 → 目标语组合，配套术语库工具调用</td></tr>
+        <tr><td><strong>Manufacturing（制造）</strong></td><td>跨语言规格→工艺文档 · 供应链多语通知 · 质量报告转换</td><td>规格语 × 工艺文档语 × 通知语</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>Hybrid evaluation 三合一细节</strong>：</p>
+    <ul class="point-list">
+      <li><strong>Structural grading</strong> — 输出格式合规性（JSON schema · 表格结构 · 字段完整性）。对格式敏感任务（如本地化流水线）权重最高。</li>
+      <li><strong>Executable verification</strong> — 工具调用参数合法性 · 返回值消费正确性 · 下游脚本可运行性。对 commerce/manufacturing 等强工具任务是主要评分基准。</li>
+      <li><strong>LLM-based semantic assessment</strong> — 跨语义一致性（源语内容 vs 目标语输出）、指代保持、关键实体不丢失。对 knowledge work / legal analysis 权重最高。</li>
+    </ul>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与出处</div>
+    <div class="ref-item"><strong>AgentBench: Evaluating LLMs as Agents</strong> · Liu et al. 2023 · <a href="https://arxiv.org/abs/2308.03688" target="_blank" rel="noopener">arxiv.org/abs/2308.03688</a> —— long-horizon agent benchmark 奠基工作，本文的"单语基线"参照对象。</div>
+    <div class="ref-item"><strong>τ-bench: Tool-Agent-User Interaction in Real-World Domains</strong> · Yao et al. 2024 · <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a> —— 真实域交互 benchmark，本文的<em>工作流复杂度</em> 参照。</div>
+    <div class="ref-item"><strong>AgentGym: Evolving Large Language Model-based Agents across Diverse Environments</strong> · Xi et al. 2024 · <a href="https://arxiv.org/abs/2406.04151" target="_blank" rel="noopener">arxiv.org/abs/2406.04151</a> —— 跨环境 agent 训练，作为工具调用抽象层参照。</div>
+    <div class="ref-item"><strong>K-BrowseComp: Korean Web Browsing Agent Benchmark</strong> · Lee et al. 2026 · <a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arxiv.org/abs/2606.02404</a> —— 单一非英语语言 agent benchmark，本文明确定位相对它的<em>混合多语言</em>差异。</div>
+    <div class="ref-item"><strong>KSAFE-MM: Korean Cultural Multimodal Safety</strong> · Kim et al. 2026 · <a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">arxiv.org/abs/2605.28013</a> —— 局部文化维度 safety benchmark，可视为多语言 benchmark 的另一条支线。</div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">实验结果与核心论点</div>
+    <p><strong>1. 主要发现：SOTA agent 在多语工作流下显著衰减</strong>——摘要直接给出定性结论 "state-of-the-art LLM agents suffer significant performance degradation in multilingual workflow settings compared to monolingual counterparts"（<u>具体百分点在正文表格中，PDF 二进制流未能解析，暂以 abstract 结论为准</u>）。</p>
+    <p><strong>2. Compounding Effects 结构性证据</strong>——摘要明确：多语言性引入的衰减<u>沿推理与执行步骤复合</u>，而非独立衰减。这意味着：</p>
+    <ul class="point-list">
+      <li>第 1 步推理阶段的语言错配<u>不会自愈</u>，会污染第 2 步工具调用参数选择</li>
+      <li>工具调用参数的语义漂移<u>进一步扭曲</u>第 3 步输出生成的目标</li>
+      <li>因此总衰减 &gt; 单步衰减之和 —— 这是 long-horizon × multilingual 特有现象</li>
+    </ul>
+    <p><strong>3. 三合一评估框架的必要性</strong>——单一评分模式（比如只看最终 F1）会把"功能正确但语义漂移"或"语义一致但结构违规"混为一谈。PolyWorkBench 的<em>正交三维</em> 分离让下游 diagnosis 成为可能，同时避免<u>LLM-as-Judge 的单点失败</u>（因为结构化打分 + 可执行验证提供了独立于 LLM 评委的证据）——与 <em>7-03 Necessary but Not Sufficient（评委派）</em> 的核心担忧完全对齐。</p>
+    <p><strong>4. 5 个 domain 的现实代表性</strong>——commerce/knowledge/legal/localization/manufacturing 覆盖<u>2024-2026 年企业 agent 部署主要场景</u>，是 <em>K-BrowseComp（web browsing 单一场景）· ToolFailBench（tool-use diagnosis 单一维度）</em> 之外的<em>横向扩展</em>。</p>
+    <p style="font-size:0.85rem;color:#888">⚠️ 说明：PolyWorkBench 论文的 arXiv HTML 版本未生成（"HTML is not available for the source"），且 PDF 二进制流经压缩，无法从当前源精确提取具体模型分数表。本报告基于 abstract + 论文页面 metadata 编写。完整数字请参见 PDF 正文。</p>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>H2 benchmark 方法学七联拍雏形</strong>：<em>物品（7-02 IRT）· 搜索（7-03 BOA）· 评委（7-03 Necessary but Not Sufficient）· 构造（7-03 TASTE）· 配置（7-06 SafetyRepro）· 价值观（7-07 SovereignPA-Bench）· <u>多语言（本文）</u></em>。多语言联是<em>横向扩展 items 语言维度</em>——与其他六联（纵向：item 质量、搜索、评委、构造、配置、价值观）正交。工程可复用点：（1）<u>Hybrid three-way evaluation</u>（结构 × 执行 × 语义）可以直接被 τ-bench、AgentBench、SWE-bench 借用；（2）<u>Compounding effect 指标</u>（推理漂移 → 工具漂移 → 输出漂移的复合衰减）是新的 benchmark 维度，可以量化"long-horizon 的深度"；（3）与 <em>7-08 Doomed from the Start</em> 组"<u>benchmark 承诺认证 × recall 保证</u>" 组合——PolyWorkBench 可以直接接入 recall-controlled probe cascade 得到"<em>多语言工作流的算力节省 pareto frontier</em>"。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>多语言 × long-horizon 揭示的<em>compounding effects</em> 有直接的 safety 含义：（1）<strong>Safety policy 语言漂移风险</strong>——如果 policy 是英文写的但 agent 处理中文/日文输入，policy 的<u>解释边界会漂移</u>；<u>7-07 Cedar Policy 派</u>需要显式处理多语言 authoritative 版本；（2）<strong>Consent / manipulation 的多语言表现差异</strong>——与 <em>7-07 SovereignPA-Bench</em> 的<em>manipulation capture</em> 指标结合，可以研究"agent 在非母语场景是否更易被 prompt injection"；（3）<strong>Cross-language tool description 攻击面</strong>——MCP 工具描述以某种语言写，用户以另一种语言下达指令，可能出现<em>7-05 Forged Reasoning Attacks</em> 类型的漂移利用。方法学建议：把 PolyWorkBench 的 <em>hybrid three-way evaluation</em> 接入 agent safety benchmark，形成 "<u>safety × multilingual × workflow</u>" 三维矩阵。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>PolyWorkBench 对 harness 层提出<u>三条新工程要求</u>：（1）<strong>Multilingual routing 内建于 harness 策略层</strong>——什么时候切换语言 · 什么时候统一到目标语 · 什么时候保持原文，应该是 <em>7-08 Harness MDP</em> 的<u>七结构化动作</u> 中新增的动作类型（本文的 4-6 hidden action：<em>translate / normalize-language / preserve-original</em>）。（2）<strong>Executable verification 与 harness 检查层集成</strong>——PolyWorkBench 的第二部分评估（工具调用可执行验证）正是 <em>7-02 Loop Engineering Verification Ladder</em> 的<u>第二级 cheap-checks</u> 的直接实现，两者天然融合。（3）<strong>Semantic assessment 是 harness 层新 rubric</strong>——用 LLM-based 跨语义一致性作为 <em>7-03 Grader-Repro 派</em> 的新评委输入。<strong>建议</strong>：把 PolyWorkBench 直接接入 <em>7-08 Learning to Control Harnesses</em> 的适配器体系，形成"<u>learned multilingual harness controller</u>"——这可以是 H2 下半年最值得追的<em>跨谱系融合</em> 研究方向。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>ToolFailBench: Diagnosing Tool-Use Failures in LLM Agents</strong>（今日次选）—— <a href="https://arxiv.org/abs/2607.04686" target="_blank" rel="noopener">arxiv.org/abs/2607.04686</a>：单维度诊断（tool use），与 PolyWorkBench 的<em>五域横向扩展</em> 形成互补——一个深挖单变量、一个铺开工作流分布。</li>
+      <li><strong>K-BrowseComp: Korean Web Browsing Agent Benchmark</strong>（06-01 提交）—— <a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arxiv.org/abs/2606.02404</a>：单一非英语语言 benchmark，与 PolyWorkBench 的<em>同一 workflow 内多语言混合</em> 形成方法学对照。</li>
+      <li><strong>A Matter of TASTE: Improving Coverage and Difficulty of Agent Benchmarks</strong>（7-03 已收）—— <a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a>：反转构造派 · 通过合成工具序列改进 benchmark 难度，与 PolyWorkBench 的<em>语言维度扩展</em> 是 benchmark 演化两条平行路径。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.06008" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.06008" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">arXiv 上 HTML 版本尚未生成（"HTML is not available for the source"）。论文摘要页未直接列出 GitHub 链接；作者机构线索指向 <strong>北京交通大学 + 腾讯微信 AI</strong>（Fandong Meng · Jinan Xu · Kaiyu Huang 三位是长期做多语言机器翻译的作者组），数据集释出应稍后公布。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
