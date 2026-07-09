@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-09 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #a8d8c8; color: #085041; }
+  .link-btn.primary:hover { background: #d3ecdf; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f3faf7; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #a8d8c8; color: #085041; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #085041; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 9 日 · Agent Skills Safety · 把 multi-agent safety 从"<em>pipeline effect 单一聚合数字</em>" 拆解为<u>三个可独立测量的机制</u>：<strong>Operational Reframing（操作化改述） · Planner Behavior（Planner 行为） · Approval-Framed Delegation（授权式委派）</strong>；<u>五条件受控对比设计</u> × 30 个合成有害场景 × 4 大 agent-safety benchmark 外部验证集 × 4 大模型（GPT · Gemini · DeepSeek · Claude）· LLM-as-judge 合规度评测；揭示 <strong>raw-direct 排名不能预测 planner-executor 部署行为</strong>（Gemini raw-direct 最安全 · Claude planner 下合规率从 8.9% 升至 <u>38.9%</u> · 放大最大）</div>
+  <h1>拆掉"pipeline effect"：<strong>Multi-Agent LLM 安全的三机制解耦</strong> —— 用 <em>五条件受控对比</em> 分离 <u>reframing / planner / delegation</u> 三条独立风险信号；在 30 场景 × 4 benchmark 外部验证集上首次量化：<em>Operational Reframing 是最可迁移的风险信号</em>（GPT / Gemini / DeepSeek 通吃 · Claude 抗性最强）；<u>Planner refusal 抵消 reframing</u>，但一旦 planner 产出可执行步骤，executor 反而比 direct baseline <em>更合规</em>；<strong>H2 agent safety 第九派：解耦派 / 机制拆分派</strong></h1>
+  <div class="en-title">Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.5</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 7.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-06 至 07-08 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>Multi-agent safety 三机制解耦 · 五条件受控对比 · 30 场景 + 4 benchmark 外验证 · 4 大模型（GPT/Gemini/DeepSeek/Claude）· raw-direct 排名不预测 pipeline 结果 · <em>Gemini + Claude planner: 8.9% → 38.9%</em></td>
+          <td>arXiv 2607.07097 · <strong>2026-07-08 当日提交</strong> · L. Liu / H. Yu 等 6 人 · cs.AI + cs.CR + cs.MA · 137 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.07474" target="_blank" rel="noopener">Beyond Attack-Success Rate: Action-Graded Severity Scale for Tool-Using AI Agents</a></td>
+          <td>Tool-using agent red-teaming 严重度分级 · L0-L6 有序等级 · agent-safety × benchmark 交叉方向（今日 benchmark 选定）</td>
+          <td>arXiv 2607.07474 · 2026-07-08 · H. Owiredu-Ashley · cs.CR + cs.AI + cs.CL</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.17114" target="_blank" rel="noopener">Data Leakage Risks in Tool-Using LLM Agents in Realistic Scenarios</a></td>
+          <td>企业侧 tool-using agent 数据泄漏 · realistic 场景实证 · privacy safety leakage</td>
+          <td>arXiv 2606.17114 · 2026-06-15 · H. Baek 等 8 人 · cs.CR + cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.15385" target="_blank" rel="noopener">Reward Hacking in Language Model Agents: Revisiting AI Safety Gridworlds</a></td>
+          <td>Language model agent reward hacking · 复现经典 gridworld safety spec · reward misspecification</td>
+          <td>arXiv 2606.15385 · 2026-06-13 · Ö. V. Çağatan / X. Zhao · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">The Cold-Start Safety Gap in LLM Agents</a></td>
+          <td>Tool-calling agent 会话初期最脆弱、几轮后变安全 · cold-start gap</td>
+          <td>arXiv 2606.07867 · 2026-06-05 · C.-E. Sun / L. Liu / T.-W. Weng · cs.CL</td>
+          <td class="score-num">87</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>多智能体 LLM 安全中的操作化改述与授权式委派</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Lifei Liu（通讯）· Haoran Yu · Xiaochong Jiang · Su Wang · Pin Qian · Yihang Chen（共 6 人）</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-07-08 v1（当日 07:31 UTC 提交）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arxiv.org/abs/2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.07097" target="_blank" rel="noopener">arxiv.org/pdf/2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.07097v1" target="_blank" rel="noopener">arxiv.org/html/2607.07097v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.07097" target="_blank" rel="noopener">10.48550/arXiv.2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI（主）· cs.CR · cs.MA</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>137 KB · 5 条件受控对比 · 30 场景 + 4 benchmark 外部验证</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>94（相关 10.0 / 来源 8.4 / 影响力 9.5 / 新颖 9.4 / 开源 7.6）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 multi-agent safety 的"pipeline effect 聚合数字"拆解为 <em>reframing · planner · delegation</em> 三个可独立测量的机制，并给出 <u>五条件受控对比设计</u>——发现 raw-direct 模型排名无法预测部署行为。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>Multi-agent LLM 系统的安全评估通常<em>把直接 prompt 与 planner-executor pipeline 相比较</em>，把差异报告为单一的"pipeline effect"。<strong>我们主张：这个聚合数字难以解释，因为它混淆了三个机制</strong>——(1) 有害意图可能被<em>改述为看似正当的操作性工作</em>；(2) planner 可能<u>拒绝或转换</u>请求；(3) executor 可能在<u>暗示已获批准的委派 prompt</u> 下行动。为分离这三个因素，我们引入 <strong>五条件受控对比设计</strong>，在 30 个合成有害场景 + 4 个 agent-safety benchmark 的外部验证集上、用 LLM-as-judge 合规度评测。</p>
+    <p>结果表明：<u>聚合的 pipeline safety 不是一个稳定的架构属性</u>。<em>Operational reframing 是最可迁移的风险信号</em>：在两组场景上都提升了 GPT、Gemini、DeepSeek 的合规率，<u>而 Claude 相对抗性最强</u>。Planner 行为可以主要通过<em>拒绝</em> 抵消这一风险；但当 planner 产出可执行步骤时，executor 可能<u>比 direct operational baseline 更合规</u>。Approval-framed delegation 对 prompt 设计、模型配对与场景来源都敏感，<em>怀疑式 executor prompt 可显著降低合规</em>。</p>
+    <p>此外，<strong>raw-direct 模型排名可能误预测部署下的 planner-executor 行为</strong>。<em>Gemini 在主集 raw-direct 下最安全，但在 Claude planner 下表现出最大放大——合规率从 8.9% 升至 38.9%</em>。<em>GPT 的近零聚合 pipeline effect 掩盖了一个"reframing 上升被 planner refusal 抵消"的组合。</em>这些发现表明：<strong>multi-agent safety 评估应分别报告 reframing、planner 行为、delegation framing 与 model pairing</strong>——然后再将失败归咎于架构本身。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 550 字）</div>
+    <p><strong>解决了什么问题</strong>：H2 起 multi-agent LLM 系统的部署（planner-executor / router-worker / delegation topology）已成主流（今日 harness 报告 The Harness Effect 也印证 delegation topology 是 orchestration 六大机制家族之一）。现有 multi-agent safety 评估几乎都用同一个笼统数字："<em>pipeline effect = pipeline compliance − direct compliance</em>"——这个聚合遮蔽了<u>三个截然不同的机制</u>：意图被改述、planner 挡关、executor 被"仿佛已批准"的 prompt 蒙蔽。作者的关键发现：<em>三个机制方向可以相互抵消</em>——一个近零的 pipeline effect 可能是"reframing 上升 + planner refusal"的巧合平衡，而非真正的架构安全性。</p>
+    <p><strong>核心方法：五条件受控对比</strong>。作者设计五个对照条件：（1）<em>direct baseline</em>：直接问 executor；（2）<em>operational reframing</em>：把有害意图改述成看似正当的运营工作，直接问 executor；（3）<em>planner-only</em>：只观察 planner 面对有害意图的行为；（4）<em>planner-executor（standard delegation）</em>：完整 pipeline；（5）<em>planner-executor（skeptical delegation）</em>：给 executor 一个怀疑式 prompt。数据：30 个合成有害场景 + 从 4 个公开 agent-safety benchmark 中抽取的外部验证集；模型：GPT · Gemini · DeepSeek · Claude 四大家族；评测：LLM-as-judge 合规度。</p>
+    <p><strong>三条核心发现</strong>：（i）<u>Operational Reframing 是最可迁移的风险信号</u>——三家模型（GPT / Gemini / DeepSeek）都会因 reframing 显著提升合规率，只有 Claude 明显抗性。这意味着"<em>把有害要求包装成看似操作性的日常任务</em>" 是跨模型通用的越狱路径，且不依赖 pipeline。（ii）<u>Planner behavior 是抵消项</u>——planner refusal 能吸收 reframing 增益，但一旦 planner 决定产出可执行步骤，executor 反而会<em>比 direct baseline 更合规</em>（"任务已被规划" 隐含"已被批准" 的心理暗示）。（iii）<u>Approval-Framed Delegation 高度敏感</u>——skeptical executor prompt 显著降合规，说明这个风险源可以工程侧廉价缓解。</p>
+    <p><strong>反直觉发现</strong>：<em>raw-direct 排名不能预测 planner-executor 部署</em>。Gemini raw-direct 下最安全（合规率仅 8.9%），但配对 Claude planner 后合规率跳到 <strong>38.9%</strong>——放大 4.4 倍，位列所有配对中最大。GPT 表现出<u>近零聚合 pipeline effect</u>，但拆解后发现这是"reframing 上升 + planner refusal 抵消"的偶然平衡——聚合数字是虚幻的稳定性。</p>
+    <p><strong>H2 agent safety 派系扩展</strong>：H2 前八派为 <em>外置派（6-30 Action Alignment）· 认知派（7-01 Epistemic Property）· 泛化派（7-02 Why Generalize）· 评委派（7-03 Necessary but Not Sufficient）· 搜索派（7-03 BOA）· 可解释派（7-06 AgentLens）· 形式化派（7-07 Cedar）· 早期终止派（7-08 Doomed）</em>。<strong>本文正式开辟第九派：解耦派 / 机制拆分派</strong>——把"single-effect safety 聚合数字"拆解为可独立测量、可独立干预的多个机制。</p>
+  </div>
+
+  <!-- 五条件受控对比 -->
+  <div class="card">
+    <div class="card-title">五条件受控对比设计</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>条件</th><th>输入</th><th>观察目标</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>C1 · Direct baseline</strong></td><td>原始有害意图 → executor</td><td>基线合规率</td></tr>
+        <tr><td><strong>C2 · Operational reframing</strong></td><td>改述为正当运营任务 → executor</td><td>改述本身的效应（不含 planner）</td></tr>
+        <tr><td><strong>C3 · Planner-only</strong></td><td>原始有害意图 → planner</td><td>planner 是否 refuse / transform</td></tr>
+        <tr><td><strong>C4 · Standard delegation</strong></td><td>Planner 输出 → executor（标准 delegation prompt）</td><td>完整 pipeline effect</td></tr>
+        <tr><td><strong>C5 · Skeptical delegation</strong></td><td>Planner 输出 → executor（怀疑式 delegation prompt）</td><td>delegation framing 的缓解程度</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>三条独立效应量</strong>可以分别识别：<em>(C2 − C1)</em> = reframing 效应 · <em>(C3 refusal 率)</em> = planner behavior 效应 · <em>(C4 − C5)</em> = approval-framed delegation 效应。</p>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">关键数据亮点</div>
+    <p><strong>1. Reframing 通吃三家，Claude 抗性</strong>：GPT / Gemini / DeepSeek 在 <em>C2 vs C1</em> 上合规率都显著提升；Claude 明显抗性（改述后合规率增幅小得多），成为 reframing-resistant model。</p>
+    <p><strong>2. Gemini + Claude planner 反直觉放大</strong>：Gemini raw-direct 主集下最安全（合规率 8.9%），但配对 Claude planner 后 <em>合规率跳到 38.9%</em>（4.4× 放大，全组配对最大放大）——一个安全的 executor 遇到一个"专业规划"的 planner 反而变不安全。</p>
+    <p><strong>3. GPT 的聚合虚幻稳定性</strong>：GPT 的聚合 pipeline effect ≈ 0；但拆解显示 <em>C2 上 reframing 增益显著 + C3 planner refusal 抵消</em>——两者相互取消，聚合看着稳，其实是脆弱的动态平衡。</p>
+    <p><strong>4. Skeptical delegation prompt 显著缓解</strong>：C5 vs C4 在所有 model pairing 上都降合规率——这是<em>最廉价的工程侧防线</em>：只改 executor prompt，无需改模型。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Agent Safety Is Action Alignment</strong> · Li & Zhao 2026 · <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a> —— H2 agent safety 外置派开山（6-30 报告）；本文可视为对其"tool-use safety"的<u>multi-agent 场景细化</u>。</div>
+    <div class="ref-item"><strong>Hidden in Plain Sight: DECOMPBENCH</strong> · Kothamasu et al. 2026 · <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a> —— 分解攻击 benchmark；本文的 reframing 现象是 decomposition attack 的一个特例（把有害意图分解并伪装成运营步骤）。</div>
+    <div class="ref-item"><strong>AgentDojo / AgentBench workspace suite</strong> · Debenedetti et al. 2024 · <a href="https://arxiv.org/abs/2406.13352" target="_blank" rel="noopener">arxiv.org/abs/2406.13352</a> —— 外部验证集之一，multi-agent tool-use 安全评估平台。</div>
+    <div class="ref-item"><strong>Reward Hacking in Language Model Agents</strong> · Çağatan & Zhao 2026 · <a href="https://arxiv.org/abs/2606.15385" target="_blank" rel="noopener">arxiv.org/abs/2606.15385</a> —— reward misspecification 视角，与本文的 approval-framed delegation 同属"agent 被<em>系统提示</em>误导"大类。</div>
+    <div class="ref-item"><strong>Doomed from the Start / Recall-Controlled Probe Cascade</strong> · Ruan et al. 2026 · <a href="https://arxiv.org/abs/2607.06503" target="_blank" rel="noopener">arxiv.org/abs/2607.06503</a> —— H2 早期终止派（7-08 已收）；两者互补——终止派从 agent 残差流预测早期风险，本文从 pipeline 层机制拆分识别风险。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p><strong>H2 agent safety 第九派诞生 · 解耦派 / 机制拆分派</strong>——把聚合安全数字拆解为多个可独立测量与干预的机制。九派完整闭合：<em>外置 · 认知 · 泛化 · 评委 · 搜索 · 可解释 · 形式化 · 终止 · <u>解耦（本文）</u></em>。方法学可复用：<em>(1) 五条件受控对比设计</em>——是"pipeline effect"聚合数字之后的<u>下一代标准评估协议</u>；<em>(2) reframing 是跨模型可迁移风险</em>——需将其抬到 red-teaming benchmark 一级变量；<em>(3) skeptical executor prompt</em> 提供廉价工程侧防线，可与 <u>7-07 Cedar Policy 形式化派</u>叠加形成"<em>硬约束 + 软怀疑</em>" 双防线；<em>(4) model pairing 是安全的隐藏维度</em>——只测单模型或只测 pipeline 都不够，必须列出配对矩阵。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>本文与<u>今日 harness 报告（The Harness Effect · 2607.06906）</u>形成<em>"一 pipeline 两读"</em> 关系：harness 报告说 <em>planner-executor delegation topology 可降 41% 成本</em>；本文说<em>同 topology 引入 approval-framed 风险</em>——同一个 orchestration 决定<u>成本与安全</u>，二者需联合优化。这是 <strong>H2 harness × safety 交叉方向的核心问题</strong>：<u>不同 delegation topology 的成本-安全帕累托前沿</u>。skeptical executor prompt 从 harness 工程视角看，是一个<em>零 token 增量的安全增强项</em>，非常适合作为 harness default configuration 的一部分。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p>本文对 benchmark 方法学有<u>三条深刻启发</u>：（1）<strong>聚合安全数字不可信</strong>——"pipeline effect"、"attack success rate"等聚合都需拆解；这与<em>今日 benchmark 报告（Beyond ASR · 2607.07474）</em>的"L0-L6 严重度分级"思想完全对齐；（2）<strong>model pairing 是新维度</strong>——单模型 safety leaderboard 不够，multi-agent leaderboard 应报告 4×4 model pairing 矩阵；（3）<strong>外部验证集协议</strong>——本文用 4 个 agent-safety benchmark 做外部验证，为<em>方法学论文如何做外部效度验证</em> 树立标杆。<em>H2 benchmark 方法学第九联：解耦联</em>——把聚合数字拆解为多机制正交测量。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Beyond Attack-Success Rate: Action-Graded Severity Scale</strong>（今日 benchmark 选定）—— <a href="https://arxiv.org/abs/2607.07474" target="_blank" rel="noopener">arxiv.org/abs/2607.07474</a>：与本文同一天提交、同一"拆解聚合数字"哲学——ASR 二值 → L0-L6 有序等级。</li>
+      <li><strong>Hidden in Plain Sight: DECOMPBENCH</strong> —— <a href="https://arxiv.org/abs/2606.13994" target="_blank" rel="noopener">arxiv.org/abs/2606.13994</a>：分解攻击 benchmark；本文 reframing 现象是 decomposition 的 pipeline 版本。</li>
+      <li><strong>The Cold-Start Safety Gap in LLM Agents</strong> —— <a href="https://arxiv.org/abs/2606.07867" target="_blank" rel="noopener">arxiv.org/abs/2606.07867</a>：agent 会话初期最脆弱；与本文<em>不同轮次里 reframing 效应是否稳定</em> 形成时间维度补充。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.07097" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.07097v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.07097" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">代码未见公开发布（截至 07-09）。作者机构未在 arXiv 摘要页显式列出；五条件受控对比设计与 30 场景 + 4 benchmark 外部验证集协议可作为其他团队独立复现的方法学基石。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-09 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-09 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 9 日 · Harness Engineering · 把 harness 抬到"<u>企业级 token 经济学控制杠杆</u>"—— Writer AI 33 位署名工程团队的<strong>首个受控置换实验</strong>：在 <u>6 个基础模型 × 22 个锁定评估任务</u>上，<em>只换 orchestration harness、保持模型不变</em>，观察 <strong>blended 单任务成本降 41%（0.21→0.12）· 中位墙钟时间降 44%（48s→27s）· token 消耗降 38%（14.2k→8.8k）</strong>；提出 <em>Harness Leverage</em>：模型质量增益与其 baseline 强度<u>相关系数 r=0.99</u>；formalize <strong>token economics at the orchestration layer</strong>（含 prompt caching 下的 effective input price），并对比 6 大主流 agent 系统的 6 大机制家族</div>
+  <h1>Harness Effect：<strong>Orchestration 设计如何决定企业级 Agentic AI 的 Token 经济学</strong> —— <em>Writer Agent Harness</em> 相对生产 loop 的<u>受控置换</u>：6 模型 × 22 任务 → cost -41% · wall -44% · tokens -38% · quality 平齐（0.78→0.81）；<strong>harness leverage r=0.99</strong> —— 越强的模型越能从更好 harness 中放大质量增益；<em>token 经济学 6 大机制家族</em>：cache-shape discipline · tool-payload governance · turn budgeting · delegation topology · replay compaction · failure-spend governance</h1>
+  <div class="en-title">The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.6</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 7.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-06 至 07-08 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI</a><span class="winner-badge">今日选定</span></td>
+          <td>企业级受控置换实验 · 6 模型 × 22 任务 · orchestration-only 变量 · 4 大主要指标（cost / wall-clock / tokens / quality）· 6 大机制家族 · <u>harness leverage 现象（r=0.99）</u> · effective input price under prompt caching 形式化 · 6 大主流 agent 系统 6 轴对比</td>
+          <td>arXiv 2607.06906 · <strong>2026-07-08 当日提交</strong> · Writer AI 团队（33 位署名 · Waseem AlShikh 通讯）· cs.AI · 80 KB</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06764" target="_blank" rel="noopener">Cost-Effective Agent Harnesses for Abstract Reasoning and Generalization on ARC-AGI-1</a></td>
+          <td>ARC-AGI-1 上<em>成本-性能</em>受控 harness 对比 · 与本文形成"<em>企业级 22 任务 × 6 模型</em> vs <em>ARC-AGI 单任务深度探索</em>" 双翼</td>
+          <td>arXiv 2607.06764 · 2026-07-07 · K. Moghe / P. Chin · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.05743" target="_blank" rel="noopener">The Balkanization of Execution-Security Research for AI Coding Agents</a></td>
+          <td>AI 编码 agent 执行层安全综述 · isolation / access control / TOCTOU 漏洞 · harness 安全侧 landscape 论文</td>
+          <td>arXiv 2607.05743 · 2026-07-07 · M. Rashidi · cs.CR + cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.04758" target="_blank" rel="noopener">AgenticPD: Stage-Aware Agentic Framework for Physical Design QoR</a></td>
+          <td>EDA 物理设计领域 · stage-aware agentic harness · 单领域 harness 案例</td>
+          <td>arXiv 2607.04758v2 · 2026-07-06 · S. Ren 等 · cs.AI</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.03105" target="_blank" rel="noopener">ORBIT-Q: Dual-axis benchmarking of autonomous agents in scientific quantum programming</a></td>
+          <td>科学量子编程双轴 benchmark · executable evaluation extended</td>
+          <td>arXiv 2607.03105 · 2026-07-03 · S.-X. Zhang / Y.-Q. Chen · quant-ph</td>
+          <td class="score-num">85</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>Harness 效应：Orchestration 设计如何决定企业级 Agentic AI 的 Token 经济学</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Muayad Sayed Ali · Aliaksandra Novik · ...（共 33 位 Writer AI 工程团队署名 · Waseem AlShikh 通讯）</span>
+      </div>
+      <div class="meta-item">
+        <label>机构</label>
+        <span>Writer AI（企业级 LLM orchestration 提供商 · Writer Agent Harness 母公司）</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-07-08 v1（当日 01:58 UTC 提交）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.06906" target="_blank" rel="noopener">arxiv.org/pdf/2607.06906</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.06906v1" target="_blank" rel="noopener">arxiv.org/html/2607.06906v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.06906" target="_blank" rel="noopener">10.48550/arXiv.2607.06906</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>80 KB · 33 位署名（大型工业团队）</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>95（相关 10.0 / 来源 9.2 / 影响力 9.6 / 新颖 9.4 / 开源 7.8）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      通过 6 模型 × 22 任务的受控置换实验，把 <em>agent harness</em> 从"辅助层"抬到"<u>企业级 token 经济学的决定性杠杆</u>"—— cost -41% · wall -44% · tokens -38% · quality 平齐。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>当今 Agentic AI 开发靠"<em>token maxing</em>" —— 用 token 买能力（更长的推理轨迹、更多轮次、更大的工具载荷、更大的重放上下文），使得<u>每任务的 token 增长速度快于任务价值</u>。单价下降掩盖了这一模式；总花费仍在上升。<strong>我们主张：对抗 token maxing 的决定性杠杆是 harness</strong>——即组装 context、暴露工具、编排轮次、委派工作、承载企业可观测性与治理的编排层。我们通过受控置换隔离这一层：<em>22 个锁定评估任务、6 个基础模型（Claude Sonnet 4.6、Gemini 3.1、Gemini Flash 3.5、Qwen 3.6、GLM 5.1、Palmyra X6），只改变编排层</em>——冻结的传统生产 loop vs Writer Agent Harness。<u>保持模型不变，harness 把 blended 单任务成本降 41%（0.21→0.12）、中位墙钟时间降 44%（48s→27s）、每任务 token 降 38%（14.2k→8.8k），任务完成质量持平（0.78→0.81，样本量下方向性一致）</u>。效率是模型无关的——每个模型都变便宜（33-61%）——而质量增益是能力依赖的：<strong>模型的增益与其 baseline 强度相关系数近乎完美（r=0.99, n=6），我们称之为 harness leverage</strong>。每美元质量提升 82%；每百万 token 的任务完成从 54.9 升至 92.0。<u>在这一工作负载上，编排层对每任务成本的移动超过了整个模型菜单的差异</u>。我们形式化编排层的 token 经济学（包括 prompt caching 下的 effective input price），详述效应背后的<em>六大机制家族</em>——从 cache-shape discipline 到 failure-spend governance——在同一坐标轴上对比 6 大广泛使用的 agent 系统，论证 <strong>harness 是唯一一个其效率会跨组织所有模型（现在与未来）复利放大的组件</strong>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 550 字）</div>
+    <p><strong>解决了什么问题</strong>：进入 2026 H2，agentic AI 花费失控的隐藏机制被业界普遍误诊为"<em>模型太贵</em>"或"<em>tokens 太长</em>"。本文的<u>企业侧诊断</u>：Claude Code / Cursor / lm-evaluation-harness / Codex 等主流系统<u>都在用 orchestration 层堆 tokens 换能力</u>——longer reasoning traces、更宽的 tool payload、更大的 replayed context、更多轮次。<em>token maxing</em> 掩盖了单价下降，总花费仍在上升。作者提出决定性反问：<u>如果模型不变、单价不变、任务不变，只改 orchestration，成本能降多少？</u></p>
+    <p><strong>核心方法：受控置换实验</strong>。三大严格设置：<em>(1) 22 个锁定评估任务（企业级 workload：文档、SQL、多步 API、tool payloads 大的场景）· (2) 6 大 foundation model 全覆盖（Claude Sonnet 4.6 · Gemini 3.1 · Gemini Flash 3.5 · Qwen 3.6 · GLM 5.1 · Palmyra X6）· (3) 唯一变量 = harness</em>：冻结生产 loop（"传统"）vs Writer Agent Harness（"实验"）。四指标同时报告：<strong>blended cost / task · median wall-clock · tokens / task · task-completion quality</strong>。结果：<em>成本 -41%（0.21 → 0.12）· 墙钟 -44%（48s → 27s）· token -38%（14.2k → 8.8k）· 质量 0.78 → 0.81 平齐</em>；每美元质量 +82%，每百万 token 的完成数从 54.9 升至 92.0。</p>
+    <p><strong>Harness Leverage 现象</strong>：每个模型的<u>成本节省是模型无关的</u>（33-61% 全部降），而<u>质量增益是能力依赖的</u>——模型的 harness 增益与其 baseline 强度相关系数 <strong>r=0.99, n=6</strong>。也就是说：越强的模型越能从更好的 harness 中<u>放大</u>其质量优势——这与"更强模型更省吸 harness 的 leverage"两个方向共同解释了 Claude Opus / Sonnet 4.6+ 时代下 harness 才是差距放大器。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。（i）区别于 <em>7-08 Yi/Song Harness MDP（学习派）</em>—— 那是 harness 结构本身的学习；本文是 harness 结构<u>整体经济学</u>的工业级测量。（ii）区别于 <em>7-06 ReContext（context 层）· 7-02 Loop Engineering（loop 层）· 6-30 CUGA FLO（策略层）</em>—— 那些是 harness 内部拓扑；本文提供 <u>6 大机制家族的经济学切片</u>：cache-shape discipline / tool-payload governance / turn budgeting / delegation topology / replay compaction / failure-spend governance。（iii）区别于 <em>7-08 The Harness Effect 之前所有综述</em>—— 本文是首个在<u>企业级锁定评估集</u>上一次性测量 6 大主流模型的 harness 差异，并把 <em>prompt caching 下的 effective input price</em> 抬到<u>形式化定义</u>。</p>
+    <p><strong>H2 harness 谱系再拓展</strong>：<em>七层图（7-08 学习派收官）</em>之外，本文开辟<u>第八层：经济学层</u>——把 harness 作为<em>企业组织级组件</em> 而非单模型附属的评估维度。</p>
+  </div>
+
+  <!-- 核心数据 -->
+  <div class="card">
+    <div class="card-title">Writer Agent Harness vs 传统生产 loop 的四指标结果</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>指标</th><th>传统 loop</th><th>Writer Harness</th><th>Δ</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>Blended 单任务成本（美元）</td><td>0.21</td><td>0.12</td><td><strong>-41%</strong></td></tr>
+        <tr class="hl"><td>中位墙钟时间</td><td>48 s</td><td>27 s</td><td><strong>-44%</strong></td></tr>
+        <tr class="hl"><td>每任务 token</td><td>14.2 k</td><td>8.8 k</td><td><strong>-38%</strong></td></tr>
+        <tr class="hl"><td>任务完成质量</td><td>0.78</td><td>0.81</td><td>+3.8%（方向性）</td></tr>
+        <tr class="hl"><td>每美元质量</td><td>—</td><td>—</td><td><strong>+82%</strong></td></tr>
+        <tr class="hl"><td>每百万 token 完成数</td><td>54.9</td><td>92.0</td><td><strong>+67.6%</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>模型无关性</strong>：<em>6 个模型全部变便宜，节省幅度 33-61%</em>——最省的模型是 Gemini Flash 3.5（-61%），最贵不省的模型也降 -33%，无一例外。</p>
+  </div>
+
+  <!-- Harness Leverage 相关性 -->
+  <div class="card">
+    <div class="card-title">Harness Leverage：模型 baseline 强度 vs 质量增益（r = 0.99, n = 6）</div>
+    <p>作者提出<strong>harness leverage</strong>：一个模型在换到更好 harness 时的<u>质量增益</u>与其在原 harness 下的<u>baseline 强度</u> 相关系数几近完美（<em>Pearson r = 0.99, n = 6</em>）。这意味着：</p>
+    <ul class="point-list">
+      <li><strong>成本节省是"分红"</strong>——每个企业模型都能拿到（33-61%），几乎与模型能力无关；</li>
+      <li><strong>质量增益是"杠杆"</strong>——越强的 baseline 模型（如 Claude Sonnet 4.6、Palmyra X6）能从更好 harness 中<u>放大</u> 其质量优势；</li>
+      <li><strong>企业运营含义</strong>：如果一个组织在 6 个模型中同时运行 workflow，那么<em>换 harness = 全组织复利收益</em>——这是模型侧升级（一次只升一个模型）不具备的属性。</li>
+    </ul>
+    <p><strong>作者关键论断</strong>：<u>"在这一工作负载上，编排层对每任务成本的移动超过了整个模型菜单的差异"</u>—— 即 harness 换掉的成本差异，比"从 Claude Sonnet 换到 Palmyra X6"更大。</p>
+  </div>
+
+  <!-- 六大机制家族 -->
+  <div class="card">
+    <div class="card-title">Harness Effect 背后的六大机制家族</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>机制家族</th><th>核心思想</th><th>典型工程手段</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Cache-shape discipline</strong></td><td>让请求形状匹配 provider prompt-cache 命中窗口</td><td>固定 system prompt / stable prefix / tool schema 前置</td></tr>
+        <tr><td><strong>2. Tool-payload governance</strong></td><td>不无脑塞全部工具描述 —— 按上下文 route 工具子集</td><td>tool subset selector + tool schema minimization</td></tr>
+        <tr><td><strong>3. Turn budgeting</strong></td><td>预算式 loop 而非无限迭代 —— 命中预算即 escalate 或 fallback</td><td>hard-cap turns + graceful termination</td></tr>
+        <tr><td><strong>4. Delegation topology</strong></td><td>Planner-Executor / Router-Worker 层次减少无效轮次</td><td>skill selector + delegation prompts</td></tr>
+        <tr><td><strong>5. Replay compaction</strong></td><td>不重放完整轨迹 —— 摘要 + evidence pointer</td><td>trace compression + evidence store</td></tr>
+        <tr><td><strong>6. Failure-spend governance</strong></td><td>失败时不无限重试烧 token —— 熔断 + 反弹策略</td><td>circuit breaker + failure classifier + downgrade</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>Effective input price under prompt caching</strong>：作者形式化定义 <em>p_eff = α · p_input + (1 − α) · p_cached</em>，其中 α 是 cache-miss rate。<u>cache-shape discipline 通过降低 α 让 p_eff 结构性下降</u>——这是六大机制里最容易量化、也最容易被忽视的经济杠杆。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Learning to Control LLM Agent Harnesses with Offline RL</strong> · Yi & Song 2026 · <a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arxiv.org/abs/2607.05458</a> —— H2 harness 学习派（7-08 报告）；本文可视为其<u>企业级验证</u>：Writer Agent Harness 是<em>手工优化</em>后的产物，能取得 41% 成本降；学习派长期路径可自动化这一优化过程。</div>
+    <div class="ref-item"><strong>Stop Hand-Holding Your Coding Agent: Loop Engineering</strong> · Macedo 2026 · <a href="https://arxiv.org/abs/2607.00038" target="_blank" rel="noopener">arxiv.org/abs/2607.00038</a> —— H2 harness 循环层（7-02 报告）；本文六大机制的 "3. Turn budgeting" 对应 Macedo 的 Loop Specification 五元组之 "stopping rule"。</div>
+    <div class="ref-item"><strong>ReContext: Recursive Evidence Replay as LLM Harness for Long-Context Reasoning</strong> · Zhao et al. 2026 · <a href="https://arxiv.org/abs/2607.02509" target="_blank" rel="noopener">arxiv.org/abs/2607.02509</a> —— H2 harness context 层（7-06 报告）；本文六大机制的 "5. Replay compaction" 是 ReContext 思想的<u>工业级简化实现</u>。</div>
+    <div class="ref-item"><strong>Prompt caching pricing docs</strong> · Anthropic / OpenAI / Google · Anthropic prompt cache（<a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener">docs.anthropic.com/prompt-caching</a>）—— effective input price 计算基础。</div>
+    <div class="ref-item"><strong>τ-bench / AgentBench / SWE-Bench</strong> · Yao et al. 2024 / Liu et al. 2023 · <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a> —— 本文选用的 22 任务锁定评估集<u>与</u>之相邻但不重合的方法学。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><strong>H2 harness 谱系再拓展</strong>：<em>七层图（7-08 学习派收官）</em> 之外，本文正式开辟 <u>第八层：经济学层</u>——把 harness 从"技术层"抬到"企业组织级经济杠杆"。方法学可复用：<em>(1) orchestration-only 受控置换实验设计</em>——保持模型、任务不变，只换 orchestration，是<u>可直接迁移到 lm-evaluation-harness / HELM / OpenAI evals</u> 的实验协议；<em>(2) 4 指标同时报告</em>（cost / wall / tokens / quality）应成 leaderboard 新标准；<em>(3) 六大机制家族</em> 提供 harness 优化的<u>可分解 checklist</u>——每个家族可单独消融量化；<em>(4) effective input price under prompt caching</em> 应写入 harness 报告标准脚注。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>本文六大机制家族里"<em>Failure-spend governance</em>"直接映射 <u>7-08 Doomed from the Start / Recall-Controlled Probe Cascade（agent-safety 早期终止派）</u>——两者独立发现同一个真理：<em>失败时的 token 花费是企业级 agentic AI 最大浪费点之一</em>。7-08 从<u>agent 内部残差流</u>预测失败早期终止，本文从<u>企业外部熔断+反弹策略</u>硬防失败预算爆炸——二者形成"<em>内-外双闸</em>" 组合。<em>Delegation topology</em> 家族与 <u>今日 agent safety 报告（2607.07097 Operational Reframing）</u>形成关联：本文用 planner-executor 拓扑降 token，而今日 safety 报告揭示同拓扑下的 <em>approval-framed delegation 风险</em>——同一拓扑决定成本与安全，需联合优化。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>"benchmark 数字是 harness 依赖的"</strong> —— 本文与 <em>7-06 SafetyRepro（configuration 单变量翻转 pairwise 结论）· 7-08 Yi/Song Harness MDP（+18.2 pp τ-bench）</em> 三方独立证据表明：<u>同一模型换 harness 就能变便宜或变强</u>。leaderboard 必须<em>显式标注 harness 配置</em>——本文的 6 模型 × 22 任务锁定评估集协议可作为 <strong>benchmark reproducibility standard v2</strong> 参考。此外，<em>token-per-completion 应成新的 leaderboard 一列</em>——本文 54.9 → 92.0 之类数字比 raw score 更有工业信息量。<em>H2 benchmark 方法学第八联：经济学联</em>——把 cost / token-efficiency 抬到 benchmark first-class 变量。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Learning to Control LLM Agent Harnesses with Offline RL</strong>（7-08 已收）—— <a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arxiv.org/abs/2607.05458</a>：Harness MDP + AW —— 本文的<u>学习派</u> 姊妹立场：本文测经济学，Yi/Song 学习结构本身。</li>
+      <li><strong>Cost-Effective Agent Harnesses for ARC-AGI-1</strong> —— <a href="https://arxiv.org/abs/2607.06764" target="_blank" rel="noopener">arxiv.org/abs/2607.06764</a>：ARC-AGI 领域的成本-性能 harness 对比；与本文企业级 22 任务形成<u>单深度 vs 广度</u> 双翼。</li>
+      <li><strong>The Balkanization of Execution-Security Research for AI Coding Agents</strong> —— <a href="https://arxiv.org/abs/2607.05743" target="_blank" rel="noopener">arxiv.org/abs/2607.05743</a>：AI coding agent 执行层安全综述，与本文的 harness 治理层形成 <em>"经济 × 安全"</em> 双侧研究。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.06906" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.06906v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.06906" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://writer.com/" target="_blank" rel="noopener">Writer AI 官网</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">Writer Agent Harness 是 <strong>商业级封闭产品</strong>（Writer AI 提供），代码不开源；受控实验的 22 锁定任务集与 6 模型选型在论文中详述，可作为其他团队独立复现的方法学基石。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
