@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">48 篇报告</span>
+        <span class="count-badge">49 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">47 篇报告</span>
+        <span class="count-badge">48 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">46 篇报告</span>
+        <span class="count-badge">47 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-10-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">10</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>TTHE: Test-Time Harness Evolution</strong> —— 首次把 <em>可执行 harness</em> 变为 test-time adaptation 的<u>状态本身</u>；三角结构（solver / agentic proposer / judge 围绕同一冻结 LLM）· 无 gold labels · 无权重更新 · 无独立适应模型；<u>5 大任务族全部改进 fixed ReAct baseline</u>（text-to-SQL · 竞技编程 · SWE · DS-coding · agentic tool-use）；<strong>execution-derived proxy reliability</strong> 被形式化为中心挑战；<em>H2 harness 第九层：Test-Time 演化层</em> #1</div>
+          <div class="paper-sub">J. Nie / Y. Zhang / J. Song + 5 人 · arXiv 2607.08124 · <strong>2026-07-09 当日提交</strong> · cs.SE + cs.LG · 15 pages · 港澳-华东 ML 学者</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-10-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">10</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Predicting LLM Safety Before Release by Simulating Deployment</strong> —— 把 pre-deployment eval 从"<em>合成 evals</em>" 抬到"<u>真实部署 prefix 重生成</u>"；4 个 GPT-5 系列部署 · <strong>GPT-5.4 用预注册盲预测验证</strong> · 击败对抗性生产数据 baseline · evaluation-awareness 点估计更接近真实生产流量；<u>公开聊天数据集可作 seed</u>——开辟外部研究者路径；<em>H2 agent safety 第十派：预测派 / Simulation 派</em> #1</div>
+          <div class="paper-sub">M. Williams / T. Korbak / I. Kivlichan / M. Carroll + 7 人 · arXiv 2607.07184 · <strong>2026-07-08 当日提交</strong> · cs.LG + cs.AI · 31 pages · 跨机构 alignment 学者</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-10-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">10</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Pluralis v0.1: Multicultural, Multimodal, Multilingual Benchmark for AI Risk and Reliability</strong> —— 首个 <em>culture-first</em> AI safety benchmark；<u>6,448 prompts × 亚太 6 国 × 8 语言</u> · <em>native localized 采样</em> 而非西方适配；<strong>Multimodal Synergy 范式</strong>（text + image 组合触发文化违规 · 钟表 × 送礼 → 中华禁忌）；universal safety × localized cultural appropriateness 分离；Judge-Pluralis 协议门控 LLM-as-Judge 集成；<em>H2 benchmark 第十联：文化联</em> #1</div>
+          <div class="paper-sub">A. Parrish（Google DeepMind）+ 50 位跨机构作者 · arXiv 2607.06196 · 2026-07-07 · cs.CL + cs.CY · 5.68 MB</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-09-1.html">
         <div class="date-badge">

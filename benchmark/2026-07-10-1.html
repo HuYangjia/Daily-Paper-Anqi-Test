@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-10 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #faeeda; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #fac775; color: #633806; }
+  .link-btn.primary:hover { background: #f5e0bd; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #faeeda; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #854f0b; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #faeeda; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #fac775; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-10 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 10 日 · Safety Benchmark · 把 AI safety benchmark 从"<u>Western-centric culture-agnostic default</u>" 抬到"<u>culture-first multi-regional</u>" —— <strong>Pluralis v0.1</strong>：首个从<em>文化优先视角</em>构建的多模态、多区域、多语言 AI safety benchmark；<u>6,448 prompts × 亚太 6 国（Bangladesh / India / Korea / Pakistan / Singapore / Taiwan）× 8 语言</u>；本地采样而非西方数据集适配；引入<strong>multimodal 评估范式</strong> —— text 与 image 单独看无害、组合触发文化/法律违规；提出 <em>Judge-Pluralis 协议门控 LLM-as-Judge 集成</em>；50 位跨机构作者（Google DeepMind + 亚太多国学者）</div>
+  <h1>Pluralis v0.1：<strong>面向多文化、多模态、多语言 AI 风险与可靠性的 Benchmark</strong> —— 6,448 prompts × 亚太 6 国 × 8 语言 · <em>native localized safety hazards</em> 而非西方数据集适配；<strong>multimodal synergy 评估</strong>：user text（"该送礼吗？"）+ image（钟表）单独良性、组合触发文化禁忌；<em>universal safety × localized cultural appropriateness 首次分离</em>；<u>Judge-Pluralis 协议门控 LLM-as-Judge 集成</u>；系统性揭示 VLM 在地域特定失败模式；<em>call to action</em>——研究社区共同推进多文化多语言 AI 对齐</h1>
+  <div class="en-title">Pluralis v0.1: Towards a Multicultural, Multimodal, Multilingual Benchmark for AI Risk and Reliability</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 9.8</span>
+    <span class="score-chip chip-venue">来源质量 9.6</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-06 至 07-09 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.06196" target="_blank" rel="noopener">Pluralis v0.1: Multicultural, Multimodal, Multilingual Benchmark for AI Risk and Reliability</a><span class="winner-badge">今日选定</span></td>
+          <td>首个 <em>culture-first</em> AI safety benchmark · 6,448 prompts × 亚太 6 国 × 8 语言 · <strong>Multimodal synergy 评估</strong>（text × image 组合触发违规）· <em>universal safety × localized cultural appropriateness 分离</em> · Judge-Pluralis 协议门控 LLM-as-Judge 集成 · 50 位跨机构作者（Google DeepMind + 亚太多国）</td>
+          <td>arXiv 2607.06196 · <strong>2026-07-07 提交</strong> · A. Parrish + 50+ 作者 · cs.CL + cs.CY · 5.68 MB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.07744" target="_blank" rel="noopener">PERFOPT-Bench: Evaluating Coding Agents on Software Performance Optimization</a></td>
+          <td>软件性能优化 benchmark · 7 agent stack × 7 长程优化任务 · 揭示 raw speedup 作为分数不安全（大幅增益源自 benchmark 特定捷径）</td>
+          <td>arXiv 2607.07744 · 2026-07-08 · Y. Cui + 5 · cs.SE</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06411" target="_blank" rel="noopener">RuBench: Repository-Level Agentic Coding Benchmark with Natively Authored Russian Task Specifications</a></td>
+          <td>首个原生俄语仓库级 agent 编码 benchmark · 25 任务 × 5 开源仓库 · <u>Claude Code + Fable 5 在 20% 任务上静默替换模型（回退 Opus 4.8）</u>——揭示"被测量单元是产品而非模型"</td>
+          <td>arXiv 2607.06411 · 2026-07-07 · E. Shilov · cs.SE + cs.AI + cs.CL</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.06624" target="_blank" rel="noopener">AgentLens: Production-Assessed Trajectory Reviews for Coding Agent Evaluation</a></td>
+          <td>Coding agent 轨迹评审 benchmark · 形式化验证 + LLM 撰写评审 + 对比分析 · 迭代版本对比 + 夜间回归检测</td>
+          <td>arXiv 2607.06624 · 2026-07-07 · A. Podivilov + 6 · cs.AI+LG+SE · GitHub agent-lens/agent-lens-bench</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.05202" target="_blank" rel="noopener">EvoAgentBench: Benchmarking Agent Self-Evolution via Ability Transfer</a></td>
+          <td>Agent 自演化 benchmark · 4 领域 · Ability Graphs · 528/267 训练/测试 · 策展 Ability 内容可靠迁移 · 无 automatic 方法在所有设置都正增益</td>
+          <td>arXiv 2607.05202 · 2026-07-06 · X. Gao + 11 · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Pluralis v0.1: Towards a Multicultural, Multimodal, Multilingual Benchmark for AI Risk and Reliability</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>Pluralis v0.1：面向多文化、多模态、多语言的 AI 风险与可靠性 Benchmark</span>
+      </div>
+      <div class="meta-item">
+        <label>第一/通讯作者</label>
+        <span>Alicia Parrish（Google DeepMind · 红队评估权威） · Lora Aroyo（Google DeepMind · Data-Centric AI 权威）· 共 50+ 位跨机构作者</span>
+      </div>
+      <div class="meta-item">
+        <label>核心作者线索</label>
+        <span>A. Parrish / L. Aroyo / J. Bastings（Google DeepMind）· E. Ferrara（USC · AI safety）· S. Sitaram（Microsoft Research · multilingual）· A. Oh（KAIST · Korean NLP）· B. Ravindran（IIT Madras）—— <u>Google DeepMind 主导 · 亚太多国学者共同署名</u></span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-07-07 v1（12:21 UTC 提交）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.06196" target="_blank" rel="noopener">arxiv.org/abs/2607.06196</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.06196" target="_blank" rel="noopener">arxiv.org/pdf/2607.06196</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.06196" target="_blank" rel="noopener">10.48550/arXiv.2607.06196</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.CL（主）· cs.CY（副）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>5.68 MB · <strong>6,448 prompts × 亚太 6 国 × 8 语言</strong> · 50+ 位跨机构作者</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>94（相关 9.8 / 来源 9.6 / 影响力 9.4 / 新颖 9.6 / 开源 8.4）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      首个 <em>culture-first</em>、native-sourced 而非西方数据集适配的多模态多区域多语言 AI safety benchmark—— 把"cultural appropriateness"抬为 first-class 评估轴。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p><strong>当前的 AI safety 评估与 benchmarking 框架主要依赖以西方为中心、culture-agnostic 的默认设置，掩盖了关键的地区法律、社会语言学细微差别与文化禁忌</strong>，使 VLM 在全球部署中处于易受攻击状态。我们引入 <em>Pluralis v0.1</em>：一个从<u>culture-first 视角</u>构建的新型多模态、多区域、多语言数据集。<strong>覆盖亚太 6 国（Bangladesh、India、Korea、Pakistan、Singapore、Taiwan）与 8 种语言的 6,448 prompts</strong>，Pluralis 通过<u>本地原生采样 localized safety hazards</u> 而非适配西方数据集来与既有工作区分。关键地，它引入一种 <strong>多模态评估范式</strong>：user text（如"该送礼吗？"）与指代"这个"的 image（如钟表）—— 单独看都无害，<u>但组合起来触发特定法律或文化违规</u>（钟表在部分文化中象征死亡/丧礼）。Pluralis 把 <em>universal safety violations</em> 与 <em>localized cultural appropriateness</em> 解耦，并把后者确立为一个 <strong>first-class 评估轴</strong>。为使这一范式可操作化，我们提出 <em>Judge-Pluralis</em>——一个 <strong>协议门控（agreement-gated）</strong> 的 LLM-as-a-Judge 集成，在按<u>经验推导的文化分类法</u> 分类的样例上训练。观察 VLM 在 Pluralis 子集上的行为暴露出重复出现的、地域特定的失败模式，如 <em>image 误识别导致下游 harm、遗漏 item-context-locale 交互、拒答不足</em>。这些失败模式跨地域跨语言系统性变化，暴露出<u>全球平均指标掩盖的盲点</u>。最终，Pluralis <strong>不作为已解决的文化对齐评估框架呈现</strong>，而是作为未来创新的第一步与催化剂。我们呼吁研究社区利用这一基础推进多语言多文化评估科学，以更好支持全球 AI 文化对齐。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 550 字）</div>
+    <p><strong>解决了什么问题</strong>：进入 2026 H2，AI safety benchmark 生态存在被业界忽视的<em>根本性缺陷</em>：<u>大多数 benchmark（HarmBench / SafetyBench / AIR-Bench）是英文中心的，随后简单翻译或本地化</u>——这种"西方→其他" 单向适配掩盖了 (1) 地区法律差异（如伊斯兰教对某些图像的禁忌）、(2) 社会语言学细微差别（如韩语敬语失误的社会含义）、(3) 文化禁忌（如中华文化里钟表象征丧葬）。前沿 VLM 在这些维度上的失败模式被<u>全球平均指标掩盖</u>。作者提出决定性反问：<u>能否构建一个 native localized、culture-first 的 safety benchmark，让文化 appropriateness 成为独立评估轴？</u></p>
+    <p><strong>核心方法：Pluralis v0.1 数据集</strong>。三大立场性设计：<em>(1) 亚太 6 国原生采样</em>（Bangladesh、India、Korea、Pakistan、Singapore、Taiwan），跨 8 种语言，共 <strong>6,448 prompts</strong>。<u>不是翻译西方 prompt，而是从本地视角原生构造</u>——每个 prompt 由该国母语者+本地文化审视者共同构建；<em>(2) Multimodal synergy 范式</em>——本文最重要的方法学创新：<u>user text 与 image 单独都无害，但组合起来触发违规</u>。经典例子：user 问"该送礼吗？"（text 良性）+ image 是钟表（image 良性）→ 但在中华文化中"送钟"谐音"送终"、象征死亡，是严重文化禁忌。这类"组合毒性" 是<u>单模态 benchmark 结构上无法捕捉的</u>；<em>(3) universal safety × localized cultural appropriateness 分离</em>——把两者作为<u>正交评估轴</u>，防止"文化冒犯"与"通用安全"混为一谈导致过度拒答。</p>
+    <p><strong>Judge-Pluralis 评估集成</strong>：为使 culture-first 评估可操作化，作者提出<em>协议门控（agreement-gated）</em> 的 LLM-as-a-Judge 集成——多个 LLM judge 在按<u>经验推导的文化分类法</u>标注的样例上训练；<u>只有 judge 集合达成一致时才 commit 判定</u>，其余归为"模糊/需人工审核"。这一设计避开单 LLM judge 在跨文化场景的不可靠性（今天 Grader-Repro 已证明单 judge non-determinism 在纯英语场景就足以翻转结论）。</p>
+    <p><strong>关键实验发现</strong>：VLM 在 Pluralis 子集上暴露<em>三大系统性、地域特定的失败模式</em>：<em>(1) image 误识别导致下游 harm</em>（如把韩国传统服饰误识别为其他文化）；<em>(2) 遗漏 item-context-locale 三元交互</em>（钟表 × 送礼 × 中华文化）；<em>(3) 拒答不足</em>（模型不知道该拒答，因为它没见过该文化的敏感 pattern）。这些失败<u>跨地域跨语言系统性变化</u>——不是随机噪声，而是可预测的、模型可诊断的偏差。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。（i）区别于 <em>MM-SafetyBench / MMBench-Safety / 各国单语安全 benchmark</em>—— 那些都是单一维度或单一国家；Pluralis 是<u>多国 + 多语言 + 多模态 synergy</u> 三重复合；（ii）区别于 <em>KSAFE-MM（韩国单国）· K-BrowseComp（韩国 web browsing）</em>—— 那些开辟了单国本地化路径，Pluralis 首次在<u>6 国矩阵上系统对比</u>失败模式；（iii）区别于 <em>翻译型 benchmark</em>—— native sourcing 而非翻译，是 dataset governance 的方法学分水岭。<strong>H2 benchmark 谱系再拓展一格：第十联 · 文化联</strong>——九联（物品/搜索/评委/构造/配置/价值观/多语言/严重度/演化透明）+ 本文<u>文化联</u>——把 <em>localized cultural appropriateness</em> 抬为独立评估轴。</p>
+  </div>
+
+  <!-- 核心数据 -->
+  <div class="card">
+    <div class="card-title">Pluralis v0.1 数据集构成</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>维度</th><th>规模/覆盖</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td><strong>Prompts 总数</strong></td><td><strong>6,448 prompts</strong></td></tr>
+        <tr class="hl"><td>覆盖国家</td><td>亚太 6 国：<strong>Bangladesh · India · Korea · Pakistan · Singapore · Taiwan（中国台湾）</strong></td></tr>
+        <tr class="hl"><td>覆盖语言</td><td><strong>8 种语言</strong>（含孟加拉语、印地语、韩语、乌尔都语、英语、繁体中文、简体中文等）</td></tr>
+        <tr class="hl"><td>数据来源</td><td><em>Native localized safety hazards 采样</em>—— 由该国母语者+本地文化审视者共同构建，<u>非西方数据集适配</u></td></tr>
+        <tr class="hl"><td>模态</td><td>Text × Image 组合评估 · 单独良性 + 组合触发违规（如"送礼？" + 钟表 → 中华文化禁忌）</td></tr>
+        <tr class="hl"><td>评估轴</td><td>正交两轴：<em>universal safety violations</em> × <em>localized cultural appropriateness</em>（首次分离）</td></tr>
+        <tr class="hl"><td>Judge 系统</td><td><strong>Judge-Pluralis</strong>——协议门控 LLM-as-Judge 集成；文化分类法经验推导</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VLM 失败模式 -->
+  <div class="card">
+    <div class="card-title">VLM 在 Pluralis 上暴露的三大系统性失败模式</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>失败模式</th><th>典型例子</th><th>机制</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Image 误识别导致下游 harm</strong></td><td>把韩国传统服饰误识别为其他文化服饰</td><td>视觉编码器训练数据中该文化图像分布稀疏</td></tr>
+        <tr><td><strong>遗漏 item-context-locale 三元交互</strong></td><td>钟表 × 送礼 × 中华文化 → 送终（送钟）禁忌</td><td>模型未学到"物品 × 场景 × 地域" 组合的语义含义</td></tr>
+        <tr><td><strong>拒答不足</strong></td><td>模型不知道该拒答，因未见过该文化敏感 pattern</td><td>Safety-tuning 数据集缺少目标文化 sensitive examples</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>作者关键论断</strong>：<u>"这些失败模式跨地域跨语言系统性变化，暴露出全球平均指标掩盖的盲点。"</u> —— 现有全球 leaderboard 上的 safety 分数<em>在本质上是西方 average</em>，掩盖了非西方地域的具体失败。这是 AI safety benchmark 现状的<u>结构性诊断</u>。</p>
+  </div>
+
+  <!-- Multimodal Synergy 范式 -->
+  <div class="card">
+    <div class="card-title">Multimodal Synergy 评估范式</div>
+    <p>Pluralis 引入的核心方法学创新：<strong>组合毒性（compositional harm）</strong>—— <em>user text 与 image 单独看都无害，组合起来触发文化/法律违规</em>。三类典型组合：</p>
+    <ul class="point-list">
+      <li><strong>物品-场景组合</strong>：钟表（image） + "送礼？"（text） → 中华文化"送终"禁忌；</li>
+      <li><strong>符号-语境组合</strong>：印度教特定手势（image） + 触碰某物场景描述（text） → 宗教纯净禁忌；</li>
+      <li><strong>地域-法律组合</strong>：某种植物（image） + "在家种植可行吗？"（text） → 地区禁止/管制物种法律。</li>
+    </ul>
+    <p>这类组合毒性<u>结构上无法被单模态 benchmark 捕捉</u>——是 multimodal 时代 AI safety benchmark 的<em>必备维度</em>。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>KSAFE-MM: Multimodal Safety Benchmark for Korean Cultural Risks</strong> · Kim et al. 2026 · <a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">arxiv.org/abs/2605.28013</a> —— 首个韩国单国多模态安全 benchmark；Pluralis 把此路径扩展到 6 国。</div>
+    <div class="ref-item"><strong>K-BrowseComp: Web Browsing Agent Benchmark Grounded in Korean Contexts</strong> · Lee et al. 2026 · <a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arxiv.org/abs/2606.02404</a> —— 韩国 native 400 questions；与 Pluralis 组"agent × VLM" 双维度本地化。</div>
+    <div class="ref-item"><strong>SovereignPA-Bench: User-Owned Personal Agents</strong> · Liu 2026 · <a href="https://arxiv.org/abs/2607.05363" target="_blank" rel="noopener">arxiv.org/abs/2607.05363</a> —— H2 benchmark 价值观联（7-07 已收报告）；Pluralis 把"文化 appropriateness" 加入 personal agent 评估的价值观轴。</div>
+    <div class="ref-item"><strong>Necessary but Not Sufficient (Grader-Repro)</strong> · Tamba 2026 · <a href="https://arxiv.org/abs/2606.26185" target="_blank" rel="noopener">arxiv.org/abs/2606.26185</a> —— H2 benchmark 评委联（7-03 已收报告）；Judge-Pluralis 的<u>协议门控</u> 设计正是应对 Grader non-determinism 挑战的具体方案。</div>
+    <div class="ref-item"><strong>SafetyRepro (SafetyPair-Wise)</strong> · Li et al. 2026 · <a href="https://arxiv.org/abs/2605.25492" target="_blank" rel="noopener">arxiv.org/abs/2605.25492</a> —— H2 benchmark 配置联（7-06 已收报告）；Pluralis 的 universal × localized 分离与 SafetyRepro 的 pairwise 分离同源。</div>
+    <div class="ref-item"><strong>PolyWorkBench: Multilingual Long-Horizon LLM Agents</strong> · Li et al. 2026 · <a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arxiv.org/abs/2607.06008</a> —— H2 benchmark 多语言联（7-08 已收报告）；Pluralis 与 PolyWorkBench 组 <em>"文化 × 多语言"</em> 双子星——PolyWorkBench 强调多语言性沿推理链的漂移，Pluralis 强调文化 appropriateness 的独立轴。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>Pluralis 与今日 harness 报告 TTHE 形成<strong>"数据分布本地化 × harness 演化本地化" 双侧</strong>问题：<em>(1) TTHE 演化的 harness 能否 <u>locale-aware</u>？</em>——不同地域可能需要不同的工具调用策略与 verification rule；<em>(2) Judge-Pluralis 的<u>协议门控</u> 集成设计</em> 可以复用到 harness evaluation：多个 harness judge 达成一致时才 commit，避免单 judge non-determinism（今天 Harness 报告的 execution-derived proxy reliability 挑战的多 judge 版本）；<em>(3) lm-evaluation-harness / HELM / OpenAI evals</em> 应加入 <strong>"locale-adapter" 插件</strong>——支持 native localized safety hazards 而非仅英文 default。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>Pluralis 与今日 agent safety 报告 <em>Deployment Simulation</em> 形成<strong>"本地化 × 部署 grounded" 双维度</strong>：<em>(1) Deployment Simulation 的<u>公开聊天 seed 数据集</u> 应该 locale-diverse</u>——Pluralis 提供了 6 国 × 8 语言的 seed 分布；<em>(2) Cultural appropriateness 是 agent skill 的独立安全维度</em>——skill safety 不能只看 tool-use safety，还应包括 <u>cultural-appropriateness 边界</u>；<em>(3) H2 agent safety 谱系再一维</em>：预测派（今日报告）+ 文化派（本文）——两个新维度都在质疑"universal safety benchmark" 的可推广性；<em>(4) EU AI Act 的 systemic risk conditions</em> 与 Pluralis 的地区法律差异直接相关——本文对 governance 的支撑与 <u>今日 agent-safety 报告 deployment simulation</u> 一致。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>H2 benchmark 谱系再拓展一格 · 第十联：文化联</strong>——九联（物品/搜索/评委/构造/配置/价值观/多语言/严重度/演化透明）+ 本文<u>文化联</u>——把 <em>localized cultural appropriateness</em> 抬为 first-class 评估轴。方法学四条独立可复用：<em>(1) native localized sourcing 而非西方数据集适配</em>——数据 governance 分水岭；<em>(2) multimodal synergy 组合毒性</em>——单模态无法捕捉的 compositional harm；<em>(3) universal × localized 分离</em>——不再混为一谈，避免过度拒答与文化冒犯的边界模糊；<em>(4) agreement-gated LLM judge ensemble</em>——应对跨文化 judge 不可靠性的具体方案。<strong>与 7-08 PolyWorkBench（多语言联）组"文化 × 多语言" 双子星</strong>——benchmark 现在有<u>横向多语言（PolyWorkBench）× 纵向文化深度（Pluralis）</u> 两条正交轴。<em>Leaderboard 应新增 "locale × culture-adjusted safety score" 列</em>——不再只报告全球平均。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>PolyWorkBench: Multilingual Long-Horizon LLM Agents</strong>（7-08 已收）—— <a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arxiv.org/abs/2607.06008</a>：多语言长程 agent benchmark；与 Pluralis 组<em>"文化 × 多语言"</em> 双子星。</li>
+      <li><strong>KSAFE-MM: Multimodal Safety for Korean Cultural Risks</strong>—— <a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">arxiv.org/abs/2605.28013</a>：首个韩国单国多模态安全 benchmark；Pluralis 把此路径扩展到 6 国。</li>
+      <li><strong>K-BrowseComp: Korean Native Web Browsing Agent Benchmark</strong>—— <a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arxiv.org/abs/2606.02404</a>：韩国 native 400 questions；与 Pluralis 组<em>"agent × VLM" 双维度本地化</em>。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.06196" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.06196" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.06196" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">Google DeepMind（Alicia Parrish · Lora Aroyo）主导 · 亚太多国学者共同署名（KAIST · IIT Madras · USC · Microsoft Research 等 50+ 位）· 2026-07-07 v1 · 5.68 MB。<u>数据集访问路径</u> 通常从作者主页/项目主页发布，请关注 Google DeepMind 官方释出通道。文本标题明确表示为 <em>v0.1</em>——作者视其为"未来创新的第一步与催化剂" 而非已解决的框架，为社区扩展预留了空间。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
