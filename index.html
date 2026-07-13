@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">49 篇报告</span>
+        <span class="count-badge">50 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">48 篇报告</span>
+        <span class="count-badge">49 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">47 篇报告</span>
+        <span class="count-badge">48 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-13-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">13</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</strong> —— 首次把 harness 策略执行从<u>工具调用层</u> 下推到 <strong>OS 内核层</strong>：agent 声明策略 · eBPF 拦截所有系统动作 · <em>IFC DSL</em> 支持跨事件顺序/数据流策略；覆盖 tool-call 观察不到的间接执行路径 · 语义反馈替代 EPERM · <strong>1.9%-8.4% 开销</strong>；<em>H2 harness 第十层：OS 执行层</em>——与 7-07 Cedar 组"编译期证明 × 内核期执行" 闭环 · 完整开源 UCF-ML-Research 组 · #1</div>
+          <div class="paper-sub">Y. Zheng / T. Wu / Q. Fu / T. Yu / W. Mao + 4 人 · arXiv 2606.25189 · 2026-06-23 v1 / 06-30 v2 · cs.OS · eunomia-bpf 组织</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-13-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">13</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</strong> —— 把 agent safety 评估从"<em>单轮 refusal</em>" 推进到"<u>渐进多轮 stateful workspace 攻击</u>"；<strong>EU AI Act Annex I / III + GPAI Code of Practice</strong> 首次落地 benchmark 分类；<u>9 模型 aggregate strict ASR 44.4%</u>（Claude Haiku 4.5 20.5% vs Gemini 3.1 Flash Lite 92.9% · Seed 2.0 Lite &gt; 80%）· <em>Code of Practice 失控场景 chain-level ASR 93.3%</em>；<em>artifact-state 而非 utterance 作为 unsafe 判定</em>；<strong>H2 agent safety 第十一派：立法接地派</strong> #1</div>
+          <div class="paper-sub">P. Bisconti / M. Prandi / F. Pierucci + 11 人 · arXiv 2605.22643 · 2026-05-21 v1 / 05-22 v2 · cs.CL · Sapienza 大学 D. Nardi + EU 政策圈层 14 人阵容</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-13-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">13</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>REALM: A Unified Red-Teaming Benchmark for Physical-World VLMs</strong> —— Physical-World VLM 首个<u>统一协议</u> 红队 benchmark；<strong>12 攻击方法 × 3 model-agnostic defense × 13 VLM</strong> 在共享黑盒威胁模型下直接可比；<em>agentic target-generation pipeline</em> 首次让不同攻击家族<u>目标对齐</u>；<strong>四大一手结论</strong>：<em>text+typographic 攻击最强 · multimodal co-optimization 迁移最强 · single-pass ≈ iterative 但成本远低 · model scale 不保证鲁棒性</em>；<em>H2 benchmark 第十一联：统一红队协议联</em> #1</div>
+          <div class="paper-sub">Y. Zhao / Q. Lou / M. Zheng · arXiv 2606.23892 · 2026-06-22 · cs.CV · 20 pages · UCF-ML-Research（Qian Lou 组）· GitHub UCF-ML-Research/REALM</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-10-1.html">
         <div class="date-badge">

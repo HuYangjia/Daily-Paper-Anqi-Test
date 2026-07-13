@@ -45,6 +45,20 @@
   <p class="section-title">归档报告（最新在前）</p>
   <ul class="paper-list">
     <li>
+      <a class="paper-item" href="2026-07-13-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">13</div>
+        </div>
+        <span class="num-badge">#1</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</strong> —— 首次把 harness 的策略执行从<u>工具调用层</u> 下推到 <strong>OS 内核层</strong>：agent 声明策略、eBPF 在 kernel 拦截 <em>所有系统动作</em>；<em>IFC (Information-Flow Control) DSL</em> 支持 "run tests before committing" 这类<u>跨事件顺序 / 数据流</u> 策略；覆盖 <u>tool-call interception 观察不到的间接执行路径</u>（LLM 直接生成的 shell 命令、subprocess 库底层 syscall）；被拒返 <em>结构化语义反馈</em> 而非 EPERM · 1.9%-8.4% 运行时开销；实机 coding-task + safety benchmark 全面验证；<u>三大 harness 派系（tool-call guardrail / OS sandbox / policy-as-code）之外的第四条路</u>。<em>H2 harness 第十层：OS 执行层 (Kernel Enforcement Layer)</em>——与 7-07 Cedar Autoformalization 组"编译期证明 × 内核期执行" 完整闭环；开源 <a href="https://github.com/eunomia-bpf/ActPlane" target="_blank" rel="noopener">github.com/eunomia-bpf/ActPlane</a></div>
+          <div class="paper-sub">Y. Zheng / T. Wu / Q. Fu / T. Yu / W. Mao / T. Ma / D. Williams / W. Wang / A. Quinn · arXiv 2606.25189 · 2026-06-23 v1 / 06-30 v2 · cs.OS · 1,683 KB · eunomia-bpf 组织 · 系统 × OS × agent 三栈交叉</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
       <a class="paper-item" href="2026-07-10-1.html">
         <div class="date-badge">
           <div class="month">Jul</div>

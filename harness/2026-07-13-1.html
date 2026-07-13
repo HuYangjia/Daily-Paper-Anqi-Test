@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-13 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-13 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 13 日 · Harness Engineering · 首次把 harness 的"策略执行" 从<u>工具调用层</u> 下推到 <strong>OS 内核层</strong> —— agent 在 harness 层声明策略、eBPF 在 kernel 拦截所有系统动作；跨事件 IFC DSL 支持"run tests before committing" 这类<em>顺序/数据流</em> 策略；1.9%-8.4% 开销、覆盖 <u>tool-call interception 观察不到的间接执行路径</u> · 三大 harness 派系（tool-call guardrail / OS sandbox / policy-as-code）之外的<strong>第四条路</strong></div>
+  <h1><strong>ActPlane</strong>：Agent Harness 的<em>OS 层可编程策略引擎</em> —— 用 eBPF 在 kernel 拦截 agent 生成的<u>所有</u> 系统动作，让 harness 声明策略（含跨事件 IFC DSL），弥合"NL 策略意图 ↔ 具体系统动作" 的语义鸿沟；<em>tool-call guardrail 漏抓间接路径 · OS sandbox 只控资源不控动作且返回不透明错误</em> —— ActPlane 同时给出 <strong>覆盖 + 语义反馈 + 隔离</strong>；实机开销仅 <em>1.9%-8.4%</em></h1>
+  <div class="en-title">ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.8</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-06-14 至 07-09 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</a><span class="winner-badge">今日选定</span></td>
+          <td>把 harness 策略执行下推到 <em>OS 内核层</em> · agent 声明 · eBPF 拦截 · <u>跨事件 IFC DSL</u> · 覆盖 tool-call 观察不到的间接执行路径 · 1.9%-8.4% overhead · 完整开源</td>
+          <td>arXiv 2606.25189 · 2026-06-23 v1 / 2026-06-30 v2 · Y. Zheng / T. Wu / Q. Fu / T. Yu / W. Mao / T. Ma / D. Williams / W. Wang / A. Quinn · cs.OS · 1,683 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry</a></td>
+          <td>Harness foundry · prompts + tools + memory + control flow 四要素 · 执行 trace distill 回 harness 系统改进</td>
+          <td>arXiv 2606.14249 · 2026-06-12 · T. Chen + 4 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.08028" target="_blank" rel="noopener">From Prompts to Contracts: Harness Engineering for Auditable Enterprise LLM Agents</a></td>
+          <td>企业级 harness 契约化 · deterministic behavior 移到 code · schema 保证 · 韩国 5 大企业数据切片实证</td>
+          <td>arXiv 2607.08028 · 2026-07-09 · J. Ahn / M. Kim · cs.AI</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.13643" target="_blank" rel="noopener">Recursive Agent Harnesses</a></td>
+          <td>Recursive 单元是完整 agent harness（文件系统 + code exec + planning）· Anthropic dynamic workflows 命名</td>
+          <td>arXiv 2606.13643 · 2026-06-11 · E. Lumer + 3 · cs.CL</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.21856" target="_blank" rel="noopener">Harness-MU: Safe, Governed, Effective Harness for Multi-User LLM Agents</a></td>
+          <td>Multi-user / multi-principal · 访问权限 + 权威冲突 + 未授权数据泄露</td>
+          <td>arXiv 2606.21856 · 2026-06-20 · W. Fan / X. Nie / Z. Dai · cs.CR</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>ActPlane：Agent Harness 的可编程 OS 层策略执行</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Yusheng Zheng · Tianyuan Wu · Quanzhi Fu · Tong Yu · Wenan Mao · Tao Ma · Dan Williams · Wei Wang · Andi Quinn</span>
+      </div>
+      <div class="meta-item">
+        <label>机构线索</label>
+        <span>eBPF 基础设施研究圈层（GitHub 组织 eunomia-bpf）· Dan Williams（IBM/Virginia Tech 系统研究）· 系统 + OS + agent 三栈交叉</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-06-23 v1 / 2026-06-30 v2</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2606.25189" target="_blank" rel="noopener">arxiv.org/pdf/2606.25189</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2606.25189v2" target="_blank" rel="noopener">arxiv.org/html/2606.25189v2</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2606.25189" target="_blank" rel="noopener">10.48550/arXiv.2606.25189</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.OS（Operating Systems）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>1,683 KB · v2 修订版</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>94（相关 10.0 / 来源 8.8 / 影响力 9.2 / 新颖 9.6 / 开源 9.6）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      让 agent harness 在 <em>OS 内核层</em> 用 eBPF + IFC DSL 声明并执行策略 —— 首次同时给出<u>路径覆盖 · 语义反馈 · 隔离</u> 的 harness 策略执行方案。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>AI agent 越来越多通过 <strong>harness</strong>—— 围绕 LLM 的软件、包括一个执行安全和有效性策略的引擎（如 "commit 之前先运行测试"）—— 在生产环境中运行。执行这些策略需要弥合一条<em>语义鸿沟</em>：策略意图用<u>低规约的自然语言</u>表达，而执行必须作用于<u>具体的系统动作</u>（如运行哪个测试）。许多策略还定义了事件顺序或数据流动作。然而现有方法均有不足：<em>tool-call guardrail 会漏掉绕过工具层的系统动作</em>；<em>OS sandbox 控制资源访问而非动作</em>，且返回<u>不透明错误</u>让 agent 困惑。我们的关键洞察是：<strong>策略语境驻留在最接近任务的 agent 内部，而执行必须发生在覆盖所有执行路径的 OS 层</strong>。我们提出 <strong>ActPlane</strong>，一个策略引擎，让 agent 声明策略，并在 OS kernel 中执行、同时给出<u>语义反馈</u>与<u>隔离</u>。ActPlane 使用简单的 <em>信息流控制 (Information-Flow Control, IFC) DSL</em> 支持跨事件策略。我们用 <strong>eBPF</strong> 实现 ActPlane，并在经验研究策略、coding-task benchmark 和 safety benchmark 上评估。ActPlane 显著提升策略合规性，包括<u>在 tool-call 拦截无法观察的间接执行路径上</u>；开销仅 <strong>1.9%–8.4%</strong>。ActPlane 开源于 <a href="https://github.com/eunomia-bpf/ActPlane" target="_blank" rel="noopener">github.com/eunomia-bpf/ActPlane</a>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 550 字）</div>
+    <p><strong>问题背景</strong>：2026 H2 生产环境中 agent 已通过 harness 大规模落地（参考 7-08 Yi/Song Harness MDP · 7-09 Writer AI Harness Effect · 7-10 TTHE 三篇独立证据），harness 的一大核心职责就是执行"<em>commit 前跑测试</em>""<em>不要读 /etc/shadow</em>""<em>敏感数据不要写入日志</em>" 这类 <u>safety + effectiveness policy</u>。但要真正执行策略，必须跨越一条本质性的<em>语义鸿沟</em>——策略是<u>低规约自然语言</u>意图，执行必须落到<u>具体系统调用</u>。作者做了一次实证研究，发现现有两条主流路线都不够用：<em>tool-call guardrail</em>（在 harness 的工具调用接口做拦截）会<u>漏掉</u> 所有 LLM 生成代码直接触发的 syscall（如 subprocess、shell 命令、内联 exec）；<em>OS sandbox</em>（seccomp / SELinux / AppArmor）只控制<u>资源访问权限</u> 而非 <u>动作语义</u>，且失败时返回冷冰冰的 EPERM，agent 完全不知道被拒的<u>业务原因</u>。</p>
+    <p><strong>核心洞察 + 方法</strong>：<u>策略语境在 agent 内 · 执行必须在 OS</u>。ActPlane 让 harness / agent <em>声明</em> 策略（一条 DSL 语句），policy engine 把它编译成一段 eBPF 程序挂到内核 hook 上（filesystem / process / network / IPC 各层），从而<u>覆盖所有执行路径</u>（LLM 直接生成的 shell 命令、tool 中间的 fork、库函数底层的 open()）都被同一策略约束。关键创新：<em>基于 IFC (Information-Flow Control) 的简单 DSL</em>——可以表达 <u>"数据 X 一旦从来源 A 读取，就不能流向 sink B"</u> 或 <u>"事件 test-run 必须先于事件 commit"</u> 这类<strong>跨事件</strong>策略（普通 tool-call guardrail 只能做单事件同步检查）。被拦截时 ActPlane 不返 EPERM，而是返回<u>结构化语义反馈</u>（"你想 write 到 X，但当前策略要求先执行 Y"），agent 可以直接读懂并纠正。</p>
+    <p><strong>与现有工作的突破点</strong>：三条独立立场。<em>(1) 相对 tool-call guardrail</em>：ActPlane 覆盖 <u>indirect execution path</u>（LLM 生成的 shell + library 底层调用），tool-call 层根本看不到。<em>(2) 相对 OS sandbox (seccomp/eBPF-only 传统方案)</em>：ActPlane 提供 <u>semantic feedback</u> 与 <u>IFC-based 跨事件 DSL</u>，传统 sandbox 只能 allow/deny 单事件资源访问。<em>(3) 相对 policy-as-code (7-07 Cedar Autoformalization)</em>：Cedar 走 <u>静态形式化验证</u> 路线，ActPlane 走 <u>运行时 kernel 拦截</u> 路线——两者互补：Cedar 编译期证明策略无冲突，ActPlane 部署期保证策略执行。<strong>实验</strong>：在经验研究策略集 + coding-task benchmark + safety benchmark 上，ActPlane 显著提升合规性（含 tool-call 观测不到的间接路径），overhead 仅 <em>1.9%-8.4%</em>——生产可用。<strong>H2 harness 谱系再拓展一格：第十层 · OS 执行层 (Kernel Enforcement Layer)</strong>——七层图（学习派收官）+ 经济学层（Writer AI）+ Test-Time 演化层（TTHE）+ 本文 OS 执行层。全代码开源 <a href="https://github.com/eunomia-bpf/ActPlane" target="_blank" rel="noopener">github.com/eunomia-bpf/ActPlane</a> —— eunomia-bpf 组织已在 eBPF 生态积累多年。</p>
+  </div>
+
+  <!-- 三条路线对比 -->
+  <div class="card">
+    <div class="card-title">Harness 策略执行三条路线对比 —— ActPlane 是第四条</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>路线</th><th>覆盖间接路径</th><th>语义反馈</th><th>跨事件策略</th><th>开销</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tool-call guardrail（主流 harness 内建）</td><td>❌ 漏抓</td><td>✅ 有</td><td>⚠️ 仅工具层</td><td>低</td></tr>
+        <tr><td>OS sandbox（seccomp/AppArmor 传统）</td><td>✅ 覆盖</td><td>❌ EPERM</td><td>❌ 不支持</td><td>低</td></tr>
+        <tr><td>Policy-as-Code（Cedar 静态编译，7-07 Autoformalization）</td><td>⚠️ 依赖运行时</td><td>✅ 有</td><td>✅ 支持</td><td>零（编译期）</td></tr>
+        <tr class="hl"><td><strong>ActPlane（OS 层 eBPF + IFC DSL）</strong></td><td>✅ 覆盖</td><td>✅ 结构化语义反馈</td><td>✅ IFC-based 跨事件</td><td>1.9%-8.4%</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>ActPlane 是首个同时满足<u>覆盖 · 反馈 · 跨事件</u> 三属性</strong>的 harness 策略执行方案；且以生产可接受的开销（1.9%-8.4%）实现——这是 harness engineering 落地生产的关键路径。</p>
+  </div>
+
+  <!-- 策略示例 -->
+  <div class="card">
+    <div class="card-title">ActPlane 典型策略示例（推断 / 摘要 grounded）</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>策略意图</th><th>形式</th><th>为什么 tool-call 层做不到</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Commit 之前必须运行测试</td><td>跨事件顺序：event(test-run) ≺ event(git-commit)</td><td>LLM 可能直接生成 shell "git commit -m ..." 绕过工具层</td></tr>
+        <tr><td>密钥不能写入日志文件</td><td>IFC：taint(read /etc/secret) → deny write(*.log)</td><td>tool 只看单次调用参数，看不到数据来源</td></tr>
+        <tr><td>禁止 fork 到非白名单进程</td><td>syscall filter + 白名单</td><td>tool 层无法拦截 subprocess.Popen 的间接 fork</td></tr>
+        <tr><td>敏感文件不能通过网络出站</td><td>IFC：taint(read /home/user/.ssh) → deny sendto(external)</td><td>数据可能经 tmpfile 中转、tool 层完全看不见跨路径流</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Autoformalization to Cedar / Policy-as-Code</strong> · Mondl, Maisel, Brock 2026 · ICML 2026 AIWILD Workshop · <a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arxiv.org/abs/2606.26649</a> —— H2 agent safety 形式化派（7-07 报告）；与 ActPlane 组成"编译期证明 × 运行期 kernel 执行" 双翼。</div>
+    <div class="ref-item"><strong>The Harness Effect: Token Economics of Enterprise Agentic AI</strong> · Writer AI 2026 · <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a> —— H2 harness 经济学层（7-09 报告）；提供 harness 是"决定性杠杆" 的实证，ActPlane 提供其中"policy 执行" 一环的<u>系统实现</u>。</div>
+    <div class="ref-item"><strong>eBPF for Linux Kernel Programmable Observability</strong> · Cilium / Meta 团队 · Berkeley Packet Filter 内核可编程接口，ActPlane 的底层技术基座 · <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a></div>
+    <div class="ref-item"><strong>Information-Flow Control (IFC) Foundations</strong> · Sabelfeld & Myers, TIST 2003 · Language-based IFC 基础工作，ActPlane 的 DSL 语义基础</div>
+    <div class="ref-item"><strong>SkillSafetyBench: Evaluating Agent Safety under Skill-Facing Attack Surfaces</strong> · Jin et al. 2026 · <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a> —— 6-25 已收 (95)；提供"skill 里可能藏 unsafe 指令" 的攻击面证据，ActPlane 的 OS 层拦截是防御手段之一。</div>
+    <div class="ref-item"><strong>Harness-MU: Multi-User LLM Agents</strong> · Fan, Nie, Dai 2026 · <a href="https://arxiv.org/abs/2606.21856" target="_blank" rel="noopener">arxiv.org/abs/2606.21856</a> —— 今日候选之一；多用户 principal 隔离场景下的 harness 治理，ActPlane 的 IFC DSL 天然支持 multi-principal taint。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><strong>H2 harness 谱系再拓展一格 · 第十层：OS 执行层 (Kernel Enforcement Layer)</strong>——七层图（学习派收官）+ 第八层经济学层（Writer AI）+ 第九层 Test-Time 演化层（TTHE 7-10）+ 本文第十层 OS 执行层。方法学可复用：<em>(1) "策略语境在 agent · 执行在 OS" 的分层原则</em>——所有需要跨越"NL 意图 ↔ 系统动作" 鸿沟的场景都可套用；<em>(2) IFC DSL 作为 harness 层跨事件策略的标准接口</em>——比 tool-call guardrail 表达力强得多；<em>(3) 语义反馈</em>（结构化告知 agent 被拒的业务原因）应成为所有 harness 拒绝路径的标配，替代传统 EPERM/return -1；<em>(4) 1.9%-8.4% overhead</em>——ActPlane 给"harness 层增加安全 = 显著性能损失" 的偏见画上句号。<strong>与 7-08 Yi/Song Harness MDP × TTHE 组"harness 学习 × 演化 × 执行" 三翼</strong>。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>本文是<em>H2 agent safety 第七派（形式化派 / Policy-as-Code）</em>的<u>运行时侧</u>兄弟——Cedar 走静态编译期，ActPlane 走 OS 内核期，两者拼成"编译期证明 · 部署期执行" 完整闭环。启发：<em>(1) safety benchmark 应显式区分 "静态验证" vs "运行时拦截" 两条路径</em>——ROME / DECOMPBENCH / RUBAS 类 benchmark 目前无法度量 ActPlane 这类<u>内核层</u> 防御；<em>(2) 覆盖间接执行路径 (indirect path coverage)</em> 应成为 safety benchmark 的新元指标——很多 attack success 是通过 subprocess 直接 syscall 绕过 tool-call layer 达成的；<em>(3) 与今日 agent safety 报告 (Boiling the Frog) 形成对偶</em>：Boiling the Frog 展示多轮渐进攻击有 44.4% ASR，其中很多攻击成功的关键是"benign edit + risk edit" 之间的<u>顺序或数据流</u> 已被越过——ActPlane 的 IFC DSL 天然能声明"benign artifact 到 risky sink 的路径不允许"这类跨事件约束。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>Agent benchmark 必须新增"间接路径 (indirect path) 攻击面"维度</strong>——如果 benchmark 的 evaluator 只在 tool-call 层监测行为，就会系统性高估 agent safety。ActPlane 的评估协议（tool-call benchmark + safety benchmark 双侧）给出可复用模板：<em>(1) 报告"tool-call 层观测到的合规率" vs "kernel 层观测到的合规率" 双指标</em>——差值即"tool-call blind spot"；<em>(2) 引入 "IFC violation rate"</em>——数据从来源到 sink 的所有可能路径中，被 taint 违规的比例；<em>(3) 生产可行性维度</em>——benchmark 应报告防御方案的运行时 overhead（如 ActPlane 的 1.9%-8.4%），学术方案不报告开销就无法度量真实部署价值。<em>H2 benchmark 方法学第十一联：路径覆盖联 (Path Coverage League)</em>——benchmark 显式度量"哪些执行路径被观察，哪些没被观察"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Autoformalization to Cedar Policy-as-Code (ICML 2026 AIWILD)</strong>（7-07 已收）—— <a href="https://arxiv.org/abs/2606.26649" target="_blank" rel="noopener">arxiv.org/abs/2606.26649</a>：与 ActPlane 组"编译期证明 × 内核期执行" 完整闭环；同一策略集可先 Cedar 静态验证再 ActPlane 部署。</li>
+      <li><strong>SkillSafetyBench: Evaluating Agent Safety under Skill-Facing Attack Surfaces</strong>（6-25 已收）—— <a href="https://arxiv.org/abs/2605.12015" target="_blank" rel="noopener">arxiv.org/abs/2605.12015</a>：证明 skill 里藏 unsafe 指令的攻击面存在，ActPlane 的 IFC DSL 是其防御方案之一。</li>
+      <li><strong>HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry</strong>—— <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a>：把 harness 的 prompts/tools/memory/control-flow 四要素抽为可组合原语，ActPlane 可作为其"control-flow policy" 模块。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://github.com/eunomia-bpf/ActPlane" target="_blank" rel="noopener">GitHub 仓库</a>
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2606.25189" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.25189v2" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.25189" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">代码位于 <a href="https://github.com/eunomia-bpf/ActPlane" target="_blank" rel="noopener">github.com/eunomia-bpf/ActPlane</a>；eunomia-bpf 组织在 eBPF 生态深耕多年（观测、性能、安全三领域均有产品化项目），ActPlane 是其把 eBPF 抬到 agent harness 场景的里程碑。arXiv v1 (2026-06-23) → v2 (2026-06-30) 一周内修订，可能对应实机 benchmark 补充。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
