@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-14 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-14 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 14 日 · Harness Engineering · 首次系统证明"<u>harness 适配可以把 SLM (small language model) agent 变成 LLM agent 的 90% 更便宜替代</u>"—— 关键洞察：<em>任务难度可从 model 迁移到 harness</em>（tailored instructions / tools / orchestration loops）· 用 <strong>meta agent</strong> 自动发现 harness 适配 · 21 组合中 16 组显著提升 · <strong>7 组关闭 SLM-LLM 差距</strong> · 最佳 SLM 以 <strong>4% 成本恢复 89.7% LLM 性能</strong></div>
+  <h1><strong>Better Harnesses, Smaller Models</strong>：Meta-Agent 自动适配 harness、把 SLM agent 变成 LLM 的 <em>90% 更便宜</em> 替代 —— 关键洞察 "<u>许多任务难度可从 model 迁移到 harness</u>"；从 <em>失败模式 → harness 适配策略</em> 的映射框架 + harness 优化器；<strong>7 业务任务 × 3 SLM 家族 = 21 组合 · 16 组显著提升 · 7 组闭合差距 · 最佳 4% 成本恢复 89.7%</strong> LLM 性能</h1>
+  <div class="en-title">Better Harnesses, Smaller Models: Building 90% Cheaper Agents via Automated Harness Adaptation</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 96 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 9.4</span>
+    <span class="score-chip chip-novel">新颖性 9.8</span>
+    <span class="score-chip chip-open">开源复现 8.8</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-02 至 07-13 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">Better Harnesses, Smaller Models: Building 90% Cheaper Agents via Automated Harness Adaptation</a><span class="winner-badge">今日选定</span></td>
+          <td>Meta-agent 自动 harness 适配 · <em>任务难度从 model 迁移到 harness</em> · 21 SLM-任务组合 16 提升 · 7 关闭 LLM 差距 · 4% 成本恢复 89.7% 性能 · CMU Kästner 组</td>
+          <td>arXiv 2607.08938 · 2026-07-09 · C. Yang / X. Zhao / T. Wu / C. Kästner · cs.SE · 521 KB</td>
+          <td class="score-num">96</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.11423" target="_blank" rel="noopener">ToFu: A White-Box, Token-Efficient Agent Harness for Researchers</a></td>
+          <td>面向研究者的白盒 harness · MIT 许可开源 · 本地部署 · 双重角色（工具+研究对象）· 高 token 效率</td>
+          <td>arXiv 2607.11423 · 2026-07-13 · J. Ruan / Y. Ge + 8 人 · cs.CL</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.11399" target="_blank" rel="noopener">Agentic Routing: The Harness-Native Data Flywheel</a></td>
+          <td>步级 harness-native 路由 · 完整 harness state 作为路由输入 · 环境提供 label 的数据飞轮 · OpenSquilla 四层路由栈</td>
+          <td>arXiv 2607.11399 · 2026-07-13 · X. Liu / H. Zhou + 13 人 · Huawei Noah's Ark 阵容</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.11388" target="_blank" rel="noopener">StructAgent: Harness Long-horizon Digital Agents with Unified Causal Structure</a></td>
+          <td>统一 state 维护紧凑任务进度 · verifier 支持状态转移 · OSWorld-Verified 从 27% → 46.9% · 显式检查点</td>
+          <td>arXiv 2607.11388 · 2026-07-13 · W. Wu + 5 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</a></td>
+          <td>Web agent 多模态动作+引导 · Set-of-Mark 与像素坐标双锚定 · GRPO 训练 9B 从 6.9% → 13.2%</td>
+          <td>arXiv 2607.10079 · 2026-07-11 · C. Gan + 5 · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Better Harnesses, Smaller Models: Building 90% Cheaper Agents via Automated Harness Adaptation</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>更好的 Harness、更小的模型：通过自动化 Harness 适配构建 90% 更便宜的 Agent</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Chenyang Yang · Xinran Zhao · Tongshuang Wu · Christian Kästner</span>
+      </div>
+      <div class="meta-item">
+        <label>机构线索</label>
+        <span>CMU Software &amp; Societal Systems（Christian Kästner 组）· Tongshuang Wu（HCI/NLP 交叉）· 系统 × HCI × NLP 三栈交叉；本论文延续 Kästner 组"AI 系统可靠性" 主线</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-07-09 v1（首版）</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">arxiv.org/abs/2607.08938</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.08938" target="_blank" rel="noopener">arxiv.org/pdf/2607.08938</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.08938v1" target="_blank" rel="noopener">arxiv.org/html/2607.08938v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.08938" target="_blank" rel="noopener">10.48550/arXiv.2607.08938</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.SE（Software Engineering）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>521 KB · v1 首版 · 2026-07-09 21:08 UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>96（相关 10.0 / 来源 9.4 / 影响力 9.4 / 新颖 9.8 / 开源 8.8）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      任务难度可以从 <em>model</em> 迁移到 <u>harness</u> —— meta-agent 自动适配的 harness 把 SLM agent 变成 LLM 的 <strong>90% 更便宜</strong> 替代（4% 成本恢复 89.7% 性能）。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>前沿 <strong>LLM agents</strong> 正在自动化众多业务任务，但其高昂的推理成本让大规模部署<u>不可持续</u>。<strong>小语言模型（SLM, Small Language Models）</strong> 提供了更便宜的替代方案，但当直接放入为前沿 LLM 设计的 harness 中时通常表现不佳。本文表明：对于许多常规业务任务，SLM agent 可以匹敌 LLM 性能，同时<em>成本降低 90%</em>——只要配上一个由 <strong>meta agent 自动发现</strong> 的适配 harness。<u>关键洞察是：许多任务难度可以从 model 迁移到 harness</u>——通过<em>定制指令 (tailored instructions)</em>、<em>工具 (tools)</em> 与 <em>编排循环 (orchestration loops)</em>。为系统研究这个问题，我们构建了一个把 <u>agent 失败模式</u> 映射到 <u>harness 适配策略</u> 的框架，并搭建了 harness 优化器，它可以从<em>失败轨迹</em> 中自动发现有效的适配。跨 <strong>7 个业务导向 agentic 任务</strong> 与 <strong>3 个 SLM 家族</strong>（共 21 个任务-SLM 组合），优化后的 harness 在 <strong>16 个</strong> 组合上显著提升性能，其中 <strong>7 个</strong> 关闭了 SLM-LLM 性能差距，且最佳 SLM agent 以 <strong>4% 的成本</strong> 恢复了 <strong>89.7% 的 LLM 性能</strong>。进一步分析显示：适配对<em>更多重复性工作流</em> 的任务效果最佳、对<em>具有足够基础能力</em> 的 SLM 效果最佳。这些结果表明 <u>harness 适配可以扩展 SLM agent 在常规业务任务上的实际部署范围</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 570 字）</div>
+    <p><strong>问题背景</strong>：2026 H2 生产环境中，agent 部署最大的落地障碍不是"能不能做"，而是"<em>做得起 vs 做不起</em>"——前沿 LLM 单次推理成本让"每客户一个 agent" 的商业模型崩塌。业内的直觉方案是用 SLM（3B-14B）替换 LLM，但 <u>直接换模型只会得到一个残废 agent</u>。本文提出的问题非常尖锐：<em>难道 harness 与模型能力是解耦的吗？</em> 如果 harness 是为 GPT-5 / Claude Opus 这类前沿模型设计的（假设模型可以自主完成规划、错误恢复、多步推理），那么把 8B SLM 塞进去必然崩溃——因为 harness 隐式依赖了模型没有的能力。作者的关键洞察反过来：<u>许多"任务难度" 是可以在 model 与 harness 之间转移的</u>——通过定制 instructions（把隐式推理显式化）、增加工具（把 SLM 短板外包给 code interpreter / RAG / verifier）、重构 orchestration loops（把长时程推理拆成短步骤 + 显式 state）。</p>
+    <p><strong>核心方法：从失败模式到 harness 适配的自动化框架</strong>。作者不做手工 tuning，而是搭建<em>失败模式 → 适配策略</em> 的映射框架 + <strong>meta agent 作为 harness 优化器</strong>。具体流水线：<em>(1) 冷启动</em> 把 SLM 放进 LLM harness 收集失败轨迹（fail traces）；<em>(2) 失败分类</em> meta agent 把失败聚类为可命名的 failure mode（如 "confused by tool signature"、"forgot state between turns"、"over-called browsing"）；<em>(3) 适配策略生成</em> 每个 failure mode 触发对应的 harness 修改（增加 few-shot、拆解 orchestration、添加 verifier）；<em>(4) 迭代优化</em> 应用适配后重新评估，若仍失败则递归。本质是把"<em>人工调参 harness</em>" 变成"<em>meta-agent 自动搜索 harness 空间</em>"。</p>
+    <p><strong>实验结果与突破</strong>：<em>7 业务任务 × 3 SLM 家族 = 21 组合</em>，优化 harness 在 <strong>16 组显著提升</strong>；<strong>7 组关闭 SLM-LLM 差距</strong>；最佳 SLM agent 以 <em>4% 成本</em> 恢复 <strong>89.7% LLM 性能</strong>——即 <em>90% cheaper for ~90% quality</em>。深度分析：适配对<u>更多重复性 workflow 的任务</u> 效果最佳（可提取的模式多），对<u>基础能力足够的 SLM</u> 效果最佳（有底层能力可撬）。<strong>H2 harness 谱系再拓展一格：第十一层 · Meta-Optimization 层 (Meta-Agent Harness Discovery Layer)</strong>——七层图（学习派收官）+ 经济学层（Writer AI，7-09）+ Test-Time 演化层（TTHE，7-10）+ OS 执行层（ActPlane，7-13）+ 本文 Meta-Optimization 层。<em>与 7-13 ActPlane 组"OS 层执行 × Meta 层发现" 从底到顶完整</em>。哲学突破：<u>不再"给 harness 打补丁"，而是"让 harness 学会自己修自己"</u>——harness engineering 从人工 craft 走向自动 discovery。</p>
+  </div>
+
+  <!-- 三条路线对比 -->
+  <div class="card">
+    <div class="card-title">SLM Agent 三条路线对比 —— Meta-Agent Harness Adaptation 是第三条</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>路线</th><th>成本</th><th>性能</th><th>需要什么</th><th>可扩展性</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>直接换 SLM 到 LLM harness</td><td>低（-90%）</td><td>差（多组合崩溃）</td><td>无</td><td>高但无用</td></tr>
+        <tr><td>手工为 SLM 定制 harness</td><td>低（-90%）</td><td>好（若工程师投入足够）</td><td>专家人工数月</td><td>低（每个任务从头做）</td></tr>
+        <tr><td>SLM 微调到具体任务</td><td>中（训练成本 + 推理低）</td><td>中-好</td><td>标注数据 + GPU</td><td>中（每个任务一次训练）</td></tr>
+        <tr class="hl"><td><strong>本文：Meta-Agent Harness Adaptation</strong></td><td><strong>低（-90% ≈ 4%）</strong></td><td><strong>好（89.7% LLM）</strong></td><td>失败轨迹 + meta agent</td><td><strong>高（跨任务自动化）</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>Meta-Agent Harness Adaptation 是唯一同时满足"低成本 · 高性能 · 无需人工 · 可扩展"</strong> 的路线——这也是 SLM agent 在<em>常规业务任务</em>（有重复性、可 pattern-mine）大规模落地的关键路径。</p>
+  </div>
+
+  <!-- 关键数据点 -->
+  <div class="card">
+    <div class="card-title">关键实验数据点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>维度</th><th>数据</th><th>解读</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>整体覆盖</td><td>21 任务-SLM 组合中 <strong>16 组</strong> 显著提升</td><td>方法学具备<u>可迁移性</u>——不是靠某一任务某一 SLM 幸运</td></tr>
+        <tr><td>差距关闭</td><td><strong>7 组</strong> 关闭 SLM-LLM 性能差距</td><td>接近三分之一的组合上，SLM 完全可替代 LLM</td></tr>
+        <tr class="hl"><td>最佳性价比</td><td><strong>4% 成本 · 恢复 89.7% LLM 性能</strong></td><td>企业部署的甜蜜点——花 1/25 的钱做 90% 的事</td></tr>
+        <tr><td>适配增益边界（任务侧）</td><td>更多重复性 workflow → 提升最大</td><td>常规业务（客服、DevOps、报表）&gt; 创造性任务（研究、写作）</td></tr>
+        <tr><td>适配增益边界（模型侧）</td><td>基础能力足够的 SLM → 提升最大</td><td>3B 以下模型可能"底层能力不够可撬"——harness 不是万能补丁</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>ActPlane: Programmable OS-Level Policy Enforcement for Agent Harnesses</strong> · Zheng et al. 2026 · <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a> —— H2 harness 第十层 OS 执行层（7-13 报告）；与本文组"OS 层执行 × Meta 层发现" 从底到顶完整栈。</div>
+    <div class="ref-item"><strong>TTHE: Test-Time Harness Evolution</strong> · Nie, Zhang, Song et al. 2026 · <a href="https://arxiv.org/abs/2607.08124" target="_blank" rel="noopener">arxiv.org/abs/2607.08124</a> —— H2 harness 第九层 Test-Time 演化层（7-10 报告）；TTHE 在<u>测试时</u>演化 harness，本文在<u>部署前</u>由 meta agent 发现 harness——两者时间轴互补。</div>
+    <div class="ref-item"><strong>The Harness Effect: Token Economics of Enterprise Agentic AI</strong> · Writer AI 2026 · <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a> —— H2 harness 第八层 经济学层（7-09 报告）；Writer AI 证明"<u>更好 harness = 41% 成本降</u>"，本文更进一步："<u>更好 harness = 96% 成本降 + 换更小模型</u>"。</div>
+    <div class="ref-item"><strong>Learning to Control LLM Agent Harnesses with Offline RL</strong> · Yi &amp; Song 2026 · <a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arxiv.org/abs/2607.05458</a> —— H2 harness 学习派（7-08 报告）；Yi/Song 用 RL 训 controller，本文用 meta agent 直接生成 harness 结构——两条 harness 自动化路线。</div>
+    <div class="ref-item"><strong>HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry</strong> · Chen et al. 2026 · <a href="https://arxiv.org/abs/2606.14249" target="_blank" rel="noopener">arxiv.org/abs/2606.14249</a> —— 提出 harness 四要素（prompts/tools/memory/control-flow）可组合原语，本文的 meta agent 恰好可以在这四个维度上做 automated search。</div>
+    <div class="ref-item"><strong>From Prompts to Contracts: Harness Engineering for Auditable Enterprise LLM Agents</strong> · Ahn &amp; Kim 2026 · <a href="https://arxiv.org/abs/2607.08028" target="_blank" rel="noopener">arxiv.org/abs/2607.08028</a> —— 韩国企业 harness 契约化实证；本文进一步证明"契约化 harness 用 SLM 就够"。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><strong>H2 harness 谱系再拓展一格 · 第十一层：Meta-Optimization 层（Meta-Agent Harness Discovery Layer）</strong>——七层图（学习派收官）+ 第八层经济学层（Writer AI）+ 第九层 Test-Time 演化层（TTHE）+ 第十层 OS 执行层（ActPlane）+ 本文第十一层 Meta-Optimization 层。方法学可复用：<em>(1) failure-mode → adaptation-strategy 映射框架</em>——所有需要"给 SLM 适配 harness" 的场景都可以套用；<em>(2) meta agent 作为 harness 优化器</em>——把 harness 空间的 automated search 变为标配；<em>(3) "任务难度可迁移" 的假设</em>——这是 harness engineering 的第一原理级洞察，值得推广到"prompt engineering 有多少可迁移到 harness"、"tool design 有多少可迁移到 orchestration" 等姊妹问题；<em>(4) 4% 成本 · 89.7% 性能</em>——这是 SLM agent 落地生产的<u>可行性证明</u>，让 SLM harness engineering 从边缘研究变成核心工业问题。<strong>下一步预测</strong>：Meta-Optimization × ActPlane × Harness MDP 三合一——"发现 harness 结构 + OS 层执行策略 + RL 控制器" 的 end-to-end 自适应 harness system。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>本文对 agent safety 的<em>反直觉启发</em>：<u>安全性也可能从 model 迁移到 harness</u>——如果任务难度可迁移，那么"给 SLM 加 verifier / guardrail / structured output" 完全可以补偿其安全边界的欠缺。启发：<em>(1) agent safety 研究应显式区分 "model-level safety" vs "harness-level safety"</em>——RLHF 是 model 层的，ActPlane / RUBAS / verifier 是 harness 层的；<em>(2) SLM safety benchmark 需重新设计</em>——不能直接用 GPT-5 的 harness 跑 SLM 得 unsafe，因为这不是 SLM 本身的问题；<em>(3) meta agent 也可用于 safety adaptation</em>——从 unsafe traces 中自动发现"添加什么 verifier / 加什么 constraint" 能弥补 SLM 的安全欠缺；<em>(4) 与今日 agent safety 报告 (Singapore AISI + Korea AISI Data Leakage) 呼应</em>——AISI 报告发现三个 agent 都不能"完全正确 + 完全安全"，本文提供了工具：用 meta-agent 自动补全 data-handling harness。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>Agent benchmark 必须报告"harness-adjusted score" 而非 "model-only score"</strong>——如果一个 benchmark 用固定 harness 跑不同模型，得到的就是"harness 与 model 的联合能力"，无法区分 model 差异 vs harness 差异。可复用协议：<em>(1) 报告 baseline harness vs adapted harness 双分数</em>——差值即 "harness leverage" (Writer AI, 7-09 引入的概念)；<em>(2) 引入 "cost-adjusted performance"</em>——在同一成本预算下比较不同 model+harness 组合；<em>(3) 提供 "适配上限"</em>——benchmark 应该报告"最好 harness 能把 SLM 拉到 LLM 的百分之多少"；<em>(4) 常规业务任务 vs 创造性任务分开评估</em>——本文发现 harness 适配对重复性任务更有效，benchmark 应该显式区分这两类。<em>H2 benchmark 方法学第十二联：Harness-Adjusted 联</em>——benchmark 从"锁定 harness 比 model" 转向"报告 harness × model 联合空间"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>ActPlane: OS-Level Policy Enforcement for Agent Harnesses</strong>（7-13 已收）—— <a href="https://arxiv.org/abs/2606.25189" target="_blank" rel="noopener">arxiv.org/abs/2606.25189</a>：与本文组"OS 层执行 × Meta 层发现" 完整栈；ActPlane 保证策略执行，Meta-Agent 发现最优 harness 结构。</li>
+      <li><strong>The Harness Effect: Token Economics</strong>（7-09 已收）—— <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a>：Writer AI 证明 "harness = 决定性杠杆"，本文用 meta-agent 自动化这个杠杆。</li>
+      <li><strong>ToFu: A White-Box, Token-Efficient Agent Harness for Researchers</strong>—— <a href="https://arxiv.org/abs/2607.11423" target="_blank" rel="noopener">arxiv.org/abs/2607.11423</a>：MIT 开源 · 本地可部署白盒 harness；本文的 meta-agent 完全可以作用于 ToFu 这类白盒 harness（因为可读、可编辑）。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.08938" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.08938v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.08938" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">论文在 arXiv v1 (2026-07-09 21:08 UTC) 发布，摘要未显式提供代码库链接，但作者 Chenyang Yang / Christian Kästner 隶属 CMU S3D 组，历史上有开源习惯（前作 <a href="https://github.com/malusamayo" target="_blank" rel="noopener">github.com/malusamayo</a>）；本论文的 meta agent + harness optimizer 框架预期会通过 CMU 组织公开释出。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">50 篇报告</span>
+        <span class="count-badge">51 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">49 篇报告</span>
+        <span class="count-badge">50 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">48 篇报告</span>
+        <span class="count-badge">49 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-14-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">14</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Better Harnesses, Smaller Models</strong> —— Meta-agent 自动 harness 适配把 SLM 变成 LLM 的 <em>90% 更便宜替代</em>；关键洞察：<u>任务难度可从 model 迁移到 harness</u>——通过定制 instructions / tools / orchestration loops；failure-mode → adaptation-strategy 映射框架 · harness 优化器；<strong>7 任务 × 3 SLM 家族 = 21 组合 · 16 组显著提升 · 7 组关闭 SLM-LLM 差距 · 最佳 4% 成本恢复 89.7% LLM 性能</strong>；<em>H2 harness 第十一层：Meta-Optimization 层</em>——CMU Kästner 组 · #1</div>
+          <div class="paper-sub">C. Yang / X. Zhao / T. Wu / C. Kästner · arXiv 2607.08938 · 2026-07-09 · cs.SE · CMU S3D</div>
+        </div>
+        <div class="score-pill">96 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-14-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">14</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Data Leakage Risks in Tool-Using LLM Agents</strong> —— <strong>Singapore AISI × Korea AISI 首次双边联合评估</strong>——把 agent safety 从对抗性外泄扩展到<u>非对抗性 operational data leakage</u>；<em>五大风险</em>：data awareness · audience awareness · policy compliance · data minimization · access-boundary awareness；<em>12 现实非对抗任务 × 3 前沿 agent × 双 AISI 独立环境</em>；<u>没有 agent 能在所有场景实现 correct + safe 双正</u>；capability × safety 分开评估；四大定性异常 (claim-action mismatch / simulation-aware / role reversal / interpretation gap)；<em>H2 agent safety 第十二派：操作性泄漏派</em>——AISI 网络首次公开双边协作里程碑 · #1</div>
+          <div class="paper-sub">H. Baek / J. Noh + 6 人（Singapore AISI + Korea AISI 双机构）· arXiv 2606.17114 · 2026-06-15 · cs.CR + cs.AI · 政府 AI 安全研究所联合报告</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-14-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">14</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>K-BrowseComp: Web Browsing Agent Benchmark in Korean Contexts</strong> —— 首个基于韩国语境的 web browsing agent benchmark · <em>400 题</em>（300 手工构建 + 100 adversarial 合成）；<u>前沿 LLM (GPT-5.5 / DeepSeek-V4-Pro / GLM-5.1) 仅 30-46%</u>——相对 BrowseComp 显著下降；<strong>韩国 PAIF program 主权 LLM 仅 0.00-10.33%</strong>——量级性差距警示；adversarial diagnostic split 最强 26.00%；<em>solving vs creating 不对称</em> 是自动生成对抗题的方法学基础；<strong>H2 benchmark 第十二联：语言主权联 (Language Sovereignty League)</strong>——数据 + 代码公开 · #1</div>
+          <div class="paper-sub">N. Lee / D. Yoon / G. Son + 12 人（KAIST + LG AI + NAVER + CMU）· arXiv 2606.02404 · 2026-06-01 · cs.CL · 韩国 PAIF program 主权 LLM 首次公开评估</div>
+        </div>
+        <div class="score-pill">93 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-13-1.html">
         <div class="date-badge">

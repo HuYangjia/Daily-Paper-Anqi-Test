@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-14 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #0d5a45; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #a8dcca; color: #0d5a45; }
+  .link-btn.primary:hover { background: #cfebe0; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f3faf7; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #0d5a45; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-14 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 14 日 · Safety Benchmark · 首个基于韩国语境的 <em>web browsing agent benchmark</em>——<strong>K-BrowseComp</strong>· 400 题（其中 300 题由韩语母语者手工构建 + 验证）· 前沿 LLM（<strong>GPT-5.5 / DeepSeek-V4-Pro / GLM-5.1</strong>）仅 30.00–45.67% · <em>韩国主权 AI 基座（PAIF program）仅 0.00–10.33%</em>——前所未见的 K-en 性能鸿沟 · 100 题合成 diagnostic split 最强模型仅 26%</div>
+  <h1><strong>K-BrowseComp</strong>：韩国语境 <u>web browsing agent</u> benchmark —— <em>400 题</em>（300 题人工构建 + 100 题 adversarial 合成）· 前沿 LLM 仅 <strong>30-46%</strong>（BrowseComp 上显著下降）· <em>韩国 PAIF program 主权模型 0-10.33%</em>——首次量化"语言语境" 对 agent 能力的<strong>结构性瓶颈</strong>；<u>solving vs creating 不对称</u> 是 adversarial 合成的方法学基础</h1>
+  <div class="en-title">K-BrowseComp: A Web Browsing Agent Benchmark Grounded in Korean Contexts</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 93 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-05-26 至 07-11 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">K-BrowseComp: A Web Browsing Agent Benchmark Grounded in Korean Contexts</a><span class="winner-badge">今日选定</span></td>
+          <td>韩国语境 web browsing agent benchmark · 400 题（300 手工 + 100 adversarial 合成）· 前沿 LLM 30-46% · <em>PAIF program 韩国主权基座 0-10.33%</em> · solving vs creating 不对称 · KAIST + LG AI + KAI 阵容</td>
+          <td>arXiv 2606.02404 · 2026-06-01 · N. Lee / D. Yoon / G. Son + 12 · cs.CL · 2,452 KB</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">Your AI Travel Agent Would Book You a Bullfight: An Agentic Benchmark for Implicit Animal Welfare</a></td>
+          <td>动物福利 agent benchmark TAC · 6 动物 × 13 场景 × 52 提示 · Claude 4.8 最高 64.7% (低于 65% 随机) · 与 EU GPAI Code of Practice 系统性风险呼应</td>
+          <td>arXiv 2606.18142v4 · 2026-06-16 · J. Brazilek + 6 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark: Executable Evaluation in Electric Power Engineering</a></td>
+          <td>电力工程首个可执行 agent benchmark · 41 任务族 × 8 领域 · 结构化输入/输出 · 按需合成保留案例 · 参考评估暴露自洽 evaluator 缺陷</td>
+          <td>arXiv 2606.20950v2 · 2026-06-18 · S. Trashchenkov · cs.CY</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">KSAFE-MM: A Multimodal Safety Benchmark for Korean Cultural Risks</a></td>
+          <td>韩语多模态安全 · 通用 + 文化特定风险 · 12 MLLM · 文化相关攻击更脆弱 · ProgramExecution ASR 74.2% vs 标准 13.4% · 安全 vs 过度拒绝权衡</td>
+          <td>arXiv 2605.28013 · 2026-05-27 · Y. Kim + 10 · cs.CL</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.03657" target="_blank" rel="noopener">NovelAPIBench: Diagnosing Knowledge Gaps in LLM Tool Use</a></td>
+          <td>动态基准发现新 API · 分解知识包 · 生成可执行任务 · 6 诊断类别 · 检索 vs 微调互补 · usage examples 最强独立信号</td>
+          <td>arXiv 2606.03657 · 2026-06-02 · J. Liu + 3 · cs.AI</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>K-BrowseComp: A Web Browsing Agent Benchmark Grounded in Korean Contexts</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>K-BrowseComp：基于韩国语境的网页浏览智能体基准</span>
+      </div>
+      <div class="meta-item">
+        <label>作者（15 位）</label>
+        <span>Nahyun Lee · Dongkeun Yoon · Guijin Son · Geewook Kim · Dayoon Ko · Jeonghun Park · Haneul Yoo · Jaewon Cho · Junghun Park · Changyoon Lee · Kyochul Jang · Jaeyeon Kim · Eunsu Kim · Woojin Cho · Seungone Kim</span>
+      </div>
+      <div class="meta-item">
+        <label>机构线索</label>
+        <span>KAIST + LG AI Research + NAVER + Seungone Kim（CMU LTI · JudgeLM/Prometheus 作者）· 15 位跨机构韩国 LLM 学者阵容——韩国 <strong>Proprietary AI Foundation Model (PAIF)</strong> program 的评估工具</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · 2026-06-01 v1（首版）· 数据 + 代码公开</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arxiv.org/abs/2606.02404</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2606.02404" target="_blank" rel="noopener">arxiv.org/pdf/2606.02404</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2606.02404v1" target="_blank" rel="noopener">arxiv.org/html/2606.02404v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2606.02404" target="_blank" rel="noopener">10.48550/arXiv.2606.02404</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.CL（Computation and Language）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>2,452 KB · v1 首版 · 2026-06-01 15:50 UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>综合得分</label>
+        <span>93（相关 9.6 / 来源 9.2 / 影响力 8.8 / 新颖 9.4 / 开源 9.4）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      韩国母语者手工构建 300 题 + adversarial 合成 100 题 —— 首次量化"<em>非英语语境 web browsing agent</em>" 的结构性瓶颈；<u>solving vs creating 不对称</u> 是自动生成难题的方法学基础。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>前沿模型评估正在从基础能力（instruction following、reasoning）转向<strong>组合式、agentic 能力</strong>，但<u>韩语 agentic benchmark 仍然稀缺</u>。本文提出 <strong>K-BrowseComp</strong>——一个基于韩国语境的 <em>web browsing agent benchmark</em>，包含 <strong>400 个问题</strong>。其中 <em>300 题的 K-BrowseComp-Verified 子集</em> 由韩语母语者手工构建并验证。在该子集上，前沿 LLM（包括 <strong>GPT-5.5 / DeepSeek-V4-Pro / GLM-5.1</strong>）仅达到 <em>30.00%–45.67%</em> 准确率——这相对 BrowseComp 有显著下降；而通过韩国 <u>Proprietary AI Foundation Model (PAIF) program</u> 发布的韩国主权 LLM 仅取得 <em>0.00%–10.33%</em>。作者进一步构建 <strong>100 题的 synthetic split</strong>：使用<em>难例 few-shot 样本</em> 与 <em>failure-mode-targeted generation</em>，利用"<u>解决问题 vs 创造问题</u>" 的不对称性生成对抗式过滤后的合成诊断分片；在该 adversarial split 上，最强模型仅达到 <strong>26.00%</strong>——作为独立的 targeted stress test 单独报告。数据与代码已<u>公开发布</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 560 字）</div>
+    <p><strong>问题背景</strong>：2026 H2 agent benchmark 的评估重心已从"instruction following / reasoning" 转向 <em>组合式、agentic 能力</em>——最典型的 BrowseComp（Anthropic + OpenAI 主导）通过 web browsing 任务测试 agent 的 reasoning + tool use + web navigation 三合一能力。但 BrowseComp 是<u>英语语境</u>，问题、URL、页面内容全是英语——它测的是"英语 web + 英语推理" 而非"web agent 通用能力"。<strong>韩语 agentic benchmark 稀缺</strong> 意味着韩国主权 LLM（政府 PAIF program 资助）无法被公平评估，同时前沿 LLM 在<u>非英语 web</u> 上的真实表现被系统性掩盖。</p>
+    <p><strong>核心方法：K-BrowseComp 三大方法学突破</strong>。<em>(1) 韩语母语者手工构建 300 题</em>——不是把英语题机器翻译，而是<u>从韩国语境本身</u>提问（如涉及韩国政府部门、韩国大学历史、韩国专利数据库、韩国法律条文）；<em>(2) 韩语母语者独立验证</em>——每题至少 2 名母语者交叉验证 golden answer 存在且可获取；<em>(3) 100 题 adversarial 合成 diagnostic split</em>——利用"<u>solving vs creating 不对称</u>" 方法学：给 LLM 硬难 few-shot 例子 + 失败模式定向生成 prompt，让 LLM<em>创造出它自己解不了的题</em>——这本质上是<u>探索 LLM 能力边界</u>的自动化方法。</p>
+    <p><strong>关键实验数据</strong>：<em>(1) 前沿 LLM 30-46%</em>（GPT-5.5、DeepSeek-V4-Pro、GLM-5.1）——远低于同一模型在 BrowseComp 英语上的表现，证明<u>语言不是薄涂层</u>而是<u>结构性能力障碍</u>；<em>(2) 韩国 PAIF 主权模型 0-10.33%</em>——数字令人震惊，揭示韩国主权 AI 生态在 agentic 能力上的<u>严重滞后</u>——这对 PAIF program 政策制定者是直接警示；<em>(3) adversarial diagnostic split 最强模型 26%</em>——说明 K-BrowseComp-Verified 距离饱和还很远，adversarial 空间还有巨大探索余地。<strong>方法学突破</strong>：<u>solving vs creating 不对称</u> 是本文最重要的元贡献——LLM 更容易创造出它自己解不了的题，这个不对称性可作为所有 benchmark saturation 抵抗的通用手段（不只韩语、不只 web browsing）。<strong>H2 benchmark 谱系再拓展一格：第十二联 · 语言主权联 (Language Sovereignty League)</strong>——十一联（物品/搜索/评委/构造/配置/价值观/多语言/文化/严重度/统一红队/立法接地/本联）。政治意义：<u>韩国主权 LLM 0-10.33%</u> 直接质问 PAIF program 战略——政府资助的国家级基座是否真的具备 agentic 能力？</p>
+  </div>
+
+  <!-- 关键实验数据 -->
+  <div class="card">
+    <div class="card-title">关键实验数据对比</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>模型类别</th><th>典型代表</th><th>K-BrowseComp-Verified (n=300)</th><th>Adversarial Diagnostic (n=100)</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>前沿闭源 LLM</td><td>GPT-5.5, DeepSeek-V4-Pro, GLM-5.1</td><td><strong>30.00% - 45.67%</strong></td><td>最强 26.00%</td></tr>
+        <tr><td>韩国主权 LLM (PAIF program)</td><td>KO-LLM 系列</td><td><strong>0.00% - 10.33%</strong></td><td>—</td></tr>
+        <tr><td>参照：英语 BrowseComp</td><td>同一批模型</td><td>普遍 &gt;50%（显著更高）</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><strong>三大观察</strong>：<u>(1) 语言瓶颈是结构性的</u>——同一模型跨语言表现落差 20+ pp；<u>(2) 主权 LLM 差距是量级性的</u>——0.00-10.33% vs 30-46% 意味着现在的韩国主权 LLM 几乎无法完成韩国语境 web browsing 任务；<u>(3) Adversarial split 26%</u> 说明该 benchmark 远未饱和，是 H2 韩语 agent 能力真正的挑战面。</p>
+  </div>
+
+  <!-- Solving vs Creating 不对称 -->
+  <div class="card">
+    <div class="card-title">Solving vs Creating 不对称 —— 100 题 Adversarial Split 的方法学基础</div>
+    <p><strong>核心洞察</strong>：LLM 有一种奇特的不对称性——它<em>更容易生成一道它自己解不了的题</em>，而不是解一道类似难度的题。这是因为 <u>创造问题只需要局部知识组合的合法性</u>，而解决问题需要<u>完整的推理链</u>。K-BrowseComp 系统性利用这个不对称性生成 diagnostic split：</p>
+    <ul class="point-list">
+      <li><strong>步骤 1</strong>：从 K-BrowseComp-Verified 中提取<u>失败模式</u>——每种失败对应一类推理陷阱（多跳歧义 / 韩国专有名词消歧 / 时间锚定 / URL 结构假设等）</li>
+      <li><strong>步骤 2</strong>：用 <em>难例 few-shot exemplars</em> prompt LLM，让它<u>模仿这些失败模式生成新问题</u>——但答案由问题的知识组合决定，不由 LLM 提供</li>
+      <li><strong>步骤 3</strong>：<em>Failure-mode-targeted generation</em>——针对每个 failure mode 单独生成 targeted 子集，确保 diagnostic split 有清晰的 failure taxonomy</li>
+      <li><strong>步骤 4</strong>：<u>Adversarial 过滤</u>——只保留同一 LLM 无法自解的题——这就是"<em>把 LLM 自己作为 hard example filter</em>" 的自动化 curator</li>
+    </ul>
+    <p style="margin-top:0.5rem;font-size:0.88rem"><strong>这套方法学可以推广到任何 benchmark 的 saturation 抵抗</strong>——不需要每次找人工出题，只要有 seed failure modes + LLM 就可以自动生成 adversarial split。这与 5-27 TASTE (2605.28556) 的 "reversed benchmark construction" 是同一思想的不同 instantiation。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>BrowseComp (OpenAI / Anthropic)</strong> · 前沿 web browsing agent benchmark · 英语语境 · 是 K-BrowseComp 的直接对照 —— K-BrowseComp-Verified 300 题正对应 BrowseComp 的手工构建 protocol。</div>
+    <div class="ref-item"><strong>PolyWorkBench: Multilingual Long-Horizon LLM Agents</strong> · Li, Meng, Xu 等 2026 · <a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arxiv.org/abs/2607.06008</a> —— H2 benchmark 多语言联（7-08 报告）；PolyWorkBench 是 67 tasks × 5 domain × 8 语言 · K-BrowseComp 是深入韩语 web browsing 单语言深挖——两篇合成"多语言横向 × 单语言纵深" 完整语言维度。</div>
+    <div class="ref-item"><strong>Pluralis v0.1: Multicultural, Multimodal, Multilingual Benchmark</strong> · Parrish + Aroyo（Google DeepMind）2026 · <a href="https://arxiv.org/abs/2607.06196" target="_blank" rel="noopener">arxiv.org/abs/2607.06196</a> —— H2 benchmark 文化联（7-10 报告）；Pluralis 覆盖亚太 6 国 8 语言 · K-BrowseComp 深入单一韩国语境——同为 "culture-first" 家族。</div>
+    <div class="ref-item"><strong>KSAFE-MM: Multimodal Safety Benchmark for Korean Cultural Risks</strong> · Kim et al. 2026 · <a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">arxiv.org/abs/2605.28013</a> —— 同为韩语 benchmark；KSAFE-MM 关注韩语文化 safety 风险，K-BrowseComp 关注韩语 web browsing 能力——两者拼成"韩语 agent {safety, capability} 双正评估"。</div>
+    <div class="ref-item"><strong>A Matter of TASTE: Improving Coverage and Difficulty of Agent Benchmarks</strong> · Keren, Calderon, Yehudai et al. 2026 · <a href="https://arxiv.org/abs/2605.28556" target="_blank" rel="noopener">arxiv.org/abs/2605.28556</a> —— 7-03 已收 (93)；TASTE 反转 benchmark 构造，K-BrowseComp 的 solving vs creating 不对称是 TASTE 思想在 web browsing 语境的独立发现。</div>
+    <div class="ref-item"><strong>Efficient Safety Benchmarking via Item Response Theory</strong> · Spagliardi et al. 2026 · <a href="https://arxiv.org/abs/2606.20626" target="_blank" rel="noopener">arxiv.org/abs/2606.20626</a> —— 7-02 已收 (93)；IRT 用信息量精选 items · K-BrowseComp 用 adversarial 合成扩展 items——两条正交路线维护 benchmark 长期有效性。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><em>Web browsing agent harness 的<u>语言差异性</u></em>——K-BrowseComp 揭示 harness engineering 在英语外的语言语境需要重新设计：<em>(1) URL 结构假设</em>（英语 URL 是 latin，韩语 web 有大量非 latin URL）；<em>(2) HTML 结构</em>（韩语 web 有独特的 layout convention · e.g. 韩语常见的 side-nav 布局）；<em>(3) 搜索关键词生成</em>（英语 harness 假设 keyword 是空格分隔，韩语是 subword 粘连）；<em>(4) 时间锚定</em>（韩国日期格式、公历/檀君纪年混用）。<strong>与今日 harness 报告 (Better Harnesses, Smaller Models) 呼应</strong>：作者的 meta-agent 完全可以针对 K-BrowseComp 自动发现"韩语 web browsing harness 适配"——为韩国主权 LLM 自动生成 adapted harness，可能让它们从 10.33% 跃升到 30-40%。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-final ins-label">对 Agent Safety</div>
+        <p><em>K-BrowseComp 反过来指向"韩国主权 LLM 的 safety 也可能被系统性低估或高估"</em>——如果一个模型在<u>能力</u>层面只有 10%，那么它 refuse 率高看起来"safe"，但可能只是<u>不知道该怎么 unsafe</u> 而已。启发：<em>(1) safety benchmark 必须与 capability benchmark <strong>同时报告</strong></em>——safety score / capability score 双元组是判断"真安全 vs 假安全" 的最小观察单元；<em>(2) 与今日 agent safety 报告 (Singapore AISI × Korea AISI Data Leakage) 呼应</em>——AISI 报告发现"三 agent 无一 correct + safe 双正"，K-BrowseComp 提供了"K-BrowseComp × KSAFE-MM 双 benchmark 覆盖韩语能力 + 韩语安全" 的完整方案；<em>(3) 韩国主权 LLM 差距警示</em>——政府主导的国家级基座模型如果在 agentic 层面滞后，safety alignment 也必然滞后，AISI 类机构应把"能力 gap"纳入 safety risk taxonomy。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>H2 benchmark 谱系再拓展一格 · 第十二联：语言主权联 (Language Sovereignty League)</strong>——十一联（物品/搜索/评委/构造/配置/价值观/多语言/文化/严重度/统一红队/立法接地/本联）。核心方法学贡献：<em>(1) solving vs creating 不对称</em> 应成为所有 benchmark 抵抗 saturation 的默认协议——不用手工 curator 就能持续生成 adversarial split；<em>(2) 母语者手工构建 + 母语者交叉验证</em> 是 "非英语 benchmark" 的最小可信度基线；<em>(3) 主权 LLM 独立报告</em>——benchmark 应显式区分"前沿闭源 vs 国家主权 vs 开源社区" 三大生态，因为它们的<u>目标函数</u>和<u>资源约束</u>完全不同；<em>(4) diagnostic split 独立报告</em>——不合并到主分数，作为 targeted stress test 独立展示——这是本文首创的方法学。<strong>H2 benchmark 未来预测</strong>：K-BrowseComp × J-BrowseComp × ZH-BrowseComp × Ar-BrowseComp 家族化——每个主权国家的 web agent benchmark 化，最终形成 "BrowseComp Family" 全球评估网络。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>PolyWorkBench: Multilingual Long-Horizon LLM Agents</strong>（7-08 已收）—— <a href="https://arxiv.org/abs/2607.06008" target="_blank" rel="noopener">arxiv.org/abs/2607.06008</a>：67 tasks × 8 语言的横向多语言 benchmark；K-BrowseComp 是"深入单一语言" 的纵深互补。</li>
+      <li><strong>Pluralis v0.1: Multicultural Multimodal Multilingual Benchmark</strong>（7-10 已收）—— <a href="https://arxiv.org/abs/2607.06196" target="_blank" rel="noopener">arxiv.org/abs/2607.06196</a>：Google DeepMind 亚太 6 国 8 语言 6,448 prompts；与 K-BrowseComp 组"culture-first" 双子星。</li>
+      <li><strong>KSAFE-MM: Korean Multimodal Safety Benchmark</strong>—— <a href="https://arxiv.org/abs/2605.28013" target="_blank" rel="noopener">arxiv.org/abs/2605.28013</a>：同韩国团队 · 韩语文化安全评估；与 K-BrowseComp 组"韩语 agent 能力 × 安全" 双正评估。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2606.02404" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2606.02404" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2606.02404v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2606.02404" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">论文明确声明 "we publicly release our data and code"（摘要末尾）。作者团队跨 KAIST + LG AI Research + NAVER + CMU LTI（Seungone Kim, JudgeLM/Prometheus 作者），预计通过团队 GitHub 组织发布——参考 Seungone Kim 团队一贯的开源习惯（Prometheus/BiGGen-Bench 均完整开源）。v1 于 2026-06-01 提交（2,452 KB，含 hand-curated 300 题 + 100 题 adversarial split）。该 benchmark 有 policy layer 意义——直接量化韩国 PAIF program 主权 LLM 在 agentic 能力上的差距（0-10.33% vs 30-46%）。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
