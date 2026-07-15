@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-15 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-15 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 15 日 · Harness Engineering · 首次系统<strong>反思</strong> automatic harness evolution 的评估协议本身——"<u>看似 harness 改进带来的性能提升，其实可能只是额外搜索预算的红利</u>"；跨 Terminal-Bench 2.1 × GPT-5.4 × Claude Opus 4.6 的匹配预算实验揭示：<em>automatic harness evolution 不能 consistently 击败简单的 test-time scaling baseline</em>；同时用 held-out 任务发现<u>演化出来的 harness 泛化性有限</u>——严重指出"<em>search 与 evaluation 共用同一 benchmark 造成 harness 层过拟合</em>" 的方法论隐患</div>
+  <h1><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>：把昨天报告的 Meta-Optimization 层<u>钉在拷问台上</u>——在<em>匹配 feedback 预算 + 匹配 inference 预算</em> 下，automatic harness evolution 相对于简单 test-time scaling <strong>未能 consistently 胜出</strong>；search 与 eval 共用 benchmark 导致 <em>harness-level overfitting</em>；<strong>held-out 任务上泛化性有限</strong>——为 harness 自动化开出"更公平的评估协议" 药方</h1>
+  <div class="en-title">Rethinking the Evaluation of Harness Evolution for Agents</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 95 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 9.0</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 9.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-10 至 07-14 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">Rethinking the Evaluation of Harness Evolution for Agents</a><span class="winner-badge">今日选定</span></td>
+          <td>反思派 · 揭露 harness evolution "自动搜索红利" 混淆 + benchmark 过拟合 · Terminal-Bench 2.1 × GPT-5.4 / Claude Opus 4.6 · UW + AI2 + AI Frontiers 阵容 · 代码公开</td>
+          <td>arXiv 2607.12227 · 2026-07-14 v1 · Yike Wang / H. Zhu / Z. Hu + 7 人 · cs.AI · 113 KB · UW/AI2/USC/CMU 联合</td>
+          <td class="score-num">95</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.12469" target="_blank" rel="noopener">Agent-Safety Evaluations as Load-Bearing Evidence: A Vendor-Neutral, Cross-Harness Reconstructability Metric</a></td>
+          <td>厂商中立"harness 可重建性" 度量 · Evidence Sufficiency Cards + counterfactual replay · 单作者 SE 方法论论文</td>
+          <td>arXiv 2607.12469 · 2026-07-14 · O. Solozobov 单作者 · cs.SE</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.11423" target="_blank" rel="noopener">ToFu: A White-Box, Token-Efficient Agent Harness for Researchers</a></td>
+          <td>面向研究者的白盒 harness · MIT 许可开源 · 本地部署 · 高 token 效率</td>
+          <td>arXiv 2607.11423 · 2026-07-13 · J. Ruan / Y. Ge + 8 人 · cs.CL</td>
+          <td class="score-num">92</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.11399" target="_blank" rel="noopener">Agentic Routing: The Harness-Native Data Flywheel</a></td>
+          <td>步级 harness-native 路由 · 完整 harness state 作为路由输入 · 环境提供 label 的数据飞轮 · OpenSquilla 四层路由栈</td>
+          <td>arXiv 2607.11399 · 2026-07-13 · X. Liu / H. Zhou + 13 人 · Huawei Noah's Ark</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.10202" target="_blank" rel="noopener">Two Confounds in Cross-Model Value Comparison: Response Determinism and the Access Harness</a></td>
+          <td>把 access harness 识别为跨模型价值比较的独立混淆变量 · single-draw measurement 陷阱 · 与本文"harness overfitting" 呼应</td>
+          <td>arXiv 2607.10202 · 2026-07-11 · Won / Jang / Kim · cs.LG</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Rethinking the Evaluation of Harness Evolution for Agents</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>反思 Agent Harness 演化的评估协议</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Yike Wang · Huaisheng Zhu · Zhengyu Hu · Yige Yuan · Zhengyu Chen · Shakti Senthil · Hannaneh Hajishirzi · Yulia Tsvetkov · Pradeep Dasigi · Teng Xiao</span>
+      </div>
+      <div class="meta-item">
+        <label>机构线索</label>
+        <span>阵容含 <strong>Hannaneh Hajishirzi</strong>（AI2 / UW · Tulu / OLMo 主创）· <strong>Yulia Tsvetkov</strong>（UW NLP · Fairness/Alignment 权威）· <strong>Pradeep Dasigi</strong>（AI2 · Tulu 主力）·<strong>Teng Xiao</strong>（推理学习 / RLHF 学者）—— <u>UW × AI2 顶级 alignment/reasoning 联合阵容</u>；论文的方法论深度与阵容匹配</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · <strong>2026-07-14 v1</strong> 首版</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.12227" target="_blank" rel="noopener">arxiv.org/pdf/2607.12227</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.12227v1" target="_blank" rel="noopener">arxiv.org/html/2607.12227v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.12227" target="_blank" rel="noopener">10.48550/arXiv.2607.12227</a>
+      </div>
+      <div class="meta-item">
+        <label>GitHub</label>
+        <a href="https://github.com/rethinking-harness-evolution" target="_blank" rel="noopener">github.com/rethinking-harness-evolution</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI（Artificial Intelligence）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>113 KB · v1 首版 · 2026-07-14 00:18:42 UTC</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      <u>Automatic harness evolution 的性能增益可能是"额外 search 预算" 的假象</u>——在<em>匹配预算</em> 与 <em>held-out 任务</em> 下并未 consistently 胜过简单 test-time scaling。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>我们<strong>重新审视</strong> LLM agent 的 automatic harness evolution 评估。既有的 harness evolution 方法用<em>单元测试样例</em> 搜索 harness 配置，然后在<u>同一个公开 benchmark</u> 上报告最终性能。这个协议提出了两大根本性顾虑。<strong>第一</strong>，harness evolution 本身就是一个迭代搜索过程：<em>反复评估 · 用任务反馈修改候选 harness</em>——正如 agentic test-time scaling 一样，它<u>应该在匹配 feedback 预算与 inference 预算的条件下</u>与简单的 task-level search baseline 比较，才能判定"增益来自更好的 harness 设计" 还是"仅仅来自额外搜索"。<strong>第二</strong>，因为搜索和最终评估<em>共用同一 benchmark</em>，所报告的增益<u>有过拟合到该特定任务集的风险</u>。为此，我们进行了<strong>大规模对比评估</strong>：把 harness evolution 与简单 test-time scaling / discovery baseline 在同等 feedback 与 inference 预算下比较，并在 <strong>held-out 任务</strong> 上评估演化后的 harness 以判定改进是否泛化。<em>Terminal-Bench 2.1</em> × <em>GPT-5.4 与 Claude Opus 4.6</em> 的实验表明：<u>automatic harness evolution 未能 consistently 胜过简单的 test-time scaling 方法，且表现出<strong>有限的泛化性</strong></u>。我们的结果对 automatic harness evolution 的实际效力提出了重要问题，也凸显了<em>为 automatic harness design 建立更公平的评估协议与 benchmark</em> 的必要性。代码开源。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 580 字）</div>
+    <p><strong>问题背景</strong>：过去两个月 H2 harness 谱系急速膨胀——从 CMU Kästner 组 <em>Meta-Agent Harness Discovery</em>（7-14 报告，我们把它列为第十一层 Meta-Optimization 层）、到 Nie/Zhang 组 TTHE test-time 演化（7-10 报告，第九层）、再到 Yi/Song 组 Harness MDP（7-08 报告，学习派收官）——<u>整个方向都在争先恐后地宣布"我们的 harness 自动化更好"</u>。本文一石激起千层浪：<strong>你们的评估协议本身站不住脚</strong>。作者指出两个隐藏 bug：<em>(1) 搜索预算未对齐</em>——harness evolution 反复评估候选 harness、消耗大量 feedback 与 inference 预算，如果 baseline 只做一次朴素 test-time scaling，两者<u>比的根本不是"harness 好不好"，而是"你花了几倍算力"</u>；<em>(2) 搜索集 = 评估集</em>——unit tests 搜索出来的 harness 直接在同一个 benchmark 报告最终分数，构成了 <strong>harness-level 的 train-test 泄漏</strong>——好比在训练集上过拟合的模型来标榜"泛化能力"。</p>
+    <p><strong>方法：匹配预算 + Held-out 双拷问</strong>。作者的实验协议追求严格公平：<em>(1) 匹配 feedback 与 inference 预算</em>——把 harness evolution 的所有搜索 tokens 折算成 baseline 的 test-time scaling budget（如 best-of-N sampling / self-consistency / 简单 ReAct 重试）；<em>(2) 引入 discovery baseline</em>——用同样预算做<u>任务级简单搜索</u> 而不做 harness 层面搜索，测试"harness 层" 是否真的比"任务层" 增益更大；<em>(3) held-out 泛化</em>——把演化出来的 harness 冻结、丢到<u>未曾用于搜索的任务集</u> 上重新评估，看是否仍保持增益。<strong>实验平台</strong>：Terminal-Bench 2.1（agent 系统级评估首选）× GPT-5.4 与 Claude Opus 4.6（2026 H2 顶级基础模型）——阵仗<u>刻意做到"你没法说是因为模型太弱"</u>。</p>
+    <p><strong>结论与突破</strong>：<em>(1) automatic harness evolution 不能 consistently 击败简单 test-time scaling</em>——很多"harness 演化的增益" 在同预算下会被 best-of-N 打成平手甚至更低；<em>(2) 演化出的 harness 泛化性有限</em>——在 held-out 任务上收益显著下降，坐实"benchmark 过拟合" 猜测。<strong>H2 harness 谱系第一次"反思派" 登场——第十二层：Evaluation Protocol Critique 层（评估协议批判层）</strong>——与 7-14 的 Meta-Optimization 层构成"矛盾对立" 平衡关系：一个人在造更聪明的 harness 自动化，另一群人（UW + AI2）在拷问"这些自动化到底是真进步还是评估幻觉"。哲学突破：<u>harness engineering 不能只关心"我造得多快"，还必须关心"我在哪把尺子上量的"</u>——从<em>建造派 (Constructive)</em> 走向 <em>批判派 (Critical)</em> 的自我审视是任何工程学科成熟的必经之路，本文是 harness engineering 走向成熟的<strong>方法论里程碑</strong>。</p>
+  </div>
+
+  <!-- 三条评估协议对比 -->
+  <div class="card">
+    <div class="card-title">Harness Evolution 三种评估协议对比 —— 本文提出的"匹配预算 + held-out" 是第三条</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>评估协议</th><th>feedback 预算</th><th>inference 预算</th><th>搜索/评估分离</th><th>结论可信度</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>既有主流：只报 final performance</td><td>不控制</td><td>不控制</td><td>无（同一 benchmark）</td><td>低 —— 无法区分 harness vs search 红利</td></tr>
+        <tr><td>控制 inference 预算</td><td>不控制</td><td>匹配</td><td>无</td><td>中 —— 排除单次 inference 差异，但仍混合搜索红利</td></tr>
+        <tr class="hl"><td><strong>本文：匹配 feedback + inference 预算 + held-out</strong></td><td><strong>匹配</strong></td><td><strong>匹配</strong></td><td><strong>held-out 任务分离</strong></td><td><strong>高 —— 唯一能真正判定"harness 设计" 是否胜出</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><em>逻辑陷阱</em>：如果不匹配 feedback 预算，那么 evolution 消耗 100 次单元测试的反馈，而 baseline 只做一次朴素推理——所谓"evolution 更强" <strong>本质是"多花了 100 倍算力更强"</strong>。这个批判与 7-08 我们报告的 Harness MDP RL 训练也有部分共振：<u>方法论上必须给"训练/搜索成本" 一个显性 budget line</u>。</p>
+  </div>
+
+  <!-- 关键数据点 -->
+  <div class="card">
+    <div class="card-title">关键实验数据点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>维度</th><th>数据</th><th>解读</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>核心结论</td><td><strong>automatic harness evolution 不能 consistently 击败简单 test-time scaling</strong></td><td>颠覆了此前"harness 演化 = 显著增益" 的共识 —— 结论要用<u>更严评估协议</u> 重新审视</td></tr>
+        <tr><td>Held-out 泛化</td><td>演化出的 harness 在 held-out 任务上<strong>表现有限的泛化</strong></td><td>坐实 "harness overfitting" 隐患 —— harness 也会像模型一样过拟合到<u>搜索集</u></td></tr>
+        <tr><td>实验平台</td><td>Terminal-Bench 2.1 · <strong>GPT-5.4 与 Claude Opus 4.6 双 SOTA</strong></td><td>刻意<em>否证"模型不够强所以 harness 才假胜"</em> 的争议 —— 顶级模型仍然揭示同样问题</td></tr>
+        <tr><td>对比 baseline</td><td>Simple test-time scaling + simple discovery baseline</td><td>Baseline 选择遵循 "最简单可行" 而非 "最强对手" —— 更能凸显 evolution 是否真有增益</td></tr>
+        <tr><td>方法论产出</td><td>提出"fair evaluation protocol for automatic harness design" 的具体要求</td><td>相当于给整个 harness 自动化子领域<strong>立下了新的评估门槛</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Better Harnesses, Smaller Models: Automated Harness Adaptation</strong> · Yang, Zhao, Wu, Kästner 2026 · <a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">arxiv.org/abs/2607.08938</a> —— <em>7-14 我们的 Harness 报告</em>，H2 harness 第十一层 Meta-Optimization 层；本文正是对这类"meta-agent 自动发现 harness" 潮流的方法论拷问。</div>
+    <div class="ref-item"><strong>TTHE: Test-Time Harness Evolution</strong> · Nie, Zhang, Song et al. 2026 · <a href="https://arxiv.org/abs/2607.08124" target="_blank" rel="noopener">arxiv.org/abs/2607.08124</a> —— <em>7-10 我们的 Harness 报告</em>，H2 第九层 Test-Time 演化层；本文的"匹配 feedback 预算" 批判尤其适用于 TTHE 这类<u>反复消耗执行反馈</u> 的演化方法。</div>
+    <div class="ref-item"><strong>Learning to Control LLM Agent Harnesses with Offline RL</strong> · Yi &amp; Song 2026 · <a href="https://arxiv.org/abs/2607.05458" target="_blank" rel="noopener">arxiv.org/abs/2607.05458</a> —— <em>7-08 报告 Harness MDP 学习派</em>；训练时消耗大量 feedback 属于本文"搜索预算" 批判的边界情形。</div>
+    <div class="ref-item"><strong>The Harness Effect: Token Economics of Enterprise Agentic AI</strong> · Writer AI 2026 · <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a> —— <em>7-09 报告 经济学层</em>；Writer AI 已经把 harness 报告改为"cost-adjusted score"，恰好与本文"匹配预算" 呼应——两者都是<strong>把 harness engineering 从"看谁跑得高" 拉回"同样成本下谁跑得高"</strong>。</div>
+    <div class="ref-item"><strong>Two Confounds in Cross-Model Value Comparison: Response Determinism and the Access Harness</strong> · Won, Jang, Kim 2026 · <a href="https://arxiv.org/abs/2607.10202" target="_blank" rel="noopener">arxiv.org/abs/2607.10202</a> —— 姊妹批判：把 access harness 识别为<u>跨模型比较的独立混淆变量</u>；本文和它形成"harness 作为混淆源" 的<strong>双联批判</strong>。</div>
+    <div class="ref-item"><strong>Terminal-Bench 2.1</strong>（本文实验主平台）· 系统级 agent 评估首选 —— 本文数据全部基于该 benchmark；未来 harness 自动化研究应在 Terminal-Bench 2.1 上补齐"匹配预算 + held-out" 实验协议。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p><strong>H2 harness 谱系再拓展一格 · 第十二层：Evaluation Protocol Critique 层（评估协议批判层）</strong>——七层图 + 经济学层（Writer AI）+ Test-Time 演化层（TTHE）+ OS 执行层（ActPlane）+ Meta-Optimization 层（Yang/Kästner）+ 本文 <em>批判反思层</em>。这一层与第十一层 <u>Meta-Optimization 层构成"矛盾对立" 平衡关系</u>：Meta-Optimization 在造更聪明的 harness 自动化，Critique 层在拷问"这些自动化是不是真的赢过 test-time scaling"。方法学可复用：<em>(1) 匹配 feedback + inference 双预算</em>——任何 harness 自动化论文都应报告 baseline 的等预算表现；<em>(2) held-out 任务</em>——搜索集与评估集必须分离，否则涉及 harness 过拟合；<em>(3) discovery baseline</em>——加入"任务级简单搜索" 作为对照，测试"harness 层" 是否真的比"任务层" 更值得投入；<em>(4) 结论粒度</em>——不再讨论"演化好不好"，而是"演化在多少任务集上、多少预算下、多少泛化范围上真正胜出"。<strong>下一步预测</strong>：<u>Meta-Optimization × Critique 双方阵抗衡</u> 将快速催生新一批高质量 harness 自动化论文——因为方法论门槛已经被抬高。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>本文的"<strong>匹配预算 + held-out 泛化</strong>" 方法论对 agent safety 有<u>直接迁移价值</u>：<em>(1) safety benchmark 演化也可能过拟合</em>——如果一个 safety training method 在自建 benchmark 上迭代改进，那"泛化到未见 attack" 才是真实力，而不是"在训练 benchmark 上跑高分"；<em>(2) 匹配 feedback 预算</em>——今天我们已知 red-teaming 是 iterative process，如果 defense method 消耗 100 轮红队反馈，baseline 只用 1 轮，那 defense 的胜出是<u>红队预算的红利</u>；<em>(3) 与 <strong>今日 agent-safety 报告 SLBench (Chen, Wang, Yan, Zhang @ Purdue)</strong> 呼应</em>——SLBench 报告 70% unsafe rate 是一个诊断信号，但如果任何 defense method 在同 benchmark 上迭代改进，我们也应担忧 "safety-benchmark 层过拟合"；<em>(4) safety evaluation 亟需自己的 held-out 协议</em>——本文提供了 harness engineering 版本，safety community 应该复制这一方法论。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>Agent benchmark 设计原则的又一根本性升级</strong>——benchmark 不再是"给定固定 evaluation set，看谁最高"，而是必须<u>显式承担"held-out 泛化" 的责任</u>：<em>(1) benchmark 应内置 train / dev / test 三分划</em>——像传统 ML benchmark 一样，让 harness 自动化 / RLHF / red-teaming 方法在 train 上迭代、在 test 上报告；<em>(2) 匹配预算表格</em>——benchmark 应要求所有提交报告"总 feedback tokens"、"总 inference tokens"、"总 candidate 数"，让不同方法在等预算下可比；<em>(3) 与 <strong>今日 benchmark 报告 "How Many Tasks Are Enough" (Huang, KDD 2026)</strong> 呼应</em>——Huang 的工作证明部分预算就足以支持大部分 benchmark 结论（AppWorld 15% / tau-bench 25% / SWE-bench 90%）——如果 benchmark 只需要 15% 就能拉出决策，那我们就能把剩余 85% 变成"held-out 泛化" 池；<em>(4) H2 benchmark 方法学第十三联：Held-Out + Budget-Matched 联</em>——从"锁定评估集比方法" 抬到"分离评估集 + 预算平权 比方法"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Better Harnesses, Smaller Models (7-14 已收)</strong>—— <a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">arxiv.org/abs/2607.08938</a>：本文的<em>直接批判对象</em>——meta-agent 自动 harness 适配；本文说：等等，你的评估协议可能有 bug。</li>
+      <li><strong>The Harness Effect: Token Economics (7-09 已收)</strong>—— <a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">arxiv.org/abs/2607.06906</a>：Writer AI 已经把 harness 报告改为"cost-adjusted"，与本文"匹配预算" 呼应；两者都是<u>harness engineering 走向财务/预算感知</u> 的主线。</li>
+      <li><strong>Two Confounds in Cross-Model Value Comparison</strong>—— <a href="https://arxiv.org/abs/2607.10202" target="_blank" rel="noopener">arxiv.org/abs/2607.10202</a>：把 access harness 抬到<u>价值对比的独立混淆源</u>；与本文形成"harness 作为混淆变量" 双联批判。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.12227" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.12227v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.12227" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://github.com/rethinking-harness-evolution" target="_blank" rel="noopener">GitHub 代码库</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">GitHub 组织 <a href="https://github.com/rethinking-harness-evolution" target="_blank" rel="noopener">rethinking-harness-evolution</a> 已在摘要中公开，预期包含 Terminal-Bench 2.1 上的匹配预算实验脚本、baselines、以及 held-out 评估协议实现。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

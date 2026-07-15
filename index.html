@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">51 篇报告</span>
+        <span class="count-badge">52 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">50 篇报告</span>
+        <span class="count-badge">51 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">49 篇报告</span>
+        <span class="count-badge">50 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-15-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">15</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong> —— 首次系统<u>反思</u> automatic harness evolution 的评估协议本身："<em>看似 harness 改进的性能，其实可能只是额外搜索预算的红利</em>"；跨 Terminal-Bench 2.1 × <strong>GPT-5.4</strong> × <strong>Claude Opus 4.6</strong> 匹配 feedback + inference 预算实验：<strong>automatic harness evolution 未能 consistently 击败简单 test-time scaling</strong>；held-out 任务泛化<em>有限</em>——坐实 <u>harness-level benchmark 过拟合</u> 猜测；开出"更公平评估协议 + benchmark" 药方；<em>H2 harness 第十二层：Evaluation Protocol Critique 层（评估协议批判层）</em>——与 7-14 Meta-Optimization 层"矛盾对立" 平衡；代码开源 UW + AI2 阵容（Hajishirzi / Tsvetkov / Dasigi / Teng Xiao）· #1</div>
+          <div class="paper-sub">Y. Wang / H. Zhu / Z. Hu + 7 人（UW + AI2）· arXiv 2607.12227 · 2026-07-14 · cs.AI · 113 KB · GitHub rethinking-harness-evolution</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-15-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">15</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>SLBench: Evaluating How LLM Agents Follow Logical Relations in Skills</strong> —— <strong>Purdue Xiangyu Zhang 组</strong>首次把 <em>skill 内部逻辑关系</em>（preconditions / constraints / fallbacks 等 8 种关系）确立为独立<u>可靠性挑战</u>；<em>SkillLogic 框架</em> + 扫描 <strong>5000+ 公开 skill · 70% 至少含一种逻辑关系</strong>；<em>SLBench 86 案例可执行 benchmark</em>；<strong>Codex 与 Claude Code × 6 LLM backbones → unsafe rate 最高 70%</strong>——<u>隐私泄漏 · 不安全配置变更 · cleanup 不完整</u> 三大 fail mode；人类审计双因归因（capability gap + low-salience skill text）；<strong>SLGuard inference-time scaffold 减 63% 违规</strong>；<em>H2 agent safety 第十三派：Skill-Following Reliability 派</em>——把 safety 从"外部输入/工具边界" 内推到"skill 文件内部结构" · cs.CR 主分类（系统安全学派介入）· #1</div>
+          <div class="paper-sub">X. Chen / C. Wang / L. Yan / X. Zhang · arXiv 2607.09016 · 2026-07-10 · cs.CR + cs.SE · Purdue CS (Xiangyu Zhang 系统安全学派)</div>
+        </div>
+        <div class="score-pill">96 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-15-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">15</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong> —— 首次系统回答"<em>部分预算 evaluation 何时足以支持 benchmark 决策</em>"；<u>Replay 分析</u> SWE-bench · AppWorld · tau-bench 三大公开 agent benchmark task-level 记录；三条硬门槛：<em>decision-preserving · coverage · unresolved limit</em>；严格 0 pp / 5 pp 预算网格：<strong>AppWorld 15% · tau-bench 25% · SWE-bench Verified 90% · SWE-bench Lite 95% 未达标</strong>——不同 benchmark <u>差距 6 倍以上</u>；提出 partial-evaluation 报告<strong>五要素规范</strong>（margin · sampling · coverage · decision · unresolved budget）；<em>H2 benchmark 第十五联：Partial-Evaluation Discipline 联</em>——与同日 harness 报告构成<u>agent 评估科学化双子星</u>（method-side × benchmark-side）· <strong>KDD 2026 Agentic AI Workshop 已收录</strong> · #1</div>
+          <div class="paper-sub">Wei-Jung Huang（单作者）· arXiv 2607.12338 · 2026-07-14 · cs.AI · 219 KB · KDD 2026 Workshop</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-14-1.html">
         <div class="date-badge">
