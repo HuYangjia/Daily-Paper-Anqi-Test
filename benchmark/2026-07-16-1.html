@@ -86,16 +86,16 @@
 </header>
 
 <div class="hero">
-  <div class="date-label">2026 年 7 月 16 日 · Safety Benchmark · <em>KDD 2026 Agentic AI Evaluation and Trustworthiness Workshop 接收</em>；单作者 Wei-Jung Huang 首次系统回答"<strong>agent benchmark 部分预算 evaluation 何时足以支持完整决策</strong>"——不同于昨日 (7-15) 我们收录的<em>初步 replay 分析</em>，本文的<strong>正式版本</strong> 定义 partial budget "足够" 的<u>三条硬门槛</u>：<em>(1) decision-preserving</em>（partial 结论必须与完整 benchmark 一致）· <em>(2) coverage</em>（覆盖必需任务组）· <em>(3) unresolved limit</em>（未决对比不超过阈值）；三大 agent benchmark（SWE-bench · AppWorld · tau-bench）task-level 完整记录 replay 实验；<strong>严格 0 pp threshold on 5 pp budget grid：AppWorld 15% · tau-bench 25% · SWE-bench Verified 90% · SWE-bench Lite 95% 未达标</strong>——不同 benchmark 差距 <u>6 倍以上</u>；<strong>partial-evaluation 报告应显式声明五要素</strong>：outperformance margin · task selection · coverage rule · decision rule · unresolved budget</div>
-  <h1><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong>：把 agent benchmark 从"<u>跑完看谁高</u>" 抬到"<em>partial-budget 报告必须回答五要素</em>"的方法学门槛；三大公开 benchmark <strong>required task fraction 相差 6 倍以上</strong>——<u>15% (AppWorld) · 25% (tau-bench) · 90% (SWE-bench Verified) · Lite 95% 都未达标</u>；<strong>KDD 2026 Agentic AI Workshop 已收录</strong>——为 partial-budget agent evaluation 立下工业级方法学门槛</h1>
-  <div class="en-title">How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis of Public LLM Agent Benchmarks</div>
+  <div class="date-label">2026 年 7 月 16 日 · Safety Benchmark · 首次把 <em>web agent 任务执行</em> 与 <em>Digital Adoption Platform (DAP) 引导文本撰写</em> 统一为单一 <strong>Multimodal Action &amp; Guide (MAG)</strong> 任务；<u>两条 grounding scheme</u>：<em>Set-of-Mark 元素选择</em> + <em>原始像素坐标</em>——完全<strong>基于渲染截图</strong>，不再依赖 DOM / 可访问性树等文本表征；配套<strong>完整 harness</strong>：LLM 辅助标注 + 人工验证 · 训练 · live 环境评估 · action + guide 联合指标；<strong>GRPO + 专家轨迹训练</strong> 使 9B 监督式 agent <u>成功率从 6.9% 翻倍到 13.2%</u> · guide 质量同步提升；<strong>最强前沿模型完成率<u>不足 40%</u></strong>——benchmark 留下巨大改进空间</div>
+  <h1><strong>MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</strong>：首次把"<u>web agent 执行任务</u>" 与"<u>DAP 引导文本撰写</u>" 从两个独立子问题<strong>统一为单一多模态任务</strong>——<em>Set-of-Mark + 像素坐标</em> 双 grounding 完全基于截图；<strong>GRPO + 专家轨迹训练</strong> 使 9B 监督 agent 成功率<em>翻倍 6.9% → 13.2%</em>；<u>前沿模型完成率仍不足 40%</u>——H2 benchmark <strong>多模态融合任务的新范式</strong>；11 图 · 7 表 · 2 算法 · 21 页含附录 · benchmark + harness + checkpoint 承诺开源</h1>
+  <div class="en-title">MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</div>
   <div class="score-bar">
-    <span class="score-chip chip-total">综合 94 分</span>
-    <span class="score-chip chip-rel">相关度 10.0</span>
-    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-total">综合 92 分</span>
+    <span class="score-chip chip-rel">相关度 9.6</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
     <span class="score-chip chip-impact">近期影响力 8.8</span>
     <span class="score-chip chip-novel">新颖性 9.4</span>
-    <span class="score-chip chip-open">开源复现 8.0</span>
+    <span class="score-chip chip-open">开源复现 9.4</span>
   </div>
 </div>
 
@@ -110,22 +110,22 @@
       </thead>
       <tbody>
         <tr class="winner">
-          <td><a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis</a><span class="winner-badge">今日选定</span></td>
-          <td>Partial-Evaluation 方法学派 · 三大 benchmark replay 分析 · required task fraction 6 倍以上差距 · <strong>KDD 2026 Workshop 接收</strong> · partial 报告五要素规范</td>
-          <td>arXiv 2607.12338 · 2026-07-14 v1 · Wei-Jung Huang 单作者 · cs.AI · 219 KB · KDD 2026 Agentic AI Evaluation and Trustworthiness Workshop</td>
-          <td class="score-num">94</td>
+          <td><a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</a><span class="winner-badge">今日选定</span></td>
+          <td>多模态融合任务派 · Web agent action + DAP guide 两问题合一 · Set-of-Mark + 像素坐标双 grounding · GRPO + 专家轨迹训练 · 9B agent 6.9% → 13.2% · 完整 harness 配套</td>
+          <td>arXiv 2607.10079 · v1 2026-07-11 / v2 2026-07-14 · Chengguang Gan / Hanjun Wei / Yunhao Liang / Zhixi Cai / Qinghao Zhang / Shiwen Ni · cs.AI + cs.CL · 3,480 KB · 8 pages main + 21 pages total · 6 作者</td>
+          <td class="score-num">92</td>
         </tr>
         <tr>
-          <td><a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</a></td>
-          <td>Web agent 多模态 benchmark · Set-of-Mark + 像素 grounding · GRPO + 专家轨迹训练 · 9B agent 从 6.9% → 13.2%</td>
-          <td>arXiv 2607.10079 · 2026-07-11 v1 / 07-14 v2 · Chengguang Gan + 团队 · cs.AI</td>
-          <td class="score-num">89</td>
+          <td><em>【已排除】How Many Tasks Are Enough for Agent Benchmark Decisions?</em></td>
+          <td>partial-budget replay 分析 · KDD 2026 workshop · <strong>7-15 benchmark 报告已选取</strong>——本次不重复</td>
+          <td>arXiv 2607.12338 · 已收录于 benchmark/2026-07-15-1.html</td>
+          <td class="score-num">—</td>
         </tr>
         <tr>
           <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark</a></td>
-          <td>电力系统 agent benchmark · 领域专用 · 2026-06-18 首提 / 07-02 v2</td>
+          <td>电力系统专用 agent benchmark · 领域深度 · 2026-06-18 首提 · 07-02 v2</td>
           <td>arXiv 2606.20950 · v1 06-18 / v2 07-02 · cs.AI</td>
-          <td class="score-num">85</td>
+          <td class="score-num">86</td>
         </tr>
         <tr>
           <td><a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">Your AI Travel Agent Would Book You a Bullfight (TAC benchmark)</a></td>
@@ -135,13 +135,13 @@
         </tr>
         <tr>
           <td><a href="https://arxiv.org/abs/2607.13285" target="_blank" rel="noopener">Harness Handbook: Making Evolving Agent Harnesses Readable</a></td>
-          <td>Harness Handbook · Behavior-Guided Progressive Disclosure · benchmark 属性弱（是 harness 方向作品）</td>
+          <td>Harness Handbook · Behavior-Guided Progressive Disclosure · benchmark 属性弱（属 harness 方向）</td>
           <td>arXiv 2607.13285 · 2026-07-14 · Ruhan Wang + 团队 · cs.SE</td>
           <td class="score-num">83</td>
         </tr>
       </tbody>
     </table>
-    <p style="margin-top:0.6rem;font-size:0.85rem;color:#666"><em>选定理由</em>：本文是 <strong>7 月唯一被 KDD 2026 Workshop 接收的 agent benchmark 方法学论文</strong>——聚焦"部分预算 evaluation" 的科学化，比其他候选（新 benchmark 提出 / 领域专用 benchmark）都<u>更方法学化 · 更普适</u>；实证反差最尖锐——AppWorld 15% vs SWE-bench Verified 90% 相差 <strong>6 倍以上</strong>——将成为 2026 H2 agent benchmark 讨论的标志性数字；工业界立即可用（所有 agent 部署商都在做部分预算 A/B）。</p>
+    <p style="margin-top:0.6rem;font-size:0.85rem;color:#666"><em>选定理由</em>：7-15 报告已经收录 Huang 的 partial-budget 分析（2607.12338），本次严格遵循 FOR_AGENT.md "未在此前报告中出现过" 规范，改选未使用过的 MAG。MAG 的独特价值在于<strong>把 web agent 与 DAP guide 两个独立子任务首次统一</strong>，且提供<em>完整 harness 生态</em>（标注 / 训练 / 评估 / 联合指标）——是<u>2026 H2 benchmark 走向多模态融合任务</u> 的代表作。相较其他候选（Power Systems 领域 · TAC 伦理 · Handbook harness），MAG 更普适、更工业相关、更完整开源。</p>
   </div>
 
   <!-- 基本信息 -->
@@ -150,47 +150,47 @@
     <div class="meta-grid">
       <div class="meta-item">
         <label>标题（原）</label>
-        <span>How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis of Public LLM Agent Benchmarks</span>
+        <span>MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</span>
       </div>
       <div class="meta-item">
         <label>标题（译）</label>
-        <span>多少任务才足以支持 Agent Benchmark 决策？——公开 LLM Agent Benchmark 的 Replay 分析</span>
+        <span>MAG：多模态动作与引导生成的 Web Agent Benchmark 与 Harness</span>
       </div>
       <div class="meta-item">
         <label>作者</label>
-        <span>Wei-Jung Huang（单作者）</span>
+        <span>Chengguang Gan · Hanjun Wei · Yunhao Liang · Zhixi Cai · Qinghao Zhang · Shiwen Ni</span>
       </div>
       <div class="meta-item">
-        <label>会议接收</label>
-        <span><strong>KDD 2026 Workshop：Agentic AI Evaluation and Trustworthiness</strong>——KDD 顶会 workshop 独立评审通过；<u>agent evaluation 方法学</u> 已成为 2026 KDD 会议主题周边独立议程</span>
+        <label>研究定位</label>
+        <span>与 <strong>Digital Adoption Platform (DAP)</strong>（如 WalkMe, Whatfix, Appcues 等企业级 SaaS onboarding 工具）产业需求直接对齐——把<em>用户如何操作 SaaS</em> 从 GUI 覆盖层提升到 <u>agent 自动生成完成任务序列 + 引导文本</u>——市场立即可用</span>
       </div>
       <div class="meta-item">
         <label>发布平台</label>
-        <span>arXiv 预印本 · <strong>2026-07-14 v1</strong> 首版 · 04:36:41 UTC</span>
+        <span>arXiv 预印本 · <strong>2026-07-11 v1 → 2026-07-14 v2</strong>（3 天内快速更新）</span>
       </div>
       <div class="meta-item">
         <label>arXiv 链接</label>
-        <a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arxiv.org/abs/2607.12338</a>
+        <a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">arxiv.org/abs/2607.10079</a>
       </div>
       <div class="meta-item">
         <label>PDF</label>
-        <a href="https://arxiv.org/pdf/2607.12338" target="_blank" rel="noopener">arxiv.org/pdf/2607.12338</a>
+        <a href="https://arxiv.org/pdf/2607.10079" target="_blank" rel="noopener">arxiv.org/pdf/2607.10079</a>
       </div>
       <div class="meta-item">
         <label>HTML</label>
-        <a href="https://arxiv.org/html/2607.12338v1" target="_blank" rel="noopener">arxiv.org/html/2607.12338v1</a>
+        <a href="https://arxiv.org/html/2607.10079v2" target="_blank" rel="noopener">arxiv.org/html/2607.10079v2</a>
       </div>
       <div class="meta-item">
         <label>DOI</label>
-        <a href="https://doi.org/10.48550/arXiv.2607.12338" target="_blank" rel="noopener">10.48550/arXiv.2607.12338</a>
+        <a href="https://doi.org/10.48550/arXiv.2607.10079" target="_blank" rel="noopener">10.48550/arXiv.2607.10079</a>
       </div>
       <div class="meta-item">
         <label>主题分类</label>
-        <span>cs.AI（Artificial Intelligence）</span>
+        <span>cs.AI（主）· cs.CL</span>
       </div>
       <div class="meta-item">
         <label>规模</label>
-        <span>219 KB · v1 首版 · 单作者精读</span>
+        <span>3,480 KB · v2 · 8 pages main + 21 pages total · 11 figures / 7 tables / 2 algorithms · 6 作者</span>
       </div>
     </div>
   </div>
@@ -199,61 +199,43 @@
   <div class="card">
     <div class="card-title">一句话核心贡献</div>
     <div class="highlight-box">
-      为 agent benchmark 的"部分预算 evaluation" 建立<u>三条硬门槛 + 五要素报告规范</u>——replay 三大公开 benchmark 揭示 required task fraction <strong>差 6 倍以上</strong>（15% vs 90%）；KDD 2026 Workshop 认可。
+      首次把 <em>web agent 任务执行</em> 与 <em>DAP 引导文本撰写</em> 两个独立子问题<u>统一为单一多模态任务</u>——<strong>纯截图 grounding + Set-of-Mark / 像素坐标双方案</strong>；GRPO + 专家轨迹训练使 9B agent 成功率<strong>翻倍（6.9% → 13.2%）</strong>；前沿模型完成率<em>&lt; 40%</em>——benchmark 留下巨大空间。
     </div>
   </div>
 
   <!-- 摘要翻译 -->
   <div class="card">
     <div class="card-title">摘要翻译（忠实原文）</div>
-    <p>Agent benchmark 通常在<strong>所有任务跑完之后</strong> 比较两个 agent，但<u>高成本评估</u> 使得<em>部分执行</em>（partial runs）成为常见诱惑。然而<strong>任务比例本身</strong>并<u>不足以</u>说明 partial run 是否支持与完整 benchmark 相同的 pairwise 结论。我们通过 replay <strong>SWE-bench · AppWorld · tau-bench</strong> 三大公开 benchmark 已完成的<em>task-level 记录</em>研究这一问题。</p>
-    <p>Partial budget 只有<strong>满足以下三个条件</strong>才算"足够"：<em>(1)</em> 支持完整 benchmark 的<strong>决策结论</strong>（decision-preserving）· <em>(2)</em> 覆盖<strong>必需的任务组</strong>（coverage requirement）· <em>(3)</em> 未决 pairwise 对比不超过<strong>目标比例</strong>（unresolved limit）。</p>
-    <p>Required task fraction 变化<strong>剧烈</strong>。在<strong>严格 0 pp 阈值 + 5 pp 预算网格</strong> 下：<em>AppWorld</em> 首次达标 <strong>15%</strong>、<em>tau-bench</em> 达标 <strong>25%</strong>、<em>SWE-bench Verified</em> 达标 <strong>90%</strong>；<em>SWE-bench Lite</em> 在<strong>主 coverage rule 下 95% 仍未达标</strong>。<u>不同 benchmark 之间的差距超过 6 倍</u>——同样"部分评估" 在 AppWorld 上跑 15% 就够，在 SWE-bench Lite 上跑 95% 也不够。</p>
-    <p><strong>Partial-evaluation 报告应<u>明确声明</u> 五要素</strong>：<em>(1)</em> 一个 agent 必须比另一个高多少（outperformance margin）· <em>(2)</em> 如何选择任务（task selection）· <em>(3)</em> 采用什么覆盖规则（coverage rule）· <em>(4)</em> 采用什么决策规则（decision rule）· <em>(5)</em> 可以留下多少未决对比（unresolved comparisons）。这五要素<u>合成 agent benchmark partial-budget 报告的最低方法学门槛</u>。</p>
+    <p><strong>Digital Adoption Platform (DAP)</strong> 是 web 系统上广泛使用的<em>嵌入式覆盖层</em>——引导用户完成页面内操作、帮助他们快速上手陌生界面。然而完成真实任务<u>很少只是在单一页面上点几下按钮</u>——它需要在<em>不断变化的页面状态</em> 上展开一系列动作。</p>
+    <p>此前的研究还<strong>把 web agent 自动动作</strong> 与<strong>引导文本生成</strong> 视为<em>两个独立问题</em>，且大多数工作输入模型的是 <u>DOM 或可访问性树等文本页面表征</u>，<strong>而不是人类实际操作的<em>渲染屏幕</em></strong>。</p>
+    <p>本文引入 <strong>MAG</strong>——首个把任务执行与引导撰写<u>统一为单一 Multimodal Action and Guide 任务</u> 的 benchmark，配套<strong>两种截图 grounding 方案</strong>：<em>Set-of-Mark 元素选择</em> 和<em>原始像素坐标</em>。我们进一步构建了该复合任务的<strong>完整 harness</strong>——覆盖 <em>LLM 辅助标注 + 人工验证 · 训练 · live 环境评估 · action + guide 联合指标</em>。</p>
+    <p>用该 harness 我们评估了<em>前沿 API 模型</em> 与<em>开源多模态模型</em>，并给出详细分析。最后我们设计了一种<strong>GRPO 训练方法</strong>——<u>专家轨迹增强</u>——使 9B 监督式 agent 的成功率<strong>几乎翻倍</strong>（从 6.9% 提升到 <strong>13.2%</strong>），同时提升引导质量。<u>即使最强模型完成任务<strong>不到 40%</strong></u>——为未来研究留下充分空间。</p>
   </div>
 
   <!-- 核心内容解读 -->
   <div class="card">
     <div class="card-title">核心内容解读（约 620 字）</div>
-    <p><strong>问题背景</strong>：过去两年 agent benchmark 走向"高成本 evaluation" 的深水区——AppWorld 每 task 数分钟工具交互 · SWE-bench Verified 每 task 数十分钟 IDE 交互 · tau-bench 双方 LLM 对话。一次完整 benchmark 评估动辄消耗<em>几万美元 API 调用 + 数天时间</em>——工业界普遍做法是<u>只跑部分任务就下结论</u>："我们在 AppWorld 30 个任务上跑了，比 GPT-4 高 5 pp"。这类 partial-budget 报告目前<strong>缺乏方法学门槛</strong>——什么算够？作者提出：<u>任务比例本身不足以决定</u>，必须满足三个条件才算"partial 足以支持完整结论"：<em>(1)</em> partial 决策与完整 benchmark 一致；<em>(2)</em> 覆盖必需任务组（避免只挑简单任务）；<em>(3)</em> 未决 pairwise 对比数量在阈值内。这三条件构成本文核心方法学贡献。</p>
-    <p><strong>方法：Replay 三大 agent benchmark</strong>。作者利用 <em>SWE-bench · AppWorld · tau-bench</em> 已公开的 task-level 完整记录（每个 task 的每个 agent 是否成功）进行<u>模拟部分预算</u>——对于任意 partial budget（5%, 10%, ..., 95%）与任意任务采样方式，可以精确 replay 出"如果我们只跑这个 partial 预算，结论会与完整 benchmark 一致吗？"。作者构造 <strong>5 pp 网格上 0-95%</strong> 的完整扫描，报告首次达到"三条件全部满足" 的 partial fraction。评估的<u>pairwise 对比对象</u> 是 benchmark 中所有 agent 两两比较，因此是<em>决策一致性</em> 而不是<em>分数一致性</em>——更贴近真实场景（工程师问的是"A 是否好于 B"）。</p>
-    <p><strong>三大关键发现</strong>：<em>(1) benchmark 之间差距巨大</em>——<strong>AppWorld 只需 15%</strong>、<strong>tau-bench 需 25%</strong>、<strong>SWE-bench Verified 需 90%</strong>、<strong>SWE-bench Lite 95% 都不够</strong>——一个 benchmark 需要的 partial 比例可能是另一个 benchmark 的 <u>6 倍以上</u>；<em>(2) 差距背后的机制</em>：AppWorld 与 tau-bench 的<u>任务难度分布均匀</u>——sample 15% 就能刻画 pairwise 决策；SWE-bench Verified 与 Lite 的<u>难度分布 heavy-tailed</u>——少数难任务承担了大部分区分度，缺任何一个都导致决策翻转；<em>(3) SWE-bench Lite 95% 未达标</em>——甚至跑到 95% 都不能保证与完整一致的决策——这一发现<strong>颠覆</strong> 了工业界"95% 就是几乎跑完" 的默认预设，说明该 benchmark <u>不适合部分预算模式</u>——只能全跑或不跑。</p>
-    <p><strong>Partial 报告五要素规范</strong>：作者进一步提出所有 partial-evaluation 报告应显式声明五个字段：<em>margin</em>（A 必须高于 B 多少）· <em>selection</em>（如何采样任务）· <em>coverage</em>（覆盖规则）· <em>decision</em>（决策规则）· <em>unresolved</em>（可留未决对比上限）。这五要素成为 <strong>KDD 2026 agent benchmark 方法学门槛</strong>——未按此规范的 partial 报告将被视为不可复现。<u>H2 benchmark 方法学第十五联：Partial-Evaluation Discipline 联</u>——从"跑全部" 或"跑一部分" 的二选一抬到"跑一部分，但必须说明五要素"。</p>
+    <p><strong>问题背景</strong>：过去两年 web agent 与 DAP 是<em>两条独立技术路线</em>——web agent 学界（WebArena · WebShop · SeeAct）研究"agent 如何自动完成 web 任务"，DAP 工业界（WalkMe · Whatfix · Appcues 每年 $10B+ 市场）研究"如何在 web 页面上叠加 onboarding 引导" ——两条路线的评估集也几乎不重叠。作者指出这是一个<u>方法学错位</u>：DAP 引导文本本质上是 web agent 完成任务时留下的"人类可读注释"，二者应<strong>统一为同一任务</strong>——<em>agent 完成任务 + 同时生成引导</em>，因为二者在部署时是不可分割的。这一统一带来的 benchmark 是 <strong>MAG (Multimodal Action &amp; Guide)</strong>。</p>
+    <p><strong>方法学突破一：完全基于截图的 grounding</strong>。过去 web agent 主流做法是把 DOM 或 accessibility tree 喂给 LLM——文本化的页面表征简单但<u>与人类操作方式脱节</u>。MAG 反其道而行——完全<strong>只给渲染截图</strong>——设计两种 grounding scheme：<em>(1) Set-of-Mark</em>：预先在截图上标记可交互元素编号，agent 输出"点第 12 号" · <em>(2) 像素坐标</em>：agent 直接输出 (x, y) 坐标点击。两方案覆盖 web agent 领域两大 grounding 派系（SoM 派 vs Coordinate 派），提供公平对比平台。<strong>方法学突破二：完整 harness 生态</strong>——不仅是一个静态数据集，而是包含<em>LLM 辅助标注 + 人工验证</em>（保证 ground truth 可信）、<em>训练管道</em>（专家轨迹格式、GRPO 集成）、<em>live 环境 evaluation</em>（真实浏览器执行）、<em>联合指标</em>（action 成功率 + guide 质量分数）——这是 <u>benchmark + harness 一体化</u> 的完整生态。</p>
+    <p><strong>方法学突破三：GRPO + 专家轨迹训练</strong>。作者不满足于"提供 benchmark 让别人跑分"，主动示范如何训练——采用 <em>Group Relative Policy Optimization (GRPO, DeepSeek 系列 RL 方法)</em> + <u>专家轨迹增强</u>——<strong>9B 监督基线成功率 6.9% → GRPO 训练后 13.2%（几乎翻倍）</strong>——同时 guide 质量提升。这一实证证明 MAG 不仅是<em>评估工具</em>，还是<em>训练目标</em>——是标准的 benchmark-as-training-signal 范式。</p>
+    <p><strong>关键限制</strong>：<u>即便最强前沿模型完成率仍不足 40%</u>——说明 MAG 的<em>难度上限</em> 远未被触及。这是一个健康的 benchmark 特征——<strong>饱和头顶留白</strong>，为未来 2-3 年的研究提供改进空间。<strong>H2 benchmark 谱系新增第十六联：Task Unification 联（任务统一联）</strong>——把之前"agent action-only" 与"guide-only" 两个独立评估合成为<em>联合评估</em>；哲学突破：<u>agent benchmark 应该模拟部署场景中<strong>不可分割的复合任务</strong></u>，而不是把它们拆成学术子问题分别评估。</p>
   </div>
 
-  <!-- 三大 benchmark required fraction -->
+  <!-- MAG 三大方法学创新 -->
   <div class="card">
-    <div class="card-title">三大公开 Agent Benchmark 的 required task fraction · 5 pp 网格 · 0 pp threshold</div>
+    <div class="card-title">MAG 三大方法学创新 · 与既有 web agent benchmark 对比</div>
     <table class="data-table">
       <thead>
-        <tr><th>Benchmark</th><th>首次达标 partial fraction</th><th>与完整 benchmark 决策相符</th><th>解读</th></tr>
+        <tr><th>维度</th><th>既有做法</th><th>MAG 做法</th><th>创新意义</th></tr>
       </thead>
       <tbody>
-        <tr class="hl"><td><strong>AppWorld</strong></td><td><strong>15%</strong></td><td>三条件满足</td><td>难度分布最均匀 —— partial-budget A/B 首选</td></tr>
-        <tr><td>tau-bench</td><td>25%</td><td>三条件满足</td><td>难度分布较均匀 —— partial-budget 可接受</td></tr>
-        <tr><td>SWE-bench Verified</td><td><strong>90%</strong></td><td>三条件满足</td><td>heavy-tailed 难度——partial-budget 极限接近完整</td></tr>
-        <tr><td><strong>SWE-bench Lite</strong></td><td><strong>&gt; 95%</strong></td><td><em>主 coverage 规则下 95% 仍未达标</em></td><td>不适合 partial 模式——只能全跑或不跑</td></tr>
+        <tr><td>任务范围</td><td>Action-only 或 Guide-only 分开评估</td><td><strong>Action + Guide 统一为单任务</strong></td><td>符合真实 DAP 部署——二者不可分割</td></tr>
+        <tr><td>Grounding</td><td>DOM / accessibility tree 文本</td><td><strong>纯截图 + Set-of-Mark / 像素坐标</strong></td><td>与人类操作方式一致——不再靠 web 底层 API</td></tr>
+        <tr class="hl"><td><strong>评估生态</strong></td><td>静态数据集 + 事后 offline 评估</td><td><strong>Live 环境 + LLM 标注 + 人工验证 + 训练管道 + 联合指标</strong></td><td>Benchmark + Harness 一体化——研究者拿来即用</td></tr>
+        <tr><td>训练示范</td><td>Benchmark 只做评估</td><td><strong>GRPO + 专家轨迹训练管道公开</strong></td><td>Benchmark 兼作 training signal——学术加工业双落地</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:0.6rem;font-size:0.88rem"><em>核心洞察</em>：<u>partial-budget 可行性是 benchmark 的<strong>结构属性</strong></u>，不是使用者的选择；同一 partial fraction 在不同 benchmark 上有本质不同含义——15% AppWorld 报告是"决策级充分"，15% SWE-bench Lite 报告是"决策级无意义"。<strong>agent benchmark 设计者今后应<u>显式报告 benchmark 的 partial-budget 可行性</u></strong>，让使用者知道"这个 benchmark 是否可以部分跑"。</p>
-  </div>
-
-  <!-- 五要素规范 -->
-  <div class="card">
-    <div class="card-title">Partial-Evaluation 报告五要素规范 · agent benchmark 方法学新门槛</div>
-    <table class="data-table">
-      <thead>
-        <tr><th>要素</th><th>字段名</th><th>必须回答</th><th>缺失后果</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>1 · Margin</td><td>Outperformance margin</td><td>A 必须比 B 高多少才算"胜出"？</td><td>无法解释统计显著性 · 无法比较不同 partial 报告</td></tr>
-        <tr><td>2 · Selection</td><td>Task selection strategy</td><td>如何采样任务：random / stratified / adversarial?</td><td>存在挑简单任务的<u>樱桃采摘</u> 风险</td></tr>
-        <tr><td>3 · Coverage</td><td>Coverage rule</td><td>必须覆盖哪些任务组 / 分类？</td><td>缺覆盖导致 domain generalization 失效</td></tr>
-        <tr><td>4 · Decision</td><td>Decision rule</td><td>基于什么规则宣布 A 胜出？</td><td>随意选择导致 selective reporting</td></tr>
-        <tr class="hl"><td><strong>5 · Unresolved</strong></td><td>Unresolved-comparison budget</td><td>可以留下多少 pairwise 未决对比？</td><td>关键新概念——承认 partial 无法解决所有对比是<u>方法学诚实</u></td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:0.6rem;font-size:0.88rem"><em>方法学贡献</em>：<strong>Unresolved-comparison budget 是本文最新颖的概念</strong>——传统 evaluation 假设所有对比都能决出胜负，本文明确承认"partial-budget 下部分对比留白" 是合理的，只要留白比例在预算内。这与 statistical inference 里"接受未拒绝零假设" 精神一致——<u>不能强行下结论就是方法学诚实</u>。</p>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><em>核心观察</em>：MAG 的三大突破<u>合起来</u> 才是它真正的价值——单一维度突破（如"只做截图 grounding"）过去也有工作做过（如 SeeAct, WebGUM, GUI-Owl），<strong>但把"任务统一 + 纯截图 grounding + 一体化 harness + 训练示范" 四件事同时做好</strong>——这才是 <u>MAG 作为 2026 H2 benchmark 代表作</u> 的原因。</p>
   </div>
 
   <!-- 关键数据 -->
@@ -261,15 +243,15 @@
     <div class="card-title">关键实验数据点</div>
     <table class="data-table">
       <thead>
-        <tr><th>发现</th><th>数据</th><th>解读</th></tr>
+        <tr><th>维度</th><th>数据</th><th>解读</th></tr>
       </thead>
       <tbody>
-        <tr class="hl"><td>Benchmark 之间差距最触目</td><td><strong>AppWorld 15% vs SWE-bench Verified 90% —— 相差 6 倍</strong></td><td>同样 partial-budget 策略在不同 benchmark 上意义截然不同——benchmark 层面的<u>partial-budget 可行性</u> 应作为公开属性</td></tr>
-        <tr><td>SWE-bench Lite 未达标</td><td>主 coverage 规则下<strong>95% 仍未达标</strong></td><td>颠覆"跑到 95% 就是几乎跑完"的工业界预设——Lite 不适合 partial 模式</td></tr>
-        <tr><td>tau-bench 中位数</td><td><strong>25% 即可达标</strong></td><td>多轮对话式 benchmark 的 partial-budget 表现介于 AppWorld 与 SWE-bench 之间 · 25% budget 足够常规 A/B 报告</td></tr>
-        <tr><td>方法学要素</td><td><strong>5 要素规范</strong>：margin · selection · coverage · decision · unresolved</td><td>成为 KDD 2026 workshop 的官方推荐——未来 partial-budget 报告未按此规范将被视为不可复现</td></tr>
-        <tr><td>Unresolved budget 概念</td><td>承认"partial 下部分对比留白" 是合理</td><td>本文最新颖概念——把 evaluation 从"必须决胜负" 松绑为"允许方法学诚实的未决"</td></tr>
-        <tr><td>实验设计</td><td>5 pp 网格 · 严格 0 pp threshold · 4 个 benchmark 变体</td><td>覆盖度充足——足以支持 KDD workshop 评审通过</td></tr>
+        <tr class="hl"><td>GRPO 训练翻倍效果</td><td><strong>9B agent 成功率 6.9% → 13.2%</strong>（几乎翻倍）· guide 质量同步提升</td><td>验证 MAG 不仅是评估工具，还是 <u>可训练 signal</u> —— training-benchmark 双重角色</td></tr>
+        <tr><td>前沿模型上限</td><td>最强前沿模型完成率<strong>不足 40%</strong></td><td>Benchmark 未饱和—— 未来 2-3 年仍有充足研究空间；健康的头顶留白</td></tr>
+        <tr><td>Grounding 双方案</td><td><strong>Set-of-Mark + 像素坐标</strong>——覆盖 web agent 两大 grounding 派</td><td>提供公平对比平台——SoM 派 vs Coordinate 派可在同 benchmark 直接决斗</td></tr>
+        <tr><td>Harness 组件覆盖</td><td>标注 + 训练 + live 评估 + 联合指标 <strong>四大生态组件</strong></td><td>Benchmark-as-a-Service —— 研究者不再需要自建评估管道</td></tr>
+        <tr><td>规模</td><td>21 pages 含附录 · 11 figures · 7 tables · 2 algorithms · 3.48 MB v2</td><td>信息密度高——足够作为 MAG 使用手册；v1 → v2 3 天更新说明积极迭代</td></tr>
+        <tr><td>开源承诺</td><td>Benchmark + Harness + Model Checkpoints "to be released"</td><td>三件套完整开源——为社区 follow-up 提供最低门槛</td></tr>
       </tbody>
     </table>
   </div>
@@ -277,12 +259,12 @@
   <!-- 关键引用 -->
   <div class="card">
     <div class="card-title">关键引用与思想脉络</div>
-    <div class="ref-item"><strong>SWE-bench</strong>（Jimenez et al. · Princeton NLP · 2023）· <a href="https://www.swebench.com/" target="_blank" rel="noopener">swebench.com</a> · <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a> —— 本文<em>replay 对象之一</em>；Verified + Lite 两个变体都被评估；Verified 需要 90% partial budget · Lite 95% 仍不足——都是难度分布 heavy-tailed 的经典 benchmark。</div>
-    <div class="ref-item"><strong>AppWorld</strong>（Trivedi et al. · Stony Brook · 2024）· <a href="https://appworld.dev/" target="_blank" rel="noopener">appworld.dev</a> · <a href="https://arxiv.org/abs/2407.18901" target="_blank" rel="noopener">arxiv.org/abs/2407.18901</a> —— <em>replay 对象之二</em>；难度分布最均匀——只需 15% partial budget 即可支持完整决策；<u>partial-budget A/B 首选 benchmark</u>。</div>
-    <div class="ref-item"><strong>tau-bench</strong>（Yao et al. · Sierra · 2024）· <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a> —— <em>replay 对象之三</em>；双 LLM 对话式 benchmark；partial 25% 即可达标——多轮对话结构提供了<u>相对稳定的信号密度</u>。</div>
-    <div class="ref-item"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>（7-15 我们的 Harness 报告，2607.12227）· <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a> —— UW + AI2 的<em>harness 层评估协议批判</em>；与本文构成 <strong>"agent evaluation 方法学双子星"</strong>——一位关注 harness 层公平（匹配预算 + held-out），一位关注 benchmark 层公平（partial-budget 五要素）；两篇合成 2026 H2 agent evaluation 走向科学化的关键突破。</div>
-    <div class="ref-item"><strong>Partially Correlated Verifier Cascades in LLM Harnesses</strong>（今日 Harness 报告，2607.13918）· <a href="https://arxiv.org/abs/2607.13918" target="_blank" rel="noopener">arxiv.org/abs/2607.13918</a> —— <em>Beta-Binomial NPMLE 可靠性校准</em>；与本文互补：本文关注 partial-budget 任务数量维度，Han 关注 partial-verdict 相关性维度；两者合成"agent evaluation 部分预算的两大维度：任务数 × 裁判次数"。</div>
-    <div class="ref-item"><strong>Operational Reframing and Approval-Framed Delegation</strong>（今日 Agent Safety 报告，2607.07097）· <a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arxiv.org/abs/2607.07097</a> —— Liu et al. 的 factorial 5 条件对照 · benchmark 应内置 factorial 条件；与本文合成 <strong>agent benchmark 的两大方法学升级</strong>：预算维度（本文） + 机制维度（Liu 等）。</div>
+    <div class="ref-item"><strong>Set-of-Mark (SoM) Grounding for GUI Agents</strong>（Yang et al., 2023-2024）· <a href="https://arxiv.org/abs/2310.11441" target="_blank" rel="noopener">arxiv.org/abs/2310.11441</a> —— SoM grounding 概念起源；MAG 把 SoM 作为两大 grounding 方案之一 · <u>agent 输出"点第 12 号" 而非坐标</u>——本文进一步与像素坐标做公平对比。</div>
+    <div class="ref-item"><strong>GRPO (Group Relative Policy Optimization)</strong>（DeepSeek 系列 RL）· <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv.org/abs/2402.03300</a> —— MAG 训练所用 RL 方法；GRPO 已在 DeepSeek-Math / DeepSeek-Coder 中验证有效性 · 本文把它<u>迁移到多模态 web agent</u> 场景 · 6.9% → 13.2% 是 GRPO 首次在 web agent action + guide 联合任务的实证。</div>
+    <div class="ref-item"><strong>WebArena / WebShop / SeeAct</strong>（既有 web agent benchmark 谱系）· <a href="https://arxiv.org/abs/2307.13854" target="_blank" rel="noopener">WebArena</a> · <a href="https://arxiv.org/abs/2207.01206" target="_blank" rel="noopener">WebShop</a> —— MAG 的<em>前作</em>；均只关注 action-only 且倾向 DOM grounding · MAG 首次把 <u>guide 生成</u> 与<u>纯截图 grounding</u> 一并纳入。</div>
+    <div class="ref-item"><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong>（7-15 我们的 Benchmark 报告，2607.12338）· <a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arxiv.org/abs/2607.12338</a> —— Wei-Jung Huang 的 partial-budget 方法学；<u>MAG 应作为 partial-budget replay 分析的下一个候选</u>——多模态融合任务的 required task fraction 可能与 SWE-bench 类似 heavy-tailed（因为难度分布可能不均）。</div>
+    <div class="ref-item"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>（7-15 我们的 Harness 报告，2607.12227）· <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a> —— UW + AI2 匹配预算 + held-out 批判；MAG 的 harness 已内置<u>训练与评估管道</u>，天然支持 held-out 泛化测试——是 UW/AI2 方法学门槛的<em>正面示例</em>。</div>
+    <div class="ref-item"><strong>Partially Correlated Verifier Cascades</strong>（今日 Harness 报告，2607.13918）· <a href="https://arxiv.org/abs/2607.13918" target="_blank" rel="noopener">arxiv.org/abs/2607.13918</a> —— Beta-Binomial NPMLE 可靠性理论；MAG 的联合指标 (action + guide) 可能存在<u>裁判间相关性</u>——本文的理论可用于校准 MAG 联合评分的部分相关性。</div>
   </div>
 
   <!-- 三方向启发 -->
@@ -291,15 +273,15 @@
     <div class="inspiration-grid">
       <div class="inspiration-item bench">
         <div class="ins-label">对 Benchmark</div>
-        <p><strong>H2 benchmark 方法学再拓展一格 · 第十五联：Partial-Evaluation Discipline 联（部分预算纪律联）</strong>——物品侧信息量（7-02 IRT）+ 搜索侧覆盖率（7-03 BOA）+ 评委侧稳定性（7-03 Necessary but Not Sufficient）+ 构造侧代表性（7-03 TASTE）+ 配置侧完整性（新）+ 价值观侧对齐（新）+ 本文 <em>预算侧纪律</em>。方法学立刻可复用：<em>(1) Benchmark 应公开 partial-budget 可行性</em>——所有 agent benchmark 应报告 <u>required task fraction @ 0 pp / 5 pp / 10 pp threshold</u>——像 dataset card 一样成为标配；<em>(2) partial 报告五要素强制字段</em>——KDD 2026 workshop 已经把它变成方法学门槛，未来 NeurIPS / ICML / ICLR benchmark track 会 follow；<em>(3) benchmark 分类</em>——<u>partial-friendly (AppWorld 类)</u> vs <u>partial-hostile (SWE-bench Lite 类)</u>——工程师可根据 A/B 需求选择合适 benchmark；<em>(4) Unresolved budget 是新一等公民</em>——允许"部分未决" 是方法学诚实；<em>(5) H2 benchmark 谱系第十六联预测</em>：<em>Cost-adjusted Score 联</em>（把 partial budget 与美元 / GPU-hour 挂钩）—— 与 Writer AI 7-09 harness 经济学层相呼应。<strong>下一步预测</strong>：<u>SWE-bench 团队会官方发布 partial-budget 可行性数据</u>——因为 Lite 95% 未达标这一发现会引发大量 partial-budget 报告的方法学质疑。</p>
+        <p><strong>H2 benchmark 谱系再拓展一格 · 第十六联：Task Unification 联（任务统一联）</strong>——七联图（物品 / 搜索 / 评委 / 构造 / 配置 / 价值观 / 部分预算纪律）+ 本文 <em>任务统一联</em>。方法学立刻可复用：<em>(1) 独立子任务应先检查"部署时是否可分割"</em>——不可分割的必须统一评估（web action + guide 是典型不可分割例）；<em>(2) 多模态融合任务的 grounding 双方案</em>——为不同派系提供公平对比平台（避免"SoM 只跑 SoM benchmark、Coordinate 只跑 Coordinate benchmark"的孤立比较）；<em>(3) Benchmark + Harness 一体化生态</em>——不再提供单纯静态数据集，而是包含标注 / 训练 / live 评估 / 联合指标四件套；<em>(4) 训练示范包在 benchmark 内</em>——MAG 主动公开 GRPO + 专家轨迹训练管道，让 benchmark 兼作 training signal；<em>(5) H2 benchmark 谱系第十七联预测</em>：<em>Live Environment Coupling 联</em>——把 live 浏览器 / OS / device 环境作为 benchmark 的一等公民，取代静态记录的模拟评估。<strong>下一步预测</strong>：<u>WebArena / SeeAct / GUI-Owl / OSWorld 团队会 follow MAG 加入 guide 生成子任务</u>，因为 DAP 市场直接消费 —— 学术 benchmark 走向<em>产业融合</em> 的关键案例。</p>
       </div>
       <div class="inspiration-item harness">
         <div class="ins-label">对 Harness Engineering</div>
-        <p>本文的"<strong>部分预算方法学</strong>" 对 harness engineering 有<u>直接迁移价值</u>：<em>(1) harness 的 verifier gate 数量选择</em>——不同任务 required gate count 差 6 倍以上（类比不同 benchmark required task fraction 差 6 倍以上），harness 设计者应<u>按任务类型自适应</u> 而非一律"多加 gate"；<em>(2) harness 层五要素规范</em>——本文的 5 要素可迁移为 <em>harness partial-evaluation 报告规范</em>：margin · selection · coverage · decision · unresolved；<em>(3) 与 <strong>今日 Harness 报告 Partially Correlated Verifier Cascades (Han, 2607.13918)</strong> 呼应</em>——Han 提供 verifier 层部分预算的相关性理论，本文提供 task 层部分预算的实证；两者合成 <u>agent evaluation "部分预算" 完整理论 + 实证栈</u>；<em>(4) harness 应自动生成 partial-budget audit</em>——把 5 要素报告嵌入 harness output 而非事后补充。</p>
+        <p>MAG 是 <strong>benchmark 与 harness 一体化的典范</strong>——直接为 harness engineering 提供以下启发：<em>(1) harness 应主动包含 evaluation 管道</em>——不能只做 agent 执行，还要负责结果收集、联合指标、live 环境验证；<em>(2) 与今日 Harness 报告 <strong>Partially Correlated Verifier Cascades (Han, 2607.13918)</strong> 呼应</em>——MAG 的联合指标（action + guide 双裁判）天然存在相关性——Han 的 Beta-Binomial NPMLE 可用于校准；<em>(3) harness 应内置 GRPO 训练管道</em>——benchmark-as-signal 需要 harness 承担 RL 训练接口；<em>(4) H2 harness 谱系第十四层预测</em>：<em>Benchmark-Integrated 层</em>——把 benchmark 的评估管道直接嵌入 harness · 从"harness 输出结果 → benchmark 计分" 抬到"harness 就是 benchmark 的执行时"。</p>
       </div>
       <div class="inspiration-item safety">
         <div class="ins-label">对 Agent Safety</div>
-        <p>本文"<strong>partial-budget 纪律</strong>" 对 agent safety 评估的<u>直接借鉴</u>：<em>(1) safety benchmark 也是 heavy-tailed</em>——AIR-Bench · HarmBench 都存在<u>少数难攻击类别承担主要区分度</u>——safety 评估的 required partial fraction 可能<em>比 SWE-bench Lite 还高</em>；<em>(2) safety partial 报告必须声明五要素</em>——尤其 <u>coverage rule</u>——不能只挑简单攻击类别，需要覆盖 red-team category 全谱；<em>(3) 与 <strong>今日 Agent Safety 报告 Operational Reframing (Liu et al., 2607.07097)</strong> 呼应</em>——Liu 提出 factorial 5 条件对照 · 本文提出 partial-budget 5 要素；两者合成 <u>agent safety 评估的双 5-要素方法学门槛</u>——机制维度 5 条件 × 预算维度 5 要素；<em>(4) safety 应报告 unresolved comparisons</em>——承认"某些 attack-defender 对比在 partial budget 下无法决出" 是方法学诚实；<em>(5) H2 agent safety 谱系第十五派预测</em>：<em>Budget-Discipline 派</em>——把 Huang 的 partial-budget 纪律直接迁移到 safety benchmark 世界。</p>
+        <p>MAG 的方法学对 agent safety benchmark 有<u>直接迁移价值</u>：<em>(1) safety 与 capability 应联合评估</em>——像 MAG 把 action 与 guide 统一那样，safety benchmark 应把<u>capability + safety</u> 联合评估（今日 <strong>Operational Reframing (Liu et al., 2607.07097)</strong> 已经启动 factorial 对照，MAG 提供联合指标模板）；<em>(2) live 环境部署</em>——safety 评估不能只在静态 prompt 上跑，需要 MAG 式的 live 环境 harness；<em>(3) H2 agent safety 第十六派预测</em>：<em>Live-Environment Safety 派</em>——safety 评估进入真实浏览器 / OS / device——与今日 agent safety 报告的<u>机制分离方法学</u> 合力构建<em>agent safety 在实际部署环境中的可信评估协议</em>；<em>(4) skill safety × MAG 融合</em>——7-15 SLBench (Purdue) 提供 skill 内部逻辑关系评估，MAG 提供 live 环境执行验证——两者合并可构建<u>"skill 内部安全 + skill 执行安全" 联合基准</u>。</p>
       </div>
     </div>
   </div>
@@ -308,9 +290,9 @@
   <div class="card">
     <div class="card-title">相关延伸阅读</div>
     <ul class="point-list">
-      <li><strong>Rethinking the Evaluation of Harness Evolution for Agents (7-15 已收)</strong>—— <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a>：与本文构成"agent evaluation 方法学双子星"——一位关注 harness 层（匹配预算 + held-out），一位关注 benchmark 层（partial-budget 五要素）。</li>
-      <li><strong>Partially Correlated Verifier Cascades (今日 Harness 报告)</strong>—— <a href="https://arxiv.org/abs/2607.13918" target="_blank" rel="noopener">arxiv.org/abs/2607.13918</a>：Han 的 Beta-Binomial NPMLE 可靠性校准；与本文"部分预算" 两大维度（任务数 × 裁判次数）互补。</li>
-      <li><strong>MAG: Web-Agent Benchmark and Harness (2607.10079)</strong>—— <a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">arxiv.org/abs/2607.10079</a>：本文次选 · 多模态 web agent benchmark · 未来应主动报告 partial-budget 可行性——把 Huang 五要素纳入其提交 checklist。</li>
+      <li><strong>How Many Tasks Are Enough for Agent Benchmark Decisions? (7-15 已收)</strong>—— <a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arxiv.org/abs/2607.12338</a>：MAG 应作为下一个 partial-budget replay 分析候选——多模态融合任务的 required task fraction 可能与 SWE-bench 类似 heavy-tailed。</li>
+      <li><strong>Rethinking the Evaluation of Harness Evolution for Agents (7-15 已收)</strong>—— <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a>：UW + AI2 匹配预算 + held-out 批判 · MAG 的一体化 harness 是 UW/AI2 方法学门槛的<em>正面示例</em>。</li>
+      <li><strong>SeeAct / WebArena / GUI-Owl 谱系</strong>—— <a href="https://arxiv.org/abs/2401.13649" target="_blank" rel="noopener">SeeAct arxiv.org/abs/2401.13649</a>：MAG 的直系前作 · 未来这类 benchmark 都将向 MAG 的 action+guide 联合评估靠拢。</li>
     </ul>
   </div>
 
@@ -318,14 +300,12 @@
   <div class="card">
     <div class="card-title">开源资源</div>
     <div class="link-row">
-      <a class="link-btn primary" href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arXiv 摘要页</a>
-      <a class="link-btn" href="https://arxiv.org/pdf/2607.12338" target="_blank" rel="noopener">PDF 下载</a>
-      <a class="link-btn" href="https://arxiv.org/html/2607.12338v1" target="_blank" rel="noopener">HTML 全文</a>
-      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.12338" target="_blank" rel="noopener">DOI</a>
-      <a class="link-btn" href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench 官网</a>
-      <a class="link-btn" href="https://appworld.dev/" target="_blank" rel="noopener">AppWorld 官网</a>
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.10079" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.10079v2" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.10079" target="_blank" rel="noopener">DOI</a>
     </div>
-    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">本文属单作者方法学论文，<em>暂未在摘要中公开专门代码库</em>；<strong>replay 数据源</strong> 来自 SWE-bench / AppWorld / tau-bench 三大公开 benchmark 的 task-level 完整记录（均可从各自 leaderboard 获取）；partial-budget replay 逻辑相对简单，工程师可在自家 benchmark 独立实现。KDD 2026 workshop 论文预期在会议后有开源 replay script 补充发布。</p>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">论文明确承诺 <em>"Benchmark, harness, and model checkpoints to be released"</em>——三件套完整开源准备中；建议关注一作 <a href="https://arxiv.org/a/gan_c_1.html" target="_blank" rel="noopener">Chengguang Gan 的 arXiv 主页</a> 与合作者 <a href="https://arxiv.org/a/ni_s_1.html" target="_blank" rel="noopener">Shiwen Ni</a> 后续发布公告；本文 v2 距 v1 只 3 天说明积极迭代，开源仓库预期近期公开。</p>
   </div>
 
 </main>
