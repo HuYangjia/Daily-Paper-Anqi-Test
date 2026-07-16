@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">52 篇报告</span>
+        <span class="count-badge">53 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">51 篇报告</span>
+        <span class="count-badge">52 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">50 篇报告</span>
+        <span class="count-badge">51 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-16-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">16</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Partially Correlated Verifier Cascades in LLM Harnesses</strong> —— 首次为 harness 里 <u>k 个 verifier 串行 AND-gate</u> 建立 <em>部分相关</em> 版本紧凑理论 —— 精确回应 <em>Odds Law (2606.15712)</em> 明确留下的 open problem；<u>de Finetti α ∼ G 建模</u> · 精确后验 <em>ℓ_k = ℓ_0 − ln m_k</em>；四大结论：<u>凹性 + Beta 潜变量下多项式衰减 k⁻ᵇ + blind-spot ceiling −ln(1−π) + 三分法</u>；<strong>独立性外推在 k=5 低估 20 倍 · k=10 低估 3000 倍</strong>；R=2 次重复即可估相关参数 ρ_v；实用杠杆是<em>去相关</em>——换模型 / 模态 / 证据源；<em>H2 harness 第十三层：Reliability Theory 层</em>——与 7-15 Evaluation Protocol Critique 层构成"数学化批判双子星"；GitHub 开源 · Jiangang Han 单作者 · math.ST 主分类 · #1</div>
+          <div class="paper-sub">Jiangang Han · arXiv 2607.13918 · 2026-07-15 · math.ST + cs.AI · 14 pages · 单作者数学理论</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-16-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">16</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</strong> —— 把 planner-executor 多智能体安全评估从"<u>聚合 pipeline effect</u>" 拆解为<strong>三大机制 × 五条件对照</strong>：<em>Operational Reframing · Planner refusal/transform · Approval-Framed Delegation</em>；<strong>Operational Reframing 是最可移植风险</strong>——GPT / Gemini / DeepSeek 合规率均上升 · <u>唯 Claude 抵抗</u>；<strong>Raw-direct 排名<u>无法预测</u> 部署行为</strong>——<em>Gemini 直接提示 8.9% → 与 Claude planner 配对飙升 38.9%（+30 pp）</em>；GPT "接近零" pipeline effect 掩盖 <u>reframing 上升 + refusal 抵消</u> 相反机制；skeptical executor prompt 是廉价 mitigation；<em>H2 agent safety 第十四派：Mechanism Separation 派</em>——Su Wang 系列（含 7-13 Phantom Guardrails） · #1</div>
+          <div class="paper-sub">L. Liu / H. Yu / X. Jiang / S. Wang / P. Qian / Y. Chen · arXiv 2607.07097 · 2026-07-08 · cs.AI + cs.CR + cs.MA · 137 KB · 6 作者</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-16-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">16</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong> —— 单作者 <strong>KDD 2026 Agentic AI Workshop 已收录</strong>；把 agent benchmark 从"跑完看谁高" 抬到"<u>partial-budget 五要素报告规范</u>"；三条硬门槛定义 partial "足够"：<em>decision-preserving · coverage · unresolved limit</em>；replay 三大公开 benchmark：<strong>AppWorld 15% · tau-bench 25% · SWE-bench Verified 90% · SWE-bench Lite 95% 主 coverage 规则下仍未达标</strong>——差距 <u>6 倍以上</u>；partial 报告五要素规范：margin · selection · coverage · decision · <em>unresolved-comparison budget</em>（首次成为一等公民）；<em>H2 benchmark 第十五联：Partial-Evaluation Discipline 联</em>——与今日 Harness 报告 Han (2607.13918) 合成"agent evaluation 部分预算两大维度：任务数 × 裁判次数" · #1</div>
+          <div class="paper-sub">Wei-Jung Huang · arXiv 2607.12338 · 2026-07-14 · cs.AI · 219 KB · KDD 2026 Workshop 接收</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-15-1.html">
         <div class="date-badge">

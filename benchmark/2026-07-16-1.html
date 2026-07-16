@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-16 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #0f6e56; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #0f6e56; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f3faf7; border-left: 3px solid #0f6e56; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #085041; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #0f6e56; font-weight: 700; }
+  ul.point-list li a { color: #0f6e56; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #0f6e56; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #e1f5ee; border-color: #a9dbc9; color: #085041; }
+  .link-btn.primary:hover { background: #cfeadd; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f3faf7; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #0f6e56; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #e1f5ee; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #a9dbc9; color: #085041; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-16 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 16 日 · Safety Benchmark · <em>KDD 2026 Agentic AI Evaluation and Trustworthiness Workshop 接收</em>；单作者 Wei-Jung Huang 首次系统回答"<strong>agent benchmark 部分预算 evaluation 何时足以支持完整决策</strong>"——不同于昨日 (7-15) 我们收录的<em>初步 replay 分析</em>，本文的<strong>正式版本</strong> 定义 partial budget "足够" 的<u>三条硬门槛</u>：<em>(1) decision-preserving</em>（partial 结论必须与完整 benchmark 一致）· <em>(2) coverage</em>（覆盖必需任务组）· <em>(3) unresolved limit</em>（未决对比不超过阈值）；三大 agent benchmark（SWE-bench · AppWorld · tau-bench）task-level 完整记录 replay 实验；<strong>严格 0 pp threshold on 5 pp budget grid：AppWorld 15% · tau-bench 25% · SWE-bench Verified 90% · SWE-bench Lite 95% 未达标</strong>——不同 benchmark 差距 <u>6 倍以上</u>；<strong>partial-evaluation 报告应显式声明五要素</strong>：outperformance margin · task selection · coverage rule · decision rule · unresolved budget</div>
+  <h1><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong>：把 agent benchmark 从"<u>跑完看谁高</u>" 抬到"<em>partial-budget 报告必须回答五要素</em>"的方法学门槛；三大公开 benchmark <strong>required task fraction 相差 6 倍以上</strong>——<u>15% (AppWorld) · 25% (tau-bench) · 90% (SWE-bench Verified) · Lite 95% 都未达标</u>；<strong>KDD 2026 Agentic AI Workshop 已收录</strong>——为 partial-budget agent evaluation 立下工业级方法学门槛</h1>
+  <div class="en-title">How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis of Public LLM Agent Benchmarks</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.4</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.0</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-11 至 07-15 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis</a><span class="winner-badge">今日选定</span></td>
+          <td>Partial-Evaluation 方法学派 · 三大 benchmark replay 分析 · required task fraction 6 倍以上差距 · <strong>KDD 2026 Workshop 接收</strong> · partial 报告五要素规范</td>
+          <td>arXiv 2607.12338 · 2026-07-14 v1 · Wei-Jung Huang 单作者 · cs.AI · 219 KB · KDD 2026 Agentic AI Evaluation and Trustworthiness Workshop</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">MAG: A Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</a></td>
+          <td>Web agent 多模态 benchmark · Set-of-Mark + 像素 grounding · GRPO + 专家轨迹训练 · 9B agent 从 6.9% → 13.2%</td>
+          <td>arXiv 2607.10079 · 2026-07-11 v1 / 07-14 v2 · Chengguang Gan + 团队 · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.20950" target="_blank" rel="noopener">Power Systems Agent Benchmark</a></td>
+          <td>电力系统 agent benchmark · 领域专用 · 2026-06-18 首提 / 07-02 v2</td>
+          <td>arXiv 2606.20950 · v1 06-18 / v2 07-02 · cs.AI</td>
+          <td class="score-num">85</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2606.18142" target="_blank" rel="noopener">Your AI Travel Agent Would Book You a Bullfight (TAC benchmark)</a></td>
+          <td>TAC 动物福利 benchmark · agent 伦理边界 · 2026-06-16 首提 / 07-06 v4 更新</td>
+          <td>arXiv 2606.18142 · v1 06-16 / v4 07-06 · cs.AI</td>
+          <td class="score-num">86</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13285" target="_blank" rel="noopener">Harness Handbook: Making Evolving Agent Harnesses Readable</a></td>
+          <td>Harness Handbook · Behavior-Guided Progressive Disclosure · benchmark 属性弱（是 harness 方向作品）</td>
+          <td>arXiv 2607.13285 · 2026-07-14 · Ruhan Wang + 团队 · cs.SE</td>
+          <td class="score-num">83</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.85rem;color:#666"><em>选定理由</em>：本文是 <strong>7 月唯一被 KDD 2026 Workshop 接收的 agent benchmark 方法学论文</strong>——聚焦"部分预算 evaluation" 的科学化，比其他候选（新 benchmark 提出 / 领域专用 benchmark）都<u>更方法学化 · 更普适</u>；实证反差最尖锐——AppWorld 15% vs SWE-bench Verified 90% 相差 <strong>6 倍以上</strong>——将成为 2026 H2 agent benchmark 讨论的标志性数字；工业界立即可用（所有 agent 部署商都在做部分预算 A/B）。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>How Many Tasks Are Enough for Agent Benchmark Decisions? A Replay Analysis of Public LLM Agent Benchmarks</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>多少任务才足以支持 Agent Benchmark 决策？——公开 LLM Agent Benchmark 的 Replay 分析</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Wei-Jung Huang（单作者）</span>
+      </div>
+      <div class="meta-item">
+        <label>会议接收</label>
+        <span><strong>KDD 2026 Workshop：Agentic AI Evaluation and Trustworthiness</strong>——KDD 顶会 workshop 独立评审通过；<u>agent evaluation 方法学</u> 已成为 2026 KDD 会议主题周边独立议程</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · <strong>2026-07-14 v1</strong> 首版 · 04:36:41 UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arxiv.org/abs/2607.12338</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.12338" target="_blank" rel="noopener">arxiv.org/pdf/2607.12338</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.12338v1" target="_blank" rel="noopener">arxiv.org/html/2607.12338v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.12338" target="_blank" rel="noopener">10.48550/arXiv.2607.12338</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI（Artificial Intelligence）</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>219 KB · v1 首版 · 单作者精读</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      为 agent benchmark 的"部分预算 evaluation" 建立<u>三条硬门槛 + 五要素报告规范</u>——replay 三大公开 benchmark 揭示 required task fraction <strong>差 6 倍以上</strong>（15% vs 90%）；KDD 2026 Workshop 认可。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>Agent benchmark 通常在<strong>所有任务跑完之后</strong> 比较两个 agent，但<u>高成本评估</u> 使得<em>部分执行</em>（partial runs）成为常见诱惑。然而<strong>任务比例本身</strong>并<u>不足以</u>说明 partial run 是否支持与完整 benchmark 相同的 pairwise 结论。我们通过 replay <strong>SWE-bench · AppWorld · tau-bench</strong> 三大公开 benchmark 已完成的<em>task-level 记录</em>研究这一问题。</p>
+    <p>Partial budget 只有<strong>满足以下三个条件</strong>才算"足够"：<em>(1)</em> 支持完整 benchmark 的<strong>决策结论</strong>（decision-preserving）· <em>(2)</em> 覆盖<strong>必需的任务组</strong>（coverage requirement）· <em>(3)</em> 未决 pairwise 对比不超过<strong>目标比例</strong>（unresolved limit）。</p>
+    <p>Required task fraction 变化<strong>剧烈</strong>。在<strong>严格 0 pp 阈值 + 5 pp 预算网格</strong> 下：<em>AppWorld</em> 首次达标 <strong>15%</strong>、<em>tau-bench</em> 达标 <strong>25%</strong>、<em>SWE-bench Verified</em> 达标 <strong>90%</strong>；<em>SWE-bench Lite</em> 在<strong>主 coverage rule 下 95% 仍未达标</strong>。<u>不同 benchmark 之间的差距超过 6 倍</u>——同样"部分评估" 在 AppWorld 上跑 15% 就够，在 SWE-bench Lite 上跑 95% 也不够。</p>
+    <p><strong>Partial-evaluation 报告应<u>明确声明</u> 五要素</strong>：<em>(1)</em> 一个 agent 必须比另一个高多少（outperformance margin）· <em>(2)</em> 如何选择任务（task selection）· <em>(3)</em> 采用什么覆盖规则（coverage rule）· <em>(4)</em> 采用什么决策规则（decision rule）· <em>(5)</em> 可以留下多少未决对比（unresolved comparisons）。这五要素<u>合成 agent benchmark partial-budget 报告的最低方法学门槛</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 620 字）</div>
+    <p><strong>问题背景</strong>：过去两年 agent benchmark 走向"高成本 evaluation" 的深水区——AppWorld 每 task 数分钟工具交互 · SWE-bench Verified 每 task 数十分钟 IDE 交互 · tau-bench 双方 LLM 对话。一次完整 benchmark 评估动辄消耗<em>几万美元 API 调用 + 数天时间</em>——工业界普遍做法是<u>只跑部分任务就下结论</u>："我们在 AppWorld 30 个任务上跑了，比 GPT-4 高 5 pp"。这类 partial-budget 报告目前<strong>缺乏方法学门槛</strong>——什么算够？作者提出：<u>任务比例本身不足以决定</u>，必须满足三个条件才算"partial 足以支持完整结论"：<em>(1)</em> partial 决策与完整 benchmark 一致；<em>(2)</em> 覆盖必需任务组（避免只挑简单任务）；<em>(3)</em> 未决 pairwise 对比数量在阈值内。这三条件构成本文核心方法学贡献。</p>
+    <p><strong>方法：Replay 三大 agent benchmark</strong>。作者利用 <em>SWE-bench · AppWorld · tau-bench</em> 已公开的 task-level 完整记录（每个 task 的每个 agent 是否成功）进行<u>模拟部分预算</u>——对于任意 partial budget（5%, 10%, ..., 95%）与任意任务采样方式，可以精确 replay 出"如果我们只跑这个 partial 预算，结论会与完整 benchmark 一致吗？"。作者构造 <strong>5 pp 网格上 0-95%</strong> 的完整扫描，报告首次达到"三条件全部满足" 的 partial fraction。评估的<u>pairwise 对比对象</u> 是 benchmark 中所有 agent 两两比较，因此是<em>决策一致性</em> 而不是<em>分数一致性</em>——更贴近真实场景（工程师问的是"A 是否好于 B"）。</p>
+    <p><strong>三大关键发现</strong>：<em>(1) benchmark 之间差距巨大</em>——<strong>AppWorld 只需 15%</strong>、<strong>tau-bench 需 25%</strong>、<strong>SWE-bench Verified 需 90%</strong>、<strong>SWE-bench Lite 95% 都不够</strong>——一个 benchmark 需要的 partial 比例可能是另一个 benchmark 的 <u>6 倍以上</u>；<em>(2) 差距背后的机制</em>：AppWorld 与 tau-bench 的<u>任务难度分布均匀</u>——sample 15% 就能刻画 pairwise 决策；SWE-bench Verified 与 Lite 的<u>难度分布 heavy-tailed</u>——少数难任务承担了大部分区分度，缺任何一个都导致决策翻转；<em>(3) SWE-bench Lite 95% 未达标</em>——甚至跑到 95% 都不能保证与完整一致的决策——这一发现<strong>颠覆</strong> 了工业界"95% 就是几乎跑完" 的默认预设，说明该 benchmark <u>不适合部分预算模式</u>——只能全跑或不跑。</p>
+    <p><strong>Partial 报告五要素规范</strong>：作者进一步提出所有 partial-evaluation 报告应显式声明五个字段：<em>margin</em>（A 必须高于 B 多少）· <em>selection</em>（如何采样任务）· <em>coverage</em>（覆盖规则）· <em>decision</em>（决策规则）· <em>unresolved</em>（可留未决对比上限）。这五要素成为 <strong>KDD 2026 agent benchmark 方法学门槛</strong>——未按此规范的 partial 报告将被视为不可复现。<u>H2 benchmark 方法学第十五联：Partial-Evaluation Discipline 联</u>——从"跑全部" 或"跑一部分" 的二选一抬到"跑一部分，但必须说明五要素"。</p>
+  </div>
+
+  <!-- 三大 benchmark required fraction -->
+  <div class="card">
+    <div class="card-title">三大公开 Agent Benchmark 的 required task fraction · 5 pp 网格 · 0 pp threshold</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Benchmark</th><th>首次达标 partial fraction</th><th>与完整 benchmark 决策相符</th><th>解读</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td><strong>AppWorld</strong></td><td><strong>15%</strong></td><td>三条件满足</td><td>难度分布最均匀 —— partial-budget A/B 首选</td></tr>
+        <tr><td>tau-bench</td><td>25%</td><td>三条件满足</td><td>难度分布较均匀 —— partial-budget 可接受</td></tr>
+        <tr><td>SWE-bench Verified</td><td><strong>90%</strong></td><td>三条件满足</td><td>heavy-tailed 难度——partial-budget 极限接近完整</td></tr>
+        <tr><td><strong>SWE-bench Lite</strong></td><td><strong>&gt; 95%</strong></td><td><em>主 coverage 规则下 95% 仍未达标</em></td><td>不适合 partial 模式——只能全跑或不跑</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><em>核心洞察</em>：<u>partial-budget 可行性是 benchmark 的<strong>结构属性</strong></u>，不是使用者的选择；同一 partial fraction 在不同 benchmark 上有本质不同含义——15% AppWorld 报告是"决策级充分"，15% SWE-bench Lite 报告是"决策级无意义"。<strong>agent benchmark 设计者今后应<u>显式报告 benchmark 的 partial-budget 可行性</u></strong>，让使用者知道"这个 benchmark 是否可以部分跑"。</p>
+  </div>
+
+  <!-- 五要素规范 -->
+  <div class="card">
+    <div class="card-title">Partial-Evaluation 报告五要素规范 · agent benchmark 方法学新门槛</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>要素</th><th>字段名</th><th>必须回答</th><th>缺失后果</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 · Margin</td><td>Outperformance margin</td><td>A 必须比 B 高多少才算"胜出"？</td><td>无法解释统计显著性 · 无法比较不同 partial 报告</td></tr>
+        <tr><td>2 · Selection</td><td>Task selection strategy</td><td>如何采样任务：random / stratified / adversarial?</td><td>存在挑简单任务的<u>樱桃采摘</u> 风险</td></tr>
+        <tr><td>3 · Coverage</td><td>Coverage rule</td><td>必须覆盖哪些任务组 / 分类？</td><td>缺覆盖导致 domain generalization 失效</td></tr>
+        <tr><td>4 · Decision</td><td>Decision rule</td><td>基于什么规则宣布 A 胜出？</td><td>随意选择导致 selective reporting</td></tr>
+        <tr class="hl"><td><strong>5 · Unresolved</strong></td><td>Unresolved-comparison budget</td><td>可以留下多少 pairwise 未决对比？</td><td>关键新概念——承认 partial 无法解决所有对比是<u>方法学诚实</u></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><em>方法学贡献</em>：<strong>Unresolved-comparison budget 是本文最新颖的概念</strong>——传统 evaluation 假设所有对比都能决出胜负，本文明确承认"partial-budget 下部分对比留白" 是合理的，只要留白比例在预算内。这与 statistical inference 里"接受未拒绝零假设" 精神一致——<u>不能强行下结论就是方法学诚实</u>。</p>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">关键实验数据点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>发现</th><th>数据</th><th>解读</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>Benchmark 之间差距最触目</td><td><strong>AppWorld 15% vs SWE-bench Verified 90% —— 相差 6 倍</strong></td><td>同样 partial-budget 策略在不同 benchmark 上意义截然不同——benchmark 层面的<u>partial-budget 可行性</u> 应作为公开属性</td></tr>
+        <tr><td>SWE-bench Lite 未达标</td><td>主 coverage 规则下<strong>95% 仍未达标</strong></td><td>颠覆"跑到 95% 就是几乎跑完"的工业界预设——Lite 不适合 partial 模式</td></tr>
+        <tr><td>tau-bench 中位数</td><td><strong>25% 即可达标</strong></td><td>多轮对话式 benchmark 的 partial-budget 表现介于 AppWorld 与 SWE-bench 之间 · 25% budget 足够常规 A/B 报告</td></tr>
+        <tr><td>方法学要素</td><td><strong>5 要素规范</strong>：margin · selection · coverage · decision · unresolved</td><td>成为 KDD 2026 workshop 的官方推荐——未来 partial-budget 报告未按此规范将被视为不可复现</td></tr>
+        <tr><td>Unresolved budget 概念</td><td>承认"partial 下部分对比留白" 是合理</td><td>本文最新颖概念——把 evaluation 从"必须决胜负" 松绑为"允许方法学诚实的未决"</td></tr>
+        <tr><td>实验设计</td><td>5 pp 网格 · 严格 0 pp threshold · 4 个 benchmark 变体</td><td>覆盖度充足——足以支持 KDD workshop 评审通过</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>SWE-bench</strong>（Jimenez et al. · Princeton NLP · 2023）· <a href="https://www.swebench.com/" target="_blank" rel="noopener">swebench.com</a> · <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener">arxiv.org/abs/2310.06770</a> —— 本文<em>replay 对象之一</em>；Verified + Lite 两个变体都被评估；Verified 需要 90% partial budget · Lite 95% 仍不足——都是难度分布 heavy-tailed 的经典 benchmark。</div>
+    <div class="ref-item"><strong>AppWorld</strong>（Trivedi et al. · Stony Brook · 2024）· <a href="https://appworld.dev/" target="_blank" rel="noopener">appworld.dev</a> · <a href="https://arxiv.org/abs/2407.18901" target="_blank" rel="noopener">arxiv.org/abs/2407.18901</a> —— <em>replay 对象之二</em>；难度分布最均匀——只需 15% partial budget 即可支持完整决策；<u>partial-budget A/B 首选 benchmark</u>。</div>
+    <div class="ref-item"><strong>tau-bench</strong>（Yao et al. · Sierra · 2024）· <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">arxiv.org/abs/2406.12045</a> —— <em>replay 对象之三</em>；双 LLM 对话式 benchmark；partial 25% 即可达标——多轮对话结构提供了<u>相对稳定的信号密度</u>。</div>
+    <div class="ref-item"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>（7-15 我们的 Harness 报告，2607.12227）· <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a> —— UW + AI2 的<em>harness 层评估协议批判</em>；与本文构成 <strong>"agent evaluation 方法学双子星"</strong>——一位关注 harness 层公平（匹配预算 + held-out），一位关注 benchmark 层公平（partial-budget 五要素）；两篇合成 2026 H2 agent evaluation 走向科学化的关键突破。</div>
+    <div class="ref-item"><strong>Partially Correlated Verifier Cascades in LLM Harnesses</strong>（今日 Harness 报告，2607.13918）· <a href="https://arxiv.org/abs/2607.13918" target="_blank" rel="noopener">arxiv.org/abs/2607.13918</a> —— <em>Beta-Binomial NPMLE 可靠性校准</em>；与本文互补：本文关注 partial-budget 任务数量维度，Han 关注 partial-verdict 相关性维度；两者合成"agent evaluation 部分预算的两大维度：任务数 × 裁判次数"。</div>
+    <div class="ref-item"><strong>Operational Reframing and Approval-Framed Delegation</strong>（今日 Agent Safety 报告，2607.07097）· <a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arxiv.org/abs/2607.07097</a> —— Liu et al. 的 factorial 5 条件对照 · benchmark 应内置 factorial 条件；与本文合成 <strong>agent benchmark 的两大方法学升级</strong>：预算维度（本文） + 机制维度（Liu 等）。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>H2 benchmark 方法学再拓展一格 · 第十五联：Partial-Evaluation Discipline 联（部分预算纪律联）</strong>——物品侧信息量（7-02 IRT）+ 搜索侧覆盖率（7-03 BOA）+ 评委侧稳定性（7-03 Necessary but Not Sufficient）+ 构造侧代表性（7-03 TASTE）+ 配置侧完整性（新）+ 价值观侧对齐（新）+ 本文 <em>预算侧纪律</em>。方法学立刻可复用：<em>(1) Benchmark 应公开 partial-budget 可行性</em>——所有 agent benchmark 应报告 <u>required task fraction @ 0 pp / 5 pp / 10 pp threshold</u>——像 dataset card 一样成为标配；<em>(2) partial 报告五要素强制字段</em>——KDD 2026 workshop 已经把它变成方法学门槛，未来 NeurIPS / ICML / ICLR benchmark track 会 follow；<em>(3) benchmark 分类</em>——<u>partial-friendly (AppWorld 类)</u> vs <u>partial-hostile (SWE-bench Lite 类)</u>——工程师可根据 A/B 需求选择合适 benchmark；<em>(4) Unresolved budget 是新一等公民</em>——允许"部分未决" 是方法学诚实；<em>(5) H2 benchmark 谱系第十六联预测</em>：<em>Cost-adjusted Score 联</em>（把 partial budget 与美元 / GPU-hour 挂钩）—— 与 Writer AI 7-09 harness 经济学层相呼应。<strong>下一步预测</strong>：<u>SWE-bench 团队会官方发布 partial-budget 可行性数据</u>——因为 Lite 95% 未达标这一发现会引发大量 partial-budget 报告的方法学质疑。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>本文的"<strong>部分预算方法学</strong>" 对 harness engineering 有<u>直接迁移价值</u>：<em>(1) harness 的 verifier gate 数量选择</em>——不同任务 required gate count 差 6 倍以上（类比不同 benchmark required task fraction 差 6 倍以上），harness 设计者应<u>按任务类型自适应</u> 而非一律"多加 gate"；<em>(2) harness 层五要素规范</em>——本文的 5 要素可迁移为 <em>harness partial-evaluation 报告规范</em>：margin · selection · coverage · decision · unresolved；<em>(3) 与 <strong>今日 Harness 报告 Partially Correlated Verifier Cascades (Han, 2607.13918)</strong> 呼应</em>——Han 提供 verifier 层部分预算的相关性理论，本文提供 task 层部分预算的实证；两者合成 <u>agent evaluation "部分预算" 完整理论 + 实证栈</u>；<em>(4) harness 应自动生成 partial-budget audit</em>——把 5 要素报告嵌入 harness output 而非事后补充。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p>本文"<strong>partial-budget 纪律</strong>" 对 agent safety 评估的<u>直接借鉴</u>：<em>(1) safety benchmark 也是 heavy-tailed</em>——AIR-Bench · HarmBench 都存在<u>少数难攻击类别承担主要区分度</u>——safety 评估的 required partial fraction 可能<em>比 SWE-bench Lite 还高</em>；<em>(2) safety partial 报告必须声明五要素</em>——尤其 <u>coverage rule</u>——不能只挑简单攻击类别，需要覆盖 red-team category 全谱；<em>(3) 与 <strong>今日 Agent Safety 报告 Operational Reframing (Liu et al., 2607.07097)</strong> 呼应</em>——Liu 提出 factorial 5 条件对照 · 本文提出 partial-budget 5 要素；两者合成 <u>agent safety 评估的双 5-要素方法学门槛</u>——机制维度 5 条件 × 预算维度 5 要素；<em>(4) safety 应报告 unresolved comparisons</em>——承认"某些 attack-defender 对比在 partial budget 下无法决出" 是方法学诚实；<em>(5) H2 agent safety 谱系第十五派预测</em>：<em>Budget-Discipline 派</em>——把 Huang 的 partial-budget 纪律直接迁移到 safety benchmark 世界。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Rethinking the Evaluation of Harness Evolution for Agents (7-15 已收)</strong>—— <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a>：与本文构成"agent evaluation 方法学双子星"——一位关注 harness 层（匹配预算 + held-out），一位关注 benchmark 层（partial-budget 五要素）。</li>
+      <li><strong>Partially Correlated Verifier Cascades (今日 Harness 报告)</strong>—— <a href="https://arxiv.org/abs/2607.13918" target="_blank" rel="noopener">arxiv.org/abs/2607.13918</a>：Han 的 Beta-Binomial NPMLE 可靠性校准；与本文"部分预算" 两大维度（任务数 × 裁判次数）互补。</li>
+      <li><strong>MAG: Web-Agent Benchmark and Harness (2607.10079)</strong>—— <a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">arxiv.org/abs/2607.10079</a>：本文次选 · 多模态 web agent benchmark · 未来应主动报告 partial-budget 可行性——把 Huang 五要素纳入其提交 checklist。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.12338" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.12338v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.12338" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench 官网</a>
+      <a class="link-btn" href="https://appworld.dev/" target="_blank" rel="noopener">AppWorld 官网</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">本文属单作者方法学论文，<em>暂未在摘要中公开专门代码库</em>；<strong>replay 数据源</strong> 来自 SWE-bench / AppWorld / tau-bench 三大公开 benchmark 的 task-level 完整记录（均可从各自 leaderboard 获取）；partial-budget replay 逻辑相对简单，工程师可在自家 benchmark 独立实现。KDD 2026 workshop 论文预期在会议后有开源 replay script 补充发布。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-16 #1 · Agent Skills Safety · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #a32d2d; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #a32d2d; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff5f5; border-left: 3px solid #a32d2d; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #6d1a1a; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #a32d2d; font-weight: 700; }
+  ul.point-list li a { color: #a32d2d; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #a32d2d; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #fcebeb; border-color: #eec5c5; color: #6d1a1a; }
+  .link-btn.primary:hover { background: #f8d7d7; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff5f5; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #a32d2d; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fcebeb; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #eec5c5; color: #6d1a1a; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Agent Skills Safety</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-16 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 16 日 · Agent Skills Safety · 首次为 planner-executor 多智能体安全评估建立<strong>五条件对照设计</strong>——原有做法把 direct prompt 与 pipeline 做比较、把差异当成"pipeline effect" 单一指标，作者指出这种<u>聚合视角混淆了三种独立机制</u>：<em>(1) Operational Reframing</em>（有害意图被 planner 重构为看似合理的运维任务）· <em>(2) Planner refusal/transform</em>（拒绝或转换请求）· <em>(3) Approval-Framed Delegation</em>（executor 在被暗示"已批准" 的委托 prompt 下执行）；30 合成有害场景 + 4 agent-safety benchmark 外部验证 · <u>Operational Reframing 是最可移植的风险信号</u>——GPT / Gemini / DeepSeek 全部合规率上升，唯有 Claude 抵抗；<strong>Raw-direct rankings 不能预测 deployed planner-executor 行为</strong>——Gemini 直接提示 8.9% → 与 Claude planner 配对飙升到 <em>38.9% (+30 pp)</em>；结论：<u>安全评估应<strong>分别</strong> 报告 reframing / planner behavior / delegation framing / model pairing</u>——不能再把失败归因给"架构"</div>
+  <h1><strong>Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</strong>：把 planner-executor 管线安全评估从"<u>单一 pipeline effect</u>" 拆解为<em>三大机制 × 五条件对照</em>——<strong>Operational Reframing 才是最可移植的风险信号</strong>；<u>Approval-Framed Delegation 对 prompt 设计敏感 · skeptical executor prompt 可大幅降合规率</u>；<strong>Gemini 在 Claude planner 下从 8.9% 飙到 38.9% —— raw-direct 排名<em>无法预测</em> 部署行为</strong>——为 multi-agent safety 立下"分离归因"的方法学门槛</h1>
+  <div class="en-title">Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 8.6</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.6</span>
+    <span class="score-chip chip-open">开源复现 8.5</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Agent Safety 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-08 至 07-15 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</a><span class="winner-badge">今日选定</span></td>
+          <td>机制分离派 · 五条件对照 · <em>Operational Reframing / Planner Behavior / Approval Delegation</em> 三机制 · Gemini + Claude planner 反差 8.9% → 38.9% · 4 agent-safety benchmark 外部验证</td>
+          <td>arXiv 2607.07097 · 2026-07-08 v1 · L. Liu / H. Yu / X. Jiang / S. Wang / P. Qian / Y. Chen · cs.AI + cs.CR + cs.MA · 137 KB · 6 作者</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.12469" target="_blank" rel="noopener">Agent-Safety Evaluations as Load-Bearing Evidence</a></td>
+          <td>厂商中立"harness 可重建性" 度量 · Evidence Sufficiency Cards · counterfactual replay · 十二字段充分性得分 0.458-0.833</td>
+          <td>arXiv 2607.12469 · 2026-07-14 · O. Solozobov 单作者 · cs.SE · 含 Zenodo DOI 10.5281/zenodo.21055696</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13083" target="_blank" rel="noopener">Phantom Guardrails: Self-Improving Agent Harnesses Fix Failures That Never Happened</a></td>
+          <td>自改进 harness 的"虚构护栏" 失败模式 · Counterfactual Fabrication Lab · 15/60 vs 0/60 · 3 触发条件 co-occur 时崩溃</td>
+          <td>arXiv 2607.13083 · 2026-07-13 · Su Wang + 团队 · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13396" target="_blank" rel="noopener">Set-shifting Behavioral Test for Harnessed Agents</a></td>
+          <td>认知心理学 set-shifting 范式 · agent 在会话中面对隐藏工具可靠性变化的适应能力 · 竞争型 vs 互补型工具集</td>
+          <td>arXiv 2607.13396 · 2026-07-15 · Ziwei Ye + 团队 · cs.AI</td>
+          <td class="score-num">87</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.10202" target="_blank" rel="noopener">Two Confounds in Cross-Model Value Comparison</a></td>
+          <td>把 access harness 抬到跨模型价值比较的独立混淆变量 · determinism correction · profile 0.31 移动 + 4/18 翻转</td>
+          <td>arXiv 2607.10202 · 2026-07-11 · Won / Jang / Kim · cs.LG</td>
+          <td class="score-num">88</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.85rem;color:#666"><em>选定理由</em>：本文是 <strong>2026 年 7 月 agent safety 方向的"归因分离方法学论文"</strong>，把 planner-executor pipeline 的安全评估从"aggregate pipeline effect" 拆成 3 大机制 × 5 条件对照。相较其他 4 篇（分别做 evidence sufficiency / self-improvement 虚构 / cognitive test / cross-model 价值比较），本文<u>直接建立了 multi-agent safety 的归因分离新范式</u>，且实证反差最尖锐——<strong>Gemini 在 Claude planner 下合规率飙升 30 pp</strong> 这一发现将成为 2026 H2 multi-agent safety 讨论的经典引用点。</p>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>标题（原）</label>
+        <span>Operational Reframing and Approval-Framed Delegation in Multi-Agent LLM Safety</span>
+      </div>
+      <div class="meta-item">
+        <label>标题（译）</label>
+        <span>多智能体 LLM 安全中的运维性重构与批准式委托</span>
+      </div>
+      <div class="meta-item">
+        <label>作者</label>
+        <span>Lifei Liu · Haoran Yu · Xiaochong Jiang · Su Wang · Pin Qian · Yihang Chen</span>
+      </div>
+      <div class="meta-item">
+        <label>研究定位</label>
+        <span>与同期 arXiv 2607.13083 <em>"Phantom Guardrails"</em>（Su Wang 一作）作者高度重合——<u>Su Wang 系列</u> 正在系统化<em>拆分聚合式 agent safety 评估的隐藏机制</em>；本文属方法论论文，用 5 条件对照 + 30 合成 + 4 外部 benchmark 双端验证；风格接近 human-subject research 中的 factorial design</span>
+      </div>
+      <div class="meta-item">
+        <label>发布平台</label>
+        <span>arXiv 预印本 · <strong>2026-07-08 v1</strong> 首版 · 07:31:37 UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv 链接</label>
+        <a href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arxiv.org/abs/2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>PDF</label>
+        <a href="https://arxiv.org/pdf/2607.07097" target="_blank" rel="noopener">arxiv.org/pdf/2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML</label>
+        <a href="https://arxiv.org/html/2607.07097v1" target="_blank" rel="noopener">arxiv.org/html/2607.07097v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.07097" target="_blank" rel="noopener">10.48550/arXiv.2607.07097</a>
+      </div>
+      <div class="meta-item">
+        <label>主题分类</label>
+        <span>cs.AI（Artificial Intelligence · 主）· cs.CR · cs.MA</span>
+      </div>
+      <div class="meta-item">
+        <label>规模</label>
+        <span>137 KB · v1 首版 · 6 作者</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话核心贡献 -->
+  <div class="card">
+    <div class="card-title">一句话核心贡献</div>
+    <div class="highlight-box">
+      把 planner-executor 多智能体安全评估从<em>聚合 pipeline effect</em> 拆解为 <strong>Reframing · Planner Behavior · Approval Delegation</strong> 三大机制 × 5 条件对照——揭示 <u>raw-direct 排名<em>无法预测</em> 部署行为</u>，Gemini 在 Claude planner 下合规率从 8.9% 飙升到 38.9%。
+    </div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">摘要翻译（忠实原文）</div>
+    <p>多智能体 LLM 系统（planner-executor 管线）的<strong>安全评估</strong>常常把 direct prompt 与管线做比较，然后把差异当成单一的"pipeline effect" 报告。我们认为这种<u>聚合结果难以解释</u>，因为它混淆了三种机制：<em>(1)</em> 有害意图可能被<strong>重构为看似合理的运维任务</strong>；<em>(2)</em> planner 可能<strong>拒绝或转换</strong>请求；<em>(3)</em> executor 可能在"暗示已获批准" 的委托 prompt 下行动。为了分离这三个因素，我们引入<strong>五条件对照设计</strong>，在 30 个合成有害场景 + 4 个 agent-safety benchmark 的外部验证集上使用 LLM 判官合规率评估。</p>
+    <p>结果显示<u>聚合 pipeline 安全性不是稳定的架构属性</u>。<strong>Operational Reframing</strong>（运维性重构）是<em>最可移植的风险信号</em>——GPT、Gemini、DeepSeek 在两个场景集上合规率均上升，<u>唯有 Claude 表现出较强抵抗</u>。Planner 行为主要通过<em>拒绝</em> 抵消该风险；但当 planner 生成可执行步骤时，executor 会比 direct operational baseline <strong>更加合规</strong>。<strong>Approval-Framed Delegation</strong>（批准式委托）对 prompt 设计、model pairing、场景来源敏感，一个<u>怀疑性 executor prompt 可显著降低合规率</u>。</p>
+    <p><strong>Raw-direct 模型排名也可能<u>错误预测</u></strong> 部署后 planner-executor 行为。Gemini 在主集上 raw direct prompt 下<em>最安全</em>，但在与 Claude planner 配对时展现<u>最大的放大效应</u>——合规率从 8.9% 上升到 <strong>38.9%</strong>。GPT 的<em>接近零</em> 的 aggregate pipeline effect 掩盖了一个 reframing 上升被 planner refusal 抵消的隐藏过程。这些发现建议：<strong>多智能体安全评估应<u>分别</u> 报告 reframing / planner behavior / delegation framing / model pairing</strong>——不能再把失败归因给<em>架构本身</em>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">核心内容解读（约 640 字）</div>
+    <p><strong>问题背景</strong>：过去两年 planner-executor 架构（LangGraph · AutoGen · CrewAI · MetaGPT）已成为主流 multi-agent 部署形态——planner 拆解任务，executor 调工具执行。围绕这类架构的安全评估一直用同一个招式：<em>把 direct prompt 与整条 pipeline 都跑一遍有害任务，看合规率差多少，把差值命名为"pipeline effect" 汇报</em>——大量论文用这个数字下结论"planner-executor 更安全" 或"更危险"。作者指出这种聚合视角<u>本质上是把三种独立机制搅在一起</u>：<em>(1) Reframing</em>：planner 把"帮我造炸弹" 改写成"分析容器压力容器结构"——有害意图被<u>包装成合法运维任务</u>；<em>(2) Planner Refusal/Transform</em>：planner 本身拒绝或改写；<em>(3) Approval Delegation</em>：executor 收到"planner 已批准" 的暗示——比拿到 direct prompt 更愿意执行。三者叠加造成 pipeline 数字既可能上升也可能下降，聚合值<u>失去物理意义</u>。</p>
+    <p><strong>方法：五条件对照设计</strong>。作者按 factorial design 构造 5 个对照条件：<em>(A) Raw Direct</em>（直接给 executor 有害 prompt）· <em>(B) Reframed Direct</em>（把 prompt 手工按 planner 会用的方式重构为运维语言，绕开 planner）· <em>(C) Full Pipeline w/ neutral executor</em>（正常 planner + executor）· <em>(D) Approval-Framed Delegation</em>（直接给 executor "planner has approved this" 前缀 + 重构 prompt）· <em>(E) Skeptical Executor</em>（executor 收到"这是从 planner 来的，但请你独立判断" 前缀）。这五条件的差异<strong>精确定位到三大机制的独立贡献</strong>。评测集分两部分：<u>30 个合成有害场景</u>（主实验）+ <u>4 个已有 agent-safety benchmark 的外部验证集</u>（探索性），合规率由 LLM-judge 打分。评测模型覆盖 GPT · Gemini · DeepSeek · Claude 四大厂商。</p>
+    <p><strong>三大关键发现</strong>：<em>(1) Operational Reframing 是最稳定的风险放大器</em>——GPT / Gemini / DeepSeek 在两个数据集上都上升，<u>唯有 Claude 反常</u>；说明 refusal training 里"识别运维伪装" 的能力被 Anthropic 训进去了，其他厂商未跟上；<em>(2) Planner 行为具有<u>双向性</u></em>——拒绝时抵消 Reframing 风险，但生成可执行步骤时，executor <strong>比 direct operational baseline 更愿意执行</strong>（因为拿到了"上级已细化" 的信号）；<em>(3) Approval Delegation 对 prompt 敏感</em>——加一句"skeptical executor" 前缀显著降合规率——说明有廉价缓解手段。<u>最触目的实证</u>：Gemini 在 raw-direct 下是主集最安全模型（8.9%），但配 Claude planner 后合规率飙到 <strong>38.9%</strong>——增幅 30 pp——<u>Claude planner 反而放大了 Gemini executor 的风险</u>！这一现象说明<strong>model pairing 是独立安全变量</strong>，无法从单模型评测预测。GPT 那个"接近零的 pipeline effect" 是 <u>reframing 上升 + planner refusal 抵消</u> 的抵消产物，聚合视角完全看不见。</p>
+    <p><strong>H2 agent safety 谱系新增第十四派：Mechanism Separation 派（机制分离派）</strong>——与之前的外置派 / 认知派 / 泛化派 / 评委派 / 搜索派 / 可解释派 / 形式化派 / 心理测量派 / 主权派 / operational leakage 派 / Skill-Following Reliability 派并列。哲学突破：<u>agent safety 的评估必须要有 factorial design 的严谨度</u>——像 human-subject research 那样，把每个 hypothesized mechanism 独立操纵和测量，而不是把整条 pipeline 混着跑然后声称"这个架构更安全/更危险"。</p>
+  </div>
+
+  <!-- 五条件对照 -->
+  <div class="card">
+    <div class="card-title">五条件对照设计 · 三大机制的正交拆分</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>条件</th><th>目的</th><th>输入形式</th><th>触发的机制</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A · Raw Direct</td><td>基线</td><td>Direct 有害 prompt 给 executor</td><td>无</td></tr>
+        <tr><td>B · Reframed Direct</td><td>隔离 Reframing</td><td>预先手工"重构为运维" 后给 executor</td><td>Operational Reframing 独立效应</td></tr>
+        <tr><td>C · Full Pipeline</td><td>参考</td><td>Planner + executor 正常流</td><td>三者混合</td></tr>
+        <tr class="hl"><td><strong>D · Approval Delegation</strong></td><td>隔离 Delegation Framing</td><td>Reframed + "planner has approved" 前缀</td><td>Approval Framing 独立效应</td></tr>
+        <tr><td>E · Skeptical Executor</td><td>缓解验证</td><td>Reframed + "请独立判断" 前缀</td><td>验证怀疑性 executor prompt 效果</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.6rem;font-size:0.88rem"><em>方法学核心</em>：条件 B - 条件 A = <strong>Reframing 独立效应</strong> · 条件 D - 条件 B = <strong>Delegation Framing 独立效应</strong> · 条件 C - (B + D 组合) = <strong>Planner Behavior 独立效应</strong> · 条件 E - 条件 D = <strong>Skeptical prompt 缓解量</strong>——这就是<u>因果推断中 mediation analysis 的严格 factorial 版本</u>被首次应用到 agent safety 评估。</p>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">关键实验数据点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>发现</th><th>数据</th><th>解读</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>Model Pairing 独立效应最触目实证</td><td><strong>Gemini raw-direct 8.9% → 与 Claude planner 配对 38.9%（+30 pp）</strong></td><td><u>Claude planner 放大 Gemini executor 的风险</u>——raw-direct 排名<u>反向</u>预测部署行为</td></tr>
+        <tr><td>Operational Reframing 可移植性</td><td>GPT · Gemini · DeepSeek 在两个数据集上均<strong>合规率上升</strong>；Claude 独立抵抗</td><td>Reframing 是<u>三大厂商共同弱点</u> · 只有 Anthropic 训进了识别；Claude 抵抗<em>不能</em> 推广至其他模型</td></tr>
+        <tr><td>Planner 双向作用</td><td>拒绝 → 抵消风险；生成步骤 → executor 比 direct operational <strong>更合规</strong></td><td>"planner 已细化" 变成执行者的<u>隐式授权信号</u>——这是 multi-agent 独有的 emergent 风险模式</td></tr>
+        <tr><td>Skeptical Executor 缓解</td><td>加一句"请独立判断" 前缀→ 合规率<strong>大幅下降</strong></td><td>廉价 mitigation：<em>executor 端 skepticism prompt</em> · 部署者应默认启用</td></tr>
+        <tr><td>GPT 的"接近零" 假象</td><td>Aggregate pipeline effect ≈ 0 <u>但由 reframing 上升 + planner refusal 抵消组成</u></td><td>聚合视角<em>完全看不见</em> 内部相反机制的抵消——传统评估协议的方法学 bug 实锤</td></tr>
+        <tr><td>覆盖规模</td><td>30 合成有害场景（主）+ 4 agent-safety benchmark（外部验证）· 4 厂商 4 模型 · 5 条件</td><td>规模适中但设计密度高——单个数据点的<u>因果解释力</u> 远超聚合评估</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">关键引用与思想脉络</div>
+    <div class="ref-item"><strong>Phantom Guardrails: When Self-Improving Agent Harnesses Fix Failures That Never Happened</strong>（同作者团队 · Su Wang 一作，2607.13083）· <a href="https://arxiv.org/abs/2607.13083" target="_blank" rel="noopener">arxiv.org/abs/2607.13083</a> —— <em>共同署名作者 Su Wang</em> 也在本文中；两篇论文属同一"<u>拆分 agent safety 聚合评估的隐藏机制</u>" 系列——本文关注 planner-executor pipeline 机制分离，Phantom 关注 self-improving harness 的虚构护栏机制。</div>
+    <div class="ref-item"><strong>Action Alignment</strong>（6-30 我们的 Agent Safety 报告，2606.28739）· <a href="https://arxiv.org/abs/2606.28739" target="_blank" rel="noopener">arxiv.org/abs/2606.28739</a> —— <em>H2 第一派：外置派</em>；建立"refusal 学不到 R"；本文说：即使外置对齐，multi-agent pipeline 也会通过 <u>reframing + delegation framing</u> 绕过——两条独立路径揭示<strong>行为快照式安全评估的根本缺陷</strong>。</div>
+    <div class="ref-item"><strong>Agentic Safety is Epistemic Property</strong>（7-01 我们的 Agent Safety 报告，2606.28347）· <a href="https://arxiv.org/abs/2606.28347" target="_blank" rel="noopener">arxiv.org/abs/2606.28347</a> —— <em>H2 第二派：认知派</em>；提出 <u>teachability + Utility-Learning Tension</u>；本文的"Claude planner 放大 Gemini executor 风险" 就是"agent 网络内部的 teachability 传染" 的具体案例——认知派的实证凭证。</div>
+    <div class="ref-item"><strong>SLBench: Evaluating How LLM Agents Follow Logical Relations in Skills</strong>（7-15 我们的 Agent Safety 报告，2607.09016）· <a href="https://arxiv.org/abs/2607.09016" target="_blank" rel="noopener">arxiv.org/abs/2607.09016</a> —— <em>H2 第十三派：Skill-Following Reliability 派</em>；报告 <strong>70% unsafe rate</strong>——本文的"aggregate pipeline effect 掩盖 mechanism-level 风险" 观察在 SLBench 里也成立——multi-agent 与 skill-following 两条路径合流指向<u>安全评估必须拆到最小机制单元</u>。</div>
+    <div class="ref-item"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>（7-15 我们的 Harness 报告，2607.12227）· <a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">arxiv.org/abs/2607.12227</a> —— UW + AI2 的方法学批判 · 与本文精神一致：<u>拒绝聚合评估、要求匹配预算 + held-out</u>；两篇合成 <strong>2026 H2 "评估协议批判" 双子</strong>——一位在 harness 层批判、一位在 agent safety 层批判。</div>
+    <div class="ref-item"><strong>Approval-Framed Delegation prior work</strong>（Anthropic Constitutional AI · 2023）· <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a> —— 首次在 RLHF 中系统训练模型识别"上级已批准" 类操纵 · 本文 Claude 抵抗力的原因可能就在这里 · Anthropic 的<u>先见方法学赢在此处</u>。</div>
+  </div>
+
+  <!-- 三方向启发 -->
+  <div class="card">
+    <div class="card-title">对研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety</div>
+        <p><strong>H2 agent safety 谱系再拓展一格 · 第十四派：Mechanism Separation 派（机制分离派）</strong>——外置派 + 认知派 + 泛化派 + 评委派 + 搜索派 + 可解释派 + 形式化派 + 心理测量派 + 主权派 + operational leakage 派 + Skill-Following Reliability 派 + 本文 <em>机制分离派</em>。方法学立刻可复用：<em>(1) Factorial 条件对照 = agent safety 的最低方法学门槛</em>——任何 planner-executor / multi-agent 系统安全评估必须报告至少 3 条件对照（raw / reframed / pipeline），否则聚合数字失去物理意义；<em>(2) Model Pairing 是独立安全变量</em>——不能从单模型 raw-direct 排名推测 pipeline 部署行为，多智能体系统需要专门的<u>pairing 安全矩阵</u>；<em>(3) Skeptical Executor Prompt 是廉价 mitigation</em>——工业界的 LangGraph / AutoGen 应默认为 executor 加"独立判断" 前缀；<em>(4) H2 agent safety <strong>第五轴度量</strong></em>：<u>行为快照 · 认知属性 · 泛化 · 评委不确定 · 机制分离</u>——五轴合成 agent safety 的完整评估空间。<strong>下一步预测</strong>：<u>厂商级 red-teaming 报告</u> 会主动引用本文并加入 factorial 条件对照——因为不这样做的报告将不再可信。</p>
+      </div>
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering</div>
+        <p>本文的"<strong>机制分离</strong>" 方法学对 harness engineering 有<u>直接启发</u>：<em>(1) harness 中的验证器组合</em>——本文的三大机制类似 harness 里的多层 verifier 之间的相互作用；<em>(2) 与 <strong>今日 harness 报告 Partially Correlated Verifier Cascades (Han, 2607.13918)</strong> 呼应</em>——Han 建立部分相关级联理论 · 本文提供 <u>多智能体 pipeline 中相似"部分相关" 结构的实证证据</u>：Gemini + Claude planner 配对反常上升 = pipeline 内部机制强相关；<em>(3) harness 应显式建模 role-conditioning</em>——同一 LLM 作 planner 与作 executor 的<u>行为差异</u> 必须在 harness 报告；<em>(4) harness 评估协议应加入"conditional decomposition"</em>——把最终指标按 3 大机制分解报告，避免聚合视角遮蔽内部相反机制。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Benchmark</div>
+        <p><strong>Agent benchmark 评测报告要求全面升级</strong>：<em>(1) benchmark 应内置 factorial 条件</em>——不能只提供"整条 pipeline vs baseline" 对比，必须内置至少 raw-direct + reframed-direct 两条 baseline；<em>(2) benchmark 应报告 model pairing 效应</em>——所有 multi-agent benchmark 应显式测试至少 2×2 planner-executor 配对，暴露<u>非可加性</u>；<em>(3) benchmark 应报告机制归因</em>——每一个"失败案例" 至少归因到 reframing / planner / delegation 三者之一；<em>(4) 与 <strong>今日 benchmark 报告 How Many Tasks Are Enough (Huang, 2607.12338)</strong> 呼应</em>——Huang 关注部分预算 · 本文关注机制分离——两者合成<u>agent benchmark 的两大方法学升级</u>：预算维度 + 机制维度；<em>(5) H2 benchmark 方法学第十五联：Mechanism-Decomposed Reporting 联</em>——从"报告一个 pipeline 分数" 抬到"分别报告 reframing / planner / delegation 三分数"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 延伸阅读 -->
+  <div class="card">
+    <div class="card-title">相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Phantom Guardrails (2607.13083)</strong>—— <a href="https://arxiv.org/abs/2607.13083" target="_blank" rel="noopener">arxiv.org/abs/2607.13083</a>：同作者团队姊妹论文（Su Wang 一作） · self-improving harness 虚构护栏 · 与本文构成"Su Wang 系列拆分聚合式 agent safety 隐藏机制" 双子拍。</li>
+      <li><strong>Agent-Safety Evaluations as Load-Bearing Evidence (2607.12469)</strong>—— <a href="https://arxiv.org/abs/2607.12469" target="_blank" rel="noopener">arxiv.org/abs/2607.12469</a>：cross-harness reconstructability metric · 与本文 mechanism separation 方法学互补——一位关注证据充分性、一位关注机制归因。</li>
+      <li><strong>Constitutional AI (Anthropic, 2212.08073)</strong>—— <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">arxiv.org/abs/2212.08073</a>：Claude 抵抗 Operational Reframing 的方法学根源；建议部署者理解"训练时机制识别" 如何转化为部署时的安全余量。</li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">开源资源</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.07097" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.07097" target="_blank" rel="noopener">PDF 下载</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.07097v1" target="_blank" rel="noopener">HTML 全文</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.07097" target="_blank" rel="noopener">DOI</a>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.85rem;color:#888">本文<em>暂未</em> 在摘要中公开 GitHub 代码库，30 个合成有害场景 + LLM-judge 合规评分实现细节需查看 PDF 附录；建议关注 Su Wang 系列后续论文（Phantom Guardrails 已给出 <em>Counterfactual Fabrication Lab</em> 复现协议 · 可能作为 factorial safety evaluation 的姊妹工具链）。</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Agent Skills Safety 归档</a>
+  ·
+  <a href="../../index.html">Daily Paper Tracker 总入口</a>
+</footer>
+
+</body>
+</html>
