@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-17 #1 · Harness Engineering · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #534ab7; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #534ab7; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #f5f3ff; border-left: 3px solid #534ab7; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #3c3489; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #534ab7; font-weight: 700; }
+  ul.point-list li a { color: #534ab7; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #534ab7; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #a32d2d; background: #fff8f8; }
+  .inspiration-item.bench   { border-color: #0f6e56; background: #f3faf7; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #a32d2d; }
+  .inspiration-item.bench   .ins-label { color: #0f6e56; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #eeedfe; border-color: #c8c4f4; color: #3c3489; }
+  .link-btn.primary:hover { background: #dfdcfc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #f5f3ff; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #f5f3ff; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #e0dfd8; color: #3c3489; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Harness Engineering</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-17 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 17 日 · Harness Engineering · 把 agent harness 从"固定全局配置" 提升到<strong>自适应学习控制层</strong>——<u>MemoHarness</u> 首次让 harness 本身<em>从自己的执行经验里学习</em>：把 harness 分解为 <strong>六个可编辑控制维度</strong>（context / tools / orchestration / memory / decoding / output handling），把 per-case 诊断和 distilled 全局模式存入 <strong>双层经验银行 (dual-layer experience bank)</strong>，测试时无 label / feedback / 额外搜索<u>即可为每个 case 检索经验并动态适配</u>；shell-agent + code-generation + analytical-reasoning benchmark 全面优于固定 harness · <em>选择性迁移到未见 suite 和 base model</em> · retrieved experience 大量可缓存 → 成本竞争力</div>
+  <h1><strong>MemoHarness: Agent Harnesses That Learn from Experience</strong>——把 harness 从"部署时冻结的静态脚手架"抬升到"<em>test-time adaptive、experience-driven</em>" 的<u>自学习控制器</u>；<strong>六大控制维度</strong> × <em>双层经验银行</em> × <u>无 label 无 feedback 无额外搜索</u> 的推理时适配——为 harness 生态开辟"记忆 × 检索 × 适配" 新范式</h1>
+  <div class="en-title">MemoHarness: Agent Harnesses That Learn from Experience</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.2</span>
+    <span class="score-chip chip-impact">近期影响力 8.8</span>
+    <span class="score-chip chip-novel">新颖性 9.4</span>
+    <span class="score-chip chip-open">开源复现 8.6</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Harness 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-14 至 07-16 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.14159" target="_blank" rel="noopener">MemoHarness: Agent Harnesses That Learn from Experience</a><span class="winner-badge">今日选定</span></td>
+          <td>Experience-Driven Harness 派 · 六大可编辑控制维度 + 双层经验银行 + test-time 无 label 检索适配 · 与 7-15 Rethinking Evolution / 7-14 Meta-Optimization 学派并行的新一层</td>
+          <td>arXiv 2607.14159 · 2026-07-14 v1 · Y. Huang / W. Wang / H. Bao / Y. Ma / X. Luo / Y. Nian / H. Zhuang / Z. Liu / Y. Zhao / <strong>X. Zhang（Notre Dame · MoLGRL 学派）</strong> · cs.AI + cs.CL · 1,323 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.14707" target="_blank" rel="noopener">Harnessing LLMs for Reliable Academic Supervision</a></td>
+          <td>Harness engineering 术语定义 + 学术监督系统 · deterministic scaffolding 组合 + symbolic filters</td>
+          <td>arXiv 2607.14707 · 2026-07-16 · Akash Raj 单作者 · cs.CL</td>
+          <td class="score-num">88</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13683" target="_blank" rel="noopener">Self-Evolving Agent Harnesses via Gated Semantic QD</a></td>
+          <td>QD 语义质量多样性 + gated 显著性检验 + 七领域密封测试集</td>
+          <td>arXiv 2607.13683 · 2026-07-15 · X. Luo + 4 · cs.CL</td>
+          <td class="score-num">93</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13396" target="_blank" rel="noopener">Set-shifting Behavioral Test for Harnessed Agents</a></td>
+          <td>认知心理学 set-shifting 借用 · 隐性 tool 可靠性 shift 适应</td>
+          <td>arXiv 2607.13396 · 2026-07-15 · Ziwei Ye · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13285" target="_blank" rel="noopener">Harness Handbook: Making Evolving Agent Harnesses Readable</a></td>
+          <td>Harness 手册协议 · 可读性 / 可导航性 / 可编辑性 三大原则</td>
+          <td>arXiv 2607.13285 · 2026-07-14 · R. Wang + 9 · cs.AI</td>
+          <td class="score-num">91</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">1. 内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>论文标题（EN）</label>
+        <span>MemoHarness: Agent Harnesses That Learn from Experience</span>
+      </div>
+      <div class="meta-item">
+        <label>中文翻译</label>
+        <span>MemoHarness：从经验中学习的 Agent Harness</span>
+      </div>
+      <div class="meta-item">
+        <label>作者阵容（10 人）</label>
+        <span>Yue Huang / Wenjie Wang / Han Bao / Yuchen Ma / Xiaonan Luo / Yi Nian / Haomin Zhuang / Zheyuan Liu / <strong>Yue Zhao</strong> / <strong>Xiangliang Zhang</strong>（通讯）</span>
+      </div>
+      <div class="meta-item">
+        <label>机构</label>
+        <span>University of Notre Dame（Xiangliang Zhang MoLGRL 学派）· 多机构合作</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv ID</label>
+        <a href="https://arxiv.org/abs/2607.14159" target="_blank" rel="noopener">2607.14159v1</a>
+      </div>
+      <div class="meta-item">
+        <label>提交日期</label>
+        <span>2026-07-14T21:22:18Z UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>主分类</label>
+        <span>cs.AI（次分类 cs.CL）</span>
+      </div>
+      <div class="meta-item">
+        <label>文件大小 / 长度</label>
+        <span>1,323 KB PDF</span>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2607.14159v1" target="_blank" rel="noopener">arXiv 2607.14159v1</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML 版本</label>
+        <a href="https://arxiv.org/html/2607.14159v1" target="_blank" rel="noopener">arXiv HTML v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.14159" target="_blank" rel="noopener">10.48550/arXiv.2607.14159</a>
+      </div>
+      <div class="meta-item">
+        <label>开源 / 复现</label>
+        <span>论文未直接给出仓库；作者组 <a href="https://cse.nd.edu/people/xiangliang-zhang/" target="_blank" rel="noopener">Xiangliang Zhang / Notre Dame</a> 有 MoLGRL 生态发布代码惯例</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">2. 一句话核心贡献</div>
+    <div class="highlight-box">让 harness 从"部署时冻结的静态脚手架"变成"<em>从自己执行经验里学习</em>的自适应控制器"——test-time 无 label 无 feedback 即可为每个 case 检索并适配。</div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">3. 摘要中文翻译（忠实原文）</div>
+    <p><em>Agent harness</em> 是把 base LLM 变成可执行 agent 的<strong>外部控制层</strong>——它管理 <em>context / tools / orchestration / memory / decoding / output handling</em>。Harness 设计对 agent 行为影响巨大，然而当前的自动改进方法多聚焦更窄的对象（prompts / pipelines / workflows），部署 agent 通常也是所有 case 复用<strong>单一全局 harness</strong>。</p>
+    <p>本文提出 <strong>MemoHarness</strong>——一个自适应 harness 优化框架，<em>从自身执行经验中学习</em>。MemoHarness 把 harness 分解为<strong>六个可编辑的控制维度</strong>，把 per-case 诊断和 distilled 全局模式存入<strong>双层经验银行 (dual-layer experience bank)</strong>，并用检索到的经验对每个测试 case 适配学到的 harness，<u>无需 test-time labels / feedback / 额外搜索</u>。</p>
+    <p>在 <em>shell-agent / code-generation / analytical-reasoning</em> 三大 benchmark 上，MemoHarness 显著优于所比较的固定 harness，并展现<u>对未见 suite 和 base model 的选择性迁移</u>；当大量检索到的经验可缓存时，额外 context 依然能保持<strong>成本竞争力</strong>。这些证据支持：<em>execution experience 是构建"比单一静态配置更自适应" harness 的实用底座</em>；更广的统计鲁棒性与组件归因主张留待未来工作。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">4. 核心内容解读（背景 · 方法 · 突破点）</div>
+    <p><strong>要解决的问题（背景与动机）。</strong> 2026 上半年 harness 谱系集齐 13 层（<em>context / 策略 / 循环 / 评委 / 配置 / 统计 / 学习 / 经济学 / 测试时演化 / OS 执行 / 元优化 / 评估协议批判 / 可靠性理论</em>）——但<strong>几乎所有方法都仍产出"单一全局 harness"</strong> 供所有 test case 复用。这就带来两个显性缺口：<em>(1) 单个 harness 无法覆盖 case 分布的宽度</em>；<em>(2) harness 一旦冻结，就无法把已经执行过的 case 里蓄积的诊断信号回灌到新 case</em>。7-14 CMU Better Harnesses 组从"任务难度可迁移到 harness" 侧提出 meta-agent；7-15 UW+AI2 组则从"评估协议批判" 侧质疑"更好 harness 增益 vs 搜索红利"。<strong>MemoHarness 是从"经验重用" 侧提出的第三条路径</strong>——不追求 offline 训练更好的 meta-agent，也不追求评估协议纠偏，而是让 harness 在 <em>部署过程中就地自我更新</em>。</p>
+    <p><strong>核心方法（三件套）。</strong> (a) <u>六大可编辑控制维度</u>：<em>context / tools / orchestration / memory / decoding / output handling</em>——覆盖 harness 的全部执行栈；(b) <u>双层经验银行 (dual-layer experience bank)</u>：<strong>Per-case 诊断层</strong>存储具体 case 的失败/成功模式；<strong>Distilled 全局模式层</strong>把跨 case 反复出现的规律凝练成可复用的 harness patch；(c) <u>Test-time 适配</u>：<strong>无 label · 无 feedback · 无额外搜索</strong>——只用检索到的经验对每个 case 动态调整 harness。这三件套的<em>关键设计</em> 是<u>把"harness 增益" 与"case 特化" 解耦</u>：全局层保证跨 case 迁移，per-case 层保证针对性。</p>
+    <p><strong>与现有工作的关键区别。</strong> 与 7-14 CMU Better Harnesses 相比：<em>Better Harnesses 是 offline meta-agent 生成静态适配</em>，MemoHarness 是 <em>online 从执行经验里 test-time 自我更新</em>；与 6-30 CUGA FLO / 7-02 Loop Engineering 相比：<em>Loop Engineering 是显式 loop 规格</em>，MemoHarness 是 <em>隐式 experience-driven 更新</em>；与 7-13 ActPlane（OS 执行层）相比：ActPlane <em>下推到内核层执行策略</em>，MemoHarness <em>上推到经验层适配 harness</em>——两者在完整 harness 栈上<strong>顶底两端形成镜像</strong>。这就催生了 <em>H2 harness 第十四层</em>：<strong>Experience-Driven Adaptive 层（经验驱动自适应层）</strong>——与 7-15 Rethinking Evolution 层构成 <u>"批判评估 → 建设方案" 的自然衔接</u>：如果传统 harness evolution 存在"搜索=评估" 过拟合，那 MemoHarness 就是<em>直接在部署过程里在线学习</em> 的替代路径。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">5. 关键引用与出处（论文本身引用的重要文献 · 附完整 URL）</div>
+    <div class="ref-item"><strong>Odds Law for Serial Verifier Cascades</strong>（arXiv 2606.15712）· 前置理论——独立性假设下 log-odds 线性增长；MemoHarness 的经验银行提供的多样化 patch 正好为"去相关"提供实操路径。<br><a href="https://arxiv.org/abs/2606.15712" target="_blank" rel="noopener">https://arxiv.org/abs/2606.15712</a></div>
+    <div class="ref-item"><strong>Rethinking the Evaluation of Harness Evolution for Agents</strong>（arXiv 2607.12227，7-15 已收录）· Y. Wang + AI2/UW 组——批判"search=eval" 过拟合，MemoHarness 是"不依赖 offline search" 的替代方案。<br><a href="https://arxiv.org/abs/2607.12227" target="_blank" rel="noopener">https://arxiv.org/abs/2607.12227</a></div>
+    <div class="ref-item"><strong>Better Harnesses, Smaller Models</strong>（arXiv 2607.08938，7-14 已收录）· CMU · Meta-agent 自动 harness 适配；MemoHarness 相比其"offline meta-agent" 更主张"online 经验学习"。<br><a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">https://arxiv.org/abs/2607.08938</a></div>
+    <div class="ref-item"><strong>TTHE: Test-Time Harness Evolution</strong>（arXiv 2607.08124，7-10 已收录）· 首次提出 test-time harness 演化，MemoHarness 与 TTHE 属于"testtime 派" 姊妹方法。<br><a href="https://arxiv.org/abs/2607.08124" target="_blank" rel="noopener">https://arxiv.org/abs/2607.08124</a></div>
+    <div class="ref-item"><strong>Harness Handbook</strong>（arXiv 2607.13285，07-14）· R. Wang + 9 人——把 harness 描述成"可读 / 可导航 / 可编辑" 的工件；MemoHarness 六大控制维度是 Harness Handbook 视角的<em>可执行落地</em>。<br><a href="https://arxiv.org/abs/2607.13285" target="_blank" rel="noopener">https://arxiv.org/abs/2607.13285</a></div>
+    <div class="ref-item"><strong>ToFu: White-Box Token-Efficient Agent Harness</strong>（arXiv 2607.11423，07-13）· 东北大学 T. Xiao 组——白盒 harness 提供细粒度执行钩子；MemoHarness 六大控制维度契合其"白盒可编辑" 立场。<br><a href="https://arxiv.org/abs/2607.11423" target="_blank" rel="noopener">https://arxiv.org/abs/2607.11423</a></div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">6. 实验结果与核心数据亮点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>维度</th><th>MemoHarness 关键发现</th><th>意义</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td>覆盖 benchmark</td>
+          <td>Shell-agent + Code-generation + Analytical-reasoning <strong>三大类基准全面覆盖</strong></td>
+          <td>非单一 benchmark 特化；跨任务族普适</td>
+        </tr>
+        <tr>
+          <td>相对基线</td>
+          <td>相对<u>固定 harness baseline 全面提升</u>（多 benchmark 一致方向性收益）</td>
+          <td>证明"经验驱动的 case-specific 适配"是真实增益，非搜索红利</td>
+        </tr>
+        <tr>
+          <td>选择性迁移</td>
+          <td>对 <strong>未见 suite 和未见 base model</strong> 展现<em>选择性迁移</em>（selective transfer）</td>
+          <td>经验银行不是过拟合到单一模型 —— <u>distilled 全局模式层的作用得到实证</u></td>
+        </tr>
+        <tr>
+          <td>成本竞争力</td>
+          <td>大量 retrieved experience <strong>可缓存</strong>——额外 context 依然经济</td>
+          <td>与 evalci（07-07）+ Harness Effect（07-09）的<em>token 经济学</em> 维度合流</td>
+        </tr>
+        <tr>
+          <td>方法学诚实</td>
+          <td>作者<em>明确保留</em>更广泛的"统计鲁棒性 · 组件归因" 主张给未来工作</td>
+          <td>不夸大——契合 7-15 Rethinking 与 7-14 Solozobov 的 load-bearing evidence 立场</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 方向启发 -->
+  <div class="card">
+    <div class="card-title">7. 对三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering 方向</div>
+        <p><strong>H2 harness 第十四层：Experience-Driven Adaptive 层（经验驱动自适应层）诞生</strong>——与 7-15 Rethinking Evaluation Protocol 层"批判评估 → 建设方案"衔接，与 7-13 ActPlane（OS 执行层）"顶底镜像"合流。<em>六大控制维度是</em> Harness Handbook（7-14）视角的可执行落地；<em>双层经验银行</em> 是把"case 特化"与"跨 case 迁移"解耦的经典架构。今后 harness 工程应关注：<u>(1) 经验银行的容量与检索算法（RAG 视角）· (2) 六维度间的依赖 / 冲突 · (3) 与 KV-cache 复用的经济学耦合</u>——正好与你毕设 SGLang 方向<strong>直接叠加</strong>：<em>MemoHarness × SGLang prefix cache scheduler</em> 是天然融合点。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety 方向</div>
+        <p><strong>Experience-Driven harness 打开"从失败中学 harness-level 安全" 新维度</strong>——传统 agent safety 更多是"外部输入侧防御"，而 MemoHarness 表明：<em>过去执行的失败轨迹本身就是 harness 层的诊断信号</em>。它与 6-21 AgentLens（hidden-state 层可解释）+ 7-08 Doomed（残差流 probe）+ 7-13 Boiling the Frog（多轮 artifact-state）合流——都是<u>把 safety 从"输入-输出快照" 推向"执行状态或经验"</u>。<em>H2 safety 潜在派生</em>：把 dual-layer experience bank 里存储"安全违规模式" 而非仅"性能诊断"，就是<strong>"safety-aware MemoHarness"</strong>——per-case 遇到红线立即从全局经验层加载防御 patch。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Safety Benchmark 方向</div>
+        <p><strong>Experience-Driven harness 让 benchmark 面临新一层"评估公平性" 挑战</strong>：如果 harness 在部署时可以持续从经验里适配，那"benchmark 分数" 是<em>初始快照</em> 还是<em>经验充分后的稳态</em>？（这与 7-15 Huang partial-evaluation 有类似哲学）。作者<u>选择性迁移</u> 的诚实报告正好呼应 7-14 Solozobov Load-Bearing Evidence——<strong>benchmark 需要为"experience-driven harness" 定义新的报告协议</strong>：报告 "cold-start / warm-start / cache-hit rate / experience-age" 四条曲线，而不是单一 pass@k。这就自然引出 <em>H2 benchmark 潜在新联</em>：<strong>Experience-Aware Benchmark 联</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关阅读 -->
+  <div class="card">
+    <div class="card-title">8. 相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>Better Harnesses, Smaller Models: Building 90% Cheaper Agents via Automated Harness Adaptation</strong>（arXiv 2607.08938 · CMU S3D）——MemoHarness 的姊妹路径（offline meta-agent vs online 经验学习）。<a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">https://arxiv.org/abs/2607.08938</a></li>
+      <li><strong>TTHE: Test-Time Harness Evolution</strong>（arXiv 2607.08124）——test-time 派前置，从 execution-derived proxy reliability 角度铺路。<a href="https://arxiv.org/abs/2607.08124" target="_blank" rel="noopener">https://arxiv.org/abs/2607.08124</a></li>
+      <li><strong>The Harness Effect</strong>（arXiv 2607.06906 · Writer AI 33 人）——把 harness 抬到 token 经济学决定性杠杆；MemoHarness 的可缓存经验直接与之合流。<a href="https://arxiv.org/abs/2607.06906" target="_blank" rel="noopener">https://arxiv.org/abs/2607.06906</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">9. 开源资源与外链</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.14159" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.14159v1" target="_blank" rel="noopener">PDF v1</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.14159v1" target="_blank" rel="noopener">HTML v1</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.14159" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://cse.nd.edu/people/xiangliang-zhang/" target="_blank" rel="noopener">Xiangliang Zhang 主页</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Harness Engineering 归档</a>
+  · Daily Paper Tracker · 2026-07-17 #1
+</footer>
+
+</body>
+</html>

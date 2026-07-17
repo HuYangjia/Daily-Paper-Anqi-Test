@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-07-17 #1 · Safety Benchmark · Daily Paper Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif; background: #f7f7f5; color: #2c2c2a; line-height: 1.75; }
+  header { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  header a { font-size: 0.85rem; color: #888; text-decoration: none; }
+  header a:hover { color: #854f0b; }
+  header .sep { color: #ccc; font-size: 0.85rem; }
+  header .current { font-size: 0.85rem; color: #444; }
+  .hero { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 2.2rem 1.25rem 1.8rem; text-align: center; }
+  .hero .date-label { font-size: 0.73rem; color: #aaa; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 1.45rem; font-weight: 500; margin: 0 auto 0.4rem; max-width: 760px; line-height: 1.4; }
+  .hero .en-title { font-size: 0.88rem; color: #888; margin-bottom: 1.1rem; font-style: italic; }
+  .score-bar { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+  .score-chip { font-size: 0.76rem; padding: 3px 12px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .chip-total  { background: #eaf3de; color: #3b6d11; }
+  .chip-rel    { background: #eeedfe; color: #534ab7; }
+  .chip-venue  { background: #e6f1fb; color: #185fa5; }
+  .chip-impact { background: #faeeda; color: #854f0b; }
+  .chip-novel  { background: #fcebeb; color: #a32d2d; }
+  .chip-open   { background: #e1f5ee; color: #0f6e56; }
+  main { max-width: 780px; margin: 2rem auto; padding: 0 1.25rem; }
+  .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #bbb; margin-bottom: 1rem; padding-bottom: 0.55rem; border-bottom: 1px solid #f0efe9; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; }
+  .meta-item label { display: block; font-size: 0.72rem; color: #bbb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta-item span, .meta-item a { font-size: 0.9rem; word-break: break-word; }
+  .meta-item a { color: #854f0b; text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .highlight-box { background: #fff8ee; border-left: 3px solid #854f0b; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 1rem; font-weight: 500; color: #633806; line-height: 1.6; }
+  p { font-size: 0.93rem; margin-bottom: 0.85rem; color: #3a3a38; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: #2c2c2a; font-weight: 500; }
+  ul.point-list { padding-left: 1.2rem; list-style: none; }
+  ul.point-list li { font-size: 0.93rem; margin-bottom: 0.55rem; color: #3a3a38; position: relative; padding-left: 0.4rem; }
+  ul.point-list li::before { content: "▸"; position: absolute; left: -0.8rem; color: #854f0b; font-weight: 700; }
+  ul.point-list li a { color: #854f0b; text-decoration: none; font-size: 0.88rem; }
+  ul.point-list li a:hover { text-decoration: underline; }
+  .ref-item { font-size: 0.86rem; padding: 0.5rem 0; border-bottom: 1px solid #f3f3f0; color: #555; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-item a { color: #854f0b; text-decoration: none; }
+  .ref-item a:hover { text-decoration: underline; }
+  .inspiration-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  .inspiration-item { border-left: 3px solid #e0dfd8; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; background: #fafaf8; }
+  .inspiration-item.harness { border-color: #534ab7; background: #f5f3ff; }
+  .inspiration-item.safety  { border-color: #0f6e56; background: #f0f9f5; }
+  .inspiration-item.bench   { border-color: #854f0b; background: #fff8ee; }
+  .inspiration-item .ins-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+  .inspiration-item.harness .ins-label { color: #534ab7; }
+  .inspiration-item.safety  .ins-label { color: #0f6e56; }
+  .inspiration-item.bench   .ins-label { color: #854f0b; }
+  .inspiration-item p { font-size: 0.88rem; margin-bottom: 0; color: #3a3a38; }
+  .link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1efe8; color: #2c2c2a; font-size: 0.84rem; padding: 6px 14px; border-radius: 8px; text-decoration: none; border: 1px solid #e0dfd8; transition: background 0.1s; }
+  .link-btn:hover { background: #eae8e0; }
+  .link-btn.primary { background: #faeeda; border-color: #efc57e; color: #633806; }
+  .link-btn.primary:hover { background: #f5e0bc; }
+  .candidate-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .candidate-table th { background: #f7f7f5; font-weight: 500; padding: 0.45rem 0.7rem; text-align: left; border: 1px solid #e8e8e4; color: #666; white-space: nowrap; }
+  .candidate-table td { padding: 0.5rem 0.7rem; border: 1px solid #e8e8e4; vertical-align: top; color: #444; }
+  .candidate-table tr.winner td { background: #fff8ee; }
+  .score-num { font-weight: 500; color: #3b6d11; }
+  .winner-badge { display: inline-block; background: #3b6d11; color: #fff; font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; margin-left: 5px; vertical-align: middle; font-weight: 500; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.5rem 0; }
+  .data-table th { background: #fff8ee; padding: 0.4rem 0.7rem; text-align: left; border: 1px solid #efc57e; color: #633806; font-weight: 500; }
+  .data-table td { padding: 0.4rem 0.7rem; border: 1px solid #e8e8e4; color: #444; }
+  .data-table tr.hl td { background: #fafaf3; font-weight: 500; color: #3b6d11; }
+  footer { text-align: center; font-size: 0.76rem; color: #bbb; padding: 2.5rem 1rem; margin-top: 0.5rem; }
+  footer a { color: #bbb; }
+  @media (max-width: 580px) { .meta-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.15rem; } .card { padding: 1.1rem 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html">← 总导航</a>
+  <span class="sep">/</span>
+  <a href="../index.html">Safety Benchmark</a>
+  <span class="sep">/</span>
+  <span class="current">2026-07-17 #1</span>
+</header>
+
+<div class="hero">
+  <div class="date-label">2026 年 7 月 17 日 · Safety Benchmark · 首次把 <strong>MCP servers 的动态演化</strong> 建成 agent benchmark 一等公民维度——<u>MCPEvol-Bench</u>：<em>11 mutation operators × 123 MCP servers × 12 SOTA LLMs</em>——受启于大规模实证研究，模拟真实工具接口/功能演化；<strong>GPT-5.4 性能下降 13.7% · Claude Sonnet 4-6 下降 14.4%</strong>——伴随 planning / reasoning 错误大幅上升；证明<em>LLM-driven workflow 在工具演化下的固有脆弱性</em>；建立 dynamic tool environment 下 agent adaptability 评估的<u>标准</u></div>
+  <h1><strong>MCPEvol-Bench: Benchmarking LLM Agent Performance Across Dynamic Evolutions of MCP Servers</strong> —— 首次把"<em>MCP 服务器接口 / 功能的持续演化</em>" 立成 benchmark 一等公民；<u>11 mutation operators × 123 MCP servers × 12 SOTA 模型</u>；<strong>GPT-5.4 -13.7% / Claude-Sonnet-4-6 -14.4%</strong> · planning / reasoning 错误剧增——把 agent benchmark 从"<em>静态工具面</em>" 推向"<em>动态演化工具生态</em>"</h1>
+  <div class="en-title">MCPEvol-Bench: Benchmarking LLM Agent Performance Across Dynamic Evolutions of MCP Servers</div>
+  <div class="score-bar">
+    <span class="score-chip chip-total">综合 94 分</span>
+    <span class="score-chip chip-rel">相关度 10.0</span>
+    <span class="score-chip chip-venue">来源质量 9.0</span>
+    <span class="score-chip chip-impact">近期影响力 9.2</span>
+    <span class="score-chip chip-novel">新颖性 9.5</span>
+    <span class="score-chip chip-open">开源复现 8.4</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 候选对比 -->
+  <div class="card">
+    <div class="card-title">今日 Benchmark 方向 #1 候选评分对比（共 5 篇候选 · 2026-07-14 至 07-16 提交）</div>
+    <table class="candidate-table">
+      <thead>
+        <tr><th>标题（简）</th><th>方向细分</th><th>来源</th><th>综合分</th></tr>
+      </thead>
+      <tbody>
+        <tr class="winner">
+          <td><a href="https://arxiv.org/abs/2607.14642" target="_blank" rel="noopener">MCPEvol-Bench: Benchmarking LLM Agent Performance Across Dynamic Evolutions of MCP Servers</a><span class="winner-badge">今日选定</span></td>
+          <td>Dynamic Tool Evolution 联 · 11 mutation operators × 123 MCP servers × 12 SOTA LLMs · GPT-5.4 -13.7% / Claude-Sonnet-4-6 -14.4% · 大规模实证驱动的 mutation 设计</td>
+          <td>arXiv 2607.14642 · 2026-07-16 v1 · H. Liu / K. Hu / J. Liao / Q. Wang / P. Qian / Y. Zhai / <strong>D. Feng / B. Ding / H. Wang</strong>（NUDT 组）· cs.AI + cs.SE · 3,972 KB</td>
+          <td class="score-num">94</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.14896" target="_blank" rel="noopener">StructureClaw: Traceable LLM Agents for Structural Engineering</a></td>
+          <td>结构工程可跟踪 agent · 端到端 executable benchmark · 16 位作者 · 多机构合作</td>
+          <td>arXiv 2607.14896 · 2026-07-16 · S. Qin + 15 · cs.SE</td>
+          <td class="score-num">91</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13618" target="_blank" rel="noopener">STOCKTAKE: Measuring the Gap Between Perception and Action</a></td>
+          <td>Fair oracle · 多周决策任务 · knowing-doing gap 量化</td>
+          <td>arXiv 2607.13618 · 2026-07-15 · S. Deb / A. Krishnan · cs.AI</td>
+          <td class="score-num">89</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.13465" target="_blank" rel="noopener">DevicesWorld: Benchmarking Cross-Device Agents</a></td>
+          <td>跨设备（手机+桌面+智能家居）异构环境 agent benchmark</td>
+          <td>arXiv 2607.13465 · 2026-07-15 · H. Li + 11 · cs.CL</td>
+          <td class="score-num">90</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2607.14285" target="_blank" rel="noopener">ToolAlignBench: Alignment Conflicts in Tool-Calling LLMs</a></td>
+          <td>128 场景 × 16 领域 · ICML 2026 Pluralistic Alignment Workshop 接收（今日 agent-safety 方向已选）</td>
+          <td>arXiv 2607.14285 · 2026-07-15 · A. Keluskar / A. Bhattacharjee / Huan Liu · cs.SE</td>
+          <td class="score-num">95（跨方向）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 基本信息 -->
+  <div class="card">
+    <div class="card-title">1. 内容基本信息</div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>论文标题（EN）</label>
+        <span>MCPEvol-Bench: Benchmarking LLM Agent Performance Across Dynamic Evolutions of MCP Servers</span>
+      </div>
+      <div class="meta-item">
+        <label>中文翻译</label>
+        <span>MCPEvol-Bench：跨 MCP 服务器动态演化的 LLM Agent 性能基准</span>
+      </div>
+      <div class="meta-item">
+        <label>作者阵容（9 人）</label>
+        <span>Huanxi Liu · Kun Hu · Jiaqi Liao · Qiang Wang · Pengfei Qian · YuanZhao Zhai · <strong>Dawei Feng · Bo Ding · Huaimin Wang</strong>（NUDT 系统学派）</span>
+      </div>
+      <div class="meta-item">
+        <label>机构</label>
+        <span>National University of Defense Technology（NUDT）· 分布式与并行系统学派</span>
+      </div>
+      <div class="meta-item">
+        <label>arXiv ID</label>
+        <a href="https://arxiv.org/abs/2607.14642" target="_blank" rel="noopener">2607.14642v1</a>
+      </div>
+      <div class="meta-item">
+        <label>提交日期</label>
+        <span>2026-07-16T07:09:49Z UTC</span>
+      </div>
+      <div class="meta-item">
+        <label>主分类</label>
+        <span>cs.AI（次分类 cs.SE）</span>
+      </div>
+      <div class="meta-item">
+        <label>文件大小</label>
+        <span>3,972 KB PDF</span>
+      </div>
+      <div class="meta-item">
+        <label>PDF 链接</label>
+        <a href="https://arxiv.org/pdf/2607.14642v1" target="_blank" rel="noopener">arXiv 2607.14642v1</a>
+      </div>
+      <div class="meta-item">
+        <label>HTML 版本</label>
+        <a href="https://arxiv.org/html/2607.14642v1" target="_blank" rel="noopener">arXiv HTML v1</a>
+      </div>
+      <div class="meta-item">
+        <label>DOI</label>
+        <a href="https://doi.org/10.48550/arXiv.2607.14642" target="_blank" rel="noopener">10.48550/arXiv.2607.14642</a>
+      </div>
+      <div class="meta-item">
+        <label>覆盖 SOTA 模型</label>
+        <span>12 个前沿 LLM（含 GPT-5.4 · Claude-Sonnet-4-6 · Gemini · DeepSeek 等）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一句话贡献 -->
+  <div class="card">
+    <div class="card-title">2. 一句话核心贡献</div>
+    <div class="highlight-box">首次把"<em>MCP 服务器工具接口和功能的持续演化</em>" 建成 agent benchmark 一等公民维度—— GPT-5.4/Claude-Sonnet-4-6 下降 13.7%/14.4%，暴露 LLM-driven workflow 的<strong>固有脆弱性</strong>。</div>
+  </div>
+
+  <!-- 摘要翻译 -->
+  <div class="card">
+    <div class="card-title">3. 摘要中文翻译（忠实原文）</div>
+    <p>随着 <strong>Model Context Protocol (MCP) 服务器</strong>成为连接 LLM 与外部工具的核心基础设施，现有 benchmark 利用真实 MCP 服务器评估 LLM agent 的工具使用能力。<em>但这些 benchmark 忽视了 MCP 服务器内部工具接口和功能的持续演化</em>——导致有缺陷的评估，无法捕捉 agent 在 <u>变化的工具版图</u> 中的适应能力。</p>
+    <p>为弥合此差距，我们引入 <strong>MCPEvol-Bench</strong>——一个评估 LLM agent 在<em>动态工具集演化下的任务解决能力</em>的新颖 benchmark。受<u>大规模实证研究</u>启发，我们提出 <strong>11 个 mutation operators</strong> 来模拟 <em>123 个 MCP 服务器</em>内部的<u>真实工具演化</u>。我们对 <strong>12 个 SOTA LLM</strong>在多版本 MCP 服务器上做基准测试——揭示：<em>即使是前沿模型也难以适应演化中的工具</em>。</p>
+    <p>例如，<strong>GPT-5.4 在演化后的 MCP 服务器上出现 13.7% 的性能下降 · Claude-Sonnet-4-6 出现 14.4% 的下降</strong>——伴随 <em>planning 和 reasoning 错误的显著增加</em>。这些发现凸显 LLM 驱动的工作流具有<strong>脆弱性</strong>——把 MCPEvol-Bench 确立为<u>动态工具环境下 agent 适应能力评估的标准</u>。</p>
+  </div>
+
+  <!-- 核心内容解读 -->
+  <div class="card">
+    <div class="card-title">4. 核心内容解读（背景 · 方法 · 突破点）</div>
+    <p><strong>要解决的问题（背景与动机）。</strong> H2 上半年 benchmark 谱系（十六联：物品 IRT / 搜索 BOA / 评委 Grader-Repro / 构造 TASTE / 配置 SafetyRepro / 价值观 SovereignPA / 多语言 PolyWorkBench / 文化 Pluralis / 严重度 Beyond ASR / 统一红队 REALM / 语言主权 K-BrowseComp / 立法接地 Boiling the Frog / partial-evaluation Huang / task-unification MAG）—— 几乎<em>全部假设"工具接口静态"</em>：evaluation 时看到的是 v1，部署时还是 v1。<strong>MCPEvol-Bench 揭示：这是 benchmark 生态的一大盲区</strong>——真实 MCP 服务器的接口签名、参数结构、返回格式、错误码<em>持续演化</em>（github push、API 版本迭代、tool description 修订），而 agent 的 planning 和 reasoning<u>严重依赖冻结的 tool 认知</u>。当工具从 v1 演化到 v1.1，agent 常出现 planning / reasoning 错误剧增。</p>
+    <p><strong>核心方法（大规模实证驱动的 11 mutation operators）。</strong> (a) <u>实证研究</u>：先对真实 MCP 服务器版本历史做<em>大规模统计分析</em>，归纳 11 类<strong>真实存在</strong>的演化操作（如：参数增删 / 类型变更 / 默认值调整 / 错误码扩展 / 返回结构重构 / 描述文本修订 / 弃用标注 / 功能拆分 / 功能合并 / 权限模型变化 / 依赖注入）；(b) <u>Benchmark 构造</u>：将 11 operators 应用到 <strong>123 真实 MCP 服务器</strong>——生成多版本轨迹；(c) <u>大规模评估</u>：<strong>12 SOTA LLM × 多版本 MCP servers</strong> 交叉测试。<strong>关键设计哲学</strong>：<em>mutation 不是人工合成，而是来自实证研究驱动的真实演化模式</em>——避免"合成攻击" 的 red-teaming benchmark 常见"人工不真实" 问题。这与 07-16 MAG（Task Unification 联）合流构成 <u>"演化维度 + 任务维度" agent benchmark 双翼</u>。</p>
+    <p><strong>与现有工作的关键区别与突破点。</strong> 与 07-15 SLBench（skill 内部逻辑）相比：<em>SLBench 静态 skill</em>，MCPEvol-Bench <em>动态 MCP 演化</em>；与 07-15 Huang partial-evaluation（横向部分预算）相比：<em>Huang 是"跑多少 case 足够"</em>，MCPEvol-Bench 是"<em>工具演化多少版本足够</em>"（时间维度补充）；与 06-30 OSWorld 2.0（长程 GUI）相比：<em>OSWorld 演化的是 UI 状态</em>，MCPEvol-Bench 演化的是<strong>工具接口本身</strong>。这就催生了 <em>H2 benchmark 第十七联</em>：<strong>Dynamic Tool Evolution 联（动态工具演化联）</strong>——首次把"工具版本轨迹" 建成 benchmark 一等公民；与 07-14 K-BrowseComp Language Sovereignty 联从"<em>横切分布</em>"（语言 / 主权）扩展到"<em>纵切时间</em>"（版本 / 演化）——benchmark 覆盖立方体又多一维。<strong>13.7% / 14.4% 大厂模型下降</strong> 意味着 <u>MCP 生态成熟度已足以支撑 benchmark-level 稳健分析</u>——这也解释了为什么 07-16 同日出现两篇 MCP 相关论文（本文 + FlowGuard 07-16）。</p>
+  </div>
+
+  <!-- 关键引用 -->
+  <div class="card">
+    <div class="card-title">5. 关键引用与出处</div>
+    <div class="ref-item"><strong>Model Context Protocol (MCP)</strong>——Anthropic 主导的 LLM 工具接口协议，MCPEvol-Bench 立足基础设施。<br><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">https://modelcontextprotocol.io/</a></div>
+    <div class="ref-item"><strong>FlowGuard: From Signals to Evidence for MCP Security Detection</strong>（arXiv 2607.14754，07-16）· B. An + 4——MCPEvol-Bench 的姊妹方向：安全侧的 MCP 检测；两篇同日提交表明 MCP 生态已支持独立 benchmark & 安全线。<br><a href="https://arxiv.org/abs/2607.14754" target="_blank" rel="noopener">https://arxiv.org/abs/2607.14754</a></div>
+    <div class="ref-item"><strong>How Many Tasks Are Enough for Agent Benchmark Decisions?</strong>（arXiv 2607.12338，7-15 已收录）· Wei-Jung Huang——partial-evaluation discipline 联；MCPEvol-Bench 的"演化版本轨迹" 是 Huang 时间维度的补充。<br><a href="https://arxiv.org/abs/2607.12338" target="_blank" rel="noopener">https://arxiv.org/abs/2607.12338</a></div>
+    <div class="ref-item"><strong>MAG: Web-Agent Benchmark and Harness for Multimodal Action and Guide Generation</strong>（arXiv 2607.10079，7-16 已收录）· Chengguang Gan——task-unification 联；MCPEvol-Bench 与其构成"任务合成 × 工具演化" 双翼。<br><a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">https://arxiv.org/abs/2607.10079</a></div>
+    <div class="ref-item"><strong>SLBench: Evaluating How LLM Agents Follow Logical Relations in Skills</strong>（arXiv 2607.09016，7-15 已收录）· Purdue X. Zhang——skill-following；MCPEvol-Bench 沿其"skill 认知" 扩展到"skill 演化认知"。<br><a href="https://arxiv.org/abs/2607.09016" target="_blank" rel="noopener">https://arxiv.org/abs/2607.09016</a></div>
+    <div class="ref-item"><strong>Diagnosing Knowledge Gaps in LLM Tool Use: An Agentic Benchmark for Novel API Acquisition</strong>（arXiv 2606.03657）· J. Liu 等——novel API 认知；MCPEvol-Bench 与其构成 <em>"未见 API 冷启动 × 已见 API 演化"</em> 完整覆盖。<br><a href="https://arxiv.org/abs/2606.03657" target="_blank" rel="noopener">https://arxiv.org/abs/2606.03657</a></div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">6. 实验结果与核心数据亮点</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>维度</th><th>MCPEvol-Bench 关键结果</th><th>意义</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td>Benchmark 规模</td>
+          <td><strong>123 真实 MCP 服务器 × 11 mutation operators × 12 SOTA LLMs</strong></td>
+          <td>规模级大厂 benchmark——覆盖生态完整 slice</td>
+        </tr>
+        <tr>
+          <td>核心发现（GPT）</td>
+          <td><strong>GPT-5.4 性能下降 13.7%</strong>（演化后 MCP 服务器）</td>
+          <td>前沿模型也无法免疫工具演化；<u>非"边缘 case" 问题</u></td>
+        </tr>
+        <tr>
+          <td>核心发现（Claude）</td>
+          <td><strong>Claude Sonnet 4-6 性能下降 14.4%</strong></td>
+          <td>两大厂旗舰模型下降幅度接近——共性问题；两位数下降<u>足以改变部署决策</u></td>
+        </tr>
+        <tr>
+          <td>错误模式</td>
+          <td>Planning 错误 & Reasoning 错误<strong>大幅上升</strong></td>
+          <td>不是执行层问题，而是<em>agent 认知层</em>问题——工具冻结假设深深 baked 到 planning</td>
+        </tr>
+        <tr>
+          <td>Mutation 数量</td>
+          <td><strong>11 类真实存在的演化操作</strong>（大规模实证研究驱动）</td>
+          <td>与 red-teaming benchmark 的"合成攻击" 区别——每类 mutation 都<u>有真实世界样本背书</u></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 方向启发 -->
+  <div class="card">
+    <div class="card-title">7. 对三个研究方向的启发</div>
+    <div class="inspiration-grid">
+      <div class="inspiration-item harness">
+        <div class="ins-label">对 Harness Engineering 方向</div>
+        <p><strong>Harness 必须把"工具版本感知" 建成 first-class 组件</strong>：MCPEvol-Bench 揭示<em>agent 认知与工具真实接口的 gap</em>——harness 侧需要 <u>tool-version detection + auto-migration + fallback</u>。这与 07-14 CMU Better Harnesses 的"harness 自动适配"合流——但 Better Harnesses 是"跨模型" 适配，MCPEvol-Bench 提示"跨版本" 适配。<em>H2 harness 潜在派生</em>：<strong>Version-Aware Harness 层</strong>——把 tool 描述、版本、变更历史注入 context；与今日 harness 方向的 MemoHarness 六大控制维度形成叠加——<u>MemoHarness 的经验银行可以专门存储 "tool-version migration patterns"</u>。</p>
+      </div>
+      <div class="inspiration-item safety">
+        <div class="ins-label">对 Agent Safety 方向</div>
+        <p><strong>工具演化制造新一类 safety 风险面</strong>：MCPEvol-Bench 揭示 agent 在<em>被演化过的工具</em> 上出现 planning / reasoning 错误——但错误未必只是"能力下降"，也可能演变成 <u>误操作 / 越权 / 数据泄漏</u>。今天 agent-safety 方向的 ToolAlignBench 揭示"<em>价值观仲裁</em>" 问题——MCPEvol-Bench 补充 <strong>"工具版本认知漂移"</strong> 问题——两者合流：<em>不仅要仲裁"safety 训练价值观 vs 部署指令"，还要处理"过时工具认知 vs 新接口"</em>。安全侧需要 <u>version-drift-aware guardrail</u>——当检测到 MCP server 演化，自动降级到安全模式（要求人工审批 / 拒绝执行）。</p>
+      </div>
+      <div class="inspiration-item bench">
+        <div class="ins-label">对 Safety Benchmark 方向</div>
+        <p><strong>H2 benchmark 第十七联诞生：Dynamic Tool Evolution 联（动态工具演化联）</strong>——从"横切分布 (语言 / 主权 / 文化)" 扩展到"<em>纵切时间 (版本 / 演化)</em>"——benchmark 覆盖立方体又多一维（时间轴）。<em>与 07-16 MAG Task-Unification 联</em>合流构成 <strong>"benchmark 动态化" 双翼</strong>：MAG 让任务动态合成，MCPEvol-Bench 让工具动态演化。<u>未来 3-6 个月可预期</u>：(1) Agent 在 <em>weekly LLM API rev</em>（GPT/Claude/Gemini 版本切换）下的 rolling benchmark；(2) 用 mutation operators 做 <em>counterfactual 评估</em>——同一 agent 在不同工具演化路径下的稳态；(3) MCP 生态"演化速度" 作为 benchmark 元数据。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关阅读 -->
+  <div class="card">
+    <div class="card-title">8. 相关延伸阅读</div>
+    <ul class="point-list">
+      <li><strong>FlowGuard: From Signals to Evidence for MCP Security Detection</strong>（arXiv 2607.14754）——同日 MCP 安全姊妹论文；两者构成 MCP 生态"能力 + 安全" 双翼。<a href="https://arxiv.org/abs/2607.14754" target="_blank" rel="noopener">https://arxiv.org/abs/2607.14754</a></li>
+      <li><strong>MAG: Web-Agent Benchmark and Harness for Multimodal Action</strong>（arXiv 2607.10079）——task-unification 联；与 MCPEvol-Bench 合流 benchmark 动态化。<a href="https://arxiv.org/abs/2607.10079" target="_blank" rel="noopener">https://arxiv.org/abs/2607.10079</a></li>
+      <li><strong>Diagnosing Knowledge Gaps in LLM Tool Use (NovelAPIBench)</strong>（arXiv 2606.03657）——novel API 冷启动；与 MCPEvol-Bench 构成"冷启 × 演化" 完整时间轴。<a href="https://arxiv.org/abs/2606.03657" target="_blank" rel="noopener">https://arxiv.org/abs/2606.03657</a></li>
+    </ul>
+  </div>
+
+  <!-- 开源资源 -->
+  <div class="card">
+    <div class="card-title">9. 开源资源与外链</div>
+    <div class="link-row">
+      <a class="link-btn primary" href="https://arxiv.org/abs/2607.14642" target="_blank" rel="noopener">arXiv 摘要页</a>
+      <a class="link-btn" href="https://arxiv.org/pdf/2607.14642v1" target="_blank" rel="noopener">PDF v1</a>
+      <a class="link-btn" href="https://arxiv.org/html/2607.14642v1" target="_blank" rel="noopener">HTML v1</a>
+      <a class="link-btn" href="https://doi.org/10.48550/arXiv.2607.14642" target="_blank" rel="noopener">DOI</a>
+      <a class="link-btn" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP 官方协议站</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <a href="../index.html">← 返回 Safety Benchmark 归档</a>
+  · Daily Paper Tracker · 2026-07-17 #1
+</footer>
+
+</body>
+</html>

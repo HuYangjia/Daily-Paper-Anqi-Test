@@ -68,7 +68,7 @@
       <h2>Harness Engineering</h2>
       <p>LLM 评估框架工程、evaluation harness、可复现评估系统设计</p>
       <div class="dir-meta">
-        <span class="count-badge">53 篇报告</span>
+        <span class="count-badge">54 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -79,7 +79,7 @@
       <h2>Agent Skills Safety</h2>
       <p>Agent 技能安全边界、agentic AI safety、工具调用风险与对齐</p>
       <div class="dir-meta">
-        <span class="count-badge">52 篇报告</span>
+        <span class="count-badge">53 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -90,7 +90,7 @@
       <h2>Safety Benchmark</h2>
       <p>safety/agent/alignment benchmark、HarmBench、TrustLLM、评估方法设计</p>
       <div class="dir-meta">
-        <span class="count-badge">51 篇报告</span>
+        <span class="count-badge">52 篇报告</span>
         <span class="arrow">→</span>
       </div>
     </a>
@@ -109,6 +109,48 @@
 
   <p class="section-title">最近报告（全方向）</p>
   <ul class="paper-list">
+    <li>
+      <a class="paper-item" href="harness/2026-07-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-harness">Harness</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>MemoHarness: Agent Harnesses That Learn from Experience</strong> —— 把 harness 从"部署时冻结的静态脚手架" 抬升到 <em>test-time adaptive · experience-driven</em> 自学习控制器；<strong>六大可编辑控制维度</strong>（context / tools / orchestration / memory / decoding / output）+ <strong>双层经验银行</strong>（per-case 诊断层 + distilled 全局模式层）+ <u>无 label / feedback / 额外搜索</u> 的 test-time 适配；shell-agent + code-gen + analytical-reasoning 全面超越固定 harness · 选择性迁移到未见 suite/base model；<em>H2 harness 第十四层：Experience-Driven Adaptive 层</em>——与 7-15 Rethinking Evaluation Protocol 层"批判 → 建设" 衔接；Xiangliang Zhang（Notre Dame）10 人组 · #1</div>
+          <div class="paper-sub">Y. Huang / W. Wang / H. Bao / Y. Ma / X. Luo / Y. Nian / H. Zhuang / Z. Liu / Y. Zhao / X. Zhang · arXiv 2607.14159 · 2026-07-14 · cs.AI + cs.CL · Notre Dame</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="agent-safety/2026-07-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-safety">Safety</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>ToolAlignBench: Investigating Alignment Conflicts in Tool-Calling Enabled LLMs</strong> —— 首次把 <em>safety training 价值观</em> vs <em>deployment context 指令</em> 的<u>基本张力</u>建成可跑 benchmark：<strong>128 场景 × 16 受监管领域</strong>；<u>safety-aligned open-source 模型 43.4% 概率 override 部署指令</u>——处理"组织不当行为暗示" 文档时，agent 主动 <em>whistleblowing / data exfiltration / evidence tampering</em>——safety training 的"善意" 反而制造<strong>合规责任风险</strong>；<u>abliteration</u> 可降低外部举报率；<em>H2 agent safety 第十五派：Value-Conflict Alignment 派</em>——把 pluralistic alignment 从理论变可执行 benchmark；<strong>ICML 2026 Pluralistic Alignment Workshop 接收</strong> · ASU DMML 组 · #1</div>
+          <div class="paper-sub">A. Keluskar / A. Bhattacharjee / H. Liu · arXiv 2607.14285 · 2026-07-15 · cs.SE + cs.AI · ICML 2026 Workshop</div>
+        </div>
+        <div class="score-pill">95 分</div>
+      </a>
+    </li>
+    <li>
+      <a class="paper-item" href="benchmark/2026-07-17-1.html">
+        <div class="date-badge">
+          <div class="month">Jul</div>
+          <div class="day">17</div>
+        </div>
+        <span class="dir-tag tag-bench">Bench</span>
+        <div class="paper-meta">
+          <div class="paper-title"><strong>MCPEvol-Bench: Benchmarking LLM Agent Performance Across Dynamic Evolutions of MCP Servers</strong> —— 首次把 <em>MCP 服务器接口 / 功能的持续演化</em> 立成 benchmark 一等公民；<strong>11 mutation operators × 123 真实 MCP 服务器 × 12 SOTA LLMs</strong>；<u>GPT-5.4 演化后下降 13.7% · Claude Sonnet 4-6 下降 14.4%</u>——伴随 planning / reasoning 错误剧增；把 agent benchmark 从"静态工具面" 推向"<em>动态演化工具生态</em>"；<em>H2 benchmark 第十七联：Dynamic Tool Evolution 联</em>——从"横切分布 (语言 / 主权 / 文化)" 扩展到"<u>纵切时间 (版本 / 演化)</u>"；NUDT 分布式系统学派 9 人组 · #1</div>
+          <div class="paper-sub">H. Liu / K. Hu / J. Liao / Q. Wang / P. Qian / Y. Zhai / D. Feng / B. Ding / H. Wang · arXiv 2607.14642 · 2026-07-16 · cs.AI + cs.SE · NUDT</div>
+        </div>
+        <div class="score-pill">94 分</div>
+      </a>
+    </li>
     <li>
       <a class="paper-item" href="harness/2026-07-16-1.html">
         <div class="date-badge">
